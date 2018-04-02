@@ -136,12 +136,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
 
         // get the help descriptions
-        let firstTimeText: string = "Select a column to begin creating a query."
+        let firstTimeText: string = "Start creating the query by selecting a column below."
 
-        let secondTimeText: string = "Select another column for your query."
+        let secondTimeText: string = "Select another column for the query."
 
 
-        let selectedColumnText: string = "Add as many column values, filters and ranges for this column as required."
+        let selectedColumnText: string = "Build the query, using the tabls below to add column values, filters or ranges for this column as required."
         if (this.props.ExpressionMode == ExpressionMode.SingleColumn) {
             selectedColumnText += "This Query can only contain one Query Condition."
         }
@@ -156,7 +156,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         return <PanelWithButton headerText="Query Builder"
             button={null}
-            bsStyle="primary" style={{ height: '575px' }}>
+            bsStyle="primary" style={{ height: '550px' }}>
 
 
             <Tab.Container id="left-tabs-example" defaultActiveKey="columnValues">
@@ -366,6 +366,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '507px',
+    'height': '480px',
     'marginBottom': '0'
 }

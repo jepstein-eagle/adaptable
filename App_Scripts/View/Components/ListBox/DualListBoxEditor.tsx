@@ -642,14 +642,14 @@ var rowStyle = {
 var listGroupStyleAvailable: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '411px',
-    'height': '411px',
+    'height': '371px',
     'marginBottom': '0'
 };
 
 var listGroupStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '450px',
-    'height': '450px',
+    'height': '410px',
     'marginBottom': '0'
 };
 

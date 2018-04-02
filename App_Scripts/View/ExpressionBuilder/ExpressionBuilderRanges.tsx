@@ -30,8 +30,12 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
                 return <option key={operator} value={operator}>{ExpressionHelper.OperatorToLongFriendlyString(operator, selectedColumnDataType)}</option>
             })
 
-            let operationMenuItems = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType) => {
-                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOld(index, rangeOperand)}>{rangeOperand as RangeOperandType}</MenuItem>
+            let rangeMenuItemsOperand1 = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType) => {
+                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand1(index, rangeOperand)}>{rangeOperand as RangeOperandType}</MenuItem>
+            })
+
+            let rangeMenuItemsOperand2 = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType) => {
+                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand2(index, rangeOperand)}>{rangeOperand as RangeOperandType}</MenuItem>
             })
 
             let deleteButton = <Button bsSize={"small"} bsStyle={"default"} style={deleteButtonStyle} onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
@@ -53,8 +57,8 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
 
 
                         <InputGroup>
-                            <DropdownButton style={rangeOperatorStyle} title={range.Operand1Type} id="range_operand" componentClass={InputGroup.Button}>
-                                {operationMenuItems}
+                            <DropdownButton style={rangeOperatorStyle} title={range.Operand1Type} id="range_operand_1" componentClass={InputGroup.Button}>
+                                {rangeMenuItemsOperand1}
                             </DropdownButton>
 
                             {range.Operand1Type == RangeOperandType.Column ?
@@ -69,11 +73,11 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
 
                         {range.Operator == LeafExpressionOperator.Between &&
                             <InputGroup>
-                                <DropdownButton style={rangeOperatorStyle} title={range.Operand1Type} id="range_operand" componentClass={InputGroup.Button}>
-                                    {operationMenuItems}
+                                <DropdownButton style={rangeOperatorStyle} title={range.Operand2Type} id="range_operand_2" componentClass={InputGroup.Button}>
+                                    {rangeMenuItemsOperand2}
                                 </DropdownButton>
 
-                                {range.Operand1Type == RangeOperandType.Column ?
+                                {range.Operand2Type == RangeOperandType.Column ?
                                     <ColumnSelector SelectedColumnIds={[range.Operand2]}
                                         ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType && c.ColumnId != this.props.SelectedColumn.ColumnId)}
                                         onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
@@ -115,13 +119,7 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
         this.props.onRangesChange([].concat(this.props.Ranges, ObjectFactory.CreateEmptyRange()))
     }
 
-    private onLeafExpressionOperatorChangedOld(index: number, x: LeafExpressionOperator) {
-        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
-        let range = this.props.Ranges[index]
-        rangeCol[index] = Object.assign({}, range, { Operator: x })
-        this.props.onRangesChange(rangeCol)
-    }
-
+  
     private onLeafExpressionOperatorChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
 
@@ -131,18 +129,17 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
         this.props.onRangesChange(rangeCol)
     }
 
-    private onRangeTypeChanged(index: number, event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
-        let range = this.props.Ranges[index]
-        rangeCol[index] = Object.assign({}, range, { Operand1Type: e.value })
-        this.props.onRangesChange(rangeCol)
-    }
-
-    private onRangeTypeChangedOld(index: number, rangeOperandType: RangeOperandType): any {
+    private onRangeTypeChangedOperand1(index: number, rangeOperandType: RangeOperandType): any {
         let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
         let range = this.props.Ranges[index]
         rangeCol[index] = Object.assign({}, range, { Operand1Type: rangeOperandType })
+        this.props.onRangesChange(rangeCol)
+    }
+
+    private onRangeTypeChangedOperand2(index: number, rangeOperandType: RangeOperandType): any {
+        let rangeCol: Array<IRange> = [].concat(this.props.Ranges)
+        let range = this.props.Ranges[index]
+        rangeCol[index] = Object.assign({}, range, { Operand2Type: rangeOperandType })
         this.props.onRangesChange(rangeCol)
     }
 
@@ -183,8 +180,8 @@ export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilde
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'overflowX': 'hidden',
-    'height': '475px',
-    'maxHeight': '475px',
+    'height': '445px',
+    'maxHeight': '445px',
     'marginBottom': '0'
 }
 

@@ -428,7 +428,7 @@ export module ExpressionHelper {
                     rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
-                    if (rangeExpression.Operand1Type==RangeOperandType.Column) {
+                    if (rangeExpression.Operand2Type==RangeOperandType.Column) {
                         rangeEvaluation.operand2 = Number(getOtherColumnValue(rangeExpression.Operand2));
                     } else {
                         rangeEvaluation.operand2 = Number(rangeExpression.Operand2);

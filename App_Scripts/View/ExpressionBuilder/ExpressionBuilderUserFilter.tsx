@@ -50,7 +50,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'overflowX': 'hidden',
-    'height': '475px',
-    'maxHeight': '475px',
+    'height': '445px',
+    'maxHeight': '445px',
     'marginBottom': '0'
 }

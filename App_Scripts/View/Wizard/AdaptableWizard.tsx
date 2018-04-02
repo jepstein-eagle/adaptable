@@ -73,7 +73,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="adaptable_blotter_style_wizard_base" >
-                    <div className="adaptableblotter_modal_main_popup">
+                    <div className="adaptableblotter_modal_main_wizard">
                         {this.state.ActiveState}
                     </div>
                 </Modal.Body>

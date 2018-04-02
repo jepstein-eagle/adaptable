@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Panel } from 'react-bootstrap';
+import { Panel, Well, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
@@ -30,6 +30,9 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
         return <div className="adaptable_blotter_style_wizard_userfilter_column">
             <Panel header="Select a Column" bsStyle="primary">
+                    <HelpBlock>
+                        {"Choose which column the User Filter will apply to."}
+                    </HelpBlock>
                 <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                     ColumnList={this.props.Columns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
@@ -56,10 +59,10 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     public Back(): void { //
     }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

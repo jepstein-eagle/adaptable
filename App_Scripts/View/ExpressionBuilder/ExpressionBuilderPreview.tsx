@@ -191,7 +191,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         return <div>
             {this.props.ShowPanel &&
 
-                <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '575px' }} >
+                <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '550px' }} >
                     <div style={divStyle}>
                         {previewLists}
                     </div>
@@ -237,7 +237,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '490px'
+    'height': '465px'
 }
 
 var smallFontSizeStyle = {

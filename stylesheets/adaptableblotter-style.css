@@ -86,6 +86,11 @@ button.placeholder:before {
   height: 570px;
 }
 
+.adaptableblotter_modal_main_wizard{
+  width: 900px;
+  height: 550px;
+}
+
 
 
 .adaptaleblotter_object_list_item{

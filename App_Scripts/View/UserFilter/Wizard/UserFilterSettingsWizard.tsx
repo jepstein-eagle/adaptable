@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
+import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
@@ -30,7 +30,12 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
             <Panel header="Filter Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="filterName">
-                        <Col xs={3} componentClass={ControlLabel}>Filter Name: </Col>
+                        <Col xs={12}>
+                            <HelpBlock>
+                                {"Select a name for the User Filter - this is the name that will appear in Query Builder and Column Filter dropdowns."}
+                            </HelpBlock>
+                        </Col>
+                        <Col xs={2} componentClass={ControlLabel}>Filter Name: </Col>
                         <Col xs={8}>
                             <FormGroup controlId="formInlineName" validationState={validationState}>
                                 <FormControl value={this.state.FilterName} type="string" placeholder="Enter filter name"
@@ -40,7 +45,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
                             </FormGroup>
                         </Col>
                     </FormGroup>
-                    <Col xs={1}>{' '} </Col>
+                    <Col xs={2}>{' '} </Col>
                 </AdaptableBlotterForm>
             </Panel>
         </div>
@@ -51,9 +56,9 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         let e = event.target as HTMLInputElement;
         this.setState({
             FilterName: e.value,
-            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1 ? 
-            "A User Filter already exists with that name for column: " + this.props.Columns.find(c=>c.ColumnId==this.props.Data.ColumnId).FriendlyName : 
-            null
+            ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1 ?
+                "A User Filter already exists with that name for column: " + this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName :
+                null
 
         } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())
     }
@@ -69,10 +74,10 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         this.props.Data.Name = this.state.FilterName
     }
     public Back(): void { /* no implementation */ }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName
