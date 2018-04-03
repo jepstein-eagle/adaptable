@@ -34,18 +34,19 @@ export module UIHelper {
     }
 
 
-    export function getModalContainer(blotterOptions:IAdaptableBlotterOptions, document: Document):HTMLElement{
+    export function getModalContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement {
         let modalContainer: HTMLElement;
-        if (blotterOptions.modalContainer == "Grid") {
-          modalContainer = document.getElementById("grid")
-          if (modalContainer) {
-            const modalContainerClassName: string = " modal-container"
-            if (!modalContainer.className.includes(modalContainerClassName)) {
-              modalContainer.className += modalContainerClassName;
+        if (blotterOptions.modalContainer) { // this has been set, so we use the property
+            modalContainer = document.getElementById(blotterOptions.modalContainer)
+            if (modalContainer) {
+                const modalContainerClassName: string = " modal-container"
+                if (!modalContainer.className.includes(modalContainerClassName)) {
+                    modalContainer.className += modalContainerClassName;
+                }
             }
-          }
-        } else {
-          modalContainer = document.body
+        }
+        if (!modalContainer) {
+            modalContainer = document.body
         }
         return modalContainer;
     }

@@ -8,5 +8,5 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfigUrl: "",
     maxColumnValueItemsDisplayed: 5000,
-    modalContainer: "Page"
+   // modalContainer: "Page"
 }
