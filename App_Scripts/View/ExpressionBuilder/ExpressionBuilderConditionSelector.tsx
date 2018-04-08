@@ -141,7 +141,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let secondTimeText: string = "Select another column for the query."
 
 
-        let selectedColumnText: string = "Build the query, using the tabls below to add column values, filters or ranges for this column as required."
+        let selectedColumnText: string = "Build the Query: Use the tabs below to add column values, filters or ranges for this column as required."
         if (this.props.ExpressionMode == ExpressionMode.SingleColumn) {
             selectedColumnText += "This Query can only contain one Query Condition."
         }
