@@ -99,7 +99,7 @@
 	},
 	"Layout": {
 		"CurrentLayout": "Default",
-		"AvailableLayouts": [
+		"Layouts": [
 			{
 				"Columns": [
 					"tradeId",

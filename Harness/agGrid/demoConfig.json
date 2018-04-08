@@ -1,0 +1,60 @@
+{
+	"Entitlements": {
+		"FunctionEntitlements": [
+			{
+				"FunctionName": "Export",
+				"AccessLevel": "ReadOnly"
+			},
+			{
+				"FunctionName": "CustomSort",
+				"AccessLevel": "ReadOnly"
+			},
+			{
+				"FunctionName": "PlusMinus",
+				"AccessLevel": "Hidden"
+			},
+			{
+				"FunctionName": "SmartEdit",
+				"AccessLevel": "Hidden"
+			}
+		]
+	},
+	"Theme": {
+		"CurrentTheme": "Company Theme Dark",
+		"SystemThemes": [],
+		"UserThemes": [
+			{
+				"Name": "Company Theme Light",
+				"Url": "c://Shared/Files/Themes/lighttheme.css"
+			},
+			{
+				"Name": "Company Theme Dark",
+				"Url": "c://Shared/Files/Themes/darktheme.css"
+			}
+		]
+	},
+	"UserInterface": {
+		"ColorPalette": [
+			"#000000",
+			"#ffffff",
+			"#C0C0C0",
+			"#808080",
+			"#800000"
+		]
+	},
+	"Dashboard": {
+		"VisibleToolbars": [
+			"AdvancedSearch",
+			"Layout",
+			"QuickSearch"
+		],
+		"VisibleButtons": [
+			"About",
+			"Dashboard",
+			"QuickSearch",
+			"SmartEdit",
+			"ColumnChooser"
+		],
+		"Zoom": "0.85"
+	}
+}

@@ -1,152 +1,163 @@
 import * as React from "react";
 import * as Redux from "redux";
+import { connect } from 'react-redux';
+import { Well, HelpBlock } from 'react-bootstrap';
+import { PanelWithButton } from '../Components/Panels/PanelWithButton';
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
+import { LayoutWizard } from './Wizard/LayoutWizard'
+import { LayoutEntityRow } from './LayoutEntityRow'
+import { Helper } from '../../Core/Helpers/Helper';
+import { ObjectFactory } from '../../Core/ObjectFactory';
+import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
+import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, ControlLabel, Row, Col, HelpBlock, Grid } from 'react-bootstrap';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
-import { IColumn } from '../../Core/Interface/IColumn';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { Helper } from '../../Core/Helpers/Helper';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonSave } from '../Components/Buttons/ButtonSave';
-import { ButtonShare } from "../Components/Buttons/ButtonShare";
-import { IAdaptableBlotterObject, IGridSort } from "../../Core/Interface/Interfaces";
-import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
+import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
-import { LayoutEntityRow } from "./LayoutEntityRow";
-import { PanelWithButton } from "../Components/Panels/PanelWithButton";
-import { AdaptableObjectCollection } from "../Components/AdaptableObjectCollection";
+import { UIHelper } from '../UIHelper';
+import { IColumn } from "../../Core/Interface/IColumn";
+import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
-    Layouts: ILayout[];
-    CurrentLayout: string;
-    GridSort: IGridSort;
-    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-    onSaveLayout: (columns: string[], GgidSort: IGridSort, layoutName: string) => LayoutRedux.LayoutAddAction;
-    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+    Layoutes: ILayout[];
+    CurrentLayoutName: string;
+    onAddUpdateLayout: (Layout: ILayout) => LayoutRedux.LayoutAddAction,
+    onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction,
+    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
 }
 
-interface LayoutPopupState {
-    NewLayoutName: string,
-    ErrorMessage: string
-}
+class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
+    constructor(props: LayoutPopupProps) {
+        super(props);
+        this.state = UIHelper.EmptyConfigState();
+    }
 
-class LayoutPopupComponent extends React.Component<LayoutPopupProps, LayoutPopupState> {
-    constructor() {
-        super();
-        this.state = {
-            NewLayoutName: "",
-            ErrorMessage: null
+    componentDidMount() {
+        if (this.props.PopupParams == "New") {
+            this.onNew()
+        }
+        // dont think we will ever let you an edit a layout - only create and then save what is currently in the grid.
+        if (this.props.PopupParams == "Edit") {
+            let currentLayout = this.props.Layoutes.find(as => as.Name == this.props.CurrentLayoutName)
+            if (currentLayout) {
+                this.onEdit(currentLayout)
+            }
         }
     }
 
     render() {
-        let infoBody: any[] = ["Use layouts to create and manage multiple named, sets of ordered columns", <br />, <br />, "To change a layout choose an item from the dropdown (you can also use the dropdown in the layout toolbar)", <br />, <br />, "To create a new layout, enter a name in the 'Save As New Layout' textbox."]
+        let currentLayout = this.props.Layoutes.find(as => as.Name == this.props.CurrentLayoutName)
+
+        let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
+            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
-            { Content: "Description", Size: 7 },
+            { Content: "Details", Size: 7 },
             { Content: "", Size: 2 },
         ]
 
-        let layoutRows = this.props.Layouts.map((x, index) => {
+        let LayoutRows = this.props.Layoutes.map((x, index) => {
             return <LayoutEntityRow
                 key={index}
                 ColItems={colItems}
-                IsCurrentLayout={x.Name == this.props.CurrentLayout}
+                IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
                 AdaptableBlotterObject={x}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 Index={index}
-                onEdit={null}
+                onEdit={(index, x) => this.onEdit(x as ILayout)}
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={LayoutRedux.LayoutDelete(x.Name)}
-                onSelect={() => this.onSelectLayout(x.Name)}
+                onSelect={() => this.props.onSelectLayout(x.Name)}
             >
             </LayoutEntityRow>
         })
 
-        let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
+        let newSearchButton = <ButtonNew onClick={() => this.onNew()}
+            overrideTooltip="Create New Advanced Search"
+            DisplayMode="Glyph+Text"
+            size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_advancedsearch">
+        return <div className="adaptable_blotter_style_popup_Layout">
+            <PanelWithButton bsStyle="primary" headerText={StrategyNames.LayoutStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyGlyphs.LayoutGlyph} className="adaptableblotter_modal_main_popup" >
 
+                {LayoutRows.length > 0 &&
+                    <AdaptableObjectCollection ColItems={colItems} items={LayoutRows} />
+                }
 
-            <PanelWithImage bsStyle="primary" header={StrategyNames.LayoutStrategyName} infoBody={infoBody}
-                glyphicon={StrategyGlyphs.LayoutGlyph} className="adaptableblotter_modal_main_popup" >
-                    <AdaptableBlotterForm horizontal>
-                        <Row>
-                            <Col xs={12} >
-                                <HelpBlock>
-                                    Enter a name and then click 'Save' in order to create a new layout; this will contain the Blotter's current column order and sort.
-                                </HelpBlock>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col xs={2} >
-                                <ControlLabel >Name</ControlLabel>
-                            </Col>
-                            <Col xs={6}>
-                                <FormGroup controlId="formInlineName" validationState={validationState}>
-                                    <FormControl type="text" placeholder="Enter a Layout Name" onChange={(e) => this.onSaveLayoutNameChanged(e)} />
-                                    <FormControl.Feedback />
-                                    <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                                </FormGroup>
-                            </Col>
-                            <Col xs={4}>
-                                <ButtonSave onClick={() => this.onSaveLayoutClicked()}
-                                    overrideDisableButton={StringExtensions.IsNullOrEmpty(this.state.NewLayoutName) || StringExtensions.IsNotNullOrEmpty(this.state.ErrorMessage)}
-                                    DisplayMode="Glyph+Text" />
-                            </Col>
-                        </Row>
-                    </AdaptableBlotterForm>
-                 <AdaptableObjectCollection ColItems={colItems} items={layoutRows} reducedPanel={true} />
-            </PanelWithImage>
+                {LayoutRows.length == 0 &&
+                    <Well bsSize="small">
+                        <HelpBlock>Click 'New' to start creating advanced searches.</HelpBlock>
+                    </Well>
+                }
+
+                {this.state.EditedAdaptableBlotterObject != null &&
+                    <LayoutWizard
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+                        ConfigEntities={this.props.Layoutes}
+                        ModalContainer={this.props.ModalContainer}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
+                        GridSort={this.props.GridSort}
+                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        onCloseWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()} />
+                }
+
+            </PanelWithButton>
         </div>
     }
 
-    private onSelectLayout(layout: string) {
-        this.props.onLoadLayout(layout);
+    onNew() {
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateLayout(null, null, ""), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
-    private onSaveLayoutNameChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.setState({
-            NewLayoutName: e.value,
-            ErrorMessage: this.props.Layouts.findIndex(x => x.Name == e.value) > -1 ? "A Layout already exists with that name" : null
-        });
+    onEdit(Layout: ILayout) {
+        let clonedObject: ILayout = Helper.cloneObject(Layout);
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 })
     }
 
-    private onSaveLayoutClicked() {
-        let layoutName: string = this.state.NewLayoutName;
-        this.setState({ NewLayoutName: "" });
-        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.GridSort, layoutName);
-        this.setState({ NewLayoutName: "" });
+    onCloseWizard() {
+        this.props.onClearPopupParams()
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    onFinishWizard() {
+        let clonedObject: ILayout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+        this.props.onAddUpdateLayout(clonedObject);
+        if (this.state.EditedAdaptableBlotterObjectIndex == -1) {// its new so make it the selected layout
+            this.props.onSelectLayout(clonedObject.Name);
+        }
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Layouts: state.Layout.AvailableLayouts,
-        CurrentLayout: state.Layout.CurrentLayout,
-        GridSort: state.Grid.GridSort
+        Layoutes: state.Layout.Layouts,
+        CurrentLayoutName: state.Layout.CurrentLayout,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-        onSaveLayout: (Columns: string[], GridSort: IGridSort, LayoutName: string) => dispatch(LayoutRedux.LayoutAdd(Columns, GridSort, LayoutName)),
+        onAddUpdateLayout: (Layout: ILayout) => dispatch(LayoutRedux.LayoutAdd(Layout)),
+        onSelectLayout: (selectedSearchName: string) => dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
     };
 }
 
 export let LayoutPopup = connect(mapStateToProps, mapDispatchToProps)(LayoutPopupComponent);
+

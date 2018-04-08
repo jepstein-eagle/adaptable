@@ -15,6 +15,8 @@ import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrate
 import { IReport } from '../Strategy/Interface/IExportStrategy';
 import { IColumn } from './Interface/IColumn';
 import { IRange } from './Interface/IRange';
+import { ILayout } from '../Strategy/Interface/ILayoutStrategy';
+import { IGridSort } from './Interface/Interfaces';
 
 export module ObjectFactory {
 
@@ -141,6 +143,15 @@ export module ObjectFactory {
         return {
             ColumnId: "",
             Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
+            IsPredefined: false
+        }
+    }
+
+    export function CreateLayout(columns: IColumn[], gridSort: IGridSort, name: string): ILayout {
+        return {
+            Columns: (columns)? columns.map(x => x.ColumnId): [],
+            GridSort: gridSort,
+            Name: name,
             IsPredefined: false
         }
     }

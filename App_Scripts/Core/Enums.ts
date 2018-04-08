@@ -58,6 +58,11 @@ export enum MathOperation {
 // Enums used in Strategies
 
 
+export enum LayoutSource{
+    Existing = "Existing",
+    New = "New"
+}
+
 export enum ConditionalStyleScope {
     Column = "Column",
     Row = "Row"

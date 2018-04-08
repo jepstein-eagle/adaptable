@@ -2,16 +2,14 @@ import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
 import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { InputAction } from '../../Core/Interface/IMessage';
-import { IGridSort } from '../../Core/Interface/Interfaces';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 const LAYOUT_ADD = 'LAYOUT_ADD';
 const LAYOUT_SAVE = 'LAYOUT_SAVE';
 export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 
-export interface LayoutAddAction extends InputAction {
-    Columns: string[],
-    GridSort: IGridSort
+export interface LayoutAddAction extends Redux.Action {
+   Layout: ILayout
 }
 
 export interface LayoutSelectAction extends Redux.Action {
@@ -19,20 +17,16 @@ export interface LayoutSelectAction extends Redux.Action {
 }
 
 export interface LayoutSaveAction extends Redux.Action {
-    LayoutName: string,
-    Columns: string[],
-    GridSort: IGridSort
+    Layout: ILayout
 }
 
 export interface LayoutDeleteAction extends Redux.Action {
     LayoutName: string
 }
 
-export const LayoutAdd = (Columns: string[], GridSort: IGridSort, InputText: string): LayoutAddAction => ({
+export const LayoutAdd = (Layout: ILayout): LayoutAddAction => ({
     type: LAYOUT_ADD,
-    Columns,
-    GridSort,
-    InputText
+    Layout
 })
 
 export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
@@ -40,11 +34,9 @@ export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
     LayoutName
 })
 
-export const LayoutSave = (Columns: string[],  GridSort: IGridSort, LayoutName: string): LayoutSaveAction => ({
+export const LayoutSave = ( Layout: ILayout): LayoutSaveAction => ({
     type: LAYOUT_SAVE,
-    Columns,
-    GridSort,
-    LayoutName
+   Layout
 })
 
 export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
@@ -54,8 +46,7 @@ export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
 
 const initialLayoutState: LayoutState = {
     CurrentLayout: "",
-    AvailableLayouts: [],
-    
+    Layouts: []
 }
 
 export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = initialLayoutState, action: Redux.Action): LayoutState => {
@@ -66,23 +57,21 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName })
         case LAYOUT_ADD:
             let actionTypedAdd = (<LayoutAddAction>action)
-            let layoutToAdd: ILayout = { Columns: actionTypedAdd.Columns, GridSort: actionTypedAdd.GridSort, Name: actionTypedAdd.InputText, IsPredefined: false }
-            layouts = [].concat(state.AvailableLayouts);
-            layouts.push(layoutToAdd);
-            return Object.assign({}, state, { CurrentLayout: layoutToAdd.Name, AvailableLayouts: layouts });
+            layouts = [].concat(state.Layouts);
+            layouts.push(actionTypedAdd.Layout);
+            return Object.assign({}, state, { CurrentLayout: actionTypedAdd.Layout.Name, Layouts: layouts });
         case LAYOUT_DELETE:
             let actionTypedDelete = (<LayoutDeleteAction>action)
-            layouts = [].concat(state.AvailableLayouts)
+            layouts = [].concat(state.Layouts)
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);
-            return Object.assign({}, state, { AvailableLayouts: layouts })
+            return Object.assign({}, state, { Layouts: layouts })
         case LAYOUT_SAVE:
             let actionTypedSave = <LayoutSaveAction>action;
-            layouts = [].concat(state.AvailableLayouts);
-            index = layouts.findIndex(a => a.Name == actionTypedSave.LayoutName)
-            let layoutToSave: ILayout = { Columns: actionTypedSave.Columns, GridSort: actionTypedSave.GridSort, Name: actionTypedSave.LayoutName, IsPredefined: false }
-            layouts[index] = layoutToSave;
-            return Object.assign({}, state, { AvailableLayouts: layouts });
+            layouts = [].concat(state.Layouts);
+            index = layouts.findIndex(a => a.Name == actionTypedSave.Layout.Name)  // assuming you only save and not edit...
+            layouts[index] = actionTypedSave.Layout;
+            return Object.assign({}, state, { Layouts: layouts });
         default:
             return state
     }

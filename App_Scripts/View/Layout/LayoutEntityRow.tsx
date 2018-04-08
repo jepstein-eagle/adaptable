@@ -9,6 +9,9 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IGridSort } from "../../Core/Interface/Interfaces";
+import { IColumn } from "../../Core/Interface/IColumn";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {
     IsCurrentLayout: boolean;
@@ -51,8 +54,9 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         return returnString;
     }
 
-    private getColumnDescription(column: string): string {
-        return this.props.Columns.find(c => c.ColumnId == column).FriendlyName;
+    private getColumnDescription(columnId: string): string {
+        let column: IColumn = this.props.Columns.find(c => c.ColumnId == columnId);
+        return (column)? column.FriendlyName : GeneralConstants. MISSING_COLUMN;
     }
 
 }

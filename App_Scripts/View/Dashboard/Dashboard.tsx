@@ -42,7 +42,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     Columns: this.props.Columns,
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
-                    ColorPalette: this.props.ColorPalette
+                    ColorPalette: this.props.ColorPalette,
+                    GridSort: this.props.GridSort
                 });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}
@@ -93,7 +94,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
-        ColorPalette: state.UserInterface.ColorPalette
+        ColorPalette: state.UserInterface.ColorPalette,
+        GridSort: state.Grid.GridSort
     };
 }
 

@@ -22,23 +22,23 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IGridSort } from "../../Core/Interface/Interfaces";
+import { ObjectFactory } from "../../Core/ObjectFactory";
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
-    onLoadLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-    onSaveLayout: (columns: string[], gridSort: IGridSort, layoutName: string) => LayoutRedux.LayoutSaveAction;
-    onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
-    AvailableLayouts: ILayout[];
+    onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
+    onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
+    onNewLayout: () => PopupRedux.PopupShowAction;
+    Layouts: ILayout[];
     CurrentLayout: string;
-    GridSort: IGridSort;
 }
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
     render(): any {
 
-        let layoutEntity = this.props.AvailableLayouts.find(x => x.Name == this.props.CurrentLayout)
+        let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
         let isLayoutModified = this.isLayoutModified(layoutEntity);
-        let availableLayouts = this.props.AvailableLayouts.map((x, index) => {
+        let availableLayouts = this.props.Layouts.map((x, index) => {
             if (x.Name == this.props.CurrentLayout) {
                 if (!isLayoutModified) {
                     return <option value={x.Name} key={index}>{x.Name}</option>
@@ -56,7 +56,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <FormControl componentClass="select" placeholder="select" bsSize={"small"}
                     value={this.props.CurrentLayout}
-                    onChange={(x) => this.onSelectionChanged(x)} >
+                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
                     {availableLayouts}
                 </FormControl>
                 {' '}
@@ -67,12 +67,12 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonNew onClick={() => this.onNew()}
+                <ButtonNew onClick={() => this.props.onNewLayout()}
                     size={"small"}
-                    overrideTooltip="Create a new Layout using the Blotter's current column order and visibility"
+                    overrideTooltip="Create a new Layout"
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonUndo onClick={() => this.onUndo()}
+                <ButtonUndo onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
                     size={"small"}
                     overrideTooltip="Undo Layout Changes"
                     overrideDisableButton={!isLayoutModified}
@@ -111,26 +111,18 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         return false;
     }
 
-    private onSave() {
-        this.props.onSaveLayout(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.GridSort, this.props.CurrentLayout);
+    private onSelectedLayoutChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.props.onSelectLayout(e.value);
     }
 
-    private onNew() {
-        let prompt: IUIPrompt = {
-            PromptTitle: "Create New Layout",
-            PromptMsg: "Please enter a layout name",
-            ConfirmAction: LayoutRedux.LayoutAdd(this.props.Columns.filter(c => c.Visible).map(x => x.ColumnId), this.props.GridSort, "")
-        }
-        this.props.onShowPrompt(prompt)
+    private onSave() {
+        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSort, this.props.CurrentLayout)
+        this.props.onSaveLayout(layoutToSave);
     }
 
     private onUndo() {
-        this.props.onLoadLayout(this.props.CurrentLayout);
-    }
-
-    private onSelectionChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onLoadLayout(e.value);
+        this.props.onSelectLayout(this.props.CurrentLayout);
     }
 
 }
@@ -138,16 +130,15 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentLayout: state.Layout.CurrentLayout,
-        AvailableLayouts: state.Layout.AvailableLayouts,
-        GridSort: state.Grid.GridSort
+        Layouts: state.Layout.Layouts,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onLoadLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-        onSaveLayout: (columns: string[], gridSort: IGridSort, layoutName: string) => dispatch(LayoutRedux.LayoutSave(columns, gridSort, layoutName)),
-        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
+        onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
+        onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
+        onNewLayout: () => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, false, "New")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadonly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, isReadonly))
     };

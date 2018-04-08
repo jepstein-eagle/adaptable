@@ -286,6 +286,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
             this.gridOptions.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
+        // need to do this?  seems so but not sure
+        this.setColumnIntoStore();
+      //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
     public createMenu() {

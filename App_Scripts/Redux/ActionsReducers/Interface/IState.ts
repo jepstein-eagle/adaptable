@@ -159,7 +159,7 @@ export interface CellValidationState {
 
 export interface LayoutState {
     CurrentLayout: string;
-    AvailableLayouts: ILayout[]
+    Layouts: ILayout[]
 }
 
 export interface CalculatedColumnState {
