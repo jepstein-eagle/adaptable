@@ -32,7 +32,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
             selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
         }
-        let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "DisplayValue")
+        let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
 
         let allowNew =(this.props.AllowNew!=null)? this.props.AllowNew: true;
         let placeholderText = "Select existing column value"

@@ -12,14 +12,14 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { ObjectFactory } from '../../Core/ObjectFactory'
 
-export interface ExpressionBuilderRangesPropsExpressionBuilderRangesNew extends React.ClassAttributes<ExpressionBuilderRangesNew> {
+export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends React.ClassAttributes<ExpressionBuilderRanges> {
     SelectedColumn: IColumn
     Ranges: Array<IRange>
     Columns: Array<IColumn>
     onRangesChange: (Ranges: Array<IRange>) => void
 }
 
-export class ExpressionBuilderRangesNew extends React.Component<ExpressionBuilderRangesPropsExpressionBuilderRangesNew, {}> {
+export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesPropsExpressionBuilderRanges, {}> {
 
     render() {
 

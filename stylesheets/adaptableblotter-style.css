@@ -20,6 +20,10 @@
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
 }
 
+.filterFormColumnSelector{
+ width: 150px;
+}
+
 /*Style to similate transparent background*/
 .adaptableblotter_white_grey_stripes{
   background: -moz-repeating-linear-gradient(

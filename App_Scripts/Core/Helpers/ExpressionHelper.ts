@@ -73,7 +73,7 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += RangesToString(columnRanges, columnFriendlyName)
+                columnToString += RangesToString(columnRanges, columnFriendlyName, columns)
             }
             if (returnValue != "") {
                 returnValue += " AND "
@@ -312,21 +312,29 @@ export module ExpressionHelper {
         }
     }
 
-    function RangesToString(keyValuePair: { ColumnName: string, Ranges: Array<IRange> }, columnFriendlyName: string): string {
+    function RangesToString(keyValuePair: { ColumnName: string, Ranges: Array<IRange> }, columnFriendlyName: string, columns: IColumn[]): string {
         let returnValue = ""
         for (let range of keyValuePair.Ranges) {
             if (returnValue != "") {
                 returnValue += " OR "
             }
             if (range.Operator == LeafExpressionOperator.Between) {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + range.Operand1 + " AND " + range.Operand2
-            }
-            else {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + range.Operand1
+                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns) + " AND " + getOperandValue(range.Operand2Type, range.Operand2, columns)
+            } else {
+                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns)
             }
         }
         return returnValue
 
+    }
+
+    function getOperandValue(rangeOperatorType: RangeOperandType, operand: string, columns: IColumn[]): string {
+        if (rangeOperatorType == RangeOperandType.Value) {
+            return operand;
+        } else {
+            let column: IColumn = columns.find(c => c.ColumnId == operand);
+            return (column) ? "[" + column.FriendlyName + "]" : GeneralConstants.MISSING_COLUMN
+        }
     }
 
     export function GetColumnListFromExpression(Expression: Expression): Array<string> {
@@ -393,7 +401,7 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyRangeExpression(): IRange {
-        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Column, Operand2Type: RangeOperandType.Column }
+        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value }
     }
 
     export function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnName: string) => any, ): IRangeEvaluation {
@@ -406,13 +414,13 @@ export module ExpressionHelper {
         }
         switch (column.DataType) {
             case DataType.Date:
-                if (rangeExpression.Operand1Type==RangeOperandType.Column) {
+                if (rangeExpression.Operand1Type == RangeOperandType.Column) {
                     rangeEvaluation.operand1 = Date.parse(getOtherColumnValue(rangeExpression.Operand1))
-                } else {    
+                } else {
                     rangeEvaluation.operand1 = Date.parse(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
-                    if (rangeExpression.Operand2Type==RangeOperandType.Column) {
+                    if (rangeExpression.Operand2Type == RangeOperandType.Column) {
                         rangeEvaluation.operand2 = Date.parse(getOtherColumnValue(rangeExpression.Operand2))
                     } else {
                         rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
@@ -421,14 +429,14 @@ export module ExpressionHelper {
                 rangeEvaluation.newValue = newValue.setHours(0, 0, 0, 0)
                 break
             case DataType.Number:
-                if (rangeExpression.Operand1Type==RangeOperandType.Column) {
+                if (rangeExpression.Operand1Type == RangeOperandType.Column) {
                     let otherValue = getOtherColumnValue(rangeExpression.Operand1);
                     rangeEvaluation.operand1 = Number(otherValue);
                 } else {
                     rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
-                    if (rangeExpression.Operand2Type==RangeOperandType.Column) {
+                    if (rangeExpression.Operand2Type == RangeOperandType.Column) {
                         rangeEvaluation.operand2 = Number(getOtherColumnValue(rangeExpression.Operand2));
                     } else {
                         rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
@@ -441,10 +449,10 @@ export module ExpressionHelper {
                 break;
             case DataType.Object:
             case DataType.String:
-                rangeEvaluation.operand1 = rangeExpression.Operand1Type==RangeOperandType.Column ?
+                rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     rangeExpression.Operand1;//.toLowerCase() - not sure what to do about case but this is currently breaking...
-                rangeEvaluation.operand2 = rangeExpression.Operand2Type==RangeOperandType.Column ?
+                rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     rangeExpression.Operand2;//.toLowerCase();
                 break;

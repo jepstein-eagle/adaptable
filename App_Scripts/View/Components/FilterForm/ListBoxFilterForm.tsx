@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DistinctCriteriaPairValue, LeafExpressionOperator, DataType, RangeOperandType } from '../../../Core/Enums'
-import { MenuItem,  DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
+import { DistinctCriteriaPairValue, LeafExpressionOperator, DataType, RangeOperandType, SelectionMode } from '../../../Core/Enums'
+import { MenuItem, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
 import { IRange } from '../../../Core/Interface/IRange'
@@ -9,9 +9,14 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterFormControlTextClear";
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 import { UIHelper } from "../../UIHelper";
+import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
+import { ColumnSelector } from "../Selectors/ColumnSelector";
+import { IColumn } from "../../../Core/Interface/IColumn";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
+    CurrentColumn: IColumn;
+    Columns: IColumn[],
     ColumnValues: Array<IRawValueDisplayValuePair>
     UserFilters: Array<IRawValueDisplayValuePair>
     UiSelectedColumnValues: Array<string>
@@ -97,31 +102,58 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         let textClear = <AdaptableBlotterFormControlTextClear
             autoFocus={true}
             style={searchFilterStyle}
-             type="text"
+            type="text"
             placeholder="Search Filters"
             value={this.state.FilterValue}
             bsSize={"small"}
             OnTextChange={(x) => this.onUpdateFilterSearch(x)} />
 
+        let rangeMenuItemsOperand1 = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType, index: number) => {
+            return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand1(index, rangeOperand)}>{rangeOperand as RangeOperandType}</MenuItem>
+        })
+
+        let rangeMenuItemsOperand2 = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType, index: number) => {
+            return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand2(index, rangeOperand)}>{rangeOperand as RangeOperandType}</MenuItem>
+        })
+
+
+
         let rangeForm =
             <AdaptableBlotterForm horizontal>
                 <FormGroup controlId={"advancedForm"}>
-                    <FormControl bsSize={"small"} style={customRangeStyle} componentClass="select" placeholder="select" value={this.state.UiSelectedRange.Operator} onChange={(x) => this.onLeafExpressionOperatorChange(x)} >
+                    <FormControl bsSize={"small"} style={rangeOperatorStyle} componentClass="select" placeholder="select" value={this.state.UiSelectedRange.Operator} onChange={(x) => this.onLeafExpressionOperatorChange(x)} >
                         {this.props.Operators.map((operator: LeafExpressionOperator) => {
                             return <option key={operator} value={operator.toString()}>{ExpressionHelper.OperatorToLongFriendlyString(operator, this.props.DataType)}</option>
                         })}
                     </FormControl>
 
-                    {this.getOperand1FormControl()}
-                    {this.getOperand2FormControl()}
+                    {this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown &&
+                        <InputGroup>
+                            <DropdownButton bsSize={"small"} style={rangeTypeStyle} title={this.state.UiSelectedRange.Operand1Type} id="range_operand_1" componentClass={InputGroup.Button}>
+                                {rangeMenuItemsOperand1}
+                            </DropdownButton>
+
+                            {this.getOperand1FormControl()}
+                        </InputGroup>
+                    }
+                    {this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between &&
+                       <InputGroup>
+                       <DropdownButton bsSize={"small"} style={rangeTypeStyle} title={this.state.UiSelectedRange.Operand2Type} id="range_operand_2" componentClass={InputGroup.Button}>
+                           {rangeMenuItemsOperand2}
+                       </DropdownButton>
+
+                       {this.getOperand2FormControl()}
+                   </InputGroup>
+                    }
+
                     <div style={separatorStyle}>{"- - - - - - - - - - - - - - - -"}</div>
                 </FormGroup>
             </AdaptableBlotterForm>
 
-       
+
         return <div>
             {rangeForm}
-          
+
             {textClear}
             <ListGroup fill style={divStyle} >
                 {userFiltersItemsElements}
@@ -130,19 +162,73 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         </div>;
     }
 
-    getOperand1FormControl(): any {
-        if (this.state.UiSelectedRange.Operator != LeafExpressionOperator.Unknown) {
-            return <FormControl value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={customRangeStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand1Edit(e)} />
+    // Methods for getting the range
+    private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
+        this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    private onRangeTypeChangedOperand1(index: number, rangeOperandType: RangeOperandType): any {
+        let editedRange: IRange = { Operand1Type: rangeOperandType, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: "", Operand2: this.state.UiSelectedRange.Operand2 }
+        this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    private onRangeTypeChangedOperand2(index: number, rangeOperandType: RangeOperandType): any {
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: rangeOperandType, Operator: this.state.UiSelectedRange.Operator, Operand1:this.state.UiSelectedRange.Operand1, Operand2: "" }
+        this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    private getOperand1FormControl(): any {
+        if (this.state.UiSelectedRange.Operand1Type == RangeOperandType.Column) {
+            return <ColumnSelector SelectedColumnIds={[this.state.UiSelectedRange.Operand1]} bsSize={"small"} className={"filterFormColumnSelector"}
+                ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId)}
+                onColumnChange={columns => this.onColumnOperand1SelectedChanged(columns)}
+                SelectionMode={SelectionMode.Single} />
+        }
+        else {
+            return <FormControl value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={rangeOperandStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand1Edit(e)} />
         }
     }
 
-    getOperand2FormControl(): any {
-        if (this.state.UiSelectedRange.Operator == LeafExpressionOperator.Between) {
-            return <FormControl  value={String(this.state.UiSelectedRange.Operand2)} bsSize={"small"} style={customRangeStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(e)} />
+    private getOperand2FormControl(): any {
+        if (this.state.UiSelectedRange.Operand2Type == RangeOperandType.Column) {
+            return <ColumnSelector SelectedColumnIds={[this.state.UiSelectedRange.Operand2]} bsSize={"small"} className={"filterFormColumnSelector"}
+                ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId)}
+                onColumnChange={columns => this.onColumnOperand2SelectedChanged(columns)}
+                SelectionMode={SelectionMode.Single} />
+        }
+        else {
+            return <FormControl value={String(this.state.UiSelectedRange.Operand2)} bsSize={"small"} style={rangeOperandStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(e)} />
         }
     }
 
-    
+
+    private onOperand1Edit(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let newRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
+        this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    private onOperand2Edit(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let newRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
+        this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    private onColumnOperand1SelectedChanged(columns: IColumn[]) {
+        let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : ""
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: selectedColumn, Operand2: this.state.UiSelectedRange.Operand2 }
+        this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    private onColumnOperand2SelectedChanged(columns: IColumn[]) {
+        let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : ""
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2:selectedColumn }
+        this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
+    }
+
+    // Methods for getting column values or filters
     onUpdateFilterSearch(filterSearch: string) {
         this.setState({ FilterValue: filterSearch } as ListBoxFilterFormState);
     }
@@ -209,23 +295,9 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         }
     }
 
-    private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        let newRange: IRange = {Operand1Type: RangeOperandType.Value, Operand2Type:RangeOperandType.Value, Operator: e.value as LeafExpressionOperator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 }
-        this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
-    }
 
-    private onOperand1Edit(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        let newRange: IRange = {Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value, Operator: this.state.UiSelectedRange.Operator, Operand1: e.value, Operand2: this.state.UiSelectedRange.Operand2 }
-        this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
-    }
 
-    private onOperand2Edit(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        let newRange: IRange = {Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: e.value }
-        this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
-    }
+
 
 
 }
@@ -263,10 +335,21 @@ let radioButtonStyle: React.CSSProperties = {
     'marginLeft': '2px'
 }
 
-let customRangeStyle = {
-    'marginTop': '10px',
+let rangeOperatorStyle = {
+    'marginTop': '0px',
     'marginLeft': '15px',
     'width': '222px'
+}
+let rangeOperandStyle = {
+    'marginTop': '0px',
+    'marginLeft': '0px',
+    'width': '150px'
+}
+
+let rangeTypeStyle = {
+    'marginTop': '0px',
+    'marginLeft': '15px',
+    'width': '72px'
 }
 let searchFilterStyle = {
     'marginTop': '0px',

@@ -36,10 +36,10 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         })
 
         return <div className="adaptable_blotter_style_wizard_layout_settings">
-            <Panel header="Sort Order" bsStyle="primary">
+            <Panel header="Sort Information" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="layoutShowSort">
-                        <Col xs={4} componentClass={ControlLabel}>Add Sort Information to Layout: </Col>
+                        <Col xs={4} componentClass={ControlLabel}>Add Column Sort to Layout: </Col>
                         <Col xs={1}>
                             <Checkbox value="HasSortOrder" checked={this.state.HasSortOrder} onChange={(e) => this.onHasSortCheckedChanged(e)} />
                         </Col>

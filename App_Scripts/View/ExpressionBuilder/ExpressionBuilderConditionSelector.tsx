@@ -5,7 +5,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
-import { ExpressionBuilderRangesNew } from './ExpressionBuilderRanges'
+import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { Well, FormGroup, ControlLabel, Row, Col, HelpBlock, Tabs, Tab, Panel, NavItem, Nav } from 'react-bootstrap';
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
@@ -246,12 +246,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                         </ExpressionBuilderUserFilter>
                                     </Tab.Pane>
                                     <Tab.Pane eventKey={"ranges"} title="Ranges" >
-                                        <ExpressionBuilderRangesNew
+                                        <ExpressionBuilderRanges
                                             SelectedColumn={selectedColumn}
                                             Ranges={this.state.SelectedColumnRanges}
                                             Columns={this.props.ColumnsList}
                                             onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
-                                        </ExpressionBuilderRangesNew>
+                                        </ExpressionBuilderRanges>
                                     </Tab.Pane>
                                 </Tab.Content>
 

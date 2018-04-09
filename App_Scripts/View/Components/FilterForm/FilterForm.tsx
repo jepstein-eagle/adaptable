@@ -23,8 +23,8 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
     Columns: IColumn[],
     UserFilters: IUserFilter[],
-   SystemFilters: ISystemFilter[],
-   ColumnFilters: IColumnFilter[],
+    SystemFilters: ISystemFilter[],
+    ColumnFilters: IColumnFilter[],
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
     ColumnValueType: DistinctCriteriaPairValue,
@@ -35,8 +35,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     render(): any {
 
         // get user filter expressions appropriate for this column
-        let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn,  this.props.UserFilters).map(uf=>uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf=>sf.Name))
-        ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
+        let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf.Name))
+            ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
         let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf } })
 
         let columnValuePairs: Array<IRawValueDisplayValuePair>
@@ -75,7 +75,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             DisplayMode="Glyph+Text" />
 
         return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={clearButton}>
-            <ListBoxFilterForm ColumnValues={columnValuePairs}
+            <ListBoxFilterForm CurrentColumn={this.props.CurrentColumn}
+                Columns={this.props.Columns}
+                ColumnValues={columnValuePairs}
                 DataType={this.props.CurrentColumn.DataType}
                 UiSelectedColumnValues={uiSelectedColumnValues}
                 UiSelectedUserFilters={uiSelectedUserFilters}
