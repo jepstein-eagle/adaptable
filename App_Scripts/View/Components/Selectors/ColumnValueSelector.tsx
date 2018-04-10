@@ -12,38 +12,44 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
     onColumnValueChange: (columnvalue: any) => void
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     AllowNew?: boolean // defaults to true if not provided
-
+    bsSize?: 'large' | 'lg' | 'small' | 'sm';
 }
 export class ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
 
     componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
         if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) && StringExtensions.IsNullOrEmpty(nextProps.SelectedColumnValue)) {
-            (this.refs.typeahead as any).getInstance().clear()
+            let typeahed: any = (this.refs.typeahead as any);
+            if (typeahed) {
+                typeahed.getInstance().clear()
+            }
         }
     }
-
     render() {
-        let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
-        let selectedValue: any;
-
-        if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
-            selectedValue = "";
-        } else {
-            let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
-            selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
-        }
-        let sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
-
-        let allowNew =(this.props.AllowNew!=null)? this.props.AllowNew: true;
+        let sortedColumnValues: string[] = []
+        let selectedValue: string = ""
         let placeholderText = "Select existing column value"
-        if(allowNew){
-            placeholderText+= " or enter free text"
+        let allowNew = (this.props.AllowNew != null) ? this.props.AllowNew : true;
+        if (allowNew) {
+            placeholderText += " or enter free text"
+        }
+
+        if (this.props.SelectedColumn != null) {
+            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+
+            if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
+                selectedValue = "";
+            } else {
+                let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
+                selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
+            }
+            sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
         }
 
         return <Typeahead ref="typeahead"
             emptyLabel={""}
             placeholder={placeholderText}
-            labelKey={"DisplayValue"}
+            bsSize={this.props.bsSize}
+            labelKey={"RawValue"}
             filterBy={["DisplayValue"]}
             multiple={false}
             clearButton={true}

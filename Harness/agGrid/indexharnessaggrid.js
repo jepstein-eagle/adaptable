@@ -189,7 +189,7 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "demo user",
         blotterId: "Demo Blotter",
-        enableAuditLog: false,
+        enableAuditLog: true,
         enableRemoteConfigServer: false,
         predefinedConfigUrl: "",// "demoConfig.json",
         iPushPullConfig: {

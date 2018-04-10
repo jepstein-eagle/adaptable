@@ -65,15 +65,15 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 
 //here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
-   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl],
- // [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
+  [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl]
 ]);
 
-export const AdaptableDashboardPermanentToolbarFactory=  new Map<string, React.ComponentClass<any>>([
+export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([
   [StrategyIds.HomeStrategyId, HomeToolbarControl],
 ]);
 

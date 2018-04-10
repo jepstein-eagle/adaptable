@@ -32,6 +32,8 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     CurrentLayout: string;
 }
 
+
+
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
     render(): any {

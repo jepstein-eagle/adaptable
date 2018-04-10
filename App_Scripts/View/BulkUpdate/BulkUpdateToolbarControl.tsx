@@ -1,6 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
+import { ButtonToolbar, Col, InputGroup } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
@@ -9,7 +10,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { Helper } from '../../Core/Helpers/Helper';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -24,6 +25,10 @@ import { IUserFilter } from "../../Strategy/Interface/IUserFilterStrategy";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
+import { ISelectedCells } from "../../Core/Interface/Interfaces";
+import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { IEvent } from "../../Core/Interface/IEvent";
+import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -36,7 +41,22 @@ interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopu
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
 }
 
-class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolbarControlComponentProps, {}> {
+interface BulkUpdateToolbarControlComponentState {
+    SelectedColumn: IColumn
+    SubFunc: any
+}
+
+class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolbarControlComponentProps, BulkUpdateToolbarControlComponentState> {
+    constructor(props: BulkUpdateToolbarControlComponentProps) {
+        super(props);
+        this.state = {
+            SelectedColumn: null,
+            SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
+                this.onSelectionChanged(event)
+            }
+        }
+    }
+
     componentWillReceiveProps(nextProps: BulkUpdateToolbarControlComponentProps, nextContext: any) {
         //if there was a selected search and parent unset the column we then clear the component 
         // otherwise it's correctly unselected but the input still have the previsous selected text
@@ -48,12 +68,26 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     public componentDidMount() {
         //  this.props.onBulkUpdateCheckSelectedCells();
         //   this.props.onBulkUpdateValueChange("");
+
+
+
+
+        if (this.props.AdaptableBlotter) {
+            this.props.AdaptableBlotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc)
+        }
     }
+
+    public componentWillUnmount() {
+        if (this.props.AdaptableBlotter) {
+            this.props.AdaptableBlotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc)
+        }
+    }
+
+
 
     render() {
 
 
-        let col: IColumn
         // if (this.props.PreviewInfo) {
         //    col = this.props.Columns.find(c => c.ColumnId == "counterparty") // hardcoding until can get it from selected cells!
         // }
@@ -67,18 +101,26 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         // we dont want to show the panel in the form but will need to appear in a popup....
 
 
-        // turning this off until I can find a way to solve 2 problems
-        // 1.  how to get distinct values from a column
-        // 2.  listen to selectd cells changed (which might fix 1)
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                {col &&
+                <InputGroup>
                     <ColumnValueSelector
+                        disabled={this.state.SelectedColumn == null}
+                        bsSize={"small"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
-                        SelectedColumn={col}
+                        SelectedColumn={this.state.SelectedColumn}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
-                }
+                    <InputGroup.Button>
+
+                        <ButtonApply onClick={() => this.onApplyBulkUpdate()}
+                            size={"small"}
+                            bsStyle={"success"}
+                            overrideTooltip="Apply Bulk Update"
+                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue)}
+                            DisplayMode="Glyph" />
+                    </InputGroup.Button>
+                </InputGroup>
             </div>
         </span>
 
@@ -93,6 +135,32 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         this.props.onBulkUpdateValueChange(selectedColumnValue);
     }
 
+    private onSelectionChanged(event: any): any {
+        let selectedCells: ISelectedCells = event.getSelectedCells();
+        let selectedColumn: IColumn = null
+        if (selectedCells.Selection.size > 0) {
+
+            for (let pair of selectedCells.Selection) {
+                if (pair[1].length == 1) {
+
+                    let selectedColumnId: string = pair[1][0].columnID;
+                    // test column is not readonly
+                    if (!event.isColumnReadonly(selectedColumnId)) {
+                        selectedColumn = this.props.Columns.find(c => c.ColumnId == selectedColumnId)
+                    }
+                }
+                break;
+            }
+        }
+        if (selectedColumn != this.state.SelectedColumn) {
+            this.setState({ SelectedColumn: selectedColumn });
+        }
+        this.props.onBulkUpdateValueChange("");
+    }
+
+    onApplyBulkUpdate(): any {
+        this.props.onApplyBulkUpdate()
+    }
 
 }
 
@@ -101,7 +169,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
         PreviewInfo: state.BulkUpdate.PreviewInfo,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters
+        UserFilters: state.UserFilter.UserFilters,
     };
 }
 

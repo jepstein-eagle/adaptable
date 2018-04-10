@@ -12,6 +12,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { HomeToolbarControl } from '../Home/HomeToolbarControl'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { DistinctCriteriaPairValue } from "../../Core/Enums";
 
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
@@ -43,7 +44,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
                     ColorPalette: this.props.ColorPalette,
-                    GridSort: this.props.GridSort
+                    GridSort: this.props.GridSort,
+                    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
+      
                 });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}

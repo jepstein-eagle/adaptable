@@ -878,6 +878,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
+        gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
+            this._onSelectedCellsChanged.Dispatch(this, this)
+        });
         gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
         });

@@ -56,7 +56,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
         this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
-            if (this.ExportState) {
+            if (this.ExportState  && this.ExportState.CurrentLiveReports.length > 0) {
                 let liveReport = this.ExportState.CurrentLiveReports.find(x => x.Report == ReportHelper.SELECTED_CELLS_REPORT)
                 if (liveReport) {
                     this.throttledRecomputeAndSendLiveExcelEvent()

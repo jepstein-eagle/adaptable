@@ -16,6 +16,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     overrideText?: string
     DisplayMode: "Glyph" | "Text" | "Glyph+Text"
     transformGlyph?: boolean
+    bsStyle? : string
 }
 
 export interface ButtonBaseProps extends ButtonProps {

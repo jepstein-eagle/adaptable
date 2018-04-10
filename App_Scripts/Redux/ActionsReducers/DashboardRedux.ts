@@ -63,8 +63,8 @@ export const DashboardSetIsMinimised = (IsMinimised: boolean): DashboardSetIsMin
 })
 
 const initialDashboardState: DashboardState = {
-   AvailableToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId],
-    VisibleToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId],
+   AvailableToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId, StrategyIds.BulkUpdateStrategyId],
+    VisibleToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId, StrategyIds.BulkUpdateStrategyId],
     VisibleButtons: [StrategyNames.AboutStrategyName, StrategyNames.DashboardStrategyName, StrategyNames.SmartEditStrategyName, StrategyNames.ColumnChooserStrategyName, StrategyNames.ConditionalStyleStrategyName, StrategyNames.TeamSharingStrategyName],
     Zoom: 1,
     IsMinimised: false
