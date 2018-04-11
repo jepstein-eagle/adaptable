@@ -23,14 +23,16 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     render() {
         const popoverClickRootClose = (
             <Popover id="popover-trigger-click-root-close" title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
-                {this.props.bodyText.map(( textOrHTML:any, index:any) => <span key={index}>{textOrHTML}</span> )}
+                {this.props.bodyText.map((textOrHTML: any, index: any) => <span key={index}>{textOrHTML}</span>)}
             </Popover>);
 
-        return <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
-            <Label bsSize="large" bsStyle={this.getStyle()} className="medium_padding_style">
-                <Glyphicon glyph={this.getGlyphName()}   />
-            </Label>
-        </OverlayTrigger>
+        return <span className="adaptableblotter_info_button" >
+            <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
+                <Label bsSize="large" bsStyle={this.getStyle()} className="medium_padding_style">
+                    <Glyphicon glyph={this.getGlyphName()} />
+                </Label>
+            </OverlayTrigger>
+        </span>
     }
 
 
@@ -54,8 +56,8 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
             case PopoverType.Warning:
                 return "warning-sign";
             case PopoverType.Info:
-             return "info-sign";
-           }
-      }
+                return "info-sign";
+        }
+    }
 }
 
