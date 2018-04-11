@@ -188,11 +188,11 @@ function InitBlotter() {
         "Entitlements": {
             "FunctionEntitlements": [
                 {
-                    "FunctionName": "Export",
+                    "FunctionName": "AdvancedSearch",
                     "AccessLevel": "ReadOnly"
                 },
                 {
-                    "FunctionName": "CustomSort",
+                    "FunctionName": "QuickSearch",
                     "AccessLevel": "ReadOnly"
                 },
                 {
@@ -208,6 +208,27 @@ function InitBlotter() {
         "Theme": {
             "CurrentTheme": "Slate",
         },
+        "AdvancedSearch": {
+            "AdvancedSearches": [
+              {
+                "Name": 'test',
+                "Expression": {
+                  "ColumnDisplayValuesExpressions": [
+                    {
+                      "ColumnName": 'bid',
+                      "ColumnDisplayValues": [
+                        '14.3971'
+                      ]
+                    }
+                  ],
+                  "ColumnRawValuesExpressions": [],
+                  "FilterExpressions": [],
+                  "RangeExpressions": []
+                },
+                "IsPredefined": false
+              }
+            ],
+            },
         "Dashboard": {
             "VisibleToolbars": [
                 "AdvancedSearch",
@@ -222,7 +243,7 @@ function InitBlotter() {
                 "ColumnChooser",
                 "BulkUpdate"
             ],
-            "Zoom": "0.75"
+            "Zoom": "1"
         }
     }
 
@@ -230,9 +251,9 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "demo user",
         blotterId: "Demo Blotter",
-        enableAuditLog: false,
+        enableAuditLog: true,
         enableRemoteConfigServer: false,
-      //  predefinedConfig: "demoConfig.json",
+        predefinedConfig: json,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",

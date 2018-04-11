@@ -1015,8 +1015,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (sortModel != null) {
             if (sortModel.length > 0) {
                 sortModel.forEach(sm => {
-                    let sortObject: any = sortModel[0];
-                    let gridSort: IGridSort = { Column: sortObject.colId, SortOrder: (sortObject.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending }
+                     let gridSort: IGridSort = { Column: sm.colId, SortOrder: (sm.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending }
                     gridSorts.push(gridSort);
 
                 })

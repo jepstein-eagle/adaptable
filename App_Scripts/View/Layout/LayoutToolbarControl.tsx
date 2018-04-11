@@ -117,6 +117,26 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         this.props.onSelectLayout(e.value);
     }
 
+
+    private onSelectedLayoutChangedForTypeahead(selected: ILayout[]) {
+        this.props.onSelectLayout(selected.length > 0 ? selected[0].Name : "");
+        /*
+         <Typeahead
+                    bsSize="small"
+                    className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                    placeholder={"Select a Layout"}
+                    labelKey={"Name"}
+                    filterBy={["Name"]}
+                    clearButton={true}
+                    selected={[this.props.CurrentLayout]}
+                    onChange={(selected) => { this.onSelectedLayoutChanged(selected) }}
+                    options={this.props.Layouts}
+                    defaultSelected={[defaultLayout]}
+                />
+
+                */
+    }
+
     private onSave() {
         let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSorts, this.props.CurrentLayout)
         this.props.onSaveLayout(layoutToSave);
