@@ -23,10 +23,11 @@ export interface LayoutGridSortWizardState {
 export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardProps, LayoutGridSortWizardState> implements AdaptableWizardStep {
     constructor(props: LayoutGridSortWizardProps) {
         super(props)
+        
         this.state = {
-            ColumnId: (this.props.Data.GridSort) ? this.props.Data.GridSort.Column : "",
-            SortOrder: (this.props.Data.GridSort) ? this.props.Data.GridSort.SortOrder : SortOrder.Ascending,
-            HasSortOrder: this.props.Data.GridSort != null
+            ColumnId: (this.props.Data.GridSorts.length > 0) ? this.props.Data.GridSorts[0].Column : "",
+            SortOrder: (this.props.Data.GridSorts.length > 0) ? this.props.Data.GridSorts[0].SortOrder : SortOrder.Ascending,
+            HasSortOrder: this.props.Data.GridSorts.length > 0 != null
         }
     }
     render(): any {
@@ -100,7 +101,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
 
     public Next(): void {
         if (this.state.HasSortOrder) {
-            this.props.Data.GridSort = { Column: this.state.ColumnId, SortOrder: this.state.SortOrder }
+            this.props.Data.GridSorts = [{ Column: this.state.ColumnId, SortOrder: this.state.SortOrder }]
         }
     }
     public Back(): void {

@@ -44,7 +44,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
                     ColorPalette: this.props.ColorPalette,
-                    GridSort: this.props.GridSort,
+                    GridSorts: this.props.GridSorts,
                     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
       
                 });
@@ -98,7 +98,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
         ColorPalette: state.UserInterface.ColorPalette,
-        GridSort: state.Grid.GridSort
+        GridSorts: state.Grid.GridSorts
     };
 }
 

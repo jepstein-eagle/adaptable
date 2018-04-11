@@ -38,7 +38,7 @@ export interface IAdaptableBlotter {
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
     hideFilterForm(): void
-    setGridSort(gridSort:IGridSort): void
+    setGridSort(gridSorts:IGridSort[]): void
 
     // cell selection
     getSelectedCells(): ISelectedCells

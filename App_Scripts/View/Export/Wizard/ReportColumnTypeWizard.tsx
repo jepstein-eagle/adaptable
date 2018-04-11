@@ -29,7 +29,7 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
                         <Radio value="All" checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '}{' '}All Columns in the Data Source</Radio>
                         {' '} <span className="adaptableblotter_info_button" > <AdaptablePopover headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} popoverType={PopoverType.Info} /></span>
                     </AdaptableBlotterForm>
-                </Col>
+                </Col>€#
                 <Col xs={12} className="large_margin_style">
                     <AdaptableBlotterForm inline>
                         <Radio value="Visible" checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} {' '}Visible Columns Only (at time that report is run)</Radio>

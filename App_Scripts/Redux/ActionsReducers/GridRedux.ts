@@ -28,7 +28,7 @@ export interface GridSelectColumnAction extends Redux.Action {
 }
 
 export interface GridSetSortAction extends Redux.Action {
-    GridSort: IGridSort;
+    GridSorts: IGridSort[];
 }
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
@@ -53,14 +53,14 @@ export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
     ColumnId
 })
 
-export const GridSetSort = (GridSort: IGridSort): GridSetSortAction => ({
+export const GridSetSort = (GridSorts: IGridSort[]): GridSetSortAction => ({
     type: GRID_SET_SORT,
-    GridSort
+    GridSorts
 })
 
 const initialGridState: GridState = {
     Columns: [],
-    GridSort: null
+    GridSorts: []
 }
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
@@ -68,7 +68,7 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
         case GRID_SET_COLUMNS:
             return Object.assign({}, state, { Columns: [].concat((<GridSetColumnsAction>action).Columns) })
         case GRID_SET_SORT:
-            return Object.assign({}, state, { GridSort: (<GridSetSortAction>action).GridSort })
+            return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
         default:
             return state
     }

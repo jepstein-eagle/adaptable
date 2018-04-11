@@ -451,8 +451,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         let columns = currentLayout.Columns.map(columnId => gridState.Columns.find(x => x.ColumnId == columnId));
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
                         // set sort 
-                        middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSort))
-                        adaptableBlotter.setGridSort(currentLayout.GridSort);
+                        middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
+                        adaptableBlotter.setGridSort(currentLayout.GridSorts);
                     }
                     return returnAction;
                 }
@@ -685,7 +685,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     }
                     else {
                         //update default layout with latest columns
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSort, DEFAULT_LAYOUT)
+                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutSave(layout));
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }

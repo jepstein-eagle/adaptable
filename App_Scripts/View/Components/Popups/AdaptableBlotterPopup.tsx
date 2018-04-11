@@ -34,7 +34,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
         ModalContainer: this.props.ModalContainer,
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
-        GridSort: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSort
+        GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts
       }
 
       var body: any = React.createElement(bodyElement, commonProps);

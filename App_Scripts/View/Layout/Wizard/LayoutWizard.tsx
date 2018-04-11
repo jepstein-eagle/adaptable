@@ -13,7 +13,7 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 import { IGridSort } from '../../../Core/Interface/Interfaces';
 
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
-  GridSort:IGridSort 
+  GridSorts:IGridSort[]
 }
 
 export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
@@ -27,7 +27,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 Steps={[
-                    <LayoutSelectionWizard StepName={stepNames[0]} Layouts={layouts} Columns={this.props.Columns} GridSort={this.props.GridSort} />,
+                    <LayoutSelectionWizard StepName={stepNames[0]} Layouts={layouts} Columns={this.props.Columns} GridSorts={this.props.GridSorts} />,
                     <LayoutColumnWizard StepName={stepNames[1]} Columns={this.props.Columns} />,
                     <LayoutGridSortWizard StepName={stepNames[2]} Columns={this.props.Columns}  />,
                     <LayoutSettingsWizard StepName={stepNames[3]} Layouts={layouts} />]}

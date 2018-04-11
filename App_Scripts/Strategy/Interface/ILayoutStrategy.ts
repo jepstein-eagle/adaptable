@@ -9,8 +9,6 @@ export interface ILayoutStrategy extends IStrategy {
 export interface ILayout extends IAdaptableBlotterObject{
     Name: string;
     Columns: string[];
-    GridSort: IGridSort
+    GridSorts: IGridSort[]
 }
-
-
 

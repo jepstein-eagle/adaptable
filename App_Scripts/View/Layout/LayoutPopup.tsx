@@ -109,7 +109,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        GridSort={this.props.GridSort}
+                        GridSorts={this.props.GridSorts}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
@@ -121,7 +121,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateLayout(null, null, ""), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateLayout([], [], ""), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
     onEdit(Layout: ILayout) {

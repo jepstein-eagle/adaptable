@@ -147,10 +147,10 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateLayout(columns: IColumn[], gridSort: IGridSort, name: string): ILayout {
+    export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], name: string): ILayout {
         return {
             Columns: (columns)? columns.map(x => x.ColumnId): [],
-            GridSort: gridSort,
+            GridSorts: gridSorts,
             Name: name,
             IsPredefined: false
         }

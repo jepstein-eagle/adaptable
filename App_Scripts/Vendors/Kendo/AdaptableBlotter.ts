@@ -911,22 +911,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private onSortChanged(): void {
         let sortModel: any[]=  this.grid.dataSource.sort()
-        let gridSort: IGridSort;
+        let gridSorts: IGridSort[];
         if (sortModel != null) {
             if (sortModel.length > 0) {
                 // for now assuming just single column sorts...
                 let sortObject: any = sortModel[0];
                 
-                gridSort = {Column :sortObject.field, SortOrder : (sortObject.dir == "asc") ? SortOrder.Ascending : SortOrder.Descending}
+                gridSorts = [{Column :sortObject.field, SortOrder : (sortObject.dir == "asc") ? SortOrder.Ascending : SortOrder.Descending}]
              }
         }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSort));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
     }
 
-    public setGridSort(gridSort: IGridSort):void{
+    public setGridSort(gridSorts:IGridSort[]):void{
          // get the sort model
          let sortModel: any[] = []
-         if (gridSort != null) {
+         if (gridSorts.length > 0) {
+             let gridSort: IGridSort = gridSorts[0]; // just one for now
              let sortDescription: string = (gridSort.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
              this.grid.dataSource.sort({field: gridSort.Column, dir: sortDescription});
          }else{

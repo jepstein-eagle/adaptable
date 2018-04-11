@@ -1178,12 +1178,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
         }
         this.grid.behavior.reindex();
-        let gridSort: IGridSort = { Column: this.sortColumnName, SortOrder: this.sortOrder }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSort));
+        let gridSorts: IGridSort[] = [{ Column: this.sortColumnName, SortOrder: this.sortOrder }]
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
     }
 
-    public setGridSort(gridSort: IGridSort): void {
-        if (gridSort != null) {
+    public setGridSort(gridSorts:IGridSort[]): void {
+        if (gridSorts.length> 0) { 
+            let gridSort: IGridSort = gridSorts[0];   // we know that for hypergrid tehre is only one sort
             this.sortColumnGridIndex = this.grid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
             this.sortColumnName = gridSort.Column;
             this.sortOrder = gridSort.SortOrder;

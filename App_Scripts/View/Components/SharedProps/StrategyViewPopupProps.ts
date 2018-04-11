@@ -19,5 +19,5 @@ export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View
     SystemFilters: ISystemFilter[],
     ModalContainer: HTMLElement,
     ColorPalette: string[],
-    GridSort: IGridSort
+    GridSorts: IGridSort[]
 }

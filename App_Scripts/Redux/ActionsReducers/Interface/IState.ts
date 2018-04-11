@@ -27,7 +27,7 @@ Created by the system and not part of predefined or user config
 */
 export interface GridState {
     Columns: IColumn[];
-    GridSort: IGridSort
+    GridSorts: IGridSort[]
 }
 
 export interface MenuState {

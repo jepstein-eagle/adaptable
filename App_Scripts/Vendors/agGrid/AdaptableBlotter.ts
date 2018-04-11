@@ -288,7 +288,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }))
         // need to do this?  seems so but not sure
         this.setColumnIntoStore();
-      //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
+        //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
     public createMenu() {
@@ -1011,15 +1011,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private onSortChanged(params: any): void {
         let sortModel: any[] = this.gridOptions.api.getSortModel();
-        let gridSort: IGridSort;
+        let gridSorts: IGridSort[] = [];
         if (sortModel != null) {
             if (sortModel.length > 0) {
-                // for now assuming just single column sorts...
-                let sortObject: any = sortModel[0];
-                gridSort = {Column :sortObject.colId, SortOrder : (sortObject.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending}
-             }
+                sortModel.forEach(sm => {
+                    let sortObject: any = sortModel[0];
+                    let gridSort: IGridSort = { Column: sortObject.colId, SortOrder: (sortObject.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending }
+                    gridSorts.push(gridSort);
+
+                })
+            }
         }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSort));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
     }
 
     public getRowInfo(): any {
@@ -1033,23 +1036,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public selectColumn(columnId: string) {
 
         this.gridOptions.api.clearRangeSelection();
-        let rangeSelectionParams: AddRangeSelectionParams = { 
-            rowStart: 0, 
-            rowEnd: this.gridOptions.api.getDisplayedRowCount(), 
-            columnStart: columnId, 
-            columnEnd: columnId, 
-            floatingStart: "top", 
-            floatingEnd: "bottom" }
+        let rangeSelectionParams: AddRangeSelectionParams = {
+            rowStart: 0,
+            rowEnd: this.gridOptions.api.getDisplayedRowCount(),
+            columnStart: columnId,
+            columnEnd: columnId,
+            floatingStart: "top",
+            floatingEnd: "bottom"
+        }
         this.gridOptions.api.addRangeSelection(rangeSelectionParams)
     }
 
-    public setGridSort(gridSort: IGridSort): void {
+    public setGridSort(gridSorts: IGridSort[]): void {
         // get the sort model
         let sortModel: any[] = []
-        if (gridSort != null) {
-            let sortDescription: string = (gridSort.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
-            sortModel.push({ colId: gridSort.Column, sort: sortDescription })
-        }
+        gridSorts.forEach(gs => {
+            let sortDescription: string = (gs.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
+            sortModel.push({ colId: gs.Column, sort: sortDescription })
+        })
         this.gridOptions.api.setSortModel(sortModel)
         this.gridOptions.api.onSortChanged();
     }

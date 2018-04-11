@@ -114,7 +114,7 @@ function replacer(a, b, c) {
 function getSchema(data) {
     var schema = []
 
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text' });
+    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: 'Number' });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text' , enableRowGroup: true});
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
@@ -189,7 +189,7 @@ function InitBlotter() {
         primaryKey: "tradeId",
         userName: "demo user",
         blotterId: "Demo Blotter",
-        enableAuditLog: true,
+        enableAuditLog: false,
         enableRemoteConfigServer: false,
         predefinedConfigUrl: "",// "demoConfig.json",
         iPushPullConfig: {

@@ -12,7 +12,7 @@ import { IGridSort } from '../../../Core/Interface/Interfaces';
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>
-    GridSort: IGridSort
+    GridSorts: IGridSort[]
     Columns: Array<IColumn>
 }
 
@@ -68,7 +68,7 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
         if (this.state.LayoutSource == LayoutSource.Existing) { // need to popuplate the layout
             let visibleColumns = this.props.Columns.filter(c => c.Visible).map(c => c.ColumnId)
             this.props.Data.Columns = visibleColumns;
-               this.props.Data.GridSort = this.props.GridSort
+               this.props.Data.GridSorts = this.props.GridSorts
         }
     }
     public Back(): void {

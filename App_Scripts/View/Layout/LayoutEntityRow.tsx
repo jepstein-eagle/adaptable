@@ -46,10 +46,10 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
     private getLayoutDescription(layout: ILayout): string {
         let returnString: string = "";
-        let gridSort: IGridSort = layout.GridSort;
+        let gridSorts: IGridSort[] = layout.GridSorts;
         returnString += layout.Columns.length + " Columns; ";
-        returnString += (gridSort != null) ?
-            "Sort: " + this.getColumnDescription(gridSort.Column) + " (" + gridSort.SortOrder + ")" :
+        returnString += (gridSorts.length > 0) ?
+            "Sort: " + this.getColumnDescription(gridSorts[0].Column) + " (" + gridSorts[0].SortOrder + ")" :
             "No Sort";
         return returnString;
     }

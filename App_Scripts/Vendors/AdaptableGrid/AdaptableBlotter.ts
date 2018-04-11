@@ -515,7 +515,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
-    public setGridSort(gridSort: IGridSort):void{
+    public setGridSort(gridSorts:IGridSort[]):void{
         //todo
     }
   

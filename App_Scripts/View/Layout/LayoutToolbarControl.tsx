@@ -33,7 +33,6 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
 }
 
 
-
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
     render(): any {
@@ -106,7 +105,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             if (!Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
                 return true;
             }
-            if (!Helper.areObjectsEqual(layoutEntity.GridSort, this.props.GridSort)) {
+            if (!Helper.areArraysEqualWithOrder(layoutEntity.GridSorts, this.props.GridSorts)) {
                 return true;
             }
         }
@@ -119,7 +118,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onSave() {
-        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSort, this.props.CurrentLayout)
+        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSorts, this.props.CurrentLayout)
         this.props.onSaveLayout(layoutToSave);
     }
 

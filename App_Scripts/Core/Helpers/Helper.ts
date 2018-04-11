@@ -80,6 +80,8 @@ export module Helper {
     }
 
     export function areArraysEqualWithOrder(arr1: any[], arr2: any[]) {
+     
+     
         if (arr1.length !== arr2.length) {
             return false;
         }
@@ -92,6 +94,7 @@ export module Helper {
             .replace(/[A-Z]/g, ' $&')
             .trim();
     }
+
     function replacer(a: string, b: string, c: string) {
         return b.toUpperCase() + c;
     }
