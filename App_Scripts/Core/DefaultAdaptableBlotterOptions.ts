@@ -6,6 +6,6 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     enableRemoteConfigServer: false,
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,
-    predefinedConfigUrl: "",
+    predefinedConfig: null,
     maxColumnValueItemsDisplayed: 5000,
 }

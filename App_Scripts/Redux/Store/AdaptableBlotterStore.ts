@@ -132,7 +132,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
-            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl, blotter.BlotterOptions.predefinedConfig);
+            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId,  blotter.BlotterOptions.predefinedConfig);
         }
         // const someExampleMigration = {
         //     version: 1,

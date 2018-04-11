@@ -20,21 +20,21 @@ interface IAdaptableBlotterReduxLocalStorageEngine extends ReduxStorage.StorageE
 
 
 class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxLocalStorageEngine {
-    constructor(private key: string, private urlPredefinedConfig: string, private predifinedConfig: object) {
+    constructor(private key: string, private predefinedConfig: object) {
 
     }
     load(): Promise<any> {
         const jsonState = localStorage.getItem(this.key);
         let parsedJsonState = JSON.parse(jsonState/*, this.reviver*/) || {}
-        if (StringExtensions.IsNotNullOrEmpty(this.urlPredefinedConfig)) {
-            return fetch(this.urlPredefinedConfig)
+        if (typeof this.predefinedConfig== 'string' && StringExtensions.IsNotNullOrEmpty(this.predefinedConfig)) {
+            return fetch(this.predefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
                 .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => console.error(err));
-        } else if (this.predifinedConfig != null) {
-            return new Promise (( resolve )=> resolve(this.predifinedConfig))
+        } else if (this.predefinedConfig != null) {
+            return new Promise (( resolve )=> resolve(this.predefinedConfig))
                 .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => console.error(err));
@@ -104,10 +104,6 @@ function rejectWithMessage(error: any) {
     return Promise.reject(error.message);
 }
 
-export function createEngine(key: string, urlPredefinedConfig: string, predefinedConfig: object): ReduxStorage.StorageEngine {
-    // see if this works...
-
-
-
-    return new AdaptableBlotterReduxLocalStorageEngine(key, urlPredefinedConfig, predefinedConfig)
+export function createEngine(key: string, predefinedConfig: object): ReduxStorage.StorageEngine {
+    return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig)
 }
