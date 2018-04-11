@@ -132,7 +132,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
-            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl);
+            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfigUrl, blotter.BlotterOptions.predefinedConfig);
         }
         // const someExampleMigration = {
         //     version: 1,
@@ -680,13 +680,13 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let currentLayout = DEFAULT_LAYOUT
                     let gridState: GridState = middlewareAPI.getState().Grid
                     if (middlewareAPI.getState().Layout.Layouts.length == 0) {
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, null, DEFAULT_LAYOUT)
+                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
                     }
                     else {
                         //update default layout with latest columns
                         let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, DEFAULT_LAYOUT)
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(layout));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(layout))
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout

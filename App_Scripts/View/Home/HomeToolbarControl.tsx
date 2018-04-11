@@ -58,7 +58,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let shortcuts: any
         if (shortcutsArray) {
             shortcuts = shortcutsArray.map(x => {
-                let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.Label == x)
+                let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.StrategyId == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
                         <Button bsSize={"small"} disabled={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)}>

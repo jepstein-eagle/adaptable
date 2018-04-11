@@ -27,7 +27,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         this.state = {
             ColumnId: (this.props.Data.GridSorts.length > 0) ? this.props.Data.GridSorts[0].Column : "",
             SortOrder: (this.props.Data.GridSorts.length > 0) ? this.props.Data.GridSorts[0].SortOrder : SortOrder.Ascending,
-            HasSortOrder: this.props.Data.GridSorts.length > 0 != null
+            HasSortOrder: this.props.Data.GridSorts.length > 0 
         }
     }
     render(): any {

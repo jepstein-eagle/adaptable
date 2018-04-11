@@ -17,8 +17,10 @@ const checkStatus = (response: Response) => {
 
 interface IAdaptableBlotterReduxLocalStorageEngine extends ReduxStorage.StorageEngine { }
 
+
+
 class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxLocalStorageEngine {
-    constructor(private key: string, private urlPredefinedConfig: string) {
+    constructor(private key: string, private urlPredefinedConfig: string, private predifinedConfig: object) {
 
     }
     load(): Promise<any> {
@@ -28,6 +30,11 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
             return fetch(this.urlPredefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
+                .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
+                .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
+                .catch(err => console.error(err));
+        } else if (this.predifinedConfig != null) {
+            return new Promise (( resolve )=> resolve(this.predifinedConfig))
                 .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => console.error(err));
@@ -53,7 +60,7 @@ function FilterPredefinedItems(state: any) {
     // we iterating substate here
     for (let substateName in state) {
         if (state.hasOwnProperty(substateName)) {
-            let substate = state[substateName]  
+            let substate = state[substateName]
             //we look for arrays of entities and will filter predefined Items
             //works only if array is at rootlevel. Will need enhancement if that was to change
             for (let property in substate) {
@@ -80,8 +87,8 @@ function ForcePredefinedItems(state: any) {
                     if (Array.isArray(substate[property])) {
                         let arrayItems = substate[property]
                         arrayItems.forEach((element: any) => {
-                            if(element.hasOwnProperty("IsPredefined")){
-                            element.IsPredefined = true;
+                            if (element.hasOwnProperty("IsPredefined")) {
+                                element.IsPredefined = true;
                             }
                         });
                     }
@@ -97,6 +104,10 @@ function rejectWithMessage(error: any) {
     return Promise.reject(error.message);
 }
 
-export function createEngine(key: string, urlPredefinedConfig: string): ReduxStorage.StorageEngine {
-    return new AdaptableBlotterReduxLocalStorageEngine(key, urlPredefinedConfig)
+export function createEngine(key: string, urlPredefinedConfig: string, predefinedConfig: object): ReduxStorage.StorageEngine {
+    // see if this works...
+
+
+
+    return new AdaptableBlotterReduxLocalStorageEngine(key, urlPredefinedConfig, predefinedConfig)
 }

@@ -21,7 +21,7 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
     render() {
         let config: string[] = [];
         this.props.DashboardState.VisibleButtons.forEach(x => {
-            let menuItem = this.props.MenuState.MenuItems.find(m => m.Label == x)
+            let menuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == x)
             if (menuItem != null && menuItem.IsVisible) {
                 config.push(x)
             }

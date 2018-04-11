@@ -116,26 +116,28 @@ function getSchema(data) {
 
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: 'Number' });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text' , enableRowGroup: true});
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text',enableRowGroup: true });
+    schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text' });
 
     schema.push({
         headerName: "Pricing",
         children: [
-            { headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell'},
-            { headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true},
-            { headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell'},
-            { headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell'},
-            { headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell'},
-            { headerName: "Bloomberg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell'}
+            { headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' },
+            { headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true },
+            { headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' },
+            { headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' },
+            { headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' },
+            { headerName: "Bloomberg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' }
         ]
     })
-    schema.push({ headerName: "Is Live", field: "isLive",editable: false, cellRenderer: params => {
-        return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
-    }});
+    schema.push({
+        headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
+            return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
+        }
+    });
     schema.push({ headerName: "Fitch Rating", field: "fitchRating", editable: true, filter: 'text' });
     schema.push({ headerName: "Moodys Rating", field: "moodysRating", editable: true, filter: 'text' });
     schema.push({ headerName: "SandP Rating", field: "sandpRating", editable: true, filter: 'text' });
@@ -176,22 +178,62 @@ function InitBlotter() {
         enableColResize: true
     };
 
-
-   
-   
     var eGridDiv = document.getElementById('grid');
     var grid = new agGrid.Grid(eGridDiv, gridOptions);
     dataGen.startTickingDataagGrid(gridOptions);
 
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
+    let json = {
+        "Entitlements": {
+            "FunctionEntitlements": [
+                {
+                    "FunctionName": "Export",
+                    "AccessLevel": "ReadOnly"
+                },
+                {
+                    "FunctionName": "CustomSort",
+                    "AccessLevel": "ReadOnly"
+                },
+                {
+                    "FunctionName": "PlusMinus",
+                    "AccessLevel": "Hidden"
+                },
+                {
+                    "FunctionName": "SmartEdit",
+                    "AccessLevel": "Hidden"
+                }
+            ]
+        },
+        "Theme": {
+            "CurrentTheme": "Slate",
+        },
+        "Dashboard": {
+            "VisibleToolbars": [
+                "AdvancedSearch",
+                "Layout",
+                "QuickSearch"
+            ],
+            "VisibleButtons": [
+                "About",
+                "Dashboard",
+                "QuickSearch",
+                "SmartEdit",
+                "ColumnChooser",
+                "BulkUpdate"
+            ],
+            "Zoom": "0.75"
+        }
+    }
+
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
         userName: "demo user",
         blotterId: "Demo Blotter",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-        predefinedConfigUrl: "",// "demoConfig.json",
+         predefinedConfigUrl: "demoConfig.json",
+       // predefinedConfig: json,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
