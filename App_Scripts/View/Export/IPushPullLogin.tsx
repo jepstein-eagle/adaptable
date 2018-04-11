@@ -37,9 +37,9 @@ class IPushPullLoginComponent extends React.Component<IPushPullLoginProps, IPush
                 <FormControl type="password" onChange={(e) => this.onPasswordChange(e)} />
                 <HelpBlock>{this.props.ErrorMsg}</HelpBlock>
             </FormGroup>
-             <Button className="adaptableblotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
+             <Button className="adaptable_blotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
               <Button disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
-                className="adaptableblotter_right_modal_button" bsStyle="primary"
+                className="adaptable_blotter_right_modal_button" bsStyle="primary"
                 onClick={() => { this.props.onLogin(this.state.Login, this.state.Password) }}><Glyphicon glyph="user" /> Login</Button>
     
         </PanelWithButton>

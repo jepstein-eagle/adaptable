@@ -49,7 +49,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
           </Modal.Header>*/}
         <Modal.Body className="adaptable_blotter_style_popup_base">
 
-          <div className="adaptableblotter_modal_main_popup">
+          <div className="adaptable_blotter_modal_main_popup">
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
               {body}
             </div>

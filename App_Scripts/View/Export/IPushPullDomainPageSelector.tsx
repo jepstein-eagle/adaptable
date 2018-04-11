@@ -59,9 +59,9 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
             </Alert> : <ListGroup fill className="preview_panel">
                     {itemsElements}
                 </ListGroup>}
-            <Button className="adaptableblotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
+            <Button className="adaptable_blotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
             <Button disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
-                className="adaptableblotter_right_modal_button" bsStyle="primary"
+                className="adaptable_blotter_right_modal_button" bsStyle="primary"
                 onClick={() => { this.props.onApplyExport(this.props.PopupParams, this.state.SelectedFolder, this.state.SelectedPage) }}>
                 <Glyphicon glyph="user" /> Select</Button>
         </PanelWithButton>

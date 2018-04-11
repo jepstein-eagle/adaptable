@@ -89,7 +89,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
         return <div className="adaptable_blotter_style_popup_Layout">
             <PanelWithButton bsStyle="primary" headerText={StrategyNames.LayoutStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyGlyphs.LayoutGlyph} className="adaptableblotter_modal_main_popup" >
+                button={newSearchButton} glyphicon={StrategyGlyphs.LayoutGlyph} className="adaptable_blotter_modal_main_popup" >
 
                 {LayoutRows.length > 0 &&
                     <AdaptableObjectCollection ColItems={colItems} items={LayoutRows} />

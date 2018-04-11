@@ -16,7 +16,7 @@ export class StyleVisualItem extends React.Component<StyleVisualItemProps, {}> {
         let fontStyleForStyle: any = this.props.Style.FontStyle == FontStyle.Italic ? "italic" : "normal"
         let fontSizeForStyle: any = EnumExtensions.getCssFontSizeFromFontSizeEnum(this.props.Style.FontSize);
 
-        return <div className={this.props.Style.BackColor != undefined ? "" : "adaptableblotter_white_grey_stripes"}
+        return <div className={this.props.Style.BackColor != undefined ? "" : "adaptable_blotter_white_grey_stripes"}
             style={{
                 textAlign: 'center',
                 margin: '2px',

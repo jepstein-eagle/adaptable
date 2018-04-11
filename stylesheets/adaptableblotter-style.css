@@ -25,7 +25,7 @@
 }
 
 /*Style to similate transparent background*/
-.adaptableblotter_white_grey_stripes{
+.adaptable_blotter_white_grey_stripes{
   background: -moz-repeating-linear-gradient(
     -45deg,
     #96979b,
@@ -85,36 +85,36 @@ button.placeholder:before {
 
 
 /*Styling for our main modal windows*/
-.adaptableblotter_modal_main_popup{
+.adaptable_blotter_modal_main_popup{
   width: 900px;
   height: 570px;
 }
 
-.adaptableblotter_modal_main_wizard{
+.adaptable_blotter_modal_main_wizard{
   width: 900px;
   height: 550px;
 }
 
 
 
-.adaptaleblotter_object_list_item{
+.adaptale_blotter_object_list_item{
   overflow-y: auto;
   min-height: 80px;
   max-height: 430px;
 }
 
-.adaptaleblotter_object_list_item_medium{
+.adaptale_blotter_object_list_item_medium{
   overflow-y: auto;
   min-height: 80px;
   max-height: 350px;
 }
 
-.adaptableblotter_left_modal_button {
+.adaptable_blotter_left_modal_button {
   float: left;
   margin-right: 5px
 }
 
-.adaptableblotter_right_modal_button {
+.adaptable_blotter_right_modal_button {
   float: right;
   margin-left: 5px
 }

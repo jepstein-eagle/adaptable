@@ -86,7 +86,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
         return <div className="adaptable_blotter_style_popup_advancedsearch">
             <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptableblotter_modal_main_popup" >
+                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptable_blotter_modal_main_popup" >
 
                 {advancedSearchRows.length > 0 &&
                     <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />

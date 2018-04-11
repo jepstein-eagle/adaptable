@@ -83,7 +83,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_calculatedcolumn">
-            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} className="adaptableblotter_modal_main_popup" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} className="adaptable_blotter_modal_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&

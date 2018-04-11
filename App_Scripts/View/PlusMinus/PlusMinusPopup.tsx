@@ -87,7 +87,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_plusminus">
-            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup"
+            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup"
                 button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
                 infoBody={infoBody}>
 

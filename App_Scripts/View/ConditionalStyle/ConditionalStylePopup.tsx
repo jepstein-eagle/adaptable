@@ -84,7 +84,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_conditionalstyle">
-            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" className="adaptableblotter_modal_main_popup" glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" className="adaptable_blotter_modal_main_popup" glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>

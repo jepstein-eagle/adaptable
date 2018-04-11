@@ -73,12 +73,12 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="adaptable_blotter_style_wizard_base" >
-                    <div className="adaptableblotter_modal_main_wizard">
+                    <div className="adaptable_blotter_modal_main_wizard">
                         {this.state.ActiveState}
                     </div>
                 </Modal.Body>
                 <Modal.Footer className="adaptable_blotter_style_wizard_base">
-                    <Button className="adaptableblotter_left_modal_button" onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
+                    <Button className="adaptable_blotter_left_modal_button" onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
                     <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
                     <Button bsStyle="primary" disabled={!this.ActiveStep.canNext()} onClick={() => this.handleClickNext()}>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"} /></Button>
                 </Modal.Footer>

@@ -49,7 +49,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             emptyLabel={""}
             placeholder={placeholderText}
             bsSize={this.props.bsSize}
-            labelKey={"RawValue"}
+            labelKey={"DisplayValue"}
             filterBy={["DisplayValue"]}
             multiple={false}
             clearButton={true}

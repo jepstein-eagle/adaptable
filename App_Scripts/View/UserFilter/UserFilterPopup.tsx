@@ -94,7 +94,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_userfilter">
-            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup" infoBody={infoBody}
                 button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&

@@ -89,7 +89,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         </AdaptableBlotterForm>;
 
         return <div className="adaptable_blotter_style_popup_flashingcells">
-            <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
+            <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
                 {setAllOption }
                 <AdaptableObjectCollection ColItems={colItems} items={allFlashingCells} reducedPanel={true} />
 

@@ -89,7 +89,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_cellvalidation">
-            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" className="adaptableblotter_modal_main_popup"
+            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup"
                 button={newButton}
                 glyphicon={StrategyGlyphs.CellValidationGlyph}
                 infoBody={infoBody}>

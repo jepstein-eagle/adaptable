@@ -90,7 +90,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
                       {displayedCalendarModalBody}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button className="adaptableblotter_right_modal_button" onClick={() => this.closeInformationModal()}>Close</Button>
+                        <Button className="adaptable_blotter_right_modal_button" onClick={() => this.closeInformationModal()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             }

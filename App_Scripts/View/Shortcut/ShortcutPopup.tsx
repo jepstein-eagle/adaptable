@@ -79,7 +79,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <div className="adaptable_blotter_style_popup_shortcut">
-            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptableblotter_modal_main_popup"
+            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptable_blotter_modal_main_popup"
                 button={newButton}
                 bsStyle="primary" glyphicon={StrategyGlyphs.ShortcutGlyph}
                 infoBody={infoBody}>

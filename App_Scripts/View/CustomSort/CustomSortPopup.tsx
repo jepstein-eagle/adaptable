@@ -85,7 +85,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_customsort">
-            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} className="adaptableblotter_modal_main_popup" infoBody={infoBody}
+            <PanelWithButton headerText={StrategyNames.CustomSortStrategyName} className="adaptable_blotter_modal_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
 
                 {customSorts.length > 0 &&
