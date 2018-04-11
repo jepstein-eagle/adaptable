@@ -152,7 +152,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
 
         return (
-            <Row style={rowStyle}>
+            <Row >
                 <Col xs={4}>
                     <Panel header={this.props.HeaderAvailable} className="no-padding-panel" bsStyle="info">
                         <div>
@@ -179,13 +179,15 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     </ButtonGroup>
                 </Col>
                 <Col xs={4} >
-                    <Panel header={this.props.HeaderSelected} bsStyle="info">
-                        <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
-                            onDragEnter={(event) => this.DragEnterSelected(event)}
-                            onDragOver={(event) => this.DragOverSelected(event)}
-                            onDragLeave={(event) => this.DragLeaveSelected(event)}>
-                            {itemsElements}
-                        </ListGroup>
+                    <Panel header={this.props.HeaderSelected} className="no-padding-panel" bsStyle="info">
+                        <div>
+                            <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
+                                onDragEnter={(event) => this.DragEnterSelected(event)}
+                                onDragOver={(event) => this.DragOverSelected(event)}
+                                onDragLeave={(event) => this.DragLeaveSelected(event)}>
+                                {itemsElements}
+                            </ListGroup>
+                        </div>
                     </Panel>
                 </Col>
                 <Col xs={2} style={colButtonStyle} >
@@ -636,9 +638,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
 
 }
-var rowStyle = {
-    'minWidth': '800px',
-};
+
+
 var listGroupStyleAvailable: React.CSSProperties = {
     'overflowY': 'auto',
     'maxHeight': '411px',
