@@ -62,8 +62,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             { Content: "Report", Size: 2 },
             { Content: "Columns", Size: 3 },
             { Content: "Query Details", Size: 4 },
-            { Content: "", Size: 1 },
-            { Content: "", Size: 2 },
+            { Content: "Export", Size: 1},
+            { Content: "", Size: 3 },
         ]
 
         let Reports = this.props.Reports.map((Report: IReport, index) => {

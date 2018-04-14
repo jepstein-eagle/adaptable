@@ -74,7 +74,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             overrideTooltip="Clear Filter"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-panel small-padding-panel" bsStyle="info" button={clearButton}>
+        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-except-top-panel small-padding-panel" bsStyle="info" button={clearButton}>
             <ListBoxFilterForm CurrentColumn={this.props.CurrentColumn}
                 Columns={this.props.Columns}
                 ColumnValues={columnValuePairs}

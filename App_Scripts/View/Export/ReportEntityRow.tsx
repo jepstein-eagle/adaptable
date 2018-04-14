@@ -1,6 +1,6 @@
 import { IReport } from '../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import { DropdownButton, MenuItem, Col } from 'react-bootstrap';
+import { DropdownButton, MenuItem, Col, Glyphicon } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../Core/Enums';
 import { ReportHelper } from '../../Core/Helpers/ReportHelper';
@@ -10,6 +10,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean
@@ -32,6 +33,8 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
             <MenuItem onClick={() => this.props.onReportStopLive(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Stop Sync with iPushPull"}</MenuItem>
             : <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
 
+
+            let exportGlyph : any = <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
@@ -43,7 +46,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         let exportButton = <DropdownButton dropup={this.props.isDropUp}
             bsSize={"small"}
             bsStyle={"default"}
-            title={"Export"}
+            title={exportGlyph}
             key={report.Name}
             id={report.Name}                >
             {csvMenuItem}

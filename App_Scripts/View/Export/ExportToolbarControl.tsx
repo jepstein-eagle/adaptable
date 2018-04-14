@@ -24,6 +24,8 @@ import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
+import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
     onApplyExport: (Report: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
@@ -76,7 +78,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         }
 
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
-            <Glyphicon glyph={"export"} />
+            <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
         </OverlayTrigger>
 
         let content = <span>
@@ -130,7 +132,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         </span>
 
         return <div className="adaptable_blotter_style_dashboard_export">
-            <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon="export" onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+            <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon={StrategyGlyphs.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
                 {content}
             </PanelDashboard>
         </div>

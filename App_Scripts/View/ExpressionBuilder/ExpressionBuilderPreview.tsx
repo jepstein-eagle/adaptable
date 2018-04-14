@@ -157,7 +157,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <InputGroup>
                     <InputGroup.Button>
                         <Button block className="no_margin_style"
-                             style={{ width: "210px" }}
+                             style={{ width: "245px" }}
                              bsStyle="success"
                             key={columnId + "header"}
                             ref={columnId}
@@ -191,8 +191,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         return <div>
             {this.props.ShowPanel &&
 
-                <PanelWithButton headerText="Preview" bsStyle="primary" style={{ height: '550px' }} >
-                    <div style={divStyle}>
+                <PanelWithButton headerText="Preview" bsStyle="info" style={{ height: '425px' }} >
+                    <div >
                         {previewLists}
                     </div>
                 </PanelWithButton>
@@ -235,10 +235,6 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '465px'
-}
 
 var smallFontSizeStyle = {
     fontSize: 'small'

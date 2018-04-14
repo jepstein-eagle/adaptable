@@ -54,11 +54,14 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
+            let contentSize = (this.props.TeamSharingActivated)? 6: 7
+            let buttonSize = (this.props.TeamSharingActivated)? 3: 2
+        
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
-            { Content: "Query", Size: 7 },
-            { Content: "", Size: 2 },
+            { Content: "Query", Size: contentSize },
+            { Content: "", Size: buttonSize },
         ]
 
         let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
@@ -85,7 +88,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             size={"small"} />
 
         return <div className="adaptable_blotter_style_popup_advancedsearch">
-            <PanelWithButton bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
+            <PanelWithButton  bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
                 button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptable_blotter_modal_main_popup" >
 
                 {advancedSearchRows.length > 0 &&

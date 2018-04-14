@@ -18,8 +18,6 @@ import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 
-
-
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
     Expression: Expression
@@ -30,6 +28,7 @@ export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttr
     UserFilters: IUserFilter[]
     SystemFilters: ISystemFilter[]
     SelectedColumnId: string
+    QueryBuildStatus: QueryBuildStatus
 }
 
 export interface ExpressionBuilderConditionSelectorState {
@@ -38,13 +37,13 @@ export interface ExpressionBuilderConditionSelectorState {
     AllFilterExpresions: Array<string>
     SelectedFilterExpressions: Array<string>
     SelectedColumnRanges: Array<IRange>
+    QueryBuildStatus: QueryBuildStatus
 }
 
 export class ExpressionBuilderConditionSelector extends React.Component<ExpressionBuilderConditionSelectorProps, ExpressionBuilderConditionSelectorState> {
     constructor(props: ExpressionBuilderConditionSelectorProps) {
         super(props);
         this.state = this.buildState(this.props)
-
     }
 
     componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
@@ -59,7 +58,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 AllFilterExpresions: [],
                 SelectedFilterExpressions: [],
                 SelectedColumnRanges: [],
-
+                QueryBuildStatus: this.props.QueryBuildStatus
             };
         }
         else {
@@ -93,25 +92,19 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     }
                 })
             }
-
             let combinedFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf.Name));
-
 
             // get ranges
             let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
-            if (ranges) {
-                selectedColumnRanges = ranges.Ranges
-            }
-            else {
-                selectedColumnRanges = []
-            }
+            selectedColumnRanges = (ranges) ? ranges.Ranges : []
+
             return {
                 ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue),
                 SelectedColumnValues: selectedColumnValues,
                 AllFilterExpresions: combinedFilterExpressions,
                 SelectedFilterExpressions: selectedColumnFilterExpressions,
                 SelectedColumnRanges: selectedColumnRanges,
-
+                QueryBuildStatus: this.props.QueryBuildStatus
             };
         }
     }
@@ -120,6 +113,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let column = (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)) ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId)
         let selectedColumnDataType: DataType = column ? column.DataType : null
         let selectedColumn: IColumn = column;
+        let selectedColumnFriendlyName: string = (selectedColumn) ? selectedColumn.FriendlyName : ""
 
         // get filter names
         // first system ones
@@ -130,9 +124,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf: IUserFilter) => {
             availableFilterNames.push(uf.Name)
         })
-
-
-        let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
 
         // get the help descriptions
@@ -148,87 +139,37 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let addButtonText: string = "Click to add another 'Column Condition' to the query."
 
-        let newButton = <ButtonCondition onClick={() => this.onSelectedColumnChanged()}
-            overrideTooltip="Add Condition"
-            style={{width:"230px"}}
-            DisplayMode="Glyph+Text"
-        />
+        let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
-        return <PanelWithButton headerText="Query Builder"
-            button={null}
-            bsStyle="primary" style={{ height: '550px' }}>
+        return <PanelWithButton headerText={panelHeader} bsStyle="info" style={{ height: '425px' }}>
 
 
-            <Tab.Container id="left-tabs-example" defaultActiveKey="columnValues">
-                <Row>
-                    <Col xs={6}>
-                        <Panel style={divStyle}>
-                            {queryBuildStatus == QueryBuildStatus.FirstSelection &&
-                                <Well bsSize="small">
-                                    <HelpBlock>
-                                        {firstTimeText}
-                                    </HelpBlock>
-                                </Well>
-                            }
-                            {queryBuildStatus == QueryBuildStatus.SecondSelection &&
-                                <Well bsSize="small">
-                                    <HelpBlock>
-                                        {secondTimeText}
-                                    </HelpBlock>
-                                </Well>
-                            }
+            {this.state.QueryBuildStatus == QueryBuildStatus.SelectColumn ?
+                <div>
+                    <Well bsSize="small">
+                        <HelpBlock>
+                            {firstTimeText}
+                        </HelpBlock>
+                    </Well>
 
-                            {queryBuildStatus == QueryBuildStatus.MultiColumnConditionsAdded &&
-                                <div>
-                                    {newButton}
+                    <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]}
+                        ColumnList={this.props.ColumnsList}
+                        onColumnChange={columns => this.onColumnSelectChange(columns)}
+                        SelectionMode={SelectionMode.Single} />
+                </div>
 
-                                    <div style={{ height: '20px' }} />
-                                </div>
-                            }
-
-
-
-
-                            <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]}
-                                disabled={queryBuildStatus == QueryBuildStatus.MultiColumnConditionsAdded || queryBuildStatus == QueryBuildStatus.SingleColumnConditionsAdded}
-                                ColumnList={this.props.ColumnsList}
-                                onColumnChange={columns => this.onColumnSelectChange(columns)}
-                                SelectionMode={SelectionMode.Single} />
-
-                            <div style={{ height: '20px' }} />
-
-                            {selectedColumn &&
-                                <div>
-                                    <Well bsSize="small">
-                                        <HelpBlock>
-                                            {selectedColumnText}
-                                        </HelpBlock>
-                                    </Well>
-                                </div>
-                            }
-
-                            {(queryBuildStatus != QueryBuildStatus.FirstSelection && queryBuildStatus != QueryBuildStatus.SecondSelection) &&
-                                <Nav bsStyle="pills" stacked>
-                                    <NavItem key="columnValues" eventKey="columnValues">Column Values</NavItem>
-                                    <NavItem key="filters" eventKey="filters">Filters</NavItem>
-                                    <NavItem key="ranges" eventKey="ranges">Ranges</NavItem>
-                                </Nav>
-                            }
-
-                            <div style={{ height: '20px' }} />
-
-
-                        </Panel>
-                    </Col>
-
-
-
+                :
+                <div>
                     {selectedColumn &&
-                        <Col xs={6}>
-                            <Panel>
-
+                        <Tab.Container id="left-tabs-example" defaultActiveKey="columnValues">
+                            <div>
+                                <Nav bsStyle="pills" >
+                                    <NavItem eventKey="columnValues" selected={true}>Column Values</NavItem>
+                                    <NavItem eventKey="filters">Filters</NavItem>
+                                    <NavItem eventKey="ranges">Ranges</NavItem>
+                                </Nav>
                                 <Tab.Content animation>
-                                    <Tab.Pane eventKey={"columnValues"} title="Column Values">
+                                    <Tab.Pane eventKey="columnValues">
                                         {selectedColumn.DataType != DataType.Boolean &&
                                             <ExpressionBuilderColumnValues
                                                 ColumnValues={this.state.ColumnValues}
@@ -238,14 +179,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
                                         }
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey={"filters"} title="Filters">
+                                    <Tab.Pane eventKey="filters">
                                         <ExpressionBuilderUserFilter
                                             AvailableFilterNames={availableFilterNames}
                                             SelectedFilterNames={this.state.SelectedFilterExpressions}
                                             onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
                                         </ExpressionBuilderUserFilter>
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey={"ranges"} title="Ranges" >
+                                    <Tab.Pane eventKey="ranges">
                                         <ExpressionBuilderRanges
                                             SelectedColumn={selectedColumn}
                                             Ranges={this.state.SelectedColumnRanges}
@@ -254,43 +195,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                         </ExpressionBuilderRanges>
                                     </Tab.Pane>
                                 </Tab.Content>
-
-                            </Panel>
-                        </Col>
+                            </div>
+                        </Tab.Container>
                     }
-                </Row>
-            </Tab.Container>
-
+                </div>
+            }
         </PanelWithButton>
     }
 
-    private getQueryBuildStatus(): QueryBuildStatus {
-        let isColumnSelected: boolean = StringExtensions.IsNotNullOrEmpty(this.props.SelectedColumnId);
-        let hasColumnConditions: boolean = this.state.SelectedColumnRanges.length > 0 || this.state.SelectedColumnValues.length > 0 || this.state.SelectedFilterExpressions.length > 0;
-        let hasOtherConditions: boolean = this.props.Expression.ColumnRawValuesExpressions.length > 0 || this.props.Expression.ColumnDisplayValuesExpressions.length > 0 || this.props.Expression.FilterExpressions.length > 0 || this.props.Expression.RangeExpressions.length > 0;
 
-        if (!isColumnSelected) { // no column
-            if (!hasColumnConditions) {// no conditios so its first time
-                if (hasOtherConditions) { // coming in for a second time
-                    return QueryBuildStatus.SecondSelection
-                }
-                else {  // coming in for the first time
-                    return QueryBuildStatus.FirstSelection
-                }
-            }
-            else {
-                return QueryBuildStatus.SecondSelection
-            }
-        }
-        else { // we have a column and conditions
-            if (!hasColumnConditions) {
-                return QueryBuildStatus.ColumnSelected
-            } else {
-                return (this.props.ExpressionMode == ExpressionMode.MultiColumn) ? QueryBuildStatus.MultiColumnConditionsAdded : QueryBuildStatus.SingleColumnConditionsAdded;
-            }
-        }
-
-    }
 
     onSelectedColumnChanged() {
         this.props.onSelectedColumnChange("")

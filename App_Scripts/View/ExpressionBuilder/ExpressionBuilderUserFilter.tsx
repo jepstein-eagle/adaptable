@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
-import { ListGroupItem, ListGroup } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, Panel } from 'react-bootstrap';
 import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 
 
@@ -18,17 +18,17 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
         var userFilterNames = this.props.AvailableFilterNames.map((ne: string, index: number) => {
             return <ListGroupItem key={index} bsSize={"small"}
                 onClick={() => this.onClickColum(ne)}
-                active={this.props.SelectedFilterNames.find(f => f==ne)}>
+                active={this.props.SelectedFilterNames.find(f => f == ne)}>
 
                 {ne}
             </ListGroupItem>
         })
 
-        return <PanelWithButton headerText={"Filters"} className="no-padding-panel"  bsStyle="info" style={divStyle}>
+        return <Panel className="no-padding-anywhere-panel" style={divStyle}>
             <ListGroup >
                 {userFilterNames}
             </ListGroup>
-        </PanelWithButton>
+        </Panel>
     }
 
     onClickColum(filterName: string) {
@@ -49,8 +49,6 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'overflowX': 'hidden',
-    'height': '445px',
-    'maxHeight': '445px',
-    'marginBottom': '0'
+    'height': '315px',
 }
+

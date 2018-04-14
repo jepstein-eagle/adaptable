@@ -15,6 +15,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     DisplayMember?: string
     ValueMember?: string
     SortMember?: string
+    ReducedDisplay?: boolean
 }
 
 export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -151,13 +152,16 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let headerFirstListBox = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
             SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
 
+        let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
+        let listGroupSelectedStyle: any = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge
+
         return (
             <Row >
                 <Col xs={4}>
-                    <Panel header={this.props.HeaderAvailable} className="no-padding-panel" bsStyle="info">
+                    <Panel header={this.props.HeaderAvailable} className="no-padding-anywhere-panel" bsStyle="info">
                         <div>
                             {headerFirstListBox}
-                            <ListGroup fill className="AvailableDropZone" style={listGroupStyleAvailable}
+                            <ListGroup fill className="AvailableDropZone" style={listGroupAvailableStyle}
                                 onDragEnter={(event) => this.DragEnterAvailable(event)}
                                 onDragOver={(event) => this.DragOverAvailable(event)}
                                 onDragLeave={(event) => this.DragLeaveAvailable(event)}>
@@ -167,7 +171,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     </Panel>
                 </Col>
                 <Col xs={2} style={colButtonStyle} >
-                    <ButtonGroup>
+                    <ButtonGroup  >
                         <Button disabled={this.state.AvailableValues.length == 0}
                             onClick={() => this.AddAll()} block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
                         <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
@@ -179,9 +183,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     </ButtonGroup>
                 </Col>
                 <Col xs={4} >
-                    <Panel header={this.props.HeaderSelected} className="no-padding-panel" bsStyle="info">
+                    <Panel header={this.props.HeaderSelected} className="no-padding-anywhere-panel" bsStyle="info">
                         <div>
-                            <ListGroup fill style={listGroupStyle} className="SelectedDropZone"
+                            <ListGroup fill style={listGroupSelectedStyle} className="SelectedDropZone"
                                 onDragEnter={(event) => this.DragEnterSelected(event)}
                                 onDragOver={(event) => this.DragOverSelected(event)}
                                 onDragLeave={(event) => this.DragLeaveSelected(event)}>
@@ -640,20 +644,32 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 }
 
 
-var listGroupStyleAvailable: React.CSSProperties = {
+var listGroupStyleAvailableLarge: React.CSSProperties = {
     'overflowY': 'auto',
-    'maxHeight': '411px',
-    'height': '371px',
+    'height': '430px',
     'marginBottom': '0'
 };
 
-var listGroupStyle: React.CSSProperties = {
+var listGroupStyleSelectedLarge: React.CSSProperties = {
     'overflowY': 'auto',
-    'maxHeight': '450px',
-    'height': '410px',
+    'height': '470px',
+    'marginBottom': '0'
+};
+var listGroupStyleAvailableSmall: React.CSSProperties = {
+    'overflowY': 'auto',
+    'height': '330px',
+    'marginBottom': '0'
+};
+
+var listGroupStyleSelectedSmall: React.CSSProperties = {
+    'overflowY': 'auto',
+    'height': '370px',
     'marginBottom': '0'
 };
 
 var colButtonStyle = {
-    transform: 'translateY(100px)'
+    transform: 'translateY(100px)',
+    horitzontalAlign: 'center',
+    margin: '0px',
+    padding: '0px'
 }

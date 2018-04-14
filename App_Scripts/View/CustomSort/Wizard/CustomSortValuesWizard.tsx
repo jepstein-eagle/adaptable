@@ -43,7 +43,8 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
                     DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                     SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
                     ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
+                     ReducedDisplay={true} />
             </PanelWithInfo>
         </div>
     }

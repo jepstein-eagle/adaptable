@@ -55,11 +55,18 @@ button.placeholder:before {
   color: White;
 }
 
-.no-padding-panel > [class*='panel-body'] {
+.no-padding-except-top-panel > [class*='panel-body'] {
     padding-right:0;
 	padding-left: 0;
 	padding-bottom: 0;
 	padding-top: 5px;
+}
+
+.no-padding-anywhere-panel > [class*='panel-body'] {
+    padding-right:0;
+	padding-left: 0;
+	padding-bottom: 0;
+	padding-top: 0px;
 }
 
 .small-padding-panel > [class*='panel-body'] {
@@ -86,16 +93,14 @@ button.placeholder:before {
 
 /*Styling for our main modal windows*/
 .adaptable_blotter_modal_main_popup{
-  width: 900px;
-  height: 570px;
+  width: 700px;
+  height: 590px;
 }
 
 .adaptable_blotter_modal_main_wizard{
-  width: 900px;
-  height: 550px;
+  width: 700px;
+  height: 520px;
 }
-
-
 
 .adaptale_blotter_object_list_item{
   overflow-y: auto;

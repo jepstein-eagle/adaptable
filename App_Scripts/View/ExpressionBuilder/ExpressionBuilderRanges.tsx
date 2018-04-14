@@ -24,6 +24,8 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
     render() {
 
         let selectedColumnDataType = this.props.SelectedColumn.DataType
+        let addButton = <Button bsSize={"small"} bsStyle={"default"}  onClick={() => this.addRange()}><Glyphicon glyph="plus" />Add Range</Button>
+        
         let rangesElement: JSX.Element[] = this.props.Ranges.map((range, index) => {
 
             let optionLeafOperators = ExpressionHelper.GetOperatorsForDataType(selectedColumnDataType).map((operator: LeafExpressionOperator) => {
@@ -93,11 +95,10 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             </div>
         })
 
-        return <PanelWithButton headerText={"Ranges"} className="no-padding-panel" bsStyle="info" style={divStyle}
-            buttonClick={() => this.addRange()}
-            buttonContent={"Add Range"}>
+        return <Panel className="no-padding-anywhere-panel" style={divStyle}>
+            {addButton}
             {rangesElement}
-        </PanelWithButton>
+        </Panel>
 
     }
 
@@ -179,10 +180,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'overflowX': 'hidden',
-    'height': '445px',
-    'maxHeight': '445px',
-    'marginBottom': '0'
+    'height': '300px',
 }
 
 let betweenDivStyle: React.CSSProperties = {
@@ -194,21 +192,21 @@ let deleteButtonStyle = {
 }
 
 let dropDownStyle = {
-    'width': '195px',
+    'width': '250px',
     'marginLeft': '10px',
     'marginRight': '0px',
     'marginTop': '0px'
 }
 
 let operandStyle = {
-    'width': '160px',
+    'width': '200px',
     'marginLeft': '0px',
     'marginRight': '2px',
     'marginTop': '0px'
 }
 
 let rangeOperatorStyle = {
-    'width': '80px',
+    'width': '100px',
     'marginLeft': '10px',
     'marginRight': '0px',
     'marginTop': '0px'

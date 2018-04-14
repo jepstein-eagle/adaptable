@@ -2,6 +2,7 @@ import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import {  SelectionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { SingleListBox } from "../Components/ListBox/SingleListBox";
+import { Panel } from "react-bootstrap";
 
 
 export interface ExpressionBuilderColumnValuesProps extends React.ClassAttributes<ExpressionBuilderColumnValues> {
@@ -13,7 +14,7 @@ export interface ExpressionBuilderColumnValuesProps extends React.ClassAttribute
 export class ExpressionBuilderColumnValues extends React.Component<ExpressionBuilderColumnValuesProps, {}> {
 
     render() {
-        return <PanelWithButton headerText={"Column Values"} className="no-padding-panel" style={divStyle}  bsStyle="info">
+        return <Panel className="no-padding-anywhere-panel" style={divStyle}>
             <SingleListBox  Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
                 DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
@@ -22,12 +23,11 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
                 onSelectedChange={(list) => this.props.onColumnValuesChange(list)}
                 SelectionMode={SelectionMode.Multi}>
             </SingleListBox>
-        </PanelWithButton>
+        </Panel>
     }
 }
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '445px',
-    'marginBottom': '0'
+    'height': '315px',
 }

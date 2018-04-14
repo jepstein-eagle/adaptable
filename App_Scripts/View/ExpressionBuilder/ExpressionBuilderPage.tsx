@@ -6,10 +6,15 @@ import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
-import { ExpressionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus } from '../../Core/Enums'
 import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { IRange } from "../../Core/Interface/IRange";
+import { PanelWithButton } from "../Components/Panels/PanelWithButton";
+import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
+import { ObjectFactory } from "../../Core/ObjectFactory";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     Columns: Array<IColumn>
@@ -25,42 +30,87 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
 export interface ExpressionBuilderPageState {
     Expression: Expression
     SelectedColumnId: string
+    // QueryBuildStatus: QueryBuildStatus
 }
 
 export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState> implements AdaptableWizardStep {
 
+
+
     render() {
 
-        return <div className="adaptable_blotter_style_wizard_query">
+        let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
-            <Row>
-                <Col xs={8}>
-                    <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
-                        Expression={this.state.Expression}
-                        ExpressionMode={(this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
-                        onExpressionChange={(expression) => this.onChangeExpression(expression)}
-                        onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                        SelectedColumnId={this.state.SelectedColumnId}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
-                    </ExpressionBuilderConditionSelector>
-                </Col>
-                <Col xs={4}>
-                    <ExpressionBuilderPreview Expression={this.state.Expression}
-                        UserFilters={this.props.UserFilters}
-                        onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
-                        SelectedColumnId={this.state.SelectedColumnId}
-                        ColumnsList={this.props.Columns}
-                        DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
-                        DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
-                        DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
-                        DeleteAllColumnExpression={(columnId) => this.DeleteAllColumnExpression(columnId)}
-                        ShowPanel={true}>
-                    </ExpressionBuilderPreview>
-                </Col>
-            </Row>
+
+        let newButton = <ButtonCondition onClick={() => this.onSelectedColumnChanged()}
+            overrideDisableButton={queryBuildStatus == QueryBuildStatus.SelectColumn}
+            overrideTooltip="Add Condition"
+            style={{ width: "230px" }}
+            DisplayMode="Glyph+Text"
+        />
+
+        // (selectedColumnRanges.length > 0 || selectedColumnValues.length > 0 || selectedColumnFilterExpressions.length > 0) ?
+        //  QueryBuildStatus.MultiColumnConditionsAdded :
+        //  QueryBuildStatus.ColumnSelected
+
+
+        return <div className="adaptable_blotter_style_wizard_query">
+            <PanelWithButton headerText="Query Builder"
+                button={newButton}
+                bsStyle="primary" style={{ height: '500px' }}>
+                <Row>
+                    <Col xs={6}>
+                        <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
+                            QueryBuildStatus={queryBuildStatus}
+                            UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
+                            Expression={this.state.Expression}
+                            ExpressionMode={(this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
+                            onExpressionChange={(expression) => this.onChangeExpression(expression)}
+                            onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                            SelectedColumnId={this.state.SelectedColumnId}
+                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
+                        </ExpressionBuilderConditionSelector>
+                    </Col>
+                    <Col xs={6}>
+                        <ExpressionBuilderPreview Expression={this.state.Expression}
+                            UserFilters={this.props.UserFilters}
+                            onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
+                            SelectedColumnId={this.state.SelectedColumnId}
+                            ColumnsList={this.props.Columns}
+                            DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
+                            DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
+                            DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
+                            DeleteAllColumnExpression={(columnId) => this.DeleteAllColumnExpression(columnId)}
+                            ShowPanel={true}>
+                        </ExpressionBuilderPreview>
+                    </Col>
+                </Row>
+            </PanelWithButton>
         </div>
+    }
+
+
+    getQueryBuildStatus(): QueryBuildStatus {
+        // if now expression then assume its new  - fair?
+        if (ExpressionHelper.IsExpressionEmpty(this.state.Expression)) {
+            if (StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)) {
+                return QueryBuildStatus.SelectColumn; // you neeed to select a column
+            } else {
+                return QueryBuildStatus.ColumnSelected; // column is selected but you need to add some elements
+            }
+        } else { // we have an expression
+            if (StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)) {
+                return QueryBuildStatus.SelectColumn; // you neeed to select a column
+            } else {
+                return QueryBuildStatus.ConditionsAdded; // do we need this status???
+            }
+        }
+    }
+
+    onSelectedColumnChanged() {
+        this.setState({ SelectedColumnId: "" } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
+
     }
 
     DeleteColumnValue(columnId: string, value: any) {

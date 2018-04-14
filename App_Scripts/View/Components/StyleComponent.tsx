@@ -36,12 +36,9 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
         return <div className="adaptable_blotter_style_styleeditor">
             <Panel header="Style" bsStyle="primary">
 
-                <Panel header="Cell Colours" eventKey="1" bsStyle="info"  >
+                <Panel header="Cell Colours" bsStyle="info"  >
                     <Col xs={12}>
-                        <HelpBlock>Set the fore or back colours by ticking the checkbox and selecting a colour from the dropdown.</HelpBlock>
-                    </Col>
-                     <Col xs={12}>
-                        <HelpBlock>Leave unchecked to continue using the colours from the cell's existing style.</HelpBlock>
+                        <HelpBlock>Set the fore or back colours by ticking the checkbox and selecting a colour from the dropdown.  Leave unchecked to continue using the colours from the cell's existing style.</HelpBlock>
                     </Col>
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="colorBackStyle">
@@ -68,7 +65,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     </AdaptableBlotterForm>
                 </Panel>
 
-                <Panel header="Font Properties" eventKey="1" bsStyle="info"  >
+                <Panel header="Font Properties" bsStyle="info"  >
                     <AdaptableBlotterForm horizontal>
                         <FormGroup controlId="fontWeight">
                             <Col xs={12} >

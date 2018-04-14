@@ -60,8 +60,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
 
         let colItems: IColItem[] = [
             { Content: "Target", Size: 2 },
-            { Content: "Style", Size: 3 },
-            { Content: "Query", Size: 5 },
+            { Content: "Style", Size: 2 },
+            { Content: "Query", Size: 6 },
             { Content: "", Size: 2 },
         ]
         let conditionalStyles = this.props.ConditionalStyles.map((conditionalStyle: IConditionalStyle, index) => {
