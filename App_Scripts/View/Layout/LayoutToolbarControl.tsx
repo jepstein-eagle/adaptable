@@ -73,6 +73,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     selected={currentLayoutNameAsArray}
                     onChange={(selected) => { this.onSelectedLayoutChangedForTypeahead(selected) }}
                     options={availableLayouts}
+                    allowNew={false}
+                    newSelectionPrefix={"New Layout: "}
                 />
                 {' '}
                 <ButtonSave onClick={() => this.onSave()}

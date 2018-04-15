@@ -38,7 +38,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
     }
     render(): any {
 
-        let addButton = <Button bsSize={"small"} bsStyle={"default"} style={{marginBottom:'20px'}} onClick={() => this.addSort()}><Glyphicon glyph="plus" />Add Sort</Button>
+        let addButton = <Button bsSize={"small"} bsStyle={"default"} style={{ marginBottom: '20px' }} onClick={() => this.addSort()}><Glyphicon glyph="plus" />Add Sort</Button>
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 4 },
@@ -74,7 +74,9 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
             <Panel header="Sort Information" bsStyle="primary">
                 <div>
                     {addButton}
-                    <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} />
+                    {colItems.length > 0 &&
+                        <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} />
+                    }
                 </div>
             </Panel>
         </div>

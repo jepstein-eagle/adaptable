@@ -45,12 +45,12 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             this.onNew()
         }
         // dont think we will ever let you an edit a layout this way - only create and then save what is currently in the grid.
-     //   if (this.props.PopupParams == "Edit") {
-     //       let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
-     //       if (currentLayout) {
-      ///          this.onEdit(currentLayout)
-       //     }
-      //  }
+        //   if (this.props.PopupParams == "Edit") {
+        //       let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
+        //       if (currentLayout) {
+        ///          this.onEdit(currentLayout)
+        //     }
+        //  }
     }
 
     render() {
@@ -66,7 +66,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             { Content: "", Size: 2 },
         ]
 
-        let LayoutRows = this.props.Layouts.filter(l=>l.Name!=GeneralConstants.DEFAULT_LAYOUT).map((x, index) => {
+        let LayoutRows = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT).map((x, index) => {
             return <LayoutEntityRow
                 key={index}
                 ColItems={colItems}
@@ -138,9 +138,19 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
     onFinishWizard() {
         let clonedObject: ILayout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+
+        let layoutNameChanged: boolean = this.state.EditedAdaptableBlotterObjectIndex == -1;
+        if (this.state.EditedAdaptableBlotterObjectIndex > -1) {
+            let previousLayout = this.props.Layouts[this.state.EditedAdaptableBlotterObjectIndex + 1];
+            layoutNameChanged = previousLayout.Name == this.props.CurrentLayoutName;
+        }
+
         this.props.onAddUpdateLayout(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-      
+
+        if ( layoutNameChanged) { // its new so make it the selected layout or name has changed.
+            this.props.onSelectLayout(clonedObject.Name);
+        }
     }
 }
 

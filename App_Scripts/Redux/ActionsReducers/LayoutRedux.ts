@@ -61,18 +61,12 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             let actionTypedAddUpdate = (<LayoutAddUpdateAction>action)
             layouts = [].concat(state.Layouts);
             index = actionTypedAddUpdate.Index + 1; // we add 1 to the index because the first is always default that is not passed in
-            let currentLayout: string = state.CurrentLayout;
             if (index > 0) {  // it exists
-                let isCurrentLayout: boolean = layouts[index].Name == currentLayout;      
-                layouts[index] = actionTypedAddUpdate.Layout 
-                if (isCurrentLayout) {
-                    currentLayout = actionTypedAddUpdate.Layout.Name;
-                }
-             } else {
+                layouts[index] = actionTypedAddUpdate.Layout
+            } else {
                 layouts.push(actionTypedAddUpdate.Layout)
-                currentLayout = actionTypedAddUpdate.Layout.Name // if new then make it the new layout
             }
-            return Object.assign({}, state, { CurrentLayout: currentLayout, Layouts: layouts })
+            return Object.assign({}, state, { Layouts: layouts })
         case LAYOUT_DELETE:
             let actionTypedDelete = (<LayoutDeleteAction>action)
             layouts = [].concat(state.Layouts)
