@@ -82,7 +82,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                 onReportStopLive={(exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination)}
                 onEdit={(index, Report) => this.onEdit(index, Report as IReport)}
                 onDeleteConfirm={ExportRedux.ReportDelete(index)}
-                isDropUp={index > 1} />
+             />
         });
 
         let newButton = <ButtonNew onClick={() => this.onNew()}

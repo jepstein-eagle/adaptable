@@ -30,14 +30,13 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
-        colItems[0].Content = this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + GeneralConstants.MISSING_COLUMN
-        colItems[1].Content = cellValidation.Description
-        colItems[2].Content = this.setExpressionDescription(cellValidation)
-        colItems[3].Content =
-            <FormControl componentClass="select" placeholder="select" value={cellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
+        colItems[0].Content = this.getColumnandRule(cellValidation)
+        colItems[1].Content = this.setExpressionDescription(cellValidation)
+        colItems[2].Content =
+            <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={cellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
                 {CellValidationModeTypes}
             </FormControl>
-        colItems[4].Content = <EntityListActionButtons
+        colItems[3].Content = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             showShare={this.props.TeamSharingActivated}
             editClick={() => this.props.onEdit(this.props.Index, cellValidation)}
@@ -50,12 +49,19 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         return <AdaptableObjectRow ColItems={colItems} />
     }
 
+  
+
     setExpressionDescription(CellValidation: ICellValidationRule): string {
         return (CellValidation.HasExpression) ?
             ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
             "No Expression";
     }
 
+     private getColumnandRule(cellValidation: ICellValidationRule):string {
+        let columnInfo: string =   this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + GeneralConstants.MISSING_COLUMN
+        columnInfo += ": " +        cellValidation.Description
+        return columnInfo
+       }
 
     onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;

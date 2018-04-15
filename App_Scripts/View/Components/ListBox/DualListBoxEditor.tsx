@@ -657,13 +657,13 @@ var listGroupStyleSelectedLarge: React.CSSProperties = {
 };
 var listGroupStyleAvailableSmall: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '330px',
+    'height': '345px',
     'marginBottom': '0'
 };
 
 var listGroupStyleSelectedSmall: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '370px',
+    'height': '385px',
     'marginBottom': '0'
 };
 

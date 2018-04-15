@@ -57,10 +57,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
         let colItems: IColItem[] = [
-            { Content: "Column", Size: 2 },
-            { Content: "Disallowed Edit", Size: 2 },
+            { Content: "Validation Rule", Size: 4 },
             { Content: "Expression", Size: 4 },
-            { Content: "If Rule Broken", Size: 2 },
+            { Content: "Action", Size: 2 },
             { Content: "", Size: 2 },
         ]
 

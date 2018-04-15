@@ -1,6 +1,6 @@
 import { IReport } from '../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
-import { DropdownButton, MenuItem, Col, Glyphicon } from 'react-bootstrap';
+import { DropdownButton, MenuItem, Col, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../Core/Enums';
 import { ReportHelper } from '../../Core/Helpers/ReportHelper';
@@ -17,7 +17,6 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
     LiveReports: ILiveReport[]
     onExport: (exportDestination: ExportDestination) => void;
     onReportStopLive: (exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => void,
-    isDropUp: boolean;
 }
 
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
@@ -34,7 +33,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
             : <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
 
 
-            let exportGlyph : any = <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
+        let exportGlyph: any = <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
@@ -43,17 +42,19 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         colItems[1].Content = ReportHelper.GetReportColumnsDescription(report, this.props.Columns)
         colItems[2].Content = ReportHelper.GetReportExpressionDescription(report, this.props.Columns, this.props.UserFilters)
 
-        let exportButton = <DropdownButton dropup={this.props.isDropUp}
-            bsSize={"small"}
-            bsStyle={"default"}
-            title={exportGlyph}
-            key={report.Name}
-            id={report.Name}                >
-            {csvMenuItem}
-            {clipboardMenuItem}
-            {OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem}
-            {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
-        </DropdownButton>
+        let exportButton = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {"Export Report"}</Tooltip >}>
+            <DropdownButton
+                bsSize={"small"}
+                bsStyle={"default"}
+                title={exportGlyph}
+                key={report.Name}
+                id={report.Name}                >
+                {csvMenuItem}
+                {clipboardMenuItem}
+                {OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem}
+                {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
+            </DropdownButton>
+        </OverlayTrigger>
 
         colItems[3].Content = exportButton
 
