@@ -30,7 +30,6 @@ function InitBlotter() {
                             bloombergAsk: { type: "number" },
                             bloombergBid: { type: "number" },
                             percentChange: { type: "number" },
-                            bookingGuid: { type: "string" },
                             lastUpdated: { type: "date" },
                             lastUpdatedBy: { type: "string" }
                         }

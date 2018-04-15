@@ -47,7 +47,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Int
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, SortOrder, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, CellValidationMode, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -580,14 +580,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setCustomSort(columnId: string, comparer: Function): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
-        if (this.sortColumnName == columnId) {
+        let gridSort: IGridSort = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
+        if (gridSort) {
             this.ReindexAndRepaint()
         }
     }
 
     public removeCustomSort(columnId: string): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
-        if (this.sortColumnName == columnId) {
+        let gridSort: IGridSort = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
+        if (gridSort) {
             this.ReindexAndRepaint()
         }
     }
@@ -1005,18 +1007,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         grid.addEventListener('fin-selection-changed', () => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
-        this.sortOrder = SortOrder.Unknown;
+
         //this is used so the grid displays sort icon when sorting....
         grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
-            if (columnIndex == this.sortColumnGridIndex) {
-                if (this.sortOrder == SortOrder.Ascending) {
-                    icon = UPWARDS_BLACK_ARROW;
+
+            let gridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+            let cols: any[] = this.grid.behavior.getActiveColumns();
+            gridSorts.forEach((gs: IGridSort) => {
+                let foundCol = cols.find(c => c.name == gs.Column)
+
+                if (foundCol && foundCol.index == columnIndex) {
+                    icon = (gs.SortOrder == SortOrder.Ascending) ? UPWARDS_BLACK_ARROW : DOWNWARDS_BLACK_ARROW;
                 }
-                else if (this.sortOrder == SortOrder.Descending) {
-                    icon = DOWNWARDS_BLACK_ARROW;
-                }
-            }
+            })
             return icon;
         };
         let originGetCell = grid.behavior.dataModel.getCell;
@@ -1156,41 +1160,50 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public sortColumnGridIndex: number = -1
-    public sortColumnName: string = ""
-    public sortOrder: SortOrder
+    //   public sortColumnGridIndex: number = -1
+    //  public sortColumnName: string = ""
+    //   public sortOrder: SortOrder
     public onSortSaved(gridColumnIndex: number) {
         //Toggle sort one column at a time
         //we need the index property not the index of the collection
         let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
-        if (this.sortColumnGridIndex === gridColumnIndexTransposed) {
-            if (this.sortOrder == SortOrder.Descending) {
-                this.sortColumnGridIndex = -1;
-            }
-            else {
-                this.sortOrder = SortOrder.Descending
+
+        let currentGridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+        let newGridSorts: IGridSort[] = [].concat(currentGridSorts)
+
+        let column = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
+
+
+        // not rigth for existing sorts in terms of turning off...
+        let currentGridSort: IGridSort = newGridSorts.find(gs => gs.Column == column);
+        if (currentGridSort) {
+            // if exists and ascending make descending
+            if (currentGridSort.SortOrder == SortOrder.Ascending) {
+                currentGridSort.SortOrder = SortOrder.Descending;
+            } else { // it exists and is descendig so need to 'turn off' (i.e.remove from colection)     
+               let index = newGridSorts.findIndex(a => a.Column == currentGridSort.Column)
+                newGridSorts.splice(index, 1);
             }
         } else {
-            this.sortOrder = SortOrder.Ascending
-            //we need the index property not the index of the collection
-            //this.sortColumnGridIndex = gridColumnIndex;
-            this.sortColumnGridIndex = gridColumnIndexTransposed;
-            this.sortColumnName = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
+            let newGridSort: IGridSort = { Column: column, SortOrder: SortOrder.Ascending }
+            newGridSorts.push(newGridSort);
         }
+
+
+        //  let gridSorts: IGridSort[] = [{ Column: this.sortColumnName, SortOrder: this.sortOrder }]
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(newGridSorts));
         this.grid.behavior.reindex();
-        let gridSorts: IGridSort[] = [{ Column: this.sortColumnName, SortOrder: this.sortOrder }]
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
     }
 
-    public setGridSort(gridSorts:IGridSort[]): void {
-        if (gridSorts.length> 0) { 
-            let gridSort: IGridSort = gridSorts[0];   // we know that for hypergrid tehre is only one sort
-            this.sortColumnGridIndex = this.grid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
-            this.sortColumnName = gridSort.Column;
-            this.sortOrder = gridSort.SortOrder;
-        } else {
-            this.sortColumnGridIndex = -1;
-        }
+    public setGridSort(gridSorts: IGridSort[]): void {
+        //   if (gridSorts.length> 0) { 
+        //      let gridSort: IGridSort = gridSorts[0];   // we know that for hypergrid tehre is only one sort
+        //      this.sortColumnGridIndex = this.grid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
+        //       this.sortColumnName = gridSort.Column;
+        //       this.sortOrder = gridSort.SortOrder;
+        //   } else {
+        //       this.sortColumnGridIndex = -1;
+        //   }
         this.grid.behavior.reindex();
     }
 

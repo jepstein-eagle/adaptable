@@ -122,7 +122,6 @@
 					"bloombergAsk",
 					"bloombergBid",
 					"percentChange",
-					"bookingGuid",
 					"lastUpdated",
 					"lastUpdatedBy"
 				],

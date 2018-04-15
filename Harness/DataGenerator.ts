@@ -218,7 +218,6 @@ export class DataGenerator {
                 "bloombergAsk": this.roundTo4Dp(ask + 0.01),
                 "bloombergBid": this.roundTo4Dp(bid - 0.01),
                 "percentChange": this.generateRandomNullableDouble(),
-                "bookingGuid": this.generateUuid(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
                 "lastUpdatedBy": this.getRandomItem(this.getNames()),
                 /*
@@ -234,7 +233,6 @@ export class DataGenerator {
                   "bloombergAsk2": this.roundTo4Dp(ask + 0.01),
                   "bloombergBid2": this.roundTo4Dp(bid - 0.01),
                   "percentChange2": this.generateRandomNullableDouble(),
-                  "bookingGuid2": this.generateUuid(),
                   "lastUpdated2": this.generateRandomDateAndTime(-7, 0),
                   "lastUpdatedBy2": this.getRandomItem(this.getNames())
                   */

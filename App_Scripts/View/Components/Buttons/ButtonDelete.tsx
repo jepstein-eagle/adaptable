@@ -11,6 +11,7 @@ export interface DeleteButtonProps extends ButtonProps {
     ConfirmAction: Redux.Action
     ConfirmationMsg: string
     ConfirmationTitle: string
+    onClickAction?: () => void;
 }
 
 class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
@@ -19,7 +20,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Delete"
             bsStyle='danger'
             bsSize={this.props.size}
-             ConfigEntity={this.props.ConfigEntity}
+            ConfigEntity={this.props.ConfigEntity}
             glyph="trash"
             onClick={() => this.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
@@ -31,16 +32,21 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
     }
 
     onClick() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel",
-            ConfirmationTitle: this.props.ConfirmationTitle,
-            ConfirmationMsg: this.props.ConfirmationMsg,
-            ConfirmationText: "Delete",
-            CancelAction: null,
-            ConfirmAction: this.props.ConfirmAction,
-            ShowCommentBox: false
+        if (this.props.ConfirmAction) {
+            let confirmation: IUIConfirmation = {
+                CancelText: "Cancel",
+                ConfirmationTitle: this.props.ConfirmationTitle,
+                ConfirmationMsg: this.props.ConfirmationMsg,
+                ConfirmationText: "Delete",
+                CancelAction: null,
+                ConfirmAction: this.props.ConfirmAction,
+                ShowCommentBox: false
+            }
+            this.props.onConfirmWarning(confirmation)
+
+        } else {
+            this.props.onClickAction();
         }
-        this.props.onConfirmWarning(confirmation)
     }
 }
 

@@ -29,7 +29,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: Array<IConditionalStyle>,
-     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
+    onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 

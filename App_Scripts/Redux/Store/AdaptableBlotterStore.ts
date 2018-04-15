@@ -349,7 +349,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                                 overwriteConfirmation = true
                                 importAction = LayoutRedux.LayoutSave(layout)
                             } else {
-                                importAction = LayoutRedux.LayoutAdd(layout)
+                                importAction = LayoutRedux.LayoutAddUpdate(-1, layout)
                             }
                             break;
                         }
@@ -681,7 +681,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let gridState: GridState = middlewareAPI.getState().Grid
                     if (middlewareAPI.getState().Layout.Layouts.length == 0) {
                         let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], DEFAULT_LAYOUT)
-                        middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(-1, layout));
                     }
                     else {
                         //update default layout with latest columns and sort

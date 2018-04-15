@@ -22,11 +22,11 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
         })
 
         let header = <AdaptableBlotterForm horizontal>
-            <Row  style={{ display: "flex", alignItems: "center" }}>
+            <Row  style={{ display: "flex", alignItems: "center", fontSize:"small"}} >
                 {optionColumns}
             </Row>
         </AdaptableBlotterForm>;
-        return <Panel header={header} bsSize={"small"} className="no_padding_no_margin_style"  bsStyle={this.props.bsStyle}>
+        return <Panel header={header} bsSize={"small"} className="no_padding_no_margin_style"  bsStyle={this.props.bsStyle} >
             {this.props.children}
         </Panel>;
     }

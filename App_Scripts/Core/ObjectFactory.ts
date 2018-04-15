@@ -3,7 +3,7 @@ import { ExpressionHelper } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
 import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { IConditionalStyle } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle, RangeOperandType } from '../Core/Enums';
+import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle, RangeOperandType, SortOrder } from '../Core/Enums';
 import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCell } from '../Strategy/Interface/IFlashingCellsStrategy'
@@ -53,6 +53,13 @@ export module ObjectFactory {
             Operand2: "",
             Operand1Type: RangeOperandType.Value,
             Operand2Type: RangeOperandType.Value
+        }
+    }
+
+    export function CreateEmptyGridSort(): IGridSort {
+        return {
+            Column: "",
+            SortOrder: SortOrder.Unknown
         }
     }
 

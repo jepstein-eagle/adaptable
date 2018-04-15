@@ -75,7 +75,7 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
         // todo
     }
     public GetIndexStepIncrement() {
-        return (this.state.LayoutSource == LayoutSource.Existing) ? 3 : 1;
+        return 1;//(this.state.LayoutSource == LayoutSource.Existing) ? 3 : 1;
     }
     public GetIndexStepDecrement() {
         return 1;

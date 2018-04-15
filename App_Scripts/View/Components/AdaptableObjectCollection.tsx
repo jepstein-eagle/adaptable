@@ -18,9 +18,9 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
 
         let bsStyle: string = (this.props.bsStyle )? this.props.bsStyle: "info"
         let className: string = (this.props.reducedPanel==true )? "adaptale_blotter_object_list_item_medium": "adaptale_blotter_object_list_item"
-        return <div>
+        return <div >
             <PanelWithRow ColItems={this.props.ColItems} bsStyle={bsStyle} bsSize={"small"} />
-            <ListGroup className={className}>
+            <ListGroup className={className} style={{overflowY: "visible"}}>
                 {this.props.items}
             </ListGroup>
         </div>

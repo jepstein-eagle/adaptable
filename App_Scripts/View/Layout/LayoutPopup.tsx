@@ -29,7 +29,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
     CurrentLayoutName: string;
-    onAddUpdateLayout: (Layout: ILayout) => LayoutRedux.LayoutAddAction,
+    onAddUpdateLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutAddUpdateAction,
     onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
 }
@@ -44,13 +44,13 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         if (this.props.PopupParams == "New") {
             this.onNew()
         }
-        // dont think we will ever let you an edit a layout - only create and then save what is currently in the grid.
-        if (this.props.PopupParams == "Edit") {
-            let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
-            if (currentLayout) {
-                this.onEdit(currentLayout)
-            }
-        }
+        // dont think we will ever let you an edit a layout this way - only create and then save what is currently in the grid.
+     //   if (this.props.PopupParams == "Edit") {
+     //       let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
+     //       if (currentLayout) {
+      ///          this.onEdit(currentLayout)
+       //     }
+      //  }
     }
 
     render() {
@@ -75,7 +75,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 Index={index}
-                onEdit={(index, x) => this.onEdit(x as ILayout)}
+                onEdit={(index, x) => this.onEdit(index, x as ILayout)}
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={LayoutRedux.LayoutDelete(x.Name)}
@@ -126,9 +126,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateLayout([], [], ""), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
-    onEdit(Layout: ILayout) {
-        let clonedObject: ILayout = Helper.cloneObject(Layout);
-        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 })
+    onEdit(index: number, layout: ILayout) {
+        let clonedObject: ILayout = Helper.cloneObject(layout);
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index })
     }
 
     onCloseWizard() {
@@ -138,11 +138,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
     onFinishWizard() {
         let clonedObject: ILayout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+        this.props.onAddUpdateLayout(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-        this.props.onAddUpdateLayout(clonedObject);
-        if (this.state.EditedAdaptableBlotterObjectIndex == -1) {// its new so make it the selected layout
-            this.props.onSelectLayout(clonedObject.Name);
-        }
+      
     }
 }
 
@@ -155,7 +153,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateLayout: (Layout: ILayout) => dispatch(LayoutRedux.LayoutAdd(Layout)),
+        onAddUpdateLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutAddUpdate(index, layout)),
         onSelectLayout: (selectedSearchName: string) => dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
     };

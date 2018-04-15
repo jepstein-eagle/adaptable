@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Checkbox } from 'react-bootstrap';
+import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Checkbox, Glyphicon, Button } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
@@ -7,30 +7,64 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { SortOrder, SelectionMode } from "../../../Core/Enums";
 import { IGridSort } from "../../../Core/Interface/Interfaces";
-import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
+import { GridSortRow } from '../GridSortRow'
+import { IColItem } from "../../UIInterfaces";
+import { AdaptableObjectCollection } from '../../Components/AdaptableObjectCollection';
+import { ObjectFactory } from "../../../Core/ObjectFactory";
+import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
+
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: Array<IColumn>
 }
 
 export interface LayoutGridSortWizardState {
-    ColumnId: string,
-    SortOrder: SortOrder,
-    HasSortOrder: boolean
+    GridSorts: IGridSort[]
 }
 
 export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardProps, LayoutGridSortWizardState> implements AdaptableWizardStep {
+
+
+    onEdit(arg0: any): any {
+        throw new Error("Method not implemented.");
+    }
     constructor(props: LayoutGridSortWizardProps) {
         super(props)
-        
+
         this.state = {
-            ColumnId: (this.props.Data.GridSorts.length > 0) ? this.props.Data.GridSorts[0].Column : "",
-            SortOrder: (this.props.Data.GridSorts.length > 0) ? this.props.Data.GridSorts[0].SortOrder : SortOrder.Ascending,
-            HasSortOrder: this.props.Data.GridSorts.length > 0 
+            GridSorts: this.props.Data.GridSorts
         }
     }
     render(): any {
+
+        let addButton = <Button bsSize={"small"} bsStyle={"default"} style={{marginBottom:'20px'}} onClick={() => this.addSort()}><Glyphicon glyph="plus" />Add Sort</Button>
+
+        let colItems: IColItem[] = [
+            { Content: "Column", Size: 4 },
+            { Content: "Sort Order", Size: 4 },
+            { Content: "", Size: 4 },
+        ]
+
+        let gridSortRows = this.state.GridSorts.map((x, index) => {
+            return <GridSortRow
+                key={index}
+                AdaptableBlotterObject={null}
+                ColItems={colItems}
+                Columns={this.props.Columns}
+                UserFilters={null}
+                Index={index}
+                onEdit={null}
+                onDeleteGridSort={() => this.onDeleteGridSort(index)}
+                onGridSortColumnChanged={(column) => this.onColumnSelectedChanged(index, column)}
+                onGridSortOrderChanged={(sortOrder) => this.onSortOrderChanged(index, sortOrder)}
+                onShare={null}
+                TeamSharingActivated={false}
+                onDeleteConfirm={null}
+                GridSort={x}
+            >
+            </GridSortRow>
+        })
 
         let sortOrders = EnumExtensions.getNames(SortOrder).filter(s => s != SortOrder.Unknown).map((enumName) => {
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
@@ -38,71 +72,60 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
 
         return <div className="adaptable_blotter_style_wizard_layout_settings">
             <Panel header="Sort Information" bsStyle="primary">
-                <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="layoutShowSort">
-                        <Col xs={4} componentClass={ControlLabel}>Add Column Sort to Layout: </Col>
-                        <Col xs={1}>
-                            <Checkbox value="HasSortOrder" checked={this.state.HasSortOrder} onChange={(e) => this.onHasSortCheckedChanged(e)} />
-                        </Col>
-                        <Col xs={6} />
-                    </FormGroup>
-                    {this.state.HasSortOrder &&
-                        <div>
-                            <FormGroup controlId="layoutSortColumn" >
-                                <Col xs={4} componentClass={ControlLabel}>Column: </Col>
-                                <Col xs={5}>
-                                    <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
-                                        ColumnList={this.props.Columns}
-                                        onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                                        SelectionMode={SelectionMode.Single} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup controlId="layoutSortOrder">
-                                <Col xs={4} componentClass={ControlLabel}>Sort Order: </Col>
-                                <Col xs={5}>
-                                    <FormControl componentClass="select" placeholder="select"
-                                        value={this.state.SortOrder}
-                                        onChange={(x) => this.onSortOrderChanged(x)} >
-                                        {sortOrders}
-
-                                    </FormControl>
-                                </Col>
-                            </FormGroup>
-                        </div>
-                    }
-                </AdaptableBlotterForm>
+                <div>
+                    {addButton}
+                    <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} />
+                </div>
             </Panel>
         </div>
     }
 
+
+    addSort(): any {
+        let sorts: IGridSort[] = [].concat(this.state.GridSorts, ObjectFactory.CreateEmptyGridSort())
+        this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
+
+    }
     private onHasSortCheckedChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ HasSortOrder: e.checked } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
+        //    this.setState({ HasSortOrder: e.checked } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
+    private onColumnSelectedChanged(index: number, column: IColumn) {
+        let sorts: IGridSort[] = [].concat(this.state.GridSorts)
+        let sort: IGridSort = sorts[index];
+        sort.Column = column.ColumnId;
+        this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onSortOrderChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.setState({ SortOrder: e.value } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
+    private onSortOrderChanged(index: number, sortOrder: SortOrder) {
+        let sorts: IGridSort[] = [].concat(this.state.GridSorts)
+        let sort: IGridSort = sorts[index];
+        sort.SortOrder = sortOrder;
+        this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
+    }
+
+    private onDeleteGridSort(index: number): any {
+        let sorts: IGridSort[] = [].concat(this.state.GridSorts)
+        sorts.splice(index, 1);
+        this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
-        if (this.state.HasSortOrder) {
-            return StringExtensions.IsNotNullOrEmpty(this.state.ColumnId);
-        }
-        return true
+        let canNext: boolean = true;
+        this.state.GridSorts.forEach(gs => {
+            if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
+                canNext = false;
+            }
+        })
+        return canNext;
     }
 
 
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        if (this.state.HasSortOrder) {
-            this.props.Data.GridSorts = [{ Column: this.state.ColumnId, SortOrder: this.state.SortOrder }]
-        }
+        this.props.Data.GridSorts = this.state.GridSorts
     }
     public Back(): void {
         // todo

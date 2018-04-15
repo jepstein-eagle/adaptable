@@ -21,7 +21,7 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
     constructor(props: LayoutColumnWizardProps) {
         super(props)
         this.state = {
-            SelectedColumns: [],
+            SelectedColumns: this.props.Data.Columns.map(col => this.props.Columns.find(x => x.ColumnId == col).FriendlyName)
         }
         //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }

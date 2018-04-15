@@ -11,6 +11,7 @@ import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IGridSort } from "../../Core/Interface/Interfaces";
 import { IColumn } from "../../Core/Interface/IColumn";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { SortOrder } from "../../Core/Enums";
 
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {
@@ -25,6 +26,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
+
         colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(layout)} checked={this.props.IsCurrentLayout} />
         colItems[1].Content = layout.Name;
         colItems[2].Content = this.getLayoutDescription(layout)
@@ -32,9 +34,9 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         let buttons: any = <EntityListActionButtons
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             showShare={this.props.TeamSharingActivated}
-            editClick={null}
+            editClick={() => this.props.onEdit(this.props.Index, layout)}
             shareClick={() => this.props.onShare()}
-            overrideDisableEdit={true}
+            overrideDisableEdit={false}
             overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}
             ConfigEntity={layout}
             EntityName={StrategyNames.LayoutStrategyName} />
@@ -48,15 +50,30 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         let returnString: string = "";
         let gridSorts: IGridSort[] = layout.GridSorts;
         returnString += layout.Columns.length + " Columns; ";
-        returnString += (gridSorts.length > 0) ?
-            "Sort: " + this.getColumnDescription(gridSorts[0].Column) + " (" + gridSorts[0].SortOrder + ")" :
-            "No Sort";
+        returnString += "\n"
+        returnString += this.getGridSort(layout.GridSorts);
         return returnString;
+    }
+
+    private getGridSort(gridSorts: IGridSort[]): string {
+        if (gridSorts.length == 0) {
+            return "No Sort";
+        }
+
+        let returnString: string = "Sort: "
+        gridSorts.forEach((gs: IGridSort) => {
+            returnString += this.getColumnDescription(gs.Column) + this.getSortOrder(gs.SortOrder)
+        })
+        return returnString;
+    }
+
+    private getSortOrder(sortOrder: SortOrder): string {
+        return (sortOrder == SortOrder.Ascending) ? " [asc] " : " [desc] "
     }
 
     private getColumnDescription(columnId: string): string {
         let column: IColumn = this.props.Columns.find(c => c.ColumnId == columnId);
-        return (column)? column.FriendlyName : GeneralConstants. MISSING_COLUMN;
+        return (column) ? column.FriendlyName : GeneralConstants.MISSING_COLUMN;
     }
 
 }
