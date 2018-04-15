@@ -48,7 +48,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
                 <Typeahead
                     bsSize="small"
-                    className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
+                    className={"adaptable_blotter_typeahead_inline"} 
+                    ref="typeahead" 
+                    emptyLabel={"No Advanced Search found with that name"}
                     placeholder={"Select a Search"}
                     labelKey={"Name"}
                     filterBy={["Name"]}

@@ -35,7 +35,8 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
                    SelectedValues={this.state.SelectedColumns}
                     HeaderAvailable="Available Columns"
                     HeaderSelected="Columns in Layout"
-                    onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+                    onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
+                    ReducedDisplay={true} />
             </PanelWithInfo>
         </div>
     }

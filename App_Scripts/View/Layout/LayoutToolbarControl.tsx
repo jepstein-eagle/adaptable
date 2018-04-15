@@ -23,6 +23,8 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IGridSort } from "../../Core/Interface/Interfaces";
 import { ObjectFactory } from "../../Core/ObjectFactory";
+import { Typeahead } from 'react-bootstrap-typeahead'
+
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
@@ -36,30 +38,42 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
     render(): any {
-
-        let layoutEntity = this.props.Layouts.find(x => x.Name == this.props.CurrentLayout)
+        let nonDefaultLayouts = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT);
+        let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout)
         let isLayoutModified = this.isLayoutModified(layoutEntity);
-        let availableLayouts = this.props.Layouts.map((x, index) => {
+        let currentLayoutNameAsArray: string[] =[];
+         let availableLayouts = nonDefaultLayouts.map((x) => {
             if (x.Name == this.props.CurrentLayout) {
+             let currentLayoutName: string
                 if (!isLayoutModified) {
-                    return <option value={x.Name} key={index}>{x.Name}</option>
+                     currentLayoutName = x.Name
                 }
                 else {
-                    return <option value={x.Name} key={index}>{x.Name + "(Modified)"}</option>
+                    currentLayoutName= x.Name + "(Modified)"
                 }
+                currentLayoutNameAsArray.push(currentLayoutName);
+                return currentLayoutName
             }
             else {
-                return <option value={x.Name} key={index}>{x.Name}</option>
+                return x.Name
             }
         })
 
+      
         let content = <span>
             <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-                <FormControl componentClass="select" placeholder="select" bsSize={"small"}
-                    value={this.props.CurrentLayout}
-                    onChange={(x) => this.onSelectedLayoutChanged(x)} >
-                    {availableLayouts}
-                </FormControl>
+                <Typeahead
+                    bsSize="small"
+                    className={"adaptable_blotter_typeahead_inline"}
+                    ref="typeahead"
+                    emptyLabel={"No Layout found with that name"}
+                    placeholder={"Select a Layout"}
+                    labelKey={"Name"}
+                    clearButton={true}
+                    selected={currentLayoutNameAsArray}
+                    onChange={(selected) => { this.onSelectedLayoutChangedForTypeahead(selected) }}
+                    options={availableLayouts}
+                />
                 {' '}
                 <ButtonSave onClick={() => this.onSave()}
                     size={"small"}
@@ -118,23 +132,9 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
 
-    private onSelectedLayoutChangedForTypeahead(selected: ILayout[]) {
-        this.props.onSelectLayout(selected.length > 0 ? selected[0].Name : "");
-        /*
-         <Typeahead
-                    bsSize="small"
-                    className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Advanced Search found with that search"}
-                    placeholder={"Select a Layout"}
-                    labelKey={"Name"}
-                    filterBy={["Name"]}
-                    clearButton={true}
-                    selected={[this.props.CurrentLayout]}
-                    onChange={(selected) => { this.onSelectedLayoutChanged(selected) }}
-                    options={this.props.Layouts}
-                    defaultSelected={[defaultLayout]}
-                />
-
-                */
+    private onSelectedLayoutChangedForTypeahead(selected: string[]) {
+        let selectedLayout = selected.length > 0 ? selected[0] : GeneralConstants.DEFAULT_LAYOUT
+        this.props.onSelectLayout(selectedLayout);
     }
 
     private onSave() {

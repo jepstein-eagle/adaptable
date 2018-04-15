@@ -684,7 +684,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
                     }
                     else {
-                        //update default layout with latest columns
+                        //update default layout with latest columns and sort
                         let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutSave(layout))
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout

@@ -23,9 +23,11 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
-    Layoutes: ILayout[];
+    Layouts: ILayout[];
     CurrentLayoutName: string;
     onAddUpdateLayout: (Layout: ILayout) => LayoutRedux.LayoutAddAction,
     onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction,
@@ -44,7 +46,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         }
         // dont think we will ever let you an edit a layout - only create and then save what is currently in the grid.
         if (this.props.PopupParams == "Edit") {
-            let currentLayout = this.props.Layoutes.find(as => as.Name == this.props.CurrentLayoutName)
+            let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
             if (currentLayout) {
                 this.onEdit(currentLayout)
             }
@@ -52,7 +54,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     }
 
     render() {
-        let currentLayout = this.props.Layoutes.find(as => as.Name == this.props.CurrentLayoutName)
+        let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
 
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
@@ -64,7 +66,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             { Content: "", Size: 2 },
         ]
 
-        let LayoutRows = this.props.Layoutes.map((x, index) => {
+        let LayoutRows = this.props.Layouts.filter(l=>l.Name!=GeneralConstants.DEFAULT_LAYOUT).map((x, index) => {
             return <LayoutEntityRow
                 key={index}
                 ColItems={colItems}
@@ -104,7 +106,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <LayoutWizard
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
-                        ConfigEntities={this.props.Layoutes}
+                        ConfigEntities={this.props.Layouts}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -146,7 +148,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        Layoutes: state.Layout.Layouts,
+        Layouts: state.Layout.Layouts,
         CurrentLayoutName: state.Layout.CurrentLayout,
     };
 }
