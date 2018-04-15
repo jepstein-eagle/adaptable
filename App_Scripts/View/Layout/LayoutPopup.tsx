@@ -56,8 +56,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     render() {
         let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
 
-        let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
-            "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
+        let infoBody: any[] = ["Create layouts - groups of column order, visibility and sorts.", <br />, <br />,
+            "You can create as many layouts as you wish."]
 
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
@@ -99,7 +99,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
                 {LayoutRows.length == 0 &&
                     <Well bsSize="small">
-                        <HelpBlock>Click 'New' to start creating advanced searches.</HelpBlock>
+                        <HelpBlock>Click 'New' to start creating layouts.</HelpBlock>
                     </Well>
                 }
 

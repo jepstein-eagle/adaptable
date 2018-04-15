@@ -12,7 +12,8 @@ export interface ListBoxFilterSortComponentProps extends React.ClassAttributes<L
 
 export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSortComponentProps, {}> {
     render() {
-        return <AdaptableBlotterForm horizontal>
+        return <div>
+            <AdaptableBlotterForm horizontal>
             <FormGroup style={{ margin: 0 }}>
                 <InputGroup>
                     <FormControl
@@ -36,6 +37,7 @@ export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSor
                 </InputGroup>
             </FormGroup>
         </AdaptableBlotterForm>
+        </div>
     }
 
     handleChangeFilterValue(x: React.FormEvent<any>) {

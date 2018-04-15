@@ -74,7 +74,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
             <Panel header="Sort Information" bsStyle="primary">
                 <div>
                     {addButton}
-                    {colItems.length > 0 &&
+                    {gridSortRows.length > 0 &&
                         <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} />
                     }
                 </div>
