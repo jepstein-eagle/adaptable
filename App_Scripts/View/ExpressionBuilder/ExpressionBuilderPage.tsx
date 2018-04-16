@@ -30,12 +30,9 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
 export interface ExpressionBuilderPageState {
     Expression: Expression
     SelectedColumnId: string
-    // QueryBuildStatus: QueryBuildStatus
 }
 
 export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState> implements AdaptableWizardStep {
-
-
 
     render() {
 
@@ -43,7 +40,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
 
         let newButton = <ButtonCondition onClick={() => this.onSelectedColumnChanged()}
-            overrideDisableButton={queryBuildStatus == QueryBuildStatus.SelectColumn}
+            overrideDisableButton={queryBuildStatus == QueryBuildStatus.SelectFirstColumn || queryBuildStatus == QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == QueryBuildStatus.SingleConditionsAdded}
             overrideTooltip="Add Condition"
             style={{ width: "230px" }}
             DisplayMode="Glyph+Text"
@@ -95,15 +92,15 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         // if now expression then assume its new  - fair?
         if (ExpressionHelper.IsExpressionEmpty(this.state.Expression)) {
             if (StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)) {
-                return QueryBuildStatus.SelectColumn; // you neeed to select a column
+                return QueryBuildStatus.SelectFirstColumn; // you neeed to select a column
             } else {
                 return QueryBuildStatus.ColumnSelected; // column is selected but you need to add some elements
             }
         } else { // we have an expression
             if (StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)) {
-                return QueryBuildStatus.SelectColumn; // you neeed to select a column
+                return QueryBuildStatus.SelectFurtherColumn; // you neeed to select another column
             } else {
-                return QueryBuildStatus.ConditionsAdded; // do we need this status???
+                return (this.props.ExpressionMode == ExpressionMode.SingleColumn) ? QueryBuildStatus.SingleConditionsAdded : QueryBuildStatus.MultipleConditionsAdded; // do we need this status???
             }
         }
     }

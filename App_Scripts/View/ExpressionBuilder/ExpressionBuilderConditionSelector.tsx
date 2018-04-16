@@ -137,20 +137,26 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             selectedColumnText += "This Query can only contain one Query Condition."
         }
 
-        let addButtonText: string = "Click to add another 'Column Condition' to the query."
-
-        let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
+        let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
         return <PanelWithButton headerText={panelHeader} bsStyle="info" style={{ height: '425px' }}>
 
 
-            {this.state.QueryBuildStatus == QueryBuildStatus.SelectColumn ?
+            {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ?
                 <div>
-                    <Well bsSize="small">
-                        <HelpBlock>
-                            {firstTimeText}
-                        </HelpBlock>
-                    </Well>
+                    {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ?
+                        <Well bsSize="small">
+                            <HelpBlock>
+                                {firstTimeText}
+                            </HelpBlock>
+                        </Well>
+                        :
+                        <Well bsSize="small">
+                            <HelpBlock>
+                                {secondTimeText}
+                            </HelpBlock>
+                        </Well>
+                    }
 
                     <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]}
                         ColumnList={this.props.ColumnsList}

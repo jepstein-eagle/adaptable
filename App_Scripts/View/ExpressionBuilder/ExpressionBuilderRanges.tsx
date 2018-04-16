@@ -24,7 +24,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
     render() {
 
         let selectedColumnDataType = this.props.SelectedColumn.DataType
-        let addButton = <Button bsSize={"small"} bsStyle={"default"}  onClick={() => this.addRange()}><Glyphicon glyph="plus" />Add Range</Button>
+        let addButton = <Button bsSize={"small"} bsStyle={"default"}  onClick={() => this.addRange()}><Glyphicon glyph="plus" /> Add Range</Button>
         
         let rangesElement: JSX.Element[] = this.props.Ranges.map((range, index) => {
 

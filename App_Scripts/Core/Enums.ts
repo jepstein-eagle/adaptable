@@ -151,9 +151,11 @@ export enum PanelWidth {
 }
 
 export enum QueryBuildStatus {
-    SelectColumn,
+    SelectFirstColumn,
+    SelectFurtherColumn,
     ColumnSelected,
-    ConditionsAdded,
+    SingleConditionsAdded,
+    MultipleConditionsAdded,
   }
 
 export enum RangeOperandType {

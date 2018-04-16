@@ -157,8 +157,9 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <InputGroup>
                     <InputGroup.Button>
                         <Button block className="no_margin_style"
-                             style={{ width: "245px" }}
+                             style={{ width: "250px" }}
                              bsStyle="success"
+                             bsSize="small"
                             key={columnId + "header"}
                             ref={columnId}
                             onClick={() => this.props.onSelectedColumnChange(columnId)} >
@@ -169,6 +170,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         <Button block className="no_margin_style"
                             style={{ width: "40px" }}
                             bsStyle="success"
+                            bsSize="small"
                             key={columnId + "headerx"}
                             ref={columnId}
                             onClick={() => this.props.DeleteAllColumnExpression(columnId)} >

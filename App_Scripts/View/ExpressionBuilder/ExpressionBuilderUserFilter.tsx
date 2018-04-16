@@ -15,17 +15,17 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
 
     render(): any {
 
-        var userFilterNames = this.props.AvailableFilterNames.map((ne: string, index: number) => {
-            return <ListGroupItem key={index} bsSize={"small"}
-                onClick={() => this.onClickColum(ne)}
-                active={this.props.SelectedFilterNames.find(f => f == ne)}>
+        var userFilterNames = this.props.AvailableFilterNames.map((uf: string, index: number) => {
+            return <ListGroupItem key={index} bsSize={"xsmall"}
+                onClick={() => this.onClickColum(uf)}
+                active={this.props.SelectedFilterNames.find(f => f ==uf)}>
 
-                {ne}
+                {uf}
             </ListGroupItem>
         })
 
         return <Panel className="no-padding-anywhere-panel" style={divStyle}>
-            <ListGroup >
+            <ListGroup  >
                 {userFilterNames}
             </ListGroup>
         </Panel>
