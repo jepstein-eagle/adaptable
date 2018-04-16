@@ -49,6 +49,8 @@ export function getNameForStrategy(strategyID: string) {
             return ConditionalStyleStrategyName
         case StrategyIds.CustomSortStrategyId:
             return CustomSortStrategyName
+        case StrategyIds.DashboardStrategyId:
+            return DashboardStrategyName
         case StrategyIds.ExportStrategyId:
             return ExportStrategyName
         case StrategyIds.UserFilterStrategyId:

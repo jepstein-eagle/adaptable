@@ -1,3 +1,4 @@
+import * as StrategyNames from './StrategyNames';
 
 export const AboutStrategyId: string = "About"
 export const AdvancedSearchStrategyId: string = "AdvancedSearch"
@@ -25,3 +26,57 @@ export const TeamSharingStrategyId: string = "TeamSharing"
 export const ThemeStrategyId: string = "Theme"
 export const UserDataManagementStrategyId: string = "UserDataManagement"
 export const UserFilterStrategyId: string = "UserFilter"
+
+
+export function getIdForStrategyName(strategyName: string) {
+    switch (strategyName) {
+        case StrategyNames.AboutStrategyName:
+            return AboutStrategyId
+        case StrategyNames.AdvancedSearchStrategyName:
+            return AdvancedSearchStrategyId
+        case StrategyNames.BulkUpdateStrategyName:
+            return BulkUpdateStrategyId
+        case StrategyNames.CalculatedColumnStrategyName:
+            return CalculatedColumnStrategyId
+        case StrategyNames.CalendarStrategyName:
+            return CalendarStrategyId
+        case StrategyNames.CellValidationStrategyName:
+            return CellValidationStrategyId
+        case StrategyNames.ColumnChooserStrategyName:
+            return ColumnChooserStrategyId
+        case StrategyNames.ColumnInfoStrategyName:
+            return ColumnInfoStrategyId
+        case StrategyNames.ConditionalStyleStrategyName:
+            return ConditionalStyleStrategyId
+        case StrategyNames.CustomSortStrategyName:
+            return CustomSortStrategyId
+        case StrategyNames.DashboardStrategyName:
+            return DashboardStrategyId
+        case StrategyNames.ExportStrategyName:
+            return ExportStrategyId
+        case StrategyNames.UserFilterStrategyName:
+            return UserFilterStrategyId
+        case StrategyNames.ColumnFilterStrategyName:
+            return ColumnFilterStrategyId
+        case StrategyNames.FlashingCellsStrategyName:
+            return FlashingCellsStrategyId
+        case StrategyNames.FormatColumnStrategyName:
+            return FormatColumnStrategyId
+        case StrategyNames.LayoutStrategyName:
+            return LayoutStrategyId
+        case StrategyNames.PlusMinusStrategyName:
+            return PlusMinusStrategyId
+        case StrategyNames.QuickSearchStrategyName:
+            return QuickSearchStrategyId
+        case StrategyNames.ShortcutStrategyName:
+            return ShortcutStrategyId
+        case StrategyNames.SelectColumnStrategyName:
+            return SelectColumnStrategyId;
+        case StrategyNames.SmartEditStrategyName:
+            return SmartEditStrategyId
+        case StrategyNames.TeamSharingStrategyName:
+            return TeamSharingStrategyId
+        case StrategyNames.ThemeStrategyName:
+            return ThemeStrategyId
+    }
+}

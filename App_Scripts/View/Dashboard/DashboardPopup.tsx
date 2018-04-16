@@ -43,6 +43,12 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     }
     render() {
 
+        let colItems: IColItem[] = [
+            { Content: "Control", Size: 5 },
+            { Content: "Show/Hide", Size: 2 },
+            { Content: "Preview", Size: 5 },
+        ]
+
         let allToolbars: string[]=[]
         this.props.VisibleToolbars.forEach(vt=>{
             allToolbars.push(vt);
@@ -75,21 +81,18 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             return <li key={"DashboardControl" + x}
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={3}><Label  style={{ cursor: 's-resize' }} draggable={isVisible} onDragStart={(event) => this.DragStart(event, x)}
+                    <Col xs={colItems[0].Size}><Label  style={{ cursor: 's-resize' }} draggable={isVisible} onDragStart={(event) => this.DragStart(event, x)}
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x)}
                     </Col>
-                    <Col xs={2}>{visibleButton}</Col>
-                    <Col xs={6} style={{ zoom: 0.75 }}>{dashboardElememt}
+                    <Col xs={colItems[1].Size}>{visibleButton}</Col>
+                    <Col xs={colItems[2].Size} style={{ zoom: 0.75 }}>{dashboardElememt}
                     </Col>
                 </Row>
             </li>
         })
 
-        let colItems: IColItem[] = [
-            { Content: "Control", Size: 4 },
-            { Content: "Show/Hide", Size: 2 },
-            { Content: "Preview", Size: 6 },
-        ]
+     
+
         return <div className="adaptable_blotter_style_popup_dashboard">
             <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >
                 <AdaptableBlotterForm inline >

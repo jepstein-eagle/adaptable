@@ -71,11 +71,11 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         })
 
         return <div className="adaptable_blotter_style_wizard_layout_settings">
-            <Panel header="Sort Information" bsStyle="primary">
+            <Panel header="Sort Information" bsStyle="primary"  style={{overflowY: "visible"}} >
                 <div>
                     {addButton}
                     {gridSortRows.length > 0 &&
-                        <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} />
+                        <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} allowOverflow={true} />
                     }
                 </div>
             </Panel>
