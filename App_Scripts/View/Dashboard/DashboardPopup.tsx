@@ -44,9 +44,9 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     render() {
 
         let colItems: IColItem[] = [
-            { Content: "Control", Size: 5 },
+            { Content: "Control", Size: 4 },
             { Content: "Show/Hide", Size: 2 },
-            { Content: "Preview", Size: 5 },
+            { Content: "Preview", Size: 6 },
         ]
 
         let allToolbars: string[]=[]
@@ -90,8 +90,6 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 </Row>
             </li>
         })
-
-     
 
         return <div className="adaptable_blotter_style_popup_dashboard">
             <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >

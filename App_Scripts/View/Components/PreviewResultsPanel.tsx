@@ -56,12 +56,14 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         return <div className="adaptable_blotter_style_previewresults">
             {this.props.ShowPanel &&
                 <Panel header={previewHeader} bsStyle="info" className="preview_panel">
+                <div>
                     <Table >
                         {header}
                         <tbody>
                             {previewItems}
                         </tbody>
                     </Table>
+                    </div>
                 </Panel>
             }
         </div>

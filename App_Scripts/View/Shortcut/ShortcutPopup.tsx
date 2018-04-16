@@ -45,7 +45,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             "Date shortcuts replace the contents of the cell with a new date value."]
 
         let colItems: IColItem[] = [
-            { Content: "Column", Size: 2 },
+            { Content: "Columns", Size: 2 },
             { Content: "Key", Size: 2 },
             { Content: "Operation", Size: 3 },
             { Content: "Value", Size: 3 },

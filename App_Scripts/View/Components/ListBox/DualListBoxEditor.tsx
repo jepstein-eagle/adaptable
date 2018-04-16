@@ -172,11 +172,11 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 </Col>
                 <Col xs={2} style={colButtonStyle} >
                     <ButtonGroup  >
-                        <Button disabled={this.state.AvailableValues.length == 0}
+                        <Button style={{ marginBottom: "10px" }} disabled={this.state.AvailableValues.length == 0}
                             onClick={() => this.AddAll()} block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
-                        <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
+                        <Button style={{ marginBottom: "30px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
                             onClick={() => this.Add()} block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
-                        <Button style={{ marginTop: "10px" }} disabled={this.state.UiSelectedSelectedValues.length == 0}
+                        <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedSelectedValues.length == 0}
                             onClick={() => this.Remove()} block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
                         <Button disabled={this.state.SelectedValues.length == 0}
                             onClick={() => this.RemoveAll()} block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>

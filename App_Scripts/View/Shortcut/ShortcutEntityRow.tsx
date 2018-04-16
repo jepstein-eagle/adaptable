@@ -23,7 +23,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         let shortcut: IShortcut = this.props.AdaptableBlotterObject as IShortcut;
         let colItems: IColItem[] = [].concat(this.props.ColItems);
 
-        colItems[0].Content = shortcut.DataType == DataType.Date ? "Date Columns" : "Numeric Columns"
+        colItems[0].Content = shortcut.DataType == DataType.Date ? "Date" : "Numeric"
 
         colItems[1].Content =
             <AdaptableBlotterForm inline key={shortcut.ShortcutKey}>

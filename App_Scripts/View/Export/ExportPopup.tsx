@@ -94,7 +94,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} className="adaptable_blotter_modal_main_popup">
 
                 {Reports.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={Reports} />
+                    <AdaptableObjectCollection ColItems={colItems} items={Reports} allowOverflow={true}  />
                 }
 
                 {Reports.length == 0 &&
