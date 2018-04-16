@@ -39,14 +39,12 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
                         <HelpBlock>Alternatively, choose to build a new layout from scratch.</HelpBlock>
                     </Col>
                     <Col xs={12} className="large_margin_style">
-
-                        <Radio inline value="Existing" checked={this.state.LayoutSource == LayoutSource.Existing} onChange={(e) => this.onScopeSelectChanged(e)}>Use current Grid Setup</Radio>
+                        <Radio inline value="Existing" checked={this.state.LayoutSource == LayoutSource.Existing} onChange={(e) => this.onScopeSelectChanged(e)}>Copy current Grid setup</Radio>
                         {' '} {' '}<AdaptablePopover headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} popoverType={PopoverType.Info} />
                     </Col>
                       <Col xs={12} className="large_margin_style">
                         <Radio inline value="New" checked={this.state.LayoutSource == LayoutSource.New} onChange={(e) => this.onScopeSelectChanged(e)}>Create a new Layout</Radio>
                         {' '} {' '}<AdaptablePopover headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} popoverType={PopoverType.Info} />
-
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>
