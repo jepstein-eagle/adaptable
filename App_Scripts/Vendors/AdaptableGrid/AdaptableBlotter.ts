@@ -49,9 +49,14 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
+import { BlotterApi } from './BlotterApi';
+import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+    private filterContainer: HTMLDivElement
+  
+    public api: IBlotterApi
     public  GridName : string = "Adaptable Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
@@ -63,7 +68,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-    private filterContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
@@ -118,7 +122,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, <any>event)
         })
 
-
+ // get the api ready
+ this.api = new BlotterApi(this);
 
     }
 
@@ -144,6 +149,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
+    }
+
+    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
+    public onAuditChanged(): IEvent<any, any> {
+        return this._onAuditChanged;
     }
 
 

@@ -19,17 +19,38 @@
 			}
 		]
 	},
-	"Theme": {
-		"CurrentTheme": "Company Theme Dark",
-		"SystemThemes": [],
-		"UserThemes": [
+	"ConditionalStyle": {
+		"ConditionalStyles": [
 			{
-				"Name": "Company Theme Light",
-				"Url": "c://Shared/Files/Themes/lighttheme.css"
-			},
+				"ColumnId": "",
+				"Style": {
+					"ClassName": "styleForeYellow"
+				},
+				"ConditionalStyleScope": "Row",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "country",
+							"ColumnDisplayValues": [
+								"France",
+								"Germany"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"FilterExpressions": [],
+					"RangeExpressions": []
+				}
+			}
+		]
+	},
+	"FormatColumn": {
+		"FormatColumns": [
 			{
-				"Name": "Company Theme Dark",
-				"Url": "c://Shared/Files/Themes/darktheme.css"
+				"ColumnId": "notional",
+				"Style": {
+					"ClassName": "styleBackBrown"
+				}
 			}
 		]
 	},

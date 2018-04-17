@@ -17,6 +17,7 @@ import { IColumn } from './Interface/IColumn';
 import { IRange } from './Interface/IRange';
 import { ILayout } from '../Strategy/Interface/ILayoutStrategy';
 import { IGridSort } from './Interface/Interfaces';
+import { IStyle } from './Interface/IStyle';
 
 export module ObjectFactory {
 
@@ -139,7 +140,7 @@ export module ObjectFactory {
     export function CreateEmptyConditionalStyle(): IConditionalStyle {
         return {
             ColumnId: "",
-            Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
+            Style: CreateEmptyStyle(),
             ConditionalStyleScope: ConditionalStyleScope.Row,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             IsPredefined: false
@@ -149,7 +150,7 @@ export module ObjectFactory {
     export function CreateEmptyFormatColumn(): IFormatColumn {
         return {
             ColumnId: "",
-            Style: { BackColor: null, ForeColor: null, FontWeight: FontWeight.Normal, FontStyle: FontStyle.Normal, FontSize: null },
+            Style: CreateEmptyStyle(),
             IsPredefined: false
         }
     }
@@ -160,6 +161,17 @@ export module ObjectFactory {
             GridSorts: gridSorts,
             Name: name,
             IsPredefined: false
+        }
+    }
+
+    export function CreateEmptyStyle(): IStyle {
+        return {
+            BackColor: null, 
+            ForeColor: null, 
+            FontWeight: FontWeight.Normal, 
+            FontStyle: FontStyle.Normal, 
+            FontSize: null, 
+            ClassName: ""
         }
     }
 

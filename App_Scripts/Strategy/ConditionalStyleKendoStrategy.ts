@@ -6,6 +6,7 @@ import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 
 export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -16,23 +17,25 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
         let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        this.ConditionalStyleState.ConditionalStyles.forEach((c, index) => {
-            let columnIndex: number = this.blotter.getColumnIndex(c.ColumnId);
+        this.ConditionalStyleState.ConditionalStyles.forEach((cs, index) => {
+            let columnIndex: number = this.blotter.getColumnIndex(cs.ColumnId);
 
-            if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
-                if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    theBlotter.addRowStyle(dataChangedEvent.IdentifierValue, StyleConstants.CONDITIONAL_STYLE_STYLE + index)
+            let styleName : string = (StringExtensions.IsNullOrEmpty(cs.Style.ClassName))? StyleConstants.CONDITIONAL_STYLE_STYLE + index: cs.Style.ClassName;
+                    
+            if (ExpressionHelper.checkForExpression(cs.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
+                if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                    theBlotter.addRowStyle(dataChangedEvent.IdentifierValue, styleName)
                 }
-                else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    theBlotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, StyleConstants.CONDITIONAL_STYLE_STYLE + index)
+                else if (cs.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                    theBlotter.addCellStyle(dataChangedEvent.IdentifierValue, columnIndex, styleName)
                 }
             }
             else {
-                if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    theBlotter.removeRowStyle(dataChangedEvent.IdentifierValue, StyleConstants.CONDITIONAL_STYLE_STYLE + index)
+                if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                    theBlotter.removeRowStyle(dataChangedEvent.IdentifierValue, styleName)
                 }
-                else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                    theBlotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, StyleConstants.CONDITIONAL_STYLE_STYLE + index)
+                else if (cs.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                    theBlotter.removeCellStyle(dataChangedEvent.IdentifierValue, columnIndex, styleName)
                 }
             }
         })

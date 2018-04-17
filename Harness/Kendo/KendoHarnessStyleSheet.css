@@ -5,3 +5,16 @@
          .k-grid td{
             white-space: nowrap;
          }
+
+         .styleBackBrown{
+            background-color : rosybrown 
+          }
+    
+        .styleForeYellow{
+            color: orange;
+            font-stretch: expanded;
+            vertical-align: baseline;
+            font-family: cursive;
+            font-size: xx-large;
+    
+          }

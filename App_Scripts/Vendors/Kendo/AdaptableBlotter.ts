@@ -68,9 +68,12 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
+import { BlotterApi } from './BlotterApi';
+import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+    public api: IBlotterApi
     public GridName: string = "Kendo Telerik"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
@@ -158,6 +161,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //we may revisit that later
                     this.initInternalGridLogic(grid)
                 })
+
+                 // get the api ready
+        this.api = new BlotterApi(this);
     }
 
     public InitAuditService() {
@@ -260,6 +266,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
+    }
+
+    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
+    public onAuditChanged(): IEvent<any, any> {
+        return this._onAuditChanged;
     }
 
     public createMenu() {

@@ -67,6 +67,8 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
+import { BlotterApi } from './BlotterApi';
+import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -89,6 +91,7 @@ const getFilterIcon = (state: boolean) => {
 }
 
 export class AdaptableBlotter implements IAdaptableBlotter {
+    public api: IBlotterApi
     public GridName: string = "Hypergrid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
@@ -184,6 +187,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //we may revisit that later
                     this.initInternalGridLogic(grid)
                 })
+
+        // get the api ready
+        this.api = new BlotterApi(this);
     }
 
     public InitAuditService() {
@@ -275,6 +281,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
+    }
+
+    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
+    public onAuditChanged(): IEvent<any, any> {
+        return this._onAuditChanged;
     }
 
     public createMenu() {
@@ -1057,17 +1068,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         //Lowest priority first then every step will override the properties it needs to override.
                         //probably not needed to optimise as we just assign properties.......
                         if (formatStyle) {
-                            if (formatStyle.BackColor) {
-                                config.backgroundColor = formatStyle.BackColor;
-                            }
-                            if (formatStyle.ForeColor) {
-                                config.color = formatStyle.ForeColor;
-                            }
-                            if (formatStyle.FontStyle
-                                || formatStyle.FontWeight
-                                || formatStyle.ForeColor
-                                || formatStyle.FontSize) {
-                                config.font = this.buildFontCSSShorthand(config.font, formatStyle);
+                            if (formatStyle.ClassName) {
+                                // if a classname has been set then just use that
+                             let   s: string = formatStyle.ClassName;
+                            } else {
+                                if (formatStyle.BackColor) {
+                                    config.backgroundColor = formatStyle.BackColor;
+                                }
+                                if (formatStyle.ForeColor) {
+                                    config.color = formatStyle.ForeColor;
+                                }
+                                if (formatStyle.FontStyle
+                                    || formatStyle.FontWeight
+                                    || formatStyle.ForeColor
+                                    || formatStyle.FontSize) {
+                                    config.font = this.buildFontCSSShorthand(config.font, formatStyle);
+                                }
                             }
                         }
                         if (conditionalStyleRow) {
@@ -1181,7 +1197,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (currentGridSort.SortOrder == SortOrder.Ascending) {
                 currentGridSort.SortOrder = SortOrder.Descending;
             } else { // it exists and is descendig so need to 'turn off' (i.e.remove from colection)     
-               let index = newGridSorts.findIndex(a => a.Column == currentGridSort.Column)
+                let index = newGridSorts.findIndex(a => a.Column == currentGridSort.Column)
                 newGridSorts.splice(index, 1);
             }
         } else {

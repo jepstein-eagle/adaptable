@@ -1,0 +1,37 @@
+{
+	"ConditionalStyle": {
+		"ConditionalStyles": [
+			{
+				"ColumnId": "",
+				"Style": {
+					"ClassName": "styleForeYellow"
+				},
+				"ConditionalStyleScope": "Row",
+				"Expression": {
+					"ColumnDisplayValuesExpressions": [
+						{
+							"ColumnName": "country",
+							"ColumnDisplayValues": [
+								"France",
+								"Germany"
+							]
+						}
+					],
+					"ColumnRawValuesExpressions": [],
+					"FilterExpressions": [],
+					"RangeExpressions": []
+				}
+			}
+		]
+	},
+	"FormatColumn": {
+		"FormatColumns": [
+			{
+				"ColumnId": "notional",
+				"Style": {
+					"ClassName": "styleBackBrown"
+				}
+			}
+		]
+	}
+}

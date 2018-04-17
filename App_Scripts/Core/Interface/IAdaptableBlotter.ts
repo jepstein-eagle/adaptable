@@ -1,11 +1,11 @@
 import { DataType, DistinctCriteriaPairValue } from '../Enums'
-import {  IStrategy } from '../../Strategy/Interface/IStrategy'
-import {  ICellInfo, IAdaptableStrategyCollection, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces'
+import { IStrategy } from '../../Strategy/Interface/IStrategy'
+import { ICellInfo, IAdaptableStrategyCollection, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
-import {  IValidationService} from '../Services/Interface/IValidationService'
+import { IValidationService } from '../Services/Interface/IValidationService'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
@@ -13,8 +13,16 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IAdaptableBlotterOptions } from './IAdaptableBlotterOptions';
 import { IColumn } from './IColumn';
+import { IBlotterApi } from './IBlotterApi';
+
+
+
+
 
 export interface IAdaptableBlotter {
+    // new API interface for external calls - not sure yet if good idea or not...
+    api: IBlotterApi
+
     GridName: string
     AdaptableBlotterStore: IAdaptableBlotterStore;
     BlotterOptions: IAdaptableBlotterOptions
@@ -33,18 +41,19 @@ export interface IAdaptableBlotter {
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
+    onAuditChanged(): IEvent<any, any>;
 
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
     hideFilterForm(): void
-    setGridSort(gridSorts:IGridSort[]): void
+    setGridSort(gridSorts: IGridSort[]): void
 
     // cell selection
     getSelectedCells(): ISelectedCells
     getActiveCell(): ICellInfo
     selectCells(cells: ICellInfo[]): void
-    selectColumn(columnId: string):void
+    selectColumn(columnId: string): void
 
 
     // column related
@@ -73,7 +82,6 @@ export interface IAdaptableBlotter {
     // Custom Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
-    
 
     //CalculatedColumn
     deleteCalculatedColumn(calculatedColumnId: string): void

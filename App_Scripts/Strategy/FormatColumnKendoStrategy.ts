@@ -3,6 +3,7 @@ import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrate
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 
 export class FormatColumnKendoStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -19,11 +20,10 @@ export class FormatColumnKendoStrategy extends FormatColumnStrategy implements I
                 let columnIndex: number = columns.findIndex(c => c.ColumnId == fc.ColumnId)
 
                 if (columnIndex > 0) {
-
-
                     theBlotter.forAllRecordsDo((row: any) => {
                         let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row)
-                        theBlotter.addCellStyle(primaryKey, columnIndex, StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(fc))
+                        let styleName : string = (StringExtensions.IsNullOrEmpty(fc.Style.ClassName))? StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(fc): fc.Style.ClassName;
+                         theBlotter.addCellStyle(primaryKey, columnIndex, styleName)
 
                     })
                 }

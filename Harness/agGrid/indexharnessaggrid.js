@@ -1,4 +1,8 @@
 
+
+
+
+
 function ThemeChange(blotter, container) {
 
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
@@ -161,9 +165,21 @@ function notionalCellRenderer(params) {
         return null;
     }
 }
+
+function getFewTrades(dataGen) {
+    var trades = dataGen.getFewTrades();
+    return trades;
+}
+function getManyTrades(dataGen) {
+    var trades = dataGen.getManyTrades();
+    return trades;
+}
+
 function InitBlotter() {
+
     var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getTrades();
+
+    var trades = getFewTrades(dataGen);
 
     // let the grid know which columns and what data to use
     var gridOptions = {
@@ -205,30 +221,65 @@ function InitBlotter() {
                 }
             ]
         },
+        "ConditionalStyle": {
+            "ConditionalStyles": [
+                {
+                    "ColumnId": '',
+                    "Style": {
+                        "ClassName": "styleForeYellow"
+                    },
+                    "ConditionalStyleScope": 'Row',
+                    "Expression": {
+                        "ColumnDisplayValuesExpressions": [
+                            {
+                                "ColumnName": 'country',
+                                "ColumnDisplayValues": [
+                                    'France',
+                                    'Germany'
+                                ]
+                            }
+                        ],
+                        "ColumnRawValuesExpressions": [],
+                        "FilterExpressions": [],
+                        "RangeExpressions": []
+                    },
+                }
+            ]
+        },
         "Theme": {
             "CurrentTheme": "Slate",
         },
+        "FormatColumn": {
+            "FormatColumns": [
+                {
+                    "ColumnId": "notional",
+                    "Style": {
+                        "ClassName": "styleBackBrown"
+                    }
+                }
+            ]
+        },
         "AdvancedSearch": {
             "AdvancedSearches": [
-              {
-                "Name": 'test',
-                "Expression": {
-                  "ColumnDisplayValuesExpressions": [
-                    {
-                      "ColumnName": 'bid',
-                      "ColumnDisplayValues": [
-                        '14.3971'
-                      ]
-                    }
-                  ],
-                  "ColumnRawValuesExpressions": [],
-                  "FilterExpressions": [],
-                  "RangeExpressions": []
-                },
-                "IsPredefined": false
-              }
+                {
+                    "Name": 'test',
+                    "Expression": {
+                        "ColumnDisplayValuesExpressions": [
+                            {
+                                "ColumnName": 'bid',
+                                "ColumnDisplayValues": [
+                                    '14.3971'
+                                ]
+                            }
+                        ],
+                        "ColumnRawValuesExpressions": [],
+                        "FilterExpressions": [],
+                        "RangeExpressions": []
+                    },
+                    "IsPredefined": false
+                }
             ],
-            },
+        },
         "Dashboard": {
             "VisibleToolbars": [
                 "AdvancedSearch",
@@ -253,7 +304,8 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-      //  predefinedConfig: json,
+        predefinedConfig: "demoConfig.json",// json,
+        runServerSearch: true,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -261,4 +313,12 @@ function InitBlotter() {
     });
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
+
+    //  adaptableblotter.onKeyDown().Subscribe((sender, blotter) => smallLetter(sender, blotter))
+    adaptableblotter.onAuditChanged().Subscribe((sender, blotter) => smallLetter(adaptableblotter, dataGen))
+
+}
+
+function smallLetter(adaptableblotter, dataGen) {
+    adaptableblotter.Api.setDataSource(getManyTrades(dataGen));
 }

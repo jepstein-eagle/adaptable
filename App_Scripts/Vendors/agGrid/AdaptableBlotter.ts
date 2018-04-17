@@ -86,9 +86,12 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } fr
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
+import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { BlotterApi } from './BlotterApi';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
+    public api: IBlotterApi
     public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
@@ -168,6 +171,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.initInternalGridLogic(gridOptions, gridContainer)
                 }
             )
+
+        // get the api ready
+        this.api = new BlotterApi(this);
     }
 
     private createFilterWrapper(col: Column) {
@@ -201,6 +207,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
+    }
+
+    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
+    public onAuditChanged(): IEvent<any, any> {
+        return this._onAuditChanged;
     }
 
     public applyColumnFilters() {
@@ -1015,7 +1026,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (sortModel != null) {
             if (sortModel.length > 0) {
                 sortModel.forEach(sm => {
-                     let gridSort: IGridSort = { Column: sm.colId, SortOrder: (sm.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending }
+                    let gridSort: IGridSort = { Column: sm.colId, SortOrder: (sm.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending }
                     gridSorts.push(gridSort);
 
                 })
@@ -1033,6 +1044,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectColumn(columnId: string) {
+      //  this._onAuditChanged.Dispatch("Search changed", "its big")
 
         this.gridOptions.api.clearRangeSelection();
         let rangeSelectionParams: AddRangeSelectionParams = {
@@ -1057,6 +1069,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.onSortChanged();
     }
 
+    public setData(dataSource: any) {
+        this.gridOptions.api.setRowData(dataSource)
+    }
 
 }
 

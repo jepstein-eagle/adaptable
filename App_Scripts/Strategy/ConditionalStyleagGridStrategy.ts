@@ -5,6 +5,7 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import * as StyleConstants from '../Core/Constants/StyleConstants'
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -49,13 +50,16 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
             for (let column of columns) {
                 let cellClassRules: any = {};
                 this.ConditionalStyleState.ConditionalStyles.forEach((cs, index) => {
+                    let styleName : string = (StringExtensions.IsNullOrEmpty(cs.Style.ClassName))? StyleConstants.CONDITIONAL_STYLE_STYLE + index: cs.Style.ClassName;
+                      
+                   
                     if (cs.ConditionalStyleScope == ConditionalStyleScope.Column && cs.ColumnId == column.ColumnId) {
-                        cellClassRules[StyleConstants.CONDITIONAL_STYLE_STYLE + index] = function (params: any) {
+                        cellClassRules[styleName] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     }
                     else if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        cellClassRules[StyleConstants.CONDITIONAL_STYLE_STYLE + index] = function (params: any) {
+                        cellClassRules[styleName] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     }

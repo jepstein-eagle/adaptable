@@ -42,6 +42,20 @@ export class DataGenerator {
         }
         return trades;
     }
+    getFewTrades(): ITrade[] {
+        let trades: ITrade[] = [];
+        for (let i = 1; i < 10; i++) {
+            trades.push(this.createTrade(i));
+        }
+        return trades;
+    }
+    getManyTrades(): ITrade[] {
+        let trades: ITrade[] = [];
+        for (let i = 1; i < 200; i++) {
+            trades.push(this.createTrade(i));
+        }
+        return trades;
+    }
 
     getBonds(): IBond[] {
         let bonds: IBond[] = [];

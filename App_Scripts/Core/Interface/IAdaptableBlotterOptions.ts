@@ -5,9 +5,10 @@ export interface IAdaptableBlotterOptions {
     userName?: string,
     primaryKey?: string,
     blotterId?: string,
- predefinedConfig?: object,
+    predefinedConfig?: object,
     maxColumnValueItemsDisplayed: number,
-    modalContainer?:  string,
+    modalContainer?: string,
+    runServerSearch?: boolean,
     iPushPullConfig?: {
         api_url?: string;
         ws_url?: string;

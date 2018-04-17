@@ -6,6 +6,7 @@ export interface IStyle {
     FontWeight?: FontWeight
     FontStyle?: FontStyle
     FontSize?: FontSize
+    ClassName?: string
 }
 
 

@@ -132,7 +132,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
-            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId,  blotter.BlotterOptions.predefinedConfig);
+            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
         }
         // const someExampleMigration = {
         //     version: 1,
@@ -446,7 +446,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                     if (currentLayout) {
-                        let gridState: GridState =  middlewareAPI.getState().Grid;
+                        let gridState: GridState = middlewareAPI.getState().Grid;
                         // set columns
                         let columns = currentLayout.Columns.map(columnId => gridState.Columns.find(x => x.ColumnId == columnId));
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
@@ -460,7 +460,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let returnAction = next(action);
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
-                    if(!currentLayout){ // we have deleted the current layout (allowed) so lets make the layout default
+                    if (!currentLayout) { // we have deleted the current layout (allowed) so lets make the layout default
                         middlewareAPI.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
                     }
                     return returnAction;
@@ -484,7 +484,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 }
                 case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = <GridRedux.GridSelectColumnAction>action
-                      adaptableBlotter.selectColumn(actionTyped.ColumnId)
+                    adaptableBlotter.selectColumn(actionTyped.ColumnId)
                     return next(action);
                 }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {
@@ -707,14 +707,22 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
 
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
-                //    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
-                //        if (!middlewareAPI.getState().Dashboard.DashboardFunctionToolbars.find(x => x == strategyId)) {
-                      //      middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
-                //        }
-                //    })
+                    //    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
+                    //        if (!middlewareAPI.getState().Dashboard.DashboardFunctionToolbars.find(x => x == strategyId)) {
+                    //      middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
+                    //        }
+                    //    })
 
                     adaptableBlotter.InitAuditService()
                     return returnAction;
+                }
+                case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
+                    if (adaptableBlotter.BlotterOptions.runServerSearch == true) {
+                        let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
+                        alert("new search: " + actionTyped.SelectedSearchName)
+
+                    }
+                    return next(action);
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
                     let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action

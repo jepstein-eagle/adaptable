@@ -2,6 +2,7 @@ import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrate
 import { FormatColumnStrategy } from './FormatColumnStrategy';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import * as StyleConstants from '../Core/Constants/StyleConstants'
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {
@@ -20,7 +21,8 @@ export class FormatColumnagGridStrategy extends FormatColumnStrategy implements 
                 let cellClassRules: any = {};
                 this.FormatColumnState.FormatColumns.forEach((fc, index) => {
                     if (fc.ColumnId == column.ColumnId) {
-                        cellClassRules[StyleConstants.FORMAT_COLUMN_STYLE + index] = function (params: any) {
+                        let styleName : string = (StringExtensions.IsNullOrEmpty(fc.Style.ClassName))? StyleConstants.FORMAT_COLUMN_STYLE + index: fc.Style.ClassName;
+                        cellClassRules[styleName] = function (params: any) {
                             return true;
                         }
                      }

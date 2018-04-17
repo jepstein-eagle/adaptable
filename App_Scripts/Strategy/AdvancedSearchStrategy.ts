@@ -24,6 +24,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
             this.AdvancedSearchState = this.GetAdvancedSearchState();
 
+            
            this.AuditFunctionAction(
                 "ApplySearch",
                 StringExtensions.IsNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearch) ?
