@@ -139,7 +139,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
-        return <PanelWithButton headerText={panelHeader} bsStyle="info" style={{ height: '425px' }}>
+        return <PanelWithButton headerText={panelHeader} bsStyle="info" style={{ height: '427px' }}>
 
 
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ?
@@ -283,8 +283,3 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
 }
 
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'height': '480px',
-    'marginBottom': '0'
-}

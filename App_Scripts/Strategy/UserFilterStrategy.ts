@@ -30,7 +30,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
 
     protected InitState() {
         if (this.userFilters != this.GetFilterState()) {
-            setTimeout(() => this.blotter.applyColumnFilters(), 5);
+            setTimeout(() => this.blotter.applyGridFiltering(), 5);
             this.userFilters = this.GetFilterState();
         }
     }

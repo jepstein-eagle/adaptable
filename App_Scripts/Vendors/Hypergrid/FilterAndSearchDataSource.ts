@@ -24,17 +24,19 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     filterTest: function (r: any, rowObject: any) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns
-        if(columns.length == 0)
-        {
+        if (columns.length == 0) {
             return true;
         }
 
+        let blotterOptions =  blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
         //first we assess AdvancedSearch 
-        let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-            let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
-            if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
-                return false;
+        if (blotterOptions.runServerSearch == false) {
+            let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
+            if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+                let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
+                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
+                    return false;
+                }
             }
         }
 

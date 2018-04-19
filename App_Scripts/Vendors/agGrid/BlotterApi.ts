@@ -1,15 +1,21 @@
-import { IBlotterApi } from "../../Core/Interface/IBlotterApi";
+import { IBlotterApi, BlotterApiBase } from "../../Core/Interface/IBlotterApi";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { AdaptableBlotter } from "./AdaptableBlotter";
+import { EventDispatcher } from "../../Core/EventDispatcher";
+import { IEvent } from "../../Core/Interface/IEvent";
 
-export class BlotterApi implements IBlotterApi {
+export class BlotterApi extends BlotterApiBase implements IBlotterApi {
 
-    constructor(private blotter : AdaptableBlotter) {
-        //we init with defaults then overrides with options passed in the constructor
-        this.blotter = blotter;
+    constructor( blotter : AdaptableBlotter) {
+        super(blotter)
+         this.blotter = blotter;
     }
 
     public setDataSource(dataSource: any): void {
-        this.blotter.setData(dataSource)
+        let theBlotter = this.blotter as AdaptableBlotter
+       
+        theBlotter.setData(dataSource)
     }
+
+    
 }

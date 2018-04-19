@@ -11,7 +11,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CustomSortStrategyId, blotter)
-         }
+    }
 
     protected InitState() {
         if (this.CustomSorts != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {
@@ -24,25 +24,22 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
     }
-    
+
     protected addColumnMenuItem(columnId: string): void {
-            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
-            let label = (customSort) ? "Edit " : "Create "
-            let popupParam = (customSort) ? "Edit|" : "New|"
-            this.createMenuItemColumnMenu(
-                label + StrategyNames.CustomSortStrategyName,
-                ScreenPopups.CustomSortPopup,
-                StrategyGlyphs.CustomSortGlyph,
-                popupParam + columnId)
-        
+        let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
+        let label = (customSort) ? "Edit " : "Create "
+        let popupParam = (customSort) ? "Edit|" : "New|"
+        this.createMenuItemColumnMenu(
+            label + StrategyNames.CustomSortStrategyName,
+            ScreenPopups.CustomSortPopup,
+            StrategyGlyphs.CustomSortGlyph,
+            popupParam + columnId)
+
     }
 
     removeCustomSorts() {
         if (this.CustomSorts) {
             this.CustomSorts.forEach(customSort => {
-                this.AuditFunctionAction("RemoveCustomSort",
-                    "ColumnId:" + customSort.ColumnId,
-                    customSort)
                 this.blotter.removeCustomSort(customSort.ColumnId)
             });
         }
@@ -50,10 +47,6 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
 
     applyCustomSorts() {
         this.CustomSorts.forEach(customSort => {
-            this.AuditFunctionAction(
-                "SetCustomSort",
-                "ColumnId:" + customSort.ColumnId,
-                customSort)
             this.blotter.setCustomSort(customSort.ColumnId, this.getComparerFunction(customSort, this.blotter))
         });
     }

@@ -4,9 +4,10 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
- import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState'
+import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
+import { BlotterApiBase, IBlotterApi } from '../Core/Interface/IBlotterApi';
 
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
@@ -14,7 +15,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AdvancedSearchStrategyId, blotter)
-        }
+    }
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyNames.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyGlyphs.AdvancedSearchGlyph);
@@ -24,21 +25,22 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
             this.AdvancedSearchState = this.GetAdvancedSearchState();
 
-            
-           this.AuditFunctionAction(
-                "ApplySearch",
-                StringExtensions.IsNullOrEmpty(this.GetAdvancedSearchState().CurrentAdvancedSearch) ?
-                    "No current Advanced Search" : "Current search Id:" + this.GetAdvancedSearchState().CurrentAdvancedSearch,
-                this.AdvancedSearchState.AdvancedSearches.find(x => x.Name == this.GetAdvancedSearchState().CurrentAdvancedSearch))
+            // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
+            //  probably not an issue but might be worth revisiting ...
+            let currentAdvancedSearch = this.AdvancedSearchState.AdvancedSearches.find(as => as.Name == this.AdvancedSearchState.CurrentAdvancedSearch)
 
-            this.blotter.applyColumnFilters()
+           this.blotter.AdvancedSearchedChanged.Dispatch(this.blotter, currentAdvancedSearch);
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.runServerSearch != true) {
+                this.blotter.applyGridFiltering()
+            }
         }
     }
 
     private GetAdvancedSearchState(): AdvancedSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
     }
-
-
+    private GetGridState(): GridState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
+    }
 
 }

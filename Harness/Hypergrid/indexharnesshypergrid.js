@@ -104,7 +104,8 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        predefinedConfig:null, //"",// "predefinedConfig.json",
+        runServerSearch: true,
+        predefinedConfig:json, //"",// "predefinedConfig.json",
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -130,8 +131,28 @@ function InitBlotter() {
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
 
+    adaptableblotter.api.onAdvancedSearchedChanged().Subscribe((sender, search) => getTradesForSearch(search, dataGen))
+
+
     grid.addProperties(lightTheme);
 }
+
+function getTradesForSearch(search, dataGen) {
+    let newTrades
+     if (search == null || search.Name == "") {
+     //    alert("empty search")
+     newTrades = dataGen.getTrades()
+     } else {
+    //     alert(search.Name)
+    
+         if (search.Name == "barcap") {
+             newTrades = dataGen.getBarcapTrades()
+         } else {
+             newTrades = dataGen.getGSTrades()
+         }
+     }
+     adaptableblotter.api.setDataSource(newTrades);
+ }
 
 var lightTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
@@ -214,3 +235,103 @@ var darkTheme = {
     columnAutosizing: true,
     readOnly: false
 };
+
+
+let json = {
+    "Entitlements": {
+        "FunctionEntitlements": [
+            {
+                "FunctionName": "AdvancedSearch",
+                "AccessLevel": "ReadOnly"
+            },
+            {
+                "FunctionName": "QuickSearch",
+                "AccessLevel": "ReadOnly"
+            },
+            {
+                "FunctionName": "PlusMinus",
+                "AccessLevel": "Hidden"
+            },
+            {
+                "FunctionName": "SmartEdit",
+                "AccessLevel": "Hidden"
+            }
+        ]
+    },
+    "ConditionalStyle": {
+        "ConditionalStyles": [
+            {
+                "ColumnId": '',
+                "Style": {
+                    "ClassName": "styleForeYellow"
+                },
+                "ConditionalStyleScope": 'Row',
+                "Expression": {
+                    "ColumnDisplayValuesExpressions": [
+                        {
+                            "ColumnName": 'country',
+                            "ColumnDisplayValues": [
+                                'France',
+                                'Germany'
+                            ]
+                        }
+                    ],
+                    "ColumnRawValuesExpressions": [],
+                    "FilterExpressions": [],
+                    "RangeExpressions": []
+                },
+            }
+        ]
+    },
+    "Theme": {
+        "CurrentTheme": "Slate",
+    },
+    "FormatColumn": {
+        "FormatColumns": [
+            {
+                "ColumnId": "notional",
+                "Style": {
+                    "ClassName": "styleBackBrown"
+                }
+            }
+        ]
+    },
+    "AdvancedSearch": {
+        "AdvancedSearches": [
+            {
+                "Name": 'test',
+                "Expression": {
+                    "ColumnDisplayValuesExpressions": [
+                        {
+                            "ColumnName": 'bid',
+                            "ColumnDisplayValues": [
+                                '14.3971'
+                            ]
+                        }
+                    ],
+                    "ColumnRawValuesExpressions": [],
+                    "FilterExpressions": [],
+                    "RangeExpressions": []
+                },
+                "IsPredefined": false
+            }
+        ],
+    },
+    "Dashboard": {
+        "VisibleToolbars": [
+            "AdvancedSearch",
+            "Layout",
+            "QuickSearch"
+        ],
+        "VisibleButtons": [
+            "About",
+            "Dashboard",
+            "QuickSearch",
+            "SmartEdit",
+            "ColumnChooser",
+            "BulkUpdate"
+        ],
+        "Zoom": "1"
+    }
+}
+

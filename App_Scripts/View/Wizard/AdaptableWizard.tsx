@@ -62,8 +62,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
 
     render() {
-        //   let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.BlotterOptions, document);
-
         return (
             <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_base"
                 container={this.props.ModalContainer} >

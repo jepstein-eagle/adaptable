@@ -172,7 +172,6 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     }
 
 
-
     private onShortcutKeyChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ShortcutKey: e.value } as ShortcutSettingsWizardState, () => this.props.UpdateGoBackState())

@@ -9,18 +9,18 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 
-export interface ConditionalStyleColumnWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
+export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: Array<IColumn>
 }
 
-export interface ConditionalStyleColumnWizardState {
+export interface ConditionalStyleScopeWizardState {
     ColumnId: string,
     ConditionalStyleScope: ConditionalStyleScope,
 }
 
-export class ConditionalStyleColumnWizard extends React.Component<ConditionalStyleColumnWizardProps, ConditionalStyleColumnWizardState> implements AdaptableWizardStep {
+export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyleScopeWizardProps, ConditionalStyleScopeWizardState> implements AdaptableWizardStep {
 
-    constructor(props: ConditionalStyleColumnWizardProps) {
+    constructor(props: ConditionalStyleScopeWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
@@ -57,15 +57,15 @@ export class ConditionalStyleColumnWizard extends React.Component<ConditionalSty
 
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onScopeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Column") {
-            this.setState({ ConditionalStyleScope: ConditionalStyleScope.Column } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ ConditionalStyleScope: ConditionalStyleScope.Column } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
         } else {
-            this.setState({ ConditionalStyleScope: ConditionalStyleScope.Row, ColumnId: "" } as ConditionalStyleColumnWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ ConditionalStyleScope: ConditionalStyleScope.Row, ColumnId: "" } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
         }
     }
 

@@ -1,21 +1,25 @@
 import * as React from "react";
-import { FormGroup, FormControl, Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
+import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, Well } from 'react-bootstrap';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { FontWeight, FontStyle, FontSize, PopoverType } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
     ColorPalette: string[],
+    StyleClassNames: string[]
     Style: IStyle,
     UpdateStyle: (style: IStyle) => void;
+    CanUseClassName: boolean
 }
 
 export interface StyleComponentState {
     myStyle: IStyle
+    ShowClassName: boolean
 }
 
 export class StyleComponent extends React.Component<StyleComponentProps, StyleComponentState>  {
@@ -23,7 +27,8 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
     constructor(props: StyleComponentProps) {
         super(props)
         this.state = {
-            myStyle: this.props.Style
+            myStyle: this.props.Style,
+            ShowClassName: StringExtensions.IsNotNullOrEmpty(this.props.Style.ClassName)
         }
     }
 
@@ -33,76 +38,133 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
             return <option key={enumName} value={enumName}>{enumName as FontSize}</option>
         })
 
+        let optionClassNames = this.props.StyleClassNames.map(scn => {
+            return <option value={scn} key={scn}>{scn}</option>
+        })
+
         return <div className="adaptable_blotter_style_styleeditor">
             <Panel header="Style" bsStyle="primary">
 
-                <Panel header="Cell Colours" bsStyle="info"  >
-                    <Col xs={12}>
-                        <HelpBlock>Set the fore or back colours by ticking the checkbox and selecting a colour from the dropdown.  Leave unchecked to continue using the colours from the cell's existing style.</HelpBlock>
-                    </Col>
-                    <AdaptableBlotterForm horizontal>
-                        <FormGroup controlId="colorBackStyle">
-                            <Col xs={3} >
-                                <Checkbox inline value="existing" checked={this.state.myStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}>Set Back Colour</Checkbox>
-                            </Col>
-                            <Col xs={8}>
-                                {this.state.myStyle.BackColor != null &&
-                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
-                                }
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId="colorForeStyle">
-                            <Col xs={3} >
-                                <Checkbox inline value="existing" checked={this.state.myStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}>Set Fore Colour</Checkbox>
-                            </Col>
-                            <Col xs={8}>
-                                {this.state.myStyle.ForeColor != null &&
-                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
-                                }
-                            </Col>
 
-                        </FormGroup>
-                    </AdaptableBlotterForm>
-                </Panel>
+                {this.props.CanUseClassName && this.props.StyleClassNames.length > 0 &&
+                    <Checkbox inline style={{ marginBottom: "10px" }} onChange={(e) => this.onShowClassNameChanged(e)} checked={this.state.ShowClassName}>Use Style Class Name</Checkbox>
+                }
 
-                <Panel header="Font Properties" bsStyle="info"  >
-                    <AdaptableBlotterForm horizontal>
-                        <FormGroup controlId="fontWeight">
-                            <Col xs={12} >
-                                <Checkbox value={FontWeight.Normal.toString()} checked={this.state.myStyle.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
-                            </Col>
-                        </FormGroup>
+                {this.state.ShowClassName ?
+                    <Well bsSize="small">
+                        <HelpBlock>
+                            {"Choose a style from the dropdown."}
+                        </HelpBlock>
+                        <HelpBlock>
+                            {"Note: This assumes that you have provided a style with the same name in a stylesheet."}
+                        </HelpBlock>
+                        <FormControl componentClass="select" placeholder="select" value={this.state.myStyle.ClassName} onChange={(x) => this.onStyleClassNameChanged(x)} >
+                            <option value="select" key="select">Select Style Class Name</option>
+                            {optionClassNames}
+                        </FormControl>
 
-                        <FormGroup controlId="fontStyle">
-                            <Col xs={12} >
-                                <Checkbox value={FontStyle.Normal.toString()} checked={this.state.myStyle.FontStyle == FontStyle.Italic} onChange={(e) => this.onFontStyleChange(e)}  >Italic</Checkbox>
-                            </Col>
-                        </FormGroup>
-                        <FormGroup controlId="fontSize">
-                            <Col xs={3} >
-                                <Checkbox inline checked={this.state.myStyle.FontSize ? true : false} onChange={(e) => this.onUseFontSizeCheckChange(e)}>Set Font Size</Checkbox>
-                            </Col>
-                            <Col xs={8}>
-                                {/*we use the componentclass fieldset to indicate its not a new form...*/}
-                                {this.state.myStyle.FontSize != null &&
-                                    < AdaptableBlotterForm inline componentClass='fieldset' >
-                                        <FormControl componentClass="select" placeholder="select" value={this.state.myStyle.FontSize.toString()} onChange={(x) => this.onFontSizeChange(x)} >
-                                            {optionFontSizes}
-                                        </FormControl>
-                                        {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
-                                            bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
-                                            popoverType={PopoverType.Info} />
-                                    </AdaptableBlotterForm  >
-                                }
-                            </Col>
+                    </Well>
+                    :
 
-                        </FormGroup>
-                    </AdaptableBlotterForm>
-                </Panel>
+                    <Row>
+                        <Col xs={6}>
+                            <Panel header="Cell Colours" bsStyle="info"  >
+                                <div style={{ height: '355px', overflowY: 'auto' }}>
+                                    <Col xs={12}>
+                                        <HelpBlock>Set the colour by ticking a checkbox and selecting a colour from the dropdown; leave unchecked to use colours from the cell's existing style.</HelpBlock>
+                                    </Col>
+                                    <AdaptableBlotterForm horizontal>
+                                        <FormGroup controlId="colorBackStyle">
+                                            <Col xs={6} >
+                                                <Checkbox inline value="existing" checked={this.state.myStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}>Set Back Colour</Checkbox>
+                                            </Col>
+                                            <Col xs={6}>
+                                                {this.state.myStyle.BackColor != null &&
+                                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
+                                                }
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup controlId="colorForeStyle">
+                                            <Col xs={6} >
+                                                <Checkbox inline value="existing" checked={this.state.myStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}>Set Fore Colour</Checkbox>
+                                            </Col>
+                                            <Col xs={6}>
+                                                {this.state.myStyle.ForeColor != null &&
+                                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
+                                                }
+                                            </Col>
+
+                                        </FormGroup>
+                                    </AdaptableBlotterForm>
+                                </div>
+                            </Panel>
+                        </Col>
+                        <Col xs={6}>
+                            <Panel header="Font Properties" bsStyle="info"  >
+                                <div style={{ height: '355px', overflowY: 'auto' }}>
+                                    <AdaptableBlotterForm horizontal>
+                                        <FormGroup controlId="fontWeight">
+                                            <Col xs={12} >
+                                                <Checkbox value={FontWeight.Normal.toString()} checked={this.state.myStyle.FontWeight == FontWeight.Bold} onChange={(e) => this.onFontWeightChange(e)} >Bold</Checkbox>
+                                            </Col>
+                                        </FormGroup>
+
+                                        <FormGroup controlId="fontStyle">
+                                            <Col xs={12} >
+                                                <Checkbox value={FontStyle.Normal.toString()} checked={this.state.myStyle.FontStyle == FontStyle.Italic} onChange={(e) => this.onFontStyleChange(e)}  >Italic</Checkbox>
+                                            </Col>
+                                        </FormGroup>
+                                        <FormGroup controlId="fontSize">
+                                            <Col xs={6} >
+                                                <Checkbox inline checked={this.state.myStyle.FontSize ? true : false} onChange={(e) => this.onUseFontSizeCheckChange(e)}>Set Font Size</Checkbox>
+                                            </Col>
+                                            <Col xs={6}>
+                                                {/*we use the componentclass fieldset to indicate its not a new form...*/}
+                                                {this.state.myStyle.FontSize != null &&
+                                                    < AdaptableBlotterForm inline componentClass='fieldset' >
+                                                        <FormControl componentClass="select" placeholder="select" value={this.state.myStyle.FontSize.toString()} onChange={(x) => this.onFontSizeChange(x)} >
+                                                            {optionFontSizes}
+                                                        </FormControl>
+                                                        {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
+                                                            bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
+                                                            popoverType={PopoverType.Info} />
+                                                    </AdaptableBlotterForm  >
+                                                }
+                                            </Col>
+
+                                        </FormGroup>
+                                    </AdaptableBlotterForm>
+                                </div>
+                            </Panel>
+                        </Col>
+                    </Row>
+
+
+
+                }
+
 
 
             </Panel >
         </div>
+    }
+
+    private onShowClassNameChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        // clear everything 
+        this.state.myStyle.BackColor = null;
+        this.state.myStyle.ForeColor = null;
+        this.state.myStyle.FontSize = null;
+        this.state.myStyle.FontStyle = null;
+        this.state.myStyle.FontWeight = null;
+        this.state.myStyle.ClassName = ""
+        this.setState({ ShowClassName: e.checked } as StyleComponentState)
+    }
+
+    private onStyleClassNameChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.state.myStyle.ClassName = e.value == "select" ? "" : e.value;
+        this.props.UpdateStyle(this.state.myStyle);
     }
 
     private onUseBackColorCheckChange(event: React.FormEvent<any>) {

@@ -3,16 +3,19 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IAuditLogEntry } from '../Interface/IAuditLogEntry';
 import { AuditLogTrigger } from '../Enums';
 import { IDataChangedEvent } from './Interface/IAuditService';
+import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
 // import * as SockJS from 'sockjs-client'
 
 export class AuditLogService {
     private auditLogQueue: Array<IAuditLogEntry>
     private canSendLog: boolean = true
     private numberOfMissedPing: number = 0
+    private blotterOptions: IAdaptableBlotterOptions
 
-    constructor(private blotter: IAdaptableBlotter) {
+    constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
         this.auditLogQueue = []
-        if (blotter.BlotterOptions.enableAuditLog) {
+        this.blotterOptions = blotterOptions
+        if (this.blotterOptions.enableAuditLog) {
             this.ping()
             setInterval(() => this.ping(), 60000)
             setInterval(() => this.flushAuditQueue(), 1000)
@@ -28,11 +31,11 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.BlotterOptions.userName,
-                adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
                 adaptableblotter_editcell: {
                     primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
+                    primarykey_column_id: this.blotterOptions.primaryKey,
                     column_id: dataChangedEvent.ColumnId,
                     old_value_string: dataChangedEvent.OldValue,
                     new_value_string: dataChangedEvent.NewValue
@@ -43,11 +46,11 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.BlotterOptions.userName,
-                adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
                 adaptableblotter_editcell: {
                     primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
+                    primarykey_column_id: this.blotterOptions.primaryKey,
                     column_id: dataChangedEvent.ColumnId,
                     old_value_string: String(dataChangedEvent.OldValue),
                     new_value_string: String(dataChangedEvent.NewValue),
@@ -60,11 +63,11 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.BlotterOptions.userName,
-                adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
                 adaptableblotter_editcell: {
                     primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
+                    primarykey_column_id: this.blotterOptions.primaryKey,
                     column_id: dataChangedEvent.ColumnId,
                     old_value_string: String(dataChangedEvent.OldValue),
                     new_value_string: String(dataChangedEvent.NewValue),
@@ -77,11 +80,11 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.BlotterOptions.userName,
-                adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
                 adaptableblotter_editcell: {
                     primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
+                    primarykey_column_id: this.blotterOptions.primaryKey,
                     column_id: dataChangedEvent.ColumnId,
                     old_value_string: String(dataChangedEvent.OldValue),
                     new_value_string: String(dataChangedEvent.NewValue),
@@ -94,11 +97,11 @@ export class AuditLogService {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotter.BlotterOptions.userName,
-                adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
                 adaptableblotter_editcell: {
                     primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotter.BlotterOptions.primaryKey,
+                    primarykey_column_id: this.blotterOptions.primaryKey,
                     column_id: dataChangedEvent.ColumnId,
                     old_value_string: String(dataChangedEvent.OldValue),
                     new_value_string: String(dataChangedEvent.NewValue)
@@ -111,8 +114,8 @@ export class AuditLogService {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger.StateChange,
             adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotter.BlotterOptions.userName,
-            adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+            adaptableblotter_username: this.blotterOptions.userName,
+            adaptableblotter_id: this.blotterOptions.blotterId,
             //we want to loose the type since you cannot have same field name with different types in logstash. So log it as a string...
             //it makes sense anyway
             adaptableblotter_state_change: this.convertToText(stateChanges),
@@ -124,8 +127,8 @@ export class AuditLogService {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger.AdaptableBlotterFunction,
             adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotter.BlotterOptions.userName,
-            adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+            adaptableblotter_username: this.blotterOptions.userName,
+            adaptableblotter_id: this.blotterOptions.blotterId,
             adaptableblotter_function: {
                 name: functionName,
                 action: action,
@@ -141,8 +144,8 @@ export class AuditLogService {
         let pingMessage: IAuditLogEntry = {
             adaptableblotter_auditlog_trigger: AuditLogTrigger.Ping,
             adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotter.BlotterOptions.userName,
-            adaptableblotter_id: this.blotter.BlotterOptions.blotterId,
+            adaptableblotter_username: this.blotterOptions.userName,
+            adaptableblotter_id: this.blotterOptions.blotterId,
             adaptableblotter_number_of_missed_ping: this.numberOfMissedPing
         }
         let xhr = new XMLHttpRequest();

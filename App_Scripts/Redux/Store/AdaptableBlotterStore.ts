@@ -63,6 +63,9 @@ import { format } from 'util';
 import { GridState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
+import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
+import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
+import { BlotterApiBase } from '../../Core/Interface/IBlotterApi';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -120,7 +123,7 @@ const configServerTeamSharingUrl = "/adaptableblotter-teamsharing"
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     public Load: PromiseLike<any>
-    constructor(private blotter: IAdaptableBlotter) {
+    constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
@@ -128,11 +131,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let engineWithMigrate: ReduxStorage.StorageEngine
         let engineReduxStorage: ReduxStorage.StorageEngine
 
-        if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+        if (blotterOptions.enableRemoteConfigServer) {
+            engineReduxStorage = createEngineRemote(configServerUrl, blotterOptions.userName, blotterOptions.blotterId, blotter);
         }
         else {
-            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
+            engineReduxStorage = createEngineLocal(blotterOptions.blotterId, blotterOptions.predefinedConfig);
         }
         // const someExampleMigration = {
         //     version: 1,
@@ -141,7 +144,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UserInterface", "Popup", "Entitlements", "Menu", "Grid", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UserInterface", "Popup", "Entitlements", "Menu", "Grid", "Blotter", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -167,7 +170,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             reducerWithStorage,
             composeEnhancers(Redux.applyMiddleware(
                 diffStateAuditMiddleware(blotter),
-                adaptableBlotterMiddleware(blotter),
+                functionLogMiddleware(blotter),
+                adaptableBlotterMiddleware(blotter, blotterOptions),
                 middlewareReduxStorage))
         );
         //We start to build the state once everything is instantiated... I dont like that. Need to change
@@ -203,7 +207,90 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
     }
 }
 
-var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+// this function is responsible for sending any changes through functions to the audit - previously done in the strategies but better done here I think....
+// ideally it should only audit grid actions that are effected by our function.  general state changes are picked up in the audit diff
+// e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or seraches changed
+var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+    return function (next: Redux.Dispatch<AdaptableBlotterState>) {
+        return function (action: Redux.Action) {
+            let state = middlewareAPI.getState()
+
+            // Note: not done custom sort, and many others
+            // also not done bulk update, smart edit as each has different issues...
+            switch (action.type) {
+
+                case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
+                    let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
+                    let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
+
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.AdvancedSearchStrategyId,
+                        "apply advanced search",
+                        actionTyped.SelectedSearchName,
+                        advancedSearch)
+
+                    return next(action);
+                }
+                case AdvancedSearchRedux.ADVANCED_SEARCH_ADD_UPDATE: {
+                    let actionTyped = <AdvancedSearchRedux.AdvancedSearchAddUpdateAction>action
+                    let currentAdvancedSearch = state.AdvancedSearch.CurrentAdvancedSearch; // problem here if they have changed the name potentially...
+                    if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
+
+                        adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.AdvancedSearchStrategyId,
+                            "apply advanced search",
+                            actionTyped.AdvancedSearch.Name,
+                            actionTyped.AdvancedSearch)
+
+                    }
+                    return next(action);
+                }
+                case QuickSearchRedux.QUICK_SEARCH_APPLY: {
+                    let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action
+
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.QuickSearchStrategyId,
+                        "apply quick search",
+                        actionTyped.quickSearchText,
+                        actionTyped.quickSearchText)
+                    return next(action);
+                }
+                case PlusMinusRedux.PLUSMINUS_APPLY: {
+                    let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
+
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.PlusMinusStrategyId,
+                        "apply plus minus",
+                        "KeyPressed:" + actionTyped.KeyEventString,
+                        actionTyped.CellInfos)
+                    return next(action);
+                }
+                case ShortcutRedux.SHORTCUT_APPLY: {
+                    let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
+
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ShortcutStrategyId,
+                        "apply shortcut",
+                        "KeyPressed:" + actionTyped.KeyEventString,
+                        { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId })
+                    return next(action);
+                }
+                case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+                    // this is basically select as we immediately set filters and just audit them all for now
+                    let actionTyped = <ColumnFilterRedux.ColumnFilterAddUpdateAction>action
+
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId,
+                        "apply column filters",
+                        "filters applied",
+                        state.ColumnFilter.ColumnFilters)
+                    return next(action);
+                }
+
+                default:
+                    return next(action);
+            }
+        }
+    }
+}
+
+
+
+var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
@@ -229,8 +316,8 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     xhr.setRequestHeader("Content-type", "application/json");
                     let obj: ISharedEntity = {
                         entity: actionTyped.Entity,
-                        user: adaptableBlotter.BlotterOptions.userName,
-                        blotter_id: adaptableBlotter.BlotterOptions.blotterId,
+                        user: blotterOptions.userName,
+                        blotter_id: blotterOptions.blotterId,
                         strategy: actionTyped.Strategy,
                         timestamp: new Date()
                     }
@@ -391,7 +478,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     return returnAction;
                 }
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
-                    let returnObj = adaptableBlotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
+                    let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
                     if (!returnObj.IsValid) {
                         middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
                     }
@@ -403,7 +490,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
                     let returnAction = next(action);
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    adaptableBlotter.createCalculatedColumn((<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn)
+                    blotter.createCalculatedColumn((<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn)
                     let newCalculatedColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn.ColumnId)
                     if (newCalculatedColumn) {
                         columnsLocalLayout.push(newCalculatedColumn)
@@ -417,7 +504,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
-                    adaptableBlotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
+                    blotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
                     if (deletedCalculatedColumnIndex > -1) {
                         columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
                     }
@@ -430,14 +517,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     let index = calculatedColumnState.CalculatedColumns.findIndex(x => x.ColumnId == actionTyped.CalculatedColumn.ColumnId)
-                    adaptableBlotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[index].ColumnId)
+                    blotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[index].ColumnId)
                     let returnAction = next(action);
-                    adaptableBlotter.createCalculatedColumn(actionTyped.CalculatedColumn)
+                    blotter.createCalculatedColumn(actionTyped.CalculatedColumn)
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
                 case ColumnFilterRedux.HIDE_FILTER_FORM: {
-                    adaptableBlotter.hideFilterForm()
+                    blotter.hideFilterForm()
                     return next(action);
                 }
                 case LayoutRedux.LAYOUT_SELECT: {
@@ -452,7 +539,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
                         // set sort 
                         middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
-                        adaptableBlotter.setGridSort(currentLayout.GridSorts);
+                        blotter.setGridSort(currentLayout.GridSorts);
                     }
                     return returnAction;
                 }
@@ -468,7 +555,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
                     let actionTyped = <GridRedux.GridSetValueLikeEditAction>action
                     //We set the value in the grid
-                    adaptableBlotter.setValue(actionTyped.CellInfo)
+                    blotter.setValue(actionTyped.CellInfo)
                     //We AuditLog the Edit
                     //13/02: we now do the AuditLog in the SeValue function
                     // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
@@ -479,12 +566,12 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
                     let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId)
                     columnList.splice(columnIndex, 1)
-                    adaptableBlotter.setNewColumnListOrder(columnList)
+                    blotter.setNewColumnListOrder(columnList)
                     return next(action);
                 }
                 case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = <GridRedux.GridSelectColumnAction>action
-                    adaptableBlotter.selectColumn(actionTyped.ColumnId)
+                    blotter.selectColumn(actionTyped.ColumnId)
                     return next(action);
                 }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {
@@ -515,7 +602,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 SMART EDIT ACTIONS
                 ************ */
                 case SmartEditRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
-                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
+                    let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
@@ -540,7 +627,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
 
-                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
+                    let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
 
                     let apiReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue), state.SmartEdit.SmartEditOperation);
@@ -549,8 +636,11 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 }
 
                 case SmartEditRedux.SMARTEDIT_APPLY: {
-                    let SmartEditStrategy = <ISmartEditStrategy>(adaptableBlotter.Strategies.get(StrategyIds.SmartEditStrategyId));
-                    SmartEditStrategy.ApplySmartEdit((<SmartEditRedux.SmartEditApplyAction>action).bypassCellValidationWarnings);
+                    let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
+                    let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
+                    let thePreview = middlewareAPI.getState().SmartEdit.PreviewInfo
+                    let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
+                    SmartEditStrategy.ApplySmartEdit(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
@@ -560,7 +650,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 BULK UPDATE ACTIONS
                 ************ */
                 case BulkUpdateRedux.BulkUpdate_CHECK_CELL_SELECTION: {
-                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(adaptableBlotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
+                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
@@ -584,7 +674,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
 
-                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(adaptableBlotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
+                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
 
                     let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
@@ -593,35 +683,38 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 }
 
                 case BulkUpdateRedux.BulkUpdate_APPLY: {
-                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(adaptableBlotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
-                    BulkUpdateStrategy.ApplyBulkUpdate((<BulkUpdateRedux.BulkUpdateApplyAction>action).bypassCellValidationWarnings);
+                    let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
+                    let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
+                    let thePreview = middlewareAPI.getState().BulkUpdate.PreviewInfo
+                    let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
+                    BulkUpdateStrategy.ApplyBulkUpdate(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
 
 
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
-                    let plusMinusStrategy = <IPlusMinusStrategy>(adaptableBlotter.Strategies.get(StrategyIds.PlusMinusStrategyId));
+                    let plusMinusStrategy = <IPlusMinusStrategy>(blotter.Strategies.get(StrategyIds.PlusMinusStrategyId));
                     let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
                     plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
                 case ShortcutRedux.SHORTCUT_APPLY: {
-                    let shortcutStrategy = <IShortcutStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ShortcutStrategyId));
+                    let shortcutStrategy = <IShortcutStrategy>(blotter.Strategies.get(StrategyIds.ShortcutStrategyId));
                     let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
-                    shortcutStrategy.ApplyShortcut(actionTyped.Shortcut, actionTyped.CellInfo, actionTyped.KeyEventString, actionTyped.NewValue);
+                    shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
                     return next(action);
                 }
 
                 case ExportRedux.EXPORT_APPLY: {
-                    let exportStrategy = <IExportStrategy>(adaptableBlotter.Strategies.get(StrategyIds.ExportStrategyId));
+                    let exportStrategy = <IExportStrategy>(blotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = <ExportRedux.ExportApplyAction>action;
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
                         middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
-                        iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+                        iPushPullHelper.GetDomainPages(blotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         }).catch((err: any) => {
@@ -646,7 +739,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                         let report = middlewareAPI.getState().Popup.ScreenPopup.Params
                         middlewareAPI.dispatch(PopupRedux.PopupHide())
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
-                        iPushPullHelper.GetDomainPages(adaptableBlotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+                        iPushPullHelper.GetDomainPages(blotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         }).catch((error: any) => {
@@ -675,7 +768,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                 case RESET_STATE: {
                     let returnAction = next(action);
                     //we set the column list from the datasource
-                    adaptableBlotter.setColumnIntoStore();
+                    blotter.setColumnIntoStore();
                     //create the default layout so we can revert to it if needed
                     let currentLayout = DEFAULT_LAYOUT
                     let gridState: GridState = middlewareAPI.getState().Grid
@@ -691,10 +784,10 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     }
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
-                        adaptableBlotter.createCalculatedColumn(x)
+                        blotter.createCalculatedColumn(x)
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
-                        adaptableBlotter.setColumnIntoStore();
+                        blotter.setColumnIntoStore();
                         //12/09/17 : fortunately it's not needed anymore as I changed the init process... That was dirty
                         // //We force clone of the state so strategies get reinitialized with the new column.
                         // //it's not ideal and will probably need optimization
@@ -703,7 +796,7 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     //load either saved layout or default one
                     middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
 
-                    adaptableBlotter.createMenu();
+                    blotter.createMenu();
 
                     //we create default configuration for new Dashboard Items that are
                     //not existing in the user config
@@ -713,22 +806,14 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
                     //        }
                     //    })
 
-                    adaptableBlotter.InitAuditService()
+                    blotter.InitAuditService()
                     return returnAction;
-                }
-                case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-                    if (adaptableBlotter.BlotterOptions.runServerSearch == true) {
-                        let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
-                        alert("new search: " + actionTyped.SelectedSearchName)
-
-                    }
-                    return next(action);
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
                     let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
                     //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
                     //Time will tell I guess
-                    adaptableBlotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
+                    blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
                     return next(action);
                 default:
                     return next(action);
@@ -736,3 +821,5 @@ var adaptableBlotterMiddleware = (adaptableBlotter: IAdaptableBlotter): any => f
         }
     }
 }
+
+

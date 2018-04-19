@@ -15,7 +15,7 @@ import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Core/Helpers/Helper";
 
 interface AboutPopupComponentProps extends StrategyViewPopupProps<AboutPopupComponent> {
-  }
+}
 
 interface KeyValuePair {
     Key: string,
@@ -74,12 +74,12 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-     };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-     };
+    };
 }
 
 export let AboutPopup = connect(mapStateToProps, mapDispatchToProps)(AboutPopupComponent);

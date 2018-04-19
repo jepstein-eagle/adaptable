@@ -3,6 +3,7 @@ import { IAuditService, IDataChangedEvent, IDataChangingEvent, IDataChangedInfo 
 import { IEvent } from '../Interface/IEvent';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { EventDispatcher } from '../EventDispatcher'
+import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
 
 /*
 For now this is a very rough and ready Audit Service which will recieve notifications of changes in data - either via an event fired in the blotter or through other strategies.
@@ -19,10 +20,11 @@ export class AuditService implements IAuditService {
     //just need to refactor the whole lot. For now it's called only from aggrid and kendo
     Init(initialData: any): void {
         let colummns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let blotterOptions = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions;
         for (let record of initialData) {
             for (let prop in record) {
                 if (record.hasOwnProperty(prop) && colummns.find(x => x.ColumnId == prop)) {
-                    let primaryKey = record[this.blotter.BlotterOptions.primaryKey]
+                    let primaryKey = record[blotterOptions.primaryKey]
                     var dataChangedEvent: IDataChangedEvent = { OldValue: null, NewValue: record[prop], ColumnId: prop, IdentifierValue: primaryKey, Timestamp: Date.now(), Record: record };
                     this.InitAddDataValuesToList(dataChangedEvent);
                 }

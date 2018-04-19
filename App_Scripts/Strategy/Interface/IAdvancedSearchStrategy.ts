@@ -5,6 +5,12 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 export interface IAdvancedSearchStrategy extends IStrategy {
 }
 
+
+export interface IAdvancedSearchChangedArgs {
+  AdvancedSearch: IAdvancedSearch
+}
+
+
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
   Name: string,
   Expression: Expression,

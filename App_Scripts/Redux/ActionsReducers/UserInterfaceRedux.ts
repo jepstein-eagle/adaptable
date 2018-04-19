@@ -26,7 +26,9 @@ const initialUserInterfaceState: UserInterfaceState = {
         "#FF0000", //  {/* red */}
         "#FF6961", //  {/* pastel red */}
         "#FFA500", //  {/* orange */}
-    ]
+    ],
+    StyleClassNames: []
+
 }
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (state: UserInterfaceState = initialUserInterfaceState, action: Redux.Action): UserInterfaceState => {

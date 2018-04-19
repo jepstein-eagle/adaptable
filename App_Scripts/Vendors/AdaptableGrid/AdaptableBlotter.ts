@@ -39,7 +39,7 @@ import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IAdaptableBlotter} from '../../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
@@ -51,13 +51,14 @@ import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotter
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
-  
+
     public api: IBlotterApi
-    public  GridName : string = "Adaptable Grid"
+    public GridName: string = "Adaptable Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
@@ -68,13 +69,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-    public BlotterOptions: IAdaptableBlotterOptions
+    private blotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
 
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -82,8 +83,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
         this.StyleService = new StyleService(this);
         //   this.ThemeService = new ThemeService(this)
-        this.AuditLogService = new AuditLogService(this);
+        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
+
+          // store the options in state - and also later anything else that we need...
+          this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -122,8 +126,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, <any>event)
         })
 
- // get the api ready
- this.api = new BlotterApi(this);
+        // get the api ready
+        this.api = new BlotterApi(this);
 
     }
 
@@ -146,16 +150,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onSelectedCellsChanged;
     }
 
+    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
+
+
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
     }
-
-    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
-    public onAuditChanged(): IEvent<any, any> {
-        return this._onAuditChanged;
-    }
-
 
     public setColumnIntoStore() {
         let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableGrid.Column, index: number) => {
@@ -482,7 +483,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // }
 
-    public applyColumnFilters(): void {
+    public applyGridFiltering(): void {
         return null
     }
 
@@ -521,12 +522,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return 1
     }
 
-    public selectColumn(columnId: string){
+    public selectColumn(columnId: string) {
         // todo
     }
 
-    public setGridSort(gridSorts:IGridSort[]):void{
+    public setGridSort(gridSorts: IGridSort[]): void {
         //todo
     }
-  
+
 }

@@ -6,6 +6,7 @@ import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
 import { IPreviewValidationSummary, IPreviewResult, IPreviewInfo } from '../Interface/IPreviewResult';
+import { ICellInfo } from '../Interface/Interfaces';
 
 
 export module PreviewHelper {
@@ -45,6 +46,25 @@ export module PreviewHelper {
             }
         }
         return "";
+    }
+
+
+    export function GetCellInfosFromPreview(previewInfo: IPreviewInfo, bypassCellValidationWarnings: boolean): ICellInfo[] {
+        let newValues: ICellInfo[] = [];
+        if (bypassCellValidationWarnings) {
+            for (let previewResult of previewInfo.PreviewResults) {
+                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.StopEdit).length == 0) {
+                    newValues.push({ Id: previewResult.Id, ColumnId: previewInfo.ColumnId, Value: previewResult.ComputedValue })
+                }
+            }
+        }
+        else {
+            previewInfo.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
+                newValues.push({ Id: pr.Id, ColumnId: previewInfo.ColumnId, Value: pr.ComputedValue })
+            })
+        }
+
+        return newValues;
     }
 }
 

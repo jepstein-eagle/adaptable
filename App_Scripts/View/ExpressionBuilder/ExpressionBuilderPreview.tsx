@@ -30,7 +30,7 @@ export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Exp
     DeleteUserFilterExpression: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
     DeleteAllColumnExpression:(ColumnId: string)=> void
-    ShowPanel: boolean
+    ShowPanel: boolean // currently ALWAYS true!
     ReadOnlyMode?: boolean
 }
 
@@ -183,7 +183,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
 
 
-                <ListGroup>
+                <ListGroup style={{ overflowY: "hidden" }}>
                     {columnValuesListgroupItems}
                     {columnUserFilterExpressionsListgroupItems}
                     {columnRangesListgroupItems}
@@ -193,8 +193,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         return <div>
             {this.props.ShowPanel &&
 
-                <PanelWithButton headerText="Preview" bsStyle="info" style={{ height: '425px' }} >
-                    <div >
+                <PanelWithButton headerText="Preview" bsStyle="info"  >
+                     <div style={{ height: '355px' , overflowY: 'auto'}}>
                         {previewLists}
                     </div>
                 </PanelWithButton>
@@ -238,6 +238,3 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 }
 
 
-var smallFontSizeStyle = {
-    fontSize: 'small'
-};

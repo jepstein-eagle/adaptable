@@ -15,12 +15,12 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   AdaptableBlotter: IAdaptableBlotter;
   PopupParams: string
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
-  ModalContainer: HTMLElement
 }
 
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
   render() {
 
+    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions, document);
     if (this.props.ComponentName) {
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
@@ -28,11 +28,11 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
-        TeamSharingActivated: this.props.AdaptableBlotter ? this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer : false,
+        TeamSharingActivated: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.enableRemoteConfigServer,
         Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
         UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
         SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-        ModalContainer: this.props.ModalContainer,
+        ModalContainer: modalContainer ,
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts
       }
@@ -42,8 +42,9 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
 
 
     return (
+      
       <Modal show={this.props.showModal} onHide={this.props.onHide} className="adaptable_blotter_style_base"
-        container={this.props.ModalContainer} >
+        container={modalContainer} >
         {/*<Modal.Header closeButton>
             <Modal.Title>{}</Modal.Title>
           </Modal.Header>*/}
@@ -56,7 +57,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
           </div>
         </Modal.Body>
         <Modal.Footer className="adaptable_blotter_style_popup_base">
-             <Button onClick={() => this.props.onHide()}>Close</Button>
+          <Button onClick={() => this.props.onHide()}>Close</Button>
         </Modal.Footer>
       </Modal>
     );

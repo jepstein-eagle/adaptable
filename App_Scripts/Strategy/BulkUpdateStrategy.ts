@@ -24,25 +24,9 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         this.createMenuItemShowPopup(StrategyNames.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyGlyphs.BulkUpdateGlyph);
     }
 
-    public ApplyBulkUpdate(bypassCellValidationWarnings: boolean): void {
-        let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().BulkUpdate.PreviewInfo
-        let newValues: ICellInfo[] = [];
-        if (bypassCellValidationWarnings) {
-            for (let previewResult of thePreview.PreviewResults) {
-                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.StopEdit).length == 0) {
-                    newValues.push({ Id: previewResult.Id, ColumnId: thePreview.ColumnId, Value: previewResult.ComputedValue })
-                }
-            }
-        }
-        else {
-            thePreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
-                newValues.push({ Id: pr.Id, ColumnId: thePreview.ColumnId, Value: pr.ComputedValue })
-            })
-        }
-
-        this.AuditFunctionAction("ApplyBulkUpdate",
-            "",
-            { BulkUpdateValue: this.GetBulkUpdateState().BulkUpdateValue, NewValues: newValues })
+    public ApplyBulkUpdate(newValues: ICellInfo[]): void {
+      
+       // this.AuditFunctionAction("ApplyBulkUpdate", "", { BulkUpdateValue: this.GetBulkUpdateState().BulkUpdateValue, NewValues: newValues })
 
         this.blotter.setValueBatch(newValues)
     }
@@ -128,7 +112,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
                 let previewResult: IPreviewResult = { Id: pair[0], InitialValue: columnValuePair.value, ComputedValue: typedBulkUpdateValue, ValidationRules: validationRules }
-               
+
                 previewResults.push(previewResult)
                 columnId = columnValuePair.columnID;
             }

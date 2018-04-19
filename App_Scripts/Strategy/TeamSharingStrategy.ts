@@ -17,7 +17,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
      }
 
     protected hasPopupMenu(): boolean{
-        return this.blotter.BlotterOptions.enableRemoteConfigServer;
+        return  this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.enableRemoteConfigServer;
     }
 
     protected InitState() {

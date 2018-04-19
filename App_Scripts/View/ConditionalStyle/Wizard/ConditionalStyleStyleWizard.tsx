@@ -1,23 +1,25 @@
 import * as React from "react";
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
+import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
+import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
+import { IStyle } from '../../../Core/Interface/IStyle';
 import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
-import { IStyle } from '../../../Core/Interface/IStyle';
+import { Checkbox } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 
-export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
+
+export interface ConditionalStyleStyleWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     ColorPalette: string[]
     StyleClassNames: string[]
 }
 
-export interface FormatColumnStyleWizardState {
+export interface ConditionalStyleStyleWizardState {
     Style: IStyle,
 }
 
-export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWizardProps, FormatColumnStyleWizardState> implements AdaptableWizardStep {
+export class ConditionalStyleStyleWizard extends React.Component<ConditionalStyleStyleWizardProps, ConditionalStyleStyleWizardState> implements AdaptableWizardStep {
 
-    constructor(props: FormatColumnStyleWizardProps) {
+    constructor(props: ConditionalStyleStyleWizardProps) {
         super(props)
         this.state = { Style: this.props.Data.Style }
     }
@@ -25,8 +27,8 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
     render() {
 
         let canUseClassName = true; // get from somewhere...
-      
-        return <div className="adaptable_blotter_style_wizard_formatcolumn_style">
+        return <div className="adaptable_blotter_style_wizard_conditionalstyle_style">
+
             <StyleComponent
                 ColorPalette={this.props.ColorPalette}
                 StyleClassNames={this.props.StyleClassNames}
@@ -34,9 +36,13 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
                 UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}
                 CanUseClassName={canUseClassName}
             />
+
         </div>
     }
 
+    private onUpdateStyle(style: IStyle) {
+        this.setState({ Style: style } as ConditionalStyleStyleWizardState, () => this.props.UpdateGoBackState())
+    }
 
     public canNext(): boolean {
         return this.state.Style.BackColor != null || this.state.Style.ForeColor != null || this.state.Style.FontWeight != FontWeight.Normal || this.state.Style.FontStyle != FontStyle.Normal || this.state.Style.FontSize != null || StringExtensions.IsNotNullOrEmpty(this.state.Style.ClassName)
@@ -45,25 +51,16 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
     public Next(): void {
         this.props.Data.Style = this.state.Style;
     }
-    public Back(): void { 
-        // todo
+    public Back(): void {
+        // todod
     }
-
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
-
-    private onUpdateStyle(style: IStyle) {
-        this.setState({ Style: style } as FormatColumnStyleWizardState, () => this.props.UpdateGoBackState())
-    }
-
-
-
     public StepName = this.props.StepName
-
 }
 
 

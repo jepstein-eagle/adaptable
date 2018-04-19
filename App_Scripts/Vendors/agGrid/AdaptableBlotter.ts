@@ -86,8 +86,9 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } fr
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
-import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { IBlotterApi, BlotterApiBase } from '../../Core/Interface/IBlotterApi';
 import { BlotterApi } from './BlotterApi';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -102,24 +103,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ValidationService: IValidationService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
-    public BlotterOptions: IAdaptableBlotterOptions
     public StyleService: StyleService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
+    private blotterOptions: IAdaptableBlotterOptions
+
+
     constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
 
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
         //   this.ThemeService = new ThemeService(this)
-        this.AuditLogService = new AuditLogService(this);
+        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
+
+        // store the options in state - and also later anything else that we need...
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
+
+        // store any grid-specific info in this object (to be improved!) and then accessible later
+        let blotterRestrictions: string[] = ["UseClassSytleNames"]
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterRestrictionsAction>(GridRedux.GridSetBlotterRestrictions(blotterRestrictions));
+
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -142,15 +153,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
-        this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+        // not able to select a column in hypergrid currently
+        //this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
 
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+
+        iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -174,6 +187,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // get the api ready
         this.api = new BlotterApi(this);
+
+
     }
 
     private createFilterWrapper(col: Column) {
@@ -209,12 +224,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onRefresh;
     }
 
-    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
-    public onAuditChanged(): IEvent<any, any> {
-        return this._onAuditChanged;
-    }
-
-    public applyColumnFilters() {
+    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
+    
+    public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
     }
@@ -314,7 +326,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: RowNode): any {
-        return this.gridOptions.api.getValue(this.BlotterOptions.primaryKey, record)
+        return this.gridOptions.api.getValue(this.blotterOptions.primaryKey, record)
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -443,7 +455,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         })
-        this.applyColumnFilters();
+        this.applyGridFiltering();
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
@@ -488,7 +500,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
 
 
-        this.applyColumnFilters();
+        this.applyGridFiltering();
     }
 
     public cancelEdit() {
@@ -520,11 +532,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
         }
     }
-
-
-
-
-
 
     public selectCells(cells: ICellInfo[]): void {
         // todo?
@@ -586,7 +593,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
         })
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.blotterOptions.maxColumnValueItemsDisplayed);
     }
 
     public getDisplayValue(id: any, columnId: string): string {
@@ -884,7 +891,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._currentEditor = null;
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
-            this.applyColumnFilters();
+            this.applyGridFiltering();
         });
         gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
             this._onSelectedCellsChanged.Dispatch(this, this)
@@ -931,13 +938,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
-            //first we assess AdvancedSearch 
-            let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
-            if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-                let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
-                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
-                    // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
-                    return false;
+            //first we assess AdvancedSearch (if its running locally)
+            if (this.blotterOptions.runServerSearch == false) {
+                let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
+                if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+                    let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
+                    if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
+                        // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
+                        return false;
+                    }
                 }
             }
             //we then assess filters
@@ -1044,8 +1053,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectColumn(columnId: string) {
-      //  this._onAuditChanged.Dispatch("Search changed", "its big")
-
         this.gridOptions.api.clearRangeSelection();
         let rangeSelectionParams: AddRangeSelectionParams = {
             rowStart: 0,

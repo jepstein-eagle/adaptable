@@ -24,27 +24,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyGlyphs.SmartEditGlyph);
     }
 
-    public ApplySmartEdit(bypassCellValidationWarnings: boolean): void {
-        let thePreview = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.PreviewInfo
-        let newValues: ICellInfo[] = [];
-        if (bypassCellValidationWarnings) {
-            for (let previewResult of thePreview.PreviewResults) {
-                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.StopEdit).length == 0) {
-                    newValues.push({ Id: previewResult.Id, ColumnId: thePreview.ColumnId, Value: previewResult.ComputedValue })
-                }
-            }
-        }
-        else {
-            thePreview.PreviewResults.filter(p => p.ValidationRules.length == 0).forEach(pr => {
-                newValues.push({ Id: pr.Id, ColumnId: thePreview.ColumnId, Value: pr.ComputedValue })
-            })
-        }
-
-        this.AuditFunctionAction("ApplySmartEdit",
-            "",
-            { SmartEditValue: this.GetSmartEditState().SmartEditValue, SmartEditOperation: this.GetSmartEditState().SmartEditOperation, NewValues: newValues })
-
-        this.blotter.setValueBatch(newValues)
+    public ApplySmartEdit(newValues: ICellInfo[]): void {
+          this.blotter.setValueBatch(newValues)
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {

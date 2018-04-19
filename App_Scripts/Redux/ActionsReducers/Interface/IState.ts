@@ -21,13 +21,18 @@ import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement, IGridSort } from '../../../Core/Interface/Interfaces';
 import { IUserTheme } from '../../../Strategy/Interface/IThemeStrategy';
+import { IAdaptableBlotterOptions } from '../../../Core/Interface/IAdaptableBlotterOptions';
 
 /*
 Created by the system and not part of predefined or user config
 */
+
+
 export interface GridState {
     Columns: IColumn[];
-    GridSorts: IGridSort[]
+    GridSorts: IGridSort[];
+    BlotterOptions: IAdaptableBlotterOptions;
+    BlotterRestrictions: string[]
 }
 
 export interface MenuState {
@@ -71,6 +76,7 @@ predefined and user config but not editable by users
 
 export interface UserInterfaceState {
     ColorPalette: string[];
+    StyleClassNames: string[]
 }
 
 

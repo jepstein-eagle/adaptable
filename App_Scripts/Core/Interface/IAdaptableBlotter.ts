@@ -11,13 +11,10 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { IAdaptableBlotterOptions } from './IAdaptableBlotterOptions';
 import { IColumn } from './IColumn';
 import { IBlotterApi } from './IBlotterApi';
-
-
-
-
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
+import { EventDispatcher } from '../EventDispatcher';
 
 export interface IAdaptableBlotter {
     // new API interface for external calls - not sure yet if good idea or not...
@@ -25,7 +22,6 @@ export interface IAdaptableBlotter {
 
     GridName: string
     AdaptableBlotterStore: IAdaptableBlotterStore;
-    BlotterOptions: IAdaptableBlotterOptions
     Strategies: IAdaptableStrategyCollection
 
     // Services
@@ -41,8 +37,10 @@ export interface IAdaptableBlotter {
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
-    onAuditChanged(): IEvent<any, any>;
 
+    // not sure if this is right but putting the event here
+     AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> ;
+   
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
@@ -55,7 +53,6 @@ export interface IAdaptableBlotter {
     selectCells(cells: ICellInfo[]): void
     selectColumn(columnId: string): void
 
-
     // column related
     getColumnIndex(columnName: string): number
     setColumnIntoStore(): void
@@ -66,7 +63,6 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
-
 
     // editing related
     setValue(cellInfo: ICellInfo): void
@@ -89,7 +85,8 @@ export interface IAdaptableBlotter {
     getFirstRecord(): any
 
     // Filtering
-    applyColumnFilters(): void
+    applyGridFiltering(): void
+
     //TEMPORARY : JO
     getIPPStyle(): IPPStyle
 
@@ -97,4 +94,3 @@ export interface IAdaptableBlotter {
     getRowInfo(): any
     getColumnInfo(): any
 }
-

@@ -7,17 +7,17 @@ import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 
-export interface FormatColumnColumnWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
+export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     Columns: Array<IColumn>
 }
 
-export interface FormatColumnColumnWizardState {
+export interface FormatColumnScopeWizardState {
     ColumnId: string
 }
 
-export class FormatColumnColumnWizard extends React.Component<FormatColumnColumnWizardProps, FormatColumnColumnWizardState> implements AdaptableWizardStep {
+export class FormatColumnScopeWizard extends React.Component<FormatColumnScopeWizardProps, FormatColumnScopeWizardState> implements AdaptableWizardStep {
 
-    constructor(props: FormatColumnColumnWizardProps) {
+    constructor(props: FormatColumnScopeWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId
@@ -40,7 +40,7 @@ export class FormatColumnColumnWizard extends React.Component<FormatColumnColumn
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as FormatColumnColumnWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as FormatColumnScopeWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

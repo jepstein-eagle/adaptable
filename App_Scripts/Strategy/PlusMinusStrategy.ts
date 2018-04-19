@@ -187,9 +187,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
         if (successfulValues.length > 0) {
-            this.AuditFunctionAction("ApplyPlusMinus",
-                "KeyPressed:" + keyEventString,
-                successfulValues)
+           
+            
             this.blotter.setValueBatch(successfulValues);
 
             if (this.reSelectCells) {  // not sure this is quite right as warning values are not included even if they pass and it doesnt work post-alert

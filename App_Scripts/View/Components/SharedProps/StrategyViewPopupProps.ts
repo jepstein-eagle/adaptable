@@ -4,7 +4,6 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IUserFilter, ISystemFilter } from "../../../Strategy/Interface/IUserFilterStrategy";
-import { IAdaptableBlotterOptions } from "../../../Core/Interface/IAdaptableBlotterOptions";
 import { IGridSort } from "../../../Core/Interface/Interfaces";
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface

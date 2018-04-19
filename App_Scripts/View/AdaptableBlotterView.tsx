@@ -32,8 +32,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
-        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
-
+ 
         return (
             <div className="adaptable_blotter_style_base" >
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
@@ -74,8 +73,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     IsReadOnly={this.props.PopupState.ScreenPopup.IsReadOnly}
                     AdaptableBlotter={this.props.AdaptableBlotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
-                    PopupParams={this.props.PopupState.ScreenPopup.Params}
-                    ModalContainer={modalContainer} />
+                    PopupParams={this.props.PopupState.ScreenPopup.Params} />
             </div>
 
         );

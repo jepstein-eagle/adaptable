@@ -70,6 +70,7 @@ import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu'
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -86,14 +87,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-    public BlotterOptions: IAdaptableBlotterOptions
+    private blotterOptions: IAdaptableBlotterOptions
     private contextMenuContainer: HTMLDivElement
 
     constructor(private grid: kendo.ui.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
 
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -102,8 +103,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
 
         // this.ThemeService = new ThemeService(this);
-        this.AuditLogService = new AuditLogService(this);
+        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
+
+          // store the options in state - and also later anything else that we need...
+          this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
 
         this.Strategies = new Map<string, IStrategy>();
 
@@ -141,7 +145,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+        iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.container);
 
@@ -267,12 +271,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
     }
-
-    private _onAuditChanged: EventDispatcher<any, any> = new EventDispatcher<any, any>();
-    public onAuditChanged(): IEvent<any, any> {
-        return this._onAuditChanged;
-    }
-
+    
+    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
+   
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -549,7 +550,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
         })
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.blotterOptions.maxColumnValueItemsDisplayed);
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
@@ -649,7 +650,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    public applyColumnFilters(): void {
+    public applyGridFiltering(): void {
         //we remove all style linked to QuickSearch
         this.removeAllCellStylesWithRegex(new RegExp("^Ab-QuickSearch"));
         let quickSearchColors: { rowId: any, columnIndex: number }[] = []

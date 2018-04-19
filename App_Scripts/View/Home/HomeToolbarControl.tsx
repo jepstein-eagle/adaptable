@@ -17,11 +17,13 @@ import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
     DashboardState: DashboardState,
+    BlotterOptions: IAdaptableBlotterOptions,
     Columns: IColumn[],
     HeaderText: string,
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
@@ -69,7 +71,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             })
         }
 
-        let optionsBlotterName: string =this.props.AdaptableBlotter.BlotterOptions.blotterId;
+        let optionsBlotterName: string =this.props.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
      
         const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
@@ -126,6 +128,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         MenuState: state.Menu,
         DashboardState: state.Dashboard,
+        BlotterOptions: state.Grid.BlotterOptions,
         Columns: state.Grid.Columns
     };
 }

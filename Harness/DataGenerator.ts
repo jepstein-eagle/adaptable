@@ -42,17 +42,17 @@ export class DataGenerator {
         }
         return trades;
     }
-    getFewTrades(): ITrade[] {
+    getBarcapTrades(): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 10; i++) {
-            trades.push(this.createTrade(i));
+        for (let i = 1; i < 5; i++) {
+            trades.push(this.createTrade(i, "Barcap"));
         }
         return trades;
     }
-    getManyTrades(): ITrade[] {
+    getGSTrades(): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 200; i++) {
-            trades.push(this.createTrade(i));
+        for (let i = 1; i < 20; i++) {
+            trades.push(this.createTrade(i, "Goldman Sachs"));
         }
         return trades;
     }
@@ -203,19 +203,20 @@ export class DataGenerator {
 
 
 
-    createTrade(i: number): ITrade {
+    createTrade(i: number, counterparty?: string): ITrade {
         let price = this.getMeaningfulDouble();
         let bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
         let ask = this.roundTo4Dp(price + bidOfferSpread / 2);
         let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         let tradeDate = this.generateRandomDate(-1000, 1000);
         let moodyRating = this.getRandomItem(this.getMoodysRatings())
+        let tradeCounterparty = counterparty? counterparty:  this.getRandomItem(this.getCounterparties())
         let trade =
             {
                 "tradeId": i,
                 "notional": this.getRandomItem(this.getNotionals()),
                 "deskId": this.generateRandomInt(0, 250),
-                "counterparty": this.getRandomItem(this.getCounterparties()),
+                "counterparty": tradeCounterparty,
                 "currency": this.getRandomItem(this.getCurrencies()),
                 "country": this.getRandomItem(this.getCountries()),
                 "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),

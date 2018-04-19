@@ -91,9 +91,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.StopEdit;
                 let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.WarnUser;
 
-                this.AuditFunctionAction("HandleKeyDown",
-                    "Key Pressed: " + keyEventString,
-                    { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
+             //   this.AuditFunctionAction("HandleKeyDown",                     "Key Pressed: " + keyEventString,                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
 
                 //We cancel the edit before doing anything so there is no issue when showing a popup or performing the shortcut
                 this.blotter.cancelEdit()
@@ -104,7 +102,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     if (hasErrorWarning) {
                         this.ShowWarningMessages(validationRules, activeShortcut, activeCell, keyEventString, valueToReplace, dataChangedEvent.OldValue);
                     } else {
-                        this.ApplyShortcut(activeShortcut, activeCell, keyEventString, valueToReplace);
+                        this.ApplyShortcut(activeCell, valueToReplace);
                     }
                 }
                 // useful feature - prevents the main thing happening you want to on the keypress.
@@ -131,12 +129,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         }
     }
 
-    public ApplyShortcut(shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any): void {
-
-        this.AuditFunctionAction("ApplyShortcut",
-            "",
-            { Shortcut: shortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
-
+    public ApplyShortcut(activeCell: ICellInfo, newValue: any): void {
         this.blotter.setValueBatch([{ Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue }]);
     }
 

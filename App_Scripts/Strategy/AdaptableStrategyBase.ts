@@ -156,12 +156,12 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.PopupParams)
     }*/
 
-    protected AuditFunctionAction(action: string, info: string, data?: any) {
-        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-            action,
-            info,
-            data)
-    }
+  //  protected AuditFunctionAction(action: string, info: string, data?: any) {
+  //      this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+  //          action,
+  //          info,
+  //          data)
+  //  }
 
 }
 

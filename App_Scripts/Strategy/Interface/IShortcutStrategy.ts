@@ -11,7 +11,7 @@ export interface IShortcut extends IAdaptableBlotterObject{
 }
 
 export interface IShortcutStrategy extends IStrategy {
-    ApplyShortcut(shortcut: IShortcut, cellInfo: ICellInfo, keyEventString: string, newValue: any): void
+    ApplyShortcut(cellInfo: ICellInfo, newValue: any): void
 
 }
 
