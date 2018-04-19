@@ -68,7 +68,7 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { IBlotterApi, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
 //icon to indicate toggle state
@@ -282,14 +282,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onSelectedCellsChanged;
     }
 
-    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
-
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
     }
 
-
+    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
+    
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {

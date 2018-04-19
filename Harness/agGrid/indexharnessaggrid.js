@@ -200,7 +200,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        predefinedConfig: json,//"demoConfig.json",// json,
+     //   predefinedConfig: json,//"demoConfig.json",// json,
         runServerSearch: true,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -210,14 +210,15 @@ function InitBlotter() {
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
 
-    adaptableblotter.api.onAdvancedSearchedChanged().Subscribe((sender, search) => getTradesForSearch(search, dataGen))
+    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 
 }
 
-function getTradesForSearch(search, dataGen) {
+function getTradesForSearch(searchArgs, dataGen) {
+    let search = searchArgs.AdvancedSearch;
     let newTrades
     if (search == null || search.Name == "") {
-        newTrades = dataGen.getTrades()
+           newTrades = dataGen.getTrades()
     } else {
         if (search.Name == "barcap") {
             newTrades = dataGen.getBarcapTrades()

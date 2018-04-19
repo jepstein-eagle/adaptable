@@ -7,7 +7,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
-import { BlotterApiBase, IBlotterApi } from '../Core/Interface/IBlotterApi';
+import { BlotterApiBase, IBlotterApi, ISearchChangedArgs } from '../Core/Interface/IBlotterApi';
 
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
@@ -29,7 +29,8 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             //  probably not an issue but might be worth revisiting ...
             let currentAdvancedSearch = this.AdvancedSearchState.AdvancedSearches.find(as => as.Name == this.AdvancedSearchState.CurrentAdvancedSearch)
 
-           this.blotter.AdvancedSearchedChanged.Dispatch(this.blotter, currentAdvancedSearch);
+            let searchChangedArgs: ISearchChangedArgs= {AdvancedSearch: currentAdvancedSearch}
+           this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
             if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.runServerSearch != true) {
                 this.blotter.applyGridFiltering()
             }

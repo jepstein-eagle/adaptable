@@ -69,7 +69,7 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { IBlotterApi, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
 
@@ -272,8 +272,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onRefresh;
     }
     
-    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
-   
+    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
+    
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {

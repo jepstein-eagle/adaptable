@@ -131,19 +131,20 @@ function InitBlotter() {
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
 
-    adaptableblotter.api.onAdvancedSearchedChanged().Subscribe((sender, search) => getTradesForSearch(search, dataGen))
+    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 
 
     grid.addProperties(lightTheme);
 }
 
-function getTradesForSearch(search, dataGen) {
+function getTradesForSearch(searchArgs, dataGen) {
     let newTrades
-     if (search == null || search.Name == "") {
-     //    alert("empty search")
+    let search = searchArgs.AdvancedSearch;
+   if (search == null || search.Name == "") {
+         alert("empty search")
      newTrades = dataGen.getTrades()
      } else {
-    //     alert(search.Name)
+         alert(search.Name)
     
          if (search.Name == "barcap") {
              newTrades = dataGen.getBarcapTrades()

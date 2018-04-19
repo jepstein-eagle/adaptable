@@ -50,7 +50,7 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } fr
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi } from '../../Core/Interface/IBlotterApi';
+import { IBlotterApi, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
 
@@ -150,8 +150,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onSelectedCellsChanged;
     }
 
-    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
-
+    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
+    
 
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {

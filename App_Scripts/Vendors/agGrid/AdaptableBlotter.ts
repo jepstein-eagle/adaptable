@@ -86,7 +86,7 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } fr
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
-import { IBlotterApi, BlotterApiBase } from '../../Core/Interface/IBlotterApi';
+import { IBlotterApi, BlotterApiBase, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { BlotterApi } from './BlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 
@@ -224,7 +224,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onRefresh;
     }
 
-    public AdvancedSearchedChanged: EventDispatcher<IAdaptableBlotter, IAdvancedSearch> = new EventDispatcher<IAdaptableBlotter, IAdvancedSearch>();
+    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
     
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()

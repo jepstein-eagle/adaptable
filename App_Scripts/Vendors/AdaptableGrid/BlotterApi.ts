@@ -5,7 +5,7 @@ export class BlotterApi extends BlotterApiBase implements IBlotterApi {
 
     constructor( blotter : AdaptableBlotter) {
         super(blotter)
-         this.blotter = blotter;
+        // this.blotter = blotter;
     }
 
     public setDataSource(dataSource: any): void {

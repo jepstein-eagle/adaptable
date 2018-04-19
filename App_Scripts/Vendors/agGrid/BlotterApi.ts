@@ -1,8 +1,6 @@
-import { IBlotterApi, BlotterApiBase } from "../../Core/Interface/IBlotterApi";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { BlotterApiBase } from "../../Core/Api/BlotterApiBase";
+import { IBlotterApi } from "../../Core/Api/IBlotterApi";
 import { AdaptableBlotter } from "./AdaptableBlotter";
-import { EventDispatcher } from "../../Core/EventDispatcher";
-import { IEvent } from "../../Core/Interface/IEvent";
 
 export class BlotterApi extends BlotterApiBase implements IBlotterApi {
 
