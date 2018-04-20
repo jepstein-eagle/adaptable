@@ -30,7 +30,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
 
         let blotterOptions =  blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
         //first we assess AdvancedSearch 
-        if (blotterOptions.runServerSearch == false) {
+      //  if (blotterOptions.runServerSearch == false) {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -38,7 +38,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                     return false;
                 }
             }
-        }
+     //   }
 
         //we then assess filters
         let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;

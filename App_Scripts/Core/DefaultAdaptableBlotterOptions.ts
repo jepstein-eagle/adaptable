@@ -8,5 +8,5 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfig: null,
     maxColumnValueItemsDisplayed: 5000,
-    runServerSearch: false
+    serverSearch: "None"
 }

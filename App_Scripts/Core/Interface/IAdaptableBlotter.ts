@@ -1,4 +1,4 @@
-import { DataType, DistinctCriteriaPairValue } from '../Enums'
+import { DataType, DistinctCriteriaPairValue, SearchChangedTrigger } from '../Enums'
 import { IStrategy } from '../../Strategy/Interface/IStrategy'
 import { ICellInfo, IAdaptableStrategyCollection, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -12,9 +12,10 @@ import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { IBlotterApi, ISearchChangedArgs } from './IBlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { EventDispatcher } from '../EventDispatcher';
+import { IBlotterApi } from '../Api/IBlotterApi';
+import { ISearchChangedArgs } from '../Api/ISearchChangedArgs';
 
 export interface IAdaptableBlotter {
     // new API interface for external calls - not sure yet if good idea or not...
@@ -39,8 +40,9 @@ export interface IAdaptableBlotter {
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     // not sure if this is right but putting the event here
-    SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> ;
-   
+    SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>
+   // PublishSearchChangedEvent(searchChangedTrigger: SearchChangedTrigger): void
+
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any

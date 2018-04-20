@@ -1,5 +1,10 @@
 import { IAdvancedSearch } from "../../Strategy/Interface/IAdvancedSearchStrategy";
+import { IColumnFilter } from "../../Strategy/Interface/IColumnFilterStrategy";
+import { SearchChangedTrigger } from "../Enums";
 
 export interface ISearchChangedArgs {
-    AdvancedSearch: IAdvancedSearch
-  }
+  SearchChangedTrigger: SearchChangedTrigger
+  AdvancedSearch: IAdvancedSearch
+  QuickSearchText: USVString
+  ColumnFilters: IColumnFilter[]
+}

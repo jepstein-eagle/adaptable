@@ -510,4 +510,16 @@ export module ExpressionHelper {
         return false;
     }
 
+    export function ExpressionContainsFilter(expression: Expression, filter: IUserFilter): boolean {
+        let hasFilter: boolean = false;
+        if (expression != null && expression.FilterExpressions.length > 0) {
+            expression.FilterExpressions.forEach(fe => {
+                if (!hasFilter) {
+                    hasFilter = fe.Filters.find(f => f == filter.Name) != null;
+                }
+            })
+        }
+        return hasFilter;
+    }
+
 } 

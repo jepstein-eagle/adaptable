@@ -7,7 +7,10 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
-import { BlotterApiBase, IBlotterApi, ISearchChangedArgs } from '../Core/Interface/IBlotterApi';
+import { ISearchChangedArgs } from '../Core/Api/ISearchChangedArgs';
+import { basename } from 'path';
+import { SearchChangedTrigger } from '../Core/Enums';
+import { Server } from 'https';
 
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
@@ -27,13 +30,9 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
             // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
-            let currentAdvancedSearch = this.AdvancedSearchState.AdvancedSearches.find(as => as.Name == this.AdvancedSearchState.CurrentAdvancedSearch)
-
-            let searchChangedArgs: ISearchChangedArgs= {AdvancedSearch: currentAdvancedSearch}
-           this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.runServerSearch != true) {
+           
                 this.blotter.applyGridFiltering()
-            }
+          
         }
     }
 

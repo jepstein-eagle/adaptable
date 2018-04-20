@@ -1,6 +1,6 @@
 import { BlotterApiBase } from "../../Core/Api/BlotterApiBase";
 import { IBlotterApi } from "../../Core/Api/IBlotterApi";
-import { AdaptableBlotter } from "../Hypergrid/AdaptableBlotter";
+import { AdaptableBlotter } from "./AdaptableBlotter";
 
 
 export class BlotterApi extends BlotterApiBase implements IBlotterApi {

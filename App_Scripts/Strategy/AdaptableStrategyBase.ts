@@ -6,6 +6,11 @@ import { IEnterpriseCache } from 'ag-grid';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
+import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
+import { ISearchChangedArgs } from '../Core/Api/ISearchChangedArgs';
+import { QuickSearchState, AdvancedSearchState, ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { IColumnFilter } from './Interface/IColumnFilterStrategy';
+import { SearchChangedTrigger } from '../Core/Enums';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean
@@ -94,17 +99,17 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     createMenuItemReduxAction(Label: string,
         GlyphIcon: string,
         Action: Action): any {
-        if (this.isVisibleStrategy()&& !this.isReadOnlyStrategy()) {
+        if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                   MenuRedux.AddItemColumnContextMenu(
-                new MenuItemDoReduxAction(
-                    Label,
-                    this.Id,
-                    Action,
-                    GlyphIcon,
-                    false,
-                    true
-                ))
+                MenuRedux.AddItemColumnContextMenu(
+                    new MenuItemDoReduxAction(
+                        Label,
+                        this.Id,
+                        Action,
+                        GlyphIcon,
+                        false,
+                        true
+                    ))
             )
         }
     }
@@ -150,18 +155,19 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
+   
     /*this.Action = PopupRedux.PopupShow(
             ComponentName,
             Entitlment ? Entitlment.AccessLevel == "ReadOnly" : false,
             this.PopupParams)
     }*/
 
-  //  protected AuditFunctionAction(action: string, info: string, data?: any) {
-  //      this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-  //          action,
-  //          info,
-  //          data)
-  //  }
+    //  protected AuditFunctionAction(action: string, info: string, data?: any) {
+    //      this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
+    //          action,
+    //          info,
+    //          data)
+    //  }
 
 }
 

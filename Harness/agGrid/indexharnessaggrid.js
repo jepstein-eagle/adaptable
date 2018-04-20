@@ -194,14 +194,16 @@ function InitBlotter() {
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
 
+    let serverSearch="AllSearch"
+
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
         userName: "demo user",
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-     //   predefinedConfig: json,//"demoConfig.json",// json,
-        runServerSearch: true,
+        //   predefinedConfig: json,//"demoConfig.json",// json,
+        serverSearch: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -215,12 +217,16 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
+     
     let search = searchArgs.AdvancedSearch;
+  
     let newTrades
     if (search == null || search.Name == "") {
-           newTrades = dataGen.getTrades()
+        alert("nowt")
+        newTrades = dataGen.getTrades()
     } else {
-        if (search.Name == "barcap") {
+        alert(search.Name);
+          if (search.Name == "barcap") {
             newTrades = dataGen.getBarcapTrades()
         } else {
             newTrades = dataGen.getGSTrades()
@@ -250,10 +256,10 @@ let json = {
             }
         ]
     },
-    "UserInterface":{
+    "UserInterface": {
         "StyleClassNames": [
-                "styleBackBrown",
-                "styleForeYellow"
+            "styleBackBrown",
+            "styleForeYellow"
         ]
     },
     "ConditionalStyle": {

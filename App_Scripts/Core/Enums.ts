@@ -58,7 +58,7 @@ export enum MathOperation {
 // Enums used in Strategies
 
 
-export enum LayoutSource{
+export enum LayoutSource {
     Existing = "Existing",
     New = "New"
 }
@@ -156,9 +156,18 @@ export enum QueryBuildStatus {
     ColumnSelected,
     SingleConditionsAdded,
     MultipleConditionsAdded,
-  }
+}
 
 export enum RangeOperandType {
     Value = "Value",
-    Column= "Column",
+    Column = "Column",
 }
+
+export enum SearchChangedTrigger {
+    AdvancedSearch = "AdvancedSearch",
+    QuickSearch = "QuickSearch",
+    ColumnFilter = "ColumnFilter",
+    UserFilter = "UserFilter",
+    DataChange = "DataChange",
+}
+

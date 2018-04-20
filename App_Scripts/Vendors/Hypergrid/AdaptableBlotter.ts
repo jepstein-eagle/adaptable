@@ -47,7 +47,7 @@ import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Int
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, DistinctCriteriaPairValue, CellValidationMode, SortOrder } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, CellValidationMode, SortOrder, SearchChangedTrigger } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -68,8 +68,9 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
+import { IBlotterApi } from '../../Core/Api/IBlotterApi';
+import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -1228,6 +1229,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let schema = this.grid.behavior.dataModel.dataSource.schema;
         this.grid.behavior.dataModel.dataSource.setData(data, schema);
         this.ReindexAndRepaint();
+    }
+
+    public PublishSearchChangedEvent(searchChangedTrigger: SearchChangedTrigger) {
+        // todo
     }
 
 }

@@ -8,7 +8,7 @@ export interface IAdaptableBlotterOptions {
     predefinedConfig?: object,
     maxColumnValueItemsDisplayed: number,
     modalContainer?: string,
-    runServerSearch?: boolean,
+    serverSearch?:  'None' | 'AdvancedSearch' | 'AllSearch'
     iPushPullConfig?: {
         api_url?: string;
         ws_url?: string;

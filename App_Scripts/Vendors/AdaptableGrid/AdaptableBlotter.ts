@@ -38,7 +38,7 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, SearchChangedTrigger } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
@@ -50,8 +50,9 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } fr
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
+import { IBlotterApi } from '../../Core/Api/IBlotterApi';
+import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -528,6 +529,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setGridSort(gridSorts: IGridSort[]): void {
         //todo
+    }
+
+    public PublishSearchChangedEvent(searchChangedTrigger: SearchChangedTrigger) {
+        // todo
     }
 
 }

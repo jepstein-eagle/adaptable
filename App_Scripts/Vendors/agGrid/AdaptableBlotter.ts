@@ -61,7 +61,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, SearchChangedTrigger } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
@@ -86,9 +86,10 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } fr
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
-import { IBlotterApi, BlotterApiBase, ISearchChangedArgs } from '../../Core/Interface/IBlotterApi';
 import { BlotterApi } from './BlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
+import { IBlotterApi } from '../../Core/Api/IBlotterApi';
+import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -225,7 +226,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
-    
+
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
@@ -939,7 +940,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (this.blotterOptions.runServerSearch == false) {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch == "None") {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -950,43 +951,47 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-            if (columnFilters.length > 0) {
-                for (let columnFilter of columnFilters) {
-                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
-                        // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
-                        return false;
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "AllSearch") {
+                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+                if (columnFilters.length > 0) {
+                    for (let columnFilter of columnFilters) {
+                        if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
+                            // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
+                            return false;
+                        }
                     }
                 }
             }
             //we assess quicksearch
-            let recordReturnValue = false;
-            let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-            if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-                && quickSearchState.QuickSearchDisplayType != QuickSearchDisplayType.HighlightCell) {
-                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                for (let column of columns.filter(c => c.Visible)) {
-                    let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
-                    let rowId = this.getPrimaryKeyValueFromRecord(node);
-                    let stringValueLowerCase = displayValue.toLowerCase();
-                    switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
-                        case LeafExpressionOperator.Contains:
-                            {
-                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "AllSearch") {
+                let recordReturnValue = false;
+                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+                if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
+                    && quickSearchState.QuickSearchDisplayType != QuickSearchDisplayType.HighlightCell) {
+                    let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                    for (let column of columns.filter(c => c.Visible)) {
+                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
+                        let rowId = this.getPrimaryKeyValueFromRecord(node);
+                        let stringValueLowerCase = displayValue.toLowerCase();
+                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                            case LeafExpressionOperator.Contains:
+                                {
+                                    if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                        return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                    }
                                 }
-                            }
-                            break;
-                        case LeafExpressionOperator.StartsWith:
-                            {
-                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                break;
+                            case LeafExpressionOperator.StartsWith:
+                                {
+                                    if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                        return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                    }
                                 }
-                            }
-                            break;
+                                break;
+                        }
                     }
+                    return false;
                 }
-                return false;
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
@@ -1080,6 +1085,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.setRowData(dataSource)
     }
 
+    
 }
 
 
