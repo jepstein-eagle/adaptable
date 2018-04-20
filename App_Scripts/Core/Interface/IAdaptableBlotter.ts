@@ -41,8 +41,7 @@ export interface IAdaptableBlotter {
 
     // not sure if this is right but putting the event here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>
-   // PublishSearchChangedEvent(searchChangedTrigger: SearchChangedTrigger): void
-
+   
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any

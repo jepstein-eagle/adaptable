@@ -46,7 +46,7 @@ function InitBlotter() {
     var trades = dataGen.getTrades();
 
     var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-    dataGen.startTickingDataHypergrid(grid)
+   // dataGen.startTickingDataHypergrid(grid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     grid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
@@ -97,6 +97,8 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
+    let serverSearch = "AdvancedSearch"
+
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
         primaryKey: "tradeId",
@@ -104,8 +106,8 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        runServerSearch: true,
-        predefinedConfig:json, //"",// "predefinedConfig.json",
+        // predefinedConfig:  json, //"",// "predefinedConfig.json",
+        serverSearch: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -137,23 +139,25 @@ function InitBlotter() {
     grid.addProperties(lightTheme);
 }
 
+
 function getTradesForSearch(searchArgs, dataGen) {
-    let newTrades
+
     let search = searchArgs.AdvancedSearch;
-   if (search == null || search.Name == "") {
-         alert("empty search")
-     newTrades = dataGen.getTrades()
-     } else {
-         alert(search.Name)
-    
-         if (search.Name == "barcap") {
-             newTrades = dataGen.getBarcapTrades()
-         } else {
-             newTrades = dataGen.getGSTrades()
-         }
-     }
-     adaptableblotter.api.setDataSource(newTrades);
- }
+    alert(searchArgs.SearchChangedTrigger);
+    let newTrades
+    if (search == null || search.Name == "") {
+        alert("nowt")
+        newTrades = dataGen.getTrades()
+    } else {
+        alert(search.Name);
+        if (search.Name == "barcap") {
+            newTrades = dataGen.getBarcapTrades()
+        } else {
+            newTrades = dataGen.getGSTrades()
+        }
+    }
+    adaptableblotter.api.setDataSource(newTrades);
+}
 
 var lightTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
@@ -242,7 +246,7 @@ let json = {
     "Entitlements": {
         "FunctionEntitlements": [
             {
-                "FunctionName": "AdvancedSearch",
+                "FunctionName": "CustomSort",
                 "AccessLevel": "ReadOnly"
             },
             {

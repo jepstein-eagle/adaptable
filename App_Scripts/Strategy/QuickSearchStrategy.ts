@@ -23,10 +23,13 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         if (this.quickSearchState != this.GetQuickSearchState()) {
             this.quickSearchState = this.GetQuickSearchState();
 
-           
-                this.blotter.applyGridFiltering();
-                this.postSearch();
-            
+            this.blotter.applyGridFiltering();
+            this.postSearch();
+
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch == "AllSearch") {
+                this.publishServerSearch(SearchChangedTrigger.QuickSearch)
+            }
+
         }
     }
     protected GetQuickSearchState(): QuickSearchState {

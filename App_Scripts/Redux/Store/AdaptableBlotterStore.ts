@@ -172,9 +172,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             reducerWithStorage,
             composeEnhancers(Redux.applyMiddleware(
                 diffStateAuditMiddleware(blotter),
-                functionLogMiddleware(blotter),
                 adaptableBlotterMiddleware(blotter, blotterOptions),
-                middlewareReduxStorage))
+                middlewareReduxStorage,
+                functionLogMiddleware(blotter),
+
+            ))
         );
         //We start to build the state once everything is instantiated... I dont like that. Need to change
         this.Load =
@@ -202,10 +204,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
                 let newState = middlewareAPI.getState()
                 let diff = DeepDiff.diff(oldState, newState)
                 adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
-
-
             }
-
             return ret;
         }
     }
@@ -234,15 +233,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                         actionTyped.SelectedSearchName,
                         advancedSearch)
 
-                    if (state.Grid.BlotterOptions.serverSearch != "None") {
-                        // doing them all in each until I find a better way...
-                        let currentAdvancedSearch = advancedSearch
-                        let quickSearchText: string = state.QuickSearch.QuickSearchText
-                        let columnFilters: IColumnFilter[] = state.ColumnFilter.ColumnFilters;
-                        let searchChangedArgs: ISearchChangedArgs = { AdvancedSearch: currentAdvancedSearch, QuickSearchText: quickSearchText, ColumnFilters: columnFilters, SearchChangedTrigger: SearchChangedTrigger.AdvancedSearch }
-
-                        adaptableBlotter.SearchedChanged.Dispatch(adaptableBlotter, searchChangedArgs);
-                    }
 
                     return next(action);
                 }
@@ -256,10 +246,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                             actionTyped.AdvancedSearch.Name,
                             actionTyped.AdvancedSearch)
 
-                        if (state.Grid.BlotterOptions.serverSearch != "None") {
-                     //       adaptableBlotter.PublishSearchChangedEvent(SearchChangedTrigger.AdvancedSearch);
-                        }
-
                     }
                     return next(action);
                 }
@@ -271,9 +257,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                         actionTyped.quickSearchText,
                         actionTyped.quickSearchText)
 
-                    if (state.Grid.BlotterOptions.serverSearch == "AllSearch") {
-                 //       adaptableBlotter.PublishSearchChangedEvent(SearchChangedTrigger.QuickSearch);
-                    }
                     return next(action);
                 }
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
@@ -303,9 +286,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                         "filters applied",
                         state.ColumnFilter.ColumnFilters)
 
-                    if (state.Grid.BlotterOptions.serverSearch == "AllSearch") {
-             //           adaptableBlotter.PublishSearchChangedEvent(SearchChangedTrigger.ColumnFilter);
-                    }
                     return next(action);
                 }
                 case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
@@ -317,28 +297,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                         "filters applied",
                         state.UserFilter.UserFilters)
 
-
-                    if (state.Grid.BlotterOptions.serverSearch != "None") {
-                        let isActiveUserFilter: boolean = false;
-                        // get the current advanced search and test - need for both AdvancedSearch and All
-                        let currentAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
-                        isActiveUserFilter = (currentAdvancedSearch != null && ExpressionHelper.ExpressionContainsFilter(currentAdvancedSearch.Expression, userFilter));
-
-                        // now test if its allsearch and we have a matching column filter
-                        if (!isActiveUserFilter && state.Grid.BlotterOptions.serverSearch == "AllSearch") {
-                            state.ColumnFilter.ColumnFilters.forEach(cf => {
-                                if (!isActiveUserFilter) {
-                                    if (ExpressionHelper.ExpressionContainsFilter(cf.Filter, userFilter)) {
-                                        isActiveUserFilter = true;
-                                    }
-                                }
-                            }
-                            );
-                        }
-                        if (isActiveUserFilter) {
-              //              adaptableBlotter.PublishSearchChangedEvent(SearchChangedTrigger.UserFilter);
-                        }
-                    }
                     return next(action);
                 }
 
@@ -868,6 +826,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     //    })
 
                     blotter.InitAuditService()
+                    return returnAction;
+                }
+                case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+                    let returnAction = next(action);
+                    let s: string = "first";
                     return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:

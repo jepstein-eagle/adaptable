@@ -28,9 +28,9 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             return true;
         }
 
-        let blotterOptions =  blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
+        let blotterOptions = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
         //first we assess AdvancedSearch 
-      //  if (blotterOptions.runServerSearch == false) {
+        if (blotterOptions.serverSearch == "None") {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -38,68 +38,72 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                     return false;
                 }
             }
-     //   }
+        }
 
-        //we then assess filters
-        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-        if (columnFilters.length > 0) {
-            for (let columnFilter of columnFilters) {
-                if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
-                    return false
+        //we then assess column filters
+        if (blotterOptions.serverSearch != "AllSearch") {
+            let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+            if (columnFilters.length > 0) {
+                for (let columnFilter of columnFilters) {
+                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
+                        return false
+                    }
                 }
             }
         }
 
         //we assess quicksearch
-        if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
-            let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
-            let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
+        if (blotterOptions.serverSearch != "AllSearch") {
+            if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+                let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
+                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
 
-            let recordReturnValue = false
-            for (let column of columns.filter(c => c.Visible)) {
-                let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
-                let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
-                let stringValueLowerCase = displayValue.toLowerCase()
-                switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
-                    case LeafExpressionOperator.Contains:
-                        {
-                            if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
-                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
+                let recordReturnValue = false
+                for (let column of columns.filter(c => c.Visible)) {
+                    let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
+                    let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
+                    let stringValueLowerCase = displayValue.toLowerCase()
+                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                        case LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
+                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
+                                    }
+                                    //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                        return true;
+                                    }
+                                    recordReturnValue = true
                                 }
-                                //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
-                                    return true;
-                                }
-                                recordReturnValue = true
                             }
-                        }
-                        break;
-                    case LeafExpressionOperator.StartsWith:
-                        {
-                            if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                                    || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
-                                    this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
+                            break;
+                        case LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
+                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
+                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
+                                    }
+                                    //if we need to display only the rows that matched the quicksearch and no coloring then we can return
+                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                        return true;
+                                    }
+                                    recordReturnValue = true
                                 }
-                                //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
-                                    return true;
-                                }
-                                recordReturnValue = true
                             }
-                        }
-                        break;
+                            break;
+                    }
                 }
+                //if we color only then we just return true....
+                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell) {
+                    return true;
+                }
+                return recordReturnValue
             }
-            //if we color only then we just return true....
-            if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell) {
-                return true;
-            }
-            return recordReturnValue
         }
         return true;
     },

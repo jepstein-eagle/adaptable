@@ -194,7 +194,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
 
-    let serverSearch="AllSearch"
+    let serverSearch = "AllSearch"
 
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
@@ -217,16 +217,16 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-     
+
     let search = searchArgs.AdvancedSearch;
-  
+    alert(searchArgs.SearchChangedTrigger);
     let newTrades
     if (search == null || search.Name == "") {
         alert("nowt")
         newTrades = dataGen.getTrades()
     } else {
         alert(search.Name);
-          if (search.Name == "barcap") {
+        if (search.Name == "barcap") {
             newTrades = dataGen.getBarcapTrades()
         } else {
             newTrades = dataGen.getGSTrades()

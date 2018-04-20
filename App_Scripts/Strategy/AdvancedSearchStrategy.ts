@@ -30,8 +30,11 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
             // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
-           
                 this.blotter.applyGridFiltering()
+
+                if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "None") {
+                     this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
+                }
           
         }
     }
