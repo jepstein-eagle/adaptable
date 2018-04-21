@@ -16,7 +16,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
         }
         isFilterActive() {
             //make the small filter icon to appear when there is a filter
-            return blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
+            return blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
         }
 
         doesFilterPass(params: IDoesFilterPassParams): boolean {

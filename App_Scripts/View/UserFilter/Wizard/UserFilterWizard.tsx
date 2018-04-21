@@ -1,4 +1,4 @@
-import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { ExpressionMode } from '../../../Core/Enums'

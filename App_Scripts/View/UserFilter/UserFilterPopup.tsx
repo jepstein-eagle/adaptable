@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as FilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -11,7 +11,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';

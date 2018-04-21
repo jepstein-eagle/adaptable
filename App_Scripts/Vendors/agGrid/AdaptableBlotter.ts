@@ -921,10 +921,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent;
         gridOptions.isExternalFilterPresent = () => {
-            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0;
+            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0;
             if (isFilterActive) {
                 //used in particular at init time to show the filter icon correctly
-                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters) {
+                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
                     if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
                         this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
                     }
@@ -952,7 +952,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             //we then assess filters
             if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "AllSearch") {
-                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {

@@ -13,11 +13,5 @@ export interface IUserFilter extends IAdaptableBlotterObject {
   ColumnId: string
 }
 
-export interface ISystemFilter extends IAdaptableBlotterObject {
-  Name: string;
-  DataType: DataType;
-  IsExpressionSatisfied?: (valueToCheck: any, blotter: IAdaptableBlotter) => boolean;
-}
-
 
 

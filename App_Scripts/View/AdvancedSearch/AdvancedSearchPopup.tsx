@@ -12,7 +12,7 @@ import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'

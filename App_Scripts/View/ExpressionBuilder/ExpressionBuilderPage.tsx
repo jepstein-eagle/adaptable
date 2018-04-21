@@ -7,7 +7,7 @@ import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus } from '../../Core/Enums'
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { IRange } from "../../Core/Interface/IRange";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
@@ -19,7 +19,7 @@ import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     Columns: Array<IColumn>
     UserFilters: Array<IUserFilter>
-    SystemFilters: Array<ISystemFilter>
+    SystemFilters: Array<string>
     SelectedColumnId: string
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     ExpressionMode?: ExpressionMode

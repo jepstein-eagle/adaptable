@@ -27,7 +27,8 @@ const initialUserInterfaceState: UserInterfaceState = {
         "#FF6961", //  {/* pastel red */}
         "#FFA500", //  {/* orange */}
     ],
-    StyleClassNames: []
+    StyleClassNames: [],
+   
 
 }
 

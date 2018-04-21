@@ -12,7 +12,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     apply: function () {
         this.clearColorQuickSearch();
         let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
-        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
         if (StringExtensions.IsNotNullOrEmpty(currentSearchName)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
@@ -42,7 +42,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
 
         //we then assess column filters
         if (blotterOptions.serverSearch != "AllSearch") {
-            let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+            let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {
                     if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
@@ -109,7 +109,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
     },
     getRowCount: function () {
         let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
-        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
         if (StringExtensions.IsNotNullOrEmpty(currentSearchName)
             || columnFilters.length > 0
             || StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {

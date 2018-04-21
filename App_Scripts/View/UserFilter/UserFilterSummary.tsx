@@ -6,7 +6,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -21,7 +21,7 @@ import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
-    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
+    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -59,7 +59,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         EntityName={StrategyNames.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
-                        onDelete={UserFilterRedux.UserFilterDelete(item)}
+                        onDelete={FilterRedux.UserFilterDelete(item)}
                     />
                 strategySummaries.push(detailRow);
             }
@@ -110,14 +110,14 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
+        UserFilters: state.Filter.UserFilters,
+        SystemFilters: state.Filter.SystemFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(UserFilter)),
+        onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(UserFilter)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

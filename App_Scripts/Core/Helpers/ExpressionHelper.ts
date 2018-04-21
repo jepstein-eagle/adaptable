@@ -1,7 +1,7 @@
 import { Expression } from '../Expression'
 import { FilterHelper } from '../Helpers/FilterHelper'
 import { IRange, IRangeEvaluation } from '../Interface/IRange';
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { LeafExpressionOperator, RangeOperandType } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -84,7 +84,7 @@ export module ExpressionHelper {
     }
 
 
-    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, getOtherColumnValue: (columnName: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: ISystemFilter[], blotter: IAdaptableBlotter): boolean {
+    export function IsSatisfied(Expression: Expression, getColumnValue: (columnName: string) => any, getDisplayColumnValue: (columnName: string) => string, getOtherColumnValue: (columnName: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: string[], blotter: IAdaptableBlotter): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
         for (let columnId of expressionColumnList) {
@@ -130,10 +130,11 @@ export module ExpressionHelper {
 
                     // then evaluate any system filters
                     if (!isColumnSatisfied) {
-                        let filteredSystemFilters: ISystemFilter[] = FilterHelper.GetSystemFilters(systemFilters, columnFilters.Filters);
+                        let filteredSystemFilters: string[] = systemFilters.filter(f => columnFilters.Filters.find(u => u == f) != null)
                         for (let systemFilter of filteredSystemFilters) {
                             let valueToCheck: any = getColumnValue(columnId);
-                            isColumnSatisfied = systemFilter.IsExpressionSatisfied(valueToCheck, blotter);
+                            let satisfyFunction: any = FilterHelper.GetFunctionForSystemFilter(systemFilter)
+                            isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(valueToCheck, blotter);
                             if (isColumnSatisfied) {
                                 break;
                             }
@@ -377,8 +378,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"), // this value
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),  // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
             blotter
         );
     }
@@ -390,8 +391,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),  // this value
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
             blotter
         );
     }

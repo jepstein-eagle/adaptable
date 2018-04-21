@@ -25,9 +25,7 @@ import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux'
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
-import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
-import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
-import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux'
+import * as FilterRedux from '../ActionsReducers/FilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
@@ -84,9 +82,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
-    UserFilter: UserFilterRedux.UserFilterReducer,
-    SystemFilter: SystemFilterRedux.SystemFilterReducer,
-    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
+    Filter: FilterRedux.FilterReducer,
     Theme: ThemeRedux.ThemeReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
@@ -277,25 +273,25 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                         { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId })
                     return next(action);
                 }
-                case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+                case FilterRedux.COLUMN_FILTER_ADD_UPDATE: {
                     // this is basically select as we immediately set filters and just audit them all for now
-                    let actionTyped = <ColumnFilterRedux.ColumnFilterAddUpdateAction>action
+                    let actionTyped = <FilterRedux.ColumnFilterAddUpdateAction>action
 
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId,
                         "apply column filters",
                         "filters applied",
-                        state.ColumnFilter.ColumnFilters)
+                        state.Filter.ColumnFilters)
 
                     return next(action);
                 }
-                case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
-                    let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
+                case FilterRedux.USER_FILTER_ADD_UPDATE: {
+                    let actionTyped = <FilterRedux.UserFilterAddUpdateAction>action
                     let userFilter = actionTyped.UserFilter;
 
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId,
                         "user filters changed",
                         "filters applied",
-                        state.UserFilter.UserFilters)
+                        state.Filter.UserFilters)
 
                     return next(action);
                 }
@@ -434,10 +430,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                             let filter = actionTyped.Entity as IUserFilter
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
-                            if (middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Name == filter.Name)) {
+                            if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Name == filter.Name)) {
                                 overwriteConfirmation = true
                             }
-                            importAction = UserFilterRedux.UserFilterAddUpdate(filter)
+                            importAction = FilterRedux.UserFilterAddUpdate(filter)
                             // } 
                             break;
                         }
@@ -542,7 +538,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
-                case ColumnFilterRedux.HIDE_FILTER_FORM: {
+                case FilterRedux.HIDE_FILTER_FORM: {
                     blotter.hideFilterForm()
                     return next(action);
                 }
@@ -828,7 +824,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     blotter.InitAuditService()
                     return returnAction;
                 }
-                case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+                case FilterRedux.COLUMN_FILTER_ADD_UPDATE: {
                     let returnAction = next(action);
                     let s: string = "first";
                     return returnAction;

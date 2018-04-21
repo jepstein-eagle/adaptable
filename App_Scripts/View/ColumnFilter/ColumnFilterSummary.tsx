@@ -8,7 +8,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile'
@@ -19,7 +19,7 @@ import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
-    onDeleteFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction,
+    onDeleteFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -50,15 +50,15 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        ColumnFilters: state.ColumnFilter.ColumnFilters,
+        ColumnFilters: state.Filter.ColumnFilters,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
+        UserFilters: state.Filter.UserFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterDelete(columnFilter)),
+        onDeleteFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
     };

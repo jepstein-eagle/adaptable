@@ -16,7 +16,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationMode } from '../../Core/Enums'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';

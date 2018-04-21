@@ -1,5 +1,5 @@
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { DataType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
@@ -36,16 +36,17 @@ export module FilterHelper {
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null)
     }
 
-    export function GetSystemFilters(systemFilters: ISystemFilter[], systemFilterNames: string[]): ISystemFilter[] {
-        return systemFilters.filter(f => systemFilterNames.find(u => u == f.Name) != null)
-    }
+   //  export function GetSystemFilters(allSystemFilters: string[], columnSystemFilters: string[]): string[] {
+     //    return allSystemFilters.filter(f => columnSystemFilters.find(u => u == f) != null)
+    // }
 
 
-    export function GetSystemFiltersForColumn(column: IColumn, systemFilters: ISystemFilter[]): ISystemFilter[] {
-        let appropriateSystemFilters: ISystemFilter[] = []
+    export function GetSystemFiltersForColumn(column: IColumn, systemFilters: string[]): string[] {
+        let appropriateSystemFilters: string[] = []
         if (column != null) {
-            systemFilters.forEach((systemFilter: ISystemFilter) => {
-                if ((systemFilter.DataType == DataType.All && column.DataType != DataType.Boolean) || systemFilter.DataType == column.DataType) {
+            systemFilters.forEach((systemFilter: string) => {
+                let dataType: DataType = GetDatatypeForSystemFilter(systemFilter);
+                if ((dataType == DataType.All && column.DataType != DataType.Boolean) || dataType == column.DataType) {
                     appropriateSystemFilters.push(systemFilter)
                 }
             })
@@ -89,156 +90,162 @@ export module FilterHelper {
     }
 
 
-    export function CreateSystemFilters(): Array<ISystemFilter> {
+    export function GetFunctionForSystemFilter(systemFilterName: string): any {
 
-        let _systemExpressions: ISystemFilter[] = [];
+        switch (systemFilterName) {
 
-        // for all columns
-        _systemExpressions.push({
-            Name: BLANKS_SYSTEM_FILTER,
-            DataType: DataType.All,
-            IsExpressionSatisfied: (itemToCheck: any, blotter: IAdaptableBlotter): boolean => {
-                return Helper.IsInputNullOrEmpty(itemToCheck);
-            },
-            IsPredefined: true
-        });
+            case BLANKS_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (itemToCheck: any, blotter: IAdaptableBlotter): boolean => {
+                        return Helper.IsInputNullOrEmpty(itemToCheck);
+                    },
+                }
+            }
+            case NON_BLANKS_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (itemToCheck: any, blotter: IAdaptableBlotter): boolean => {
+                        return Helper.IsInputNotNullOrEmpty(itemToCheck);
+                    },
+                }
+            }
+            case TODAY_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
+                        return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
+                    },
+                }
+            }
+            case IN_PAST_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        return +dateToCheck < Date.now();
+                    },
+                }
+            }
+            case IN_FUTURE_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        return +dateToCheck > Date.now();
+                    },
+                }
+            }
+            case YESTERDAY_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
+                        return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
+                    },
+                }
+            }
+            case TOMORROW_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
+                        return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
+                    },
+                }
+            }
+            case NEXT_WORKING_DAY_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
+                    },
 
-        _systemExpressions.push({
-            Name: NON_BLANKS_SYSTEM_FILTER,
-            DataType: DataType.All,
-            IsExpressionSatisfied: (itemToCheck: any, blotter: IAdaptableBlotter): boolean => {
-                return Helper.IsInputNotNullOrEmpty(itemToCheck);
-            },
-            IsPredefined: true
-        });
+                }
+            }
+            case PREVIOUS_WORKING_DAY_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
+                    },
 
-        // Date Predefined user filter Expressions
-        _systemExpressions.push({
-            Name: TODAY_SYSTEM_FILTER,
-            DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
-                return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
-            },
-            IsPredefined: true
-        });
+                }
+            }
+            case THIS_YEAR_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                        let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
+                        let todayyear: number = today.getFullYear();
+                        let datetocheckyear: number = dateToCheck.getFullYear();
+                        return (todayyear == datetocheckyear)
+                    },
 
-        _systemExpressions.push({
-            Name: IN_PAST_SYSTEM_FILTER,
-             DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return +dateToCheck < Date.now();
-            },
-            IsPredefined: true
-        });
+                }
+            }
+            case POSITIVE_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
+                        return (numberToCheck > 0);
+                    },
 
-        _systemExpressions.push({
-            Name: IN_FUTURE_SYSTEM_FILTER,
-            DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return +dateToCheck > Date.now();
-            },
-            IsPredefined: true
-        });
+                }
+            }
+            case NEGATIVE_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
+                        return (numberToCheck < 0);
+                    },
+                }
+            }
+            case ZERO_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
+                        return (numberToCheck == 0);
+                    },
 
-        _systemExpressions.push({
-            Name: YESTERDAY_SYSTEM_FILTER,
-            DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
-                return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
-            },
-            IsPredefined: true
-        });
+                }
+            }
+            case TRUE_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
+                        return (boolToCheck);
+                    },
+                }
+            }
+            case FALSE_SYSTEM_FILTER: {
+                return {
+                    IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
+                        return (!boolToCheck);
+                    },
+                }
+            }
 
-        _systemExpressions.push({
-            Name: TOMORROW_SYSTEM_FILTER,
-            DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
-                return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
-            },
-            IsPredefined: true
-        });
 
-        _systemExpressions.push({
-            Name: NEXT_WORKING_DAY_SYSTEM_FILTER,
-             DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
-            },
-            IsPredefined: true
-        });
 
-        _systemExpressions.push({
-            Name: PREVIOUS_WORKING_DAY_SYSTEM_FILTER,
-            DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                return blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
-            },
-            IsPredefined: true
-        });
+        }
+    }
+    export function GetDatatypeForSystemFilter(systemFilterName: string): DataType {
 
-        _systemExpressions.push({
-            Name: THIS_YEAR_SYSTEM_FILTER,
-            DataType: DataType.Date,
-            IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
-                let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
-                let todayyear: number = today.getFullYear();
-                let datetocheckyear: number = dateToCheck.getFullYear();
-                return (todayyear == datetocheckyear)
-            },
-            IsPredefined: true
-        });
+        switch (systemFilterName) {
 
-        // Numeric Predefined user filter Expressions
-        _systemExpressions.push({
-            Name: POSITIVE_SYSTEM_FILTER,
-            DataType: DataType.Number,
-            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
-                return (numberToCheck > 0);
-            },
-            IsPredefined: true
-        });
+            case BLANKS_SYSTEM_FILTER:
+            case NON_BLANKS_SYSTEM_FILTER: {
+                return DataType.All
+            }
+            case TODAY_SYSTEM_FILTER:
+            case IN_PAST_SYSTEM_FILTER:
+            case IN_FUTURE_SYSTEM_FILTER:
+            case YESTERDAY_SYSTEM_FILTER:
+            case TOMORROW_SYSTEM_FILTER:
+            case NEXT_WORKING_DAY_SYSTEM_FILTER:
+            case PREVIOUS_WORKING_DAY_SYSTEM_FILTER:
+            case THIS_YEAR_SYSTEM_FILTER: {
+                return DataType.Date
+            }
+            case POSITIVE_SYSTEM_FILTER:
+            case NEGATIVE_SYSTEM_FILTER:
+            case ZERO_SYSTEM_FILTER: {
+                return DataType.Number
+            }
+            case TRUE_SYSTEM_FILTER:
+            case FALSE_SYSTEM_FILTER: {
+                return DataType.Boolean
+            }
 
-        _systemExpressions.push({
-            Name: NEGATIVE_SYSTEM_FILTER,
-            DataType: DataType.Number,
-            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
-                return (numberToCheck < 0);
-            },
-            IsPredefined: true
-        });
 
-        _systemExpressions.push({
-            Name: ZERO_SYSTEM_FILTER,
-            DataType: DataType.Number,
-            IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
-                return (numberToCheck == 0);
-            },
-            IsPredefined: true
-        });
 
-        // Boolean Predefined user filter Expressions
-        _systemExpressions.push({
-            Name: TRUE_SYSTEM_FILTER,
-            DataType: DataType.Boolean,
-            IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
-                return (boolToCheck);
-            },
-            IsPredefined: true
-        });
-
-        _systemExpressions.push({
-            Name: FALSE_SYSTEM_FILTER,
-             DataType: DataType.Boolean,
-            IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
-                return (!boolToCheck);
-            },
-            IsPredefined: true
-        });
-
-        return _systemExpressions;
+        }
 
     }
 

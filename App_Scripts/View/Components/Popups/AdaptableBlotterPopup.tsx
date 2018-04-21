@@ -30,8 +30,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         onClearPopupParams: () => this.props.onClearPopupParams(),
         TeamSharingActivated: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.enableRemoteConfigServer,
         Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
-        UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-        SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+        UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+        SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
         ModalContainer: modalContainer ,
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts

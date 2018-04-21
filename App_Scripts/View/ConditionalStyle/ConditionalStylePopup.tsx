@@ -17,7 +17,7 @@ import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';

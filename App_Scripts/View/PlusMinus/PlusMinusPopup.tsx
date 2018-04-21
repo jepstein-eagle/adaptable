@@ -15,7 +15,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'

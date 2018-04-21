@@ -13,7 +13,7 @@ import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy
 import { IStyle } from '../../../Core/Interface/IStyle';
 import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IColumnFilter } from '../../../Strategy/Interface/IColumnFilterStrategy';
-import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
@@ -59,10 +59,6 @@ export interface BulkUpdateState {
     PreviewInfo: IPreviewInfo
 }
 
-export interface SystemFilterState {
-    SystemFilters: ISystemFilter[]
-}
-
 /*
 predefined config only - not editable by users
 */
@@ -77,6 +73,7 @@ predefined and user config but not editable by users
 export interface UserInterfaceState {
     ColorPalette: string[];
     StyleClassNames: string[]
+   
 }
 
 
@@ -145,12 +142,10 @@ export interface AdvancedSearchState {
     CurrentAdvancedSearch: string;
 }
 
-export interface ColumnFilterState {
+export interface FilterState {
     ColumnFilters: IColumnFilter[];
-}
-
-export interface UserFilterState {
     UserFilters: IUserFilter[];
+    SystemFilters: string[]
 }
 
 export interface ThemeState {

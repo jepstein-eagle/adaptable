@@ -46,7 +46,7 @@ function InitBlotter() {
     var trades = dataGen.getTrades();
 
     var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-   // dataGen.startTickingDataHypergrid(grid)
+    // dataGen.startTickingDataHypergrid(grid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     grid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
@@ -68,7 +68,7 @@ function InitBlotter() {
     grid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
         let editorName = declaredEditorName;
         if (options.column.name !== "tradeId"
-          //  && options.column.name !== "changeOnYear"
+            //  && options.column.name !== "changeOnYear"
             && options.column.name !== "price"
             && options.column.name !== "bid"
             && options.column.name !== "ask"
@@ -97,7 +97,7 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    let serverSearch = "AdvancedSearch"
+    let serverSearch = "None"
 
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
@@ -106,7 +106,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        // predefinedConfig:  json, //"",// "predefinedConfig.json",
+        predefinedConfig: json, //"",// "predefinedConfig.json",
         serverSearch: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -243,6 +243,13 @@ var darkTheme = {
 
 
 let json = {
+    "Filter": {
+        "SystemFilters": [
+            "Blanks",
+            "Tomorrow",
+            "Positive"
+        ]
+    },
     "Entitlements": {
         "FunctionEntitlements": [
             {

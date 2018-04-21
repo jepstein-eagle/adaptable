@@ -5,7 +5,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard'
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
-import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';

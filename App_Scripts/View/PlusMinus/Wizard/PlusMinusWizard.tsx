@@ -6,7 +6,7 @@ import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
-import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';

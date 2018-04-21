@@ -8,7 +8,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { ExportDestination } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IReport, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Core/Helpers/Helper';

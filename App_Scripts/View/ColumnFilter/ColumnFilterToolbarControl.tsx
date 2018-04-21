@@ -6,7 +6,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import * as FilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
@@ -75,7 +75,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-           ColumnFilters: state.ColumnFilter.ColumnFilters,
+           ColumnFilters: state.Filter.ColumnFilters,
     };
 }
 

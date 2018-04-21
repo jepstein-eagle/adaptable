@@ -1,17 +1,17 @@
-import { IUserFilterStrategy } from '../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilterStrategy, IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { SearchChangedTrigger } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
-    private userFilters: UserFilterState
+    private userFilters: IUserFilter[]
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.UserFilterStrategyId, blotter)
@@ -30,23 +30,23 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     protected InitState() {
-        if (this.userFilters != this.GetFilterState()) {
-            this.userFilters = this.GetFilterState();
+        if (this.userFilters != this.GetUserFilterState()) {
+            this.userFilters = this.GetUserFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
             if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "None") {
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
-                    || this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0) {
+                    || this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0) {
                     this.publishServerSearch(SearchChangedTrigger.UserFilter)
                 }
             }
         }
     }
 
-    private GetFilterState(): UserFilterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter;
+    private GetUserFilterState(): IUserFilter[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
     }
 }
 

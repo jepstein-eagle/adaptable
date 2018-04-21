@@ -2,14 +2,14 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
-import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
-import { ColumnFilterState, UserFilterState, SystemFilterState } from '../../../Redux/ActionsReducers/Interface/IState';
+import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
+import { FilterState } from '../../../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilter, IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
-import { IUserFilter, ISystemFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { IRange } from '../../../Core/Interface/IRange'
@@ -23,10 +23,10 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
     Columns: IColumn[],
     UserFilters: IUserFilter[],
-    SystemFilters: ISystemFilter[],
+    SystemFilters: string[],
     ColumnFilters: IColumnFilter[],
-    onDeleteColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction
-    onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
+    onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
+    onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     ColumnValueType: DistinctCriteriaPairValue,
 }
 
@@ -35,7 +35,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     render(): any {
 
         // get user filter expressions appropriate for this column
-        let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf.Name))
+        let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf))
             ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
         let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf } })
 
@@ -159,17 +159,17 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        ColumnFilters: state.ColumnFilter.ColumnFilters,
+        ColumnFilters: state.Filter.ColumnFilters,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters
+        UserFilters: state.Filter.UserFilters,
+        SystemFilters: state.Filter.SystemFilters
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterDelete(columnFilter)),
-        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
+        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
     };
 }
 

@@ -169,7 +169,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
         PreviewInfo: state.BulkUpdate.PreviewInfo,
         Columns: state.Grid.Columns,
-        UserFilters: state.UserFilter.UserFilters,
+        UserFilters: state.Filter.UserFilters,
     };
 }
 

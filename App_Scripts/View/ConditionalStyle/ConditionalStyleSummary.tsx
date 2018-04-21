@@ -117,8 +117,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters,
+        UserFilters: state.Filter.UserFilters,
+        SystemFilters: state.Filter.SystemFilters,
         ColorPalette: state.UserInterface.ColorPalette,
         StyleClassNames : state.UserInterface.StyleClassNames
     };

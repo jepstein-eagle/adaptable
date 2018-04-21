@@ -8,7 +8,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ISearchChangedArgs } from '../Core/Api/ISearchChangedArgs';
-import { QuickSearchState, AdvancedSearchState, ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumnFilter } from './Interface/IColumnFilterStrategy';
 import { SearchChangedTrigger } from '../Core/Enums';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
@@ -162,7 +162,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             // doing them all in each until I find a better way...
             let currentAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch)
             let quickSearchText: string = state.QuickSearch.QuickSearchText
-            let columnFilters: IColumnFilter[] = state.ColumnFilter.ColumnFilters;
+            let columnFilters: IColumnFilter[] = state.Filter.ColumnFilters;
             let searchChangedArgs: ISearchChangedArgs = { AdvancedSearch: currentAdvancedSearch, QuickSearchText: quickSearchText, ColumnFilters: columnFilters, SearchChangedTrigger: searchChangedTrigger }
             this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
         }

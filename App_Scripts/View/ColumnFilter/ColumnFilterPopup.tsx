@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -21,7 +21,7 @@ import { PanelWithImage } from "../Components/Panels/PanelWithImage";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]
-    onDeleteFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterDeleteAction,
+    onDeleteFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -76,13 +76,13 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        ColumnFilters: state.ColumnFilter.ColumnFilters,
+        ColumnFilters: state.Filter.ColumnFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterDelete(columnFilter)),
+        onDeleteFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

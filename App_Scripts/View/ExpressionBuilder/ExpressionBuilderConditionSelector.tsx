@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IRange } from '../../Core/Interface/IRange'
-import { IUserFilter, ISystemFilter } from '../../Strategy/Interface/IUserFilterStrategy'
+import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
@@ -26,7 +26,7 @@ export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttr
     onSelectedColumnChange: (ColumnName: string) => void
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     UserFilters: IUserFilter[]
-    SystemFilters: ISystemFilter[]
+    SystemFilters: string[]
     SelectedColumnId: string
     QueryBuildStatus: QueryBuildStatus
 }
@@ -86,13 +86,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         selectedColumnFilterExpressions.push(fe);
                     }
                     // if it is a system filter add it ot that list
-                    let systemFilter: ISystemFilter = this.props.SystemFilters.find(sf => sf.Name == fe);
-                    if (systemFilter) {
+                    let selectedSystemFilter: string = this.props.SystemFilters.find(sf => sf == fe);
+                    if (selectedSystemFilter) {
                         selectedColumnFilterExpressions.push(fe);
                     }
                 })
             }
-            let combinedFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf.Name));
+            let combinedFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf));
 
             // get ranges
             let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnName == theProps.SelectedColumnId)
@@ -118,8 +118,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         // get filter names
         // first system ones
         let availableFilterNames: string[] = []
-        FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf: ISystemFilter) => {
-            availableFilterNames.push(sf.Name)
+        FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf: string) => {
+            availableFilterNames.push(sf)
         })
         FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf: IUserFilter) => {
             availableFilterNames.push(uf.Name)
