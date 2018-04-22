@@ -116,6 +116,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                             <Col xs={9}>
                                                 {this.state.useSelector ?
                                                     <ColumnValueSelector
+                                                        cssClassName={cssClassName}
                                                         SelectedColumnValue={this.props.BulkUpdateValue}
                                                         SelectedColumn={col}
                                                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
@@ -138,6 +139,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                         </Col> <Row>
                                             <Col xs={8}>
                                                 <ColumnValueSelector
+                                                    cssClassName={cssClassName}
                                                     SelectedColumnValue={this.props.BulkUpdateValue}
                                                     SelectedColumn={col}
                                                     getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}

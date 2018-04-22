@@ -950,8 +950,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
        
     }
 
-    public PublishSearchChangedEvent(searchChangedTrigger: SearchChangedTrigger) {
-        // todo
+    public canMultiSort(): boolean{
+        return true;
     }
 
 }

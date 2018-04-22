@@ -4,6 +4,7 @@ import { Helper } from '../../../Core/Helpers/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGroup } from 'react-bootstrap';
 import { SortOrder } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>
@@ -16,6 +17,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     ValueMember?: string
     SortMember?: string
     ReducedDisplay?: boolean
+    cssClassName: string
 }
 
 export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -106,6 +108,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         });
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + StyleConstants.DOUBLE_LIST_BOX;
         let setRefFirstSelected = true
         let itemsElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
@@ -155,7 +158,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
         let listGroupSelectedStyle: any = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge
 
-        return (
+        return (<div className={cssClassName}>
             <Row >
                 <Col xs={4}>
                     <Panel header={this.props.HeaderAvailable} className="ab_no-padding-anywhere-panel" bsStyle="info">
@@ -207,6 +210,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     </ButtonGroup>
                 </Col>
             </Row>
+        </div>
         );
     }
 

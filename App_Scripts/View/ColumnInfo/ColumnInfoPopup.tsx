@@ -110,7 +110,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                                 <Col xs={2} componentClass={ControlLabel}>Column: </Col>
 
                                 <Col xs={8} >
-                                    <ColumnSelector SelectedColumnIds={[selectedColumnId]}
+                                    <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[selectedColumnId]}
                                         ColumnList={this.props.Columns}
                                         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                                         SelectionMode={SelectionMode.Single} />

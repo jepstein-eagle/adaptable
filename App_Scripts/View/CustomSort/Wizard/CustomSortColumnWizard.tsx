@@ -21,10 +21,10 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
         this.state = { SelectedColumnId: this.props.Data.ColumnId }
     }
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__column"
+        let cssClassName: string = this.props.cssClassName + "-column"
         return <div className={cssClassName}>
              <Panel header="Select a Column" bsStyle="primary">
-                <ColumnSelector SelectedColumnIds={[this.state.SelectedColumnId]}
+                <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.SelectedColumnId]}
                     ColumnList={this.props.Columns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                     SelectionMode={SelectionMode.Single} />

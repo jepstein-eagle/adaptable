@@ -29,7 +29,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
     }
 
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__scope"
+        let cssClassName: string = this.props.cssClassName + "-scope"
        
         return <div className={cssClassName}>
              <Panel header="Select Where the Conditional Style is Applied" bsStyle="primary">
@@ -46,7 +46,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
                     </Col>
                 </AdaptableBlotterForm>
                 <Col xs={12} className="ab_large_margin">
-                    <ColumnSelector className={cssClassName + "__columnselector"} disabled={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} SelectedColumnIds={[this.state.ColumnId]}
+                    <ColumnSelector cssClassName={cssClassName} disabled={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} SelectedColumnIds={[this.state.ColumnId]}
                         ColumnList={this.props.Columns}
                         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                         SelectionMode={SelectionMode.Single} />

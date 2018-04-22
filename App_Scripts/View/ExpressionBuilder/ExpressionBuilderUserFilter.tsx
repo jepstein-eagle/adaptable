@@ -16,7 +16,8 @@ export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<
 export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuilderUserFilterProps, {}> {
 
     render(): any {
-
+        let cssClassName: string = this.props.cssClassName + "__queryuserfilters"
+       
         var userFilterNames = this.props.AvailableFilterNames.map((uf: string, index: number) => {
             return <ListGroupItem key={index} bsSize={"xsmall"}
                 onClick={() => this.onClickColum(uf)}
@@ -26,11 +27,13 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
             </ListGroupItem>
         })
 
-        return <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+        return <div className={cssClassName}>
+        <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
             <ListGroup  >
                 {userFilterNames}
             </ListGroup>
         </Panel>
+        </div>
     }
 
     onClickColum(filterName: string) {

@@ -40,7 +40,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
        
         let helpText : string = "Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
-        let cssClassName: string = this.props.cssClassName + "__rules"
+        let cssClassName: string = this.props.cssClassName + "-rules"
        
         return <div className={cssClassName}>
         <Panel header={validationRuleHeader} bsStyle="primary">

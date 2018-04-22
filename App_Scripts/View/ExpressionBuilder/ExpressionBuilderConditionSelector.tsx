@@ -161,7 +161,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Well>
                     }
 
-                    <ColumnSelector SelectedColumnIds={[this.props.SelectedColumnId]}
+                    <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.props.SelectedColumnId]}
                         ColumnList={this.props.ColumnsList}
                         onColumnChange={columns => this.onColumnSelectChange(columns)}
                         SelectionMode={SelectionMode.Single} />

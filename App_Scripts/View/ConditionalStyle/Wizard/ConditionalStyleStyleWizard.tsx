@@ -25,7 +25,7 @@ export class ConditionalStyleStyleWizard extends React.Component<ConditionalStyl
     }
 
     render() {
-        let cssClassName: string = this.props.cssClassName + "__style"
+        let cssClassName: string = this.props.cssClassName + "-style"
        
         let canUseClassName = true; // get from somewhere...
         return <div className={cssClassName}>

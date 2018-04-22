@@ -22,7 +22,7 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
         }
     }
     render() {
-        let cssClassName: string = this.props.cssClassName + "__reportcolumns"
+        let cssClassName: string = this.props.cssClassName + "-reportcolumns"
         return <div className={cssClassName}>
             <Panel header="Select Columns for the Report" bsStyle="primary">
                 <Col xs={12} className="ab_large_margin">

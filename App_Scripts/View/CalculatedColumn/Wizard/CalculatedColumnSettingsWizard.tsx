@@ -21,7 +21,7 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
         this.state = { ColumnName: this.props.Data.ColumnId, ErrorMessage: null }
     }
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__settings"
+        let cssClassName: string = this.props.cssClassName + "-settings"
 
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
         return <div className={cssClassName}>

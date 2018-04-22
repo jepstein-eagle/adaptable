@@ -1085,6 +1085,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.setRowData(dataSource)
     }
 
+    public canMultiSort(): boolean{
+        return true;
+    }
     
 }
 

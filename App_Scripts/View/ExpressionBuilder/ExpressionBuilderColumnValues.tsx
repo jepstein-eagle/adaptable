@@ -16,9 +16,12 @@ export interface ExpressionBuilderColumnValuesProps extends React.ClassAttribute
 export class ExpressionBuilderColumnValues extends React.Component<ExpressionBuilderColumnValuesProps, {}> {
 
     render() {
-        return <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+        let cssClassName: string = this.props.cssClassName + "__querycolumnvalues"
+        return   <div className={cssClassName}>
+        <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
             <SingleListBox  Values={this.props.ColumnValues}
-                UiSelectedValues={this.props.SelectedValues}
+               cssClassName={cssClassName}
+               UiSelectedValues={this.props.SelectedValues}
                 DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                 ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                 SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
@@ -26,6 +29,7 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
                 SelectionMode={SelectionMode.Multi}>
             </SingleListBox>
         </Panel>
+        </div>
     }
 }
 

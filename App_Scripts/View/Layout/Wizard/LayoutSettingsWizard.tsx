@@ -24,7 +24,7 @@ export class LayoutSettingsWizard extends React.Component<LayoutSettingsWizardPr
     }
     render(): any {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-        let cssClassName: string = this.props.cssClassName + "__settings"
+        let cssClassName: string = this.props.cssClassName + "-settings"
        
         return <div className={cssClassName}>
              <Panel header="Layout Settings" bsStyle="primary">

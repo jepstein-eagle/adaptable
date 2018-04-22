@@ -33,19 +33,20 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     render(): any {
         let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
         let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
-        let cssClassName: string = this.props.cssClassName + "__values"
-       
+        let cssClassName: string = this.props.cssClassName + "-values"
+
         return <div className={cssClassName}>
-        <PanelWithInfo  cssClassName={cssClassName}  header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
+            <PanelWithInfo cssClassName={cssClassName} header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.state.ColumnValues}
+                    cssClassName={cssClassName}
                     SelectedValues={this.state.SelectedValues}
                     HeaderAvailable="Column Values"
                     HeaderSelected="Custom Sort Order"
                     DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                     SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
                     ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
-                     ReducedDisplay={true} />
+                    onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
+                    ReducedDisplay={true} />
             </PanelWithInfo>
         </div>
     }
@@ -58,7 +59,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     public Next(): void { this.props.Data.Values = this.state.SelectedValues }
     public Back(): void {
         // todo
-     }
+    }
     public GetIndexStepIncrement() {
         return 1;
     }

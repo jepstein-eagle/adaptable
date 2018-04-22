@@ -61,7 +61,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         let currentActionValue = this.state.ShortcutOperation;
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
         let currentDynamicResult = this.state.ShortcutResult != "" ? this.state.ShortcutResult : "select"
-        let cssClassName: string = this.props.cssClassName + "__settings"
+        let cssClassName: string = this.props.cssClassName + "-settings"
        
         return <div className={cssClassName}>
         <Panel header="Shortcut Settings" bsStyle="primary">

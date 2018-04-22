@@ -70,7 +70,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         let sortOrders = EnumExtensions.getNames(SortOrder).filter(s => s != SortOrder.Unknown).map((enumName) => {
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
         })
-        let cssClassName: string = this.props.cssClassName + "__gridsort"
+        let cssClassName: string = this.props.cssClassName + "-gridsort"
        
         return <div className={cssClassName}>
         <Panel header="Sort Information" bsStyle="primary"  style={{overflowY: "visible"}} >

@@ -1231,8 +1231,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint();
     }
 
-    public PublishSearchChangedEvent(searchChangedTrigger: SearchChangedTrigger) {
-        // todo
+    
+    public canMultiSort(): boolean{
+        return false;  // needs to be true soon...
     }
 
 }

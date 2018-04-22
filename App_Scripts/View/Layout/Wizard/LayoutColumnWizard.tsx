@@ -28,12 +28,13 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
 
     render(): any {
         let infoBody: any[] = ["Create a layout.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
-        let cssClassName: string = this.props.cssClassName + "__column"
+        let cssClassName: string = this.props.cssClassName + "-column"
        
         return <div className={cssClassName}>
         <PanelWithInfo cssClassName={cssClassName} header={"Choose columns for the Layout"} bsStyle="primary" infoBody={infoBody}>
             <DualListBoxEditor AvailableValues={this.props.Columns.map(x=>x.FriendlyName)}
-                   SelectedValues={this.state.SelectedColumns}
+                 cssClassName={cssClassName}
+                 SelectedValues={this.state.SelectedColumns}
                     HeaderAvailable="Available Columns"
                     HeaderSelected="Columns in Layout"
                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}

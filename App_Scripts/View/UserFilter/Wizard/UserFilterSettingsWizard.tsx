@@ -25,7 +25,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     }
     render() {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-        let cssClassName: string = this.props.cssClassName + "__settings"
+        let cssClassName: string = this.props.cssClassName + "-settings"
        
         return <div className={cssClassName}>
             <Panel header="Filter Settings" bsStyle="primary">

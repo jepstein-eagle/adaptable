@@ -20,7 +20,7 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
     }
     render(): any {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.props.GetErrorMessage()) ? null : "error"
-        let cssClassName: string = this.props.cssClassName + "__expression"
+        let cssClassName: string = this.props.cssClassName + "-expression"
        
        return <div className={cssClassName}>
             <Panel header="Calculated Column Expression" bsStyle="primary">

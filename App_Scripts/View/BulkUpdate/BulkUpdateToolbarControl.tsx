@@ -106,7 +106,8 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <InputGroup>
                     <ColumnValueSelector
-                        disabled={this.state.SelectedColumn == null}
+                       cssClassName={cssClassName}     
+                       disabled={this.state.SelectedColumn == null}
                         bsSize={"small"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
                         SelectedColumn={this.state.SelectedColumn}

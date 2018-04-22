@@ -24,11 +24,11 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     }
 
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__selectcolumn"
+        let cssClassName: string = this.props.cssClassName + "-selectcolumn"
        
         return <div className={cssClassName}>
         <Panel header="Select a Column" bsStyle="primary">
-            <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
+            <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single} />

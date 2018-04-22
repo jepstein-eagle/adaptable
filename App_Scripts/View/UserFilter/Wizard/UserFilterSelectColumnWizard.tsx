@@ -26,14 +26,14 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     render(): any {
 
-        let cssClassName: string = this.props.cssClassName + "__column"
+        let cssClassName: string = this.props.cssClassName + "-column"
        
         return <div className={cssClassName}>
             <Panel header="Select a Column" bsStyle="primary">
                     <HelpBlock>
                         {"Choose which column the User Filter will apply to."}
                     </HelpBlock>
-                <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
+                <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.ColumnId]}
                     ColumnList={this.props.Columns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                     SelectionMode={SelectionMode.Single} />

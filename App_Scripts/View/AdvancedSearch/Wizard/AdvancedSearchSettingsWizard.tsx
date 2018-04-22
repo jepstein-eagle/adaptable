@@ -23,7 +23,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
         }
     }
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__settings"
+        let cssClassName: string = this.props.cssClassName + "-settings"
         
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 

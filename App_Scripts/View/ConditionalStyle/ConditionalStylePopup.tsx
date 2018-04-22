@@ -56,7 +56,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     render() {
-        let cssClassName: string = this.props.cssClassName + "__conditionalStyle";
+        let cssClassName: string = this.props.cssClassName + "__conditionalstyle";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
 
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,

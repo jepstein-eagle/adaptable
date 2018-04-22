@@ -26,7 +26,8 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
             return <div className={cssClassName}>
             <PanelWithImage  cssClassName={cssClassName} header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x => x.FriendlyName)}
-                    SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
+                   cssClassName={cssClassName}
+                   SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
                     HeaderAvailable="Hidden Columns"
                     HeaderSelected="Visible Columns"
                     onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>

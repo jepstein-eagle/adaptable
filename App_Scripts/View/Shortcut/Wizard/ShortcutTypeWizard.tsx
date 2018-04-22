@@ -23,7 +23,7 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     }
 
     render() {
-        let cssClassName: string = this.props.cssClassName + "__shortcuttype"
+        let cssClassName: string = this.props.cssClassName + "-type"
        
         return <div className={cssClassName}>
              <Panel header="Select Where Shortcut is Applied" bsStyle="primary">

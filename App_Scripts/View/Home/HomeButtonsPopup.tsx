@@ -35,7 +35,8 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName}  header="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph}>
                 <DualListBoxEditor AvailableValues={availableValues}
-                    SelectedValues={selectedValues}
+                   cssClassName={cssClassName}
+                   SelectedValues={selectedValues}
                     HeaderAvailable="Available Function Buttons"
                     HeaderSelected="Visible Function Buttons"
                     onChange={(SelectedValues) => this.ListChange(SelectedValues)}></DualListBoxEditor>

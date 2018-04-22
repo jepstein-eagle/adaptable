@@ -4,6 +4,7 @@ import { SortOrder, SelectionMode } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, ListGroup,  ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
@@ -14,6 +15,7 @@ export interface SingleListBoxProps extends ListGroupProps {
     ValueMember?: string
     SortMember?: string
     SelectionMode : SelectionMode
+    cssClassName: string
 }
 
 export interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
@@ -42,6 +44,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         });
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + StyleConstants.SINGLE_LIST_BOX;
         let itemsElements = this.state.Values.map(x => {
             let isActive: boolean
             if (this.props.ValueMember) {
@@ -68,7 +71,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         let header = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
             SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
 
-        return <div>
+        return <div className={cssClassName}>
             {header}
             <ListGroup fill style={this.props.style}>
                 {itemsElements}

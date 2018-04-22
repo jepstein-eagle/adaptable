@@ -94,4 +94,7 @@ export interface IAdaptableBlotter {
     // info
     getRowInfo(): any
     getColumnInfo(): any
+
+    // temp : JW  -- until we are able to get multi column sort working on hypergrid
+    canMultiSort(): boolean
 }

@@ -36,7 +36,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
         })
         
-        colItems[0].Content=    <ColumnSelector SelectedColumnIds={[this.props.GridSort.Column]}
+        colItems[0].Content=    <ColumnSelector  cssClassName={this.props.cssClassName} SelectedColumnIds={[this.props.GridSort.Column]}
         ColumnList={this.props.Columns}
         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
         SelectionMode={SelectionMode.Single} />

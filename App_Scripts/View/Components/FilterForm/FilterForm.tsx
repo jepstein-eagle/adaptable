@@ -35,7 +35,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
     render(): any {
         let cssClassName: string = StyleConstants.FILTER_FORM
-      
+
         // get user filter expressions appropriate for this column
         let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf))
             ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
@@ -77,7 +77,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             DisplayMode="Glyph+Text" />
 
         return <PanelWithButton cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="info" button={clearButton}>
-            <ListBoxFilterForm CurrentColumn={this.props.CurrentColumn}
+            <ListBoxFilterForm cssClassName={cssClassName}
+                CurrentColumn={this.props.CurrentColumn}
                 Columns={this.props.Columns}
                 ColumnValues={columnValuePairs}
                 DataType={this.props.CurrentColumn.DataType}

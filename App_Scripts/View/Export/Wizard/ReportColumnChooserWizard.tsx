@@ -27,13 +27,14 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
         }
     }
     render() {
-        let cssClassName: string = this.props.cssClassName + "__choosecolumns"
+        let cssClassName: string = this.props.cssClassName + "-choosecolumns"
        
         return <div className={cssClassName}>
         {this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns &&
                 <Panel>
                     <DualListBoxEditor AvailableValues={this.state.AllColumnValues}
-                        SelectedValues={this.state.SelectedColumnValues}
+                       cssClassName={cssClassName}
+                       SelectedValues={this.state.SelectedColumnValues}
                         HeaderAvailable="Columns"
                         HeaderSelected="Columns in Report"
                         onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>

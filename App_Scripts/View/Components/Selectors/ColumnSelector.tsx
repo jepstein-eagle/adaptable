@@ -6,6 +6,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { Sizes } from "react-bootstrap";
 import { CSSProperties } from "react";
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[]
@@ -13,7 +14,8 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     onColumnChange: (SelectedColumns: IColumn[]) => void
     SelectionMode: SelectionMode
     className?: string,
-    bsSize?: 'large' | 'lg' | 'small' | 'sm';
+    bsSize?: 'large' | 'lg' | 'small' | 'sm'; 
+    cssClassName: string
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
@@ -30,6 +32,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_SELECTOR;
         let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnList, "FriendlyName")
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x))
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
@@ -39,9 +42,10 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
 
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
-        return <Typeahead ref="typeahead" emptyLabel={"No Column found with that search"}
+        return <Typeahead ref="typeahead" 
+        emptyLabel={"No Column found with that search"}
             placeholder={placeHolder}
-            className={this.props.className}
+            className={cssClassName}
             bsSize={this.props.bsSize}
             labelKey={"FriendlyName"}
             filterBy={["FriendlyName", "ColumnId"]}

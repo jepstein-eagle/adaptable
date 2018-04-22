@@ -24,10 +24,11 @@ export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends Rea
 export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesPropsExpressionBuilderRanges, {}> {
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__queryranges"
 
         let selectedColumnDataType = this.props.SelectedColumn.DataType
-        let addButton = <Button bsSize={"small"} bsStyle={"default"}  onClick={() => this.addRange()}><Glyphicon glyph="plus" /> Add Range</Button>
-        
+        let addButton = <Button bsSize={"small"} bsStyle={"default"} onClick={() => this.addRange()}><Glyphicon glyph="plus" /> Add Range</Button>
+
         let rangesElement: JSX.Element[] = this.props.Ranges.map((range, index) => {
 
             let optionLeafOperators = ExpressionHelper.GetOperatorsForDataType(selectedColumnDataType).map((operator: LeafExpressionOperator) => {
@@ -66,7 +67,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                             </DropdownButton>
 
                             {range.Operand1Type == RangeOperandType.Column ?
-                                <ColumnSelector SelectedColumnIds={[range.Operand1]}
+                                <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[range.Operand1]}
                                     ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType && c.ColumnId != this.props.SelectedColumn.ColumnId)}
                                     onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
                                     SelectionMode={SelectionMode.Single} />
@@ -82,7 +83,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                                 </DropdownButton>
 
                                 {range.Operand2Type == RangeOperandType.Column ?
-                                    <ColumnSelector SelectedColumnIds={[range.Operand2]}
+                                    <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[range.Operand2]}
                                         ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType && c.ColumnId != this.props.SelectedColumn.ColumnId)}
                                         onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
                                         SelectionMode={SelectionMode.Single} />
@@ -97,11 +98,12 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             </div>
         })
 
-        return <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
-            {addButton}
-            {rangesElement}
-        </Panel>
-
+        return <div className={cssClassName}>
+            <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+                {addButton}
+                {rangesElement}
+            </Panel>
+        </div>
     }
 
     getOperand1FormControl(index: number, range: IRange): any {
@@ -122,7 +124,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
         this.props.onRangesChange([].concat(this.props.Ranges, ObjectFactory.CreateEmptyRange()))
     }
 
-  
+
     private onLeafExpressionOperatorChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
 

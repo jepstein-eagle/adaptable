@@ -25,7 +25,7 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
     render() {
 
         let canUseClassName = true; // get from somewhere...
-        let cssClassName: string = this.props.cssClassName + "__style"
+        let cssClassName: string = this.props.cssClassName + "-style"
        
         return <div className={cssClassName}>
         <StyleComponent

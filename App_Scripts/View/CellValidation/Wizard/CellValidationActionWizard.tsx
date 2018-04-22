@@ -23,7 +23,7 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
     }
 
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__action"
+        let cssClassName: string = this.props.cssClassName + "-action"
        
         return <div className={cssClassName}>
         <Panel header="Action When Validation Fails" bsStyle="primary">

@@ -27,7 +27,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
     }
 
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__settings"
+        let cssClassName: string = this.props.cssClassName + "-settings"
        
         return <div className={cssClassName}>
         <Panel header="Plus/Minus Settings" bsStyle="primary">

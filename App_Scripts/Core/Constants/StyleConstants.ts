@@ -56,14 +56,18 @@ export const NEW_BUTTON: string = "__btn-new"
 export const MINIMISE_BUTTON: string = "__btn-minimise"
 
 // others
-export const FILTER_FORM: string = "__filterform"
-export const PUSHPULL_LOGIN: string = "__pushpulllogin"
-export const PUSHPULL_PAGE_SELECTOR: string = "__pushpullpageselector"
+export const FILTER_FORM: string = AB_STYLE + "__filterform"
+export const PUSHPULL_LOGIN: string = AB_STYLE + "__pushpulllogin"
+export const PUSHPULL_PAGE_SELECTOR: string = AB_STYLE + "__pushpullpageselector"
 export const STYLE_COMPONENT: string = "__stylecomponent"
 export const PREVIEW_RESULTS: string = "__previewresults"
 export const COLOR_PICKER: string = "__colorpicker"
+export const COLUMN_SELECTOR: string = "__columnselector"
+export const COLUMN_VALUE_SELECTOR: string = "__columnvalueselector"
 export const STRATEGY_PROFILE: string = "__strategyprofile"
-export const CONTEXT_MENU: string = "__contextmenu"
+export const CONTEXT_MENU: string = AB_STYLE + "__contextmenu"
+export const SINGLE_LIST_BOX: string =  "__singlelistbox"
+export const DOUBLE_LIST_BOX: string =  "__doublelistbox"
 
 
 // popups

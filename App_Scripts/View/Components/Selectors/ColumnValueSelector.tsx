@@ -5,6 +5,7 @@ import { Typeahead } from 'react-bootstrap-typeahead'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '../../../Core/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
     SelectedColumn: IColumn
@@ -13,6 +14,7 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     AllowNew?: boolean // defaults to true if not provided
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
+    cssClassName: string
 }
 export class ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
 
@@ -25,6 +27,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         }
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_VALUE_SELECTOR;
         let sortedColumnValues: string[] = []
         let selectedValue: string = ""
         let placeholderText = "Select existing column value"
@@ -46,6 +49,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         }
 
         return <Typeahead ref="typeahead"
+            className={cssClassName}
             emptyLabel={""}
             placeholder={placeholderText}
             bsSize={this.props.bsSize}

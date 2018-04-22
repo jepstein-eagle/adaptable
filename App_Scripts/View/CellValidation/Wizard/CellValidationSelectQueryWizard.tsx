@@ -28,7 +28,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
     }
 
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__selectquery"
+        let cssClassName: string = this.props.cssClassName + "-selectquery"
        
         return <div className={cssClassName}>
         <Panel header="Cell Validation Query" bsStyle="primary">

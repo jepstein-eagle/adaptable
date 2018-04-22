@@ -29,7 +29,7 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
     }
 
     render(): any {
-        let cssClassName: string = this.props.cssClassName + "__selection"
+        let cssClassName: string = this.props.cssClassName + "-selection"
        
         return <div className={cssClassName}>
         <Panel header="Select Source for Layout" bsStyle="primary">
