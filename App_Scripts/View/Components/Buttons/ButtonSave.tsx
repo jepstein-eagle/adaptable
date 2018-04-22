@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ButtonBase, ButtonProps } from './ButtonBase'
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export class ButtonSave extends React.Component<ButtonProps, {}> {
     render() {
@@ -14,6 +15,7 @@ export class ButtonSave extends React.Component<ButtonProps, {}> {
             style={this.props.style}
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
-        />;
+            cssClassName={this.props.cssClassName + StyleConstants.SAVE_BUTTON}
+            />;
     }
 }

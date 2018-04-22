@@ -23,9 +23,10 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     }
 
     render() {
-
-        return <div className="adaptable_blotter_style_wizard_shortcut_type">
-            <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__shortcuttype"
+       
+        return <div className={cssClassName}>
+             <Panel header="Select Where Shortcut is Applied" bsStyle="primary">
 
                 <AdaptableBlotterForm inline>
                     <Col xs={12} >
@@ -34,13 +35,13 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
                     <Col xs={12} >
                         <HelpBlock>Date shortcuts replace the cell contents with a new Date value.</HelpBlock>
                     </Col>
-                    <Col xs={12} className="medium_margin_style">
+                    <Col xs={12} className="ab_medium_margin">
                         <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
                     </Col>
-                    <Col xs={12} className="medium_margin_style">
+                    <Col xs={12} className="ab_medium_margin">
                         <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date Columns</Radio>
                     </Col>
-                    <Col xs={12} className="medium_margin_style">
+                    <Col xs={12} className="ab_medium_margin">
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>

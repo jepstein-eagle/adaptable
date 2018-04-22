@@ -18,13 +18,14 @@ export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
     render(): any {
         let x: IPlusMinusRule = this.props.AdaptableBlotterObject as IPlusMinusRule
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = this.props.Column ? this.props.Column.FriendlyName : x.ColumnId + GeneralConstants.MISSING_COLUMN
         colItems[1].Content = <FormControl value={x.NudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e)} />
         colItems[2].Content = this.wrapExpressionDescription(x)
 
         let buttons: any = <EntityListActionButtons
+        cssClassName={this.props.cssClassName}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, x)}
             shareClick={() => this.props.onShare()}
@@ -35,7 +36,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         </EntityListActionButtons>
         colItems[3].Content = buttons
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
 
     }
 

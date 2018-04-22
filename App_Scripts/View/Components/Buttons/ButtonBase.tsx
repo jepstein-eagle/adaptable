@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { IAdaptableBlotterObject } from "../../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     onClick?: () => void
@@ -16,7 +17,9 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     overrideText?: string
     DisplayMode: "Glyph" | "Text" | "Glyph+Text"
     transformGlyph?: boolean
-    bsStyle? : string
+    bsStyle?: string
+     cssClassName: string
+
 }
 
 export interface ButtonBaseProps extends ButtonProps {
@@ -24,6 +27,7 @@ export interface ButtonBaseProps extends ButtonProps {
     bsStyle: string;
     bsSize: ReactBootstrap.Sizes
     glyph: string
+   
 }
 
 export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
@@ -35,7 +39,8 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         bsSize: null,
         glyph: "",
         DisplayMode: "Glyph+Text",
-        transformGlyph: false
+        transformGlyph: false,
+        cssClassName: "btn"
     };
     render() {
         let isDisabled: boolean
@@ -56,11 +61,11 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         let content: React.ReactElement<any>
         if (this.props.DisplayMode == "Glyph") {
             if (this.props.transformGlyph) {
-            content = <Glyphicon glyph={this.props.glyph} style={{"transform": "scale(-1, 1)"}} />
-        }else{
-            content = <Glyphicon glyph={this.props.glyph} />
+                content = <Glyphicon glyph={this.props.glyph} style={{ "transform": "scale(-1, 1)" }} />
+            } else {
+                content = <Glyphicon glyph={this.props.glyph} />
+            }
         }
-    }
         else if (this.props.DisplayMode == "Text") {
             content = <span>{text}</span>
         }
@@ -70,9 +75,10 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
             </div>
         }
         let button = <Button style={this.props.style}
+            className={this.props.cssClassName}
             bsStyle={this.props.bsStyle}
             disabled={isDisabled}
-            bsSize ={this.props.bsSize}
+            bsSize={this.props.bsSize}
             onClick={() => this.props.onClick()}>
             {content}</Button>
         let buttonwithtooltip = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>

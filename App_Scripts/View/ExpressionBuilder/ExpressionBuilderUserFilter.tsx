@@ -9,6 +9,8 @@ export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<
     AvailableFilterNames: Array<string>
     SelectedFilterNames: Array<string>
     onFilterNameChange: (selectedFilterNames: Array<string>) => void
+    cssClassName: string
+
 }
 
 export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuilderUserFilterProps, {}> {
@@ -24,7 +26,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
             </ListGroupItem>
         })
 
-        return <Panel className="no-padding-anywhere-panel" style={divStyle}>
+        return <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
             <ListGroup  >
                 {userFilterNames}
             </ListGroup>

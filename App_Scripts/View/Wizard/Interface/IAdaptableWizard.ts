@@ -18,6 +18,7 @@ export interface AdaptableWizardStepProps<T> {
     Data?: T
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
+    cssClassName: string
 }
 
 // props for an Expression Wizard Page
@@ -39,6 +40,7 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
     onCloseWizard: () => void
     onFinishWizard: () => void
     ModalContainer: HTMLElement
+    cssClassName: string
 }
 
 // props for a wizard that wraps a config entity (without an expression)

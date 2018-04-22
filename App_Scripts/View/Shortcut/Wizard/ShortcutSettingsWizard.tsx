@@ -61,9 +61,10 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         let currentActionValue = this.state.ShortcutOperation;
         let currentKeyValue = !this.state.ShortcutKey ? "select" : this.state.ShortcutKey;
         let currentDynamicResult = this.state.ShortcutResult != "" ? this.state.ShortcutResult : "select"
-
-        return <div className="adaptable_blotter_style_wizard_shortcut_settings">
-            <Panel header="Shortcut Settings" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__settings"
+       
+        return <div className={cssClassName}>
+        <Panel header="Shortcut Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
 
                     <FormGroup controlId="formInlineKey">
@@ -76,7 +77,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                 {optionKeys}
                             </FormControl>
                         </Col>
-                        <Col xs={1}><AdaptablePopover headerText={"Shortcut: Key"} bodyText={["The keyboard key that, when pressed, triggers the shortcut."]} popoverType={PopoverType.Info} />
+                        <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Key"} bodyText={["The keyboard key that, when pressed, triggers the shortcut."]} popoverType={PopoverType.Info} />
                         </Col>
                     </FormGroup>
 
@@ -91,7 +92,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         {optionActions}
                                     </FormControl>
                                 </Col>
-                                <Col xs={1}><AdaptablePopover headerText={"Shortcut: Operation"}
+                                <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Operation"}
                                     bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </Col>
                             </FormGroup>
@@ -108,7 +109,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         value={this.state.ShortcutResult}
                                     />
                                 </Col>
-                                <Col xs={1}><AdaptablePopover headerText={"Shortcut: Value"}
+                                <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Value"}
                                     bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} popoverType={PopoverType.Info} />
                                 </Col>
                             </FormGroup>
@@ -124,7 +125,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     <Radio inline value="custom" checked={this.state.IsDynamic == false} onChange={(e) => this.onDynamicSelectChanged(e)}>Custom</Radio>
                                     <Radio inline value="dynamic" checked={this.state.IsDynamic == true} onChange={(e) => this.onDynamicSelectChanged(e)}>Dynamic</Radio>
                                 </Col>
-                                <Col xs={1}><AdaptablePopover headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.", <br />, <br />, <b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", <br />, <br />, "Dynamic dates that use working days are based on the current holiday calendar."]} popoverType={PopoverType.Info} />
+                                <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.", <br />, <br />, <b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", <br />, <br />, "Dynamic dates that use working days are based on the current holiday calendar."]} popoverType={PopoverType.Info} />
                                 </Col>
                             </FormGroup>
 
@@ -143,7 +144,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                             <option value={CalendarConstants.NEXT_WORK_DAY} key={CalendarConstants.NEXT_WORK_DAY}>Next Work Day</option>
                                         </FormControl>
                                     </Col>
-                                    <Col xs={1}><AdaptablePopover headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
+                                    <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
                                     </Col>
                                 </FormGroup>
                                 :
@@ -160,7 +161,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         />
                                     </Col>
                                     <Col xs={1}>
-                                        <AdaptablePopover headerText={"Shortcut: Custom Date"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
+                                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Custom Date"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} popoverType={PopoverType.Info} />
                                     </Col>
                                 </FormGroup>
                             }

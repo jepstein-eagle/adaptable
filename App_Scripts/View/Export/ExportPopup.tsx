@@ -25,6 +25,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -55,6 +56,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__export";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__export";
 
         let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
 
@@ -68,9 +71,10 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
         let Reports = this.props.Reports.map((Report: IReport, index) => {
             return <ReportEntityRow
-                AdaptableBlotterObject={Report}
+            cssClassName={cssClassName}   
+            AdaptableBlotterObject={Report}
                 key={index}
-                ColItems={colItems}
+                colItems={colItems}
                 Index={index}
                 Columns={this.props.Columns}
                 IsLast={index == this.props.Reports.length - 1}
@@ -85,16 +89,16 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
              />
         });
 
-        let newButton = <ButtonNew onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
             overrideTooltip="Create Report"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_export">
-            <PanelWithButton headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} className="adaptable_blotter_modal_main_popup">
+            return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} >
 
                 {Reports.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={Reports} allowOverflow={true}  />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={Reports} allowOverflow={true}  />
                 }
 
                 {Reports.length == 0 &&
@@ -103,6 +107,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
                 {this.state.EditedAdaptableBlotterObject &&
                     <ReportWizard
+                        cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReport}
                         ModalContainer={this.props.ModalContainer}
                         ConfigEntities={this.props.Reports}

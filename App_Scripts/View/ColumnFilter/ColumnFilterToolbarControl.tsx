@@ -30,6 +30,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
     render(): any {
 
+        let cssClassName: string = this.props.cssClassName + "__columnfilter";
         let collapsedText = this.props.ColumnFilters.length == 0 ?
             "None" :
             this.props.ColumnFilters.length == 1 ?
@@ -47,27 +48,26 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         })
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 {collapsedText}
                 {' '}
                 {infoBody.length > 0 &&
-                    <AdaptablePopover headerText="Active Filters" bodyText={infoBody} popoverType={PopoverType.Info} />
+                    <AdaptablePopover  cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} popoverType={PopoverType.Info} />
                 }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
-                   size={"small"} 
+                 cssClassName={cssClassName}
+                 size={"small"} 
                    overrideTooltip="Clear Column Filters"
                     DisplayMode="Glyph"
                     overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>
         </span>
 
-        return  <div className="adaptable_blotter_style_dashboard_columnfilter">
-        <PanelDashboard headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
-        </div>
-    }
+     }
 
 
 

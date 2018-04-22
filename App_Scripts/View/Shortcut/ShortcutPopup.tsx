@@ -22,6 +22,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
@@ -40,6 +41,9 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__shortcut";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__shortcut";
+
         let infoBody: any[] = ["Use shortcuts to replace frequently entered text (in numeric or date columns) with a single keystroke.", <br />, <br />,
             "Numeric shortcuts update the existing cell value based on a 'calculation'.", <br />, <br />,
             "Date shortcuts replace the contents of the cell with a new date value."]
@@ -56,10 +60,11 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutEntityRow
-                AdaptableBlotterObject={shortcut} key={"ns" + index}
+            cssClassName={cssClassName}   
+            AdaptableBlotterObject={shortcut} key={"ns" + index}
                 Index={index}
                 onEdit={null}
-                ColItems={colItems}
+                colItems={colItems}
                 AvailableActions={shortcutOperationList}
                 AvailableKeys={this.getAvailableKeys(shortcut)}
                 onShare={() => this.props.onShare(shortcut)}
@@ -71,21 +76,21 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             </ShortcutEntityRow>
         });
 
-        let newButton = <ButtonNew onClick={() => this.CreateShortcut()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.CreateShortcut()}
             overrideTooltip="Create New Shortcut"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
-        return <div className="adaptable_blotter_style_popup_shortcut">
-            <PanelWithButton headerText={StrategyNames.ShortcutStrategyName} className="adaptable_blotter_modal_main_popup"
+        return <div className={cssClassName}>
+        <PanelWithButton  cssClassName={cssClassName} headerText={StrategyNames.ShortcutStrategyName} className="ab_main_popup"
                 button={newButton}
                 bsStyle="primary" glyphicon={StrategyGlyphs.ShortcutGlyph}
                 infoBody={infoBody}>
 
                 {shortcuts.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={shortcuts} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={shortcuts} />
                 }
 
                 {shortcuts.length == 0 &&
@@ -94,7 +99,8 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <ShortcutWizard
-                        EditedAdaptableBlotterObject={shortcut}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={shortcut}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}

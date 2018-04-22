@@ -37,6 +37,8 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__calendars";
+
         let infoBody: any[] = ["Choose which region Holiday Calendars you wish to use.", <br />, <br />,
             "These are used primarily when calculating Working Days."]
 
@@ -48,7 +50,8 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
         let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
             return <CalendarsEntryRow
-                Calendar={calendar}
+            cssClassName={cssClassName}
+            Calendar={calendar}
                 key={calendar.CalendarName}
                 onSelect={(calendar) => this.props.onSelectCalendar(calendar)}
                 onShowInformation={(calendar) => this.onShowInformation(calendar)}
@@ -64,6 +67,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
         let displayedCalendarModalBody = this.state.DisplayedCalendar == null ? null :
             this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry: ICalendarEntry) => {
                 return <CalendarEntryItem
+                cssClassName={cssClassName}
                     CalendarEntry={calendarEntry}
                     key={calendarEntry.HolidayName + calendarEntry.HolidayDate}>
                 </CalendarEntryItem>
@@ -72,25 +76,25 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
 
 
-        return <PanelWithImage header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
+        return <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
 
-            <PanelWithRow ColItems={allCalenderColItems} bsStyle="info" className="preview_panel" />
+            <PanelWithRow cssClassName={cssClassName} colItems ={allCalenderColItems} bsStyle="info" className="ab_preview_panel" />
             <ListGroup >
                 {allCalendars}
             </ListGroup>
 
             {this.state.DisplayedCalendar &&
 
-                <Modal show={this.state.DisplayedCalendar != null} onHide={() => this.closeInformationModal()} className="adaptable_blotter_style">
+                <Modal show={this.state.DisplayedCalendar != null} onHide={() => this.closeInformationModal()} className={cssClassName}>
                     <Modal.Header closeButton>
                         <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.CalendarName}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
-                    <PanelWithRow ColItems={calenderEntryColItems} bsStyle="info" />
+                    <PanelWithRow cssClassName={cssClassName} colItems ={calenderEntryColItems} bsStyle="info" />
                       {displayedCalendarModalBody}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button className="adaptable_blotter_right_modal_button" onClick={() => this.closeInformationModal()}>Close</Button>
+                        <Button className="ab_right_modal_button" onClick={() => this.closeInformationModal()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             }

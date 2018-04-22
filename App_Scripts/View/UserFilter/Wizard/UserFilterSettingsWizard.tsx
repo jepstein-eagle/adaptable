@@ -25,8 +25,9 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     }
     render() {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-
-        return <div className="adaptable_blotter_style_wizard_userfilter_settings">
+        let cssClassName: string = this.props.cssClassName + "__settings"
+       
+        return <div className={cssClassName}>
             <Panel header="Filter Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="filterName">

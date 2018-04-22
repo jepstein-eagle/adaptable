@@ -5,16 +5,16 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
-export interface ReportNameWizardProps extends AdaptableWizardStepProps<IReport> {
+export interface ReportSettingsWizardProps extends AdaptableWizardStepProps<IReport> {
     Reports: IReport[]
 }
-export interface ReportNameWizardState {
+export interface ReportSettingsWizardState {
     ReportName: string,
     ErrorMessage: string
 }
 
-export class ReportNameWizard extends React.Component<ReportNameWizardProps, ReportNameWizardState> implements AdaptableWizardStep {
-    constructor(props: ReportNameWizardProps) {
+export class ReportSettingsWizard extends React.Component<ReportSettingsWizardProps, ReportSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: ReportSettingsWizardProps) {
         super(props);
         this.state = {
             ReportName: this.props.Data.Name,
@@ -23,9 +23,10 @@ export class ReportNameWizard extends React.Component<ReportNameWizardProps, Rep
     }
     render(): any {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-
-        return <div className="adaptable_blotter_style_wizard_export_reportname">
-            <Panel header="Enter a Name for the Report" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__settings"
+       
+        return <div className={cssClassName}>
+        <Panel header="Enter a Name for the Report" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <Col xs={10}>
                         <FormGroup controlId="formInlineName" validationState={validationState}>
@@ -46,7 +47,7 @@ export class ReportNameWizard extends React.Component<ReportNameWizardProps, Rep
         this.setState({
             ReportName: e.value,
             ErrorMessage: this.props.Reports.findIndex(x => x.Name == e.value) > -1 ? "A Report already exists with that name" : null
-        } as ReportNameWizardState, () => this.props.UpdateGoBackState())
+        } as  ReportSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.ReportName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)); }

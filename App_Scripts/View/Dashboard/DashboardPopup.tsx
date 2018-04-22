@@ -42,6 +42,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         this.state = { CurrentDashboardPopup: "", EditedZoomFactor: props.Zoom }
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + "__dashboard";
 
         let colItems: IColItem[] = [
             { Content: "Control", Size: 4 },
@@ -91,8 +92,8 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             </li>
         })
 
-        return <div className="adaptable_blotter_style_popup_dashboard">
-            <PanelWithImage header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >
+        return <div className={cssClassName}>
+        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
                     {' '}
@@ -100,8 +101,8 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 </AdaptableBlotterForm>
                 {' '}
                 <div><br /></div>
-                <PanelWithRow ColItems={colItems} bsStyle="info" />
-                <ListGroup className="preview_panel" onDragEnter={(event) => this.DragEnter(event)}
+                <PanelWithRow cssClassName={cssClassName} colItems ={colItems} bsStyle="info" />
+                <ListGroup className="ab_preview_panel" onDragEnter={(event) => this.DragEnter(event)}
                     onDragOver={(event) => this.DragOver(event)}
                     onDragLeave={(event) => this.DragLeave(event)}>
                     {radioDashboardControls}

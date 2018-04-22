@@ -1,10 +1,11 @@
 import * as React from "react";
 import { ButtonBase, ButtonProps } from './ButtonBase'
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export class ButtonClose extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Close"
-            bsStyle='default'
+            bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
              ConfigEntity={this.props.ConfigEntity}
             glyph="remove"
@@ -14,7 +15,8 @@ export class ButtonClose extends React.Component<ButtonProps, {}> {
             style={this.props.style}
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
-        />;
+            cssClassName={this.props.cssClassName + StyleConstants.CLOSE_BUTTON}
+            />;
     }
 }
 

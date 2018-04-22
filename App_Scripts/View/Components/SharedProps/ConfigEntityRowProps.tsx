@@ -13,7 +13,8 @@ export interface BaseEntityRowProps<View> extends React.ClassAttributes<View> {
     onDeleteConfirm: Redux.Action;
     Index: number
     onEdit: (index: number, adaptableBlotterObject: IAdaptableBlotterObject) => void;
-    ColItems: IColItem[]
+    colItems: IColItem[]
+    cssClassName: string
 }
 
 // shared props

@@ -33,9 +33,10 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     render(): any {
         let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
         let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
-     
-        return <div className="adaptable_blotter_style_wizard_customsort_values">
-            <PanelWithInfo header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
+        let cssClassName: string = this.props.cssClassName + "__values"
+       
+        return <div className={cssClassName}>
+        <PanelWithInfo  cssClassName={cssClassName}  header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.state.ColumnValues}
                     SelectedValues={this.state.SelectedValues}
                     HeaderAvailable="Column Values"
@@ -55,7 +56,9 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     public canNext(): boolean { return this.state.SelectedValues.length > 0; }
     public canBack(): boolean { return !this.state.IsEdit; }
     public Next(): void { this.props.Data.Values = this.state.SelectedValues }
-    public Back(): void { }
+    public Back(): void {
+        // todo
+     }
     public GetIndexStepIncrement() {
         return 1;
     }

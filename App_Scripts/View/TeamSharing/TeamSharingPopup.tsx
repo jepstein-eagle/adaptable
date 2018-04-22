@@ -46,6 +46,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__teamsharing";
+
         let infoBody: any[] = ["Team Sharing"]
 
         let colItems: IColItem[] = [
@@ -59,13 +61,13 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 className="list-group-item" key={index}>
                 <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={2}>
-                        <StrategyProfile StrategyId={x.strategy} />
+                        <StrategyProfile cssClassName={cssClassName} StrategyId={x.strategy} />
                     </Col>
                     <Col xs={3}>
                         {x.user}{<br/>}{x.timestamp.toLocaleString()}
                     </Col>
                     <Col xs={6} style={{ fontSize: 'small' }}>
-                        <Panel bsStyle="primary" className="small-padding-panel">
+                        <Panel bsStyle="primary" className="ab_small-padding-panel">
                             {this.getSharedItemDetails(x)}
                         </Panel>
                     </Col>
@@ -77,12 +79,13 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             </li>
         })
-        return <div className="adaptable_blotter_style_popup_teamsharing">
-        <PanelWithImage header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
+      
+        return <div className={cssClassName}>
+        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
             bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
             {this.props.Entities.length == 0 ?
                 <Well bsSize="small">Shared Items will appear here when available.</Well>
-                : <PanelWithRow ColItems={colItems} bsStyle="info" />
+                : <PanelWithRow cssClassName={cssClassName} colItems ={colItems} bsStyle="info" />
             }
             <ListGroup >
                 {sharedItems}

@@ -5,6 +5,7 @@ import { IColItem } from "../UIInterfaces";
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
     CalendarEntry: ICalendarEntry;
+    cssClassName: string
 }
 
 export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {}> {
@@ -14,6 +15,6 @@ export class CalendarEntryItem extends React.Component<CalendarEntryItemProps, {
        let colItems: IColItem[] = []
         colItems.push({ Size: 6, Content: this.props.CalendarEntry.HolidayName });
         colItems.push({ Size: 6, Content: new Date(this.props.CalendarEntry.HolidayDate).toDateString() });
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 }

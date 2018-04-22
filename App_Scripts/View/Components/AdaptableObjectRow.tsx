@@ -2,14 +2,17 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { Col, Row } from 'react-bootstrap';
 import { IColItem } from "../UIInterfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
-    ColItems: IColItem[]
+    colItems: IColItem[]
+     cssClassName: string
 }
 
 export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps, {}> {
     render(): any {
-        let colItems = this.props.ColItems.map((colItem: IColItem, index: number) => {
+        let cssClassName = this.props.cssClassName + StyleConstants.LIST_GROUP_ITEM
+        let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
             return <Col key={index} xs={colItem.Size}>
                 <span style={smallFontSizeStyle}>
                     {colItem.Content}
@@ -17,7 +20,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
             </Col>
         });
 
-        return <div className="adaptable_blotter_style_rowobject">
+        return <div className={cssClassName}>
             <li
                 className="list-group-item"
                 onClick={() => {

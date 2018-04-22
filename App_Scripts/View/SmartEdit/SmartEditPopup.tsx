@@ -47,6 +47,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__smartedit";
         let infoBody: any[] = ["Click ", <i><b>Apply to Grid</b></i>,
             " button to update all selected cells with the values showing in the Preview Results grid.", <br />, <br />,
             "This value will be calculated based on the Maths operation selected in the dropdown", <br />, <br />,
@@ -64,7 +65,8 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
         let previewPanel = showPanel ?
             <PreviewResultsPanel
-                UpdateValue={this.props.SmartEditValue}
+            cssClassName={cssClassName} 
+            UpdateValue={this.props.SmartEditValue}
                 PreviewInfo={this.props.PreviewInfo}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
@@ -77,10 +79,8 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
             return <MenuItem key={index} eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
         })
 
-        return (
-             <div className="adaptable_blotter_style_popup_smartedit">
-          
-                <PanelWithImage header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
+        return (<div className={cssClassName}>
+           <PanelWithImage  cssClassName={cssClassName} header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
                     <AdaptableBlotterForm inline onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
@@ -96,9 +96,9 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
                             onClick={() => { this.props.PreviewInfo && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() }} >Apply to Grid</Button>
                         {' '}
                         {(this.props.PreviewInfo && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning) &&
-                            <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
+                            <AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
                         {(this.props.PreviewInfo && !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) &&
-                            <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
+                            <AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
                     </AdaptableBlotterForm>
                 </PanelWithImage>
                 {previewPanel}

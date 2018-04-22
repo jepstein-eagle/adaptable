@@ -25,11 +25,12 @@ export class FormatColumnScopeWizard extends React.Component<FormatColumnScopeWi
     }
 
     render(): any {
+        let cssClassName: string = this.props.cssClassName + "__scope"
+       
+        return <div className={cssClassName}>
+        <Panel header="Choose a column to format" bsStyle="primary">
 
-        return <div className="adaptable_blotter_style_wizard_formatcolumn_column">
-            <Panel header="Choose a column to format" bsStyle="primary">
-
-                <Col xs={12} className="medium_margin_style">
+                <Col xs={12} className="ab_medium_margin">
                     <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                         ColumnList={this.props.Columns}
                         onColumnChange={columns => this.onColumnSelectedChanged(columns)}

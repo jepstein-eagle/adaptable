@@ -36,7 +36,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         let exportGlyph: any = <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = report.Name
         colItems[1].Content = ReportHelper.GetReportColumnsDescription(report, this.props.Columns)
@@ -59,7 +59,8 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         colItems[3].Content = exportButton
 
         let buttons: any = <EntityListActionButtons
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
+        cssClassName={this.props.cssClassName}
+         ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, report)}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
@@ -68,6 +69,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
         colItems[4].Content = buttons
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 }

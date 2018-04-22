@@ -11,6 +11,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { IPPDomain, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExportDestination } from "../../Core/Enums";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface IPushPullDomainPageSelectorProps extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
     IPPDomainsPages: IPPDomain[]
@@ -31,6 +32,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
         this.state = { SelectedFolder: null, SelectedPage: null }
     }
     render() {
+        let cssClassName: string = StyleConstants.PUSHPULL_PAGE_SELECTOR
         let itemsElements: any[] = []
         this.props.IPPDomainsPages.forEach(x => {
             // let itemsElements = this.props.IPPDomainsPages.map(x => {
@@ -51,17 +53,17 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
                     value={x.Name} ><Glyphicon glyph="folder-close" ></Glyphicon>{' '}{x.Name}</ListGroupItem>)
             }
         })
-        return <PanelWithButton headerText="iPushPull Folder and Page Selector" bsStyle="primary" glyphicon="export">
+        return <PanelWithButton cssClassName={cssClassName} headerText="iPushPull Folder and Page Selector" bsStyle="primary" glyphicon="export">
 
 
             {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? <Alert bsStyle="danger">
                 Error getting iPushPull Pages : {this.props.ErrorMsg}
-            </Alert> : <ListGroup fill className="preview_panel">
+            </Alert> : <ListGroup fill className="ab_preview_panel">
                     {itemsElements}
                 </ListGroup>}
-            <Button className="adaptable_blotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
+            <Button className="ab_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
             <Button disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedPage)}
-                className="adaptable_blotter_right_modal_button" bsStyle="primary"
+                className="ab_right_modal_button" bsStyle="primary"
                 onClick={() => { this.props.onApplyExport(this.props.PopupParams, this.state.SelectedFolder, this.state.SelectedPage) }}>
                 <Glyphicon glyph="user" /> Select</Button>
         </PanelWithButton>

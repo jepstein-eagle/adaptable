@@ -4,7 +4,7 @@ var postcss = require('postcss');
 var scopify = require('postcss-scopify');
 
 //We package all the bootswatch themes to work for the Adaptable Blotter only or 
-//at least all elements that have a parent that has the class adaptable_blotter_style
+//at least all elements that have a parent that has the class #adaptable-blotter-style
 var directories = getDirectories('node_modules/bootswatch/')
 for (var directory of directories) {
 //    if (fs.existsSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css')) {
@@ -12,7 +12,7 @@ for (var directory of directories) {
 //        copyFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'themes/' + directory + '/bootstrap.min.css')
         // var css = fs.readFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'utf8').toString();
         // var out = postcss()
-        //     .use(scopify('.adaptable_blotter_style'))
+        //     .use(scopify('.#adaptable-blotter-style'))
         //     .process(css)
         //     .css;
 
@@ -22,12 +22,12 @@ for (var directory of directories) {
 }
 
 //We package the default theme to work for the Adaptable Blotter only or 
-//at least all elements that have a parent that has the class adaptable_blotter_style/
+//at least all elements that have a parent that has the class #adaptable-blotter-style/
 //ensureDirectoryExistence('themes/default/bootstrap.min.css')
 //copyFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'themes/default/bootstrap.min.css')
 // var css = fs.readFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'utf8').toString();
 // var out = postcss()
-//     .use(scopify('.adaptable_blotter_style'))
+//     .use(scopify('.#adaptable-blotter-style'))
 //     .process(css)
 //     .css;
 
@@ -38,7 +38,7 @@ for (var directory of directories) {
     if (fs.existsSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css')) {
         var css = fs.readFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'utf8').toString();
         var out = postcss()
-            .use(scopify('.adaptable_blotter_style_base'))
+            .use(scopify('.#adaptable-blotter-style'))
             .process(css)
             .css;
 
@@ -48,10 +48,10 @@ for (var directory of directories) {
 }
 
 //We package the default theme to work for the Adaptable Blotter only or 
-//at least all elements that have a parent that has the class adaptable_blotter_style
+//at least all elements that have a parent that has the class #adaptable-blotter-style
 var css = fs.readFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'utf8').toString();
 var out = postcss()
-    .use(scopify('.adaptable_blotter_style_base'))
+    .use(scopify('.#adaptable-blotter-style'))
     .process(css)
     .css;
 

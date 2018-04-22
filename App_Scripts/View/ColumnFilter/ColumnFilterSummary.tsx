@@ -15,6 +15,7 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
@@ -31,20 +32,21 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
     }
 
     render(): any {
-
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
+        
         let columnFilter: IColumnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let description: string = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters)
 
         let summaryItems: any[] = []
-        summaryItems.push(<b>{<StrategyProfile StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
+        summaryItems.push(<b>{<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
         summaryItems.push(description);
         summaryItems.push(
-            <ButtonClear size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
+            <ButtonClear cssClassName={this.props.cssClassName} size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null} />)
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-            <SummaryRowItem SummaryItems={summaryItems} />
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
         </div>
     }
 }

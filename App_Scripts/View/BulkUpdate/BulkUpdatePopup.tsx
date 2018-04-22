@@ -56,6 +56,9 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
 
     render() {
+
+        let cssClassName: string = this.props.cssClassName + "__bulkupdate";
+
         let infoBody: any[] = ["Click ", <i><b>Apply to Grid</b></i>,
             " button to update all selected cells with the value that you specify", <br />, <br />,
             "Edits that break Cell Validation Rules will be flagged and prevented."]
@@ -83,6 +86,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
         let previewPanel = showPanel ?
             <PreviewResultsPanel
+                cssClassName={cssClassName}
                 UpdateValue={this.props.BulkUpdateValue}
                 PreviewInfo={this.props.PreviewInfo}
                 Columns={this.props.Columns}
@@ -92,76 +96,75 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             /> :
             null
 
-        return (
-            <div className="adaptable_blotter_style_popup_bulkupdate">
-                {col &&
-                    <div>
-                        <PanelWithImage header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
-                            <AdaptableBlotterForm onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
-                                <FormGroup controlId="formInlineKey">
-                                    {col.DataType == DataType.Date ?
-                                        <div>
+        return (<div className={cssClassName}>
+            {col &&
+                <div>
+                    <PanelWithImage cssClassName={cssClassName} header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
+                        <AdaptableBlotterForm onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
+                            <FormGroup controlId="formInlineKey">
+                                {col.DataType == DataType.Date ?
+                                    <div>
+                                        <Col xs={12}>
+                                            <HelpBlock>Enter a date value.  Alternatively, tick the checkbox and select from an existing column value.</HelpBlock>
+                                        </Col>
+                                        <Row>
                                             <Col xs={12}>
-                                                <HelpBlock>Enter a date value.  Alternatively, tick the checkbox and select from an existing column value.</HelpBlock>
+                                                <Checkbox className="ab_medium_margin" onChange={(e) => this.onUseColumnValuesSelectorChanged(e)} checked={this.state.useSelector}>{' '}Select from existing column values</Checkbox>
                                             </Col>
-                                            <Row>
-                                                <Col xs={12}>
-                                                    <Checkbox className="medium_margin_style" onChange={(e) => this.onUseColumnValuesSelectorChanged(e)} checked={this.state.useSelector}>{' '}Select from existing column values</Checkbox>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col xs={9}>
-                                                    {this.state.useSelector ?
-                                                        <ColumnValueSelector
-                                                            SelectedColumnValue={this.props.BulkUpdateValue}
-                                                            SelectedColumn={col}
-                                                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                                                            onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
-                                                            AllowNew={false} />
-                                                        :
-                                                        <FormControl value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
-                                                    }
-                                                </Col>
-                                                <Col xs={3}>
-                                                    <Button bsStyle={this.getButtonStyle()}
-                                                        disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent}
-                                                        onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
-                                                </Col>
-                                            </Row>
-                                        </div> :
-                                        <div>
-                                            <Col xs={12}>
-                                            <HelpBlock>Select an existing column value from the dropdown, or enter a new value</HelpBlock>
-                                              </Col> <Row>
-                                                <Col xs={8}>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={9}>
+                                                {this.state.useSelector ?
                                                     <ColumnValueSelector
                                                         SelectedColumnValue={this.props.BulkUpdateValue}
                                                         SelectedColumn={col}
                                                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                                                        onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
-                                                </Col>
-                                                <Col xs={4}>
-                                                    <Button bsStyle={this.getButtonStyle()}
-                                                        disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError}
-                                                        onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
-                                                    {' '}
-                                                    {(hasDataTypeError) &&
-                                                        <AdaptablePopover headerText={"Update Error"} bodyText={[dataTypeErrorMessage]} popoverType={PopoverType.Error} />}
-                                                    {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning) &&
-                                                        <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
-                                                    {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) &&
-                                                        <AdaptablePopover headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
-                                                </Col>
-                                            </Row>
-                                        </div>
-                                    }
-                                </FormGroup>
-                            </AdaptableBlotterForm>
-                        </PanelWithImage>
-                        {previewPanel}
-                    </div>
-                }
-            </div>
+                                                        onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
+                                                        AllowNew={false} />
+                                                    :
+                                                    <FormControl value={String(this.props.BulkUpdateValue)} type={UIHelper.getDescriptionForDataType(col.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)} onChange={(e) => this.onBulkUpdateValueChange(e)} />
+                                                }
+                                            </Col>
+                                            <Col xs={3}>
+                                                <Button bsStyle={this.getButtonStyle()}
+                                                    disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent}
+                                                    onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                            </Col>
+                                        </Row>
+                                    </div> :
+                                    <div>
+                                        <Col xs={12}>
+                                            <HelpBlock>Select an existing column value from the dropdown, or enter a new value</HelpBlock>
+                                        </Col> <Row>
+                                            <Col xs={8}>
+                                                <ColumnValueSelector
+                                                    SelectedColumnValue={this.props.BulkUpdateValue}
+                                                    SelectedColumn={col}
+                                                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                                                    onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
+                                            </Col>
+                                            <Col xs={4}>
+                                                <Button bsStyle={this.getButtonStyle()}
+                                                    disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError}
+                                                    onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                                {' '}
+                                                {(hasDataTypeError) &&
+                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Update Error"} bodyText={[dataTypeErrorMessage]} popoverType={PopoverType.Error} />}
+                                                {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning) &&
+                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
+                                                {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) &&
+                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                }
+                            </FormGroup>
+                        </AdaptableBlotterForm>
+                    </PanelWithImage>
+                    {previewPanel}
+                </div>
+            }
+        </div>
 
         );
 

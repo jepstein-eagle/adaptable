@@ -11,6 +11,8 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IUserFilter } from "../../Strategy/Interface/IUserFilterStrategy";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
+
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
     UpdateValue: string;
@@ -19,10 +21,12 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
     UserFilters: IUserFilter[];
     SelectedColumn: IColumn;
     ShowPanel: boolean
+    cssClassName: string
 }
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
     render(): any {
+       let cssClassName: string = this.props.cssClassName + StyleConstants.PREVIEW_RESULTS
         let previewHeader: string = this.props.PreviewInfo != null ? "Preview Results: " + (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : "") : "";
 
 
@@ -34,10 +38,10 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                 {previewResult.ValidationRules.length > 0 ?
                     <td>
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true &&
-                            <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Error} />
+                            <AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Error} />
                         }
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning == true &&
-                            <AdaptablePopover headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Warning} />
+                            <AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Warning} />
                         }
                     </td>
                     :
@@ -53,9 +57,9 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
             </tr>
         </thead>
 
-        return <div className="adaptable_blotter_style_previewresults">
+        return <div className={cssClassName}>
             {this.props.ShowPanel &&
-                <Panel header={previewHeader} bsStyle="info" className="preview_panel">
+                <Panel header={previewHeader} bsStyle="info" className="ab_preview_panel">
                 <div>
                     <Table >
                         {header}

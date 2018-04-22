@@ -16,14 +16,15 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
     render() {
         let stepNames: string[] = ["Column Type", "Settings"]
 
-        return <div className="adaptable_blotter_style_wizard_shortcut">
+        return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.ShortcutStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
+                cssClassName={this.props.cssClassName}
                 Steps={[
-                    <ShortcutTypeWizard StepName={stepNames[0]} />,
-                    <ShortcutSettingsWizard StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
+                    <ShortcutTypeWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} />,
+                    <ShortcutSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

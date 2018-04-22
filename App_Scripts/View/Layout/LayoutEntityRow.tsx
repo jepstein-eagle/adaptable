@@ -24,7 +24,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
     render(): any {
         let layout: ILayout = this.props.AdaptableBlotterObject as ILayout;
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
 
         colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(layout)} checked={this.props.IsCurrentLayout} />
@@ -32,7 +32,8 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         colItems[2].Content = this.getLayoutDescription(layout)
 
         let buttons: any = <EntityListActionButtons
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
+        cssClassName={this.props.cssClassName}
+          ConfirmDeleteAction={this.props.onDeleteConfirm}
             showShare={this.props.TeamSharingActivated}
             editClick={() => this.props.onEdit(this.props.Index, layout)}
             shareClick={() => this.props.onShare()}
@@ -43,7 +44,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
         colItems[3].Content = buttons;
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 
     private getLayoutDescription(layout: ILayout): string {

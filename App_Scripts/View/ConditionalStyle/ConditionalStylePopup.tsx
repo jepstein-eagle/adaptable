@@ -26,6 +26,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: IConditionalStyle[]
@@ -55,6 +56,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__conditionalStyle";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
 
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
             "Styles include selection of fore and back colours, and font properties."]
@@ -67,8 +70,9 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         ]
         let conditionalStyles = this.props.ConditionalStyles.map((conditionalStyle: IConditionalStyle, index) => {
             return <ConditionalStyleEntityRow
-                AdaptableBlotterObject={conditionalStyle}
-                ColItems={colItems}
+            cssClassName={cssClassName}    
+            AdaptableBlotterObject={conditionalStyle}
+                colItems={colItems}
                 key={"CS" + index}
                 Index={index}
                 onShare={() => this.props.onShare(conditionalStyle)}
@@ -79,25 +83,26 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyle)} />
         });
 
-        let newButton = <ButtonNew onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
             overrideTooltip="Create Conditional Style"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_conditionalstyle">
-            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" className="adaptable_blotter_modal_main_popup" glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+            return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary"  cssClassName={cssClassName} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
                 }
 
                 {conditionalStyles.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={conditionalStyles} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={conditionalStyles} />
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <ConditionalStyleWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}

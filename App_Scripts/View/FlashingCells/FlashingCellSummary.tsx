@@ -12,6 +12,7 @@ import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRed
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[]
@@ -20,6 +21,7 @@ export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingC
 
 export class FlashingCellSummaryComponent extends React.Component<FlashingCellSummaryProps, EditableConfigEntityState> {
     render(): any {
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__flashingcells";
         let flashingCell: IFlashingCell = this.props.FlashingCells.find(fc => fc.ColumnName == this.props.SummarisedColumn.ColumnId);
 
         let showFlashingButton = (!flashingCell || !flashingCell.IsLive) ?
@@ -31,8 +33,8 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
         
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-            <AdaptableObjectRow ColItems={colItems} />
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <AdaptableObjectRow cssClassName={cssWizardClassName} colItems ={colItems} />
         </div>
     }
 

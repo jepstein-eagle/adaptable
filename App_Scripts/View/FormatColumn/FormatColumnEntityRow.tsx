@@ -13,18 +13,19 @@ export class FormatColumnEntityRow extends React.Component<SharedEntityExpressio
     render(): any {
         let formatColumn = this.props.AdaptableBlotterObject as IFormatColumn;
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = this.props.Columns.find(c => c.ColumnId == formatColumn.ColumnId).FriendlyName
         colItems[1].Content = <StyleVisualItem Style={formatColumn.Style} />
         colItems[2].Content = <EntityListActionButtons
-            editClick={() => this.props.onEdit(this.props.Index, formatColumn)}
+        cssClassName={this.props.cssClassName}
+         editClick={() => this.props.onEdit(this.props.Index, formatColumn)}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
             ConfigEntity={formatColumn}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyNames.FormatColumnStrategyName} />
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 }

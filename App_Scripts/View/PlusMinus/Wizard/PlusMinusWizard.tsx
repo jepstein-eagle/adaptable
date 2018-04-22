@@ -20,15 +20,16 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
 
     render() {
         let stepNames: string[] = ["Select Column", "Settings", "Build Query"]
-        return <div className="adaptable_blotter_style_wizard_plusminus">
+        return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.PlusMinusStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
+                cssClassName={this.props.cssClassName}
                 Steps={
-                    [<PlusMinusColumnWizard StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
-                    <PlusMinusSettingsWizard StepName={stepNames[1]} />,
-                    <PlusMinusExpressionWizard StepName={stepNames[2]} Columns={this.props.Columns}
+                    [<PlusMinusColumnWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
+                    <PlusMinusSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} />,
+                    <PlusMinusExpressionWizard  cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         SelectedColumnId={this.props.SelectedColumnId}

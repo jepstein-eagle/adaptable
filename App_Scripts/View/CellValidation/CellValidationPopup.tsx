@@ -25,6 +25,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -51,6 +52,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         }
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + "__cellValidation";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
 
         let infoBody: any[] = ["Cell Validation Rules determine whether an edit is valid.", <br />, <br />,
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
@@ -67,7 +70,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
             return <CellValidationEntityRow
                 key={index}
-                ColItems={colItems}
+                cssClassName={cssClassName}
+                colItems={colItems}
                 AdaptableBlotterObject={x}
                 Column={column}
                 Columns={this.props.Columns}
@@ -82,18 +86,18 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
 
         })
-        let newButton = <ButtonNew onClick={() => this.createCellValidation()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_cellvalidation">
-            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup"
+            return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary"  cssClassName={cssClassName} 
                 button={newButton}
                 glyphicon={StrategyGlyphs.CellValidationGlyph}
                 infoBody={infoBody}>
                 {CellValidationItems.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={CellValidationItems} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={CellValidationItems} />
                 }
 
                 {CellValidationItems.length == 0 &&
@@ -105,7 +109,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <CellValidationWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}

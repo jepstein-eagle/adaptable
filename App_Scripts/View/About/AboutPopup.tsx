@@ -13,6 +13,8 @@ import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
 import { IColItem } from "../UIInterfaces";
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Core/Helpers/Helper";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
+
 
 interface AboutPopupComponentProps extends StrategyViewPopupProps<AboutPopupComponent> {
 }
@@ -46,6 +48,7 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
 
     render() {
 
+        let cssClassName: string = this.props.cssClassName + "__about";
         let colItems: IColItem[] = [
             { Content: "Property", Size: 6 },
             { Content: "Value", Size: 6 },
@@ -57,18 +60,20 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
             let rowColItems: IColItem[] = Helper.cloneObject(colItems)
             rowColItems[0].Content = x.Key
             rowColItems[1].Content = x.Value
-            return <AdaptableObjectRow key={index} ColItems={rowColItems} />
+            return <AdaptableObjectRow cssClassName={cssClassName} key={index} colItems={rowColItems} />
         })
 
-        return <div className="adaptable_blotter_style_popup_about">
-            <PanelWithImage header={StrategyNames.AboutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.AboutGlyph}>
-                <PanelWithRow ColItems={colItems} bsStyle="info" />
-                {aboutItems}
+        return <div className={cssClassName}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.AboutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.AboutGlyph}>
+                <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
+                    <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+                    <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>
+                        {aboutItems}
+                    </div>
+                </div>
             </PanelWithImage>
         </div>
     }
-
-
 
 }
 

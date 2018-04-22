@@ -2,6 +2,7 @@ import * as React from "react";
 import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { PopoverType } from '../Core/Enums';
+import * as StyleConstants from '../Core/Constants/StyleConstants';
 
 
 /*
@@ -16,19 +17,22 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     headerText: string
     bodyText: any[],
     popoverType: PopoverType
+     cssClassName: string
 }
 
 
 export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
     render() {
+        let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON
+
         const popoverClickRootClose = (
-            <Popover id="popover-trigger-click-root-close" title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
+            <Popover id={"ab_popover"} title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
                 {this.props.bodyText.map((textOrHTML: any, index: any) => <span key={index}>{textOrHTML}</span>)}
             </Popover>);
 
-        return <span className="adaptableblotter_info_button" >
+        return <span className={cssClassName}>
             <OverlayTrigger rootClose placement="bottom" overlay={popoverClickRootClose}>
-                <Label bsSize="large" bsStyle={this.getStyle()} className="medium_padding_style">
+                <Label bsSize="large" bsStyle={this.getStyle()} className="ab_medium_padding">
                     <Glyphicon glyph={this.getGlyphName()} />
                 </Label>
             </OverlayTrigger>

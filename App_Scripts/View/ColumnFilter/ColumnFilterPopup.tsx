@@ -33,6 +33,8 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__columnfilter";
+
         let infoBody: any[] = ["Column Filters are set using the filter dropdown in the column header menu.", <br />, <br />,
             "This popup allows you to see which columns have filters applied with an option to clear them."]
 
@@ -44,7 +46,8 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
             return <ColumnFilterEntityRow
                 key={index}
-                ColItems={colItems}
+                cssClassName={cssClassName}
+                colItems={colItems}
                 AdaptableBlotterObject={null}
                 ColumnFilter={columnFilter}
                 Columns={this.props.Columns}
@@ -57,12 +60,12 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
         })
 
-        return <div className="adaptable_blotter_style_popup_columnfilter">
-            <PanelWithImage header={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup" infoBody={infoBody}
+        return <div className={cssClassName}>
+        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
                  glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
                 {columnFilterItems.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={columnFilterItems} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={columnFilterItems} />
                 }
 
                 {columnFilterItems.length == 0 &&

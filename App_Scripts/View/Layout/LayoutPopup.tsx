@@ -24,7 +24,7 @@ import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
@@ -54,6 +54,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__layout";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__layout";
+
+
         let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
 
         let infoBody: any[] = ["Create layouts - groups of column order, visibility and sorts.", <br />, <br />,
@@ -69,7 +73,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         let LayoutRows = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT).map((x, index) => {
             return <LayoutEntityRow
                 key={index}
-                ColItems={colItems}
+                cssClassName={cssClassName}
+                colItems={colItems}
                 IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
                 AdaptableBlotterObject={x}
                 Columns={this.props.Columns}
@@ -84,17 +89,17 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             </LayoutEntityRow>
         })
 
-        let newSearchButton = <ButtonNew onClick={() => this.onNew()}
+        let newSearchButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_Layout">
-            <PanelWithButton bsStyle="primary" headerText={StrategyNames.LayoutStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyGlyphs.LayoutGlyph} className="adaptable_blotter_modal_main_popup" >
+            return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName}  bsStyle="primary" headerText={StrategyNames.LayoutStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyGlyphs.LayoutGlyph} className="ab_main_popup" >
 
                 {LayoutRows.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={LayoutRows} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={LayoutRows} />
                 }
 
                 {LayoutRows.length == 0 &&
@@ -105,7 +110,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <LayoutWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
                         ConfigEntities={this.props.Layouts}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}

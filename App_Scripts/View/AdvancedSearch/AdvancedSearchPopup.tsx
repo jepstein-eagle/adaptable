@@ -23,6 +23,8 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
+
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
@@ -51,12 +53,15 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__advancedsearch";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__advancedsearch";
+
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
-            let contentSize = (this.props.TeamSharingActivated)? 6: 7
-            let buttonSize = (this.props.TeamSharingActivated)? 3: 2
-        
+        let contentSize = (this.props.TeamSharingActivated) ? 6 : 7
+        let buttonSize = (this.props.TeamSharingActivated) ? 3 : 2
+
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
@@ -66,8 +71,9 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
         let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
             return <AdvancedSearchEntityRow
+                cssClassName={cssClassName}
                 key={index}
-                ColItems={colItems}
+                colItems={colItems}
                 IsCurrentAdvancedSearch={x.Name == this.props.CurrentAdvancedSearchName}
                 AdaptableBlotterObject={x}
                 Columns={this.props.Columns}
@@ -82,17 +88,17 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             </AdvancedSearchEntityRow>
         })
 
-        let newSearchButton = <ButtonNew onClick={() => this.onNew()}
+        let newSearchButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_advancedsearch">
-            <PanelWithButton  bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="adaptable_blotter_modal_main_popup" >
+        return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyNames.AdvancedSearchStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} className="ab_main_popup" >
 
                 {advancedSearchRows.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={advancedSearchRows} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={advancedSearchRows} />
                 }
 
                 {advancedSearchRows.length == 0 &&
@@ -103,6 +109,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <AdvancedSearchWizard
+                        cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
                         ConfigEntities={this.props.AdvancedSearches}
                         ModalContainer={this.props.ModalContainer}

@@ -25,6 +25,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
+    cssClassName: string
 }
 
 export interface ExpressionBuilderPageState {
@@ -36,10 +37,11 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     render() {
 
+        let cssClassName: string = this.props.cssClassName + "__querybuilder"
         let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
 
-        let newButton = <ButtonCondition onClick={() => this.onSelectedColumnChanged()}
+        let newButton = <ButtonCondition cssClassName={cssClassName} onClick={() => this.onSelectedColumnChanged()}
             overrideDisableButton={queryBuildStatus == QueryBuildStatus.SelectFirstColumn || queryBuildStatus == QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == QueryBuildStatus.SingleConditionsAdded}
             overrideTooltip="Add Condition"
             style={{ width: "230px" }}
@@ -51,13 +53,14 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         //  QueryBuildStatus.ColumnSelected
 
 
-        return <div className="adaptable_blotter_style_wizard_query">
-            <PanelWithButton headerText="Query Builder"
+        return <div className={cssClassName}>
+            <PanelWithButton  cssClassName={cssClassName} headerText="Query Builder"
                 button={newButton}
                 bsStyle="primary" style={{ height: '500px' }}>
                 <Row>
                     <Col xs={6}>
                         <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
+                          cssClassName={cssClassName} 
                             QueryBuildStatus={queryBuildStatus}
                             UserFilters={this.props.UserFilters}
                             SystemFilters={this.props.SystemFilters}
@@ -71,7 +74,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                     </Col>
                     <Col xs={6}>
                         <ExpressionBuilderPreview Expression={this.state.Expression}
-                            UserFilters={this.props.UserFilters}
+                          cssClassName={cssClassName} 
+                          UserFilters={this.props.UserFilters}
                             onSelectedColumnChange={(columnName) => this.onSelectedColumnChange(columnName)}
                             SelectedColumnId={this.state.SelectedColumnId}
                             ColumnsList={this.props.Columns}

@@ -31,6 +31,8 @@ interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPo
 class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProps, {}> {
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__flashingcells";
+
         let infoBody: any[] = ["Make numeric cells flash briefly as their value changes", <br />, <br />, "Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns", <br />, <br />, "Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
 
         let flashingCellDurations = ObjectFactory.GetFlashingCellDurations();
@@ -59,12 +61,13 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let allFlashingCells = allPotentialFlashingCells.map((flashingcell: IFlashingCell, index) => {
             return <FlashingCellEntityRow
+                cssClassName={cssClassName}
                 AdaptableBlotterObject={flashingcell}
                 key={flashingcell.ColumnName}
                 Index={index}
                 Columns={this.props.Columns}
                 UserFilters={null}
-                ColItems={colItems}
+                colItems={colItems}
                 FlashingCellDurations={flashingCellDurations}
                 ColorPalette={this.props.ColorPalette}
                 onSelect={(flashingcell) => this.props.onSelectColumn(flashingcell)}
@@ -81,17 +84,17 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
-                <Col xs={12} className="medium_margin_style">
+                <Col xs={12} className="ab_medium_margin">
                     <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingCells.filter(x => x.IsPredefined == false))}
                         checked={allPotentialFlashingCells.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
         </AdaptableBlotterForm>;
 
-        return <div className="adaptable_blotter_style_popup_flashingcells">
-            <PanelWithImage header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
-                {setAllOption }
-                <AdaptableObjectCollection ColItems={colItems} items={allFlashingCells} reducedPanel={true} />
+        return <div className={cssClassName}>
+            <PanelWithImage  cssClassName={cssClassName} header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="ab_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
+                {setAllOption}
+                <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={allFlashingCells} reducedPanel={true} />
 
             </PanelWithImage>
         </div>

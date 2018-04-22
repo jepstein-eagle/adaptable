@@ -7,6 +7,8 @@ import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
 import { IContextMenu } from '../../../Core/Interface/IMenu';
 import * as MenuRedux from '../../../Redux/ActionsReducers/MenuRedux'
 import { ContextMenuCustomRenderer } from './ContextMenuCustomRenderer'
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+
 
 interface ContextMenuComponentProps extends React.ClassAttributes<ContextMenuComponent> {
     ContextMenu: IContextMenu,
@@ -50,7 +52,7 @@ class ContextMenuComponent extends React.Component<ContextMenuComponentProps, {}
             'ContextMenuCustomRenderer': ContextMenuCustomRenderer
         }
 
-        return this.props.ContextMenu.IsVisible && <div className="adaptable_blotter_style_contextmenu" >
+        return this.props.ContextMenu.IsVisible && <div className={StyleConstants.CONTEXT_MENU} >
             <ReactDataMenu.Menu.default items={allItems} renderers={renderers} classPrefix={'adaptable_blotter_'} position={position} onClose={() => this.onMenuClose()} />
         </div>
     }

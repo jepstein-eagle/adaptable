@@ -13,13 +13,14 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
     render(): any {
         let userFilter: IUserFilter = this.props.AdaptableBlotterObject as IUserFilter;
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
        colItems[0].Content= userFilter.Name
        colItems[1].Content= this.props.Columns.find(c=> c.ColumnId== userFilter.ColumnId).FriendlyName
        colItems[2].Content= ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns, this.props.UserFilters)
        colItems[3].Content= <EntityListActionButtons
-            editClick={() => this.props.onEdit(this.props.Index, userFilter)}
+       cssClassName={this.props.cssClassName}
+         editClick={() => this.props.onEdit(this.props.Index, userFilter)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             ConfigEntity={userFilter}
@@ -27,6 +28,6 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyNames.UserFilterStrategyName} />
       
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 }

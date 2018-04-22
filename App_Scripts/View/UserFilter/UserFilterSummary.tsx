@@ -18,6 +18,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
@@ -33,12 +34,14 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     render(): any {
-
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__userfilter";
+       
         let strategySummaries: any = []
 
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.UserFilterStrategyName}
+            cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.UserFilterStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.UserFilterStrategyName)}
             onNew={() => this.onNew()}
@@ -52,6 +55,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                 let detailRow =
                     <StrategyDetail
                         key={"UF" + index}
+                        cssClassName={this.props.cssClassName}
                         Item1={item.Name}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
@@ -65,12 +69,13 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <UserFilterWizard
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                cssClassName={cssWizardClassName}
+                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}

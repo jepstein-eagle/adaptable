@@ -28,9 +28,10 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
 
     render(): any {
         let infoBody: any[] = ["Create a layout.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
-
-        return <div className="adaptable_blotter_style_wizard_Layout_values">
-            <PanelWithInfo header={"Choose columns for the Layout"} bsStyle="primary" infoBody={infoBody}>
+        let cssClassName: string = this.props.cssClassName + "__column"
+       
+        return <div className={cssClassName}>
+        <PanelWithInfo cssClassName={cssClassName} header={"Choose columns for the Layout"} bsStyle="primary" infoBody={infoBody}>
             <DualListBoxEditor AvailableValues={this.props.Columns.map(x=>x.FriendlyName)}
                    SelectedValues={this.state.SelectedColumns}
                     HeaderAvailable="Available Columns"

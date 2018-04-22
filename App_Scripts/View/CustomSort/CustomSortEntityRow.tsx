@@ -14,12 +14,13 @@ export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSor
 export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProps, {}> {
     render(): any {
         let customSort: ICustomSort = this.props.AdaptableBlotterObject as ICustomSort;
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = this.props.ColumnLabel
         colItems[1].Content = customSort.Values.join(', ')
         colItems[2].Content = <EntityListActionButtons
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
+        cssClassName={this.props.cssClassName}
+         ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, customSort)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
@@ -28,7 +29,7 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
             EntityName="Custom Sort">
         </EntityListActionButtons>
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 
 }

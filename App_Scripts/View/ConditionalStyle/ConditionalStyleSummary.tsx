@@ -20,6 +20,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -38,12 +39,14 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
     }
     render(): any {
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
         let strategySummaries: any = []
 
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.ConditionalStyleStrategyName}
-            StrategyId={StrategyIds.ConditionalStyleStrategyId}
+            cssClassName={this.props.cssClassName}
+                        StrategyId={StrategyIds.ConditionalStyleStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.ConditionalStyleStrategyName}
@@ -55,7 +58,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column) {
                 let detailRow =
                     <StrategyDetail
-                        key={"CS" + index}
+                    cssClassName={this.props.cssClassName}
+                    key={"CS" + index}
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
@@ -70,12 +74,13 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         })
 
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <ConditionalStyleWizard
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                cssClassName={cssWizardClassName}
+                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}

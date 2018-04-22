@@ -4,6 +4,9 @@ import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 import { WizardLegend } from './WizardLegend'
 import { UIHelper } from "../UIHelper";
 import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
+
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
     Steps: JSX.Element[]
@@ -14,6 +17,7 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
     StepNames?: string[] // feels wrong, wrong, wrong
     FriendlyName?: string
     ModalContainer: HTMLElement
+    cssClassName: string
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -62,24 +66,27 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
 
     render() {
+        let cssClassName: string = StyleConstants.AB_STYLE
         return (
-            <Modal show={true} onHide={this.props.onHide} className="adaptable_blotter_style_base"
+            <Modal show={true} onHide={this.props.onHide} className={cssClassName + StyleConstants.BASE}
                 container={this.props.ModalContainer} >
-                <Modal.Header closeButton className="adaptable_blotter_style_wizard_base">
+                <div className={cssClassName +StyleConstants.WIZARD_BASE}>
+                <Modal.Header closeButton className={cssClassName +StyleConstants.WIZARD_HEADER}>
                     <Modal.Title>
                         <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="adaptable_blotter_style_wizard_base" >
-                    <div className="adaptable_blotter_modal_main_wizard">
+                <Modal.Body className={cssClassName +StyleConstants.WIZARD_BODY}>
+                    <div className="ab_main_wizard">
                         {this.state.ActiveState}
                     </div>
                 </Modal.Body>
-                <Modal.Footer className="adaptable_blotter_style_wizard_base">
-                    <Button className="adaptable_blotter_left_modal_button" onClick={() => this.props.onHide()}>Cancel <Glyphicon glyph="remove" /></Button>
-                    <Button disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
+                <Modal.Footer className={cssClassName +StyleConstants.WIZARD_FOOTER}>
+                    <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{float: "left", marginRight: "5px"}} onClick={() => this.props.onHide()} />
+                    <Button bsStyle="default" disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
                     <Button bsStyle="primary" disabled={!this.ActiveStep.canNext()} onClick={() => this.handleClickNext()}>{this.isLastStep() ? "Finish" : "Next"} <Glyphicon glyph={this.isLastStep() ? "ok" : "chevron-right"} /></Button>
                 </Modal.Footer>
+                </div>
             </Modal>
         );
     }

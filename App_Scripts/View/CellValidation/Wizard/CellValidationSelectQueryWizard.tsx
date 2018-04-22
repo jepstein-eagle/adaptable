@@ -28,9 +28,10 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
     }
 
     render(): any {
-
-        return <div className="adaptable_blotter_style_wizard_cellvalidation_selectquery">
-            <Panel header="Cell Validation Query" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__selectquery"
+       
+        return <div className={cssClassName}>
+        <Panel header="Cell Validation Query" bsStyle="primary">
 
                 <AdaptableBlotterForm inline >
                     <Col xs={12}>
@@ -38,7 +39,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
                     </Col>
                     <Col xs={12}>
                         <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Query</Checkbox>
-                        {' '}<AdaptablePopover headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 

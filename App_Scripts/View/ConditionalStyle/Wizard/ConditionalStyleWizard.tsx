@@ -19,17 +19,18 @@ export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpr
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Scopre", "Create Style", "Build Query"]
-        return <div className="adaptable_blotter_style_wizard_conditionalstyle">
+        let stepNames: string[] = ["Select Scope", "Create Style", "Build Query"]
+        return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.ConditionalStyleStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
+                cssClassName={this.props.cssClassName}
                 Steps={[
-                    <ConditionalStyleScopeWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <ConditionalStyleStyleWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
+                    <ConditionalStyleScopeWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <ConditionalStyleStyleWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
                     <ConditionalStyleExpressionWizard
-                        StepName={stepNames[2]}
+                         cssClassName={this.props.cssClassName} StepName={stepNames[2]}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}

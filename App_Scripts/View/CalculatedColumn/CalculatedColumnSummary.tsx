@@ -6,13 +6,13 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
-import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
@@ -30,7 +30,8 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     }
 
     render(): any {
-        let detailRow;
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__calculatedcolumn";
+         let detailRow;
 
         let sharing = this.props.TeamSharingActivated;
 
@@ -38,6 +39,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 detailRow =
                     <StrategyDetail
+                        cssClassName={this.props.cssClassName}
                         key={"UF" + index}
                         Item1={StrategyNames.CalculatedColumnStrategyName}
                         Item2={item.GetValueFunc}
@@ -52,11 +54,12 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
             {detailRow}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CalculatedColumnWizard
+                   cssClassName={cssWizardClassName}
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                     ConfigEntities={this.props.CalculatedColumns}
                     Columns={this.props.Columns}

@@ -27,8 +27,10 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
         }
     }
     render() {
-        return <div className="adaptable_blotter_style_wizard_export_reportcolumns">
-                    {this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns &&
+        let cssClassName: string = this.props.cssClassName + "__choosecolumns"
+       
+        return <div className={cssClassName}>
+        {this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns &&
                 <Panel>
                     <DualListBoxEditor AvailableValues={this.state.AllColumnValues}
                         SelectedValues={this.state.SelectedColumnValues}

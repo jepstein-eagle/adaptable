@@ -181,7 +181,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private getOperand1FormControl(): any {
         if (this.state.UiSelectedRange.Operand1Type == RangeOperandType.Column) {
-            return <ColumnSelector SelectedColumnIds={[this.state.UiSelectedRange.Operand1]} bsSize={"small"} className={"filterFormColumnSelector"}
+            return <ColumnSelector SelectedColumnIds={[this.state.UiSelectedRange.Operand1]} bsSize={"small"} className={"ab_filterFormColumnSelector"}
                 ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId)}
                 onColumnChange={columns => this.onColumnOperand1SelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single} />
@@ -193,7 +193,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private getOperand2FormControl(): any {
         if (this.state.UiSelectedRange.Operand2Type == RangeOperandType.Column) {
-            return <ColumnSelector SelectedColumnIds={[this.state.UiSelectedRange.Operand2]} bsSize={"small"} className={"filterFormColumnSelector"}
+            return <ColumnSelector SelectedColumnIds={[this.state.UiSelectedRange.Operand2]} bsSize={"small"} className={"ab_filterFormColumnSelector"}
                 ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId)}
                 onColumnChange={columns => this.onColumnOperand2SelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single} />

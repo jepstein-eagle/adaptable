@@ -40,26 +40,27 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
        
         let helpText : string = "Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
-
-        return <div className="adaptable_blotter_style_wizard_cellvalidation_rules">
-            <Panel header={validationRuleHeader} bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__rules"
+       
+        return <div className={cssClassName}>
+        <Panel header={validationRuleHeader} bsStyle="primary">
 
                 <AdaptableBlotterForm >
                     <Col xs={12}>
                         <HelpBlock>{helpText}</HelpBlock>
                     </Col>
-                    <Col xs={12} className="large_margin_style">
+                    <Col xs={12} className="ab_large_margin">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
-                        {' '}<AdaptablePopover headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
                     </Col>
-                    <Col xs={12} className="large_margin_style">
+                    <Col xs={12} className="ab_large_margin">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow edits where the new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 
                 { /* if not None operator then show operator dropdown */}
-                <FormGroup className="large_margin_style">
+                <FormGroup className="ab_large_margin">
                     <Col xs={1}></Col>
                     <Col xs={6}>
                         <FormControl disabled={this.checkOperator(LeafExpressionOperator.None)} componentClass="select" placeholder="select" value={this.state.Operator.toString()} onChange={(x) => this.onOperatorChanged(x)} >

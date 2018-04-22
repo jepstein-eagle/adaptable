@@ -5,6 +5,7 @@ import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptable
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
 import { IUIConfirmation } from '../../../Core/Interface/IMessage';
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
@@ -28,7 +29,8 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
             style={this.props.style}
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
-        />;
+            cssClassName={this.props.cssClassName + StyleConstants.DELETE_BUTTON}
+            />;
     }
 
     onClick() {

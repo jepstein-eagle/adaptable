@@ -3,6 +3,8 @@ import { PanelProps, Panel, Row, Col, Button, Glyphicon } from 'react-bootstrap'
 import { AdaptablePopover } from './../../AdaptablePopover';
 import { PopoverType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+
 
 export interface PanelWithButtonProps extends PanelProps {
     //use either button content + buttonClick OR button
@@ -14,6 +16,7 @@ export interface PanelWithButtonProps extends PanelProps {
     buttonDisabled?: boolean
     buttonStyle?: string
     infoBody?: any[]
+    cssClassName: string
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -21,13 +24,14 @@ export interface PanelWithButtonProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
     render() {
-        let { buttonContent } = this.props
-        let className = "panel-with-button"
+        let cssClassName = this.props.cssClassName +  StyleConstants.ITEMS_PANEL
+         let { buttonContent } = this.props
+        let className = "ab_panel-with-button"
         if (this.props.className) {
             className += " " + this.props.className
         }
         if (buttonContent || this.props.button) {
-            className += " " + "panel-with-button-reduce-header-padding"
+            className += " " + "ab_panel-with-button-reduce-header-padding"
         }
         let buttonStyle: string = (this.props.buttonStyle) ? this.props.buttonStyle : "default"
 
@@ -37,15 +41,15 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
 
                 <Col xs={9}>
                     {this.props.glyphicon != null &&
-                        <Glyphicon glyph={this.props.glyphicon} className="large_right_margin_style" />
+                        <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
                     }
                     {this.props.headerText}
                     {' '}
                     {this.props.infoBody != null &&
-                      <span> 
-                         <label>{' '}</label>
-                        <span>  {' '} <AdaptablePopover headerText="" bodyText={this.props.infoBody} popoverType={PopoverType.Info} /></span>
-                 </span>
+                        <span>
+                            <label>{' '}</label>
+                            <span>  {' '} <AdaptablePopover cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} popoverType={PopoverType.Info} /></span>
+                        </span>
                     }
 
                 </Col>
@@ -59,9 +63,11 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 </Col>
             </Row>
         </AdaptableBlotterForm>;
-        return <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle} >
-            {this.props.children}
-        </Panel>;
+        return <div className={cssClassName}>
+            <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle} >
+                {this.props.children}
+            </Panel>
+        </div>;
     }
 }
 

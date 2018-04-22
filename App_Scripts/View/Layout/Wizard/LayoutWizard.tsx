@@ -21,16 +21,17 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
     render() {
         let stepNames: string[] = ["Choose Layoyut Type", "Select Columns", "Select Sort", "Choose Name"]
         let layouts: ILayout[] = this.props.ConfigEntities as ILayout[]
-        return <div className="adaptable_blotter_style_wizard_Layout">
+        return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.LayoutStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
+                cssClassName={this.props.cssClassName}
                 Steps={[
-                    <LayoutSelectionWizard StepName={stepNames[0]} Layouts={layouts} Columns={this.props.Columns} GridSorts={this.props.GridSorts} />,
-                    <LayoutColumnWizard StepName={stepNames[1]} Columns={this.props.Columns} />,
-                    <LayoutGridSortWizard StepName={stepNames[2]} Columns={this.props.Columns}  />,
-                    <LayoutSettingsWizard StepName={stepNames[3]} Layouts={layouts} />]}
+                    <LayoutSelectionWizard   cssClassName={this.props.cssClassName} StepName={stepNames[0]} Layouts={layouts} Columns={this.props.Columns} GridSorts={this.props.GridSorts} />,
+                    <LayoutColumnWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} />,
+                    <LayoutGridSortWizard  cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}  />,
+                    <LayoutSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[3]} Layouts={layouts} />]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}

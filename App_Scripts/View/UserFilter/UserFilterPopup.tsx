@@ -23,6 +23,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
@@ -47,7 +48,11 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         }
     }
     render() {
-        let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br />, <br />,
+        let cssClassName: string = this.props.cssClassName + "__userfilter";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__userfilter";
+
+
+let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br />, <br />,
             "Once created, User Filters are available in the column's filter dropdown as if a single colum value.", <br />, <br />,
             "Additionally they are available when creating other Queries (e.g. for Advanced Search)", <br />, <br />,
             "A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required."]
@@ -76,8 +81,9 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
         let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
             return <UserFilterEntityRow
-                AdaptableBlotterObject={userFilter}
-                ColItems={colItems}
+            cssClassName={cssClassName}   
+            AdaptableBlotterObject={userFilter}
+                colItems={colItems}
                 key={"CS" + index}
                 Index={index}
                 onShare={() => this.props.onShare(userFilter)}
@@ -88,17 +94,17 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                 onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)} />
         });
 
-        let newButton = <ButtonNew onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
             overrideTooltip="Create User Filter"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_userfilter">
-            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup" infoBody={infoBody}
+            return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary"  cssClassName={cssClassName}  infoBody={infoBody}
                 button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={UserFilterItems} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={UserFilterItems} />
                 }
 
                 {UserFilterItems.length == 0 &&
@@ -108,7 +114,8 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <UserFilterWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                         Columns={this.props.Columns}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}

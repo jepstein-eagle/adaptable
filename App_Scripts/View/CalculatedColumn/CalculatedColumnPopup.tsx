@@ -24,6 +24,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -54,6 +55,9 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__calculatedcolumn";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__calculatedcolumn";
+
         let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
         let colItems: IColItem[] = [
@@ -67,8 +71,9 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
 
             return <CalculatedColumnEntityRow
+                cssClassName={cssClassName}
                 Index={index}
-                ColItems={colItems}
+                colItems={colItems}
                 onShare={() => this.props.onShare(calculatedColumn)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 AdaptableBlotterObject={calculatedColumn} key={calculatedColumn.ColumnId}
@@ -78,16 +83,17 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
         });
 
         let newButton = <ButtonNew onClick={() => { this.onNew() }}
+            cssClassName={cssClassName}
             overrideTooltip="Create Calculated Column"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_calculatedcolumn">
-            <PanelWithButton headerText={StrategyNames.CalculatedColumnStrategyName} className="adaptable_blotter_modal_main_popup" infoBody={infoBody}
+        return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName}   headerText={StrategyNames.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={calculatedColumns} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={calculatedColumns} />
                 }
 
                 {this.props.CalculatedColumns.length == 0 &&
@@ -98,7 +104,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                 {this.state.EditedAdaptableBlotterObject &&
 
                     <CalculatedColumnWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                         ConfigEntities={this.props.CalculatedColumns}
                         Columns={this.props.Columns}
                         ModalContainer={this.props.ModalContainer}

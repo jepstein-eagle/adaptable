@@ -18,6 +18,7 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
@@ -32,6 +33,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         this.state = UIHelper.EmptyConfigState();
     }
     render(): any {
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__customsort";
         let customSort: ICustomSort = this.props.CustomSorts.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let noCustomSort: boolean = customSort == null;
 
@@ -40,6 +42,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         if (noCustomSort) {
             // title row
             customSortRow = <StrategyHeader
+                cssClassName={this.props.cssClassName}
                 key={StrategyNames.CustomSortStrategyName}
                 StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort Set"}
@@ -48,8 +51,9 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             />
         } else {
             customSortRow = <StrategyDetail
+                cssClassName={this.props.cssClassName}
                 key={StrategyNames.CustomSortStrategyName}
-                Item1={<StrategyProfile StrategyId={StrategyIds.CustomSortStrategyId} />}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.CustomSortStrategyId} />}
                 Item2={customSort.Values.join(', ')}
                 ConfigEnity={customSort}
                 EntityName={StrategyNames.CustomSortStrategyName}
@@ -61,11 +65,12 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             />
         }
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
             {customSortRow}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CustomSortWizard
+                    cssClassName={cssWizardClassName}
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
                     ConfigEntities={this.props.CustomSorts}
                     ModalContainer={this.props.ModalContainer}

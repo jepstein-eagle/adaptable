@@ -29,6 +29,8 @@ export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttr
     SystemFilters: string[]
     SelectedColumnId: string
     QueryBuildStatus: QueryBuildStatus
+    cssClassName: string
+
 }
 
 export interface ExpressionBuilderConditionSelectorState {
@@ -110,6 +112,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__conditionselector"
         let column = (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnId)) ? null : this.props.ColumnsList.find(x => x.ColumnId == this.props.SelectedColumnId)
         let selectedColumnDataType: DataType = column ? column.DataType : null
         let selectedColumn: IColumn = column;
@@ -139,7 +142,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
-        return <PanelWithButton headerText={panelHeader} bsStyle="info" style={{ height: '427px' }}>
+        return <PanelWithButton cssClassName={cssClassName} headerText={panelHeader} bsStyle="info" style={{ height: '427px' }}>
 
 
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ?
@@ -178,6 +181,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                     <Tab.Pane eventKey="columnValues">
                                         {selectedColumn.DataType != DataType.Boolean &&
                                             <ExpressionBuilderColumnValues
+                                                cssClassName={cssClassName}
                                                 ColumnValues={this.state.ColumnValues}
                                                 SelectedValues={this.state.SelectedColumnValues}
                                                 onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
@@ -187,6 +191,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="filters">
                                         <ExpressionBuilderUserFilter
+                                            cssClassName={cssClassName}
                                             AvailableFilterNames={availableFilterNames}
                                             SelectedFilterNames={this.state.SelectedFilterExpressions}
                                             onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
@@ -194,6 +199,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="ranges">
                                         <ExpressionBuilderRanges
+                                            cssClassName={cssClassName}
                                             SelectedColumn={selectedColumn}
                                             Ranges={this.state.SelectedColumnRanges}
                                             Columns={this.props.ColumnsList}

@@ -24,9 +24,10 @@ export class LayoutSettingsWizard extends React.Component<LayoutSettingsWizardPr
     }
     render(): any {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-
-        return <div className="adaptable_blotter_style_wizard_layout_settings">
-            <Panel header="Layout Settings" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__settings"
+       
+        return <div className={cssClassName}>
+             <Panel header="Layout Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="layouthName">
                         <Col xs={3} componentClass={ControlLabel}>Layout Name: </Col>

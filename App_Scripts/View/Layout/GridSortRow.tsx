@@ -30,7 +30,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
   
     render(): any {
        
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         let sortOrders = EnumExtensions.getNames(SortOrder).map((enumName) => {
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
@@ -51,7 +51,8 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         
      
         let deleteButton =   <ButtonDelete
-        style={{marginLeft:"1px", marginTop:"2px", marginBottom:"2px",marginRight:"1px"}}
+        cssClassName={this.props.cssClassName}
+         style={{marginLeft:"1px", marginTop:"2px", marginBottom:"2px",marginRight:"1px"}}
         overrideDisableButton={false}
             ConfigEntity={null}
             overrideTooltip={"hello"}
@@ -65,7 +66,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
           
              colItems[2].Content = deleteButton;
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 
   private  onColumnSelectedChanged(columns: IColumn[]): any {

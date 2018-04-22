@@ -16,14 +16,16 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
 
     render() {
         let stepNames: string[] = ["Create Column", "Write Expression"]
-        return <div className="adaptable_blotter_style_wizard_calculatedcolumn">
-            <AdaptableWizard
+        
+        return <div className={this.props.cssClassName}>
+        <AdaptableWizard
                 FriendlyName={StrategyNames.CalculatedColumnStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
+                cssClassName={this.props.cssClassName}
                 Steps={[
-                    <CalculatedColumnSettingsWizard StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <CalculatedColumnExpressionWizard StepName={stepNames[1]}
+                    <CalculatedColumnSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <CalculatedColumnExpressionWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]}
                         GetErrorMessage={this.props.GetErrorMessage}
                         IsExpressionValid={this.props.IsExpressionValid} />,
                 ]}

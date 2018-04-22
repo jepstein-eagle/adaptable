@@ -28,7 +28,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{StringExtensions.PlaceSpaceBetweenCapitalisedWords(enumName)}</option>
         })
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = this.getColumnandRule(cellValidation)
         colItems[1].Content = this.setExpressionDescription(cellValidation)
@@ -37,7 +37,8 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
                 {CellValidationModeTypes}
             </FormControl>
         colItems[3].Content = <EntityListActionButtons
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
+        cssClassName={this.props.cssClassName}
+        ConfirmDeleteAction={this.props.onDeleteConfirm}
             showShare={this.props.TeamSharingActivated}
             editClick={() => this.props.onEdit(this.props.Index, cellValidation)}
             shareClick={() => this.props.onShare()}
@@ -46,7 +47,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             EntityName={StrategyNames.CellValidationStrategyName} />
 
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems ={colItems} />
     }
 
   

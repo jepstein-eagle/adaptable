@@ -48,6 +48,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         }
     }
     render(): any {
+        let cssClassName: string = this.props.cssClassName + "__export";
         let savedReport: IReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
         let sortedReports = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Reports, "Name")
@@ -82,10 +83,10 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         </OverlayTrigger>
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <Typeahead
                     bsSize={"small"}
-                    className={"adaptable_blotter_typeahead_inline"} ref="typeahead" emptyLabel={"No Reports found with that search"}
+                    className={"ab_typeahead_inline"} ref="typeahead" emptyLabel={"No Reports found with that search"}
                     placeholder={"Select a Report"}
                     labelKey={"Name"}
                     filterBy={["Name"]}
@@ -108,18 +109,20 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
 
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditReport()}
+                    cssClassName={cssClassName}
                     size={"small"}
                     overrideTooltip="Edit Report"
                     overrideDisableButton={savedReport == null || savedReport.IsPredefined}
                     ConfigEntity={savedReport}
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonNew onClick={() => this.props.onNewReport()}
+                <ButtonNew cssClassName={cssClassName}onClick={() => this.props.onNewReport()}
                     size={"small"}
                     overrideTooltip="Create New Report"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
+                   cssClassName={cssClassName}
                     size={"small"}
                     overrideTooltip="Delete Report"
                     overrideDisableButton={savedReport == null || savedReport.IsPredefined}
@@ -131,12 +134,10 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </div>
         </span>
 
-        return <div className="adaptable_blotter_style_dashboard_export">
-            <PanelDashboard headerText={StrategyNames.ExportStrategyName} glyphicon={StrategyGlyphs.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.ExportStrategyName} glyphicon={StrategyGlyphs.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
                 {content}
             </PanelDashboard>
-        </div>
-    }
+           }
 
     onSelectedReportChanged(selected: IReport[]) {
         this.props.onSelectReport(selected.length > 0 ? selected[0].Name : "");

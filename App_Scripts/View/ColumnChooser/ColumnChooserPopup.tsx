@@ -12,36 +12,38 @@ import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
-     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
+    onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
 }
 
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
     render() {
-        let infoBody:any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.",<br/>,<br/>,
-        "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.",<br/>,<br/>,
-        "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
+        let cssClassName: string = this.props.cssClassName + "__columnchooser";
 
-        return  <div className="adaptable_blotter_style_popup_columnchooser">
-        <PanelWithImage header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
-            <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x=>x.FriendlyName)}
-                SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
-                HeaderAvailable="Hidden Columns"
-                HeaderSelected="Visible Columns"
-                onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>
-        </PanelWithImage>
+        let infoBody: any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.", <br />, <br />,
+            "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.", <br />, <br />,
+            "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
+
+            return <div className={cssClassName}>
+            <PanelWithImage  cssClassName={cssClassName} header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
+                <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x => x.FriendlyName)}
+                    SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
+                    HeaderAvailable="Hidden Columns"
+                    HeaderSelected="Visible Columns"
+                    onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>
+            </PanelWithImage>
         </div>
     }
 
     private ColumnListChange(columnList: Array<string>) {
         this.props.onNewColumnListOrder(columnList.map(friendlyName => this.props.Columns.find(x => x.FriendlyName == friendlyName)))
-      //  this.setState(this.state)
+        //  this.setState(this.state)
     }
 }
 
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-     };
+    };
 }
 
 

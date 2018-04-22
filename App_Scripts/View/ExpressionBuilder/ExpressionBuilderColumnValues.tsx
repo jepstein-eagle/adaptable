@@ -9,12 +9,14 @@ export interface ExpressionBuilderColumnValuesProps extends React.ClassAttribute
     SelectedValues: Array<any>
     ColumnValues: Array<any>
     onColumnValuesChange: (SelectedValues: Array<any>) => void
+    cssClassName: string
+
 }
 
 export class ExpressionBuilderColumnValues extends React.Component<ExpressionBuilderColumnValuesProps, {}> {
 
     render() {
-        return <Panel className="no-padding-anywhere-panel" style={divStyle}>
+        return <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
             <SingleListBox  Values={this.props.ColumnValues}
                 UiSelectedValues={this.props.SelectedValues}
                 DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}

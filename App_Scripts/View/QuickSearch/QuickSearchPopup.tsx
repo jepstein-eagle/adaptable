@@ -98,6 +98,8 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__quicksearch";
+
         let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.", <br />, <br />, "Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).", <br />, <br />, "For a more powerful, multi-column, saveable search with a wide range of options, use ", <i>Advanced Search</i>, "."]
 
         let stringOperators: LeafExpressionOperator[] = [LeafExpressionOperator.Contains, LeafExpressionOperator.StartsWith];
@@ -111,8 +113,8 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
             return <option key={enumName} value={enumName}>{this.getTextForQuickSearchDisplayType(enumName as QuickSearchDisplayType)}</option>
         })
 
-        return <div className="adaptable_blotter_style_popup_quicksearch">
-            <PanelWithImage header={StrategyNames.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.QuickSearchGlyph} infoBody={infoBody}>
+        return <div className={cssClassName}>
+        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.QuickSearchGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm inline>
                     <Panel header={"Search For"} bsStyle="info" >
                         <AdaptableBlotterFormControlTextClear
@@ -137,7 +139,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                                 </FormControl>
                             </Col>
                             <Col xs={1}>
-                                <AdaptablePopover headerText={"Quick Search: Operator"}
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Quick Search: Operator"}
                                     bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
 
                             </Col>
@@ -153,7 +155,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                                 </FormControl>
                             </Col>
                             <Col xs={1}>
-                                <AdaptablePopover headerText={"Quick Search: Behaviour"}
+                                <AdaptablePopover  cssClassName={cssClassName} headerText={"Quick Search: Behaviour"}
                                     bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
                                     popoverType={PopoverType.Info} />
                             </Col>
@@ -181,7 +183,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                             </Col>
                             <Col xs={5}>
                                 {this.props.QuickSearchStyle.ForeColor != null &&
-                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
+                                    <ColorPicker   ColorPalette={this.props.ColorPalette} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                                 }
                             </Col>
                         </FormGroup>

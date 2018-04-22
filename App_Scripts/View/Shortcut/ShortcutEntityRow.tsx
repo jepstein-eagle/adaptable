@@ -21,7 +21,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
     render(): any {
 
         let shortcut: IShortcut = this.props.AdaptableBlotterObject as IShortcut;
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = shortcut.DataType == DataType.Date ? "Date" : "Numeric"
 
@@ -61,7 +61,8 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 />
         colItems[4].Content =
             <EntityListActionButtons
-                showEdit={false}
+            cssClassName={this.props.cssClassName}
+               showEdit={false}
                 shareClick={() => this.props.onShare()}
                 showShare={this.props.TeamSharingActivated}
                 ConfigEntity={shortcut}
@@ -69,7 +70,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 EntityName="Shortcut">
             </EntityListActionButtons>
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
 
     }
 

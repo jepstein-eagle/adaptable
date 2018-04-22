@@ -37,6 +37,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         }
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + "__advancedsearch";
+       
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Name == this.props.CurrentAdvancedSearchName);
 
         let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
@@ -45,10 +47,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         let sortedAdvancedSearches = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <Typeahead
                     bsSize="small"
-                    className={"adaptable_blotter_typeahead_inline"} 
+                    className={"ab_typeahead_inline"} 
                     ref="typeahead" 
                     emptyLabel={"No Advanced Search found with that name"}
                     placeholder={"Select a Search"}
@@ -61,19 +63,21 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 />
                 {' '}
                 <ButtonEdit onClick={() => this.props.onEditAdvancedSearch()}
+                    cssClassName={cssClassName}
                     size={"small"}
                     overrideTooltip="Edit Current Advanced Search"
                     overrideDisableButton={currentSearchName == "select"}
                     ConfigEntity={savedSearch}
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonNew onClick={() => this.props.onNewAdvancedSearch()}
+                <ButtonNew cssClassName={cssClassName}onClick={() => this.props.onNewAdvancedSearch()}
                     size={"small"}
                     overrideTooltip="Create New Advanced Search"
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                    size={"small"}
+                   cssClassName={cssClassName}
+                   size={"small"}
                     overrideTooltip="Delete Advanced Search"
                     overrideDisableButton={currentSearchName == "select"}
                     ConfigEntity={savedSearch}
@@ -83,12 +87,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     ConfirmationTitle={"Delete Advanced Search"} />
             </div>
         </span>
-        return <div className="adaptable_blotter_style_dashboard_advancedsearch">
-            <PanelDashboard headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
                 {content}
             </PanelDashboard>
-        </div>
-    }
+           }
 
     onSelectedSearchChanged(selected: IAdvancedSearch[]) {
         this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Name : "");

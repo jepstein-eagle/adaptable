@@ -49,8 +49,9 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         let gridSortRows = this.state.GridSorts.map((x, index) => {
             return <GridSortRow
                 key={index}
+                cssClassName={""}
                 AdaptableBlotterObject={null}
-                ColItems={colItems}
+                colItems={colItems}
                 Columns={this.props.Columns}
                 UserFilters={null}
                 Index={index}
@@ -69,13 +70,14 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         let sortOrders = EnumExtensions.getNames(SortOrder).filter(s => s != SortOrder.Unknown).map((enumName) => {
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
         })
-
-        return <div className="adaptable_blotter_style_wizard_layout_settings">
-            <Panel header="Sort Information" bsStyle="primary"  style={{overflowY: "visible"}} >
+        let cssClassName: string = this.props.cssClassName + "__gridsort"
+       
+        return <div className={cssClassName}>
+        <Panel header="Sort Information" bsStyle="primary"  style={{overflowY: "visible"}} >
                 <div>
                     {addButton}
                     {gridSortRows.length > 0 &&
-                        <AdaptableObjectCollection ColItems={colItems} items={gridSortRows} allowOverflow={true} />
+                        <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={gridSortRows} allowOverflow={true} />
                     }
                 </div>
             </Panel>

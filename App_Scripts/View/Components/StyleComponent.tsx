@@ -7,6 +7,7 @@ import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
@@ -15,6 +16,7 @@ export interface StyleComponentProps extends React.ClassAttributes<StyleComponen
     Style: IStyle,
     UpdateStyle: (style: IStyle) => void;
     CanUseClassName: boolean
+    cssClassName: string
 }
 
 export interface StyleComponentState {
@@ -34,6 +36,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
     render() {
 
+        let cssClassName: string = this.props.cssClassName + StyleConstants.STYLE_COMPONENT
         let optionFontSizes = EnumExtensions.getNames(FontSize).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as FontSize}</option>
         })
@@ -42,7 +45,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
             return <option value={scn} key={scn}>{scn}</option>
         })
 
-        return <div className="adaptable_blotter_style_styleeditor">
+        return <div className={cssClassName}>
             <Panel header="Style" bsStyle="primary">
 
 
@@ -80,7 +83,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                                             </Col>
                                             <Col xs={6}>
                                                 {this.state.myStyle.BackColor != null &&
-                                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
+                                                    <ColorPicker  ColorPalette={this.props.ColorPalette} value={this.state.myStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
                                                 }
                                             </Col>
                                         </FormGroup>
@@ -90,7 +93,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                                             </Col>
                                             <Col xs={6}>
                                                 {this.state.myStyle.ForeColor != null &&
-                                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
+                                                    <ColorPicker   ColorPalette={this.props.ColorPalette} value={this.state.myStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                                                 }
                                             </Col>
 
@@ -125,7 +128,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                                                         <FormControl componentClass="select" placeholder="select" value={this.state.myStyle.FontSize.toString()} onChange={(x) => this.onFontSizeChange(x)} >
                                                             {optionFontSizes}
                                                         </FormControl>
-                                                        {' '}<AdaptablePopover headerText={"Conditional Style: Font Size"}
+                                                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Conditional Style: Font Size"}
                                                             bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
                                                             popoverType={PopoverType.Info} />
                                                     </AdaptableBlotterForm  >

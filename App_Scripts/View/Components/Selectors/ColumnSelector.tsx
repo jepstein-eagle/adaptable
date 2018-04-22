@@ -12,7 +12,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     SelectedColumnIds: string[]
     onColumnChange: (SelectedColumns: IColumn[]) => void
     SelectionMode: SelectionMode
-    className? : string,
+    className?: string,
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
 }
 
@@ -35,14 +35,13 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
         let placeHolder: string = (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"
 
-       // let size: any = (this.props.bsSize) ? this.props.bsSize : 'large';
-      
+        // let size: any = (this.props.bsSize) ? this.props.bsSize : 'large';
+
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
         return <Typeahead ref="typeahead" emptyLabel={"No Column found with that search"}
-        
             placeholder={placeHolder}
-          className={this.props.className}
+            className={this.props.className}
             bsSize={this.props.bsSize}
             labelKey={"FriendlyName"}
             filterBy={["FriendlyName", "ColumnId"]}

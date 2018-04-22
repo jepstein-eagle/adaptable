@@ -25,9 +25,11 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
     render() {
 
         let canUseClassName = true; // get from somewhere...
-      
-        return <div className="adaptable_blotter_style_wizard_formatcolumn_style">
-            <StyleComponent
+        let cssClassName: string = this.props.cssClassName + "__style"
+       
+        return <div className={cssClassName}>
+        <StyleComponent
+              cssClassName={cssClassName}
                 ColorPalette={this.props.ColorPalette}
                 StyleClassNames={this.props.StyleClassNames}
                 Style={this.props.Data.Style}

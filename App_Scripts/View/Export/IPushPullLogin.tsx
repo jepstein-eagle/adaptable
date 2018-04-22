@@ -9,6 +9,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
     onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;
@@ -27,7 +28,8 @@ class IPushPullLoginComponent extends React.Component<IPushPullLoginProps, IPush
         this.state = { Login: null, Password: null }
     }
     render() {
-        return <PanelWithButton headerText="iPushPull Login" bsStyle="primary" glyphicon="export">
+        let cssClassName: string = StyleConstants.PUSHPULL_LOGIN
+        return <PanelWithButton cssClassName={cssClassName} headerText="iPushPull Login" bsStyle="primary" glyphicon="export">
             <FormGroup controlId={"formEmail"} validationState={StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? "error" : null}>
                 <ControlLabel>Email address</ControlLabel>
                 <FormControl onChange={(e) => this.onLoginChange(e)} type="email" placeholder="Enter email" />
@@ -37,11 +39,11 @@ class IPushPullLoginComponent extends React.Component<IPushPullLoginProps, IPush
                 <FormControl type="password" onChange={(e) => this.onPasswordChange(e)} />
                 <HelpBlock>{this.props.ErrorMsg}</HelpBlock>
             </FormGroup>
-             <Button className="adaptable_blotter_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
-              <Button disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
-                className="adaptable_blotter_right_modal_button" bsStyle="primary"
+            <Button className="ab_right_modal_button" onClick={() => { this.props.onCancel() }}>Cancel <Glyphicon glyph="remove" /></Button>
+            <Button disabled={StringExtensions.IsNullOrEmpty(this.state.Password)}
+                className="ab_right_modal_button" bsStyle="primary"
                 onClick={() => { this.props.onLogin(this.state.Login, this.state.Password) }}><Glyphicon glyph="user" /> Login</Button>
-    
+
         </PanelWithButton>
     }
 
@@ -65,7 +67,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLogin: (login: string, password: string) => dispatch(ExportRedux.IPPLogin(login, password)),
-        onCancel: () => {dispatch(PopupRedux.PopupHide()); dispatch(ExportRedux.ReportSetErrorMsg(""))}
+        onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
     };
 }
 

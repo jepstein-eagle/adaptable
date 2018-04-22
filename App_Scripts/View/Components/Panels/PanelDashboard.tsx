@@ -1,6 +1,10 @@
 import * as React from "react";
 import { PanelProps, Panel, Glyphicon, Button, Label, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { ButtonClose } from "../Buttons/ButtonClose";
+import { ButtonConfigure } from "../Buttons/ButtonConfigure";
+import { ButtonMinimise } from "../Buttons/ButtonMinimise";
 
 export interface PanelDashboardProps extends PanelProps {
     headerText: string
@@ -13,6 +17,7 @@ export interface PanelDashboardProps extends PanelProps {
     showConfigureButton?: boolean
     showMinimiseButton?: boolean
     showGlyphIcon?: boolean
+    cssClassName: string
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -29,20 +34,18 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         onClose: null,
         onConfigure: null,
         onMinimise: null,
-        showGlyphIcon: true
+        showGlyphIcon: true,
+        cssClassName: ""
 
     };
     render() {
+        let cssClassName = this.props.cssClassName + StyleConstants.DASHBOARD_PANEL
 
         let header = <span>
             <Label bsStyle={this.props.panelStyle} style={{ verticalAlign: "middle", margin: "0px", padding: "0px" }} >
                 {this.props.showMinimiseButton &&
                     <span>
-                        <OverlayTrigger overlay={<Tooltip id="tooltipShowClose">Hide Toolbars</Tooltip>}>
-                            <Button bsSize={"xs"} bsStyle={this.props.panelStyle} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()}>
-                                <Glyphicon glyph={'chevron-up'} />
-                            </Button>
-                        </OverlayTrigger>
+                        <ButtonMinimise cssClassName={cssClassName} size={"xs"} bsStyle={"primary"} DisplayMode={"Glyph"} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()} />
                         {' '}{' '}
                     </span>
                 }
@@ -54,24 +57,18 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
             </Label>
             {' '}
             {this.props.showCloseButton &&
-                <OverlayTrigger overlay={<Tooltip id="tooltipShowInformation">Close {this.props.headerText}</Tooltip>}>
-                    <Button bsSize='xs' bsStyle={this.props.panelStyle} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onClose()}>
-                        <Glyphicon glyph={'remove'} />
-                    </Button>
-                </OverlayTrigger>
+                <ButtonClose cssClassName={cssClassName} overrideTooltip={"Close " + this.props.headerText} size='xs' bsStyle={"primary"} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onClose()} />
             }
             {this.props.showConfigureButton &&
-                <OverlayTrigger overlay={<Tooltip id="tooltipShowInformation">Configure {this.props.headerText}</Tooltip>}>
-                    <Button bsSize='xs' bsStyle={this.props.panelStyle} style={{ float: "right", marginLeft: "10px", marginRight: "0px" }} onClick={() => this.props.onConfigure()}>
-                        <Glyphicon glyph={'wrench'} />
-                    </Button>
-                </OverlayTrigger>
+                <ButtonConfigure cssClassName={cssClassName} overrideTooltip={"Configure " + this.props.headerText} size='xs' bsStyle={"primary"} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onConfigure()} />
             }
         </span>
-        return <Panel className="small-padding-panel panel-header-dashboard" header={header} bsStyle={this.props.panelStyle} style={this.props.style}>
-            <AdaptableBlotterForm inline>
-                {this.props.children}
-            </AdaptableBlotterForm>
-        </Panel>
+        return <div className={cssClassName}>
+            <Panel className="ab_small-padding-panel ab-panel-header-dashboard" header={header} bsStyle={this.props.panelStyle} style={this.props.style}>
+                <AdaptableBlotterForm inline>
+                    {this.props.children}
+                </AdaptableBlotterForm>
+            </Panel>
+        </div>
     }
 }

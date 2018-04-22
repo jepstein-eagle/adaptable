@@ -21,8 +21,10 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
         this.state = { ColumnName: this.props.Data.ColumnId, ErrorMessage: null }
     }
     render(): any {
+        let cssClassName: string = this.props.cssClassName + "__settings"
+
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-        return <div className="adaptable_blotter_style_wizard_calculatedcolumn_settings">
+        return <div className={cssClassName}>
             <Panel header="Calculated Column Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="formInlineName">
@@ -58,10 +60,10 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
     public Back(): void {
         //
     }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

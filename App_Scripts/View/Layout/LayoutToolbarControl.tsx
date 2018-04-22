@@ -38,7 +38,8 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
 
     render(): any {
-        let nonDefaultLayouts = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT);
+        let cssClassName: string = this.props.cssClassName + "__layout";
+ let nonDefaultLayouts = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT);
         let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout)
         let isLayoutModified = this.isLayoutModified(layoutEntity);
         let currentLayoutNameAsArray: string[] =[];
@@ -61,10 +62,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
       
         let content = <span>
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <Typeahead
                     bsSize="small"
-                    className={"adaptable_blotter_typeahead_inline"}
+                    className={"ab_typeahead_inline"}
                     ref="typeahead"
                     emptyLabel={"No Layout found with that name"}
                     placeholder={"Select a Layout"}
@@ -77,19 +78,19 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     newSelectionPrefix={"New Layout: "}
                 />
                 {' '}
-                <ButtonSave onClick={() => this.onSave()}
+                <ButtonSave  cssClassName={cssClassName} onClick={() => this.onSave()}
                     size={"small"}
                     overrideTooltip="Save Changes to Current Layout"
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonNew onClick={() => this.props.onNewLayout()}
+                <ButtonNew cssClassName={cssClassName}onClick={() => this.props.onNewLayout()}
                     size={"small"}
                     overrideTooltip="Create a new Layout"
                     DisplayMode="Glyph" />
                 {' '}
-                <ButtonUndo onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
+                <ButtonUndo  cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
                     size={"small"}
                     overrideTooltip="Undo Layout Changes"
                     overrideDisableButton={!isLayoutModified}
@@ -97,7 +98,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     DisplayMode="Glyph" />
                 {' '}
                 <ButtonDelete
-                    size={"small"}
+                    cssClassName={cssClassName}  size={"small"}
                     overrideTooltip="Delete Layout"
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     ConfigEntity={layoutEntity}
@@ -108,11 +109,9 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </div>
         </span>
 
-        return <div className="adaptable_blotter_style_dashboard_layout">
-            <PanelDashboard headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={() => this.props.onClose(StrategyIds.LayoutStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={() => this.props.onClose(StrategyIds.LayoutStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
                 {content}
             </PanelDashboard>
-        </div>
     }
 
     private isLayoutModified(layoutEntity: ILayout): boolean {

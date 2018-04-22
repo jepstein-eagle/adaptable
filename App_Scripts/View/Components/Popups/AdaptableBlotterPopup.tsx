@@ -6,6 +6,7 @@ import { AdaptableViewFactory } from './../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 import { UIHelper } from '../../UIHelper';
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
@@ -20,6 +21,8 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
   render() {
 
+    let cssClassName: string = StyleConstants.AB_STYLE
+
     let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions, document);
     if (this.props.ComponentName) {
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
@@ -32,9 +35,10 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
         UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
         SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
-        ModalContainer: modalContainer ,
+        ModalContainer: modalContainer,
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
-        GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts
+        GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
+        cssClassName: cssClassName + StyleConstants.MODAL_BODY
       }
 
       var body: any = React.createElement(bodyElement, commonProps);
@@ -42,24 +46,22 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
 
 
     return (
-      
-      <Modal show={this.props.showModal} onHide={this.props.onHide} className="adaptable_blotter_style_base"
-        container={modalContainer} >
-        {/*<Modal.Header closeButton>
-            <Modal.Title>{}</Modal.Title>
-          </Modal.Header>*/}
-        <Modal.Body className="adaptable_blotter_style_popup_base">
 
-          <div className="adaptable_blotter_modal_main_popup">
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
-              {body}
+      <Modal show={this.props.showModal} onHide={this.props.onHide} className={cssClassName + StyleConstants.BASE}
+        container={modalContainer} >
+        <div className={cssClassName +StyleConstants.MODAL_BASE}>
+          <Modal.Body className={cssClassName +StyleConstants.MODAL_BODY}>
+            <div className="ab_main_popup">
+              <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                {body}
+              </div>
             </div>
+          </Modal.Body>
+          <Modal.Footer className={cssClassName + StyleConstants.MODAL_FOOTER}>
+            <Button className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON} onClick={() => this.props.onHide()}>Close</Button>
+          </Modal.Footer>
           </div>
-        </Modal.Body>
-        <Modal.Footer className="adaptable_blotter_style_popup_base">
-          <Button onClick={() => this.props.onHide()}>Close</Button>
-        </Modal.Footer>
-      </Modal>
+         </Modal>
     );
   }
 }

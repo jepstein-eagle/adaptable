@@ -17,6 +17,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
     onDelete: Redux.Action
     showBold?: boolean
     showShare?: boolean
+    cssClassName: string
  }
 
 export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
@@ -29,6 +30,7 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
 
         summaryItems.push( <i>{this.props.Item2}</i>);
         summaryItems.push(<EntityListActionButtons
+            cssClassName={this.props.cssClassName}              
             ConfirmDeleteAction={this.props.onDelete}
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
@@ -37,7 +39,7 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
             EntityName={this.props.EntityName} />)
          
 
-        return <SummaryRowItem SummaryItems={summaryItems} />
+        return <SummaryRowItem cssClassName={this.props.cssClassName}  SummaryItems={summaryItems} />
     }
 
 }

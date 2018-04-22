@@ -24,8 +24,9 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     }
 
     render(): any {
-
-        return <div className="adaptable_blotter_style_wizard_cellvalidation_selectcolumn">
+        let cssClassName: string = this.props.cssClassName + "__selectcolumn"
+       
+        return <div className={cssClassName}>
         <Panel header="Select a Column" bsStyle="primary">
             <ColumnSelector SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}

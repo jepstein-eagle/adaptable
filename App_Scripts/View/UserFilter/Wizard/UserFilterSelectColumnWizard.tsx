@@ -26,9 +26,9 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
 
     render(): any {
 
-        // let selectedColumnValues: string[] = StringExtensions.IsNullOrEmpty(this.state.ColumnId) ? [] : [this.state.ColumnId];
-
-        return <div className="adaptable_blotter_style_wizard_userfilter_column">
+        let cssClassName: string = this.props.cssClassName + "__column"
+       
+        return <div className={cssClassName}>
             <Panel header="Select a Column" bsStyle="primary">
                     <HelpBlock>
                         {"Choose which column the User Filter will apply to."}

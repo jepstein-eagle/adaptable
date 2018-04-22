@@ -20,6 +20,7 @@ interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
 
 class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
     render() {
+        let cssClassName: string = this.props.cssClassName + "__theme";
         let infoBody: any[] = ["Choose a theme to change the look & feel of the Adaptable Blotter screens.", <br />, <br />, "Select ", <i>None</i>, " if you prefer to upload your own custom theme or ", <i>Default</i>, " to use the standard Bootstrap theme."]
 
         let availableThemes: string[] = []
@@ -33,23 +34,22 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
         let optionThemes = availableThemes.map(x => {
             return <option value={x} key={x}>{x}</option>
         })
-        return (
-            <div className="adaptable_blotter_style_popup_theme">
-                <PanelWithButton headerText={StrategyNames.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ThemeGlyph} infoBody={infoBody}>
-                    <AdaptableBlotterForm horizontal>
-                        <FormGroup controlId="themepicker">
-                            <Col xs={2} >
-                                <ControlLabel >Current</ControlLabel>
-                            </Col>
-                            <Col xs={7}>
-                                <FormControl componentClass="select" placeholder="select" value={this.props.CurrentTheme} onChange={(x) => this.onChangeTheme(x)} >
-                                    {optionThemes}
-                                </FormControl>
-                            </Col>
-                        </FormGroup>
-                    </AdaptableBlotterForm>
-                </PanelWithButton>
-            </div>
+        return (<div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ThemeGlyph} infoBody={infoBody}>
+                <AdaptableBlotterForm horizontal>
+                    <FormGroup controlId="themepicker">
+                        <Col xs={2} >
+                            <ControlLabel >Current</ControlLabel>
+                        </Col>
+                        <Col xs={7}>
+                            <FormControl componentClass="select" placeholder="select" value={this.props.CurrentTheme} onChange={(x) => this.onChangeTheme(x)} >
+                                {optionThemes}
+                            </FormControl>
+                        </Col>
+                    </FormGroup>
+                </AdaptableBlotterForm>
+            </PanelWithButton>
+        </div>
         );
     }
 

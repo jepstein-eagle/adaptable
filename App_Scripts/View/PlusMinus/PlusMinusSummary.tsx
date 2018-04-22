@@ -18,6 +18,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusRules: IPlusMinusRule[]
@@ -33,11 +34,13 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
     }
     render(): any {
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__plusminus";
         let strategySummaries: any = []
 
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.PlusMinusStrategyName}
+            cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.PlusMinusStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
@@ -52,6 +55,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                 let detailRow =
                     <StrategyDetail
                         key={"PM" + index}
+                        cssClassName={this.props.cssClassName}
                         Item1={"Nudge Value: " + item.NudgeValue}
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
                         ConfigEnity={item}
@@ -65,12 +69,13 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <PlusMinusWizard
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                cssClassName={cssWizardClassName}
+                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}

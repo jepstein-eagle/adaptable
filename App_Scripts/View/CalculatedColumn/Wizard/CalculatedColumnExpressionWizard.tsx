@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Panel, FormGroup,  FormControl, HelpBlock } from 'react-bootstrap';
+import { Panel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ICalculatedColumn } from "../../../Strategy/Interface/ICalculatedColumnStrategy";
@@ -19,16 +19,20 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
         this.state = { GetValueFunc: this.props.Data.GetValueFunc }
     }
     render(): any {
-        let validationState : "error"|null = StringExtensions.IsNullOrEmpty(this.props.GetErrorMessage()) ? null : "error"
-        return <Panel header="Calculated Column Expression" bsStyle="primary">
-            <AdaptableBlotterForm>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                    <FormControl value={this.state.GetValueFunc} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} />
-                    <FormControl.Feedback />
-                    <HelpBlock>{this.props.GetErrorMessage()}</HelpBlock>
-                </FormGroup>
-            </AdaptableBlotterForm>
-        </Panel>
+        let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.props.GetErrorMessage()) ? null : "error"
+        let cssClassName: string = this.props.cssClassName + "__expression"
+       
+       return <div className={cssClassName}>
+            <Panel header="Calculated Column Expression" bsStyle="primary">
+                <AdaptableBlotterForm>
+                    <FormGroup controlId="formInlineName" validationState={validationState}>
+                        <FormControl value={this.state.GetValueFunc} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} />
+                        <FormControl.Feedback />
+                        <HelpBlock>{this.props.GetErrorMessage()}</HelpBlock>
+                    </FormGroup>
+                </AdaptableBlotterForm>
+            </Panel>
+        </div>
     }
 
     handleExpressionChange(event: React.FormEvent<any>) {
@@ -44,10 +48,10 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.GetValueFunc = this.state.GetValueFunc }
     public Back(): void { }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

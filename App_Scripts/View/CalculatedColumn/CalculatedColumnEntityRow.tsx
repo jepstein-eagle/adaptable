@@ -12,13 +12,14 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
     render(): any {
         let calculatedColumn: ICalculatedColumn = this.props.AdaptableBlotterObject as ICalculatedColumn;
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = calculatedColumn.ColumnId
         colItems[1].Content = calculatedColumn.GetValueFunc
       
         let buttons: any = <EntityListActionButtons
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
+        cssClassName={this.props.cssClassName}
+         ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, calculatedColumn)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
@@ -28,7 +29,7 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
          colItems[2].Content = buttons
       
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
 
 
     }

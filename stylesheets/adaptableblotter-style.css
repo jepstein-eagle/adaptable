@@ -20,12 +20,12 @@
   box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
 }
 
-.filterFormColumnSelector{
+.ab_filterFormColumnSelector{
  width: 150px;
 }
 
 /*Style to similate transparent background*/
-.adaptable_blotter_white_grey_stripes{
+.ab_white_grey_stripes{
   background: -moz-repeating-linear-gradient(
     -45deg,
     #96979b,
@@ -55,81 +55,81 @@ button.placeholder:before {
   color: White;
 }
 
-.no-padding-except-top-panel > [class*='panel-body'] {
+.ab_no-padding-except-top-panel > [class*='panel-body'] {
     padding-right:0;
 	padding-left: 0;
 	padding-bottom: 0;
 	padding-top: 5px;
 }
 
-.no-padding-anywhere-panel > [class*='panel-body'] {
+.ab_no-padding-anywhere-panel > [class*='panel-body'] {
     padding-right:0;
 	padding-left: 0;
 	padding-bottom: 0;
 	padding-top: 0px;
 }
 
-.small-padding-panel > [class*='panel-body'] {
+.ab_small-padding-panel > [class*='panel-body'] {
     padding: 5px;
 }
 
-.small-padding-panel {
+.ab_small-padding-panel {
     margin-bottom: 0px!important; 
 }
 
-.panel-header-dashboard > [class*='panel-heading'] {
+.ab-panel-header-dashboard > [class*='panel-heading'] {
 	padding: 1px 15px;
 }
 
-.panel-with-button-reduce-header-padding > [class*='panel-heading'] {
+.ab_panel-with-button-reduce-header-padding > [class*='panel-heading'] {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-.panel-with-button > [class*='panel-heading']  > [class*='panel-title'] {
+.ab_panel-with-button > [class*='panel-heading']  > [class*='panel-title'] {
 	font-size: 14px;
 }
 
 
 /*Styling for our main modal windows*/
-.adaptable_blotter_modal_main_popup{
+.ab_main_popup{
   width: 700px;
   height: 590px;
 }
 
-.adaptable_blotter_modal_main_wizard{
+.ab_main_wizard{
   width: 700px;
   height: 520px;
 }
 
-.adaptale_blotter_object_list_item{
+.ab_object_list_item{
   overflow-y: auto;
   min-height: 80px;
   max-height: 430px;
 }
 
-.adaptale_blotter_object_list_item_medium{
+.ab_object_list_item_medium{
   overflow-y: auto;
   min-height: 80px;
   max-height: 350px;
 }
 
-.adaptable_blotter_left_modal_button {
+.ab_left_modal_button {
   float: left;
   margin-right: 5px
 }
 
-.adaptable_blotter_right_modal_button {
+.ab_right_modal_button {
   float: right;
   margin-left: 5px
 }
 
 /*How we manage readonly controls*/
-.adaptable_blotter_readonly button,
-.adaptable_blotter_readonly .adaptable_blotter_div_like_button,
-.adaptable_blotter_readonly select,
-.adaptable_blotter_readonly input,
-.adaptable_blotter_readonly .radio{
+.ab_readonly button,
+.ab_readonly .adaptable_blotter_div_like_button,
+.ab_readonly select,
+.ab_readonly input,
+.ab_readonly .radio{
     opacity: 0.65; 
     pointer-events: none;
 }
@@ -146,7 +146,7 @@ Home Toolbar Column Dropdown
 ********************************************/
 
 
-.home_toolbar_column_list{
+.ab_home_toolbar_column_list{
   margin-left: 5px;
   padding: 2px;
 }
@@ -157,7 +157,7 @@ Context Menu Styles
 .drop-down {
   display: inline-block;
 }
-.adaptable_blotter_menu-button {
+.ab_menu-button {
   color: white;
   background-color: #2ead6d;
   border: 0;
@@ -165,17 +165,17 @@ Context Menu Styles
   font-size: 30px;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-button-selected:not(.adaptable_blotter_menu-item-label) {
+.ab_menu-button-selected:not(.ab_menu-item-label) {
   background-color: rgb(13, 106, 146);
   color: white;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-button:hover:not(.adaptable_blotter_menu-item-label) {
+.ab_menu-button:hover:not(.ab_menu-item-label) {
   background-color: rgb(13, 106, 146);
   color: white;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-popup {
+.ab_menu-popup {
   display: inline-block;
   white-space: nowrap;
   background-color: #d9ecf5;
@@ -188,11 +188,11 @@ Context Menu Styles
   border-style: solid;
   border-width: thin;
 }
-.adaptable_blotter_menu-popup.showing {
+.ab_menu-popup.showing {
   opacity: 1;
   transition: opacity 150ms ease-in;
 }
-.adaptable_blotter_menu-item {
+.ab_menu-item {
   display: block;
   width: 100%;
   color: #00435e;
@@ -201,33 +201,33 @@ Context Menu Styles
   font-size: 15px;
   border: 0;
 }
-.adaptable_blotter_menu-item-button {
+.ab_menu-item-button {
   line-height: 15px;
   text-align: left;
   transition: background-color 150ms ease-in;
 }
 
-.adaptable_blotter_menu-item-button:hover:not(.adaptable_blotter_menu-item-label) {
+.ab_menu-item-button:hover:not(.ab_menu-item-label) {
   background-color: rgb(13, 106, 146);
   color: white;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-item-button span {
+.ab_menu-item-button span {
   line-height: inherit;
 }
-.adaptable_blotter_menu-item-selected:not(.adaptable_blotter_menu-item-label) {
+.ab_menu-item-selected:not(.ab_menu-item-label) {
   background-color: rgb(13, 106, 146);
   color: white;
   transition: background-color 150ms ease-in;
 }
-.adaptable_blotter_menu-item-label {
+.ab_menu-item-label {
   text-align: left;
   font-weight: normal;
   font-style: italic;
   padding: 5px 10px 5px 10px;
   line-height: 15px
 }
-.adaptable_blotter_menu-item-separator {
+.ab_menu-item-separator {
   border: 0;
   height: 0;
   width: auto;
@@ -236,16 +236,16 @@ Context Menu Styles
   padding: 0;
   margin: 5px 0;
 }
-.adaptable_blotter_menu-item:focus {
+.ab_menu-item:focus {
   outline: 0;
 }
-.adaptable_blotter_menu-item span {
+.ab_menu-item span {
   float: left;
 }
-.adaptable_blotter_menu-item-expandable {
+.ab_menu-item-expandable {
   padding-right: 0;
 }
-.adaptable_blotter_menu-item-link a {
+.ab_menu-item-link a {
   color: #ffcc00;
 }
 .fa.fa-chevron-right {
@@ -268,11 +268,11 @@ End Context Menu Styles
 /*******************************************
 Searchable DropDown Styles
 ********************************************/
-.adaptable_blotter_typeahead_inline{
+.ab_typeahead_inline{
   display: inline-block
 }
 
-.adaptable_blotter_clear_button{
+.ab_clear_button{
   position: absolute;
   right: 5px;
   top: 0;
@@ -434,59 +434,59 @@ Searchable DropDown Styles
 End Searchable DropDown Styles
 ********************************************/
 
-.preview_panel{
+.ab_preview_panel{
   overflow-y: auto;
-  max-height: 400px;
+  max-height: 460px;
 }
-.no_padding_style {
+.ab_no_padding {
   padding: 0px;
 }
-.small_padding_style {
+.ab_small_padding {
   padding: 2px;
 }
-.medium_padding_style {
+.ab_medium_padding {
   padding: 5px;
 }
-.large_padding_style {
+.ab_large_padding {
   padding: 10px;
 }
 
-.no_margin_style {
+.ab_no_margin {
   margin: 0px;
 }
 
-.small_margin_style {
+.ab_small_margin {
   margin: 2px;
 }
 
-.medium_margin_style {
+.ab_medium_margin {
   margin: 5px;
 }
 
-.large_margin_style {
+.ab_large_margin {
   margin: 10px;
 }
 
-.no_padding_no_margin_style {
+.ab_no_padding_no_margin {
   margin: 0px;
   padding: 0px;
 }
 
-.no_padding_small_margin_style {
+.ab_no_padding_small_margin {
   margin: 2px;
   padding: 0px;
 }
 
-.no_padding_medium_margin_style {
+.ab_no_padding_medium_margin {
   margin: 5px;
   padding: 0px;
 }
 
-.no_padding_large_margin_style {
+.ab_no_padding_large_margin {
   margin: 10px;
   padding: 0px;
 }
 
-.large_right_margin_style {
+.ab_large_right_margin_style {
   margin-right: 10px;
 }

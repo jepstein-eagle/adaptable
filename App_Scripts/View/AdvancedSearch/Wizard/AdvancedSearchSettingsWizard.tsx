@@ -23,9 +23,11 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
         }
     }
     render(): any {
+        let cssClassName: string = this.props.cssClassName + "__settings"
+        
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
-        return <div className="adaptable_blotter_style_wizard_advancedsearch_settings">
+        return <div className={cssClassName}>
             <Panel header="Advanced Search Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="searchName">

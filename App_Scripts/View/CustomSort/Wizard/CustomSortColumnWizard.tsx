@@ -21,8 +21,9 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
         this.state = { SelectedColumnId: this.props.Data.ColumnId }
     }
     render(): any {
-        return <div className="adaptable_blotter_style_wizard_customsort_column">
-            <Panel header="Select a Column" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__column"
+        return <div className={cssClassName}>
+             <Panel header="Select a Column" bsStyle="primary">
                 <ColumnSelector SelectedColumnIds={[this.state.SelectedColumnId]}
                     ColumnList={this.props.Columns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}

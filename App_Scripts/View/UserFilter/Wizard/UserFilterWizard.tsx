@@ -21,16 +21,17 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
     render() {
         let stepNames: string[] = ["Select Column", "Build Query", "Settings"]
 
-        return <div className="adaptable_blotter_style_wizard_userfilter">
+        return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.UserFilterStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
+                cssClassName={this.props.cssClassName}
                 Steps={
                     [
-                        <UserFilterSelectColumnWizard Columns={this.props.Columns} StepName={stepNames[0]} />,
+                        <UserFilterSelectColumnWizard Columns={this.props.Columns}  cssClassName={this.props.cssClassName} StepName={stepNames[0]} />,
                         <UserFilterExpressionWizard
-                            StepName={stepNames[1]}
+                             cssClassName={this.props.cssClassName} StepName={stepNames[1]}
                             Columns={this.props.Columns}
                             UserFilters={this.props.UserFilters}
                             SystemFilters={this.props.SystemFilters}
@@ -38,7 +39,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
                             SelectedColumnId={this.props.SelectedColumnId}
                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
                         <UserFilterSettingsWizard
-                            StepName={stepNames[2]}
+                             cssClassName={this.props.cssClassName} StepName={stepNames[2]}
                             UserFilters={this.props.UserFilters}
                             Columns={this.props.Columns} />,
                     ]}

@@ -25,12 +25,14 @@ export class ConditionalStyleStyleWizard extends React.Component<ConditionalStyl
     }
 
     render() {
-
+        let cssClassName: string = this.props.cssClassName + "__style"
+       
         let canUseClassName = true; // get from somewhere...
-        return <div className="adaptable_blotter_style_wizard_conditionalstyle_style">
-
+        return <div className={cssClassName}>
+       
             <StyleComponent
-                ColorPalette={this.props.ColorPalette}
+                 cssClassName={cssClassName}
+                 ColorPalette={this.props.ColorPalette}
                 StyleClassNames={this.props.StyleClassNames}
                 Style={this.props.Data.Style}
                 UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}

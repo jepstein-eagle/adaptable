@@ -13,6 +13,8 @@ export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View
     onClearPopupParams: () => PopupRedux.PopupClearParamAction,
     TeamSharingActivated: boolean
 
+    cssClassName: string
+
     Columns: IColumn[],
     UserFilters: IUserFilter[],
     SystemFilters: string[],

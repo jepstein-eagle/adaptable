@@ -27,9 +27,10 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
     }
 
     render(): any {
-
-        return <div className="adaptable_blotter_style_wizard_plusminus_setting">
-            <Panel header="Plus/Minus Settings" bsStyle="primary">
+        let cssClassName: string = this.props.cssClassName + "__settings"
+       
+        return <div className={cssClassName}>
+        <Panel header="Plus/Minus Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="nudgeColumn">
                         <Col xs={3} componentClass={ControlLabel}>Nudge Value: </Col>
@@ -42,11 +43,11 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                         <Col xs={9}>
                             <Radio value="expression" checked={!this.state.IsDefaultNudge} onChange={(e) => this.onExpressionOptionChange(e)}>
                                 Custom Plus/Minus Rule {' '}
-                                <AdaptablePopover headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
+                                <AdaptablePopover  cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
                             </Radio>
                             <Radio value="default" checked={this.state.IsDefaultNudge} onChange={(e) => this.onExpressionOptionChange(e)}>
                                 Default Nudge Value for Column {' '}
-                                <AdaptablePopover headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} popoverType={PopoverType.Info} />
+                                <AdaptablePopover  cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} popoverType={PopoverType.Info} />
                             </Radio>
                         </Col>
                     </FormGroup>

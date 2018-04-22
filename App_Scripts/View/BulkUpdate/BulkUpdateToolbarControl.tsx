@@ -99,10 +99,11 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         //    let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage)
 
         // we dont want to show the panel in the form but will need to appear in a popup....
+        let cssClassName: string = this.props.cssClassName + "__bulkupdate";
 
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <InputGroup>
                     <ColumnValueSelector
                         disabled={this.state.SelectedColumn == null}
@@ -113,7 +114,8 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
                     <InputGroup.Button>
 
-                        <ButtonApply onClick={() => this.onApplyBulkUpdate()}
+                        <ButtonApply cssClassName={cssClassName}
+                            onClick={() => this.onApplyBulkUpdate()}
                             size={"small"}
                             bsStyle={"success"}
                             overrideTooltip="Apply Bulk Update"
@@ -124,13 +126,10 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             </div>
         </span>
 
-        return <div className="adaptable_blotter_style_dashboard_bulkupdate">
-            <PanelDashboard headerText={StrategyNames.BulkUpdateStrategyName} glyphicon={StrategyGlyphs.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.BulkUpdateStrategyName} glyphicon={StrategyGlyphs.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
                 {content}
             </PanelDashboard>
-        </div>
     }
-
     private onColumnValueSelectedChanged(selectedColumnValue: any) {
         this.props.onBulkUpdateValueChange(selectedColumnValue);
     }

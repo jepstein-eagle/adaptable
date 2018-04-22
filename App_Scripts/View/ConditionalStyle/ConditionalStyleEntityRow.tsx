@@ -19,7 +19,7 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
 
         let column = this.props.Columns.find(x => x.ColumnId == conditionalStyle.ColumnId)
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content =
         conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column ?
@@ -29,7 +29,8 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
         colItems[1].Content = <StyleVisualItem Style={conditionalStyle.Style} />
         colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns, this.props.UserFilters)
         let buttons: any = <EntityListActionButtons
-            editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}
+        cssClassName={this.props.cssClassName} 
+          editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             ConfigEntity={conditionalStyle}
@@ -38,6 +39,6 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
             EntityName={StrategyNames.ConditionalStyleStrategyName} />
         colItems[3].Content = buttons;
 
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 }

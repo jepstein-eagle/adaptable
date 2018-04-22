@@ -22,6 +22,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
@@ -55,6 +56,8 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__formatcolumn";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";
 
         let infoBody: any[] = ["Format a column so it styles with the colours and font properties that you provide.", <br />, <br />, "Unlike Conditional Styles the column is ", <b>always</b>, " formatted as set and is not dependent on a rule being met."]
 
@@ -66,7 +69,8 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
         let FormatColumns = this.props.FormatColumns.map((formatColumn: IFormatColumn, index) => {
             return <FormatColumnEntityRow
                 key={index}
-                ColItems={colItems}
+               cssClassName={cssClassName}
+                colItems={colItems}
                 AdaptableBlotterObject={formatColumn}
                 Columns={this.props.Columns}
                 UserFilters={null}
@@ -77,27 +81,28 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                 onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)} />
         });
 
-        let newButton = <ButtonNew onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
             overrideTooltip="Create Format Column"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_formatcolumn">
-            <PanelWithButton headerText={StrategyNames.FormatColumnStrategyName}
+            return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyNames.FormatColumnStrategyName}
                 button={newButton}
-                bsStyle="primary" className="adaptable_blotter_modal_main_popup" glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
+                bsStyle="primary" className="ab_main_popup" glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
 
                 {this.props.FormatColumns.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new column format.</Well>
                 }
 
                 {FormatColumns.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={FormatColumns} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={FormatColumns} />
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <FormatColumnWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
                         StyleClassNames={this.props.StyleClassNames}

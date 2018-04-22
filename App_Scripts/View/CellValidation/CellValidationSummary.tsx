@@ -18,6 +18,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]
@@ -33,12 +34,14 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
     }
 
     render(): any {
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
         let strategySummaries: any = []
 
         // title row
         let titleRow = <StrategyHeader
             key={StrategyNames.CellValidationStrategyName}
-            StrategyId={StrategyIds.CellValidationStrategyId}
+            cssClassName={this.props.cssClassName}
+                        StrategyId={StrategyIds.CellValidationStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.CellValidationStrategyName}
@@ -50,7 +53,8 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 let detailRow =
                     <StrategyDetail
-                        key={"CV" + index}
+                    cssClassName={this.props.cssClassName}
+                    key={"CV" + index}
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.CellValidationMode)}
                         Item2={item.Description}
                         ConfigEnity={item}
@@ -64,12 +68,13 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CellValidationWizard
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                cssClassName={cssWizardClassName}
+                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}

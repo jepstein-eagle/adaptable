@@ -1,6 +1,7 @@
 import * as React from "react";
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 import SweetAlert from 'react-bootstrap-sweetalert'
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export interface AdaptableBlotterPopupErrorProps extends React.ClassAttributes<AdaptableBlotterPopupError> {
     ShowPopup: boolean
@@ -11,7 +12,7 @@ export interface AdaptableBlotterPopupErrorProps extends React.ClassAttributes<A
 export class AdaptableBlotterPopupError extends React.Component<AdaptableBlotterPopupErrorProps, {}> {
 
     render() {
-        return this.props.ShowPopup && <div className="adaptable_blotter_style_popup_error">
+        return this.props.ShowPopup && <div className={StyleConstants.POPUP_ERROR}>
             <SweetAlert danger confirmBtnBsStyle="danger" title="Error" onConfirm={() => this.props.onClose()} >
                 <p>
                     {this.props.Msg.split("\n").map(function (item, index) {

@@ -26,6 +26,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -54,6 +55,9 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
     }
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__plusminus";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__plusminus";
+
         let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />,
             "Plus/Minus 'Nudge' Rules can be set for any numeric column, with option to specify whether a nudge is always applied or only when a particular condition is met."]
 
@@ -67,7 +71,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
 
             return <PlusMinusEntityRow
-                ColItems={colItems}
+            cssClassName={cssClassName}   
+            colItems={colItems}
                 AdaptableBlotterObject={x}
                 key={index}
                 Index={index}
@@ -81,18 +86,18 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 onColumnDefaultNudgeValueChange={(index, event) => this.onColumnDefaultNudgeValueChange(index, event)} />
         })
 
-        let newButton = <ButtonNew onClick={() => this.createColumnNudgeValue()}
+        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-        return <div className="adaptable_blotter_style_popup_plusminus">
-            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" className="adaptable_blotter_modal_main_popup"
+            return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary"  cssClassName={cssClassName} 
                 button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
                 infoBody={infoBody}>
 
                 {PlusMinusRules.length > 0 &&
-                    <AdaptableObjectCollection ColItems={colItems} items={PlusMinusRules} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={PlusMinusRules} />
                 }
 
                 {PlusMinusRules.length == 0 &&
@@ -102,7 +107,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 {this.state.EditedAdaptableBlotterObject != null &&
 
                     <PlusMinusWizard
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}

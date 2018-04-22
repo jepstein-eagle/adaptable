@@ -14,6 +14,8 @@ import { HomeToolbarControl } from '../Home/HomeToolbarControl'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue } from "../../Core/Enums";
 import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
+
 
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
@@ -27,7 +29,10 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
+
     render() {
+        let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
+        let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
         let optionsBlotterName: string = this.props.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
@@ -48,7 +53,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     ColorPalette: this.props.ColorPalette,
                     GridSorts: this.props.GridSorts,
                     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
-      
+                    cssClassName: cssClassName
                 });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}
@@ -61,14 +66,14 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
         let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId)
         let homeToolbarElement = <Nav key={"home"} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
-            {React.createElement(homeToolbar, { AdaptableBlotter: this.props.AdaptableBlotter })}
+            {React.createElement(homeToolbar, {cssClassName: cssClassName, AdaptableBlotter: this.props.AdaptableBlotter })}
         </Nav>
 
-        return <div className="adaptable_blotter_style_base">
-            <div className="no_margin_style">
+        return <div className={cssBaseClassName}>
+            <div className="ab_no_margin">
                 {this.props.DashboardState.IsMinimised ?
 
-                    <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="no_padding_no_margin_style" >
+                    <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="ab_no_padding_no_margin" >
                         <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
                             <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.props.onSetDashboardMinimised(false)}>
                                 {blotterName} <Glyphicon glyph={"chevron-down"} />
@@ -76,11 +81,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                         </OverlayTrigger>
                     </ButtonToolbar> :
                     <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.Zoom }}>
-                        <div className="adaptable_blotter_style_dashboard_base" >
-                            <div className="no_margin_style">
-                                {homeToolbarElement}
-                                {visibleDashboardElements}
-                            </div>
+                        <div className="ab_no_margin">
+                            {homeToolbarElement}
+                            {visibleDashboardElements}
                         </div>
                     </Navbar>
                 }

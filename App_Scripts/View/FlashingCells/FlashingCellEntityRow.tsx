@@ -36,7 +36,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
             return null
         }
 
-        let colItems: IColItem[] = [].concat(this.props.ColItems);
+        let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(flashingCell)} checked={flashingCell.IsLive}></Checkbox>
         colItems[1].Content = column.FriendlyName
@@ -44,8 +44,8 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
             {durations}
         </FormControl>
         colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
-        colItems[4].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
-        return <AdaptableObjectRow ColItems={colItems}
+        colItems[4].Content = <ColorPicker   ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems}
         />
     }
 

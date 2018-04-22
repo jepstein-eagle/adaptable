@@ -17,6 +17,8 @@ export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends Rea
     Ranges: Array<IRange>
     Columns: Array<IColumn>
     onRangesChange: (Ranges: Array<IRange>) => void
+    cssClassName: string
+
 }
 
 export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRangesPropsExpressionBuilderRanges, {}> {
@@ -42,7 +44,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
             let deleteButton = <Button bsSize={"small"} bsStyle={"default"} style={deleteButtonStyle} onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
 
-            return <div className="no_padding_medium_margin_style" style={betweenDivStyle} key={index}>
+            return <div className="ab_no_padding_medium_margin" style={betweenDivStyle} key={index}>
                 <AdaptableBlotterForm horizontal key={index}>
                     <FormGroup controlId={"Range" + index}>
 
@@ -95,7 +97,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             </div>
         })
 
-        return <Panel className="no-padding-anywhere-panel" style={divStyle}>
+        return <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
             {addButton}
             {rangesElement}
         </Panel>

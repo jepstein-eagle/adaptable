@@ -9,6 +9,7 @@ export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsE
     CurrentCalendar: string;
     onSelect: (calendar: ICalendar) => void;
     onShowInformation: (calendar: ICalendar) => void;
+     cssClassName: string
 }
 
 export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {}> {
@@ -28,7 +29,7 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
                     </OverlayTrigger>
                 </ButtonToolbar>
         });
-        return <AdaptableObjectRow ColItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 }
 

@@ -20,6 +20,8 @@ interface HomeButtonsPopupComponentProps extends StrategyViewPopupProps<HomeButt
 
 class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponentProps, {}> {
     render() {
+        let cssClassName: string = this.props.cssClassName + "__home";
+
         let selectedValues: string[] = [];
         this.props.DashboardState.VisibleButtons.forEach(x => {
             let menuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == x)
@@ -28,10 +30,10 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
             }
         })
 
-       let availableValues= this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label)
+        let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label)
 
-        return <div className="adaptable_blotter_style_popup_home">
-            <PanelWithImage header="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph}>
+        return <div className={cssClassName}>
+            <PanelWithImage cssClassName={cssClassName}  header="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph}>
                 <DualListBoxEditor AvailableValues={availableValues}
                     SelectedValues={selectedValues}
                     HeaderAvailable="Available Function Buttons"
@@ -42,7 +44,7 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
     }
 
     ListChange(selectedValues: string[]) {
-        let buttonNames = selectedValues.map(sv=> StrategyIds.getIdForStrategyName(sv) )
+        let buttonNames = selectedValues.map(sv => StrategyIds.getIdForStrategyName(sv))
         this.props.onDashboardControlConfigChange(buttonNames)
     }
 

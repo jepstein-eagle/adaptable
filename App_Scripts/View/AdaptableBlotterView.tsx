@@ -13,6 +13,8 @@ import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
 import { UIHelper } from "./UIHelper";
+import * as StyleConstants from '../Core/Constants/StyleConstants';
+
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
@@ -34,7 +36,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     render() {
  
         return (
-            <div className="adaptable_blotter_style_base" >
+            <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
 
                 <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}

@@ -39,9 +39,10 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
     debouncedRunQuickSearch = _.debounce(() => this.props.onRunQuickSearch(this.state.EditedQuickSearchText), 250);
 
     render() {
+        let cssClassName: string = this.props.cssClassName + "__quicksearch";
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "adaptable_blotter_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <AdaptableBlotterFormControlTextClear
                     style={{ width: "100px" }}
                     bsSize="small"
@@ -50,19 +51,17 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     value={this.state.EditedQuickSearchText}
                     OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
                 {' '}
-                <ButtonEdit onClick={() => this.props.onShowQuickSearchPopup()}
+                <ButtonEdit cssClassName={cssClassName} onClick={() => this.props.onShowQuickSearchPopup()}
                     size={"small"}
                     overrideTooltip="Edit Quick Search"
                     DisplayMode="Glyph" />
             </div>
         </span>
-        return <div className="adaptable_blotter_style_dashboard_quicksearch">
-            <PanelDashboard headerText={StrategyNames.QuickSearchStrategyName} glyphicon={StrategyGlyphs.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyIds.QuickSearchStrategyId)}
+      return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.QuickSearchStrategyName} glyphicon={StrategyGlyphs.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyIds.QuickSearchStrategyId)}
                 onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
                 {content}
             </PanelDashboard>
-        </div>
-    }
+       }
 
     onUpdateQuickSearchText(searchText: string) {
         this.setState({ EditedQuickSearchText: searchText })

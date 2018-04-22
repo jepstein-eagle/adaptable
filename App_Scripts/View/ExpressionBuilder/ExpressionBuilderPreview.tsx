@@ -32,6 +32,8 @@ export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Exp
     DeleteAllColumnExpression:(ColumnId: string)=> void
     ShowPanel: boolean // currently ALWAYS true!
     ReadOnlyMode?: boolean
+    cssClassName: string
+
 }
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
@@ -39,6 +41,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)
     }
     render() {
+        let cssClassName: string = this.props.cssClassName + "__querypreview"
         let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression)
         let previewLists = columnList.map(columnId => {
 
@@ -152,11 +155,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let column = this.props.ColumnsList.find(x => x.ColumnId == columnId)
             let columnFriendlyName = column ? column.FriendlyName : columnId + GeneralConstants.MISSING_COLUMN
 
-            return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? "adaptable_blotter_readonly" : ""}>
+            return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? "ab_readonly" : ""}>
 
                 <InputGroup>
                     <InputGroup.Button>
-                        <Button block className="no_margin_style"
+                        <Button block className="ab_no_margin"
                              style={{ width: "250px" }}
                              bsStyle="success"
                              bsSize="small"
@@ -167,7 +170,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         </Button>
                     </InputGroup.Button>
                     <InputGroup.Button>
-                        <Button block className="no_margin_style"
+                        <Button block className="ab_no_margin"
                             style={{ width: "40px" }}
                             bsStyle="success"
                             bsSize="small"
@@ -193,7 +196,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         return <div>
             {this.props.ShowPanel &&
 
-                <PanelWithButton headerText="Preview" bsStyle="info"  >
+                <PanelWithButton cssClassName={cssClassName} headerText="Preview" bsStyle="info"  >
                      <div style={{ height: '355px' , overflowY: 'auto'}}>
                         {previewLists}
                     </div>

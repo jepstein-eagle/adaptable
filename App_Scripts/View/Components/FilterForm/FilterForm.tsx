@@ -18,6 +18,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { Expression } from "../../../Core/Expression";
+import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -33,7 +34,8 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
 class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
     render(): any {
-
+        let cssClassName: string = StyleConstants.FILTER_FORM
+      
         // get user filter expressions appropriate for this column
         let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf))
             ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
@@ -68,13 +70,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
-        let clearButton = <ButtonClear onClick={() => this.onClearFilter()}
+        let clearButton = <ButtonClear cssClassName={cssClassName} onClick={() => this.onClearFilter()}
             size={"xsmall"}
             overrideDisableButton={existingColumnFilter == null}
             overrideTooltip="Clear Filter"
             DisplayMode="Glyph+Text" />
 
-        return <PanelWithButton headerText={"Filter"} style={panelStyle} className="no-padding-except-top-panel small-padding-panel" bsStyle="info" button={clearButton}>
+        return <PanelWithButton cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="info" button={clearButton}>
             <ListBoxFilterForm CurrentColumn={this.props.CurrentColumn}
                 Columns={this.props.Columns}
                 ColumnValues={columnValuePairs}

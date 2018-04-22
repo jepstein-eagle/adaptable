@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox, DropdownButton, SplitButton } from 'react-bootstrap';
+import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox, DropdownButton, SplitButton, ButtonToolbar } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -18,6 +18,8 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
+import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -39,6 +41,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     render() {
 
+        let cssClassName: string = this.props.cssClassName + "__home";
+        let cssDropdownClassName: string = this.props.cssClassName + "__home__dropdown";
+
         // dropdown menu items
         let menuItems = this.props.MenuState.MenuItems.filter(x =>
             x.IsVisible && x.StrategyId != StrategyIds.AboutStrategyId
@@ -50,7 +55,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // columns
         let colItems = this.props.Columns.map((col: IColumn, index) => {
-            return <div className="home_toolbar_column_list" key={index}>
+            return <div className="ab_home_toolbar_column_list" key={index}>
                 <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible} onChange={(e) => this.onSetColumnVisibility(e)} > {col.FriendlyName}</Checkbox>
             </div>
         });
@@ -63,17 +68,15 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.StrategyId == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
-                        <Button bsSize={"small"} disabled={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)}>
-                            <Glyphicon glyph={menuItem.GlyphIcon} />
-                        </Button>
+                        <ButtonDashboard glyph={menuItem.GlyphIcon} cssClassName={cssClassName} bsStyle={"default"} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={menuItem.Label} overrideDisableButton={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)} />
                     </OverlayTrigger >
                 }
             })
         }
 
-        let optionsBlotterName: string =this.props.BlotterOptions.blotterId;
+        let optionsBlotterName: string = this.props.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
-     
+
         const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
             <Glyphicon glyph={"home"} />
         </OverlayTrigger>
@@ -81,29 +84,29 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             <Glyphicon glyph={"list"} />
         </OverlayTrigger>
 
-        return <div className="adaptable_blotter_style_dashboard_home">
-            <PanelDashboard showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardMinimised(true)}
-                headerText={blotterName} glyphicon={"home"} showGlyphIcon={false}
-                onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardMinimised(true)}
+            headerText={blotterName} glyphicon={"home"} showGlyphIcon={false}
+            onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
-                <DropdownButton bsStyle={"default"}
-                    bsSize={"small"}
-                    title={functionsGlyph}
-                    key={"dropdown-functions"}
-                    id={"dropdown-functions"}>
-                    {menuItems}
-                </DropdownButton>
+            <DropdownButton bsStyle={"default"}
+                className={cssDropdownClassName}
+                bsSize={"small"}
+                title={functionsGlyph}
+                key={"dropdown-functions"}
+                id={"dropdown-functions"}>
+                {menuItems}
+            </DropdownButton>
 
-                {shortcuts}
-                <DropdownButton bsStyle={"default"}
-                    bsSize={"small"}
-                    title={colsGlyph}
-                    key={"dropdown-cols"}
-                    id={"dropdown-cols"}>
-                    {colItems}
-                </DropdownButton>
-            </PanelDashboard>
-        </div>
+            {shortcuts}
+            <DropdownButton bsStyle={"default"}
+                className={cssDropdownClassName}
+                bsSize={"small"}
+                title={colsGlyph}
+                key={"dropdown-cols"}
+                id={"dropdown-cols"}>
+                {colItems}
+            </DropdownButton>
+        </PanelDashboard>
     }
 
     onClick(menuItem: IMenuItem) {

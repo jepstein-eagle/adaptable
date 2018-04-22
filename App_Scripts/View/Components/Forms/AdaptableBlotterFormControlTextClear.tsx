@@ -22,7 +22,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
                 onChange={(x) => this.props.OnTextChange((x.target as HTMLInputElement).value)} />
             {
                 StringExtensions.IsNotNullOrEmpty(String(this.props.value)) &&
-                <Glyphicon className="adaptable_blotter_clear_button" glyph={"remove-circle"} onClick={() => this.props.OnTextChange("")}></Glyphicon>
+                <Glyphicon className="ab_clear_button" glyph={"remove-circle"} onClick={() => this.props.OnTextChange("")}></Glyphicon>
             }
 
         </ButtonGroup>
