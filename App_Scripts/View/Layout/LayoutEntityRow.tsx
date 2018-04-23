@@ -10,8 +10,8 @@ import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IGridSort } from "../../Core/Interface/Interfaces";
 import { IColumn } from "../../Core/Interface/IColumn";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { SortOrder } from "../../Core/Enums";
+import { LayoutHelper } from "../../Core/Helpers/LayoutHelper";
 
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {
@@ -29,7 +29,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
         colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(layout)} checked={this.props.IsCurrentLayout} />
         colItems[1].Content = layout.Name;
-        colItems[2].Content = this.getLayoutDescription(layout)
+        colItems[2].Content = LayoutHelper.getLayoutDescription(layout, this.props.Columns)
 
         let buttons: any = <EntityListActionButtons
         cssClassName={this.props.cssClassName}
@@ -47,34 +47,6 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 
-    private getLayoutDescription(layout: ILayout): string {
-        let returnString: string = "";
-        let gridSorts: IGridSort[] = layout.GridSorts;
-        returnString += layout.Columns.length + " Columns; ";
-        returnString += "\n"
-        returnString += this.getGridSort(layout.GridSorts);
-        return returnString;
-    }
-
-    private getGridSort(gridSorts: IGridSort[]): string {
-        if (gridSorts.length == 0) {
-            return "No Sort";
-        }
-
-        let returnString: string = "Sort: "
-        gridSorts.forEach((gs: IGridSort) => {
-            returnString += this.getColumnDescription(gs.Column) + this.getSortOrder(gs.SortOrder)
-        })
-        return returnString;
-    }
-
-    private getSortOrder(sortOrder: SortOrder): string {
-        return (sortOrder == SortOrder.Ascending) ? " [asc] " : " [desc] "
-    }
-
-    private getColumnDescription(columnId: string): string {
-        let column: IColumn = this.props.Columns.find(c => c.ColumnId == columnId);
-        return (column) ? column.FriendlyName : GeneralConstants.MISSING_COLUMN;
-    }
+    
 
 }

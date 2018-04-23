@@ -25,6 +25,8 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { SortOrder } from "../../Core/Enums";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
@@ -89,17 +91,17 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             </LayoutEntityRow>
         })
 
-        let newSearchButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
+        let newSearchButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName}  bsStyle="primary" headerText={StrategyNames.LayoutStrategyName} infoBody={infoBody}
+        return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyNames.LayoutStrategyName} infoBody={infoBody}
                 button={newSearchButton} glyphicon={StrategyGlyphs.LayoutGlyph} className="ab_main_popup" >
 
                 {LayoutRows.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={LayoutRows} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={LayoutRows} />
                 }
 
                 {LayoutRows.length == 0 &&
@@ -110,8 +112,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <LayoutWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
                         ConfigEntities={this.props.Layouts}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
@@ -121,7 +123,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
-                        onFinishWizard={() => this.onFinishWizard()} />
+                        onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
+                    />
                 }
 
             </PanelWithButton>
@@ -154,9 +158,28 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         this.props.onAddUpdateLayout(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
 
-        if ( layoutNameChanged) { // its new so make it the selected layout or name has changed.
+        if (layoutNameChanged) { // its new so make it the selected layout or name has changed.
             this.props.onSelectLayout(clonedObject.Name);
         }
+    }
+
+
+    canFinishWizard() {
+        let layout = this.state.EditedAdaptableBlotterObject as ILayout
+        if (Helper.isNotEmptyArray(layout.GridSorts)) {
+            let canFinish: boolean = true;
+            layout.GridSorts.forEach(gs => {
+                if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
+                    canFinish = false;
+                }
+            })
+            if (!canFinish) {
+                return false
+            }
+        }
+        return StringExtensions.IsNotNullOrEmpty(layout.Name) &&
+            Helper.isNotEmptyArray(layout.Columns)
+
     }
 }
 

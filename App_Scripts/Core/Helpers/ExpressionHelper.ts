@@ -26,7 +26,7 @@ export module ExpressionHelper {
 
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, filters: any): string {
         let returnValue = ""
-        if (IsExpressionEmpty(Expression)) {
+        if (IsEmptyExpression(Expression)) {
             return "Any";
         }
 
@@ -79,6 +79,15 @@ export module ExpressionHelper {
                 returnValue += " AND "
             }
             returnValue += "(" + columnToString + ")";
+        }
+        return returnValue
+    }
+
+    // doesnt do columns and stuff....
+    export function ConvertRangeToString(range: IRange, columns: IColumn[]): string {
+        let returnValue: string = range.Operator + " " + range.Operand1
+        if (StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
+            returnValue += range.Operand2
         }
         return returnValue
     }
@@ -338,24 +347,32 @@ export module ExpressionHelper {
         }
     }
 
-    export function GetColumnListFromExpression(Expression: Expression): Array<string> {
-        return Array.from(new Set(Expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName)
-            .concat(Expression.ColumnRawValuesExpressions.map(x => x.ColumnName))
-            .concat(Expression.FilterExpressions.map(x => x.ColumnName))
-            .concat(Expression.RangeExpressions.map(x => x.ColumnName))))
+    export function GetColumnListFromExpression(expression: Expression): Array<string> {
+        return Array.from(new Set(expression.ColumnDisplayValuesExpressions.map(x => x.ColumnName)
+            .concat(expression.ColumnRawValuesExpressions.map(x => x.ColumnName))
+            .concat(expression.FilterExpressions.map(x => x.ColumnName))
+            .concat(expression.RangeExpressions.map(x => x.ColumnName))))
     }
 
-    export function IsExpressionEmpty(Expression: Expression): boolean {
-        return Expression.ColumnDisplayValuesExpressions.length == 0
-            && Expression.ColumnRawValuesExpressions.length == 0
-            && Expression.FilterExpressions.length == 0
-            && Expression.RangeExpressions.length == 0
+    export function IsEmptyExpression(expression: Expression): boolean {
+        return expression.ColumnDisplayValuesExpressions.length == 0
+            && expression.ColumnRawValuesExpressions.length == 0
+            && expression.FilterExpressions.length == 0
+            && expression.RangeExpressions.length == 0
     }
 
-    export function IsExpressionValid(Expression: Expression): boolean {
+    export function IsNotEmptyExpression(expression: Expression): boolean {
+        return !IsEmptyExpression(expression)
+    }
+
+    export function IsNotEmptyOrInvalidExpression(expression: Expression): boolean {
+        return IsNotEmptyExpression(expression) && IsExpressionValid(expression)
+    }
+
+    export function IsExpressionValid(expression: Expression): boolean {
         //nothing to check for ColumnValues. 
         //we check that all ranges are properly populated
-        return Expression.RangeExpressions.every(x => {
+        return expression.RangeExpressions.every(x => {
             return x.Ranges.every(range => {
                 if (range.Operator == LeafExpressionOperator.Unknown) {
                     return false

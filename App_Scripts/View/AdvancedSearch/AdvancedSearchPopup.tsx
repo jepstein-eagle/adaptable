@@ -24,6 +24,8 @@ import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
@@ -119,7 +121,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
-                        onFinishWizard={() => this.onFinishWizard()} />
+                        onFinishWizard={() => this.onFinishWizard()} 
+                        canFinishWizard={()=>this.canFinishWizard()}/>
                 }
 
             </PanelWithButton>
@@ -148,6 +151,12 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             this.props.onSelectAdvancedSearch(clonedObject.Name);
         }
     }
+
+    canFinishWizard() {
+        let advancedSearch = this.state.EditedAdaptableBlotterObject as IAdvancedSearch
+        return StringExtensions.IsNotNullOrEmpty(advancedSearch.Name)  && ExpressionHelper.IsNotEmptyOrInvalidExpression(advancedSearch.Expression);
+  
+      }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

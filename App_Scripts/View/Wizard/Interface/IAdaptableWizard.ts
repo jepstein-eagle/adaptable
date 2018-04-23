@@ -16,7 +16,7 @@ export interface AdaptableWizardStep {
 
 export interface AdaptableWizardStepProps<T> {
     Data?: T
-    UpdateGoBackState?(finish?: boolean): void
+    UpdateGoBackState?(): void
     StepName?: string
     cssClassName: string
 }
@@ -41,6 +41,7 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
     onFinishWizard: () => void
     ModalContainer: HTMLElement
     cssClassName: string
+    canFinishWizard: Function
 }
 
 // props for a wizard that wraps a config entity (without an expression)

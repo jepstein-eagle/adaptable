@@ -1,7 +1,9 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
-import { DataType } from '../Core/Enums';
+import { DataType, FontWeight, FontStyle } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotterOptions';
+import { IStyle } from '../Core/Interface/IStyle';
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
 
 
 export module UIHelper {
@@ -49,6 +51,11 @@ export module UIHelper {
             modalContainer = document.body
         }
         return modalContainer;
+    }
+
+    export function IsNotEmptyStyle(style: IStyle): boolean {
+        return style.BackColor != null || style.ForeColor != null || style.FontWeight != FontWeight.Normal || style.FontStyle != FontStyle.Normal || style.FontSize != null || StringExtensions.IsNotNullOrEmpty(style.ClassName)
+
     }
 
 }

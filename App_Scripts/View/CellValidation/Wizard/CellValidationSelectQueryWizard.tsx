@@ -22,12 +22,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
         }
     }
 
-    public componentDidMount() {
-        // would rather not but only way I can see to force page to show Finish (which is default)
-        this.props.UpdateGoBackState(this.state.HasExpression == false);
-    }
-
-    render(): any {
+     render(): any {
         let cssClassName: string = this.props.cssClassName + "-selectquery"
        
         return <div className={cssClassName}>
@@ -52,7 +47,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
 
     private onOtherExpressionOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ HasExpression: e.checked } as CellValidationSelectQueryWizardState, () => this.props.UpdateGoBackState(e.checked == false))
+        this.setState({ HasExpression: e.checked } as CellValidationSelectQueryWizardState, () => this.props.UpdateGoBackState())
     }
 
 
@@ -66,9 +61,9 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
         this.props.Data.HasExpression = this.state.HasExpression;
     }
 
-    public Back(): void { }
+    public Back(): void { /* no implementation */     }
     public GetIndexStepIncrement(){
-        return 1;
+        return this.state.HasExpression ? 1: 2;
     }
     public GetIndexStepDecrement(){
         return 1;

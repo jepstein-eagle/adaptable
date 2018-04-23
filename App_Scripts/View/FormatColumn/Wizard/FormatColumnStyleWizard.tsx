@@ -5,6 +5,7 @@ import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { IStyle } from '../../../Core/Interface/IStyle';
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { UIHelper } from "../../UIHelper";
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     ColorPalette: string[]
@@ -41,7 +42,7 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
 
 
     public canNext(): boolean {
-        return this.state.Style.BackColor != null || this.state.Style.ForeColor != null || this.state.Style.FontWeight != FontWeight.Normal || this.state.Style.FontStyle != FontStyle.Normal || this.state.Style.FontSize != null || StringExtensions.IsNotNullOrEmpty(this.state.Style.ClassName)
+        return UIHelper.IsNotEmptyStyle(this.state.Style);
     }
     public canBack(): boolean { return true; }
     public Next(): void {

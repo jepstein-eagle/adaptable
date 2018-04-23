@@ -8,13 +8,16 @@ import { IAdaptableBlotterObject } from "../../../Core/Interface/Interfaces";
 
 
 // base props
-export interface BaseEntityRowProps<View> extends React.ClassAttributes<View> {
+export interface BaseRowProps<View> extends React.ClassAttributes<View> {
+     colItems: IColItem[]
+    cssClassName: string
+}
+
+export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
     AdaptableBlotterObject: IAdaptableBlotterObject
     onDeleteConfirm: Redux.Action;
     Index: number
     onEdit: (index: number, adaptableBlotterObject: IAdaptableBlotterObject) => void;
-    colItems: IColItem[]
-    cssClassName: string
 }
 
 // shared props

@@ -19,6 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
@@ -81,7 +82,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                />
+                    canFinishWizard={()=>this.canFinishWizard()}
+                    />
             }
         </div>
     }
@@ -110,6 +112,11 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             this.props.onAddCustomSort(customSort);
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.Values) ;
     }
 }
 

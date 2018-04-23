@@ -402,7 +402,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
+        // get the column type if already in store
+        let existingColumn:IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c=>c.ColumnId == column.getId());
+        if(existingColumn){
+            return existingColumn.DataType;
+        }
+
         let row = this.gridOptions.api.getModel().getRow(0)
+
+        if(row==null){ // possible that there will be no data.
+            console.log('there is no first row so we are returning String for Type')
+             return DataType.String; 
+        }
         //if it's a group we need the content of the group
         if (row.group) {
             row = row.childrenAfterGroup[0]

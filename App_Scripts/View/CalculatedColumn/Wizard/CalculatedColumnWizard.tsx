@@ -4,6 +4,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
+import { CalculatedColumnSummaryWizard } from './CalculatedColumnSummaryWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
@@ -15,7 +16,7 @@ export interface CalculatedColumnWizardProps extends IAdaptableBlotterObjectExpr
 export class CalculatedColumnWizard extends React.Component<CalculatedColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Create Column", "Write Expression"]
+        let stepNames: string[] = ["Create Column", "Write Expression", "Summary"]
         
         return <div className={this.props.cssClassName}>
         <AdaptableWizard
@@ -28,11 +29,14 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
                     <CalculatedColumnExpressionWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]}
                         GetErrorMessage={this.props.GetErrorMessage}
                         IsExpressionValid={this.props.IsExpressionValid} />,
+                        < CalculatedColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]}/>
+
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} />
+                onFinish={() => this.props.onFinishWizard()} 
+                canFinishWizard={() => this.props.canFinishWizard()}/>
         </div>
     }
 

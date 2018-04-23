@@ -19,6 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusRules: IPlusMinusRule[]
@@ -86,7 +87,8 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                />
+                    canFinishWizard={() => this.canFinishWizard()}
+                    />
             }
         </div>
     }
@@ -109,6 +111,13 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     onFinishWizard() {
         this.props.onAddUpdatePlusMinus(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPlusMinusRule);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule
+        return StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
+            StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
+            (plusMinus.IsDefaultNudge || ExpressionHelper.IsNotEmptyOrInvalidExpression(plusMinus.Expression))
     }
 
     wrapExpressionDescription(expressionDescription: string): string {

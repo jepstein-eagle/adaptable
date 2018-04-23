@@ -54,6 +54,7 @@ export const SHARE_BUTTON: string = "__btn-share"
 export const UNDO_BUTTON: string = "__btn-undo"
 export const NEW_BUTTON: string = "__btn-new"
 export const MINIMISE_BUTTON: string = "__btn-minimise"
+export const DIRECTION_BUTTON: string = "__btn-direction"
 
 // others
 export const FILTER_FORM: string = AB_STYLE + "__filterform"

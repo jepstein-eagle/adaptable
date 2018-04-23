@@ -21,6 +21,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -92,6 +93,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
+                    canFinishWizard={()=>this.canFinishWizard()}
                 />
             }
         </div>
@@ -115,6 +117,13 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
     onFinishWizard() {
         this.props.onAddUpdateConditionalStyle(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IConditionalStyle);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle
+        return (conditionalStyle.ConditionalStyleScope== ConditionalStyleScope.Row ||  StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
+            ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
+            UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     }
 }
 

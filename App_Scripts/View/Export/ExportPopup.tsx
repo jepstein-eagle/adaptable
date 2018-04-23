@@ -26,6 +26,8 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -117,7 +119,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
-                        onFinishWizard={() => this.onFinishWizard()} />
+                        onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
+                        />
                 }
             </PanelWithButton>
         </div>
@@ -132,6 +136,13 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let Report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
         this.props.onAddUpdateReport(this.state.EditedAdaptableBlotterObjectIndex, Report)
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let report = this.state.EditedAdaptableBlotterObject as IReport
+        return StringExtensions.IsNotNullOrEmpty(report.Name) &&
+        ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
+        Helper.isNotEmptyArray(report.Columns)
     }
 
     onNew() {

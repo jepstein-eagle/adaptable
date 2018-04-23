@@ -26,6 +26,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -86,18 +87,18 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
 
         })
-        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.createCellValidation()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary"  cssClassName={cssClassName} 
+        return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
                 glyphicon={StrategyGlyphs.CellValidationGlyph}
                 infoBody={infoBody}>
                 {CellValidationItems.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={CellValidationItems} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={CellValidationItems} />
                 }
 
                 {CellValidationItems.length == 0 &&
@@ -109,8 +110,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <CellValidationWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
@@ -120,7 +121,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
-                    />
+                        canFinishWizard={() => this.canFinishWizard()} />
                 }
 
             </PanelWithButton>
@@ -147,6 +148,14 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     onFinishWizard() {
         this.props.onAddEditCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ICellValidationRule);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+
+    canFinishWizard() {
+        let cellValidationRule = this.state.EditedAdaptableBlotterObject as ICellValidationRule
+        return StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
+        (!cellValidationRule.HasExpression || ExpressionHelper.IsNotEmptyOrInvalidExpression( cellValidationRule.OtherExpression)) &&
+        StringExtensions.IsNotNullOrEmpty(cellValidationRule.Description)
     }
 }
 

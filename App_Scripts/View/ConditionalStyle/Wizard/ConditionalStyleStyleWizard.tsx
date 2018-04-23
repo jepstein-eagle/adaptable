@@ -6,6 +6,7 @@ import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { Checkbox } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { UIHelper } from "../../UIHelper";
 
 
 export interface ConditionalStyleStyleWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
@@ -26,13 +27,13 @@ export class ConditionalStyleStyleWizard extends React.Component<ConditionalStyl
 
     render() {
         let cssClassName: string = this.props.cssClassName + "-style"
-       
+
         let canUseClassName = true; // get from somewhere...
         return <div className={cssClassName}>
-       
+
             <StyleComponent
-                 cssClassName={cssClassName}
-                 ColorPalette={this.props.ColorPalette}
+                cssClassName={cssClassName}
+                ColorPalette={this.props.ColorPalette}
                 StyleClassNames={this.props.StyleClassNames}
                 Style={this.props.Data.Style}
                 UpdateStyle={(style: IStyle) => this.onUpdateStyle(style)}
@@ -47,7 +48,7 @@ export class ConditionalStyleStyleWizard extends React.Component<ConditionalStyl
     }
 
     public canNext(): boolean {
-        return this.state.Style.BackColor != null || this.state.Style.ForeColor != null || this.state.Style.FontWeight != FontWeight.Normal || this.state.Style.FontStyle != FontStyle.Normal || this.state.Style.FontSize != null || StringExtensions.IsNotNullOrEmpty(this.state.Style.ClassName)
+        return UIHelper.IsNotEmptyStyle(this.state.Style);
     }
     public canBack(): boolean { return true; }
     public Next(): void {

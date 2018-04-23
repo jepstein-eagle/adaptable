@@ -84,7 +84,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                />
+                    canFinishWizard={()=>this.canFinishWizard()}  />
             }
         </div>
     }
@@ -107,6 +107,11 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         this.props.onAddUpdateCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ICellValidationRule);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
+
+    canFinishWizard() {
+        let cellValidatinRule = this.state.EditedAdaptableBlotterObject as ICellValidationRule
+        return true;
+      }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {

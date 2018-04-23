@@ -14,3 +14,8 @@ export interface IColItem {
     Content: any;
 }
 
+export interface KeyValuePair {
+    Key: string,
+    Value: any
+}
+

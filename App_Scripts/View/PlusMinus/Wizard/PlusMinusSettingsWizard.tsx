@@ -22,10 +22,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
             IsDefaultNudge: this.props.Data.IsDefaultNudge
         }
     }
-    componentDidMount() {
-        this.props.UpdateGoBackState(this.state.IsDefaultNudge)
-    }
-
+  
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-settings"
        
@@ -59,12 +56,12 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
     private onExpressionOptionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let isDefault: boolean = (e.value == "default")
-        this.setState({ IsDefaultNudge: isDefault } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(isDefault))
+        this.setState({ IsDefaultNudge: isDefault } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     onColumnDefaultNudgeValueChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ NudgeValue: parseFloat(e.value) } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState(this.state.IsDefaultNudge))
+        this.setState({ NudgeValue: parseFloat(e.value) } as PlusMinusSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
@@ -81,7 +78,7 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
     }
     public Back(): void { }
     public GetIndexStepIncrement(){
-        return 1;
+        return  this.state.IsDefaultNudge? 2: 1;
     }
     public GetIndexStepDecrement(){
         return 1;

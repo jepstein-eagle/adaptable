@@ -94,7 +94,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     getQueryBuildStatus(): QueryBuildStatus {
         // if now expression then assume its new  - fair?
-        if (ExpressionHelper.IsExpressionEmpty(this.state.Expression)) {
+        if (ExpressionHelper.IsEmptyExpression(this.state.Expression)) {
             if (StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)) {
                 return QueryBuildStatus.SelectFirstColumn; // you neeed to select a column
             } else {
@@ -183,8 +183,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     }
 
     public canNext(): boolean {
-        return !ExpressionHelper.IsExpressionEmpty(this.state.Expression)
-            && ExpressionHelper.IsExpressionValid(this.state.Expression)
+        return ExpressionHelper.IsNotEmptyOrInvalidExpression(this.state.Expression)
     }
     public canBack(): boolean { return true; /*return !this.state.IsEdit; */ }
     public Next(): void { /*this.props.Data.Values = this.state.SelectedValues*/ }

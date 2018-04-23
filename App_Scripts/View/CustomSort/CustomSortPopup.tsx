@@ -114,6 +114,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
                     />
                 }
             </PanelWithButton>
@@ -145,6 +146,10 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
+    canFinishWizard() {
+        let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.Values) ;
+    }
 
 }
 

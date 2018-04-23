@@ -5,6 +5,7 @@ import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGro
 import { SortOrder } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { ButtonDirection } from "../Buttons/ButtonDirection";
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>
@@ -175,14 +176,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 </Col>
                 <Col xs={2} style={colButtonStyle} >
                     <ButtonGroup  >
-                        <Button style={{ marginBottom: "10px" }} disabled={this.state.AvailableValues.length == 0}
-                            onClick={() => this.AddAll()} block >Add All <Glyphicon glyph="fast-forward"></Glyphicon></Button>
-                        <Button style={{ marginBottom: "30px" }} disabled={this.state.UiSelectedAvailableValues.length == 0}
-                            onClick={() => this.Add()} block>Add <Glyphicon glyph="step-forward"></Glyphicon></Button>
-                        <Button style={{ marginBottom: "10px" }} disabled={this.state.UiSelectedSelectedValues.length == 0}
-                            onClick={() => this.Remove()} block><Glyphicon glyph="step-backward"></Glyphicon> Remove</Button>
-                        <Button disabled={this.state.SelectedValues.length == 0}
-                            onClick={() => this.RemoveAll()} block><Glyphicon glyph="fast-backward"></Glyphicon> Remove All</Button>
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Add All"} DisplayMode={"Text+Glyph"} glyph={"fast-forward"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={this.state.AvailableValues.length == 0}
+                            onClick={() => this.AddAll()} />
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Add"} DisplayMode={"Text+Glyph"} glyph={"step-forward"} style={{ width: "110px", marginBottom: "30px" }} overrideDisableButton={this.state.UiSelectedAvailableValues.length == 0}
+                            onClick={() => this.Add()} />
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Remove"} style={{ width: "110px", marginBottom: "10px" }} glyph="step-backward" DisplayMode={"Glyph+Text"} overrideDisableButton={this.state.UiSelectedSelectedValues.length == 0}
+                            onClick={() => this.Remove()} />
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Remove All"} style={{ width: "110px", marginBottom: "10px" }} DisplayMode={"Glyph+Text"} glyph="fast-backward" overrideDisableButton={this.state.SelectedValues.length == 0}
+                            onClick={() => this.RemoveAll()} />
                     </ButtonGroup>
                 </Col>
                 <Col xs={4} >
@@ -199,14 +200,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 </Col>
                 <Col xs={2} style={colButtonStyle} >
                     <ButtonGroup>
-                        <Button block disabled={!this.canGoTopOrUp()}
-                            onClick={() => this.Top()}><Glyphicon glyph="triangle-top" /> Top</Button>
-                        <Button style={{ marginBottom: "10px" }} block disabled={!this.canGoTopOrUp()}
-                            onClick={() => this.Up()}><Glyphicon glyph="menu-up" /> Up</Button>
-                        <Button style={{ marginTop: "10px" }} block disabled={!this.canGoDownOrBottom()}
-                            onClick={() => this.Down()}><Glyphicon glyph="menu-down" /> Down</Button>
-                        <Button block disabled={!this.canGoDownOrBottom()}
-                            onClick={() => this.Bottom()}><Glyphicon glyph="triangle-bottom" /> Bottom</Button>
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Top"} DisplayMode={"Glyph+Text"} glyph={"triangle-top"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoTopOrUp()}
+                            onClick={() => this.Top()} />
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Up"} DisplayMode={"Glyph+Text"} glyph={"menu-up"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoTopOrUp()}
+                            onClick={() => this.Up()} />
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Down"} DisplayMode={"Glyph+Text"} glyph={"menu-down"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoDownOrBottom()}
+                            onClick={() => this.Down()} />
+                        <ButtonDirection cssClassName={cssClassName} overrideText={"Bottom"} DisplayMode={"Glyph+Text"} glyph={"triangle-bottom"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoDownOrBottom()}
+                            onClick={() => this.Bottom()} />
                     </ButtonGroup>
                 </Col>
             </Row>

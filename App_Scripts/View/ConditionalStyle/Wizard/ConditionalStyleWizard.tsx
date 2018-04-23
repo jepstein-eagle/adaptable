@@ -5,6 +5,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard'
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
+import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
 import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
@@ -36,12 +37,17 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                         SystemFilters={this.props.SystemFilters}
                         SelectedColumnId={null}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                    />
+                    />,
+                    < ConditionalStyleSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters}/>
+
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} />
+                onFinish={() => this.props.onFinishWizard()} 
+                canFinishWizard={() => this.props.canFinishWizard()}
+                />
+         
         </div>
     }
 }

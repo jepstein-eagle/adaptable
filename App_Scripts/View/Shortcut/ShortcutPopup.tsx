@@ -23,6 +23,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
@@ -60,8 +61,8 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
         let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
             return <ShortcutEntityRow
-            cssClassName={cssClassName}   
-            AdaptableBlotterObject={shortcut} key={"ns" + index}
+                cssClassName={cssClassName}
+                AdaptableBlotterObject={shortcut} key={"ns" + index}
                 Index={index}
                 onEdit={null}
                 colItems={colItems}
@@ -76,7 +77,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             </ShortcutEntityRow>
         });
 
-        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.CreateShortcut()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.CreateShortcut()}
             overrideTooltip="Create New Shortcut"
             DisplayMode="Glyph+Text"
             size={"small"} />
@@ -84,13 +85,13 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <div className={cssClassName}>
-        <PanelWithButton  cssClassName={cssClassName} headerText={StrategyNames.ShortcutStrategyName} className="ab_main_popup"
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ShortcutStrategyName} className="ab_main_popup"
                 button={newButton}
                 bsStyle="primary" glyphicon={StrategyGlyphs.ShortcutGlyph}
                 infoBody={infoBody}>
 
                 {shortcuts.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={shortcuts} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={shortcuts} />
                 }
 
                 {shortcuts.length == 0 &&
@@ -99,8 +100,8 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <ShortcutWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={shortcut}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={shortcut}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
@@ -116,6 +117,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
                     />
                 }
             </PanelWithButton>
@@ -131,6 +133,13 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut = this.state.EditedAdaptableBlotterObject as IShortcut
         this.props.onAddShortcut(shortcut)
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let shortcut = this.state.EditedAdaptableBlotterObject as IShortcut
+
+        return StringExtensions.IsNotNullOrEmpty(shortcut.ShortcutResult) &&
+            StringExtensions.IsNotNullOrEmpty(shortcut.ShortcutKey)
     }
 
     CreateShortcut() {

@@ -27,6 +27,7 @@ import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -71,8 +72,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
 
             return <PlusMinusEntityRow
-            cssClassName={cssClassName}   
-            colItems={colItems}
+                cssClassName={cssClassName}
+                colItems={colItems}
                 AdaptableBlotterObject={x}
                 key={index}
                 Index={index}
@@ -86,18 +87,18 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 onColumnDefaultNudgeValueChange={(index, event) => this.onColumnDefaultNudgeValueChange(index, event)} />
         })
 
-        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.createColumnNudgeValue()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary"  cssClassName={cssClassName} 
+        return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
                 infoBody={infoBody}>
 
                 {PlusMinusRules.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={PlusMinusRules} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={PlusMinusRules} />
                 }
 
                 {PlusMinusRules.length == 0 &&
@@ -107,8 +108,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 {this.state.EditedAdaptableBlotterObject != null &&
 
                     <PlusMinusWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
@@ -119,6 +120,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
                     />
                 }
             </PanelWithButton>
@@ -143,6 +145,13 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule
         this.onAddColumnDefaultNudgeValue(this.state.EditedAdaptableBlotterObjectIndex, plusMinus);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule
+        return StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
+            StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
+            (plusMinus.IsDefaultNudge || ExpressionHelper.IsNotEmptyOrInvalidExpression(plusMinus.Expression))
     }
 
     onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {

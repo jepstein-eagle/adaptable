@@ -27,6 +27,7 @@ import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: IConditionalStyle[]
@@ -70,8 +71,8 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         ]
         let conditionalStyles = this.props.ConditionalStyles.map((conditionalStyle: IConditionalStyle, index) => {
             return <ConditionalStyleEntityRow
-            cssClassName={cssClassName}    
-            AdaptableBlotterObject={conditionalStyle}
+                cssClassName={cssClassName}
+                AdaptableBlotterObject={conditionalStyle}
                 colItems={colItems}
                 key={"CS" + index}
                 Index={index}
@@ -83,26 +84,26 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                 onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyle)} />
         });
 
-        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Conditional Style"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary"  cssClassName={cssClassName} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+        return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
                 }
 
                 {conditionalStyles.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={conditionalStyles} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={conditionalStyles} />
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <ConditionalStyleWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
@@ -114,6 +115,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
                     />
                 }
             </PanelWithButton>
@@ -138,6 +140,13 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
         let conditionalStyle: IConditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
         this.props.onAddUpdateConditionalStyle(this.state.EditedAdaptableBlotterObjectIndex, conditionalStyle);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle
+        return (conditionalStyle.ConditionalStyleScope== ConditionalStyleScope.Row ||  StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
+            ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
+            UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     }
 }
 

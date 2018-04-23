@@ -23,6 +23,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { UIHelper } from '../UIHelper';
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
@@ -108,13 +109,14 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                         StyleClassNames={this.props.StyleClassNames}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        Columns={this.props.Columns.filter(x => !this.props.FormatColumns.find(y => y.ColumnId == x.ColumnId))}
+                        Columns={this.props.Columns}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         ConfigEntities={this.props.FormatColumns}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
-                    />
+                        canFinishWizard={()=>this.canFinishWizard()}
+                        />
                 }
             </PanelWithButton>
         </div>
@@ -142,6 +144,11 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             this.props.onAddFormatColumn(formatColumn)
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    }
+    canFinishWizard() {
+        let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
+        return StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
+            UIHelper.IsNotEmptyStyle(formatColumn.Style)
     }
 }
 

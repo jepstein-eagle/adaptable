@@ -24,6 +24,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
@@ -32,6 +33,8 @@ interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupCom
 
 
 class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, EditableConfigEntityState> {
+
+    
 
     constructor() {
         super();
@@ -52,7 +55,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__userfilter";
 
 
-let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br />, <br />,
+        let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br />, <br />,
             "Once created, User Filters are available in the column's filter dropdown as if a single colum value.", <br />, <br />,
             "Additionally they are available when creating other Queries (e.g. for Advanced Search)", <br />, <br />,
             "A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required."]
@@ -81,8 +84,8 @@ let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br /
 
         let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
             return <UserFilterEntityRow
-            cssClassName={cssClassName}   
-            AdaptableBlotterObject={userFilter}
+                cssClassName={cssClassName}
+                AdaptableBlotterObject={userFilter}
                 colItems={colItems}
                 key={"CS" + index}
                 Index={index}
@@ -94,17 +97,17 @@ let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br /
                 onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)} />
         });
 
-        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create User Filter"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary"  cssClassName={cssClassName}  infoBody={infoBody}
+        return <div className={cssClassName}>
+            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}
                 button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={UserFilterItems} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={UserFilterItems} />
                 }
 
                 {UserFilterItems.length == 0 &&
@@ -114,8 +117,8 @@ let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br /
 
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <UserFilterWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                         Columns={this.props.Columns}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
@@ -126,6 +129,7 @@ let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br /
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={()=>this.canFinishWizard()}
                     />
                 }
             </PanelWithButton>
@@ -150,6 +154,11 @@ let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br /
         let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
         this.props.onAddUpdateUserFilter(userFilter);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+
+    canFinishWizard() {
+        let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
+        return StringExtensions.IsNotNullOrEmpty(userFilter.Name) && StringExtensions.IsNotEmpty(userFilter.ColumnId) && ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression);
     }
 
 }

@@ -23,6 +23,14 @@ export module Helper {
         }
     }
 
+    export function isNotEmptyArray(array: any[]): boolean{
+        return array.length > 0;
+    }
+
+    export function isEmptyArray(array: any[]): boolean{
+        return !isNotEmptyArray
+    }
+
     export function moveArray(array: any[], from: number, to: number) {
         array.splice(to, 0, array.splice(from, 1)[0]);
     }

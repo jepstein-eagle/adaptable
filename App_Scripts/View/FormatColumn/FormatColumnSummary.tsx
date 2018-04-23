@@ -21,6 +21,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 
 
 export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {
@@ -90,7 +91,8 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                />
+                    canFinishWizard={()=>this.canFinishWizard()}
+                    />
             }
         </div>
     }
@@ -118,6 +120,12 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
             this.props.onAddFormatColumn(formatColumn)
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+    }
+    
+    canFinishWizard() {
+        let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
+        return StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
+            UIHelper.IsNotEmptyStyle(formatColumn.Style)
     }
 
 }

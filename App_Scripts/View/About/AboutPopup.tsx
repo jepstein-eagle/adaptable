@@ -10,7 +10,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
-import { IColItem } from "../UIInterfaces";
+import { IColItem, KeyValuePair } from "../UIInterfaces";
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Core/Helpers/Helper";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
@@ -19,10 +19,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 interface AboutPopupComponentProps extends StrategyViewPopupProps<AboutPopupComponent> {
 }
 
-interface KeyValuePair {
-    Key: string,
-    Value: string
-}
+
 
 interface AboutState {
     KeyValuePairs: KeyValuePair[]

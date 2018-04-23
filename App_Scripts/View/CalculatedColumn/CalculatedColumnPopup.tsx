@@ -117,7 +117,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
-                    />
+                        canFinishWizard={()=>this.canFinishWizard()}  />
 
                 }
             </PanelWithButton>
@@ -149,7 +149,11 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
-
+    
+    canFinishWizard() {
+        let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn
+        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.GetValueFunc)
+      }
 
 }
 

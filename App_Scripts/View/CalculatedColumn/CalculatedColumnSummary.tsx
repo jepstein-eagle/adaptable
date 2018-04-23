@@ -13,6 +13,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
@@ -72,7 +73,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                />
+                    canFinishWizard={()=>this.canFinishWizard()} />
             }
         </div>
     }
@@ -90,6 +91,11 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
         this.props.onEdit(this.state.EditedAdaptableBlotterObjectIndex, calculatedColumn);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
+
+    canFinishWizard() {
+        let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn
+        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.GetValueFunc)
+      }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
