@@ -7,6 +7,7 @@ export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 export const ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
 
 export interface AdvancedSearchAddUpdateAction extends Redux.Action {
+    Index: number
     AdvancedSearch: IAdvancedSearch
 }
 
@@ -18,8 +19,9 @@ export interface AdvancedSearchSelectAction extends Redux.Action {
     SelectedSearchName: string
 }
 
-export const AdvancedSearchAddUpdate = (AdvancedSearch: IAdvancedSearch): AdvancedSearchAddUpdateAction => ({
+export const AdvancedSearchAddUpdate = (Index: number,AdvancedSearch: IAdvancedSearch): AdvancedSearchAddUpdateAction => ({
     type: ADVANCED_SEARCH_ADD_UPDATE,
+    Index,
     AdvancedSearch
 })
 
@@ -47,9 +49,8 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state:
             let actionTypedAddUpdate = (<AdvancedSearchAddUpdateAction>action)
             advancedSearches = [].concat(state.AdvancedSearches)
             let currentSearchName = actionTypedAddUpdate.AdvancedSearch.Name;
-            index = advancedSearches.findIndex(a => a.Name == currentSearchName)
-            if (index != -1) {  // it exists
-                advancedSearches[index] = actionTypedAddUpdate.AdvancedSearch
+            if (actionTypedAddUpdate.Index != -1) {  // it exists
+                advancedSearches[actionTypedAddUpdate.Index] = actionTypedAddUpdate.AdvancedSearch
             } else {
                 advancedSearches.push(actionTypedAddUpdate.AdvancedSearch)
             }

@@ -433,7 +433,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                             if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Name == filter.Name)) {
                                 overwriteConfirmation = true
                             }
-                            importAction = FilterRedux.UserFilterAddUpdate(filter)
+                            importAction = FilterRedux.UserFilterAddUpdate(1, filter)
                             // } 
                             break;
                         }
@@ -442,7 +442,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                             if (middlewareAPI.getState().AdvancedSearch.AdvancedSearches.find(x => x.Name == search.Name)) {
                                 overwriteConfirmation = true
                             }
-                            importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(search)
+                            importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(-1, search)
                             break;
                         }
                         case StrategyIds.LayoutStrategyId: {

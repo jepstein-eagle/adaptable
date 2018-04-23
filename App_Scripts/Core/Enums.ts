@@ -6,7 +6,8 @@ export enum DataType {
     Boolean = "Boolean",
     Date = "Date",
     Object = "Object",
-    All = "All"
+    All = "All",
+    Unknown = "Unknown"
 }
 
 export enum ExpressionMode {

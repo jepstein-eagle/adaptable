@@ -13,6 +13,7 @@ import { IColItem } from "../../UIInterfaces";
 import { AdaptableObjectCollection } from '../../Components/AdaptableObjectCollection';
 import { ObjectFactory } from "../../../Core/ObjectFactory";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
+import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
 
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {
@@ -71,17 +72,12 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
             return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
         })
         let cssClassName: string = this.props.cssClassName + "-gridsort"
-       
-        return <div className={cssClassName}>
-        <Panel header="Sort Information" bsStyle="primary"  style={{overflowY: "visible"}} >
-                <div>
-                    {addButton}
-                    {gridSortRows.length > 0 &&
-                        <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={gridSortRows} allowOverflow={true} />
-                    }
-                </div>
-            </Panel>
-        </div>
+
+        return <PanelWithButton cssClassName={cssClassName} headerText="Sort Information" bsStyle="primary" style={divStyle}  button={addButton}>
+            <div>
+                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={gridSortRows} allowOverflow={true} />
+               </div>
+        </PanelWithButton>
     }
 
 
@@ -142,5 +138,10 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         return 1;  // some way of knowing to go back 2 steps?
     }
     public StepName = this.props.StepName
+}
+
+let divStyle: React.CSSProperties = {
+    'overflowY': 'auto',
+    'height': '500px',
 }
 

@@ -5,7 +5,7 @@ import { Well } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import { ExportDestination } from '../../Core/Enums'
+import { ExportDestination, ReportColumnScope } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
@@ -67,14 +67,14 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             { Content: "Report", Size: 2 },
             { Content: "Columns", Size: 3 },
             { Content: "Query Details", Size: 4 },
-            { Content: "Export", Size: 1},
+            { Content: "Export", Size: 1 },
             { Content: "", Size: 3 },
         ]
 
         let Reports = this.props.Reports.map((Report: IReport, index) => {
             return <ReportEntityRow
-            cssClassName={cssClassName}   
-            AdaptableBlotterObject={Report}
+                cssClassName={cssClassName}
+                AdaptableBlotterObject={Report}
                 key={index}
                 colItems={colItems}
                 Index={index}
@@ -88,19 +88,19 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                 onReportStopLive={(exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination)}
                 onEdit={(index, Report) => this.onEdit(index, Report as IReport)}
                 onDeleteConfirm={ExportRedux.ReportDelete(index)}
-             />
+            />
         });
 
-        let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Report"
             DisplayMode="Glyph+Text"
             size={"small"} />
 
-            return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} >
+        return <div className={cssClassName}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} >
 
                 {Reports.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={Reports} allowOverflow={true}  />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={true} />
                 }
 
                 {Reports.length == 0 &&
@@ -121,7 +121,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                         canFinishWizard={() => this.canFinishWizard()}
-                        />
+                    />
                 }
             </PanelWithButton>
         </div>
@@ -141,8 +141,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     canFinishWizard() {
         let report = this.state.EditedAdaptableBlotterObject as IReport
         return StringExtensions.IsNotNullOrEmpty(report.Name) &&
-        ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-        Helper.isNotEmptyArray(report.Columns)
+            ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
+            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || Helper.isNotEmptyArray(report.Columns))
     }
 
     onNew() {

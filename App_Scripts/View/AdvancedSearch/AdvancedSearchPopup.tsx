@@ -31,7 +31,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
     AdvancedSearches: IAdvancedSearch[];
     CurrentAdvancedSearchName: string;
-    onAddUpdateAdvancedSearch: (AdvancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
+    onAddUpdateAdvancedSearch: (index: number, advancedSearch: IAdvancedSearch) => AdvancedSearchRedux.AdvancedSearchAddUpdateAction,
     onSelectAdvancedSearch: (SelectedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
 }
@@ -49,7 +49,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         if (this.props.PopupParams == "Edit") {
             let currentAdvancedSearch = this.props.AdvancedSearches.find(as => as.Name == this.props.CurrentAdvancedSearchName)
             if (currentAdvancedSearch) {
-                this.onEdit(currentAdvancedSearch)
+               let index: number = this.props.AdvancedSearches.findIndex(as=>as.Name == currentAdvancedSearch.Name)
+                this.onEdit(index, currentAdvancedSearch)
             }
         }
     }
@@ -71,21 +72,21 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             { Content: "", Size: buttonSize },
         ]
 
-        let advancedSearchRows = this.props.AdvancedSearches.map((x, index) => {
+        let advancedSearchRows = this.props.AdvancedSearches.map((advancedSearch: IAdvancedSearch, index) => {
             return <AdvancedSearchEntityRow
                 cssClassName={cssClassName}
                 key={index}
                 colItems={colItems}
-                IsCurrentAdvancedSearch={x.Name == this.props.CurrentAdvancedSearchName}
-                AdaptableBlotterObject={x}
+                IsCurrentAdvancedSearch={advancedSearch.Name == this.props.CurrentAdvancedSearchName}
+                AdaptableBlotterObject={advancedSearch}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 Index={index}
-                onEdit={(index, x) => this.onEdit(x as IAdvancedSearch)}
-                onShare={() => this.props.onShare(x)}
+                onEdit={(index, advancedSearch) => this.onEdit(index, advancedSearch as IAdvancedSearch)}
+                onShare={() => this.props.onShare(advancedSearch)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(x)}
-                onSelect={() => this.props.onSelectAdvancedSearch(x.Name)}
+                onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}
+                onSelect={() => this.props.onSelectAdvancedSearch(advancedSearch.Name)}
             >
             </AdvancedSearchEntityRow>
         })
@@ -133,9 +134,9 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAdvancedSearch(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
-    onEdit(advancedSearch: IAdvancedSearch) {
+    onEdit(index: number,advancedSearch: IAdvancedSearch) {
         let clonedObject: IAdvancedSearch = Helper.cloneObject(advancedSearch);
-        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 })
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index })
     }
 
     onCloseWizard() {
@@ -144,10 +145,12 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     }
 
     onFinishWizard() {
+       let searchIndex: number = this.state.EditedAdaptableBlotterObjectIndex ;
+       let currentSearchIndex: number = this.props.AdvancedSearches.findIndex(as=>as.Name == this.props.CurrentAdvancedSearchName)
         let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+        this.props.onAddUpdateAdvancedSearch(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-        this.props.onAddUpdateAdvancedSearch(clonedObject);
-        if (this.state.EditedAdaptableBlotterObjectIndex == -1) {// its new so make it the new search
+        if (searchIndex== -1 || searchIndex==currentSearchIndex) {// its new so make it the new search or we are editing the current search (but might have changed the name)
             this.props.onSelectAdvancedSearch(clonedObject.Name);
         }
     }
@@ -168,7 +171,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateAdvancedSearch: (advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(advancedSearch)),
+        onAddUpdateAdvancedSearch: (index: number,advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(index, advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AdvancedSearchStrategyId))
     };

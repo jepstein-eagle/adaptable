@@ -29,7 +29,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
                     // no implementation: not sure if this is actually needed...
                 }}
             >
-                <Row style={{ display: "flex", alignItems: "center" }}>
+                <Row style={{ display: "flex", alignItems: "center" , overflowY: 'visible'}}>
                     {colItems}
                 </Row>
             </li>

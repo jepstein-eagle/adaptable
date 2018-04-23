@@ -27,7 +27,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
-    onAddUpdateUserFilter: (userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+    onAddUpdateUserFilter: (index: number, userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -46,7 +46,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let userFilter: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
                 userFilter.ColumnId = arrayParams[1]
-                this.onEdit(userFilter)
+                this.setState({ EditedAdaptableBlotterObject: userFilter, WizardStartIndex: 1 });
             }
         }
     }
@@ -93,7 +93,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 UserFilters={this.props.UserFilters}
                 Columns={this.props.Columns}
-                onEdit={(index, userFilter) => this.onEdit(userFilter as IUserFilter)}
+                onEdit={(index, userFilter) => this.onEdit(index , userFilter as IUserFilter)}
                 onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)} />
         });
 
@@ -140,9 +140,9 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyUserFilter(), WizardStartIndex: 0 });
     }
 
-    onEdit(userFilter: IUserFilter) {
+    onEdit(index: number, userFilter: IUserFilter) {
         let clonedObject: IUserFilter = Helper.cloneObject(userFilter);
-        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(clonedObject), WizardStartIndex: 1 });
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(clonedObject), WizardStartIndex: 1 , EditedAdaptableBlotterObjectIndex: index});
     }
 
     onCloseWizard() {
@@ -152,7 +152,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     onFinishWizard() {
         let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
-        this.props.onAddUpdateUserFilter(userFilter);
+        this.props.onAddUpdateUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
@@ -170,7 +170,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateUserFilter: (userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(userFilter)),
+        onAddUpdateUserFilter: (index: number,userFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(index,userFilter)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

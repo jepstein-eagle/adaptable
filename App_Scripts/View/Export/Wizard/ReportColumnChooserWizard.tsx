@@ -37,7 +37,8 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
                        SelectedValues={this.state.SelectedColumnValues}
                         HeaderAvailable="Columns"
                         HeaderSelected="Columns in Report"
-                        onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}></DualListBoxEditor>
+                        onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
+                        ReducedDisplay={true} />
                 </Panel>
             }
         </div>

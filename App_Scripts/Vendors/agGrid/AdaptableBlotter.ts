@@ -93,6 +93,7 @@ import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
+    
     public api: IBlotterApi
     public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
@@ -310,8 +311,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
             this.gridOptions.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
-        // need to do this?  seems so but not sure
-        this.setColumnIntoStore();
+        // need to do this?  seems so but not sure.  if we dont then we dont get the initial column load.
+      this.setColumnIntoStore();
         //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
@@ -402,17 +403,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-        // get the column type if already in store
+        // get the column type if already in store (and not unknwown)
         let existingColumn:IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c=>c.ColumnId == column.getId());
-        if(existingColumn){
+        if(existingColumn && existingColumn.DataType!= DataType.Unknown){
             return existingColumn.DataType;
         }
 
         let row = this.gridOptions.api.getModel().getRow(0)
 
         if(row==null){ // possible that there will be no data.
-            console.log('there is no first row so we are returning String for Type')
-             return DataType.String; 
+            console.log('there is no first row so we are returning Unknown for Type')
+             return DataType.Unknown; 
         }
         //if it's a group we need the content of the group
         if (row.group) {
@@ -824,6 +825,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //since there are many events and we want them to behave the same
         let columnEventsThatTriggersStateChange = [Events.EVENT_COLUMN_MOVED,
         Events.EVENT_GRID_COLUMNS_CHANGED,
+        Events.EVENT_COLUMN_EVERYTHING_CHANGED,
+        Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
         Events.EVENT_COLUMN_VISIBLE,
         Events.EVENT_NEW_COLUMNS_LOADED];
         gridOptions.api.addGlobalListener((type: string, event: any) => {
@@ -914,6 +917,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
         });
+      //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+      //  });
+      //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+        //});
+        gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
+            // not sure about this - doing it to make sure that we set the columns properly at least once!
+            this.checkColumnsDataTypeSet();
+        });
+
+        
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
@@ -1098,6 +1111,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public canMultiSort(): boolean{
         return true;
+    }
+
+    private checkColumnsDataTypeSet(): any {
+        // check that we have no unknown columns - if we do then ok
+       let firstCol= this.AdaptableBlotterStore.TheStore.getState().Grid.Columns[0];
+       if(firstCol.DataType == DataType.Unknown){
+           this.setColumnIntoStore();
+       }
     }
     
 }

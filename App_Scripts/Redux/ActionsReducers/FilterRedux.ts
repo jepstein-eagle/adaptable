@@ -14,7 +14,8 @@ export const HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
 
 
 export interface UserFilterAddUpdateAction extends Redux.Action {
-    UserFilter: IUserFilter
+    Index: number
+   UserFilter: IUserFilter
 }
 
 export interface UserFilterDeleteAction extends Redux.Action {
@@ -35,8 +36,9 @@ export interface ColumnFilterDeleteAction extends Redux.Action {
     columnFilter: IColumnFilter
 }
 
-export const UserFilterAddUpdate = (UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
+export const UserFilterAddUpdate = (Index: number,UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
     type: USER_FILTER_ADD_UPDATE,
+    Index,
     UserFilter
 })
 
@@ -90,28 +92,27 @@ const initialFilterState:
 export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = initialFilterState, action: Redux.Action): FilterState => {
     let index: number;
     let columnFilters: IColumnFilter[]
-    let UserFilters: IUserFilter[]
+    let userFilters: IUserFilter[]
     
     switch (action.type) {
 
         case USER_FILTER_ADD_UPDATE: {
             let actionTypedAddUpdate = (<UserFilterAddUpdateAction>action)
-            UserFilters = [].concat(state.UserFilters)
-            index = UserFilters.findIndex(i => i.Name == actionTypedAddUpdate.UserFilter.Name)
-            if (index != -1) {  // it exists
-                UserFilters[index] = actionTypedAddUpdate.UserFilter
+            userFilters = [].concat(state.UserFilters)
+            if (actionTypedAddUpdate.Index != -1) {  // it exists
+                userFilters[actionTypedAddUpdate.Index] = actionTypedAddUpdate.UserFilter
             } else {
-                UserFilters.push(actionTypedAddUpdate.UserFilter)
+                userFilters.push(actionTypedAddUpdate.UserFilter)
             }
-            return Object.assign({}, state, { UserFilters: UserFilters })
+            return Object.assign({}, state, { UserFilters: userFilters })
         }
 
         case USER_FILTER_DELETE: {
             let actionTypedDelete = (<UserFilterDeleteAction>action)
-            UserFilters = [].concat(state.UserFilters)
-            index = UserFilters.findIndex(i => i.Name == actionTypedDelete.UserFilter.Name)
-            UserFilters.splice(index, 1);
-            return Object.assign({}, state, { UserFilters: UserFilters })
+            userFilters = [].concat(state.UserFilters)
+            index = userFilters.findIndex(i => i.Name == actionTypedDelete.UserFilter.Name)
+            userFilters.splice(index, 1);
+            return Object.assign({}, state, { UserFilters: userFilters })
         }
         case COLUMN_FILTER_ADD_UPDATE: {
             let actionTypedAddUpdate = (<ColumnFilterAddUpdateAction>action)

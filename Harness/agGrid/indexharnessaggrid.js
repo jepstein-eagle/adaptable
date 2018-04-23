@@ -177,7 +177,7 @@ function InitBlotter() {
     // let the grid know which columns and what data to use
     var gridOptions = {
         columnDefs: getSchema(trades),
-        rowData: trades,
+        rowData: [],
         enableSorting: true,
         enableRangeSelection: true,
         groupMultiAutoColumn: false,
@@ -194,7 +194,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
 
-    let serverSearch = "AllSearch"
+    let serverSearch = "AdvancedSearch"
 
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
@@ -203,7 +203,7 @@ function InitBlotter() {
         enableAuditLog: true,
         enableRemoteConfigServer: false,
         //   predefinedConfig: json,//"demoConfig.json",// json,
-      //  serverSearch: serverSearch,
+        serverSearch: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -219,11 +219,10 @@ function InitBlotter() {
 function getTradesForSearch(searchArgs, dataGen) {
 
     let search = searchArgs.AdvancedSearch;
-    alert(searchArgs.SearchChangedTrigger);
     let newTrades
     if (search == null || search.Name == "") {
-        alert("nowt")
-        newTrades = dataGen.getTrades()
+        //   newTrades = dataGen.getTrades()
+        return;
     } else {
         alert(search.Name);
         if (search.Name == "barcap") {
