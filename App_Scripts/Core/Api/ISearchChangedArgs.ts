@@ -5,6 +5,6 @@ import { SearchChangedTrigger } from "../Enums";
 export interface ISearchChangedArgs {
   SearchChangedTrigger: SearchChangedTrigger
   AdvancedSearch: IAdvancedSearch
-  QuickSearchText: USVString
+  QuickSearchText: string
   ColumnFilters: IColumnFilter[]
 }
