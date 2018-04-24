@@ -21,7 +21,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     cssClassName: string
     glyph?: string
     hideToolTip?: boolean
-
+    
 }
 
 export interface ButtonBaseProps extends ButtonProps {
@@ -42,7 +42,8 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         glyph: "",
         DisplayMode: "Glyph+Text",
         transformGlyph: false,
-        cssClassName: "btn"
+        cssClassName: "btn",
+        
     };
     render() {
         let isDisabled: boolean

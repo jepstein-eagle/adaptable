@@ -100,7 +100,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} >
 
                 {Reports.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={true} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={false} />
                 }
 
                 {Reports.length == 0 &&

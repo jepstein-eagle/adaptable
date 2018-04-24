@@ -55,6 +55,10 @@ export const UNDO_BUTTON: string = "__btn-undo"
 export const NEW_BUTTON: string = "__btn-new"
 export const MINIMISE_BUTTON: string = "__btn-minimise"
 export const DIRECTION_BUTTON: string = "__btn-direction"
+export const WIZARD_ACTION_BUTTON: string = "__btn-wizardaction"
+export const PREVIEW_HEADER_BUTTON: string = "__btn-previewheader"
+export const PREVIEW_DELETE_COLUMN_BUTTON: string = "__btn-previewdeletecolumn"
+export const PREVIEW_DELETE_ITEM_BUTTON: string = "__btn-previewdeleteitem"
 
 // others
 export const FILTER_FORM: string = AB_STYLE + "__filterform"

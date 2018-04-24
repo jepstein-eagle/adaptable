@@ -126,7 +126,7 @@ button.placeholder:before {
 
 /*How we manage readonly controls*/
 .ab_readonly button,
-.ab_readonly .adaptable_blotter_div_like_button,
+.ab_readonly .ab_div_like_button,
 .ab_readonly select,
 .ab_readonly input,
 .ab_readonly .radio{

@@ -12,6 +12,8 @@ import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IRange } from "../../Core/Interface/IRange";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -29,7 +31,7 @@ export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Exp
     DeleteRange: (ColumnId: string, index: number) => void
     DeleteUserFilterExpression: (ColumnId: string, index: number) => void
     DeleteColumnValue: (ColumnId: string, ColumnValue: any) => void
-    DeleteAllColumnExpression:(ColumnId: string)=> void
+    DeleteAllColumnExpression: (ColumnId: string) => void
     ShowPanel: boolean // currently ALWAYS true!
     ReadOnlyMode?: boolean
     cssClassName: string
@@ -42,7 +44,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
     render() {
         let cssClassName: string = this.props.cssClassName + "__querypreview"
-        let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression)
+         let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression)
         let previewLists = columnList.map(columnId => {
 
             // First lets do the column values
@@ -56,12 +58,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
                     return <ListGroupItem key={y} >
-                        <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer', fontSize: 'small' }}>
+                        <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer', fontSize: 'small' }}>
                             <AdaptableBlotterForm inline>
                                 {y}
-                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteColumnValue(columnId, y); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
-                                </OverlayTrigger>
+                                <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph"  />
                             </AdaptableBlotterForm>
                         </div>
                     </ListGroupItem>
@@ -75,17 +75,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             if (columnUserFilterExpressions) {
                 columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
                     return <ListGroupItem key={filter}>
-                        <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                        <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                             <AdaptableBlotterForm inline>
                                 {filter}
-                                <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                    <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => {
-                                        this.props.DeleteUserFilterExpression(columnId, index);
-                                        if (!this.props.ShowPanel) { e.stopPropagation(); }
-                                    }}>
-                                        <Glyphicon glyph="remove" />
-                                    </Button>
-                                </OverlayTrigger>
+                                <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteUserFilterExpression(columnId, index)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph" />
                             </AdaptableBlotterForm>
                         </div>
                     </ListGroupItem>
@@ -95,31 +88,30 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             // Finally do the column ranges
             let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnName == columnId)
             let columnRangesListgroupItems: JSX.Element[]
+                                 /* Note: these used to say:  this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation();  - do we need that? */
+                              
             if (columnRanges) {
                 columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
                     if (y.Operator == LeafExpressionOperator.Between) {
 
                         if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
-                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}{' '}And{' '}{this.getOperand2Value(y)}
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
-                                        </OverlayTrigger>
+                                        <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph"  />
                                     </AdaptableBlotterForm>
+                                
                                 </div>
                             </ListGroupItem>
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
-                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}{' '}And{' '}{this.getOperand2Value(y)}
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
-                                        </OverlayTrigger>
-                                    </AdaptableBlotterForm>
+                                        <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph"  />
+                                       </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }
@@ -127,25 +119,21 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     else {
                         if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
                             return <ListGroupItem key={columnId + index} bsStyle="danger" >
-                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
-                                        </OverlayTrigger>
-                                    </AdaptableBlotterForm>
+                                        <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph"  />
+                               </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }
                         else {
                             return <ListGroupItem key={columnId + index}>
-                                <div className="adaptable_blotter_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
+                                <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}
-                                        <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Remove</Tooltip>}>
-                                            <Button bsSize="xsmall" style={{ float: 'right' }} onClick={(e) => { this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation(); } }}><Glyphicon glyph="remove" /></Button>
-                                        </OverlayTrigger>
-                                    </AdaptableBlotterForm>
+                                        <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteRange(columnId, index)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph" />
+                               </AdaptableBlotterForm>
                                 </div>
                             </ListGroupItem>
                         }
@@ -159,10 +147,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
                 <InputGroup>
                     <InputGroup.Button>
-                        <Button block className="ab_no_margin"
-                             style={{ width: "250px" }}
-                             bsStyle="success"
-                             bsSize="small"
+                        <Button block className={cssClassName + StyleConstants.PREVIEW_HEADER_BUTTON}
+                            style={{ width: "250px" }}
+                            bsStyle="success"
+                            bsSize="small"
                             key={columnId + "header"}
                             ref={columnId}
                             onClick={() => this.props.onSelectedColumnChange(columnId)} >
@@ -170,7 +158,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                         </Button>
                     </InputGroup.Button>
                     <InputGroup.Button>
-                        <Button block className="ab_no_margin"
+                        <Button block className={cssClassName + StyleConstants.PREVIEW_DELETE_COLUMN_BUTTON}
                             style={{ width: "40px" }}
                             bsStyle="success"
                             bsSize="small"
@@ -197,7 +185,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             {this.props.ShowPanel &&
 
                 <PanelWithButton cssClassName={cssClassName} headerText="Preview" bsStyle="info"  >
-                     <div style={{ height: '355px' , overflowY: 'auto'}}>
+                    <div style={{ height: '355px', overflowY: 'auto' }}>
                         {previewLists}
                     </div>
                 </PanelWithButton>

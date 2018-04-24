@@ -70,18 +70,18 @@ export enum ConditionalStyleScope {
 }
 
 export enum ReportColumnScope {
-    AllColumns,
-    VisibleColumns,
-    SelectedColumns,
-    BespokeColumns
+    AllColumns="AllColumns",
+    VisibleColumns="VisibleColumns",
+    SelectedColumns="SelectedColumns",
+    BespokeColumns="BespokeColumns"
 }
 
 
 export enum ReportRowScope {
-    AllRows,
-    VisibleRows,
-    SelectedRows,
-    ExpressionRows
+    AllRows="AllRows",
+    VisibleRows="VisibleRows",
+    SelectedRows="SelectedRows",
+    ExpressionRows="ExpressionRows"
 }
 
 export enum ExportDestination {

@@ -6,6 +6,7 @@ import { UIHelper } from "../UIHelper";
 import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
+import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
 
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
@@ -62,7 +63,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         }
         let BodyElement: JSX.Element = this.props.Steps[indexStart];
         let newElement = this.cloneWizardStep(BodyElement)
-        this.state = { ActiveState: newElement, IndexState: indexStart}
+        this.state = { ActiveState: newElement, IndexState: indexStart }
     }
 
     render() {
@@ -83,9 +84,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                     </Modal.Body>
                     <Modal.Footer className={cssClassName + StyleConstants.WIZARD_FOOTER}>
                         <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} />
-                        <Button bsStyle="default" disabled={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()}><Glyphicon glyph="chevron-left" /> Back</Button>
-                        <Button bsStyle="info" disabled={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()}>{"Next"} <Glyphicon glyph={"chevron-right"} /></Button>
-                        <Button bsStyle="primary" disabled={!this.canFinishWizard()} onClick={() => this.handleClickFinish()}>{"Finish"} <Glyphicon glyph={"ok"} /></Button>
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" />
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} />
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="primary" overrideDisableButton={!this.canFinishWizard()} onClick={() => this.handleClickFinish()} overrideText="Finish" glyph={"ok"} />
                     </Modal.Footer>
                 </div>
             </Modal>
@@ -98,18 +99,18 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 
            */
         this.forceUpdate();
-      //  this.setState({ ForceFinish: forceFinish } as AdaptableWizardState)
+        //  this.setState({ ForceFinish: forceFinish } as AdaptableWizardState)
     }
 
     isLastStep(): boolean {
-        return this.state.IndexState == (this.props.Steps.length - 1) ;
+        return this.state.IndexState == (this.props.Steps.length - 1);
     }
 
     isFirstStep(): boolean {
         return this.state.IndexState == 0;
     }
 
-    canFinishWizard(): boolean{
+    canFinishWizard(): boolean {
         return this.ActiveStep.canNext() && this.props.canFinishWizard();
     }
 
