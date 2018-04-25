@@ -28,7 +28,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
     }
     render() {
         let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_VALUE_SELECTOR;
-        let sortedColumnValues: string[] = []
+        let sortedColumnValues: IRawValueDisplayValuePair[] = []
         let selectedValue: string = ""
         let placeholderText = "Select existing column value"
         let allowNew = (this.props.AllowNew != null) ? this.props.AllowNew : true;
@@ -45,16 +45,14 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
                 let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
                 selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
             }
-            sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
+            sortedColumnValues= Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
         }
 
         return <Typeahead ref="typeahead"
-            className={cssClassName}
             emptyLabel={""}
             placeholder={placeholderText}
             bsSize={this.props.bsSize}
             labelKey={"DisplayValue"}
-            filterBy={["DisplayValue"]}
             multiple={false}
             clearButton={true}
             selected={[selectedValue]}
@@ -63,6 +61,14 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             disabled={this.props.disabled}
             allowNew={allowNew}
             newSelectionPrefix={"new value: "}
+            filterBy={(option: IRawValueDisplayValuePair, text: any) => {
+                if (sortedColumnValues.length) {
+                    // Display all the options if there's a selection.
+                    return true;
+                }
+                // Otherwise filter on some criteria.
+                return option.DisplayValue.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+            }}
         />
 
     }

@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormControl } from 'react-bootstrap';
+import { FormControl, Row, Col, InputGroup, InputGroupButton, Glyphicon } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IColumn';
@@ -39,18 +39,18 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
     render(): any {
         let cssClassName: string = this.props.cssClassName + "__layout";
- let nonDefaultLayouts = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT);
+        let nonDefaultLayouts = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT);
         let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout)
         let isLayoutModified = this.isLayoutModified(layoutEntity);
-        let currentLayoutNameAsArray: string[] =[];
-         let availableLayouts = nonDefaultLayouts.map((x) => {
+        let currentLayoutNameAsArray: string[] = [];
+        let availableLayouts = nonDefaultLayouts.map((x) => {
             if (x.Name == this.props.CurrentLayout) {
-             let currentLayoutName: string
+                let currentLayoutName: string
                 if (!isLayoutModified) {
-                     currentLayoutName = x.Name
+                    currentLayoutName = x.Name
                 }
                 else {
-                    currentLayoutName= x.Name + "(Modified)"
+                    currentLayoutName = x.Name + "(Modified)"
                 }
                 currentLayoutNameAsArray.push(currentLayoutName);
                 return currentLayoutName
@@ -60,12 +60,11 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             }
         })
 
-      
-        let content = <span>
-            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+
+        let content = <InputGroup>
+            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <Typeahead
                     bsSize="small"
-                    className={"ab_typeahead_inline"}
                     ref="typeahead"
                     emptyLabel={"No Layout found with that name"}
                     placeholder={"Select a Layout"}
@@ -76,42 +75,68 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     options={availableLayouts}
                     allowNew={false}
                     newSelectionPrefix={"New Layout: "}
+                    filterBy={(option: any, text: any) => {
+                        if (currentLayoutNameAsArray.length) {
+                            // Display all the options if there's a selection.
+                            return true;
+                        }
+                        // Otherwise filter on some criteria.
+                        return option.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+                    }}
                 />
-                {' '}
-                <ButtonSave  cssClassName={cssClassName} onClick={() => this.onSave()}
-                    size={"small"}
-                    overrideTooltip="Save Changes to Current Layout"
-                    overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-                    ConfigEntity={layoutEntity}
-                    DisplayMode="Glyph" />
-                {' '}
-                <ButtonNew cssClassName={cssClassName}onClick={() => this.props.onNewLayout()}
-                    size={"small"}
-                    overrideTooltip="Create a new Layout"
-                    DisplayMode="Glyph" />
-                {' '}
-                <ButtonUndo  cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
-                    size={"small"}
-                    overrideTooltip="Undo Layout Changes"
-                    overrideDisableButton={!isLayoutModified}
-                    ConfigEntity={layoutEntity}
-                    DisplayMode="Glyph" />
-                {' '}
-                <ButtonDelete
-                    cssClassName={cssClassName}  size={"small"}
-                    overrideTooltip="Delete Layout"
-                    overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-                    ConfigEntity={layoutEntity}
-                    DisplayMode="Glyph"
-                    ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
-                    ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
-                    ConfirmationTitle={"Delete Layout"} />
-            </div>
-        </span>
+            </span>
+            <InputGroup.Button>
+                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                    <ButtonSave
+                        style={{ marginLeft: "2px" }}
+                        cssClassName={cssClassName} onClick={() => this.onSave()}
+                        size={"small"}
+                        overrideTooltip="Save Changes to Current Layout"
+                        overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+                        ConfigEntity={layoutEntity}
+                        DisplayMode="Glyph" />
+                </span>
+            </InputGroup.Button>
+            <InputGroup.Button>
+                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                    <ButtonNew
+                        style={{ marginLeft: "2px" }}
+                        cssClassName={cssClassName} onClick={() => this.props.onNewLayout()}
+                        size={"small"}
+                        overrideTooltip="Create a new Layout"
+                        DisplayMode="Glyph" />
+                </span>
+            </InputGroup.Button>
+            <InputGroup.Button>
+                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                    <ButtonUndo style={{ marginLeft: "2px" }}
+                        cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
+                        size={"small"}
+                        overrideTooltip="Undo Layout Changes"
+                        overrideDisableButton={!isLayoutModified}
+                        ConfigEntity={layoutEntity}
+                        DisplayMode="Glyph" />
+                </span>
+            </InputGroup.Button>
+            <InputGroup.Button>
+                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                    <ButtonDelete
+                        style={{ marginLeft: "2px" }}
+                        cssClassName={cssClassName} size={"small"}
+                        overrideTooltip="Delete Layout"
+                        overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+                        ConfigEntity={layoutEntity}
+                        DisplayMode="Glyph"
+                        ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
+                        ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+                        ConfirmationTitle={"Delete Layout"} />
+                </span>
+            </InputGroup.Button>
+        </InputGroup>
 
-return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={() => this.props.onClose(StrategyIds.LayoutStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
-                {content}
-            </PanelDashboard>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.LayoutStrategyName} glyphicon={StrategyGlyphs.LayoutGlyph} onClose={() => this.props.onClose(StrategyIds.LayoutStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+            {content}
+        </PanelDashboard>
     }
 
     private isLayoutModified(layoutEntity: ILayout): boolean {

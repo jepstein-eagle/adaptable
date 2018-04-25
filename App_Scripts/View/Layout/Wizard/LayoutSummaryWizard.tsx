@@ -23,7 +23,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
 
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
-            { Key: "Description", Value: this.getColumnNames()},
+            { Key: "Columns", Value: this.getColumnNames()},
             { Key: "Grid Sorts", Value: LayoutHelper.getGridSort(this.props.Data.GridSorts, this.props.Columns) },
         ]
 
