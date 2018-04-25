@@ -173,7 +173,7 @@ export enum SearchChangedTrigger {
     Sort = "Sort",
 }
 
-export enum ServerSearchOptions {
+export enum ServerSearchOption {
     None = 'None',
     AdvancedSearch = 'AdvancedSearch',
     AllSearch = 'AllSearch',

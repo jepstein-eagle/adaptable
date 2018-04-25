@@ -4,7 +4,7 @@ import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrateg
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { LeafExpressionOperator, DisplayAction, ServerSearchOptions } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction, ServerSearchOption } from '../../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase
 export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {
@@ -30,7 +30,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
 
         let blotterOptions = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
         //first we assess AdvancedSearch 
-        if (blotterOptions.serverSearch == ServerSearchOptions.None) {
+        if (blotterOptions.serverSearchOption == ServerSearchOption.None) {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -41,7 +41,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         //we then assess column filters
-        if (blotterOptions.serverSearch == ServerSearchOptions.None|| ServerSearchOptions.AdvancedSearch) {
+        if (blotterOptions.serverSearchOption == ServerSearchOption.None|| ServerSearchOption.AdvancedSearch) {
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {

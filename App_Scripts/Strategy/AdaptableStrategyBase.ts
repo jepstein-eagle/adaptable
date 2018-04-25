@@ -10,7 +10,7 @@ import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ISearchChangedArgs } from '../Core/Api/ISearchChangedArgs';
 import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumnFilter } from './Interface/IColumnFilterStrategy';
-import { SearchChangedTrigger, ServerSearchOptions } from '../Core/Enums';
+import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
@@ -158,7 +158,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
     publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
-        if (state.Grid.BlotterOptions.serverSearch != ServerSearchOptions.None) {
+        if (state.Grid.BlotterOptions.serverSearchOption != ServerSearchOption.None) {
             // doing them all in each until I find a better way...
             let currentAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch)
             let quickSearchText: string = state.QuickSearch.QuickSearchText

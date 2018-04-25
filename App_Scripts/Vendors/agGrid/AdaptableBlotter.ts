@@ -61,7 +61,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, CellValidationMode, SearchChangedTrigger, ServerSearchOptions } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, CellValidationMode, SearchChangedTrigger, ServerSearchOption } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
@@ -963,10 +963,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let serverSearch: ServerSearchOptions = this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch
+            let serverSearch: ServerSearchOption = this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (serverSearch == ServerSearchOptions.None) {
+            if (serverSearch == ServerSearchOption.None) {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -977,7 +977,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (serverSearch == ServerSearchOptions.None || ServerSearchOptions.AdvancedSearch) {
+            if (serverSearch == ServerSearchOption.None || ServerSearchOption.AdvancedSearch) {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
