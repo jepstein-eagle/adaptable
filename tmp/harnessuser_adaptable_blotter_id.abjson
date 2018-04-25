@@ -56,7 +56,7 @@
 		"QuickSearchForeColor": "#000000",
 		"QuickSearchText": "",
 		"QuickSearchOperator": "Contains",
-		"QuickSearchDisplayType": "HighlightCell",
+		"DisplayAction": "HighlightCell",
 		"QuickSearchStyle": {
 			"BackColor": "#FFFFCC",
 			"ForeColor": "#000000"

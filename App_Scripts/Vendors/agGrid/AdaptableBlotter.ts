@@ -61,7 +61,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { DataType, LeafExpressionOperator, SortOrder, QuickSearchDisplayType, DistinctCriteriaPairValue, CellValidationMode, SearchChangedTrigger } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, CellValidationMode, SearchChangedTrigger, ServerSearchOptions } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
@@ -93,7 +93,7 @@ import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
-    
+
     public api: IBlotterApi
     public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
@@ -256,38 +256,39 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let allColumns = visibleColumns.concat(hiddenColumns)
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(allColumns));
         let blotter = this
+        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ? blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName : StyleConstants.QUICK_SEARCH_STYLE
         for (let col of allColumns) {
-            this.setCellClassRules({
-                'Ab-QuickSearch': function (params: any) {
-                    let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-                    let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-                    if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
-                        && (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell)) {
-                        let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                        let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
-                        let rowId = blotter.getPrimaryKeyValueFromRecord(params.node);
-                        let stringValueLowerCase = displayValue.toLowerCase();
-                        switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
-                            case LeafExpressionOperator.Contains:
-                                {
-                                    if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                        return true
-                                    }
+            let cellClassRules: any = {};
+            cellClassRules[quickSearchClassName] = function (params: any) {
+                let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+                let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+                if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
+                    && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
+                        || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
+                    let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                    let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
+                    let rowId = blotter.getPrimaryKeyValueFromRecord(params.node);
+                    let stringValueLowerCase = displayValue.toLowerCase();
+                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
+                        case LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    return true
                                 }
-                                break;
-                            case LeafExpressionOperator.StartsWith:
-                                {
-                                    if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                        return true
-                                    }
+                            }
+                            break;
+                        case LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    return true
                                 }
-                                break;
-                        }
+                            }
+                            break;
                     }
-                    return false;
                 }
-            }, col.ColumnId, "QuickSearch")
+                return false;
+            }
+            this.setCellClassRules(cellClassRules, col.ColumnId, "QuickSearch")
         }
 
     }
@@ -312,7 +313,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
         // need to do this?  seems so but not sure.  if we dont then we dont get the initial column load.
-      this.setColumnIntoStore();
+        this.setColumnIntoStore();
         //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
@@ -404,16 +405,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // get the column type if already in store (and not unknwown)
-        let existingColumn:IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c=>c.ColumnId == column.getId());
-        if(existingColumn && existingColumn.DataType!= DataType.Unknown){
+        let existingColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == column.getId());
+        if (existingColumn && existingColumn.DataType != DataType.Unknown) {
             return existingColumn.DataType;
         }
 
         let row = this.gridOptions.api.getModel().getRow(0)
 
-        if(row==null){ // possible that there will be no data.
+        if (row == null) { // possible that there will be no data.
             console.log('there is no first row so we are returning Unknown for Type')
-             return DataType.Unknown; 
+            return DataType.Unknown;
         }
         //if it's a group we need the content of the group
         if (row.group) {
@@ -917,16 +918,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
         });
-      //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-      //  });
-      //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+        //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+        //  });
+        //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
         //});
         gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
             // not sure about this - doing it to make sure that we set the columns properly at least once!
             this.checkColumnsDataTypeSet();
         });
 
-        
+
         gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
@@ -962,9 +963,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let serverSearch: ServerSearchOptions = this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch == "None") {
+            if (serverSearch == ServerSearchOptions.None) {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -975,7 +977,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "AllSearch") {
+            if (serverSearch == ServerSearchOptions.None || ServerSearchOptions.AdvancedSearch) {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
@@ -985,19 +987,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         }
                     }
                 }
-            }
-            //we assess quicksearch
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch != "AllSearch") {
+                //we assess quicksearch
                 let recordReturnValue = false;
                 let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
                 if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-                    && quickSearchState.QuickSearchDisplayType != QuickSearchDisplayType.HighlightCell) {
+                    && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                     for (let column of columns.filter(c => c.Visible)) {
                         let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
                         let rowId = this.getPrimaryKeyValueFromRecord(node);
                         let stringValueLowerCase = displayValue.toLowerCase();
-                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
                             case LeafExpressionOperator.Contains:
                                 {
                                     if (stringValueLowerCase.includes(quickSearchLowerCase)) {
@@ -1109,18 +1109,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.setRowData(dataSource)
     }
 
-    public canMultiSort(): boolean{
+    public canMultiSort(): boolean {
         return true;
     }
 
     private checkColumnsDataTypeSet(): any {
         // check that we have no unknown columns - if we do then ok
-       let firstCol= this.AdaptableBlotterStore.TheStore.getState().Grid.Columns[0];
-       if(firstCol.DataType == DataType.Unknown){
-           this.setColumnIntoStore();
-       }
+        let firstCol = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns[0];
+        if (firstCol.DataType == DataType.Unknown) {
+            this.setColumnIntoStore();
+        }
     }
-    
+
 }
 
 

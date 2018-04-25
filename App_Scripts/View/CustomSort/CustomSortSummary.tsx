@@ -66,7 +66,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             />
         }
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div >
             {customSortRow}
 
             {this.state.EditedAdaptableBlotterObject &&

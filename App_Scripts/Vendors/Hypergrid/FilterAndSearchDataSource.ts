@@ -4,7 +4,7 @@ import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrateg
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction, ServerSearchOptions } from '../../Core/Enums'
 
 //All custom pipelines should extend from pipelineBase
 export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {
@@ -30,7 +30,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
 
         let blotterOptions = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
         //first we assess AdvancedSearch 
-        if (blotterOptions.serverSearch == "None") {
+        if (blotterOptions.serverSearch == ServerSearchOptions.None) {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -41,7 +41,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         //we then assess column filters
-        if (blotterOptions.serverSearch != "AllSearch") {
+        if (blotterOptions.serverSearch == ServerSearchOptions.None|| ServerSearchOptions.AdvancedSearch) {
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {
@@ -50,10 +50,8 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                     }
                 }
             }
-        }
 
-        //we assess quicksearch
-        if (blotterOptions.serverSearch != "AllSearch") {
+            //we assess quicksearch
             if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
                 let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
                 let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
@@ -63,17 +61,17 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                     let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
                     let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
                     let stringValueLowerCase = displayValue.toLowerCase()
-                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
                         case LeafExpressionOperator.Contains:
                             {
                                 if (stringValueLowerCase.includes(quickSearchLowerCase)) {
                                     //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
-                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
+                                    if (quickSearchState.DisplayAction == DisplayAction.HighlightCell
+                                        || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell) {
+                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.Style } })
                                     }
                                     //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                    if (quickSearchState.DisplayAction == DisplayAction.ShowRow) {
                                         return true;
                                     }
                                     recordReturnValue = true
@@ -84,12 +82,12 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                             {
                                 if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
                                     //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                                        || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
-                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.QuickSearchStyle } })
+                                    if (quickSearchState.DisplayAction == DisplayAction.HighlightCell
+                                        || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell) {
+                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.Style } })
                                     }
                                     //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                    if (quickSearchState.DisplayAction == DisplayAction.ShowRow) {
                                         return true;
                                     }
                                     recordReturnValue = true
@@ -99,7 +97,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                     }
                 }
                 //if we color only then we just return true....
-                if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell) {
+                if (quickSearchState.DisplayAction == DisplayAction.HighlightCell) {
                     return true;
                 }
                 return recordReturnValue

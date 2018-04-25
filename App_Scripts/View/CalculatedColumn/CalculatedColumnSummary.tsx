@@ -55,7 +55,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div>
             {detailRow}
 
             {this.state.EditedAdaptableBlotterObject &&

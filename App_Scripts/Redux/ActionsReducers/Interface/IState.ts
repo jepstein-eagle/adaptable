@@ -1,4 +1,4 @@
-import { MathOperation, LeafExpressionOperator, QuickSearchDisplayType } from '../../../Core/Enums'
+import { MathOperation, LeafExpressionOperator, DisplayAction } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
 import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
@@ -129,12 +129,10 @@ export interface ConditionalStyleState {
 }
 
 export interface QuickSearchState {
-    QuickSearchBackColor: string
-    QuickSearchForeColor: string
-    QuickSearchText: string
-    QuickSearchOperator: LeafExpressionOperator
-    QuickSearchDisplayType: QuickSearchDisplayType
-    QuickSearchStyle: IStyle
+   QuickSearchText: string
+    Operator: LeafExpressionOperator
+    DisplayAction: DisplayAction
+   Style: IStyle
 }
 
 export interface AdvancedSearchState {

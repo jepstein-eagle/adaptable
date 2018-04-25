@@ -33,10 +33,8 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
         
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-            <AdaptableObjectRow cssClassName={cssWizardClassName} colItems ={colItems} />
-        </div>
-    }
+        return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems ={colItems} />
+     }
 
     onFlashingSelectedChanged(flashingCell: IFlashingCell) {
         let existingfc = this.props.FlashingCells.find(e => e.ColumnName == this.props.SummarisedColumn.ColumnId)

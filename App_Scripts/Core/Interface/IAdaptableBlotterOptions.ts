@@ -1,3 +1,4 @@
+import { ServerSearchOptions } from "../Enums";
 
 export interface IAdaptableBlotterOptions {
     enableAuditLog?: boolean,
@@ -8,7 +9,7 @@ export interface IAdaptableBlotterOptions {
     predefinedConfig?: object,
     maxColumnValueItemsDisplayed: number,
     modalContainer?: string,
-    serverSearch?:  'None' | 'AdvancedSearch' | 'AllSearch'
+    serverSearch?: ServerSearchOptions
     iPushPullConfig?: {
         api_url?: string;
         ws_url?: string;

@@ -71,7 +71,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div >
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&

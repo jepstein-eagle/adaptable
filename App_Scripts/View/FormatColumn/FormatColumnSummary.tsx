@@ -73,7 +73,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
             />
         }
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div>
             {formatColumnRow}
 
             {this.state.EditedAdaptableBlotterObject &&

@@ -177,7 +177,7 @@ function InitBlotter() {
     // let the grid know which columns and what data to use
     var gridOptions = {
         columnDefs: getSchema(trades),
-        rowData: [],
+        rowData: trades,//[],
         enableSorting: true,
         enableRangeSelection: true,
         groupMultiAutoColumn: false,
@@ -194,7 +194,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
 
-    let serverSearch = "AdvancedSearch"
+    let serverSearch = "None"
 
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
@@ -202,7 +202,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        //   predefinedConfig: json,//"demoConfig.json",// json,
+        predefinedConfig: json,//"demoConfig.json",// json,
         serverSearch: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -217,7 +217,7 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-
+    alert(searchArgs.SearchChangedTrigger)
     let search = searchArgs.AdvancedSearch;
     let newTrades
     if (search == null || search.Name == "") {
@@ -235,14 +235,24 @@ function getTradesForSearch(searchArgs, dataGen) {
 }
 
 let json = {
+    "QuickSearch": {
+        "Style": {
+            "ClassName": "styleBackGreen"
+        },
+
+    },
     "Entitlements": {
         "FunctionEntitlements": [
             {
-                "FunctionName": "AdvancedSearch",
+                "FunctionName": "ConditionalStyle",
                 "AccessLevel": "ReadOnly"
             },
             {
                 "FunctionName": "QuickSearch",
+                "AccessLevel": "ReadOnly"
+            },
+            {
+                "FunctionName": "AdvancedSearch",
                 "AccessLevel": "ReadOnly"
             },
             {
@@ -287,7 +297,7 @@ let json = {
         ]
     },
     "Theme": {
-        "CurrentTheme": "Slate",
+        "CurrentTheme": "Default",
     },
     "FormatColumn": {
         "FormatColumns": [

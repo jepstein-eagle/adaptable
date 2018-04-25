@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, QuickSearchDisplayType, CellValidationMode, DistinctCriteriaPairValue, SortOrder, SearchChangedTrigger } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, DisplayAction, CellValidationMode, DistinctCriteriaPairValue, SortOrder, SearchChangedTrigger } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
@@ -684,17 +684,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let displayValue = this.getDisplayValueFromRecord(record, column.ColumnId);
                         let rowId = this.getPrimaryKeyValueFromRecord(record);
                         let stringValueLowerCase = displayValue.toLowerCase();
-                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchOperator) {
+                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
                             case LeafExpressionOperator.Contains:
                                 {
                                     if (stringValueLowerCase.includes(quickSearchLowerCase)) {
                                         //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
+                                        if (quickSearchState.DisplayAction == DisplayAction.HighlightCell
+                                            || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell) {
                                             quickSearchColors.push({ rowId, columnIndex: this.getColumnIndex(column.ColumnId) })
                                         }
                                         //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                        if (quickSearchState.DisplayAction == DisplayAction.ShowRow) {
                                             return true;
                                         }
                                         recordReturnValue = true
@@ -705,12 +705,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                 {
                                     if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
                                         //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell
-                                            || quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRowAndHighlightCell) {
+                                        if (quickSearchState.DisplayAction == DisplayAction.HighlightCell
+                                            || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell) {
                                             quickSearchColors.push({ rowId, columnIndex: this.getColumnIndex(column.ColumnId) })
                                         }
                                         //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                        if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.ShowRow) {
+                                        if (quickSearchState.DisplayAction == DisplayAction.ShowRow) {
                                             return true;
                                         }
                                         recordReturnValue = true
@@ -720,7 +720,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         }
                     }
                     //if we color only then we just return true....
-                    if (quickSearchState.QuickSearchDisplayType == QuickSearchDisplayType.HighlightCell) {
+                    if (quickSearchState.DisplayAction == DisplayAction.HighlightCell) {
                         return true;
                     }
                     return recordReturnValue;

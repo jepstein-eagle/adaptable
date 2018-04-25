@@ -45,10 +45,8 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null} />)
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-            <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
-        </div>
-    }
+        return  <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
+     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {

@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import * as _ from 'lodash'
 import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { LeafExpressionOperator, QuickSearchDisplayType, PopoverType } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction, PopoverType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
@@ -19,16 +19,14 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
-    QuickSearchBackColor: string;
-    QuickSearchForeColor: string;
-    QuickSearchText: string;
-    QuickSearchOperator: LeafExpressionOperator;
-    QuickSearchDisplayType: QuickSearchDisplayType;
+     QuickSearchText: string;
+     Operator: LeafExpressionOperator;
+    DisplayAction: DisplayAction;
     QuickSearchStyle: IStyle,
    
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction,
     onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
-    onSetSearchDisplayType: (quickSearchDisplayType: QuickSearchDisplayType) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
+    onSetSearchDisplayType: (DisplayAction: DisplayAction) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
     onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction
 }
 
@@ -62,13 +60,13 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
 
     onDisplayTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.props.onSetSearchDisplayType(e.value as QuickSearchDisplayType);
+        this.props.onSetSearchDisplayType(e.value as DisplayAction);
     }
 
     private onUseBackColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.BackColor = (e.checked) ? this.props.QuickSearchBackColor : null;
+        style.BackColor = (e.checked) ? this.props.QuickSearchStyle.BackColor : null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
@@ -76,7 +74,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     private onUseForeColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.ForeColor = (e.checked) ? this.props.QuickSearchForeColor : null;
+        style.ForeColor = (e.checked) ? this.props.QuickSearchStyle.ForeColor : null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
@@ -109,8 +107,8 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                 return <option key={stringOperatorName} value={stringOperatorName}>{ExpressionHelper.OperatorToShortFriendlyString(stringOperatorName as LeafExpressionOperator)}</option>
             })
 
-        let quickSearchDisplayTypes = EnumExtensions.getNames(QuickSearchDisplayType).map((enumName) => {
-            return <option key={enumName} value={enumName}>{this.getTextForQuickSearchDisplayType(enumName as QuickSearchDisplayType)}</option>
+        let DisplayActions = EnumExtensions.getNames(DisplayAction).map((enumName) => {
+            return <option key={enumName} value={enumName}>{this.getTextForDisplayAction(enumName as DisplayAction)}</option>
         })
 
         return <div className={cssClassName}>
@@ -130,11 +128,11 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                     <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
                         <FormGroup controlId="formInlineSearchOperator">
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <ControlLabel>Operator:</ControlLabel>
                             </Col>
-                            <Col xs={5}>
-                                <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchOperator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
+                            <Col xs={4}>
+                                <FormControl componentClass="select" placeholder="select" value={this.props.Operator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
                                     {optionOperators}
                                 </FormControl>
                             </Col>
@@ -146,12 +144,12 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                         </FormGroup>
 
                         <FormGroup controlId="formInlineSearchDisplay">
-                            <Col xs={2}>
+                            <Col xs={3}>
                                 <ControlLabel>Behaviour:</ControlLabel>
                             </Col>
-                            <Col xs={5 }>
-                                <FormControl componentClass="select" placeholder="select" value={this.props.QuickSearchDisplayType.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
-                                    {quickSearchDisplayTypes}
+                            <Col xs={4}>
+                                <FormControl componentClass="select" placeholder="select" value={this.props.DisplayAction.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
+                                    {DisplayActions}
                                 </FormControl>
                             </Col>
                             <Col xs={1}>
@@ -162,26 +160,26 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                         </FormGroup>
 
                         <FormGroup controlId="colorBackStyle">
-                            <Col xs={2} >
+                            <Col xs={3} >
                                 <ControlLabel>Set Back Colour:</ControlLabel>
                             </Col>
                             <Col xs={1}>
                                 <Checkbox value="existing" checked={this.props.QuickSearchStyle.BackColor ? true : false} onChange={(e) => this.onUseBackColorCheckChange(e)}></Checkbox>
                             </Col>
-                            <Col xs={5}>
+                            <Col xs={3}>
                                 {this.props.QuickSearchStyle.BackColor != null &&
                                     <ColorPicker ColorPalette={this.props.ColorPalette} value={this.props.QuickSearchStyle.BackColor} onChange={(x) => this.onBackColorSelectChange(x)} />
                                 }
                             </Col>
                         </FormGroup>
                         <FormGroup controlId="colorForeStyle">
-                            <Col xs={2} >
+                            <Col xs={3} >
                                 <ControlLabel>Set Fore Colour:</ControlLabel>
                             </Col>
                             <Col xs={1}>
                                 <Checkbox value="existing" checked={this.props.QuickSearchStyle.ForeColor ? true : false} onChange={(e) => this.onUseForeColorCheckChange(e)}></Checkbox>
                             </Col>
-                            <Col xs={5}>
+                            <Col xs={3}>
                                 {this.props.QuickSearchStyle.ForeColor != null &&
                                     <ColorPicker   ColorPalette={this.props.ColorPalette} value={this.props.QuickSearchStyle.ForeColor} onChange={(x) => this.onForeColorSelectChange(x)} />
                                 }
@@ -195,13 +193,13 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
 
     }
 
-    private getTextForQuickSearchDisplayType(quickSearchDisplayType: QuickSearchDisplayType): string {
-        switch (quickSearchDisplayType) {
-            case QuickSearchDisplayType.HighlightCell:
+    private getTextForDisplayAction(displayAction: DisplayAction): string {
+        switch (displayAction) {
+            case DisplayAction.HighlightCell:
                 return "Highlight Cells Only"
-            case QuickSearchDisplayType.ShowRow:
+            case DisplayAction.ShowRow:
                 return "Show Matching Rows Only"
-            case QuickSearchDisplayType.ShowRowAndHighlightCell:
+            case DisplayAction.ShowRowAndHighlightCell:
                 return "Highlight Cells & Show Matching Rows"
         }
     }
@@ -212,19 +210,17 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        QuickSearchOperator: state.QuickSearch.QuickSearchOperator,
-        QuickSearchDisplayType: state.QuickSearch.QuickSearchDisplayType,
-        QuickSearchStyle: state.QuickSearch.QuickSearchStyle,
-        QuickSearchBackColor: state.QuickSearch.QuickSearchBackColor,
-        QuickSearchForeColor: state.QuickSearch.QuickSearchForeColor,
-    };
+        Operator: state.QuickSearch.Operator,
+        DisplayAction: state.QuickSearch.DisplayAction,
+        QuickSearchStyle: state.QuickSearch.Style,
+       };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),
         onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
-        onSetSearchDisplayType: (searchDisplayType: QuickSearchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
+        onSetSearchDisplayType: (searchDisplayType: DisplayAction) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
         onSetStyle: (style: IStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
     };
 }

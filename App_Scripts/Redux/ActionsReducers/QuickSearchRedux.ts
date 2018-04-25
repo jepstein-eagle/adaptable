@@ -1,5 +1,5 @@
 import { QuickSearchState } from './Interface/IState';
-import { LeafExpressionOperator, QuickSearchDisplayType } from '../../Core/Enums';
+import { LeafExpressionOperator, DisplayAction } from '../../Core/Enums';
 import { IStyle } from '../../Core/Interface/IStyle';
 import * as Redux from 'redux'
 
@@ -23,7 +23,7 @@ export interface QuickSearchSetSearchOperatorAction extends Redux.Action {
 }
 
 export interface QuickSearchSetSearchDisplayAction extends Redux.Action {
-    quickSearchDisplayType: QuickSearchDisplayType
+    DisplayAction: DisplayAction
 }
 
 export interface QuickSearchSetStyleAction extends Redux.Action {
@@ -40,9 +40,9 @@ export const QuickSearchSetOperator = (quickSearchOperator: LeafExpressionOperat
     quickSearchOperator
 })
 
-export const QuickSearchSetDisplay = (quickSearchDisplayType: QuickSearchDisplayType): QuickSearchSetSearchDisplayAction => ({
+export const QuickSearchSetDisplay = (DisplayAction: DisplayAction): QuickSearchSetSearchDisplayAction => ({
     type: QUICK_SEARCH_SET_DISPLAY,
-    quickSearchDisplayType
+    DisplayAction
 })
 
 export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction => ({
@@ -51,15 +51,14 @@ export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction =>
 })
 
 const initialQuickSearchState: QuickSearchState = {
-    QuickSearchBackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR,
-    QuickSearchForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR,
     QuickSearchText: "",
-    QuickSearchOperator: LeafExpressionOperator.Contains,
-    QuickSearchDisplayType: QuickSearchDisplayType.HighlightCell,
-    QuickSearchStyle:
+    Operator: LeafExpressionOperator.Contains,
+    DisplayAction: DisplayAction.HighlightCell,
+    Style:
     {
         BackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR, 
-        ForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR
+        ForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR,
+        //ClassName: "styleBackBlue"
     }
 }
 
@@ -70,7 +69,7 @@ export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: Quick
         case QUICK_SEARCH_SET_OPERATOR:
             return Object.assign({}, state, { QuickSearchOperator: (<QuickSearchSetSearchOperatorAction>action).quickSearchOperator })
         case QUICK_SEARCH_SET_DISPLAY:
-            return Object.assign({}, state, { QuickSearchDisplayType: (<QuickSearchSetSearchDisplayAction>action).quickSearchDisplayType })
+            return Object.assign({}, state, { DisplayAction: (<QuickSearchSetSearchDisplayAction>action).DisplayAction })
         case QUICK_SEARCH_SET_STYLE:
             return Object.assign({}, state, { QuickSearchStyle: (<QuickSearchSetStyleAction>action).style })
         default:

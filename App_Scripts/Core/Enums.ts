@@ -70,18 +70,18 @@ export enum ConditionalStyleScope {
 }
 
 export enum ReportColumnScope {
-    AllColumns="AllColumns",
-    VisibleColumns="VisibleColumns",
-    SelectedColumns="SelectedColumns",
-    BespokeColumns="BespokeColumns"
+    AllColumns = "AllColumns",
+    VisibleColumns = "VisibleColumns",
+    SelectedColumns = "SelectedColumns",
+    BespokeColumns = "BespokeColumns"
 }
 
 
 export enum ReportRowScope {
-    AllRows="AllRows",
-    VisibleRows="VisibleRows",
-    SelectedRows="SelectedRows",
-    ExpressionRows="ExpressionRows"
+    AllRows = "AllRows",
+    VisibleRows = "VisibleRows",
+    SelectedRows = "SelectedRows",
+    ExpressionRows = "ExpressionRows"
 }
 
 export enum ExportDestination {
@@ -97,7 +97,7 @@ export enum SortOrder {
     Descending = "Descending"
 }
 
-export enum QuickSearchDisplayType {
+export enum DisplayAction {
     HighlightCell = "HighlightCell",
     ShowRow = "ShowRow",
     ShowRowAndHighlightCell = "ShowRowAndHighlightCell"
@@ -170,5 +170,13 @@ export enum SearchChangedTrigger {
     ColumnFilter = "ColumnFilter",
     UserFilter = "UserFilter",
     DataChange = "DataChange",
+    Sort = "Sort",
+}
+
+export enum ServerSearchOptions {
+    None = 'None',
+    AdvancedSearch = 'AdvancedSearch',
+    AllSearch = 'AllSearch',
+    AllSearchandSort = 'AllSearchandSort'
 }
 

@@ -70,7 +70,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div >
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&

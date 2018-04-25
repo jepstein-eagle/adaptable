@@ -75,7 +75,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         })
 
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div >
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&

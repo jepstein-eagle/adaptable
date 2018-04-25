@@ -6,7 +6,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { SearchChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, ServerSearchOptions } from '../Core/Enums';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private filterState: IColumnFilter[]
@@ -24,7 +24,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
             this.filterState = this.GetColumnFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch == "AllSearch") {
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearch == ServerSearchOptions.AllSearch || ServerSearchOptions.AllSearchandSort) {
                 this.publishServerSearch(SearchChangedTrigger.ColumnFilter)
             }
         }

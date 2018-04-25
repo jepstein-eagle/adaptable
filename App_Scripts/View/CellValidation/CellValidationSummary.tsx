@@ -68,7 +68,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
             }
         })
 
-        return <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        return <div >
             {strategySummaries}
 
             {this.state.EditedAdaptableBlotterObject &&

@@ -3,6 +3,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { FlashingCellState, QuickSearchState, ConditionalStyleState, FormatColumnState } from '../../Redux/ActionsReducers/Interface/IState';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import * as StyleConstants from '../../Core/Constants/StyleConstants'
+import { StringExtensions } from '../Extensions/StringExtensions';
 
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
@@ -40,22 +41,23 @@ export class StyleService {
             this.clearCSSRules()
 
             this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
-                this.addCSSRule("."+StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(formatColumn),
+                this.addCSSRule("." + StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(formatColumn),
                     'background-color: ' + formatColumn.Style.BackColor + ' !important;color: ' + formatColumn.Style.ForeColor + ' !important;font-weight: ' + formatColumn.Style.FontWeight + ' !important;font-style: ' + formatColumn.Style.FontStyle + ' !important;' + (formatColumn.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(formatColumn.Style.FontSize) + ' !important') : ''))
             });
 
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE  + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column).forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE  + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
 
 
             // quick search
-            this.addCSSRule("." + StyleConstants.QUICK_SEARCH_STYLE, 'background-color: ' + this.QuickSearchState.QuickSearchStyle.BackColor + ' !important;color: ' + this.QuickSearchState.QuickSearchStyle.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.QuickSearchStyle.FontWeight + ' !important;font-style: ' + this.QuickSearchState.QuickSearchStyle.FontStyle + ' !important;' + (this.QuickSearchState.QuickSearchStyle.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.QuickSearchStyle.FontSize) + ' !important') : ''))
-
+            if (StringExtensions.IsNullOrEmpty(this.QuickSearchState.Style.ClassName)) {
+                this.addCSSRule("." + StyleConstants.QUICK_SEARCH_STYLE, 'background-color: ' + this.QuickSearchState.Style.BackColor + ' !important;color: ' + this.QuickSearchState.Style.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.Style.FontWeight + ' !important;font-style: ' + this.QuickSearchState.Style.FontStyle + ' !important;' + (this.QuickSearchState.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.Style.FontSize) + ' !important') : ''))
+            }
             //we define last Flash since it has the highest priority
             this.FlashingCellState.FlashingCells.forEach((element, index) => {
                 this.addCSSRule("." + StyleConstants.FLASH_UP_STYLE + index, 'background-color: ' + element.UpBackColor + ' !important')
