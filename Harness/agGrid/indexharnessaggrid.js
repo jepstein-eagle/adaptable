@@ -118,9 +118,9 @@ function replacer(a, b, c) {
 function getSchema(data) {
     var schema = []
 
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: 'Number' });
-    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber" });
+    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefDate", "randon"] });
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
@@ -142,7 +142,7 @@ function getSchema(data) {
             return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
         }
     });
-    schema.push({ headerName: "Fitch Rating", field: "fitchRating", editable: true, filter: 'text' });
+    schema.push({ headerName: "Fitch Rating", field: "fitchRating", editable: true, filter: 'text', });
     schema.push({ headerName: "Moodys Rating", field: "moodysRating", editable: true, filter: 'text' });
     schema.push({ headerName: "SandP Rating", field: "sandpRating", editable: true, filter: 'text' });
     schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
@@ -153,6 +153,7 @@ function getSchema(data) {
 
     return schema;
 }
+
 var currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -184,7 +185,16 @@ function InitBlotter() {
         groupUseEntireRow: false,
         animateRows: true,
         enableFilter: true,
-        enableColResize: true
+        enableColResize: true,
+        suppressColumnVirtualisation: true,
+        columnTypes: {
+            "abColDefNumber":{},
+            "abColDefString":{},
+            "abColDefBoolean":{},
+            "abColDefDate":{},
+            "abColDefObject":{},
+        }
+
     };
 
     var eGridDiv = document.getElementById('grid');
@@ -202,7 +212,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        predefinedConfig: json,//"demoConfig.json",// json,
+        //  predefinedConfig: json,//"demoConfig.json",// json,
         serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

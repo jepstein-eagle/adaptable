@@ -15,7 +15,7 @@ import { IColumn } from './IColumn';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { EventDispatcher } from '../EventDispatcher';
 import { IBlotterApi } from '../Api/IBlotterApi';
-import { ISearchChangedArgs } from '../Api/ISearchChangedArgs';
+import { ISearchChangedEventArgs } from '../Api/ISearchChangedEventArgs';
 
 export interface IAdaptableBlotter {
     // new API interface for external calls - not sure yet if good idea or not...
@@ -40,7 +40,7 @@ export interface IAdaptableBlotter {
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     // not sure if this is right but putting the event here
-    SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>
+    SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
    
     // General
     createMenu(): void

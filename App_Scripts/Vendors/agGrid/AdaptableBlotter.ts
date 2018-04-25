@@ -89,7 +89,7 @@ import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IBlotterApi } from '../../Core/Api/IBlotterApi';
-import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
+import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -226,7 +226,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onRefresh;
     }
 
-    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
+    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
 
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
@@ -410,6 +410,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return existingColumn.DataType;
         }
 
+        // check for column type
+        let colType: any = column.getColDef().type;
+        if (colType) {
+            let isArray: boolean = Array.isArray(colType);
+            if (isArray) {
+                // do array check
+                let myDatatype: DataType = DataType.Unknown;
+                colType.forEach((c: string) => {
+                    if (c.startsWith("abColDef")) {
+                        myDatatype = this.getabColDefValue(c);
+                    }
+                });
+                if (myDatatype != DataType.Unknown) {
+                    return myDatatype;
+                }
+            } else {
+                // do string check
+                if (colType.startsWith("abColDef")) {
+                    return this.getabColDefValue(colType);
+                }
+            }
+
+        }
+
         let row = this.gridOptions.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
@@ -445,6 +469,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId(), dataType)
         return dataType
+    }
+
+    private getabColDefValue(colType: string): DataType {
+        switch (colType) {
+            case 'abColDefNumber':
+                return DataType.Number;
+            case 'abColDefString':
+                return DataType.String;
+            case 'abColDefBoolean':
+                return DataType.Boolean;
+            case 'abColDefDate':
+                return DataType.Date;
+            case 'abColDefObject':
+                return DataType.Object;
+        }
     }
 
 

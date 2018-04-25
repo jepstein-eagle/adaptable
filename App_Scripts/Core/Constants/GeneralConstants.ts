@@ -4,3 +4,4 @@
    
  export const USER_NAME: string = "anonymous"
  export const BLOTTER_ID: string = "adaptable_blotter_id"
+ export const MENU_PREFIX: string = "ab_"

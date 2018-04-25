@@ -7,7 +7,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
-import { ISearchChangedArgs } from '../Core/Api/ISearchChangedArgs';
+import { ISearchChangedEventArgs } from '../Core/Api/ISearchChangedEventArgs';
 import { basename } from 'path';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { Server } from 'https';

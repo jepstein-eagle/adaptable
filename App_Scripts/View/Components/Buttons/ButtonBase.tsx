@@ -90,9 +90,10 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
             bsStyle={this.props.bsStyle}
             disabled={isDisabled}
             bsSize={this.props.bsSize}
-            onClick={() => this.props.onClick()}>
+            onClick={() => this.props.onClick()}
+            onMouseDown={e => e.preventDefault()}>
             {content}</Button>
-        let buttonwithtooltip = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>
+        let buttonwithtooltip = <OverlayTrigger  overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>
             {button}
         </OverlayTrigger >
         return isDisabled || hideToolTip ? button : buttonwithtooltip

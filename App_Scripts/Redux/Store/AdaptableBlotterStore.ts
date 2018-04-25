@@ -63,7 +63,7 @@ import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
+import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
 import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 

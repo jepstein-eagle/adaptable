@@ -52,7 +52,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IBlotterApi } from '../../Core/Api/IBlotterApi';
-import { ISearchChangedArgs } from '../../Core/Api/ISearchChangedArgs';
+import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -151,7 +151,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onSelectedCellsChanged;
     }
 
-    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedArgs>();
+    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     
 
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();

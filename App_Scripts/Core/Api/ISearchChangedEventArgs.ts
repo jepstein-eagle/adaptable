@@ -2,9 +2,9 @@ import { IAdvancedSearch } from "../../Strategy/Interface/IAdvancedSearchStrateg
 import { IColumnFilter } from "../../Strategy/Interface/IColumnFilterStrategy";
 import { SearchChangedTrigger } from "../Enums";
 
-export interface ISearchChangedArgs {
+export interface ISearchChangedEventArgs {
   SearchChangedTrigger: SearchChangedTrigger
   AdvancedSearch: IAdvancedSearch
-  QuickSearchText: string
+  QuickSearch: string
   ColumnFilters: IColumnFilter[]
 }
