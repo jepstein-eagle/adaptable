@@ -143,7 +143,7 @@ export interface AdvancedSearchState {
 export interface FilterState {
     ColumnFilters: IColumnFilter[];
     UserFilters: IUserFilter[];
-    SystemFilters: string[]
+    SystemFilters: string[];
 }
 
 export interface ThemeState {

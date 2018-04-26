@@ -8,6 +8,6 @@ import { ISearchChangedEventArgs } from "./ISearchChangedEventArgs";
 // this is very early days but the idea will be - over time - that this is how people will access the AB externally
 // and we will use the IAdaptableBlotter interface internally
 export interface IBlotterApi {
-    setDataSource(dataSource: any): void
+    setDataSource(dataSource: any): void;
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
 }

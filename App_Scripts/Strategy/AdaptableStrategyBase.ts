@@ -7,7 +7,7 @@ import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
-import { ISearchChangedEventArgs } from '../Core/Api/ISearchChangedEventArgs';
+import { ISearchChangedEventArgs, IBlotterSearchState, IBlotterSortState } from '../Core/Api/ISearchChangedEventArgs';
 import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumnFilter } from './Interface/IColumnFilterStrategy';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
@@ -159,11 +159,19 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
         if (state.Grid.BlotterOptions.serverSearchOption != ServerSearchOption.None) {
-            // doing them all in each until I find a better way...
-            let currentAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch)
-            let quickSearchText: string = state.QuickSearch.QuickSearchText
-            let columnFilters: IColumnFilter[] = state.Filter.ColumnFilters;
-            let searchChangedArgs: ISearchChangedEventArgs = { AdvancedSearch: currentAdvancedSearch, QuickSearch: quickSearchText, ColumnFilters: columnFilters, SearchChangedTrigger: searchChangedTrigger }
+
+            // lets get the searchstate
+            let blotterSearchState: IBlotterSearchState = {
+                AdvancedSearch: state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch),
+                QuickSearch: state.QuickSearch.QuickSearchText,
+                ColumnFilters: state.Filter.ColumnFilters
+            }
+
+            let blotterSortState: IBlotterSortState = {
+                GridSorts: state.Grid.GridSorts,
+                CustomSorts: state.CustomSort.CustomSorts
+            }
+            let searchChangedArgs: ISearchChangedEventArgs = { SearchChangedTrigger: searchChangedTrigger, BlotterSearchState: blotterSearchState, BlotterSortState: blotterSortState }
             this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
         }
     }

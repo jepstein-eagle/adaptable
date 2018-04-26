@@ -1,154 +1,154 @@
 
 // General Enums
 export enum DataType {
-    String = "String",
-    Number = "Number",
-    Boolean = "Boolean",
-    Date = "Date",
-    Object = "Object",
-    All = "All",
-    Unknown = "Unknown"
+    String = 'String',
+    Number = 'Number',
+    Boolean = 'Boolean',
+    Date = 'Date',
+    Object = 'Object',
+    All = 'All',
+    Unknown = 'Unknown'
 }
 
 export enum ExpressionMode {
-    SingleColumn = "SingleColumn",
-    MultiColumn = "MultiColumn"
+    SingleColumn = 'SingleColumn',
+    MultiColumn = 'MultiColumn'
 }
 
 export enum LeafExpressionOperator {
-    Unknown = "Unknown",
+    Unknown = 'Unknown',
     //Numeric and Date
-    GreaterThan = "GreaterThan",
-    LessThan = "LessThan",
-    Equals = "Equals",
-    NotEquals = "NotEquals",
-    GreaterThanOrEqual = "GreaterThanOrEqual",
-    LessThanOrEqual = "LessThanOrEqual",
-    Between = "Between",
+    GreaterThan = 'GreaterThan',
+    LessThan = 'LessThan',
+    Equals = 'Equals',
+    NotEquals = 'NotEquals',
+    GreaterThanOrEqual = 'GreaterThanOrEqual',
+    LessThanOrEqual = 'LessThanOrEqual',
+    Between = 'Between',
     //String
-    Contains = "Contains",
-    NotContains = "NotContains",
-    StartsWith = "StartsWith",
-    EndsWith = "EndsWith",
-    Regex = "Regex",
+    Contains = 'Contains',
+    NotContains = 'NotContains',
+    StartsWith = 'StartsWith',
+    EndsWith = 'EndsWith',
+    Regex = 'Regex',
     // Cell Validations
-    None = "None",
-    ValueChange = "ValueChange",
-    PercentChange = "PercentChange",
-    NotBetween = "NotBetween",
-    IsPositive = "IsPositive",
-    IsNegative = "IsNegative",
-    IsTrue = "IsTrue",
-    IsFalse = "IsFalse"
+    None = 'None',
+    ValueChange = 'ValueChange',
+    PercentChange = 'PercentChange',
+    NotBetween = 'NotBetween',
+    IsPositive = 'IsPositive',
+    IsNegative = 'IsNegative',
+    IsTrue = 'IsTrue',
+    IsFalse = 'IsFalse'
 }
 
 export enum PopoverType {
-    Info = "Info",
-    Warning = "Warning",
-    Error = "Error"
+    Info = 'Info',
+    Warning = 'Warning',
+    Error = 'Error'
 }
 
 export enum MathOperation {
-    Add = "Add",
-    Subtract = "Subtract",
-    Multiply = "Multiply",
-    Divide = "Divide",
-    Replace = "Replace"
+    Add = 'Add',
+    Subtract = 'Subtract',
+    Multiply = 'Multiply',
+    Divide = 'Divide',
+    Replace = 'Replace'
 }
 
 // Enums used in Strategies
 
 
 export enum LayoutSource {
-    Existing = "Existing",
-    New = "New"
+    Existing = 'Existing',
+    New = 'New'
 }
 
 export enum ConditionalStyleScope {
-    Column = "Column",
-    Row = "Row"
+    Column = 'Column',
+    Row = 'Row'
 }
 
 export enum ReportColumnScope {
-    AllColumns = "AllColumns",
-    VisibleColumns = "VisibleColumns",
-    SelectedColumns = "SelectedColumns",
-    BespokeColumns = "BespokeColumns"
+    AllColumns = 'AllColumns',
+    VisibleColumns = 'VisibleColumns',
+    SelectedColumns = 'SelectedColumns',
+    BespokeColumns = 'BespokeColumns'
 }
 
 
 export enum ReportRowScope {
-    AllRows = "AllRows",
-    VisibleRows = "VisibleRows",
-    SelectedRows = "SelectedRows",
-    ExpressionRows = "ExpressionRows"
+    AllRows = 'AllRows',
+    VisibleRows = 'VisibleRows',
+    SelectedRows = 'SelectedRows',
+    ExpressionRows = 'ExpressionRows'
 }
 
 export enum ExportDestination {
-    CSV = "CSV",
-    Clipboard = "Clipboard",
-    OpenfinExcel = "OpenfinExcel",
-    iPushPull = "iPushPull"
+    CSV = 'CSV',
+    Clipboard = 'Clipboard',
+    OpenfinExcel = 'OpenfinExcel',
+    iPushPull = 'iPushPull'
 }
 
 export enum SortOrder {
-    Unknown = "Unknown",
-    Ascending = "Ascending",
-    Descending = "Descending"
+    Unknown = 'Unknown',
+    Ascending = 'Ascending',
+    Descending = 'Descending'
 }
 
 export enum DisplayAction {
-    HighlightCell = "HighlightCell",
-    ShowRow = "ShowRow",
-    ShowRowAndHighlightCell = "ShowRowAndHighlightCell"
+    HighlightCell = 'HighlightCell',
+    ShowRow = 'ShowRow',
+    ShowRowAndHighlightCell = 'ShowRowAndHighlightCell'
 }
 
 export enum AuditLogTrigger {
-    CellEdit = "CellEdit",
-    StateChange = "StateChange",
-    AdaptableBlotterFunction = "AdaptableBlotterFunction",
-    Ping = "Ping"
+    CellEdit = 'CellEdit',
+    StateChange = 'StateChange',
+    AdaptableBlotterFunction = 'AdaptableBlotterFunction',
+    Ping = 'Ping'
 }
 
 export enum CellValidationMode {
-    WarnUser = "WarnUser",
-    StopEdit = "StopEdit"
+    WarnUser = 'WarnUser',
+    StopEdit = 'StopEdit'
 }
 
 export enum SelectionMode {
-    Multi = "Multi",
-    Single = "Single"
+    Multi = 'Multi',
+    Single = 'Single'
 }
 
 //make sure enum items match IRawValueDisplayValuePair
 export enum DistinctCriteriaPairValue {
-    RawValue = "RawValue",
-    DisplayValue = "DisplayValue"
+    RawValue = 'RawValue',
+    DisplayValue = 'DisplayValue'
 }
 
 export enum FontWeight {
-    Normal = "Normal",
-    Bold = "Bold"
+    Normal = 'Normal',
+    Bold = 'Bold'
 }
 
 export enum FontStyle {
-    Normal = "Normal",
-    Italic = "Italic"
+    Normal = 'Normal',
+    Italic = 'Italic'
 }
 
 export enum FontSize {
-    XSmall = "XSmall",
-    Small = "Small",
-    Medium = "Medium",
-    Large = "Large",
-    XLarge = "XLarge"
+    XSmall = 'XSmall',
+    Small = 'Small',
+    Medium = 'Medium',
+    Large = 'Large',
+    XLarge = 'XLarge'
 }
 
 
 export enum PanelWidth {
-    Wide = "800px",
-    Medium = "600px",
-    Narrow = "400px"
+    Wide = '800px',
+    Medium = '600px',
+    Narrow = '400px'
 }
 
 export enum QueryBuildStatus {
@@ -160,17 +160,17 @@ export enum QueryBuildStatus {
 }
 
 export enum RangeOperandType {
-    Value = "Value",
-    Column = "Column",
+    Value = 'Value',
+    Column = 'Column',
 }
 
 export enum SearchChangedTrigger {
-    AdvancedSearch = "AdvancedSearch",
-    QuickSearch = "QuickSearch",
-    ColumnFilter = "ColumnFilter",
-    UserFilter = "UserFilter",
-    DataChange = "DataChange",
-    Sort = "Sort",
+    AdvancedSearch = 'AdvancedSearch',
+    QuickSearch = 'QuickSearch',
+    ColumnFilter = 'ColumnFilter',
+    UserFilter = 'UserFilter',
+    DataChange = 'DataChange',
+    Sort = 'Sort',
 }
 
 export enum ServerSearchOption {

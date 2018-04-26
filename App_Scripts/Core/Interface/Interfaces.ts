@@ -42,5 +42,4 @@ export interface ICellInfo {
 export interface IGridSort {
     Column: string;
     SortOrder: SortOrder
-
 }
