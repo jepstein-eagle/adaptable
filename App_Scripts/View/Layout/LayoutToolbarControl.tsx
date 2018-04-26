@@ -66,7 +66,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 <Typeahead
                     bsSize="small"
                     ref="typeahead"
-                    emptyLabel={"No Layout found with that name"}
+                    emptyLabel={"No Layout found"}
                     placeholder={"Select a Layout"}
                     labelKey={"Name"}
                     clearButton={true}
@@ -81,7 +81,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                             return true;
                         }
                         // Otherwise filter on some criteria.
-                        return option.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+                        return option.indexOf(text) !== -1;
                     }}
                 />
             </span>

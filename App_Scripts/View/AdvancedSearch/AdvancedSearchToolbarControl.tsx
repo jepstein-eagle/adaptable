@@ -51,14 +51,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
             <Typeahead
                 bsSize="small"
                 ref="typeahead"
-                emptyLabel={"No Advanced Search found with that name"}
+                emptyLabel={"No Advanced Search"}
                 placeholder={"Select a Search"}
                 labelKey={"Name"}
                 filterBy={(option: IAdvancedSearch, text: any) => {
                     if (sortedAdvancedSearches.length) {
                         return true;
                     }
-                    return option.Name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+                    return option.Name.indexOf(text) !== -1;
                 }}
                 clearButton={true}
                 selected={savedSearch ? [savedSearch] : []}

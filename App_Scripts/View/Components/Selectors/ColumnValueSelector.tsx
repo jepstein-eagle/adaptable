@@ -67,7 +67,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
                     return true;
                 }
                 // Otherwise filter on some criteria.
-                return option.DisplayValue.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+                return option.DisplayValue.indexOf(text) !== -1;
             }}
         />
 

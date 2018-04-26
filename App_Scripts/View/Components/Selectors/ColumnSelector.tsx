@@ -43,17 +43,17 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
         return <Typeahead ref="typeahead" 
-        emptyLabel={"No Column found with that search"}
+        emptyLabel={"No Column"}
             placeholder={placeHolder}
             bsSize={this.props.bsSize}
             labelKey={"FriendlyName"}  
-            filterBy={(option: IColumn, text: any) => {
+            filterBy={(option: IColumn, text: string) => {
                 if (selectedColums.length) {
                     // Display all the options if there's a selection.
                     return true;
                 }
                 // Otherwise filter on some criteria.
-                return option.FriendlyName.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+                return option.FriendlyName.indexOf(text) !== -1;
             }}
             multiple={this.props.SelectionMode == SelectionMode.Multi}
             clearButton={true}
