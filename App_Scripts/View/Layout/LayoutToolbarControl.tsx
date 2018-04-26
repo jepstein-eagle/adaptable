@@ -43,7 +43,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout)
         let isLayoutModified = this.isLayoutModified(layoutEntity);
         let currentLayoutNameAsArray: string[] = [];
-        let availableLayouts = nonDefaultLayouts.map((x) => {
+        let availableLayouts: string[] = nonDefaultLayouts.map((x) => {
             if (x.Name == this.props.CurrentLayout) {
                 let currentLayoutName: string
                 if (!isLayoutModified) {
@@ -75,7 +75,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     options={availableLayouts}
                     allowNew={false}
                     newSelectionPrefix={"New Layout: "}
-                    filterBy={(option: any, text: any) => {
+                    filterBy={(option: string, text: string) => {
                         if (currentLayoutNameAsArray.length) {
                             // Display all the options if there's a selection.
                             return true;

@@ -93,7 +93,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     selected={savedReport ? [savedReport] : []}
                     onChange={(selected) => { this.onSelectedReportChanged(selected) }}
                     options={sortedReports}
-                    filterBy={(option: IReport, text: any) => {
+                    filterBy={(option: IReport, text: string) => {
                         if (sortedReports.length) {
                             // Display all the options if there's a selection.
                             return true;

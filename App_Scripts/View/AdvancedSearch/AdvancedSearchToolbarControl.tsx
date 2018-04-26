@@ -54,7 +54,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 emptyLabel={"No Advanced Search"}
                 placeholder={"Select a Search"}
                 labelKey={"Name"}
-                filterBy={(option: IAdvancedSearch, text: any) => {
+                filterBy={(option: IAdvancedSearch, text: string) => {
                     if (sortedAdvancedSearches.length) {
                         return true;
                     }

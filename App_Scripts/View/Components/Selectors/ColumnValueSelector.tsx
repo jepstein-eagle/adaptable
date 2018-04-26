@@ -61,7 +61,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             disabled={this.props.disabled}
             allowNew={allowNew}
             newSelectionPrefix={"new value: "}
-            filterBy={(option: IRawValueDisplayValuePair, text: any) => {
+            filterBy={(option: IRawValueDisplayValuePair, text: string) => {
                 if (sortedColumnValues.length) {
                     // Display all the options if there's a selection.
                     return true;
