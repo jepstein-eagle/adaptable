@@ -76,7 +76,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 }
             </InputGroup>
 
-            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonSave
                     style={{ marginLeft: "5px" }}
                     cssClassName={cssClassName} onClick={() => this.onSave()}

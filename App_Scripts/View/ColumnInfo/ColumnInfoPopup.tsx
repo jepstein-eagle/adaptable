@@ -26,6 +26,7 @@ import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -67,38 +68,38 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let summaries: any[] = [];
         if (this.isStrategyVisible(StrategyIds.CustomSortStrategyId)) {
             summaries.push(
-                <div className={this.isStrategyReadOnly(StrategyIds.CustomSortStrategyId) ? "ab_readonly" : ""}>
+                <div className={this.isStrategyReadOnly(StrategyIds.CustomSortStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <CustomSortSummary key={StrategyIds.CustomSortStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                 </div>)
         }
         if (this.isStrategyVisible(StrategyIds.ConditionalStyleStrategyId)) {
             summaries.push(
-                <div className={this.isStrategyReadOnly(StrategyIds.ConditionalStyleStrategyId) ? "ab_readonly" : ""}>
+                <div className={this.isStrategyReadOnly(StrategyIds.ConditionalStyleStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <ConditionalStyleSummary key={StrategyIds.ConditionalStyleStrategyId} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                 </div>)
         }
         if (this.isStrategyVisible(StrategyIds.CellValidationStrategyId)) {
             summaries.push(
-                <div className={this.isStrategyReadOnly(StrategyIds.CellValidationStrategyId) ? "ab_readonly" : ""}>
+                <div className={this.isStrategyReadOnly(StrategyIds.CellValidationStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <CellValidationSummary key={StrategyIds.CellValidationStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                 </div>)
         }
         if (this.isStrategyVisible(StrategyIds.UserFilterStrategyId)) {
             summaries.push(
-                <div className={this.isStrategyReadOnly(StrategyIds.UserFilterStrategyId) ? "ab_readonly" : ""}>
+                <div className={this.isStrategyReadOnly(StrategyIds.UserFilterStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <   UserFilterSummary key={StrategyIds.UserFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                 </div>)
         }
         if (this.isStrategyVisible(StrategyIds.ColumnFilterStrategyId)) {
             summaries.push(
-                <div className={this.isStrategyReadOnly(StrategyIds.ColumnFilterStrategyId) ? "ab_readonly" : ""}>
+                <div className={this.isStrategyReadOnly(StrategyIds.ColumnFilterStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <ColumnFilterSummary key={StrategyIds.ColumnFilterStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                 </div>)
         }
 
         if (this.isStrategyVisible(StrategyIds.FormatColumnStrategyId)) {
             summaries.push(
-                <div className={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId) ? "ab_readonly" : ""}>
+                <div className={this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <FormatColumnSummary key={StrategyIds.FormatColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                 </div>)
         }
@@ -106,20 +107,20 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
             if (this.isStrategyVisible(StrategyIds.PlusMinusStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
                 summaries.push(
-                    <div className={this.isStrategyReadOnly(StrategyIds.PlusMinusStrategyId) ? "ab_readonly" : ""}>
+                    <div className={this.isStrategyReadOnly(StrategyIds.PlusMinusStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                         <PlusMinusSummary key={StrategyIds.PlusMinusStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />
                     </div>)
             }
 
             if (this.isStrategyVisible(StrategyIds.FlashingCellsStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
                 summaries.push(
-                    <div className={this.isStrategyReadOnly(StrategyIds.FlashingCellsStrategyId) ? "ab_readonly" : ""}>
+                    <div className={this.isStrategyReadOnly(StrategyIds.FlashingCellsStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                         <FlashingCellSummary key={StrategyIds.FlashingCellsStrategyId} SummarisedColumn={this.state.SelectedColumn} />
                     </div>)
             }
             if (this.isStrategyVisible(StrategyIds.CalculatedColumnStrategyId) && this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
                 summaries.push(
-                    <div className={this.isStrategyReadOnly(StrategyIds.CalculatedColumnStrategyId) ? "ab_readonly" : ""}>
+                    <div className={this.isStrategyReadOnly(StrategyIds.CalculatedColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                         <CalculatedColumnSummary key={StrategyIds.CalculatedColumnStrategyId} SummarisedColumn={this.state.SelectedColumn} />
                     </div>)
             }

@@ -7,6 +7,7 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as GeneralConstants from '../../../Core/Constants/GeneralConstants'
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
@@ -52,7 +53,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         <div className={cssClassName +StyleConstants.MODAL_BASE}>
           <Modal.Body className={cssClassName +StyleConstants.MODAL_BODY}>
             <div className="ab_main_popup">
-              <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+              <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 {body}
               </div>
             </div>

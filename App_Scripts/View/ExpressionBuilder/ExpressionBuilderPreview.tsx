@@ -143,7 +143,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let column = this.props.ColumnsList.find(x => x.ColumnId == columnId)
             let columnFriendlyName = column ? column.FriendlyName : columnId + GeneralConstants.MISSING_COLUMN
 
-            return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? "ab_readonly" : ""}>
+            return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? GeneralConstants.READ_ONLY_STYLE : ""}>
 
                 <InputGroup>
                     <InputGroup.Button>

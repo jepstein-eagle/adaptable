@@ -18,6 +18,7 @@ import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
@@ -48,7 +49,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         })
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 {collapsedText}
                 {' '}
                 {infoBody.length > 0 &&

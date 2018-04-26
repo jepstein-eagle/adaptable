@@ -29,6 +29,7 @@ import { ISelectedCells } from "../../Core/Interface/Interfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -103,7 +104,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
                     <ColumnValueSelector
                        cssClassName={cssClassName}     

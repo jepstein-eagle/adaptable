@@ -15,6 +15,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IEntitlement } from "../../Core/Interface/Interfaces";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
@@ -51,7 +52,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     value={this.state.EditedQuickSearchText}
                     OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
                 {' '}
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit cssClassName={cssClassName} onClick={() => this.props.onShowQuickSearchPopup()}
                     size={"small"}
                     overrideTooltip="Edit Quick Search"

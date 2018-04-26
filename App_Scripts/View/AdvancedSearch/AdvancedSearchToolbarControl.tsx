@@ -20,6 +20,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
@@ -31,6 +32,7 @@ interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyView
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
+   
    
     render() {
         const selectSearchString: string = "Select a Search"
@@ -44,12 +46,13 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         let sortedAdvancedSearches: IAdvancedSearch[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
         let availableSearches: any[] = sortedAdvancedSearches.filter(s => s.Name != this.props.CurrentAdvancedSearchName).map((search, index) => {
-            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedSearchChanged(search.Name)}>{search.Name}</MenuItem>
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedSearchChanged(search.Name)} >{search.Name}</MenuItem>
         })
         let content = <span>
 
             <InputGroup>
-                <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }} className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
+                <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }} 
+                  className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
                     {availableSearches}
                 </DropdownButton>
                 {currentSearchName != selectSearchString &&
@@ -67,7 +70,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 }
             </InputGroup>
 
-            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit
                     style={{ marginLeft: "5px" }}
                     onClick={() => this.props.onEditAdvancedSearch()}

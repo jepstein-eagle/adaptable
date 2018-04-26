@@ -26,6 +26,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SelectCellEditor } from "ag-grid";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -109,7 +110,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </InputGroup>
 
 
-            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+            <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <DropdownButton
                     style={{ marginLeft: "5px" }}
                     
