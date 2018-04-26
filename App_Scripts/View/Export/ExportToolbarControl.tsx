@@ -85,7 +85,6 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         let content = <InputGroup>
             <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <Typeahead
-                    bsSize={"small"} 
                     ref="typeahead" emptyLabel={"No Report found"}
                     placeholder={"Select a Report"}
                     labelKey={"Name"}
@@ -93,14 +92,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     selected={savedReport ? [savedReport] : []}
                     onChange={(selected) => { this.onSelectedReportChanged(selected) }}
                     options={sortedReports}
-                    filterBy={(option: IReport, text: string) => {
-                        if (sortedReports.length) {
-                            // Display all the options if there's a selection.
-                            return true;
-                        }
-                        // Otherwise filter on some criteria.
-                        return option.Name.indexOf(text) !== -1;
-                    }}
+                    filterBy={["Name"]}
                 />
             </span>
             <InputGroup.Button>
@@ -189,4 +181,5 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ExportToolbarControl = connect(mapStateToProps, mapDispatchToProps)(ExportToolbarControlComponent);
+
 

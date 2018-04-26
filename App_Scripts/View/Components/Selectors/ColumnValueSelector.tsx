@@ -51,8 +51,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         return <Typeahead ref="typeahead"
             emptyLabel={""}
             placeholder={placeholderText}
-            bsSize={this.props.bsSize}
-            labelKey={"DisplayValue"}
+             labelKey={"DisplayValue"}
             multiple={false}
             clearButton={true}
             selected={[selectedValue]}
@@ -61,14 +60,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             disabled={this.props.disabled}
             allowNew={allowNew}
             newSelectionPrefix={"new value: "}
-            filterBy={(option: IRawValueDisplayValuePair, text: string) => {
-                if (sortedColumnValues.length) {
-                    // Display all the options if there's a selection.
-                    return true;
-                }
-                // Otherwise filter on some criteria.
-                return option.DisplayValue.indexOf(text) !== -1;
-            }}
+            filterBy={["DisplayValue"]}
         />
 
     }

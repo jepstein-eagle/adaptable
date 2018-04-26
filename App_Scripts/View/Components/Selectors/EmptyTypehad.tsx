@@ -18,7 +18,6 @@ export class Empty extends React.Component<ColumnValueSelectorProps, {}> {
         return <Typeahead ref="typeahead"
             emptyLabel={""}
             placeholder={"hello"}
-            bsSize={"small"}
             labelKey={"DisplayValue"}
             filterBy={["DisplayValue"]}
             multiple={false}

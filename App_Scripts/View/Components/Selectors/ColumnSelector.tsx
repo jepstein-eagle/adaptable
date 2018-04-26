@@ -45,16 +45,8 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         return <Typeahead ref="typeahead" 
         emptyLabel={"No Column"}
             placeholder={placeHolder}
-            bsSize={this.props.bsSize}
             labelKey={"FriendlyName"}  
-            filterBy={(option: IColumn, text: string) => {
-                if (selectedColums.length) {
-                    // Display all the options if there's a selection.
-                    return true;
-                }
-                // Otherwise filter on some criteria.
-                return option.FriendlyName.indexOf(text) !== -1;
-            }}
+                 filterBy={["FriendlyName", "ColumnId"]}
             multiple={this.props.SelectionMode == SelectionMode.Multi}
             clearButton={true}
             selected={selectedColums}

@@ -64,8 +64,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let content = <InputGroup>
             <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
                 <Typeahead
-                    bsSize="small"
-                    ref="typeahead"
+                     ref="typeahead"
                     emptyLabel={"No Layout found"}
                     placeholder={"Select a Layout"}
                     labelKey={"Name"}
@@ -75,14 +74,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     options={availableLayouts}
                     allowNew={false}
                     newSelectionPrefix={"New Layout: "}
-                    filterBy={(option: string, text: string) => {
-                        if (currentLayoutNameAsArray.length) {
-                            // Display all the options if there's a selection.
-                            return true;
-                        }
-                        // Otherwise filter on some criteria.
-                        return option.indexOf(text) !== -1;
-                    }}
+                    
                 />
             </span>
             <InputGroup.Button>
