@@ -188,11 +188,11 @@ function InitBlotter() {
         enableColResize: true,
         suppressColumnVirtualisation: true,
         columnTypes: {
-            "abColDefNumber":{},
-            "abColDefString":{},
-            "abColDefBoolean":{},
-            "abColDefDate":{},
-            "abColDefObject":{},
+            "abColDefNumber": {},
+            "abColDefString": {},
+            "abColDefBoolean": {},
+            "abColDefDate": {},
+            "abColDefObject": {},
         }
 
     };
@@ -204,7 +204,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
 
-    let serverSearch = "None"
+    let serverSearch = "AdvancedSearch"
 
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",
@@ -212,7 +212,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        //  predefinedConfig: json,//"demoConfig.json",// json,
+         predefinedConfig: json,//"demoConfig.json",// json,
         serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -227,14 +227,14 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    alert(searchArgs.SearchChangedTrigger)
-    let search = searchArgs.AdvancedSearch;
+  //  alert(searchArgs.SearchChangedTrigger)
+    let search = searchArgs.BlotterSearchState.AdvancedSearch;
     let newTrades
     if (search == null || search.Name == "") {
         //   newTrades = dataGen.getTrades()
         return;
     } else {
-        alert(search.Name);
+   //     alert(search.Name);
         if (search.Name == "barcap") {
             newTrades = dataGen.getBarcapTrades()
         } else {
@@ -250,6 +250,37 @@ let json = {
             "ClassName": "styleBackGreen"
         },
 
+    },
+    "Filter": {
+        "ColumnFilters": [],
+        "UserFilters": [{
+            "Name": "April 2018",
+            "Expression": {
+                "ColumnDisplayValuesExpressions": [],
+                "ColumnRawValuesExpressions": [],
+                "FilterExpressions": [],
+                "RangeExpressions": [{
+                    "ColumnName": "tradeDate",
+                    "Ranges": [{
+                        "Operator": "Between",
+                        "Operand1": "2018-04-01",
+                        "Operand2": "2018-04-30",
+                        "Operand1Type": "Value",
+                        "Operand2Type": "Value"
+                    }]
+                }]
+            },
+            "ColumnId": "tradeDate",
+            "IsPredefined": false
+        }],
+        "SystemFilters": [
+            "Blanks",
+            "Non Blanks",
+            "Today",
+            "In Past",
+            "True",
+            "False"
+        ]
     },
     "Entitlements": {
         "FunctionEntitlements": [

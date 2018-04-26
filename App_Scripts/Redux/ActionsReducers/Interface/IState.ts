@@ -73,7 +73,7 @@ predefined and user config but not editable by users
 export interface UserInterfaceState {
     ColorPalette: string[];
     StyleClassNames: string[]
-   
+
 }
 
 
@@ -129,10 +129,10 @@ export interface ConditionalStyleState {
 }
 
 export interface QuickSearchState {
-   QuickSearchText: string
+    QuickSearchText: string
     Operator: LeafExpressionOperator
     DisplayAction: DisplayAction
-   Style: IStyle
+    Style: IStyle
 }
 
 export interface AdvancedSearchState {
