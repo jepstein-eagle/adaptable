@@ -32,7 +32,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
         let collapsedText = this.props.ColumnFilters.length == 0 ?
-            "None" :
+            "No Filters" :
             this.props.ColumnFilters.length == 1 ?
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
@@ -56,10 +56,11 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
+                 bsStyle={"primary"}
                  cssClassName={cssClassName}
-                 size={"small"} 
+                 size={"small"}
                    overrideTooltip="Clear Column Filters"
-                    DisplayMode="Glyph"
+                    DisplayMode="Text+Glyph"
                     overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>
         </span>

@@ -1,7 +1,6 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Typeahead } from 'react-bootstrap-typeahead'
 import { DropdownButton, MenuItem, SplitButton, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
@@ -16,6 +15,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -25,6 +25,7 @@ import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import { SelectCellEditor } from "ag-grid";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -40,24 +41,19 @@ interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
 }
 
 class ExportToolbarControlComponent extends React.Component<ExportToolbarControlComponentProps, {}> {
-    componentWillReceiveProps(nextProps: ExportToolbarControlComponentProps, nextContext: any) {
-        //if there was a selected search and parent unset the column we then clear the component 
-        // otherwise it's correctly unselected but the input still have the previsous selected text
-        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentReport) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentReport)) {
-            (this.refs.typeahead as any).getInstance().clear()
-        }
-    }
+   
     render(): any {
+        const selectReportString: string = "Select a Report"
         let cssClassName: string = this.props.cssClassName + "__export";
         let savedReport: IReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
         let sortedReports: IReport[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Reports, "Name")
 
         let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
-            "select" : this.props.CurrentReport
+           selectReportString: this.props.CurrentReport
 
-        let availableReports = this.props.Reports.map((x, index) => {
-            return <option value={x.Name} key={index}>{x.Name}</option>
+         let availableReports: any[] = this.props.Reports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedReportChanged(report.Name)}>{report.Name}</MenuItem>
         })
 
         let csvMenuItem = <MenuItem disabled={this.props.IsReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.CSV)} key={"csv"}>{"CSV"}</MenuItem>
@@ -82,81 +78,92 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
         </OverlayTrigger>
 
-        let content = <InputGroup>
-            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                <Typeahead
-                    ref="typeahead" emptyLabel={"No Report found"}
-                    placeholder={"Select a Report"}
-                    labelKey={"Name"}
-                    clearButton={true}
-                    selected={savedReport ? [savedReport] : []}
-                    onChange={(selected) => { this.onSelectedReportChanged(selected) }}
-                    options={sortedReports}
-                    filterBy={["Name"]}
-                />
-            </span>
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+        let content = <span>
 
-                    <DropdownButton
-                        style={{ marginLeft: "2px" }}
-                        bsSize="small" bsStyle="default" title={exportGlyph} id="exportDropdown" disabled={currentReportId == "select"} >
-                        {csvMenuItem}
-                        {clipboardMenuItem} {
-                            OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
-                        } {
-                            iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
-                        }
-                    </DropdownButton>
-                </span>
-            </InputGroup.Button>
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                    <ButtonEdit
-                        style={{ marginLeft: "2px" }}
-                        onClick={() => this.props.onEditReport()}
-                        cssClassName={cssClassName}
-                        size={"small"}
-                        overrideTooltip="Edit Report"
-                        overrideDisableButton={savedReport == null || savedReport.IsPredefined}
-                        ConfigEntity={savedReport}
-                        DisplayMode="Glyph" />
-                </span>
-            </InputGroup.Button>
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                    <ButtonNew
-                        style={{ marginLeft: "2px" }}
-                        cssClassName={cssClassName} onClick={() => this.props.onNewReport()}
-                        size={"small"}
-                        overrideTooltip="Create New Report"
-                        DisplayMode="Glyph" />
-                </span>
-            </InputGroup.Button>
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                    <ButtonDelete
-                        style={{ marginLeft: "2px" }}
-                        cssClassName={cssClassName}
-                        size={"small"}
-                        overrideTooltip="Delete Report"
-                        overrideDisableButton={savedReport == null || savedReport.IsPredefined}
-                        ConfigEntity={savedReport}
-                        DisplayMode="Glyph"
-                        ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}
-                        ConfirmationMsg={"Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?"}
-                        ConfirmationTitle={"Delete Report"} />
-                </span>
-            </InputGroup.Button>
-        </InputGroup>
+            <InputGroup>
+                <DropdownButton
+                    disabled={availableReports.length == 0}
+                    style={{ minWidth: "120px" }}
+                    className={cssClassName}
+                    bsSize={"small"}
+                    bsStyle={"default"}
+                    title={currentReportId}
+                    id="report" >
+                    {availableReports}
+                </DropdownButton>
+
+                {currentReportId != selectReportString &&
+                    <InputGroup.Button>
+                        <ButtonClear
+                            bsStyle={"default"}
+                            cssClassName={cssClassName}
+                            onClick={() => this.onSelectedReportChanged("")}
+                            size={"small"}
+                            overrideTooltip="Clear Report"
+                            overrideDisableButton={currentReportId == selectReportString}
+                            ConfigEntity={null}
+                            DisplayMode="Glyph" />
+                    </InputGroup.Button>
+
+                }
+            </InputGroup>
+
+
+            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                <DropdownButton
+                    style={{ marginLeft: "5px" }}
+                    
+                    bsSize="small" 
+                    bsStyle="primary" 
+                    title={exportGlyph} 
+                    id="exportDropdown" 
+                    disabled={currentReportId == selectReportString} >
+                    {csvMenuItem}
+                    {clipboardMenuItem} {
+                        OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
+                    } {
+                        iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
+                    }
+                </DropdownButton>
+
+                <ButtonEdit
+                    style={{ marginLeft: "2px" }}
+                    onClick={() => this.props.onEditReport()}
+                    cssClassName={cssClassName}
+                    size={"small"}
+                    overrideTooltip="Edit Report"
+                    overrideDisableButton={savedReport == null || savedReport.IsPredefined}
+                    ConfigEntity={savedReport}
+                    DisplayMode="Glyph" />
+
+                <ButtonNew
+                    style={{ marginLeft: "2px" }}
+                    cssClassName={cssClassName} onClick={() => this.props.onNewReport()}
+                    size={"small"}
+                    overrideTooltip="Create New Report"
+                    DisplayMode="Glyph" />
+
+                <ButtonDelete
+                    style={{ marginLeft: "2px" }}
+                    cssClassName={cssClassName}
+                    size={"small"}
+                    overrideTooltip="Delete Report"
+                    overrideDisableButton={savedReport == null || savedReport.IsPredefined}
+                    ConfigEntity={savedReport}
+                    DisplayMode="Glyph"
+                    ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}
+                    ConfirmationMsg={"Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?"}
+                    ConfirmationTitle={"Delete Report"} />
+            </span>
+        </span>
 
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.ExportStrategyName} glyphicon={StrategyGlyphs.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }
 
-    onSelectedReportChanged(selected: IReport[]) {
-        this.props.onSelectReport(selected.length > 0 ? selected[0].Name : "");
+     onSelectedReportChanged(reportName: string) {
+        this.props.onSelectReport(reportName);
     }
 }
 

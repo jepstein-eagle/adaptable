@@ -1,7 +1,6 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import { Typeahead } from 'react-bootstrap-typeahead'
 import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
@@ -19,7 +18,9 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
-import { InputGroup } from "react-bootstrap";
+import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
+import { ButtonClear } from "../Components/Buttons/ButtonClear";
+
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchName: string;
@@ -30,83 +31,80 @@ interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyView
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
-    componentWillReceiveProps(nextProps: AdvancedSearchToolbarControlComponentProps, nextContext: any) {
-        //if there was a selected search and parent unset the column we then clear the component 
-        // otherwise it's correctly unselected but the input still have the previsous selected text
-        if (StringExtensions.IsNullOrEmpty(nextProps.CurrentAdvancedSearchName) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentAdvancedSearchName)) {
-            (this.refs.typeahead as any).getInstance().clear()
-        }
-    }
+   
     render() {
+        const selectSearchString: string = "Select a Search"
         let cssClassName: string = this.props.cssClassName + "__advancedsearch";
 
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Name == this.props.CurrentAdvancedSearchName);
 
         let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
-            "select" : this.props.CurrentAdvancedSearchName
+            selectSearchString : this.props.CurrentAdvancedSearchName
 
         let sortedAdvancedSearches: IAdvancedSearch[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
-        let content = <InputGroup>
-            <Typeahead
-                ref="typeahead"
-                emptyLabel={"No Advanced Search"}
-                placeholder={"Select a Search"}
-                labelKey={"Name"}
-                filterBy={["Name"]}
-                clearButton={true}
-                selected={savedSearch ? [savedSearch] : []}
-                onChange={(selected) => { this.onSelectedSearchChanged(selected) }}
-                options={sortedAdvancedSearches}
-            />
+        let availableSearches: any[] = sortedAdvancedSearches.filter(s => s.Name != this.props.CurrentAdvancedSearchName).map((search, index) => {
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedSearchChanged(search.Name)}>{search.Name}</MenuItem>
+        })
+        let content = <span>
 
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                    <ButtonEdit
-                        style={{ marginLeft: "2px" }}
-                        onClick={() => this.props.onEditAdvancedSearch()}
-                        cssClassName={cssClassName}
-                        size={"small"}
-                        overrideTooltip="Edit Current Advanced Search"
-                        overrideDisableButton={currentSearchName == "select"}
-                        ConfigEntity={savedSearch}
-                        DisplayMode="Glyph" />
-                </span>
-            </InputGroup.Button>
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                    <ButtonNew
-                        style={{ marginLeft: "2px" }}
-                        cssClassName={cssClassName} onClick={() => this.props.onNewAdvancedSearch()}
-                        size={"small"}
-                        overrideTooltip="Create New Advanced Search"
-                        DisplayMode="Glyph" />
-                </span>
-            </InputGroup.Button>
-            <InputGroup.Button>
-                <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
-                    <ButtonDelete
-                        style={{ marginLeft: "2px" }}
-                        cssClassName={cssClassName}
-                        size={"small"}
-                        overrideTooltip="Delete Advanced Search"
-                        overrideDisableButton={currentSearchName == "select"}
-                        ConfigEntity={savedSearch}
-                        DisplayMode="Glyph"
-                        ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
-                        ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?"}
-                        ConfirmationTitle={"Delete Advanced Search"} />
-                </span>
-            </InputGroup.Button>
-        </InputGroup>
+            <InputGroup>
+                <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }} className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
+                    {availableSearches}
+                </DropdownButton>
+                {currentSearchName != selectSearchString &&
+                    <InputGroup.Button>
+                        <ButtonClear
+                            bsStyle={"default"}
+                            cssClassName={cssClassName}
+                            onClick={() => this.onSelectedSearchChanged("")}
+                            size={"small"}
+                            overrideTooltip="Clear Search"
+                            overrideDisableButton={currentSearchName == selectSearchString}
+                            ConfigEntity={savedSearch}
+                            DisplayMode="Glyph" />
+                    </InputGroup.Button>
+                }
+            </InputGroup>
+
+            <span className={this.props.IsReadOnly ? "ab_readonly" : ""}>
+                <ButtonEdit
+                    style={{ marginLeft: "5px" }}
+                    onClick={() => this.props.onEditAdvancedSearch()}
+                    cssClassName={cssClassName}
+                    size={"small"}
+                    overrideTooltip="Edit Current Advanced Search"
+                    overrideDisableButton={currentSearchName == selectSearchString}
+                    ConfigEntity={savedSearch}
+                    DisplayMode="Glyph" />
+                <ButtonNew
+                    style={{ marginLeft: "2px" }}
+                    cssClassName={cssClassName} onClick={() => this.props.onNewAdvancedSearch()}
+                    size={"small"}
+                    overrideTooltip="Create New Advanced Search"
+                    DisplayMode="Glyph" />
+                <ButtonDelete
+                    style={{ marginLeft: "2px" }}
+                    cssClassName={cssClassName}
+                    size={"small"}
+                    overrideTooltip="Delete Advanced Search"
+                    overrideDisableButton={currentSearchName == selectSearchString}
+                    ConfigEntity={savedSearch}
+                    DisplayMode="Glyph"
+                    ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
+                    ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?"}
+                    ConfirmationTitle={"Delete Advanced Search"} />
+            </span>
+        </span>
+
 
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.AdvancedSearchStrategyName} glyphicon={StrategyGlyphs.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }
 
-    onSelectedSearchChanged(selected: IAdvancedSearch[]) {
-        this.props.onSelectAdvancedSearch(selected.length > 0 ? selected[0].Name : "");
+    onSelectedSearchChanged(searchName: string) {
+        this.props.onSelectAdvancedSearch(searchName);
     }
 
 
