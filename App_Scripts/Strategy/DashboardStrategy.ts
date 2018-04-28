@@ -7,8 +7,8 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IDashboardStrategy } from '../Strategy/Interface/IDashboardStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
-import { IGridSort } from '../Core/Interface/Interfaces';
 import { Helper } from '../Core/Helpers/Helper';
+import { IGridSort } from '../Core/Api/AdaptableBlotterObjects';
 
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {

@@ -1,5 +1,4 @@
 import { EventDispatcher } from "../EventDispatcher";
-import { IAdvancedSearch } from "../../Strategy/Interface/IAdvancedSearchStrategy";
 import { IEvent } from "../Interface/IEvent";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ISearchChangedEventArgs";

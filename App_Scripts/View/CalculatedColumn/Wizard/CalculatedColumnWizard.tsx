@@ -1,4 +1,3 @@
-import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'

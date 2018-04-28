@@ -2,12 +2,12 @@ import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '.././../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { ICalculatedColumn } from "../../../Strategy/Interface/ICalculatedColumnStrategy";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { ICalculatedColumn } from "../../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface CalculatedColumnSummaryWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
@@ -23,7 +23,7 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
 
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.ColumnId },
-            { Key: "Expression", Value: this.props.Data.GetValueFunc }
+            { Key: "Expression", Value: this.props.Data.ColumnExpression }
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.CalculatedColumnStrategyName} />

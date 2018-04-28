@@ -1,7 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { ConditionalStyleScope } from '../../Core/Enums';
-import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -11,6 +10,7 @@ import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
+import { IConditionalStyle } from "../../Core/Api/AdaptableBlotterObjects";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 

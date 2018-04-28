@@ -2,7 +2,6 @@ import * as React from "react";
 import { Radio, Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
@@ -12,8 +11,8 @@ import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
-import { IUserFilter } from "../../../Strategy/Interface/IUserFilterStrategy";
 import { ConditionalStyleScope } from "../../../Core/Enums";
+import { IConditionalStyle, IUserFilter } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: IColumn[]

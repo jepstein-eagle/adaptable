@@ -1,5 +1,4 @@
 import * as React from "react";
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { Radio } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -7,6 +6,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";
+import { IAdvancedSearch } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;

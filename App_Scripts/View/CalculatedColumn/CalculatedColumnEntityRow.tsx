@@ -1,10 +1,10 @@
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import { ICalculatedColumn } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowProps<CalculatedColumnEntityRow>, {}> {
@@ -15,7 +15,7 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = calculatedColumn.ColumnId
-        colItems[1].Content = calculatedColumn.GetValueFunc
+        colItems[1].Content = calculatedColumn.ColumnExpression
       
         let buttons: any = <EntityListActionButtons
         cssClassName={this.props.cssClassName}

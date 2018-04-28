@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
@@ -9,6 +8,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
+import { ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: IColumn[]

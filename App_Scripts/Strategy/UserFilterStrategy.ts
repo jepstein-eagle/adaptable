@@ -1,4 +1,4 @@
-import { IUserFilterStrategy, IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilterStrategy } from '../Strategy/Interface/IUserFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -9,6 +9,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { IUserFilter } from '../Core/Api/AdaptableBlotterObjects';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]

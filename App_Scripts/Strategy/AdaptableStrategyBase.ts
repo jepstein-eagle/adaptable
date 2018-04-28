@@ -6,10 +6,8 @@ import { IEnterpriseCache } from 'ag-grid';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
-import { IAdvancedSearch } from './Interface/IAdvancedSearchStrategy';
 import { ISearchChangedEventArgs, IBlotterSearchState, IBlotterSortState } from '../Core/Api/ISearchChangedEventArgs';
 import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumnFilter } from './Interface/IColumnFilterStrategy';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 

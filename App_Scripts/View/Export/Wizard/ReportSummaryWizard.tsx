@@ -1,4 +1,4 @@
-import { IReport } from '../../../Strategy/Interface/IExportStrategy';
+import { IReport, IUserFilter } from "../../../Core/Api/AdaptableBlotterObjects";
 import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
@@ -9,7 +9,6 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { ReportColumnScope, ReportRowScope } from '../../../Core/Enums';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { ReportHelper } from '../../../Core/Helpers/ReportHelper';
 

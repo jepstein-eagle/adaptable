@@ -15,7 +15,6 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
 import { SortOrder } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
@@ -23,8 +22,8 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -152,7 +151,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     
     canFinishWizard() {
         let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn
-        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.GetValueFunc)
+        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
       }
 
 }

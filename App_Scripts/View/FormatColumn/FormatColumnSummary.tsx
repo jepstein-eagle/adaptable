@@ -1,4 +1,3 @@
-import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
@@ -19,9 +18,9 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { IAdaptableBlotterObject, IFormatColumn } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {

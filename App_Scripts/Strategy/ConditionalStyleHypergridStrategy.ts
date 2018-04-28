@@ -2,10 +2,10 @@ import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalSty
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IConditionalStyle } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
+import { IConditionalStyle } from '../Core/Api/AdaptableBlotterObjects';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

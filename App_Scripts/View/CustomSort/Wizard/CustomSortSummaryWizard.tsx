@@ -1,4 +1,3 @@
-import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
@@ -9,6 +8,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { ICustomSort } from "../../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {

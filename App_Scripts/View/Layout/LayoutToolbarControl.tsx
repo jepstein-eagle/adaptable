@@ -5,7 +5,6 @@ import { FormControl, Row, Col, InputGroup, InputGroupButton, Glyphicon, MenuIte
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
@@ -21,9 +20,9 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IGridSort } from "../../Core/Interface/Interfaces";
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
+import { ILayout } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {

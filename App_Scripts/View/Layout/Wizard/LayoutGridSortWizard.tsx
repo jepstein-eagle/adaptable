@@ -1,12 +1,10 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Checkbox, Glyphicon, Button } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { SortOrder, SelectionMode } from "../../../Core/Enums";
-import { IGridSort } from "../../../Core/Interface/Interfaces";
 import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
 import { GridSortRow } from '../GridSortRow'
 import { IColItem } from "../../UIInterfaces";
@@ -14,6 +12,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from "../../../Core/ObjectFactory";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
+import { ILayout, IGridSort } from "../../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {

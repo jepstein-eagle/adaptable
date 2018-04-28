@@ -1,4 +1,4 @@
-import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
+import { IShortcut } from "../../../Core/Api/AdaptableBlotterObjects";
 /// <reference path="../../typings/index.d.ts" />
 import * as React from "react";
 import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';

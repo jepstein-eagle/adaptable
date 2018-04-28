@@ -9,13 +9,12 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
-import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {

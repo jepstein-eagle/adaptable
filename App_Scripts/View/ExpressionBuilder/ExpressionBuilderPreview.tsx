@@ -3,17 +3,15 @@ import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
-import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, RangeOperandType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { IRange } from "../../Core/Interface/IRange";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
+import { Expression, IUserFilter, IRange } from "../../Core/Api/AdaptableBlotterObjects";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.

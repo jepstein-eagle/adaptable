@@ -1,23 +1,10 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch } from '../Strategy/Interface/IAdvancedSearchStrategy';
-import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
-import { IConditionalStyle } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { ReportColumnScope, ReportRowScope, CellValidationMode, LeafExpressionOperator, DataType, MathOperation, ConditionalStyleScope, FontWeight, FontStyle, RangeOperandType, SortOrder } from '../Core/Enums';
-import { IUserFilter } from '../Strategy/Interface/IUserFilterStrategy';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCell } from '../Strategy/Interface/IFlashingCellsStrategy'
-import { IShortcut } from '../Strategy/Interface/IShortcutStrategy';
-import { ICustomSort } from '../Strategy/Interface/ICustomSortStrategy';
-import { IPlusMinusRule } from '../Strategy/Interface/IPlusMinusStrategy';
-import { IFormatColumn } from '../Strategy/Interface/IFormatColumnStrategy';
-import { ICalculatedColumn } from "../Strategy/Interface/ICalculatedColumnStrategy";
-import { IReport } from '../Strategy/Interface/IExportStrategy';
-import { IColumn } from './Interface/IColumn';
-import { IRange } from './Interface/IRange';
-import { ILayout } from '../Strategy/Interface/ILayoutStrategy';
-import { IGridSort } from './Interface/Interfaces';
 import { IStyle } from './Interface/IStyle';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport } from './Api/AdaptableBlotterObjects';
+import { RangeOperandType, LeafExpressionOperator, SortOrder, CellValidationMode, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight } from './Enums';
+import { IColumn } from './Interface/IColumn';
+import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 
 export module ObjectFactory {
 
@@ -26,7 +13,7 @@ export module ObjectFactory {
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
-        return { ColumnId: "", GetValueFunc: "", IsPredefined: false }
+        return { ColumnId: "", ColumnExpression: "", IsPredefined: false }
     }
 
     export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
@@ -112,9 +99,6 @@ export module ObjectFactory {
         };
     }
 
-    export function GetFlashingCellDurations(): number[] {
-        return [250, 500, 750, 1000]
-    }
 
     export function CreateEmptyShortcut(): IShortcut {
         return {

@@ -1,4 +1,4 @@
-import { IShortcut, IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
+import {  IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -12,10 +12,10 @@ import { DataType } from '../Core/Enums'
 import { MathOperation, CellValidationMode } from '../Core/Enums'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { ObjectFactory } from '../Core/ObjectFactory';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
+import { IShortcut, ICellValidationRule } from '../Core/Api/AdaptableBlotterObjects';
 
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {

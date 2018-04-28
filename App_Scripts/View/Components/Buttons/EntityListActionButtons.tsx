@@ -4,8 +4,8 @@ import { ButtonToolbar } from 'react-bootstrap';
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
-import { IAdaptableBlotterObject } from "../../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { IAdaptableBlotterObject } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;

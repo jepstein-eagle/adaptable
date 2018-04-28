@@ -1,5 +1,5 @@
 import {IStrategy} from './IStrategy';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import { IAdaptableBlotterObject } from '../../Core/Api/AdaptableBlotterObjects';
 
 export interface ITeamSharingStrategy extends IStrategy{
     

@@ -1,5 +1,4 @@
 
-import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
@@ -7,6 +6,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
+import { ICustomSort } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>

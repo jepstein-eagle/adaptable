@@ -1,4 +1,3 @@
-import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import * as React from "react";
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
@@ -6,6 +5,7 @@ import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IAdvancedSearch } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>, {}> {
 

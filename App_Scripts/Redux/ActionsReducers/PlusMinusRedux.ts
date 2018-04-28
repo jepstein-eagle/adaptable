@@ -1,7 +1,7 @@
 import { PlusMinusState } from './Interface/IState';
-import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as Redux from 'redux'
 import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { IPlusMinusRule } from '../../Core/Api/AdaptableBlotterObjects';
 
 export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';
 export const PLUSMINUS_ADD_UPDATE_CONDITION = 'PLUSMINUS_ADD_UPDATE_CONDITION';

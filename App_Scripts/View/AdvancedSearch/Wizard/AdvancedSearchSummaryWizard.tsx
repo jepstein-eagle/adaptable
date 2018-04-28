@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { PanelWithImage } from '../../Components/Panels/PanelWithImage';
@@ -12,10 +11,10 @@ import { Helper } from "../../../Core/Helpers/Helper";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { AdaptableObjectCollection } from '../../Components/AdaptableObjectCollection';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
-import { IUserFilter } from "../../../Strategy/Interface/IUserFilterStrategy";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     Columns: IColumn[]

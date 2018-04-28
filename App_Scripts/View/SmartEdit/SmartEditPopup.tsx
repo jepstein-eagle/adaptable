@@ -10,18 +10,17 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { MathOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { ICellValidationRule } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;

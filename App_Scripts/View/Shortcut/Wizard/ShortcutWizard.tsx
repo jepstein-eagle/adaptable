@@ -1,4 +1,3 @@
-import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'

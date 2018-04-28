@@ -1,27 +1,14 @@
 import { MathOperation, LeafExpressionOperator, DisplayAction } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
-import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy'
-import { ICalculatedColumn } from '../../../Strategy/Interface/ICalculatedColumnStrategy'
-import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy'
-import { IReport, ILiveReport, IPPDomain } from '../../../Strategy/Interface/IExportStrategy'
-import { IFlashingCell } from '../../../Strategy/Interface/IFlashingCellsStrategy'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
-import { ICalendar } from '../../../Strategy/Interface/ICalendarStrategy';
-import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
-import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
 import { IStyle } from '../../../Core/Interface/IStyle';
-import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
-import { IColumnFilter } from '../../../Strategy/Interface/IColumnFilterStrategy';
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
-import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement, IGridSort } from '../../../Core/Interface/Interfaces';
-import { IUserTheme } from '../../../Strategy/Interface/IThemeStrategy';
+import { IEntitlement } from '../../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../../Core/Interface/IAdaptableBlotterOptions';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 
 /*
 Created by the system and not part of predefined or user config

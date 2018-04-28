@@ -1,4 +1,3 @@
-import { IReport } from '../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
 import { DropdownButton, MenuItem, Col, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -11,6 +10,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import { IReport } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean

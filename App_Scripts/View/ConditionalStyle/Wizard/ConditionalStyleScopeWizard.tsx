@@ -2,12 +2,12 @@ import * as React from "react";
 import { Radio, Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope, SelectionMode, PopoverType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { IConditionalStyle } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: Array<IColumn>

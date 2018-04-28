@@ -1,11 +1,11 @@
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { PopoverType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { IPlusMinusRule } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
 }

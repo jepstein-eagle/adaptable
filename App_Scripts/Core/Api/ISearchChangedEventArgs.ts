@@ -1,8 +1,5 @@
-import { IAdvancedSearch } from "../../Strategy/Interface/IAdvancedSearchStrategy";
-import { IColumnFilter } from "../../Strategy/Interface/IColumnFilterStrategy";
+import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./AdaptableBlotterObjects";
 import { SearchChangedTrigger } from "../Enums";
-import { IGridSort } from "../Interface/Interfaces";
-import { ICustomSort } from "../../Strategy/Interface/ICustomSortStrategy";
 
 export interface IBlotterSearchState {
   AdvancedSearch: IAdvancedSearch;

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { Radio } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -8,10 +7,10 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
-import { IGridSort } from "../../Core/Interface/Interfaces";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SortOrder } from "../../Core/Enums";
 import { LayoutHelper } from "../../Core/Helpers/LayoutHelper";
+import { ILayout } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {

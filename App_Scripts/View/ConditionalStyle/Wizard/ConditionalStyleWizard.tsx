@@ -1,4 +1,3 @@
-import { IConditionalStyle } from '../../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
@@ -6,7 +5,6 @@ import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard'
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';

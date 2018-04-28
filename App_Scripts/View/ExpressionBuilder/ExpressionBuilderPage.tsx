@@ -3,17 +3,15 @@ import { ExpressionBuilderConditionSelector } from './ExpressionBuilderCondition
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
-import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus } from '../../Core/Enums'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
-import { IRange } from "../../Core/Interface/IRange";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { IUserFilter, Expression } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {

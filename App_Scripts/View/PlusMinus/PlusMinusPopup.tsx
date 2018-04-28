@@ -13,9 +13,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
-import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
@@ -24,10 +22,10 @@ import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,

@@ -1,4 +1,3 @@
-import { IReport } from '../../../Strategy/Interface/IExportStrategy';
 import * as React from "react";
 import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
@@ -8,6 +7,7 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, PopoverType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
+import { IReport } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
     Columns: Array<IColumn>

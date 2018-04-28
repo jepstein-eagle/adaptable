@@ -6,13 +6,11 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { LayoutWizard } from './Wizard/LayoutWizard'
 import { LayoutEntityRow } from './LayoutEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -22,11 +20,11 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { SortOrder } from "../../Core/Enums";
+import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];

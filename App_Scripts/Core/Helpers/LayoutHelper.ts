@@ -1,14 +1,8 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { Expression } from '../Expression'
-import { ExpressionHelper } from '../Helpers/ExpressionHelper'
-import { IReport } from '../../Strategy/Interface/IExportStrategy';
-import { ReportColumnScope, ReportRowScope, SortOrder } from '../Enums'
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { IColumn } from '../Interface/IColumn';
-import { ISelectedCells, IGridSort } from '../Interface/Interfaces';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { IGridSort, ILayout } from '../Api/AdaptableBlotterObjects';
+import { SortOrder } from '../Enums';
+import { IColumn } from '../Interface/IColumn';
 
 
 

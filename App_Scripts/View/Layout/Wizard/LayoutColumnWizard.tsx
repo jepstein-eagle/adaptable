@@ -2,13 +2,13 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { DistinctCriteriaPairValue, SortOrder } from '../../../Core/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
+import { ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: Array<IColumn>

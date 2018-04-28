@@ -8,8 +8,6 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { ExportDestination, ReportColumnScope } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { IReport, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ReportEntityRow } from './ReportEntityRow'
@@ -24,10 +22,11 @@ import { encode } from "punycode";
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
+import { IReport, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],

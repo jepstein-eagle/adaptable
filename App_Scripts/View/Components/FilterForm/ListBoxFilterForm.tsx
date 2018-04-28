@@ -3,7 +3,6 @@ import { DistinctCriteriaPairValue, LeafExpressionOperator, DataType, RangeOpera
 import { MenuItem, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
-import { IRange } from '../../../Core/Interface/IRange'
 import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterFormControlTextClear";
@@ -13,6 +12,7 @@ import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
 import { ColumnSelector } from "../Selectors/ColumnSelector";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { IRange } from "../../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {

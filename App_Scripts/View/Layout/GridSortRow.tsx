@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { Radio , FormControl, Button, Glyphicon} from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -8,13 +7,13 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
-import { IGridSort } from "../../Core/Interface/Interfaces";
 import { IColumn } from "../../Core/Interface/IColumn";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { SelectionMode, SortOrder } from "../../Core/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { IGridSort } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {

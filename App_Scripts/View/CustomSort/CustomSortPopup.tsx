@@ -1,4 +1,3 @@
-import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
@@ -24,8 +23,8 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction

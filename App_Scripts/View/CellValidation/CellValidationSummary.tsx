@@ -1,4 +1,3 @@
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
@@ -17,8 +16,8 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IAdaptableBlotterObject, ICellValidationRule } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]

@@ -41,22 +41,11 @@ import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrateg
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
 import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
-import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy'
-import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy'
-import { IReport } from '../../Strategy/Interface/IExportStrategy'
-import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy'
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy'
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
-import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { format } from 'util';
 import { GridState, AdvancedSearchState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
@@ -64,8 +53,8 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
 import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
-import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule } from '../../Core/Api/AdaptableBlotterObjects';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -505,7 +494,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
                     let returnAction = next(action);
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    blotter.createCalculatedColumn((<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn)
+                    blotter.addCalculatedColumnToGrid((<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn)
                     let newCalculatedColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn.ColumnId)
                     if (newCalculatedColumn) {
                         columnsLocalLayout.push(newCalculatedColumn)
@@ -519,7 +508,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
-                    blotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
+                    blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
                     if (deletedCalculatedColumnIndex > -1) {
                         columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
                     }
@@ -532,9 +521,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     let index = calculatedColumnState.CalculatedColumns.findIndex(x => x.ColumnId == actionTyped.CalculatedColumn.ColumnId)
-                    blotter.deleteCalculatedColumn(calculatedColumnState.CalculatedColumns[index].ColumnId)
+                    blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
                     let returnAction = next(action);
-                    blotter.createCalculatedColumn(actionTyped.CalculatedColumn)
+                    blotter.addCalculatedColumnToGrid(actionTyped.CalculatedColumn)
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
@@ -799,7 +788,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     }
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
-                        blotter.createCalculatedColumn(x)
+                        blotter.addCalculatedColumnToGrid(x)
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
                         blotter.setColumnIntoStore();

@@ -5,7 +5,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
-import { IExportStrategy, IReport } from '../Strategy/Interface/IExportStrategy'
+import { IExportStrategy } from '../Strategy/Interface/IExportStrategy'
 import {  ExportDestination } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
@@ -14,6 +14,7 @@ import { OpenfinHelper } from '../Core/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Core/Helpers/iPushPullHelper';
+import { IReport } from '../Core/Api/AdaptableBlotterObjects';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
     private ExportState: ExportState

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
@@ -14,6 +13,7 @@ import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { ICalculatedColumn } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
@@ -43,7 +43,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                         cssClassName={this.props.cssClassName}
                         key={"UF" + index}
                         Item1={StrategyNames.CalculatedColumnStrategyName}
-                        Item2={item.GetValueFunc}
+                        Item2={item.ColumnExpression}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
                         EntityName={StrategyNames.CalculatedColumnStrategyName}
@@ -94,7 +94,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 
     canFinishWizard() {
         let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn
-        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.GetValueFunc)
+        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
       }
 }
 

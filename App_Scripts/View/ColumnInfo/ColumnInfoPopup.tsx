@@ -19,7 +19,6 @@ import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary'
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary'
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary'
 import { DataType, SelectionMode } from '../../Core/Enums'
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
@@ -27,6 +26,7 @@ import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { ICalculatedColumn } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {

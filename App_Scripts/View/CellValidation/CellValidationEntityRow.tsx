@@ -1,4 +1,3 @@
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import * as React from "react";
 import { Helper } from '../../Core/Helpers/Helper';
 import { FormControl } from 'react-bootstrap';
@@ -13,6 +12,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
+import { ICellValidationRule } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {

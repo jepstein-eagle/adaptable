@@ -1,4 +1,4 @@
-import { IColumnFilterStrategy, IColumnFilter } from '../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterStrategy } from '../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -7,6 +7,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
+import { IColumnFilter } from '../Core/Api/AdaptableBlotterObjects';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private filterState: IColumnFilter[]

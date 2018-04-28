@@ -1,4 +1,3 @@
-import { ICustomSort } from '../Strategy/Interface/ICustomSortStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -6,6 +5,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { ICustomSort } from '../Core/Api/AdaptableBlotterObjects';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]

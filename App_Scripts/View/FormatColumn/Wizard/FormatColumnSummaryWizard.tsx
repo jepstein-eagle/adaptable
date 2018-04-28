@@ -1,6 +1,5 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IFormatColumn } from '../../../Strategy/Interface/IFormatColumnStrategy';
 import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { IStyle } from '../../../Core/Interface/IStyle';
@@ -10,6 +9,7 @@ import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
+import { IFormatColumn } from "../../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {

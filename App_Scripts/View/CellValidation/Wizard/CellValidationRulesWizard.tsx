@@ -2,13 +2,12 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl,  Col, Panel,  HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
-import { IRange } from '../../../Core/Interface/IRange';
 import { DataType, LeafExpressionOperator, PopoverType, RangeOperandType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { ICellValidationRule, IRange } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>

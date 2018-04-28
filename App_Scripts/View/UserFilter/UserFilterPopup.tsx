@@ -11,7 +11,6 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
@@ -22,9 +21,9 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     onAddUpdateUserFilter: (index: number, userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction

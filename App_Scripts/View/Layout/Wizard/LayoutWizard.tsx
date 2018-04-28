@@ -1,4 +1,3 @@
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
@@ -10,8 +9,9 @@ import { LayoutSummaryWizard } from './LayoutSummaryWizard'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IGridSort } from '../../../Core/Interface/Interfaces';
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
+import { IGridSort, ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
+
 
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
   GridSorts:IGridSort[]

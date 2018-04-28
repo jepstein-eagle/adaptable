@@ -1,12 +1,12 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
+import { IFormatColumn } from "../../Core/Api/AdaptableBlotterObjects";
 
 export class FormatColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FormatColumnEntityRow>, {}> {
 

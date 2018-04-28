@@ -1,5 +1,4 @@
 import { IStrategy } from './IStrategy';
-import { Expression } from '../../Core/Expression';
 import { MathOperation } from '../../Core/Enums';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
 import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';

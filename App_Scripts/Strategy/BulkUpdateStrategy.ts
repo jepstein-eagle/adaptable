@@ -8,12 +8,12 @@ import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionRetu
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from '../Strategy/Interface/IBulkUpdateStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
+import { ICellValidationRule } from '../Core/Api/AdaptableBlotterObjects';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     constructor(blotter: IAdaptableBlotter) {

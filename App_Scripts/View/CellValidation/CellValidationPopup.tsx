@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -16,7 +15,6 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationMode } from '../../Core/Enums'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -24,9 +22,9 @@ import { CellValidationEntityRow } from './CellValidationEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {

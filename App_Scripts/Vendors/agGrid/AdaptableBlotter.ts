@@ -51,11 +51,10 @@ import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStr
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
-import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 
 // import other items
-import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import {  IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -82,14 +81,14 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IBlotterApi } from '../../Core/Api/IBlotterApi';
 import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/AdaptableBlotterObjects';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -758,7 +757,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
     }
 
-    public deleteCalculatedColumn(calculatedColumnID: string) {
+    public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
         let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDef.findIndex(x => x.headerName == calculatedColumnID)
         if (colDefIndex > -1) {
@@ -773,15 +772,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.setColumnIntoStore();
     }
-    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
+    public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         colDef.push({
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
-            valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.GetValueFunc, params.node)
+            valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
         })
         this.gridOptions.api.setColumnDefs(colDef)
-        let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.GetValueFunc)
+        let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
         for (let column of columnList) {
             let childrenColumnList = this.calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {

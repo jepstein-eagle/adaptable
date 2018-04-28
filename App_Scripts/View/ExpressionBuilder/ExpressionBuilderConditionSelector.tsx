@@ -1,13 +1,10 @@
 import * as React from "react";
-import { IRange } from '../../Core/Interface/IRange'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { Well, FormGroup, ControlLabel, Row, Col, HelpBlock, Tabs, Tab, Panel, NavItem, Nav } from 'react-bootstrap';
-import { Expression } from '../../Core/Expression';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode, QueryBuildStatus } from '../../Core/Enums'
@@ -17,6 +14,7 @@ import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
+import { IUserFilter, Expression, IRange } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>

@@ -1,21 +1,20 @@
 import { DataType, DistinctCriteriaPairValue, SearchChangedTrigger } from '../Enums'
 import { IStrategy } from '../../Strategy/Interface/IStrategy'
-import { ICellInfo, IAdaptableStrategyCollection, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces'
+import { ICellInfo, IAdaptableStrategyCollection, ISelectedCells } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
 import { IAuditService } from '../Services/Interface/IAuditService'
 import { IValidationService } from '../Services/Interface/IValidationService'
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy'
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { EventDispatcher } from '../EventDispatcher';
 import { IBlotterApi } from '../Api/IBlotterApi';
 import { ISearchChangedEventArgs } from '../Api/ISearchChangedEventArgs';
+import { ICalculatedColumn, IGridSort } from '../Api/AdaptableBlotterObjects';
 
 export interface IAdaptableBlotter {
     // new API interface for external calls - not sure yet if good idea or not...
@@ -81,8 +80,8 @@ export interface IAdaptableBlotter {
     removeCustomSort(columnId: string): void
 
     //CalculatedColumn
-    deleteCalculatedColumn(calculatedColumnId: string): void
-    createCalculatedColumn(calculatedColumn: ICalculatedColumn): void
+    addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void
+     removeCalculatedColumnFromGrid(calculatedColumnID: string) :void
     getFirstRecord(): any
 
     // Filtering

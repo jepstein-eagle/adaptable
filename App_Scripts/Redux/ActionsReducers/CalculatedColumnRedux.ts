@@ -1,6 +1,6 @@
 import { CalculatedColumnState } from './Interface/IState';
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import * as Redux from 'redux'
+import { ICalculatedColumn } from '../../Core/Api/AdaptableBlotterObjects';
 
 export const CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';
 export const CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';

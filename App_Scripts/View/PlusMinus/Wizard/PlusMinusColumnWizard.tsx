@@ -1,4 +1,3 @@
-import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
@@ -6,6 +5,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
+import { IPlusMinusRule } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: Array<IColumn>

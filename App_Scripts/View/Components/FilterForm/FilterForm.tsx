@@ -5,19 +5,17 @@ import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptable
 import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
 import { FilterState } from '../../../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IColumnFilter, IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
+import {  IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter, IColumnFilter, IRange, Expression } from '../../../Core/Api/AdaptableBlotterObjects';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
-import { IRange } from '../../../Core/Interface/IRange'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonClear } from "../Buttons/ButtonClear";
-import { Expression } from "../../../Core/Expression";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

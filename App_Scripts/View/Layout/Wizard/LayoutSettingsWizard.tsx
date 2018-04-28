@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: ILayout[]

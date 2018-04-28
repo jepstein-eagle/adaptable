@@ -1,10 +1,10 @@
-import { IFlashingCell } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as React from "react";
 import { Checkbox, FormControl } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
+import { IFlashingCell } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {

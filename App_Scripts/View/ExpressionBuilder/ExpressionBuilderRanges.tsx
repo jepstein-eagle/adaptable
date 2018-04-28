@@ -1,6 +1,5 @@
 import * as React from "react";
 import { DataType, SelectionMode, RangeOperandType } from '../../Core/Enums'
-import { IRange } from '../../Core/Interface/IRange'
 import { LeafExpressionOperator } from '../../Core/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -11,6 +10,7 @@ import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { ObjectFactory } from '../../Core/ObjectFactory'
+import { IRange } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends React.ClassAttributes<ExpressionBuilderRanges> {
     SelectedColumn: IColumn

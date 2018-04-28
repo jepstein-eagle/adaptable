@@ -3,7 +3,8 @@ import { IPPDomain } from '../../Strategy/Interface/IExportStrategy'
 import { ExportDestination } from '../../Core/Enums';
 import * as Redux from 'redux'
 import { ReportHelper } from '../../Core/Helpers/ReportHelper';
-import { IReport, ILiveReport } from '../../Strategy/Interface/IExportStrategy'
+import {  ILiveReport } from '../../Strategy/Interface/IExportStrategy'
+import { IReport } from '../../Core/Api/AdaptableBlotterObjects';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';

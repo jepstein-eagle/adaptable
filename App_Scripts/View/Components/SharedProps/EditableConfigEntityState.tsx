@@ -1,4 +1,6 @@
-import { IAdaptableBlotterObject } from "../../../Core/Interface/Interfaces";
+import { IAdaptableBlotterObject } from "../../../Core/Api/AdaptableBlotterObjects";
+
+
 
 /// <reference path="../../typings/.d.ts" />
 

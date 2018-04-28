@@ -1,4 +1,3 @@
-import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { Helper } from '../../Core/Helpers/Helper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -6,6 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import { ICustomSort } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSortEntityRow> {
     ColumnLabel: string

@@ -41,18 +41,17 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SearchChangedTrigger } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IBlotterApi } from '../../Core/Api/IBlotterApi';
 import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
+import { ICalculatedColumn, IGridSort } from '../../Core/Api/AdaptableBlotterObjects';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -492,10 +491,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 
-    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
+    public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         // todo
     }
-    public deleteCalculatedColumn(calculatedColumnID: string) {
+    public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
         // todo
     }
 

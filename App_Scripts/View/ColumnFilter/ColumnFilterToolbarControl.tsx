@@ -7,7 +7,6 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
-import { IColumnFilter } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -17,8 +16,8 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { IUserFilter, IColumnFilter } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,

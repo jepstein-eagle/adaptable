@@ -1,4 +1,3 @@
-import { IShortcut } from '../../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import { Radio, Panel, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
@@ -8,6 +7,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+import { IShortcut } from "../../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {

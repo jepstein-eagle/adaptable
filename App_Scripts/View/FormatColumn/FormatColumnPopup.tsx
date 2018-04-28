@@ -1,4 +1,3 @@
-import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
@@ -21,9 +20,9 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
+import { IFormatColumn, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {

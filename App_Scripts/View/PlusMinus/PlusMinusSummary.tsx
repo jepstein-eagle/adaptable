@@ -1,4 +1,3 @@
-import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
@@ -17,9 +16,9 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusRules: IPlusMinusRule[]

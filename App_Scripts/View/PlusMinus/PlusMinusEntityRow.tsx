@@ -1,4 +1,3 @@
-import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
@@ -9,6 +8,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
+import { IPlusMinusRule } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
     Column: IColumn

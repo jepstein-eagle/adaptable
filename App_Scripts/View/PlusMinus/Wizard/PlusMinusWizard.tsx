@@ -1,4 +1,3 @@
-import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
@@ -7,7 +6,7 @@ import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard'
 import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
-import { IUserFilter } from '../../../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilter } from '../../../Core/Api/AdaptableBlotterObjects';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';

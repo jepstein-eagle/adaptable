@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { InputAction } from '../../Core/Interface/IMessage';
+import { ILayout } from '../../Core/Api/AdaptableBlotterObjects';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';

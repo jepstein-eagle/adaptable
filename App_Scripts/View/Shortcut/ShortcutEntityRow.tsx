@@ -1,4 +1,3 @@
-import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import { FormGroup, FormControl } from 'react-bootstrap';
 import { DataType } from '../../Core/Enums'
@@ -8,6 +7,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
+import { IShortcut } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;

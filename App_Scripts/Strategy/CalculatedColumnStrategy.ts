@@ -5,7 +5,8 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { ICalculatedColumn, ICalculatedColumnStrategy } from "../Strategy/Interface/ICalculatedColumnStrategy";
+import {  ICalculatedColumnStrategy } from "../Strategy/Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumn } from '../Core/Api/AdaptableBlotterObjects';
 
 export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy{
     private CalculatedColumns: ICalculatedColumn[]

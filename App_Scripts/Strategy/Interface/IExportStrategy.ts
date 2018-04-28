@@ -1,17 +1,10 @@
 import {IStrategy} from './IStrategy';
-import { Expression } from '../../Core/Expression';
 import { ReportColumnScope, ReportRowScope, ExportDestination } from '../../Core/Enums';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import { IAdaptableBlotterObject, Expression } from '../../Core/Api/AdaptableBlotterObjects';
 
 
 
-export interface IReport extends IAdaptableBlotterObject {
-  Name: string;
-  ReportColumnScope: ReportColumnScope
-  ReportRowScope: ReportRowScope
-  Columns: string[]
-  Expression: Expression
-}
+
 
 export interface ILiveReport {
   WorkbookName: string,

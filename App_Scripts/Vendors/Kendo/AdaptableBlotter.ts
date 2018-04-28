@@ -46,15 +46,13 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, LeafExpressionOperator, DisplayAction, CellValidationMode, DistinctCriteriaPairValue, SortOrder, SearchChangedTrigger } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { IColumnFilter, IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
+import {  IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
@@ -62,16 +60,16 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IBlotterApi } from '../../Core/Api/IBlotterApi';
 import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
+import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort } from '../../Core/Api/AdaptableBlotterObjects';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -732,10 +730,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"))
         this._onRefresh.Dispatch(this, this);
     }
-    public deleteCalculatedColumn(calculatedColumnID: string) {
+    public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
         // todo
     }
-    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
+    public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         // todo
     }
     public getFirstRecord(): any {

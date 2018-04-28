@@ -1,4 +1,3 @@
-import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
@@ -17,7 +16,6 @@ import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -25,9 +23,9 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: IConditionalStyle[]

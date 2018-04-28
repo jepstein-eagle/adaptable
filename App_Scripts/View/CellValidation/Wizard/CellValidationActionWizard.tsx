@@ -2,10 +2,10 @@ import * as React from "react";
 import { Radio, Col, Panel,  HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { ICellValidationRule } from '../../../Strategy/Interface/ICellValidationStrategy';
 import { CellValidationMode, PopoverType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { ICellValidationRule } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>

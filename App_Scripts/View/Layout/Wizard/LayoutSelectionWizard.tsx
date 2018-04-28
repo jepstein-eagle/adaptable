@@ -1,4 +1,3 @@
-import { ILayout } from '../../../Strategy/Interface/ILayoutStrategy';
 import * as React from "react";
 import { Panel, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
@@ -8,7 +7,8 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { IGridSort } from '../../../Core/Interface/Interfaces';
+import { ILayout, IGridSort } from "../../../Core/Api/AdaptableBlotterObjects";
+
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>

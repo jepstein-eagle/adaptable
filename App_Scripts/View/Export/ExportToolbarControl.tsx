@@ -6,7 +6,6 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { IReport } from '../../Strategy/Interface/IExportStrategy'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
@@ -27,6 +26,7 @@ import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SelectCellEditor } from "ag-grid";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { IReport } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {

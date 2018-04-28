@@ -1,4 +1,3 @@
-import { ICustomSort } from '../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
@@ -15,23 +14,13 @@ import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { ICalculatedColumn } from '../../Strategy/Interface/ICalculatedColumnStrategy';
-import { ICellValidationRule } from '../../Strategy/Interface/ICellValidationStrategy';
-import { IFormatColumn } from '../../Strategy/Interface/IFormatColumnStrategy';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
-import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy';
-import { ConditionalStyleScope, FontWeight, FontStyle } from '../../Core/Enums';
-import { IPlusMinusRule } from '../../Strategy/Interface/IPlusMinusStrategy';
-import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
-import { IReport } from '../../Strategy/Interface/IExportStrategy';
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
-import { ILayout } from '../../Strategy/Interface/ILayoutStrategy';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
+import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Core/Api/AdaptableBlotterObjects';
+import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { ConditionalStyleScope } from "../../Core/Enums";
 
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
@@ -113,7 +102,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         {calcCol.ColumnId}
                     </Col>
                     <Col xs={8}>
-                        {calcCol.GetValueFunc}
+                        {calcCol.ColumnExpression}
                     </Col>
                 </Row>
             }

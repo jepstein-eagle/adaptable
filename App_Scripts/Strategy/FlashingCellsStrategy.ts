@@ -6,12 +6,13 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { ObjectFactory } from '../Core/ObjectFactory'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy, IFlashingCell } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { DataType } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { IFlashingCell } from '../Core/Api/AdaptableBlotterObjects';
 
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {

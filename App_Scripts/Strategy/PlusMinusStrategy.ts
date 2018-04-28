@@ -13,11 +13,11 @@ import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { ObjectFactory } from '../Core/ObjectFactory';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
+import { ICellValidationRule } from '../Core/Api/AdaptableBlotterObjects';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState

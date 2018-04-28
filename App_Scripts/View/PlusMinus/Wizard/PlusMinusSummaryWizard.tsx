@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IPlusMinusRule } from '../../../Strategy/Interface/IPlusMinusStrategy';
 import { PopoverType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
@@ -11,8 +10,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
-import { IUserFilter } from "../../../Strategy/Interface/IUserFilterStrategy";
-
+import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: IColumn[]

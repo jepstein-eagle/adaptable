@@ -6,13 +6,11 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -22,10 +20,10 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
-import { IAdaptableBlotterObject } from "../../Core/Interface/Interfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {

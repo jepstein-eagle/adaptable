@@ -1,7 +1,7 @@
 import { AdaptableBlotter } from './AdaptableBlotter'
 import { SortOrder } from '../../Core/Enums'
 import { DataSourceIndexed } from './DataSourceIndexed'
-import { IGridSort } from '../../Core/Interface/Interfaces';
+import { IGridSort } from '../../Core/Api/AdaptableBlotterObjects';
 
 //All custom pipelines should extend from pipelineBase
 export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('CustomSortDataSource', {

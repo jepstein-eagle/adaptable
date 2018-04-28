@@ -1,7 +1,6 @@
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Panel } from 'react-bootstrap';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 
 
 // this just takes a list of filter names - doesnt care if they are system or user

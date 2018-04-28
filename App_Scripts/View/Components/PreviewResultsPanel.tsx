@@ -6,12 +6,11 @@ import { FontWeight, FontStyle, CellValidationMode, PopoverType } from '../../Co
 import { AdaptablePopover } from "../AdaptablePopover";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
-import { ICellValidationRule } from "../../Strategy/Interface/ICellValidationStrategy";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { IUserFilter } from "../../Strategy/Interface/IUserFilterStrategy";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IUserFilter, ICellValidationRule } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {

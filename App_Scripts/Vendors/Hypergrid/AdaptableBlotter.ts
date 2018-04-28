@@ -43,7 +43,7 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ICellValidationRule, ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import {  ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
@@ -55,22 +55,21 @@ import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { IStyle } from '../../Core/Interface/IStyle';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-import { ICalculatedColumn } from "../../Strategy/Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IGridSort } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IAdvancedSearch } from '../../Strategy/Interface/IAdvancedSearchStrategy';
 import { IBlotterApi } from '../../Core/Api/IBlotterApi';
 import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
+import { ICalculatedColumn, IGridSort, ICellValidationRule } from '../../Core/Api/AdaptableBlotterObjects';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -795,7 +794,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //which call onRefresh to refresh live excel updates
         this.ReindexAndRepaint()
     }
-    public deleteCalculatedColumn(calculatedColumnID: string) {
+    public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
 
         let colIndex = this.grid.behavior.getColumns().findIndex((x: any) => x.name == calculatedColumnID)
         if (colIndex > -1) {
@@ -822,7 +821,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.behavior.changed()
         this.setColumnIntoStore();
     }
-    public createCalculatedColumn(calculatedColumn: ICalculatedColumn) {
+    public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         let newSchema = {
             name: calculatedColumn.ColumnId,
             header: calculatedColumn.ColumnId,
@@ -831,7 +830,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (Object.keys(dataRow).length == 0) {
                     return calculatedColumn.ColumnId
                 }
-                return this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.GetValueFunc, dataRow)
+                return this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, dataRow)
             }
         }
         this.grid.behavior.dataModel.schema.push(

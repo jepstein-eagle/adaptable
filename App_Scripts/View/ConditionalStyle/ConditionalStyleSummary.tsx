@@ -1,4 +1,3 @@
-import { IConditionalStyle } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
@@ -19,9 +18,9 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { IConditionalStyle, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {

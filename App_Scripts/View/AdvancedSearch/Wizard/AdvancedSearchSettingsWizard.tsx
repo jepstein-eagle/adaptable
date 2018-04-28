@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IAdvancedSearch } from '../../../Strategy/Interface/IAdvancedSearchStrategy';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { IAdvancedSearch } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[]

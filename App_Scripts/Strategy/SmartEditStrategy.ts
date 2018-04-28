@@ -8,12 +8,12 @@ import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionRetu
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ICellValidationRule } from '../Strategy/Interface/ICellValidationStrategy';
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
+import { ICellValidationRule } from '../Core/Api/AdaptableBlotterObjects';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {

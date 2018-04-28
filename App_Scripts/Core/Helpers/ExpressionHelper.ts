@@ -1,7 +1,4 @@
-import { Expression } from '../Expression'
 import { FilterHelper } from '../Helpers/FilterHelper'
-import { IRange, IRangeEvaluation } from '../Interface/IRange';
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { LeafExpressionOperator, RangeOperandType } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -9,6 +6,7 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
+import { IRange, IRangeEvaluation, Expression, IUserFilter } from '../Api/AdaptableBlotterObjects';
 
 
 export module ExpressionHelper {

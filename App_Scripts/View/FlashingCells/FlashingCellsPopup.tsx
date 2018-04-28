@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { IFlashingCell } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
@@ -17,6 +16,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { IFlashingCell } from "../../Core/Api/AdaptableBlotterObjects";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: Array<IFlashingCell>,
@@ -35,7 +35,8 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let infoBody: any[] = ["Make numeric cells flash briefly as their value changes", <br />, <br />, "Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns", <br />, <br />, "Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
 
-        let flashingCellDurations = ObjectFactory.GetFlashingCellDurations();
+        let flashingCellDurations: number[] =[250, 500, 750, 1000]
+     
 
         let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
         numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")

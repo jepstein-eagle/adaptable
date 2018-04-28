@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IFlashingCell } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IFlashingCell } from "../../Core/Api/AdaptableBlotterObjects";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[]

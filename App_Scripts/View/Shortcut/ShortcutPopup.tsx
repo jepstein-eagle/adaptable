@@ -1,4 +1,3 @@
-import { IShortcut } from '../../Strategy/Interface/IShortcutStrategy';
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
@@ -21,9 +20,9 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IAdaptableBlotterObject } from '../../Core/Interface/Interfaces';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { IShortcut, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {

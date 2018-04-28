@@ -1,4 +1,3 @@
-import { ICustomSort } from '../../../Strategy/Interface/ICustomSortStrategy';
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
@@ -9,6 +8,7 @@ import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { ICustomSort } from "../../../Core/Api/AdaptableBlotterObjects";
 
 export interface CustomSortWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CustomSortWizard> {
 }

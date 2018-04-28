@@ -1,12 +1,12 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { IUserFilter } from '../../Strategy/Interface/IUserFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
+import { IUserFilter } from "../../Core/Api/AdaptableBlotterObjects";
 
 export class UserFilterEntityRow extends React.Component<SharedEntityExpressionRowProps<UserFilterEntityRow>, {}> {
 

@@ -1,8 +1,9 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { ICellInfo, IGridSort } from '../../Core/Interface/Interfaces';
+import { ICellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
+import { IGridSort } from '../../Core/Api/AdaptableBlotterObjects';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
