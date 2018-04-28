@@ -38,7 +38,7 @@ for (var directory of directories) {
     if (fs.existsSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css')) {
         var css = fs.readFileSync('node_modules/bootswatch/' + directory + '/bootstrap.min.css', 'utf8').toString();
         var out = postcss()
-            .use(scopify('.#adaptable-blotter-style'))
+            .use(scopify('.#ab-style'))
             .process(css)
             .css;
 
@@ -51,7 +51,7 @@ for (var directory of directories) {
 //at least all elements that have a parent that has the class #adaptable-blotter-style
 var css = fs.readFileSync('node_modules/bootstrap/dist/css/bootstrap-theme.min.css', 'utf8').toString();
 var out = postcss()
-    .use(scopify('.#adaptable-blotter-style'))
+    .use(scopify('.#ab-style'))
     .process(css)
     .css;
 

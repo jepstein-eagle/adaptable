@@ -41,17 +41,17 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
         let cssClassName: string = this.props.cssClassName + "__layout";
         let nonDefaultLayouts = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT);
         let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout)
-        let currentLayoutTitle = "Select a Layout"
-        let isLayoutModified = this.isLayoutModified(layoutEntity);
-        let availableLayouts: any = nonDefaultLayouts.map((layout, index) => {
-            if (layout.Name == this.props.CurrentLayout) {
-                currentLayoutTitle = (isLayoutModified) ? layout.Name + " (Modified)" : layout.Name
-            }
-            else {
-                return <MenuItem key={index} eventKey={index} onClick={() => this.onLayoutChanged(layout.Name)}>{layout.Name}</MenuItem>
-            }
+        let currentLayoutTitle = (layoutEntity) ?
+            layoutEntity.Name :
+            "Select a Layout"
+
+        let availableLayouts: any = nonDefaultLayouts.filter(l => l.Name != currentLayoutTitle).map((layout, index) => {
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onLayoutChanged(layout.Name)}>{layout.Name}</MenuItem>
         })
 
+        if (this.isLayoutModified(layoutEntity)) {
+            currentLayoutTitle += " (Modified)";
+        }
 
         let content = <span>
 
@@ -97,7 +97,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
                     size={"small"}
                     overrideTooltip="Undo Layout Changes"
-                    overrideDisableButton={!isLayoutModified}
+                    overrideDisableButton={!currentLayoutTitle.endsWith(("Modified"))}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
 
