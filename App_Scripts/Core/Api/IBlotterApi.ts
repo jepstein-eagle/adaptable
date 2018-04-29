@@ -4,9 +4,19 @@ import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ISearchChangedEventArgs";
 
 
-// this is very early days but the idea will be - over time - that this is how people will access the AB externally
-// and we will use the IAdaptableBlotter interface internally
+
+/**
+ * The main interface between users (devs) and the Blotter while the system is up and running
+ */
 export interface IBlotterApi {
+    /**
+     * Method to repopulate the grid.  Typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to the Blotter.
+     * @param dataSource - can be any datasource that is suitable for the underlying grid.  
+     */
     setDataSource(dataSource: any): void;
+
+    /**
+     * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
+     */
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
 }

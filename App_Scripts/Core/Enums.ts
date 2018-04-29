@@ -164,6 +164,9 @@ export enum RangeOperandType {
     Column = 'Column',
 }
 
+/**
+ * Provide information on what action caused the search and filter state to change.
+ */
 export enum SearchChangedTrigger {
     AdvancedSearch = 'AdvancedSearch',
     QuickSearch = 'QuickSearch',

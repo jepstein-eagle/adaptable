@@ -212,7 +212,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        predefinedConfig: json,//"demoConfig.json",// json,
+       // predefinedConfig: json,//"demoConfig.json",// json,
         serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
