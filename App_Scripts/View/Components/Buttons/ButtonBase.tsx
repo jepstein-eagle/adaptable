@@ -5,7 +5,7 @@ import { IAdaptableBlotterObject } from "../../../Core/Api/AdaptableBlotterObjec
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     onClick?: () => void
-    //override disabled normal status. i.e. when IsPredefined == true. 
+    //override disabled normal status. i.e. when IsReadOnly == true. 
     overrideDisableButton?: boolean
     //Override normal tooltip i.e. Edit
     overrideTooltip?: string
@@ -48,7 +48,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
     render() {
         let isDisabled: boolean
         if (this.props.ConfigEntity) {
-            isDisabled = this.props.ConfigEntity.IsPredefined == true
+            isDisabled = this.props.ConfigEntity.IsReadOnly == true
         }
         if (this.props.overrideDisableButton) {
             isDisabled = true

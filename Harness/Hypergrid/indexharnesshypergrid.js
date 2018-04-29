@@ -325,7 +325,7 @@ let json = {
                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },
-                "IsPredefined": false
+                "IsReadOnly": false
             }
         ],
     },

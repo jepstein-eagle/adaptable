@@ -9,11 +9,11 @@ import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: "", SortedValues: [], IsPredefined: false }
+        return { ColumnId: "", SortedValues: [], IsReadOnly: false }
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
-        return { ColumnId: "", ColumnExpression: "", IsPredefined: false }
+        return { ColumnId: "", ColumnExpression: "", IsReadOnly: false }
     }
 
     export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
@@ -22,7 +22,7 @@ export module ObjectFactory {
             IsDefaultNudge: false,
             NudgeValue: 1,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsPredefined: false
+            IsReadOnly: false
         }
     }
 
@@ -30,7 +30,7 @@ export module ObjectFactory {
         return {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsPredefined: false
+            IsReadOnly: false
         }
     }
 
@@ -65,7 +65,7 @@ export module ObjectFactory {
             HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),
             Description: "",
-            IsPredefined: false
+            IsReadOnly: false
         }
     }
 
@@ -74,7 +74,7 @@ export module ObjectFactory {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
             ColumnId: "",
-            IsPredefined: false
+            IsReadOnly: false
         };
     }
 
@@ -85,7 +85,7 @@ export module ObjectFactory {
             Columns: [],
             ReportColumnScope: ReportColumnScope.AllColumns,
             ReportRowScope: ReportRowScope.ExpressionRows,
-            IsPredefined: false
+            IsReadOnly: true
         };
     }
 
@@ -95,7 +95,7 @@ export module ObjectFactory {
             ColumnId: column.ColumnId,
             FlashingCellDuration: 500,
             UpColor: '#008000', DownColor: '#FF0000',
-            IsPredefined: false
+            IsReadOnly: false
         };
     }
 
@@ -106,7 +106,7 @@ export module ObjectFactory {
             ShortcutResult: null,
             DataType: DataType.Number,
             ShortcutOperation: MathOperation.Multiply,
-            IsPredefined: false,
+            IsReadOnly: false,
             IsDynamic: false
         }
     }
@@ -127,7 +127,7 @@ export module ObjectFactory {
             Style: CreateEmptyStyle(),
             ConditionalStyleScope: ConditionalStyleScope.Row,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsPredefined: false
+            IsReadOnly: false
         }
     }
 
@@ -135,7 +135,7 @@ export module ObjectFactory {
         return {
             ColumnId: "",
             Style: CreateEmptyStyle(),
-            IsPredefined: false
+            IsReadOnly: false
         }
     }
 
@@ -144,7 +144,7 @@ export module ObjectFactory {
             Columns: (columns)? columns.map(x => x.ColumnId): [],
             GridSorts: gridSorts,
             Name: name,
-            IsPredefined: false
+            IsReadOnly: false
         }
     }
 

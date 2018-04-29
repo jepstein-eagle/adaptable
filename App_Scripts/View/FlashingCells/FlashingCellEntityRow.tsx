@@ -30,7 +30,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
             durations.push(<option key={flashingCell.FlashingCellDuration} value={flashingCell.FlashingCellDuration}>{this.getFriendlyFlashingDuration(flashingCell.FlashingCellDuration)}</option>)
         }
 
-        let isDisabled = flashingCell.IsPredefined
+        let isDisabled = flashingCell.IsReadOnly
         let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnId)
         if (!column) {
             return null

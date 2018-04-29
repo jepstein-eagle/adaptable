@@ -71,7 +71,7 @@ app.get('/adaptableblotter-config', function (req, res) {
             if (fs.existsSync(filename)) {
                 UserConfig = JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }))
                 log.debug("Sending config for : " + username);
-                ForcePredefinedItems(ApplicationConfig)
+             //   ForcePredefinedItems(ApplicationConfig)
                 let mergedStates = MergePredefinedWithUser(ApplicationConfig, UserConfig)
                 res.status(200).send(JSON.stringify(mergedStates))
             }
@@ -165,7 +165,7 @@ function FilterPredefinedItems(state: AdaptableBlotterState) {
             for (let property in substate) {
                 if (substate.hasOwnProperty(property)) {
                     if (Array.isArray(substate[property])) {
-                        substate[property] = substate[property].filter(x => !x.IsPredefined)
+                        substate[property] = substate[property].filter(x => !x.IsReadOnly)
                     }
                 }
 
@@ -174,7 +174,8 @@ function FilterPredefinedItems(state: AdaptableBlotterState) {
     }
 }
 
-//We force the IsPredefined of the predefinedState to be true
+//We force the IsReadOnly of the predefinedState to be true
+// I've commented this out 29/4/18 as Im not sure what hte point of it is.  why not let devs decide if something is predefined?
 function ForcePredefinedItems(state: AdaptableBlotterState) {
     // we iterating substate here
     for (let substateName in state) {
@@ -187,7 +188,7 @@ function ForcePredefinedItems(state: AdaptableBlotterState) {
                     if (Array.isArray(substate[property])) {
                         let arrayItems = substate[property]
                         arrayItems.forEach(element => {
-                            element.IsPredefined = true;
+                            element.IsReadOnly = true;
                         });
                     }
                 }

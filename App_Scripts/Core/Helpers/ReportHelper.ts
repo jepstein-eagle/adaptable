@@ -146,7 +146,7 @@ export module ReportHelper {
             ReportRowScope: ReportRowScope.AllRows,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsPredefined: true
+            IsReadOnly: true
         });
 
         _systemReports.push({
@@ -155,8 +155,8 @@ export module ReportHelper {
             ReportRowScope: ReportRowScope.VisibleRows,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsPredefined: true
-        });
+            IsReadOnly: true
+         });
 
         _systemReports.push({
             Name: SELECTED_CELLS_REPORT,
@@ -164,7 +164,7 @@ export module ReportHelper {
             ReportRowScope: ReportRowScope.SelectedRows,
             Columns: [],
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsPredefined: true
+            IsReadOnly: true
         });
         return _systemReports;
     }

@@ -38,7 +38,7 @@
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				},
-				"IsPredefined": false
+				"IsReadOnly": false
 			}
 		],
 		"CurrentAdvancedSearch": ""
@@ -70,7 +70,7 @@
 					"RBS",
 					"Societe Generale"
 				],
-				"IsPredefined": false
+				"IsReadOnly": false
 			}
 		]
 	},
@@ -81,7 +81,7 @@
 				"ShortcutResult": "1000000",
 				"DataType": "Number",
 				"ShortcutOperation": "Add",
-				"IsPredefined": false,
+				"IsReadOnly": false,
 				"IsDynamic": false
 			},
 			{
@@ -89,7 +89,7 @@
 				"ShortcutResult": "Previous Work Day",
 				"DataType": "Date",
 				"ShortcutOperation": "Replace",
-				"IsPredefined": true,
+				"IsReadOnly": true,
 				"IsDynamic": true
 			}
 		]

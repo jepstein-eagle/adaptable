@@ -27,7 +27,7 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                 { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2018").toJSON() },
             ],
-            IsPredefined: true
+            IsReadOnly: true
         },
         {
             Name: "Germany",
@@ -42,8 +42,8 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                 { HolidayName: "St Stephen's Day", HolidayDate: new Date("December 26, 2018").toJSON() },
             ],
-            IsPredefined: true
-       },
+            IsReadOnly: true
+        },
         {
             Name: "France",
             YearName: 2018, CalendarEntries: [
@@ -59,8 +59,8 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Armistice Day", HolidayDate: new Date("November 11, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
             ],
-            IsPredefined: true
-         },
+            IsReadOnly: true
+        },
         {
             Name: "United States",
             YearName: 2018, CalendarEntries: [
@@ -75,7 +75,7 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Thanksgiving Day", HolidayDate: new Date("November 22, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
             ],
-            IsPredefined: true
+            IsReadOnly: true
         },
         {
             Name: "Canada",
@@ -90,7 +90,7 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                 { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2018").toJSON() },
             ],
-            IsPredefined: true
+            IsReadOnly: true
         },
         {
             Name: "Singapore",
@@ -106,8 +106,8 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Deepavali", HolidayDate: new Date("November 06, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
             ],
-            IsPredefined: true
-         }
+            IsReadOnly: true
+        }
     ]
 }
 

@@ -47,7 +47,7 @@
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				},
-				"IsPredefined": false
+				"IsReadOnly": false
 			}
 		]
 	},
@@ -80,7 +80,7 @@
 					],
 					"RangeExpressions": []
 				},
-				"IsPredefined": false
+				"IsReadOnly": false
 			}
 		],
 		"CurrentAdvancedSearch": "Trades"
@@ -126,7 +126,7 @@
 					"lastUpdatedBy"
 				],
 				"Name": "Default",
-				"IsPredefined": false
+				"IsReadOnly": false
 			}
 		]
 	},
@@ -145,7 +145,7 @@
 					"FontStyle": "Normal",
 					"FontSize": null
 				},
-				"IsPredefined": false
+				"IsReadOnly": false
 			}
 		]
 	},

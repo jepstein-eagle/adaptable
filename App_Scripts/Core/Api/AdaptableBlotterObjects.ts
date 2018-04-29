@@ -4,11 +4,13 @@ import { IStyle } from '../Interface/IStyle';
 
 /**
  * The base Adaptable Blotter Object interface 
- * @property {boolean} IsPredefined - whether the object is created at design-time or run-time.
+ * @property {boolean} IsReadOnly - whether the object can be edited for users.  Set to true if you dont want the objects you ship with the blotter to be edited / deleted by users.
  */
 export interface IAdaptableBlotterObject {
-  IsPredefined: boolean
+  IsReadOnly: boolean
+
 }
+
 
 
 /**
@@ -108,8 +110,8 @@ export interface IReport extends IAdaptableBlotterObject {
   ReportColumnScope: ReportColumnScope
   ReportRowScope: ReportRowScope
   Columns: string[]
-  Expression: Expression
-}
+  Expression: Expression,
+ }
 
 export interface IFlashingCell extends IAdaptableBlotterObject {
   IsLive: boolean,

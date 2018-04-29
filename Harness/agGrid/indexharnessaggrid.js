@@ -119,7 +119,7 @@ function getSchema(data) {
     var schema = []
 
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber" });
-    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefDate", "randon"] });
+    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"] });
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
@@ -212,7 +212,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-       //s  predefinedConfig: json,//"demoConfig.json",// json,
+        predefinedConfig: json,//"demoConfig.json",// json,
         serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -227,14 +227,14 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-  //  alert(searchArgs.SearchChangedTrigger)
+    //  alert(searchArgs.SearchChangedTrigger)
     let search = searchArgs.BlotterSearchState.AdvancedSearch;
     let newTrades
     if (search == null || search.Name == "") {
         //   newTrades = dataGen.getTrades()
         return;
     } else {
-   //     alert(search.Name);
+        //     alert(search.Name);
         if (search.Name == "barcap") {
             newTrades = dataGen.getBarcapTrades()
         } else {
@@ -271,7 +271,7 @@ let json = {
                 }]
             },
             "ColumnId": "tradeDate",
-            "IsPredefined": false
+            "IsReadOnly": false
         }],
         "SystemFilters": [
             "Blanks",
@@ -280,30 +280,6 @@ let json = {
             "In Past",
             "True",
             "False"
-        ]
-    },
-    "Entitlements": {
-        "FunctionEntitlements": [
-            {
-                "FunctionName": "ConditionalStyle",
-                "AccessLevel": "ReadOnly"
-            },
-            {
-                "FunctionName": "QuickSearch",
-                "AccessLevel": "ReadOnly"
-            },
-            {
-                "FunctionName": "AdvancedSearch",
-                "AccessLevel": "ReadOnly"
-            },
-            {
-                "FunctionName": "PlusMinus",
-                "AccessLevel": "Hidden"
-            },
-            {
-                "FunctionName": "SmartEdit",
-                "AccessLevel": "Hidden"
-            }
         ]
     },
     "UserInterface": {
@@ -334,6 +310,7 @@ let json = {
                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },
+                "IsReadOnly": true
             }
         ]
     },
@@ -346,9 +323,10 @@ let json = {
                 "ColumnId": "notional",
                 "Style": {
                     "ClassName": "styleBackBrown"
-                }
-            }
-        ]
+                },
+             }
+        ],
+        
     },
     "AdvancedSearch": {
         "AdvancedSearches": [
@@ -367,7 +345,7 @@ let json = {
                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },
-                "IsPredefined": false
+                "IsReadOnly": false
             }
         ],
     },

@@ -131,13 +131,6 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
 
         case SHORTCUT_DELETE: {
             let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut;
-
-            // Should not be able to click delete button on predefined shortcuts but seems older browsers might not play ball so will add the check here as well....
-            if (deletedShortcut.IsPredefined) {
-                alert("You cannot delete this shortcut");
-                return state;
-            }
-
             shortcuts = [].concat(state.Shortcuts)
             let index = shortcuts.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
             shortcuts.splice(index, 1);

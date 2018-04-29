@@ -23,6 +23,10 @@ export module Helper {
         }
     }
 
+    export function itemIsInArray(array: any[], item: any): boolean{
+        return array.some(x => x === item)
+    }
+
     export function isNotEmptyArray(array: any[]): boolean{
         return array.length > 0;
     }

@@ -5,7 +5,7 @@ import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptable
 import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
 import { FilterState } from '../../../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import {  IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
@@ -69,6 +69,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
         let clearButton = <ButtonClear cssClassName={cssClassName} onClick={() => this.onClearFilter()}
+            bsStyle={"default"}
             size={"xsmall"}
             overrideDisableButton={existingColumnFilter == null}
             overrideTooltip="Clear Filter"
@@ -141,7 +142,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilters, rangeExpressions)
         }
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsPredefined: false };
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
 
         //delete if empty
         if (columnValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {

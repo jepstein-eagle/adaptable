@@ -133,7 +133,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     cssClassName={cssClassName}
                     size={"small"}
                     overrideTooltip="Edit Report"
-                    overrideDisableButton={savedReport == null || savedReport.IsPredefined}
+                    overrideDisableButton={savedReport == null || savedReport.IsReadOnly}
                     ConfigEntity={savedReport}
                     DisplayMode="Glyph" />
 
@@ -149,7 +149,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     cssClassName={cssClassName}
                     size={"small"}
                     overrideTooltip="Delete Report"
-                    overrideDisableButton={savedReport == null || savedReport.IsPredefined}
+                    overrideDisableButton={savedReport == null || savedReport.IsReadOnly}
                     ConfigEntity={savedReport}
                     DisplayMode="Glyph"
                     ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}

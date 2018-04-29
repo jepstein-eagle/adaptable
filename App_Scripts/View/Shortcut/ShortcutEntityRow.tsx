@@ -40,15 +40,13 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
             shortcut.DataType == DataType.Date ?
                 "Replace Cell"
                 :
-                shortcut.IsPredefined ?
-                MathOperation[shortcut.ShortcutOperation] :
-                    <FormControl componentClass="select" value={shortcut.ShortcutOperation} onChange={(x) => this.onActionChange(x)} >
-                        {
-                            this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
-                                return <option key={MathOperation[shortcutOperation]} value={shortcutOperation}>{MathOperation[shortcutOperation]}</option>
-                            })
-                        }
-                    </FormControl>
+                <FormControl componentClass="select" value={shortcut.ShortcutOperation} onChange={(x) => this.onActionChange(x)} >
+                    {
+                        this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
+                            return <option key={MathOperation[shortcutOperation]} value={shortcutOperation}>{MathOperation[shortcutOperation]}</option>
+                        })
+                    }
+                </FormControl>
 
         colItems[3].Content =
             shortcut.IsDynamic ?
@@ -61,8 +59,8 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 />
         colItems[4].Content =
             <EntityListActionButtons
-            cssClassName={this.props.cssClassName}
-               showEdit={false}
+                cssClassName={this.props.cssClassName}
+                showEdit={false}
                 shareClick={() => this.props.onShare()}
                 showShare={this.props.TeamSharingActivated}
                 ConfigEntity={shortcut}

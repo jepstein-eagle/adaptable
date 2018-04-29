@@ -11,9 +11,8 @@ import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFla
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 
 /*
-Created by the system and not part of predefined or user config
+Created by the system  at run-time and not part of predefined or user config
 */
-
 
 export interface GridState {
     Columns: IColumn[];
@@ -47,15 +46,11 @@ export interface BulkUpdateState {
 }
 
 /*
-predefined config only - not editable by users
+predefined config only - never editable by users
 */
 export interface EntitlementsState {
     FunctionEntitlements: IEntitlement[];
 }
-
-/* 
-predefined and user config but not editable by users
-*/
 
 export interface UserInterfaceState {
     ColorPalette: string[];
@@ -65,8 +60,16 @@ export interface UserInterfaceState {
 
 
 /* 
-predefined and user config and editable by users
+predefined and user config and editable by users but not Adaptable Blotter objects 
 */
+
+export interface QuickSearchState {
+    QuickSearchText: string
+    Operator: LeafExpressionOperator
+    DisplayAction: DisplayAction
+    Style: IStyle
+}
+
 
 export interface DashboardState {
     AvailableToolbars: string[]
@@ -76,14 +79,33 @@ export interface DashboardState {
     IsMinimised: boolean
 }
 
-export interface PlusMinusState {
-    PlusMinusRules: IPlusMinusRule[]
-}
 
 export interface SmartEditState {
     SmartEditValue: string
     SmartEditOperation: MathOperation
     PreviewInfo: IPreviewInfo // not saved with state
+}
+
+
+export interface CalendarState {
+    CurrentCalendar: string;
+    AvailableCalendars: ICalendar[]
+}
+
+
+
+export interface ThemeState {
+    CurrentTheme: string;
+    SystemThemes: string[];
+    UserThemes: IUserTheme[];
+}
+
+/* 
+predefined and user config and editable by users - includes Adaptable Blotter objects 
+*/
+
+export interface PlusMinusState {
+    PlusMinusRules: IPlusMinusRule[]
 }
 
 export interface CustomSortState {
@@ -98,7 +120,7 @@ export interface ExportState {
     IPPDomainsPages: IPPDomain[]
     CurrentReport: string;
     CurrentLiveReports: ILiveReport[];
-    Reports: Array<IReport>;
+    Reports: IReport[];
     ErrorMsg: string;
 }
 
@@ -106,21 +128,11 @@ export interface FlashingCellState {
     FlashingCells: IFlashingCell[]
 }
 
-export interface CalendarState {
-    CurrentCalendar: string;
-    AvailableCalendars: ICalendar[]
-}
 
 export interface ConditionalStyleState {
-    ConditionalStyles: Array<IConditionalStyle>;
+    ConditionalStyles: IConditionalStyle[];
 }
 
-export interface QuickSearchState {
-    QuickSearchText: string
-    Operator: LeafExpressionOperator
-    DisplayAction: DisplayAction
-    Style: IStyle
-}
 
 export interface AdvancedSearchState {
     AdvancedSearches: IAdvancedSearch[];
@@ -131,12 +143,6 @@ export interface FilterState {
     ColumnFilters: IColumnFilter[];
     UserFilters: IUserFilter[];
     SystemFilters: string[];
-}
-
-export interface ThemeState {
-    CurrentTheme: string;
-    SystemThemes: string[];
-    UserThemes: IUserTheme[];
 }
 
 export interface CellValidationState {

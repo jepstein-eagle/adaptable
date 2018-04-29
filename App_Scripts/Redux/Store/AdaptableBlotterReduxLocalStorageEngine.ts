@@ -30,12 +30,12 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
             return fetch(this.predefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
-                .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
+           //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => console.error(err));
         } else if (this.predefinedConfig != null) {
             return new Promise (( resolve )=> resolve(this.predefinedConfig))
-                .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
+          //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => console.error(err));
         }
@@ -66,7 +66,7 @@ function FilterPredefinedItems(state: any) {
             for (let property in substate) {
                 if (substate.hasOwnProperty(property)) {
                     if (Array.isArray(substate[property])) {
-                        substate[property] = substate[property].filter((x: any) => !x.IsPredefined)
+                        substate[property] = substate[property].filter((x: any) => !x.IsReadOnly)
                     }
                 }
             }
@@ -74,7 +74,8 @@ function FilterPredefinedItems(state: any) {
     }
 }
 
-//We force the IsPredefined of the predefinedState to be true
+//We force the IsReadOnly of the predefinedState to be true
+// I've commented this out 29/4/18 as Im not sure what hte point of it is.  why not let devs decide if something is predefined?
 function ForcePredefinedItems(state: any) {
     // we iterating substate here
     for (let substateName in state) {
@@ -87,8 +88,8 @@ function ForcePredefinedItems(state: any) {
                     if (Array.isArray(substate[property])) {
                         let arrayItems = substate[property]
                         arrayItems.forEach((element: any) => {
-                            if (element.hasOwnProperty("IsPredefined")) {
-                                element.IsPredefined = true;
+                            if (element.hasOwnProperty("IsReadOnly")) {
+                          //      element.IsReadOnly = true;
                             }
                         });
                     }
