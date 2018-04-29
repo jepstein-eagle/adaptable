@@ -31,7 +31,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
             let currentFlashing = this.currentFlashing
 
             columns.forEach(col => {
-                let fc = this.FlashingCellState.FlashingCells.find(x => x.ColumnName == col.ColumnId && x.IsLive)
+                let fc = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive)
                 let index = this.FlashingCellState.FlashingCells.indexOf(fc)
                 let cellClassRules: any = {};
                 if (fc) {

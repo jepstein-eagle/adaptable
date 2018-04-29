@@ -60,8 +60,8 @@ export class StyleService {
             }
             //we define last Flash since it has the highest priority
             this.FlashingCellState.FlashingCells.forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.FLASH_UP_STYLE + index, 'background-color: ' + element.UpBackColor + ' !important')
-                this.addCSSRule("." + StyleConstants.FLASH_DOWN_STYLE + index, 'background-color: ' + element.DownBackColor + ' !important')
+                this.addCSSRule("." + StyleConstants.FLASH_UP_STYLE + index, 'background-color: ' + element.UpColor + ' !important')
+                this.addCSSRule("." + StyleConstants.FLASH_DOWN_STYLE + index, 'background-color: ' + element.DownColor + ' !important')
             });
         }
     }

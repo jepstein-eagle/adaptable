@@ -52,12 +52,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: string[]
         if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnRawValuesExpressions.length > 0 ?
-                existingColumnFilter.Filter.ColumnRawValuesExpressions[0].ColumnRawValues : []
+            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.RawValueExpressions.length > 0 ?
+                existingColumnFilter.Filter.RawValueExpressions[0].RawValues : []
         }
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
-            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
-                existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
+            uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.DisplayValueExpressions.length > 0 ?
+                existingColumnFilter.Filter.DisplayValueExpressions[0].DisplayValues : []
         }
 
         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
@@ -112,8 +112,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     onClickUserFilter(userFilters: string[]) {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
-        let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
+        let columnValues = existingColumnFilter && existingColumnFilter.Filter.DisplayValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.DisplayValueExpressions[0].DisplayValues : []
 
         let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
             existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
@@ -127,8 +127,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
 
-        let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnDisplayValuesExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnDisplayValuesExpressions[0].ColumnDisplayValues : []
+        let columnValues = existingColumnFilter && existingColumnFilter.Filter.DisplayValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.DisplayValueExpressions[0].DisplayValues : []
 
         this.persistFilter(columnValues, userFilters, [rangeExpression]);
     }
@@ -141,7 +141,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
             expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, [], userFilters, rangeExpressions)
         }
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression };
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsPredefined: false };
 
         //delete if empty
         if (columnValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {

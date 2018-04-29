@@ -91,16 +91,16 @@ messages: {
                     },
                     "ConditionalStyleScope": 'Row',
                     "Expression": {
-                        "ColumnDisplayValuesExpressions": [
+                        "DisplayValueExpressions": [
                             {
-                                "ColumnName": 'country',
-                                "ColumnDisplayValues": [
+                                "ColumnId": 'country',
+                                "DisplayValues": [
                                     'France',
                                     'Germany'
                                 ]
                             }
                         ],
-                        "ColumnRawValuesExpressions": [],
+                        "RawValueExpressions": [],
                         "FilterExpressions": [],
                         "RangeExpressions": []
                     },

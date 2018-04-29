@@ -6,8 +6,8 @@ import { CellValidationMode, LeafExpressionOperator } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import * as StrategyIds from '../Constants/StrategyIds'
 import { IColumn } from '../Interface/IColumn';
-import { ICellValidationRule, IRangeEvaluation } from '../Api/AdaptableBlotterObjects';
-import { ExpressionHelper } from '../Helpers/ExpressionHelper';
+import { ICellValidationRule } from '../Api/AdaptableBlotterObjects';
+import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 
 export class ValidationService implements IValidationService {
 

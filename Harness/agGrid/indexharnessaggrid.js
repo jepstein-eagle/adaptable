@@ -256,11 +256,11 @@ let json = {
         "UserFilters": [{
             "Name": "April 2018",
             "Expression": {
-                "ColumnDisplayValuesExpressions": [],
-                "ColumnRawValuesExpressions": [],
+                "DisplayValueExpressions": [],
+                "RawValueExpressions": [],
                 "FilterExpressions": [],
                 "RangeExpressions": [{
-                    "ColumnName": "tradeDate",
+                    "ColumnId": "tradeDate",
                     "Ranges": [{
                         "Operator": "Between",
                         "Operand1": "2018-04-01",
@@ -321,16 +321,16 @@ let json = {
                 },
                 "ConditionalStyleScope": 'Row',
                 "Expression": {
-                    "ColumnDisplayValuesExpressions": [
+                    "DisplayValueExpressions": [
                         {
-                            "ColumnName": 'country',
-                            "ColumnDisplayValues": [
+                            "ColumnId": 'country',
+                            "DisplayValues": [
                                 'France',
                                 'Germany'
                             ]
                         }
                     ],
-                    "ColumnRawValuesExpressions": [],
+                    "RawValueExpressions": [],
                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },
@@ -355,15 +355,15 @@ let json = {
             {
                 "Name": 'test',
                 "Expression": {
-                    "ColumnDisplayValuesExpressions": [
+                    "DisplayValueExpressions": [
                         {
-                            "ColumnName": 'bid',
-                            "ColumnDisplayValues": [
+                            "ColumnId": 'bid',
+                            "DisplayValues": [
                                 '14.3971'
                             ]
                         }
                     ],
-                    "ColumnRawValuesExpressions": [],
+                    "RawValueExpressions": [],
                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },

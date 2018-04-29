@@ -74,18 +74,18 @@ export module FilterHelper {
     export function GetColumnIdForUserFilter(userFilter: IUserFilter): string {
 
         // see if there are any columnvalues and then get the first only
-        if (userFilter.Expression.ColumnDisplayValuesExpressions != null && userFilter.Expression.ColumnDisplayValuesExpressions.length > 0) {
-            return userFilter.Expression.ColumnDisplayValuesExpressions[0].ColumnName;
+        if (userFilter.Expression.DisplayValueExpressions != null && userFilter.Expression.DisplayValueExpressions.length > 0) {
+            return userFilter.Expression.DisplayValueExpressions[0].ColumnId;
         }
 
         // see if there are any user filter expressionss and then get the first only
         if (userFilter.Expression.FilterExpressions != null && userFilter.Expression.FilterExpressions.length > 0) {
-            return userFilter.Expression.FilterExpressions[0].ColumnName;
+            return userFilter.Expression.FilterExpressions[0].ColumnId;
         }
 
         // see if there are any ranges and then get the first only
         if (userFilter.Expression.RangeExpressions != null && userFilter.Expression.RangeExpressions.length > 0) {
-            return userFilter.Expression.RangeExpressions[0].ColumnName;
+            return userFilter.Expression.RangeExpressions[0].ColumnId;
         }
     }
 

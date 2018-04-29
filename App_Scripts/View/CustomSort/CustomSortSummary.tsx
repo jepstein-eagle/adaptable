@@ -54,7 +54,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 cssClassName={this.props.cssClassName}
                 key={StrategyNames.CustomSortStrategyName}
                 Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.CustomSortStrategyId} />}
-                Item2={customSort.Values.join(', ')}
+                Item2={customSort.SortedValues.join(', ')}
                 ConfigEnity={customSort}
                 EntityName={StrategyNames.CustomSortStrategyName}
                 onEdit={() => this.onEdit(customSort)}
@@ -115,7 +115,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     canFinishWizard() {
         let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
-        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.Values) ;
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.SortedValues) ;
     }
 }
 

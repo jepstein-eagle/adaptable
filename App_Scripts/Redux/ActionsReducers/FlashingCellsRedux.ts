@@ -73,7 +73,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
             selectedFlashingCell = Object.assign({}, selectedFlashingCell, {
                 IsLive: !selectedFlashingCell.IsLive
             });
-            let index = items.findIndex(x => x.ColumnName == selectedFlashingCell.ColumnName)
+            let index = items.findIndex(x => x.ColumnId == selectedFlashingCell.ColumnId)
             if (index != -1) {  // it exists
                 items[index] = selectedFlashingCell;
             } else {
@@ -88,7 +88,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
             let shouldTurnOn = !numericColumns.every(n => n.IsLive);
             let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
             numericColumns.forEach(column => {
-                let index = items.findIndex(i => i.ColumnName == column.ColumnName);
+                let index = items.findIndex(i => i.ColumnId == column.ColumnId);
                 if (index != -1) {  // it exists
                     items[index] = Object.assign({}, column, { IsLive: shouldTurnOn })
                 } else {
@@ -121,9 +121,9 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
             let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
             let index = items.findIndex(i => i == flashingCell)
             if (index != -1) {  // it exists
-                items[index] = Object.assign({}, flashingCell, { UpBackColor: actionTyped.UpColor })
+                items[index] = Object.assign({}, flashingCell, { UpColor: actionTyped.UpColor })
             } else {
-                items.push(Object.assign({}, flashingCell, { UpBackColor: actionTyped.UpColor }));
+                items.push(Object.assign({}, flashingCell, { UpColor: actionTyped.UpColor }));
             }
             return Object.assign({}, state, {
                 FlashingCells: items
@@ -137,9 +137,9 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: Fla
             let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
             let index = items.findIndex(i => i == flashingCell)
             if (index != -1) {  // it exists
-                items[index] = Object.assign({}, flashingCell, { DownBackColor: actionTyped.DownColor })
+                items[index] = Object.assign({}, flashingCell, { DownColor: actionTyped.DownColor })
             } else {
-                items.push(Object.assign({}, flashingCell, { DownBackColor: actionTyped.DownColor }));
+                items.push(Object.assign({}, flashingCell, { DownColor: actionTyped.DownColor }));
             }
             return Object.assign({}, state, {
                 FlashingCells: items

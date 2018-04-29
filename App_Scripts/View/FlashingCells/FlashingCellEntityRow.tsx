@@ -31,7 +31,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         }
 
         let isDisabled = flashingCell.IsPredefined
-        let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnName)
+        let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnId)
         if (!column) {
             return null
         }
@@ -43,8 +43,8 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         colItems[2].Content = <FormControl disabled={isDisabled} componentClass="select" value={flashingCell.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
             {durations}
         </FormControl>
-        colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.UpBackColor} onChange={(x) => this.onUpColorChange(x)} />
-        colItems[4].Content = <ColorPicker   ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownBackColor} onChange={(x) => this.onDownColorChange(x)} />
+        colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.UpColor} onChange={(x) => this.onUpColorChange(x)} />
+        colItems[4].Content = <ColorPicker   ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownColor} onChange={(x) => this.onDownColorChange(x)} />
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems}
         />
     }

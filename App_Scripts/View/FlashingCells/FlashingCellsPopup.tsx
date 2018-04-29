@@ -51,7 +51,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let allPotentialFlashingCells: IFlashingCell[] = [];
         numericColumns.forEach(nc => {
-            let existingfc = this.props.FlashingCells.find(e => e.ColumnName == nc.ColumnId)
+            let existingfc = this.props.FlashingCells.find(e => e.ColumnId == nc.ColumnId)
             if (!existingfc) {
                 allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc))
             }
@@ -64,7 +64,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             return <FlashingCellEntityRow
                 cssClassName={cssClassName}
                 AdaptableBlotterObject={flashingcell}
-                key={flashingcell.ColumnName}
+                key={flashingcell.ColumnId}
                 Index={index}
                 Columns={this.props.Columns}
                 UserFilters={null}

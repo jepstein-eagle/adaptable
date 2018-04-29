@@ -448,22 +448,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.closeCell()
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
             let record: any = this.grid.dataSource.getByUid(id);
-            return (columnName: string) => { return record[columnName]; }
+            return (columnId: string) => { return record[columnId]; }
         }
         else {
-            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+            return (columnId: string) => { return this.getDisplayValue(id, columnId); }
         }
     }
 
-    public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+    public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            return (columnName: string) => { return record[columnName]; }
+            return (columnId: string) => { return record[columnId]; }
         }
         else {
-            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
+            return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
         }
     }
 
@@ -483,8 +483,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.select(selectorQuery);
     }
 
-    public getColumnIndex(columnName: string): number {
-        return this.grid.columns.findIndex(x => x.field == columnName);
+    public getColumnIndex(columnId: string): number {
+        return this.grid.columns.findIndex(x => x.field == columnId);
     }
 
     private getColumnFromColumnId(columnId: string): IColumn {

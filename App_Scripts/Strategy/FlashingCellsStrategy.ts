@@ -30,7 +30,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     protected addColumnMenuItem(columnId: string): void {
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
-                let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnName == columnId)
+                let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
                 if (flashingCell && flashingCell.IsLive) {
                     this.createMenuItemReduxAction(
                         "Turn Flashing Cell Off",
@@ -60,7 +60,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
     }
 
     protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
-        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnName == DataChangedEvent.ColumnId);
+        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == DataChangedEvent.ColumnId);
         let flashingCellIndex = this.FlashingCellState.FlashingCells.indexOf(flashingCell)
         if (flashingCell != null && flashingCell.IsLive) {
             this.FlashCell(DataChangedEvent, flashingCell, flashingCellIndex);

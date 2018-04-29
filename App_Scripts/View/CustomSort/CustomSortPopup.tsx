@@ -147,7 +147,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 
     canFinishWizard() {
         let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
-        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.Values) ;
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.SortedValues) ;
     }
 
 }

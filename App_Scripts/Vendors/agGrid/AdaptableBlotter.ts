@@ -559,7 +559,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.stopEditing(true)
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
             let rowNodeSearch: RowNode
             //ag-grid doesn't support FindRow based on data
@@ -569,19 +569,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     rowNodeSearch = rowNode
                 }
             })
-            return (columnName: string) => { return this.gridOptions.api.getValue(columnName, rowNodeSearch); }
+            return (columnId: string) => { return this.gridOptions.api.getValue(columnId, rowNodeSearch); }
         }
         else {
-            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+            return (columnId: string) => { return this.getDisplayValue(id, columnId); }
         }
     }
 
-    public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+    public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            return (columnName: string) => { return this.gridOptions.api.getValue(columnName, record) }
+            return (columnId: string) => { return this.gridOptions.api.getValue(columnId, record) }
         }
         else {
-            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
+            return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
         }
     }
 
@@ -589,7 +589,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo?
     }
 
-    public getColumnIndex(columnName: string): number {
+    public getColumnIndex(columnId: string): number {
         return null
     }
 

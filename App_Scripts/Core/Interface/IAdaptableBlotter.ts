@@ -54,14 +54,14 @@ export interface IAdaptableBlotter {
     selectColumn(columnId: string): void
 
     // column related
-    getColumnIndex(columnName: string): number
+    getColumnIndex(columnId: string): number
     setColumnIntoStore(): void
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
     isColumnReadonly(columnId: string): boolean
-    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
-    getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any
+    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
+    getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
 
     // editing related

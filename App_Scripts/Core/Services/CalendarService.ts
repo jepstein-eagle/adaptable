@@ -68,7 +68,7 @@ export class CalendarService implements ICalendarService {
 
     private isNotWorkingDay(dateToCheck: Date): Boolean {
         let calendarStore = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar
-        let currentHoliday = calendarStore.AvailableCalendars.find(c => c.CalendarName == calendarStore.CurrentCalendar);
+        let currentHoliday = calendarStore.AvailableCalendars.find(c => c.Name == calendarStore.CurrentCalendar);
         for (var holiday of currentHoliday.CalendarEntries) {
             let holidayDate = new Date(holiday.HolidayDate)
             if (holidayDate.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0)) {

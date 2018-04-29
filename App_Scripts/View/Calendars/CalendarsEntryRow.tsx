@@ -17,9 +17,9 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
     render(): any {
         let colItems: IColItem[] = []
         colItems.push({
-            Size: 3, Content: <Checkbox onChange={() => this.props.onSelect(this.props.Calendar)} checked={this.props.Calendar.CalendarName == this.props.CurrentCalendar} />
+            Size: 3, Content: <Checkbox onChange={() => this.props.onSelect(this.props.Calendar)} checked={this.props.Calendar.Name == this.props.CurrentCalendar} />
         });
-        colItems.push({ Size: 5, Content: this.props.Calendar.CalendarName });
+        colItems.push({ Size: 5, Content: this.props.Calendar.Name });
 
         colItems.push({
             Size: 3, Content:

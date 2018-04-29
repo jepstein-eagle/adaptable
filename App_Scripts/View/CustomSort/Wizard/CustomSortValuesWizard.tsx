@@ -24,19 +24,19 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
         super(props)
         this.state = {
             ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue),
-            SelectedValues: this.props.Data.Values,
-            IsEdit: this.props.Data.Values.length > 0
+            SelectedValues: this.props.Data.SortedValues,
+            IsEdit: this.props.Data.SortedValues.length > 0
         }
         //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
 
     render(): any {
-        let columnName = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
-        let infoBody: any[] = ["Create a custom sort for the '" + columnName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
+        let columnId = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
+        let infoBody: any[] = ["Create a custom sort for the '" + columnId + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
         let cssClassName: string = this.props.cssClassName + "-values"
 
         return <div className={cssClassName}>
-            <PanelWithInfo cssClassName={cssClassName} header={"Sort Order for: " + columnName} bsStyle="primary" infoBody={infoBody}>
+            <PanelWithInfo cssClassName={cssClassName} header={"Sort Order for: " + columnId} bsStyle="primary" infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.state.ColumnValues}
                     cssClassName={cssClassName}
                     SelectedValues={this.state.SelectedValues}
@@ -56,7 +56,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
 
     public canNext(): boolean { return this.state.SelectedValues.length > 0; }
     public canBack(): boolean { return !this.state.IsEdit; }
-    public Next(): void { this.props.Data.Values = this.state.SelectedValues }
+    public Next(): void { this.props.Data.SortedValues = this.state.SelectedValues }
     public Back(): void {
         // todo
     }

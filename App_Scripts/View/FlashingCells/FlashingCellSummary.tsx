@@ -22,7 +22,7 @@ export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingC
 export class FlashingCellSummaryComponent extends React.Component<FlashingCellSummaryProps, EditableConfigEntityState> {
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__flashingcells";
-        let flashingCell: IFlashingCell = this.props.FlashingCells.find(fc => fc.ColumnName == this.props.SummarisedColumn.ColumnId);
+        let flashingCell: IFlashingCell = this.props.FlashingCells.find(fc => fc.ColumnId == this.props.SummarisedColumn.ColumnId);
 
         let showFlashingButton = (!flashingCell || !flashingCell.IsLive) ?
             <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="info" bsSize="small">Flashing Off</Button>
@@ -37,7 +37,7 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
      }
 
     onFlashingSelectedChanged(flashingCell: IFlashingCell) {
-        let existingfc = this.props.FlashingCells.find(e => e.ColumnName == this.props.SummarisedColumn.ColumnId)
+        let existingfc = this.props.FlashingCells.find(e => e.ColumnId == this.props.SummarisedColumn.ColumnId)
         if (!existingfc) {
             let col: IColumn = this.props.Columns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
             existingfc = ObjectFactory.CreateDefaultFlashingCell(col);

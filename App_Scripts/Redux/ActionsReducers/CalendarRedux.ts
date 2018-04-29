@@ -4,19 +4,19 @@ import * as Redux from 'redux'
 export const CALENDAR_SELECT = 'CALENDAR_SELECT';
 
 export interface CalendarSelectAction extends Redux.Action {
-    calendarName: string
+    name: string
 }
 
-export const CalendarSelect = (calendarName: string): CalendarSelectAction => ({
+export const CalendarSelect = (name: string): CalendarSelectAction => ({
     type: CALENDAR_SELECT,
-    calendarName
+    name
 })
 
 const initialCalendarState: CalendarState = {
     CurrentCalendar: "United States",
     AvailableCalendars: [
         {
-            CalendarName: "United Kingdom",
+            Name: "United Kingdom",
             YearName: 2018, CalendarEntries: [
                 { HolidayName: "New Year's Day", HolidayDate: new Date("January 01, 2018").toJSON() },
                 { HolidayName: "Good Friday", HolidayDate: new Date("March 30, 2018").toJSON() },
@@ -27,9 +27,10 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                 { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2018").toJSON() },
             ],
+            IsPredefined: true
         },
         {
-            CalendarName: "Germany",
+            Name: "Germany",
             YearName: 2018, CalendarEntries: [
                 { HolidayName: "New Year's Day", HolidayDate: new Date("January 01, 2018").toJSON() },
                 { HolidayName: "Good Friday", HolidayDate: new Date("March 30, 2018").toJSON() },
@@ -40,10 +41,11 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "German Unity Day", HolidayDate: new Date("October 03, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                 { HolidayName: "St Stephen's Day", HolidayDate: new Date("December 26, 2018").toJSON() },
-            ]
-        },
+            ],
+            IsPredefined: true
+       },
         {
-            CalendarName: "France",
+            Name: "France",
             YearName: 2018, CalendarEntries: [
                 { HolidayName: "New Years Day", HolidayDate: new Date("January 01, 2018").toJSON() },
                 { HolidayName: "Easter Monday", HolidayDate: new Date("April 02, 2018").toJSON() },
@@ -56,10 +58,11 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "All Saints Day", HolidayDate: new Date("November 01, 2018").toJSON() },
                 { HolidayName: "Armistice Day", HolidayDate: new Date("November 11, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
-            ]
-        },
+            ],
+            IsPredefined: true
+         },
         {
-            CalendarName: "United States",
+            Name: "United States",
             YearName: 2018, CalendarEntries: [
                 { HolidayName: "New Years Day", HolidayDate: new Date("January 01, 2018").toJSON() },
                 { HolidayName: "Martin Luther King Day", HolidayDate: new Date("January 15, 2018").toJSON() },
@@ -71,10 +74,11 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Veterans Day", HolidayDate: new Date("November 12, 2018").toJSON() },
                 { HolidayName: "Thanksgiving Day", HolidayDate: new Date("November 22, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
-            ]
+            ],
+            IsPredefined: true
         },
         {
-            CalendarName: "Canada",
+            Name: "Canada",
             YearName: 2018, CalendarEntries: [
                 { HolidayName: "New Years Day", HolidayDate: new Date("January 01, 2018").toJSON() },
                 { HolidayName: "Good Friday", HolidayDate: new Date("March 30, 2018").toJSON() },
@@ -85,10 +89,11 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Rememberance Day", HolidayDate: new Date("November 11, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                 { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2018").toJSON() },
-            ]
+            ],
+            IsPredefined: true
         },
         {
-            CalendarName: "Singapore",
+            Name: "Singapore",
             YearName: 2018, CalendarEntries: [
                 { HolidayName: "New Years Day", HolidayDate: new Date("January 01, 2018").toJSON() },
                 { HolidayName: "Chinese New Year", HolidayDate: new Date("February 16, 2018").toJSON() },
@@ -100,8 +105,9 @@ const initialCalendarState: CalendarState = {
                 { HolidayName: "Hari Raya Haji", HolidayDate: new Date("August 22, 2018").toJSON() },
                 { HolidayName: "Deepavali", HolidayDate: new Date("November 06, 2018").toJSON() },
                 { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
-            ]
-        }
+            ],
+            IsPredefined: true
+         }
     ]
 }
 
@@ -109,7 +115,7 @@ const initialCalendarState: CalendarState = {
 export const CalendarReducer: Redux.Reducer<CalendarState> = (state: CalendarState = initialCalendarState, action: Redux.Action): CalendarState => {
     switch (action.type) {
         case CALENDAR_SELECT:
-            return Object.assign({}, state, { CurrentCalendar: (<CalendarSelectAction>action).calendarName })
+            return Object.assign({}, state, { CurrentCalendar: (<CalendarSelectAction>action).name })
         default:
             return state
     }

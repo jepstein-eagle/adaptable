@@ -17,7 +17,7 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = this.props.ColumnLabel
-        colItems[1].Content = customSort.Values.join(', ')
+        colItems[1].Content = customSort.SortedValues.join(', ')
         colItems[2].Content = <EntityListActionButtons
         cssClassName={this.props.cssClassName}
          ConfirmDeleteAction={this.props.onDeleteConfirm}

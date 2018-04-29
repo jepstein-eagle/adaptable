@@ -13,9 +13,9 @@ export class CustomSortagGridStrategy extends CustomSortStrategy {
             let secondElementValueString = blotter.getDisplayValueFromRecord(nodeB, customSort.ColumnId)
             let firstElementValue = valueA;
             let secondElementValue = valueB;
-            let indexFirstElement = customSort.Values.indexOf(firstElementValueString);
+            let indexFirstElement = customSort.SortedValues.indexOf(firstElementValueString);
             let containsFirstElement = indexFirstElement >= 0;
-            let indexSecondElement = customSort.Values.indexOf(secondElementValueString);
+            let indexSecondElement = customSort.SortedValues.indexOf(secondElementValueString);
             let containsSecondElement = indexSecondElement >= 0;
             //if none of the element are in the list we jsut return normal compare
             if (!containsFirstElement && !containsSecondElement) {

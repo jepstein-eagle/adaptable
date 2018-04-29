@@ -9,7 +9,7 @@ import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: "", Values: [], IsPredefined: false }
+        return { ColumnId: "", SortedValues: [], IsPredefined: false }
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
@@ -92,9 +92,9 @@ export module ObjectFactory {
     export function CreateDefaultFlashingCell(column: IColumn): IFlashingCell {
         return {
             IsLive: false,
-            ColumnName: column.ColumnId,
+            ColumnId: column.ColumnId,
             FlashingCellDuration: 500,
-            UpBackColor: '#008000', DownBackColor: '#FF0000',
+            UpColor: '#008000', DownColor: '#FF0000',
             IsPredefined: false
         };
     }

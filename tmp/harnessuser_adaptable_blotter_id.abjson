@@ -35,15 +35,15 @@
 				},
 				"ConditionalStyleScope": "Row",
 				"Expression": {
-					"ColumnDisplayValuesExpressions": [
+					"DisplayValueExpressions": [
 						{
-							"ColumnName": "currency",
-							"ColumnDisplayValues": [
+							"ColumnId": "currency",
+							"DisplayValues": [
 								"EUR"
 							]
 						}
 					],
-					"ColumnRawValuesExpressions": [],
+					"RawValueExpressions": [],
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				},
@@ -67,11 +67,11 @@
 			{
 				"Name": "Trades",
 				"Expression": {
-					"ColumnDisplayValuesExpressions": [],
-					"ColumnRawValuesExpressions": [],
+					"DisplayValueExpressions": [],
+					"RawValueExpressions": [],
 					"FilterExpressions": [
 						{
-							"ColumnName": "changeOnYear",
+							"ColumnId": "changeOnYear",
 							"UserFilters": [
 								"Positive",
 								"Negative"

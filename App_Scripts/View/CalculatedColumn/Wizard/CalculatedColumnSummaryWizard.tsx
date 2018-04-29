@@ -16,7 +16,7 @@ export interface CalculatedColumnSummaryWizardProps extends AdaptableWizardStepP
 export class CalculatedColumnSummaryWizard extends React.Component<CalculatedColumnSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: CalculatedColumnSummaryWizardProps) {
         super(props);
-        this.state = { ColumnName: this.props.Data.ColumnId, ErrorMessage: null }
+        this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null }
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"

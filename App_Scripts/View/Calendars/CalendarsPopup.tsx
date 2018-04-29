@@ -52,7 +52,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
             return <CalendarsEntryRow
             cssClassName={cssClassName}
             Calendar={calendar}
-                key={calendar.CalendarName}
+                key={calendar.Name}
                 onSelect={(calendar) => this.props.onSelectCalendar(calendar)}
                 onShowInformation={(calendar) => this.onShowInformation(calendar)}
                 CurrentCalendar={this.props.CurrentCalendar}>
@@ -87,7 +87,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
                 <Modal show={this.state.DisplayedCalendar != null} onHide={() => this.closeInformationModal()} className={cssClassName}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.CalendarName}</Modal.Title>
+                        <Modal.Title>Calendar Details: {this.state.DisplayedCalendar.Name}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body >
                     <PanelWithRow cssClassName={cssClassName} colItems ={calenderEntryColItems} bsStyle="info" />
@@ -128,7 +128,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectCalendar: (calendar: ICalendar) => dispatch(CalendarsRedux.CalendarSelect(calendar.CalendarName)),
+        onSelectCalendar: (calendar: ICalendar) => dispatch(CalendarsRedux.CalendarSelect(calendar.Name)),
     };
 }
 

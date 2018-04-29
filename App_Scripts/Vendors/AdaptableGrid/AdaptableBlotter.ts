@@ -315,22 +315,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.exitCurrentEditor();
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         // this is very very wrong!
         if (type == "getColumnValue") {
-            return (columnName: string) => { return this.getRawValue(id, columnName); }
+            return (columnId: string) => { return this.getRawValue(id, columnId); }
         }
         else {
-            return (columnName: string) => { return this.getDisplayValue(id, columnName); }
+            return (columnId: string) => { return this.getDisplayValue(id, columnId); }
         }
     }
 
-    public getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, type: "getColumnValue" | "getDisplayColumnValue"): (columnName: string) => any {
+    public getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            return (columnName: string) => { return this.getCellFromRowAndColumnId(record, columnName).getRawValue() }
+            return (columnId: string) => { return this.getCellFromRowAndColumnId(record, columnId).getRawValue() }
         }
         else {
-            return (columnName: string) => { return this.getDisplayValueFromRecord(record, columnName); }
+            return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
         }
     }
 

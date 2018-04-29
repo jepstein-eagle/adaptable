@@ -23,7 +23,7 @@ import { Expression, IUserFilter, IRange } from "../../Core/Api/AdaptableBlotter
 export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: Expression
     UserFilters: IUserFilter[]
-    onSelectedColumnChange: (ColumnName: string) => void
+    onSelectedColumnChange: (ColumnId: string) => void
     SelectedColumnId: string
     ColumnsList: Array<IColumn>
     DeleteRange: (ColumnId: string, index: number) => void
@@ -46,10 +46,10 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         let previewLists = columnList.map(columnId => {
 
             // First lets do the column values
-            let columnValues = this.props.Expression.ColumnDisplayValuesExpressions.find(colValues => colValues.ColumnName == columnId)
+            let columnValues = this.props.Expression.DisplayValueExpressions.find(colValues => colValues.ColumnId == columnId)
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
-                columnValuesListgroupItems = columnValues.ColumnDisplayValues.map(y => {
+                columnValuesListgroupItems = columnValues.DisplayValues.map(y => {
                     //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
                     // since html cannot render a button within a button.
                     // https://github.com/react-bootstrap/react-bootstrap/issues/1445
@@ -68,7 +68,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
             // Next do the user filter expressions
 
-            let columnUserFilterExpressions = this.props.Expression.FilterExpressions.find(ne => ne.ColumnName == columnId)
+            let columnUserFilterExpressions = this.props.Expression.FilterExpressions.find(ne => ne.ColumnId == columnId)
             let columnUserFilterExpressionsListgroupItems: JSX.Element[]
             if (columnUserFilterExpressions) {
                 columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
@@ -84,7 +84,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
             }
             // Finally do the column ranges
-            let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnName == columnId)
+            let columnRanges = this.props.Expression.RangeExpressions.find(colValues => colValues.ColumnId == columnId)
             let columnRangesListgroupItems: JSX.Element[]
                                  /* Note: these used to say:  this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation();  - do we need that? */
                               

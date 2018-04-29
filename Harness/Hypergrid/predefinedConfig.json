@@ -24,17 +24,17 @@
 			{
 				"Name": "TestJo",
 				"Expression": {
-					"ColumnDisplayValuesExpressions": [
+					"DisplayValueExpressions": [
 						{
-							"ColumnName": "counterparty",
-							"ColumnDisplayValues": [
+							"ColumnId": "counterparty",
+							"DisplayValues": [
 								"Credit Suisse",
 								"Deutsche Bank",
 								"Goldman Sachs"
 							]
 						}
 					],
-					"ColumnRawValuesExpressions": [],
+					"RawValueExpressions": [],
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				},

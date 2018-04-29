@@ -11,14 +11,14 @@ export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStep
     Columns: IColumn[]
 }
 export interface CalculatedColumnSettingsWizardState {
-    ColumnName: string,
+    ColumnId: string,
     ErrorMessage: string
 }
 
 export class CalculatedColumnSettingsWizard extends React.Component<CalculatedColumnSettingsWizardProps, CalculatedColumnSettingsWizardState> implements AdaptableWizardStep {
     constructor(props: CalculatedColumnSettingsWizardProps) {
         super(props);
-        this.state = { ColumnName: this.props.Data.ColumnId, ErrorMessage: null }
+        this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null }
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-settings"
@@ -33,7 +33,7 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
                         </Col>
                         <Col xs={8}>
                             <FormGroup controlId="formInlineName" validationState={validationState}>
-                                <FormControl value={this.state.ColumnName} type="text" placeholder="Enter a name" onChange={(e) => this.handleColumnNameChange(e)} />
+                                <FormControl value={this.state.ColumnId} type="text" placeholder="Enter a name" onChange={(e) => this.handleColumnNameChange(e)} />
                                 <FormControl.Feedback />
                                 <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                             </FormGroup>
@@ -48,15 +48,15 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
     handleColumnNameChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({
-            ColumnName: e.value,
+            ColumnId: e.value,
             ErrorMessage: this.props.Columns.findIndex(x => x.ColumnId == e.value) > -1 ? "A Column already exists with that name" : null
         }, () => this.props.UpdateGoBackState())
 
     }
 
-    public canNext(): boolean { return StringExtensions.IsNotNullOrEmpty(this.state.ColumnName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage); }
+    public canNext(): boolean { return StringExtensions.IsNotNullOrEmpty(this.state.ColumnId) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage); }
     public canBack(): boolean { return true; }
-    public Next(): void { this.props.Data.ColumnId = this.state.ColumnName }
+    public Next(): void { this.props.Data.ColumnId = this.state.ColumnId }
     public Back(): void {
         //
     }

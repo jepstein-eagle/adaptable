@@ -4,21 +4,45 @@ import { IStyle } from '../Interface/IStyle';
 
 /**
  * The base Adaptable Blotter Object interface 
+ * @property {boolean} IsPredefined - whether the object is created at design-time or run-time.
  */
 export interface IAdaptableBlotterObject {
   IsPredefined: boolean
 }
 
-// Basic Expression object
+
+/**
+ * The main Expression object - comprised of 4 collections
+ */
 export class Expression {
   constructor(
-      public ColumnDisplayValuesExpressions: Array<{ ColumnName: string, ColumnDisplayValues: Array<string> }>,
-      public ColumnRawValuesExpressions: Array<{ ColumnName: string, ColumnRawValues: Array<any> }>,
-      public FilterExpressions: Array<{ ColumnName: string, Filters: Array<string> }>,
-      public RangeExpressions: Array<{ ColumnName: string, Ranges: Array<IRange> }>) {
+    public DisplayValueExpressions: IDisplayValueExpression[],
+    public RawValueExpressions: IRawValueExpression[],
+    public FilterExpressions: IFilterExpression[],
+    public RangeExpressions: IRangeExpression[]
+  ) {
   }
-} 
+}
 
+export interface IDisplayValueExpression {
+  ColumnId: string,
+  DisplayValues: string[]
+}
+
+export interface IRawValueExpression {
+  ColumnId: string,
+  RawValues: string[]
+}
+
+export interface IFilterExpression {
+  ColumnId: string,
+  Filters: string[]
+}
+
+export interface IRangeExpression {
+  ColumnId: string,
+  Ranges: IRange[]
+}
 
 export interface IRange {
   Operator: LeafExpressionOperator;
@@ -29,13 +53,6 @@ export interface IRange {
 }
 
 
-export interface IRangeEvaluation {
-   operand1: any;
-   operand2: any;
-   newValue: any;
-   operator: LeafExpressionOperator;
-   initialValue: any
-}
 
 // Core objects for Strategies
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
@@ -49,8 +66,8 @@ export interface ICalculatedColumn extends IAdaptableBlotterObject {
   ColumnExpression: string
 }
 
-export interface ICalendar {
-  CalendarName: string;
+export interface ICalendar extends IAdaptableBlotterObject {
+  Name: string;
   YearName: Number;
   CalendarEntries: ICalendarEntry[];
 }
@@ -69,7 +86,7 @@ export interface ICellValidationRule extends IAdaptableBlotterObject {
   OtherExpression: Expression;
 }
 
-export interface IColumnFilter  {
+export interface IColumnFilter extends IAdaptableBlotterObject {
   ColumnId: string
   Filter: Expression
 }
@@ -83,7 +100,7 @@ export interface IConditionalStyle extends IAdaptableBlotterObject {
 
 export interface ICustomSort extends IAdaptableBlotterObject {
   ColumnId: string;
-  Values: string[]
+  SortedValues: string[]
 }
 
 export interface IReport extends IAdaptableBlotterObject {
@@ -96,10 +113,10 @@ export interface IReport extends IAdaptableBlotterObject {
 
 export interface IFlashingCell extends IAdaptableBlotterObject {
   IsLive: boolean,
-  ColumnName: string;
+  ColumnId: string;
   FlashingCellDuration: number;
-  UpBackColor : string
-  DownBackColor : string
+  UpColor: string
+  DownColor: string
 }
 
 export interface IFormatColumn extends IAdaptableBlotterObject {
@@ -107,20 +124,20 @@ export interface IFormatColumn extends IAdaptableBlotterObject {
   Style: IStyle
 }
 
-export interface ILayout extends IAdaptableBlotterObject{
+export interface ILayout extends IAdaptableBlotterObject {
   Name: string;
   Columns: string[];
   GridSorts: IGridSort[]
 }
 
-export interface IPlusMinusRule extends IAdaptableBlotterObject{
+export interface IPlusMinusRule extends IAdaptableBlotterObject {
   ColumnId: string
   IsDefaultNudge: boolean
   NudgeValue: number
   Expression: Expression
 }
 
-export interface IShortcut extends IAdaptableBlotterObject{
+export interface IShortcut extends IAdaptableBlotterObject {
   ShortcutKey: string;
   ShortcutResult: any;
   ShortcutOperation: MathOperation
