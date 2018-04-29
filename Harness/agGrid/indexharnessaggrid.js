@@ -7,7 +7,7 @@ function ThemeChange(blotter, container) {
 
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if (themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+        if (themeName == "Dark Theme" ||themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
             container.className = "ag-theme-dark";
         } else if (themeName == "flatyle") {
             container.className = "ag-theme-balham";

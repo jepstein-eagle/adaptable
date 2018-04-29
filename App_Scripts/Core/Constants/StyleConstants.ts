@@ -73,6 +73,7 @@ export const STRATEGY_PROFILE: string = "__strategyprofile"
 export const CONTEXT_MENU: string = AB_STYLE + "__contextmenu"
 export const SINGLE_LIST_BOX: string =  "__singlelistbox"
 export const DOUBLE_LIST_BOX: string =  "__doublelistbox"
+export const TEXT_ENTRY_FORM: string = "__textentryform"
 
 
 // popups
