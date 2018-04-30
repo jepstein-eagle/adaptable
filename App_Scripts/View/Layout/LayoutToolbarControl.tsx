@@ -67,7 +67,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                             cssClassName={cssClassName}
                             onClick={() => this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT)}
                             size={"small"}
-                            overrideTooltip="Use default layout"
+                            overrideTooltip="Clear layout"
                             overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                             ConfigEntity={layoutEntity}
                             DisplayMode="Glyph" />

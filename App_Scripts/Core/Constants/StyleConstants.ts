@@ -8,7 +8,7 @@ export const QUICK_SEARCH_STYLE: string = "Ab-QuickSearch"
 
 // constants for CSS
 export const AB_STYLE: string = "#ab-style"
-export const BASE: string = "-base"
+export const BASE: string = "__base"
 
 // Modal
 export const MODAL_BASE: string = "__modal-base"

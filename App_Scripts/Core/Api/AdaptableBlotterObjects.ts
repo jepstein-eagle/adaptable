@@ -17,6 +17,18 @@ export interface IAdaptableBlotterObject {
  * The main Expression object - comprised of 4 collections
  */
 export class Expression {
+  /**
+     * @property {DisplayValueExpressions} - Column values as displayed in the Grid.
+     */
+  /**
+   * @property {RawValueExpressions} - Underlying column values (typically used when numbers are formatted)
+   */
+  /**
+  * @property {FilterExpressions} - User, System and Column Filters contained in the expression
+  */
+  /**
+   * @property {RangeExpressions} - Ranges contained in the expression
+   */
   constructor(
     public DisplayValueExpressions: IDisplayValueExpression[],
     public RawValueExpressions: IRawValueExpression[],
@@ -111,7 +123,7 @@ export interface IReport extends IAdaptableBlotterObject {
   ReportRowScope: ReportRowScope
   Columns: string[]
   Expression: Expression,
- }
+}
 
 export interface IFlashingCell extends IAdaptableBlotterObject {
   IsLive: boolean,

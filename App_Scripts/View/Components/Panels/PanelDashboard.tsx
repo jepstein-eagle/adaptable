@@ -42,7 +42,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         let cssClassName = this.props.cssClassName + StyleConstants.DASHBOARD_PANEL
 
         let header = <span>
-            <Label bsStyle={this.props.panelStyle} style={{ verticalAlign: "middle", margin: "0px", padding: "0px" }} >
+            <Label bsStyle={this.props.panelStyle} style={{ verticalAlign: "middle", marginRight: "10px", padding: "0px" }} >
                 {this.props.showMinimiseButton &&
                     <span>
                         <ButtonMinimise cssClassName={cssClassName} size={"xs"} bsStyle={"primary"} DisplayMode={"Glyph"} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()} />
@@ -55,7 +55,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
                 {' '}
                 {this.props.headerText}
             </Label>
-            {' '}
+            {' '} {' '}
             {this.props.showCloseButton &&
                 <ButtonClose cssClassName={cssClassName} overrideTooltip={"Close " + this.props.headerText} size='xs' bsStyle={"primary"} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onClose()} />
             }
