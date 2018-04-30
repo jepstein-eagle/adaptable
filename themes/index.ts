@@ -1,9 +1,9 @@
 //export const StaticThemes: Array<string> = ['Default', 'None', 'Cerulean', 'Cosmo', 'Cyborg', 'Darkly', 'Flatly', 'Journal', 'Lumen', 'Paper', 'Readable', 'Sandstone', 'Simplex', 'Slate', 'Spacelab', 'Superhero', 'United', 'Yeti']
-export const StaticThemes: Array<string> = ['White Theme', 'Dark Theme']
+export const StaticThemes: Array<string> = ['Light Theme', 'Dark Theme']
 declare var require: any
 export var ThemesContent = new Map<string, string>([
     // tslint:disable-next-line:no-var-requires
-    ["White Theme", require('./default/bootstrap.min.css')],
+    ["Light Theme", require('./default/bootstrap.min.css')],
   //  ["None", ""],
     // tslint:disable-next-line:no-var-requires
  //   ["Cerulean", require('./cerulean/bootstrap.min.css')],

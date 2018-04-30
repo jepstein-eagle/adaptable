@@ -1,6 +1,12 @@
 import { ServerSearchOption } from "../../Enums";
 
+/**
+ * This is the class injected into the Blotter at startup providing all the information required to get started
+ */
 export interface IAdaptableBlotterOptions {
+    /**
+     * @prop -- whether audit log is enabled
+     */
     enableAuditLog?: boolean,
     enableRemoteConfigServer?: boolean,
     userName?: string,
