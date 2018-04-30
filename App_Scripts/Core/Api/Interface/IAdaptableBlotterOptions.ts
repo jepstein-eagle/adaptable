@@ -4,13 +4,17 @@ import { ServerSearchOption } from "../../Enums";
  * This is the class injected into the Blotter at startup providing all the information required to get started
  */
 export interface IAdaptableBlotterOptions {
+    
     /**
-     * @prop -- whether audit log is enabled
+     * @prop a unique column in the grid (required for cell identification purposes).  This is the only MANDATORY property
+     */
+    primaryKey?: string,
+    /**
+     * @prop whether audit log is enabled; is so then every keystroke, data change, user action etc. is sent as JSON to the Audit Http Channel
      */
     enableAuditLog?: boolean,
     enableRemoteConfigServer?: boolean,
     userName?: string,
-    primaryKey?: string,
     blotterId?: string,
     predefinedConfig?: object,
     maxColumnValueItemsDisplayed: number,

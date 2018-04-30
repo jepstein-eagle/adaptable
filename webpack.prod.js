@@ -30,6 +30,7 @@ module.exports = {
         "ag-grid/dist/lib/entities/colDef": "ag-grid",
         "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
         "ag-grid/dist/lib/gridApi": "ag-grid",
+        "adaptableblotter/dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions": "blotterOptions",
 
     },
     resolve: {
