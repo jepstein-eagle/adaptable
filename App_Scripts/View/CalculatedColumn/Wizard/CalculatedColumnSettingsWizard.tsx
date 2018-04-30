@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '.././../Wizard/In
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICalculatedColumn } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {

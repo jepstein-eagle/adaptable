@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, Well } from 'react-bootstrap';
-import { IStyle } from '../../Core/Interface/IStyle';
 import { FontWeight, FontStyle, FontSize, PopoverType } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
@@ -8,6 +7,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {

@@ -20,7 +20,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IAdaptableBlotterObject, IFormatColumn } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IFormatColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {

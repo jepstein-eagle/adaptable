@@ -22,7 +22,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IShortcut, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
+import { IShortcut, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {

@@ -25,7 +25,7 @@ import { UIHelper } from '../UIHelper';
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
+import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,

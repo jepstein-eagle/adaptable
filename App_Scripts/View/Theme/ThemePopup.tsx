@@ -9,7 +9,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IUserTheme } from "../../Core/Api/AdaptableBlotterObjects";
+import { IUserTheme } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
     SystemThemes: Array<string>;

@@ -53,7 +53,6 @@ import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IStyle } from '../../Core/Interface/IStyle';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
@@ -61,15 +60,15 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
-import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi } from '../../Core/Api/IBlotterApi';
-import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
-import { ICalculatedColumn, IGridSort, ICellValidationRule } from '../../Core/Api/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ISearchChangedEventArgs';
+import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'

@@ -20,7 +20,7 @@ import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResul
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../Core/Api/AdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;

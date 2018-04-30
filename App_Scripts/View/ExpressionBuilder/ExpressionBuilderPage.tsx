@@ -11,7 +11,8 @@ import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { IUserFilter, Expression } from "../../Core/Api/AdaptableBlotterObjects";
+import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { Expression } from "../../Core/Api/Expression";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {

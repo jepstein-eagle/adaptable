@@ -46,12 +46,12 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
-import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { IBlotterApi } from '../../Core/Api/IBlotterApi';
-import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
-import { ICalculatedColumn, IGridSort } from '../../Core/Api/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ISearchChangedEventArgs';
+import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

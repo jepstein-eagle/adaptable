@@ -1,6 +1,5 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { IStyle } from '../../Core/Interface/IStyle';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { FontWeight, FontStyle } from '../../Core/Enums';
 import { KeyValuePair, IColItem } from "../UIInterfaces";

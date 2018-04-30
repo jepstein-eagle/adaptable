@@ -17,9 +17,9 @@ import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {

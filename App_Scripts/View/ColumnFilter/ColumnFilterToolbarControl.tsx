@@ -17,7 +17,7 @@ import { AdaptablePopover } from './../AdaptablePopover';
 import { PopoverType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter, IColumnFilter } from "../../Core/Api/AdaptableBlotterObjects";
+import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,

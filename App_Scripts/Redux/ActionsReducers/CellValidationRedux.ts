@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { CellValidationState } from './Interface/IState'
 import { CellValidationMode } from '../../Core/Enums';
-import { ICellValidationRule } from '../../Core/Api/AdaptableBlotterObjects';
+import { ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';

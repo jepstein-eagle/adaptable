@@ -6,10 +6,10 @@ import { IEnterpriseCache } from 'ag-grid';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
-import { ISearchChangedEventArgs, IBlotterSearchState, IBlotterSortState } from '../Core/Api/ISearchChangedEventArgs';
 import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs } from '../Core/Api/Interface/ISearchChangedEventArgs';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean

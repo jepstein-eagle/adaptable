@@ -18,7 +18,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusRules: IPlusMinusRule[]

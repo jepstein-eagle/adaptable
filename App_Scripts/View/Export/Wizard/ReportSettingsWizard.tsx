@@ -1,4 +1,4 @@
-import { IReport } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IReport } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'

@@ -2,7 +2,7 @@ import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { IUserFilter } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";

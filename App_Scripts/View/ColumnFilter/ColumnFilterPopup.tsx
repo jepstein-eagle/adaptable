@@ -14,7 +14,7 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]

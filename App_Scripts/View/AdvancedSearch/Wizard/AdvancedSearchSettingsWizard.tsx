@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'rea
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAdvancedSearch } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[]

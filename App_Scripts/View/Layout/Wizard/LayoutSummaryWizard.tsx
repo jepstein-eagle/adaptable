@@ -8,7 +8,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
-import { ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: IColumn[]

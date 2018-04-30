@@ -7,7 +7,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ILayout, IGridSort } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ILayout, IGridSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {

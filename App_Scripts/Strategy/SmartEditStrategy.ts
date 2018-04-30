@@ -13,7 +13,7 @@ import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../Core/Api/AdaptableBlotterObjects';
+import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {

@@ -22,7 +22,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import { ILayout } from "../../Core/Api/AdaptableBlotterObjects";
+import { ILayout } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {

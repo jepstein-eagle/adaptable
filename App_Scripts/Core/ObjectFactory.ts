@@ -1,7 +1,6 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
-import { IStyle } from './Interface/IStyle';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport } from './Api/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle } from './Api/Interface/AdaptableBlotterObjects';
 import { RangeOperandType, LeafExpressionOperator, SortOrder, CellValidationMode, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';

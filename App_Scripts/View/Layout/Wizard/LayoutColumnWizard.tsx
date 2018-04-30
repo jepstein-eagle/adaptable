@@ -8,7 +8,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
-import { ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: Array<IColumn>

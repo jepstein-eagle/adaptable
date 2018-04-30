@@ -16,7 +16,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { SortOrder } from '../../Core/Enums';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { ICalendar, ICalendarEntry } from "../../Core/Api/AdaptableBlotterObjects";
+import { ICalendar, ICalendarEntry } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
     CurrentCalendar: string

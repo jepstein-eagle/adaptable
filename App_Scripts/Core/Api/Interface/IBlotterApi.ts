@@ -1,8 +1,7 @@
-import { EventDispatcher } from "../EventDispatcher";
-import { IEvent } from "../Interface/IEvent";
-import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { ISearchChangedEventArgs } from "./ISearchChangedEventArgs";
-
+import { EventDispatcher } from "../../EventDispatcher";
+import { IEvent } from "../../Interface/IEvent";
+import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
+import { ISearchChangedEventArgs } from "./../Interface/ISearchChangedEventArgs";
 
 
 /**

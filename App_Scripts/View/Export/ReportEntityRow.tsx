@@ -10,7 +10,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { IReport } from "../../Core/Api/AdaptableBlotterObjects";
+import { IReport } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean

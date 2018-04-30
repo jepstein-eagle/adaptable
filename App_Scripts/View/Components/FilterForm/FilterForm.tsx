@@ -9,7 +9,7 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
-import { IUserFilter, IColumnFilter, IRange, Expression } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, IRange } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
@@ -17,6 +17,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { Expression } from "../../../Core/Api/Expression";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;

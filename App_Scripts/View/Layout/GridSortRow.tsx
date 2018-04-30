@@ -13,7 +13,7 @@ import { SelectionMode, SortOrder } from "../../Core/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IGridSort } from "../../Core/Api/AdaptableBlotterObjects";
+import { IGridSort } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {

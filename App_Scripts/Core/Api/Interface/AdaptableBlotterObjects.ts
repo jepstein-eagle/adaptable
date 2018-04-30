@@ -1,5 +1,5 @@
-import { LeafExpressionOperator, RangeOperandType, SortOrder, CellValidationMode, ConditionalStyleScope, MathOperation, DataType, ReportColumnScope, ReportRowScope } from '../Enums';
-import { IStyle } from '../Interface/IStyle';
+import { FontWeight, FontStyle, FontSize, LeafExpressionOperator, RangeOperandType, SortOrder, CellValidationMode, ConditionalStyleScope, MathOperation, DataType, ReportColumnScope, ReportRowScope } from '../../Enums';
+import { Expression } from '../Expression';
 
 
 /**
@@ -8,35 +8,8 @@ import { IStyle } from '../Interface/IStyle';
  */
 export interface IAdaptableBlotterObject {
   IsReadOnly: boolean
-
 }
 
-
-
-/**
- * The main Expression object - comprised of 4 collections
- */
-export class Expression {
-  /**
-     * @property {DisplayValueExpressions} - Column values as displayed in the Grid.
-     */
-  /**
-   * @property {RawValueExpressions} - Underlying column values (typically used when numbers are formatted)
-   */
-  /**
-  * @property {FilterExpressions} - User, System and Column Filters contained in the expression
-  */
-  /**
-   * @property {RangeExpressions} - Ranges contained in the expression
-   */
-  constructor(
-    public DisplayValueExpressions: IDisplayValueExpression[],
-    public RawValueExpressions: IRawValueExpression[],
-    public FilterExpressions: IFilterExpression[],
-    public RangeExpressions: IRangeExpression[]
-  ) {
-  }
-}
 
 export interface IDisplayValueExpression {
   ColumnId: string,
@@ -175,5 +148,14 @@ export interface IUserTheme extends IAdaptableBlotterObject {
 export interface IGridSort {
   Column: string;
   SortOrder: SortOrder
+}
+
+export interface IStyle {
+    BackColor?: string
+    ForeColor?: string
+    FontWeight?: FontWeight
+    FontStyle?: FontStyle
+    FontSize?: FontSize
+    ClassName?: string
 }
 

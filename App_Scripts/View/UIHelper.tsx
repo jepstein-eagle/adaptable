@@ -1,9 +1,9 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
 import { DataType, FontWeight, FontStyle } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotterOptions';
-import { IStyle } from '../Core/Interface/IStyle';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
+import { IStyle } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 
 export module UIHelper {

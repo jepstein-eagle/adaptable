@@ -12,12 +12,14 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { IBlotterApi } from '../Api/IBlotterApi';
-import { ISearchChangedEventArgs } from '../Api/ISearchChangedEventArgs';
-import { ICalculatedColumn, IGridSort } from '../Api/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort } from '../Api/Interface/AdaptableBlotterObjects';
+import { ISearchChangedEventArgs } from '../Api/Interface/ISearchChangedEventArgs';
+import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 
 export interface IAdaptableBlotter {
-    // new API interface for external calls - not sure yet if good idea or not...
+   /**
+    * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
+    */
     api: IBlotterApi
 
     GridName: string

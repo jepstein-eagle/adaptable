@@ -1,4 +1,4 @@
-import { ServerSearchOption } from "../Enums";
+import { ServerSearchOption } from "../../Enums";
 
 export interface IAdaptableBlotterOptions {
     enableAuditLog?: boolean,

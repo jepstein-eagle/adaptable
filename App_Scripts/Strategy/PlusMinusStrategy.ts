@@ -17,7 +17,7 @@ import { ObjectFactory } from '../Core/ObjectFactory';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
-import { ICellValidationRule } from '../Core/Api/AdaptableBlotterObjects';
+import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState

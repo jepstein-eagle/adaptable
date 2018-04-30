@@ -50,11 +50,10 @@ import { format } from 'util';
 import { GridState, AdvancedSearchState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { IAdaptableBlotterOptions } from '../../Core/Interface/IAdaptableBlotterOptions';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { ISearchChangedEventArgs } from '../../Core/Api/ISearchChangedEventArgs';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule } from '../../Core/Api/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,

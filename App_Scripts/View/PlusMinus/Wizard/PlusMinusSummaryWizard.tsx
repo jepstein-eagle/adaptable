@@ -10,7 +10,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
-import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: IColumn[]

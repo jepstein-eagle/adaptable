@@ -1,7 +1,7 @@
 import { FilterState } from './Interface/IState';
 import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import * as Redux from 'redux'
-import { IUserFilter, IColumnFilter } from '../../Core/Api/AdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';

@@ -10,7 +10,7 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IShortcut } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IShortcut } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }

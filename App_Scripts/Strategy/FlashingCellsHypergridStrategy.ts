@@ -2,7 +2,7 @@ import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { IFlashingCell } from '../Core/Api/AdaptableBlotterObjects';
+import { IFlashingCell } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class FlashingCellsHypergridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {

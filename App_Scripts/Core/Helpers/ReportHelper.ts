@@ -3,8 +3,9 @@ import { ReportColumnScope, ReportRowScope } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
 import { ISelectedCells } from '../Interface/Interfaces';
-import { IReport, IUserFilter, Expression } from '../Api/AdaptableBlotterObjects';
+import { IReport, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
+import { Expression } from '../Api/Expression';
 export module ReportHelper {
 
     export const ALL_DATA_REPORT = 'All Data'

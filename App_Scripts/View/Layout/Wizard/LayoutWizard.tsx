@@ -10,7 +10,7 @@ import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
-import { IGridSort, ILayout } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IGridSort, ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {

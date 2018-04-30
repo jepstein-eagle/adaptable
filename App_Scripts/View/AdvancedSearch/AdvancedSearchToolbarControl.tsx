@@ -20,7 +20,7 @@ import { SortOrder } from '../../Core/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IAdvancedSearch } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {

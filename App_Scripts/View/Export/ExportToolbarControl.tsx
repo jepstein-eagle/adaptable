@@ -26,7 +26,7 @@ import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { SelectCellEditor } from "ag-grid";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IReport } from "../../Core/Api/AdaptableBlotterObjects";
+import { IReport } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {

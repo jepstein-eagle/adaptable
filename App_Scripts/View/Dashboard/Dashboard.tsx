@@ -13,8 +13,8 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { HomeToolbarControl } from '../Home/HomeToolbarControl'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue } from "../../Core/Enums";
-import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 
 
 

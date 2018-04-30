@@ -5,7 +5,7 @@ import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntity
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { IColumnFilter } from "../../Core/Api/AdaptableBlotterObjects";
+import { IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
     onClear: (columnFilter: IColumnFilter) => void;

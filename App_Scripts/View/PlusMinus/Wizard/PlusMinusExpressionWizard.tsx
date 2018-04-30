@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } 
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IPlusMinusRule } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IPlusMinusRule } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
 
 

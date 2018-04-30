@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } 
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { DistinctCriteriaPairValue, ReportColumnScope } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IReport } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IReport } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IReport>) {

@@ -14,7 +14,7 @@ import { OpenfinHelper } from '../Core/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Core/Helpers/iPushPullHelper';
-import { IReport } from '../Core/Api/AdaptableBlotterObjects';
+import { IReport } from '../Core/Api/Interface/AdaptableBlotterObjects';
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
     private ExportState: ExportState

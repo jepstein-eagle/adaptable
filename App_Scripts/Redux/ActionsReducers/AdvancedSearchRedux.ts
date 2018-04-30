@@ -1,6 +1,6 @@
 import { AdvancedSearchState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IAdvancedSearch } from '../../Core/Api/AdaptableBlotterObjects';
+import { IAdvancedSearch } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export const ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';

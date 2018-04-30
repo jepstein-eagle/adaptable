@@ -1,4 +1,4 @@
-import { IAdaptableBlotterObject } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 

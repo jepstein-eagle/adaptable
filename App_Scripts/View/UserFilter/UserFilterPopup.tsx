@@ -23,7 +23,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     onAddUpdateUserFilter: (index: number, userFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction

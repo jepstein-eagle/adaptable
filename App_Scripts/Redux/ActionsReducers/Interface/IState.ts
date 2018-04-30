@@ -1,14 +1,13 @@
 import { MathOperation, LeafExpressionOperator, DisplayAction } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import { IStyle } from '../../../Core/Interface/IStyle';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement } from '../../../Core/Interface/Interfaces';
-import { IAdaptableBlotterOptions } from '../../../Core/Interface/IAdaptableBlotterOptions';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
+import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 
 /*
 Created by the system  at run-time and not part of predefined or user config

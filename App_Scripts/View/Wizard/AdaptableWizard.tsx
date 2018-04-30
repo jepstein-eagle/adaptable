@@ -3,7 +3,6 @@ import { Button, Modal, Glyphicon } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 import { WizardLegend } from './WizardLegend'
 import { UIHelper } from "../UIHelper";
-import { IAdaptableBlotterOptions } from "../../Core/Interface/IAdaptableBlotterOptions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
 import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";

@@ -6,7 +6,8 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
-import { IRange, Expression, IUserFilter } from '../Api/AdaptableBlotterObjects';
+import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { Expression } from '../Api/Expression';
 
 export interface IRangeEvaluation {
     operand1: any;

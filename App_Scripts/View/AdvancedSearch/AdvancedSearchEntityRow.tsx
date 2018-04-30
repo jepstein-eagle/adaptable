@@ -6,7 +6,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";
-import { IAdvancedSearch } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;

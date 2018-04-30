@@ -2,10 +2,9 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
-import { IStyle } from '../../../Core/Interface/IStyle';
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { UIHelper } from "../../UIHelper";
-import { IFormatColumn } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IFormatColumn, IStyle } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     ColorPalette: string[]

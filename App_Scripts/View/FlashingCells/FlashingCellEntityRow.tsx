@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
-import { IFlashingCell } from "../../Core/Api/AdaptableBlotterObjects";
+import { IFlashingCell } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {

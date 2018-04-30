@@ -9,7 +9,7 @@ import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
-import { ICellValidationRule, IUserFilter } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ICellValidationRule, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

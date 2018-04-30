@@ -1,7 +1,7 @@
 import { QuickSearchState } from './Interface/IState';
 import { LeafExpressionOperator, DisplayAction } from '../../Core/Enums';
-import { IStyle } from '../../Core/Interface/IStyle';
 import * as Redux from 'redux'
+import { IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export const QUICK_SEARCH_APPLY = 'QUICK_SEARCH_APPLY';
 export const QUICK_SEARCH_SET_OPERATOR = 'QUICK_SEARCH_SET_OPERATOR';

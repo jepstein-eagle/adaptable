@@ -8,7 +8,7 @@ import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ICustomSort } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface CustomSortWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CustomSortWizard> {
 }

@@ -14,7 +14,8 @@ import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
-import { IUserFilter, Expression, IRange } from "../../Core/Api/AdaptableBlotterObjects";
+import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { Expression } from "../../Core/Api/Expression";
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>

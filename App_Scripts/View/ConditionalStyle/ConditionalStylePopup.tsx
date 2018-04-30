@@ -25,7 +25,7 @@ import { UIHelper } from '../UIHelper';
 import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
     ConditionalStyles: IConditionalStyle[]

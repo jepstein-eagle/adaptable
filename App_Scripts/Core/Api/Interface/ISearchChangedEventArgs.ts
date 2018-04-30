@@ -1,5 +1,5 @@
 import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./AdaptableBlotterObjects";
-import { SearchChangedTrigger } from "../Enums";
+import { SearchChangedTrigger } from "../../Enums";
 
 /**
  * EventArgs sent as part of the onSearchedChanged Event

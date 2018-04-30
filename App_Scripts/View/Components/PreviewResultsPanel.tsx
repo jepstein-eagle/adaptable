@@ -1,6 +1,5 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { IStyle } from '../../Core/Interface/IStyle';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { FontWeight, FontStyle, CellValidationMode, PopoverType } from '../../Core/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
@@ -10,7 +9,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IUserFilter, ICellValidationRule } from "../../Core/Api/AdaptableBlotterObjects";
+import { IUserFilter, ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {

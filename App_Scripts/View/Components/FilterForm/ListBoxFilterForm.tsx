@@ -12,7 +12,7 @@ import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
 import { ColumnSelector } from "../Selectors/ColumnSelector";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
-import { IRange } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {

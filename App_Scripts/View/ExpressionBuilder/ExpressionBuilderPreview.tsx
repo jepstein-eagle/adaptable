@@ -11,7 +11,8 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { Expression, IUserFilter, IRange } from "../../Core/Api/AdaptableBlotterObjects";
+import {  IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { Expression } from "../../Core/Api/Expression";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.

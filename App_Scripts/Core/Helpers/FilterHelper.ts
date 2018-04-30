@@ -4,7 +4,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter } from '../Api/AdaptableBlotterObjects';
+import { IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 
 
 export module FilterHelper {

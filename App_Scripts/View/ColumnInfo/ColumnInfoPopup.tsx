@@ -26,7 +26,7 @@ import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { ICalculatedColumn } from "../../Core/Api/AdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {

@@ -29,7 +29,7 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter } from "../../Core/Api/AdaptableBlotterObjects";
+import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;

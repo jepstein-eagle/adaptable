@@ -1,12 +1,11 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IStyle } from '../../../Core/Interface/IStyle';
 import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { Checkbox } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { UIHelper } from "../../UIHelper";
-import { IConditionalStyle } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IConditionalStyle, IStyle } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export interface ConditionalStyleStyleWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {

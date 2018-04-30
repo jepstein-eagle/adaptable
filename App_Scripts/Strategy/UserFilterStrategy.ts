@@ -9,7 +9,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { IUserFilter } from '../Core/Api/AdaptableBlotterObjects';
+import { IUserFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]

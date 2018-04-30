@@ -6,7 +6,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
-import { IAdaptableBlotterOptions } from '../Core/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
 
 
 export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrategy {

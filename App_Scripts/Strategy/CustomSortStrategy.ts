@@ -5,7 +5,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { ICustomSort } from '../Core/Api/AdaptableBlotterObjects';
+import { ICustomSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]

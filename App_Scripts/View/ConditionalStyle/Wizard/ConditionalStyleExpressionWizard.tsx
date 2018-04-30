@@ -4,7 +4,7 @@ import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilder
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import { IConditionalStyle } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IConditionalStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IConditionalStyle>) {

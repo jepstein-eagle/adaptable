@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/AdaptableBlotterObjects';
+import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export interface AdaptableWizardStep {
     StepName: string

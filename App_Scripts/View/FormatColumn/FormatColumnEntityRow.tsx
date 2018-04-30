@@ -6,7 +6,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IFormatColumn } from "../../Core/Api/AdaptableBlotterObjects";
+import { IFormatColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export class FormatColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FormatColumnEntityRow>, {}> {
 

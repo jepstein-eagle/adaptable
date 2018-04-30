@@ -24,7 +24,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { SortOrder } from "../../Core/Enums";
-import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
+import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];

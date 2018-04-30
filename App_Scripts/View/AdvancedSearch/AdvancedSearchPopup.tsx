@@ -23,7 +23,7 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/AdaptableBlotterObjects";
+import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {

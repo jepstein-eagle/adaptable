@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import { ICalculatedColumn } from "../../Core/Api/AdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
 export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowProps<CalculatedColumnEntityRow>, {}> {

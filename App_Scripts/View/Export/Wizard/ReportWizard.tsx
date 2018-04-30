@@ -7,7 +7,7 @@ import { ReportSettingsWizard } from './ReportSettingsWizard'
 import { ReportSummaryWizard } from './ReportSummaryWizard'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IReport } from "../../../Core/Api/AdaptableBlotterObjects";
+import { IReport } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {
 

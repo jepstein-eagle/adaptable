@@ -7,7 +7,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
-import { ICustomSort } from "../../../Core/Api/AdaptableBlotterObjects";
+import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>

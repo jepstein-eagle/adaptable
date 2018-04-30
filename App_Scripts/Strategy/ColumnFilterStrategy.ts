@@ -7,7 +7,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
-import { IColumnFilter } from '../Core/Api/AdaptableBlotterObjects';
+import { IColumnFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private filterState: IColumnFilter[]

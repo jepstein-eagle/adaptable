@@ -16,7 +16,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IFlashingCell } from "../../Core/Api/AdaptableBlotterObjects";
+import { IFlashingCell } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: Array<IFlashingCell>,

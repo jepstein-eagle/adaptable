@@ -1,7 +1,7 @@
 import { TeamSharingState } from './Interface/IState';
 import * as Redux from 'redux'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
-import { IAdaptableBlotterObject } from '../../Core/Api/AdaptableBlotterObjects';
+import { IAdaptableBlotterObject } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';

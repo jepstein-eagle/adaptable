@@ -1,6 +1,6 @@
 import { ConditionalStyleState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IConditionalStyle } from '../../Core/Api/AdaptableBlotterObjects';
+import { IConditionalStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
