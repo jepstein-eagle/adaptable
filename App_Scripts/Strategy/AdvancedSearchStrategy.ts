@@ -8,8 +8,8 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { basename } from 'path';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { Server } from 'https';
+import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {

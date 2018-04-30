@@ -1,7 +1,7 @@
 import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter';
 import { QuickSearchStrategy } from './QuickSearchStrategy';
-import { ServerSearchOption } from '../Core/Enums';
+import { ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 
 export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQuickSearchStrategy {

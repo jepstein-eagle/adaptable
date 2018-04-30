@@ -1,5 +1,4 @@
 import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./AdaptableBlotterObjects";
-import { SearchChangedTrigger } from "../../Enums";
 
 /**
  * EventArgs sent as part of the onSearchedChanged Event
@@ -59,3 +58,21 @@ export interface IBlotterSortState {
 }
 
 
+/**
+ * Provide information on what action caused the search and filter state to change.
+ */
+export enum SearchChangedTrigger {
+  AdvancedSearch = 'AdvancedSearch',
+  QuickSearch = 'QuickSearch',
+  ColumnFilter = 'ColumnFilter',
+  UserFilter = 'UserFilter',
+  DataChange = 'DataChange',
+  Sort = 'Sort',
+}
+
+export enum ServerSearchOption {
+  None = 'None',
+  AdvancedSearch = 'AdvancedSearch',
+  AllSearch = 'AllSearch',
+  AllSearchandSort = 'AllSearchandSort'
+}

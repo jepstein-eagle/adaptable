@@ -47,7 +47,7 @@ import {  ICellValidationStrategy } from '../../Strategy/Interface/ICellValidati
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, DistinctCriteriaPairValue, CellValidationMode, SortOrder, SearchChangedTrigger } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, CellValidationMode, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -66,9 +66,9 @@ import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu'
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ISearchChangedEventArgs';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'

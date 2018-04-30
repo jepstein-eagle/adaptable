@@ -6,8 +6,8 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { IColumnFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private filterState: IColumnFilter[]

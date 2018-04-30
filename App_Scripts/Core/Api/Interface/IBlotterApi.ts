@@ -1,8 +1,7 @@
 import { EventDispatcher } from "../../EventDispatcher";
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
-import { ISearchChangedEventArgs } from "./../Interface/ISearchChangedEventArgs";
-
+import { ISearchChangedEventArgs } from "./ServerSearch";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -16,6 +15,7 @@ export interface IBlotterApi {
 
     /**
      * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
+     * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
      */
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
 }

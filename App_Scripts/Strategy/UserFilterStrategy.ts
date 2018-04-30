@@ -6,10 +6,10 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IUserFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]

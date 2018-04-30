@@ -6,9 +6,9 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IDashboardStrategy } from '../Strategy/Interface/IDashboardStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
 import { Helper } from '../Core/Helpers/Helper';
 import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {

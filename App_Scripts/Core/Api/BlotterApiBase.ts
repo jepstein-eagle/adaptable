@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { IEvent } from "../Interface/IEvent";
-import { ISearchChangedEventArgs } from "./Interface/ISearchChangedEventArgs";
 import { IBlotterApi } from "./Interface/IBlotterApi";
+import { ISearchChangedEventArgs } from "./Interface/ServerSearch";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 

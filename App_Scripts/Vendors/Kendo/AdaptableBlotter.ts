@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, DisplayAction, CellValidationMode, DistinctCriteriaPairValue, SortOrder, SearchChangedTrigger } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, DisplayAction, CellValidationMode, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import {  IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -67,9 +67,9 @@ import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu'
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ISearchChangedEventArgs';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

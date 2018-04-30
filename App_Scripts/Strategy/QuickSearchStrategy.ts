@@ -6,7 +6,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Enums';
+import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
     protected quickSearchState: QuickSearchState

@@ -38,7 +38,7 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue, SearchChangedTrigger } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
@@ -49,9 +49,9 @@ import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../C
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ISearchChangedEventArgs';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {

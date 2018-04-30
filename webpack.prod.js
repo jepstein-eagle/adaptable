@@ -13,7 +13,7 @@ module.exports = {
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         // 'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
         'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
-        // harness: "./Harness/DataGenerator.ts"
+         // harness: "./Harness/DataGenerator.ts"
     },
     output: {
         path: __dirname + '/dist',
@@ -22,6 +22,7 @@ module.exports = {
         library: "[name]",
         libraryTarget: 'umd'
     },
+    devtool: 'source-map',
     externals: {
         // require("jquery") is external and available
         //  on the global var jQuery
@@ -30,8 +31,7 @@ module.exports = {
         "ag-grid/dist/lib/entities/colDef": "ag-grid",
         "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
         "ag-grid/dist/lib/gridApi": "ag-grid",
-        "adaptableblotter/dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions": "blotterOptions",
-
+    
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

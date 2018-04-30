@@ -1,6 +1,6 @@
 import * as GeneralConstants from './Constants/GeneralConstants'
-import { ServerSearchOption } from "./Enums";
 import { IAdaptableBlotterOptions } from './Api/Interface/IAdaptableBlotterOptions';
+import { ServerSearchOption } from './Api/Interface/ServerSearch';
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     enableAuditLog: false,

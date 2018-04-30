@@ -2,8 +2,9 @@ import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { LeafExpressionOperator, DisplayAction, ServerSearchOption } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction } from '../../Core/Enums'
 import { IAdvancedSearch, IColumnFilter } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ServerSearchOption } from '../../Core/Api/Interface/ServerSearch';
 
 //All custom pipelines should extend from pipelineBase
 export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {

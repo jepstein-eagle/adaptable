@@ -1,4 +1,4 @@
-import { DataType, DistinctCriteriaPairValue, SearchChangedTrigger } from '../Enums'
+import { DataType, DistinctCriteriaPairValue } from '../Enums'
 import { IStrategy } from '../../Strategy/Interface/IStrategy'
 import { ICellInfo, IAdaptableStrategyCollection, ISelectedCells } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -13,8 +13,8 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { ICalculatedColumn, IGridSort } from '../Api/Interface/AdaptableBlotterObjects';
-import { ISearchChangedEventArgs } from '../Api/Interface/ISearchChangedEventArgs';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
+import { ISearchChangedEventArgs } from '../Api/Interface/ServerSearch';
 
 export interface IAdaptableBlotter {
    /**

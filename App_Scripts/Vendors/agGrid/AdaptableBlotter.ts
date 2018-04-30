@@ -60,7 +60,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, CellValidationMode, SearchChangedTrigger, ServerSearchOption } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, CellValidationMode } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
@@ -86,9 +86,9 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ISearchChangedEventArgs';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { ServerSearchOption, ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
