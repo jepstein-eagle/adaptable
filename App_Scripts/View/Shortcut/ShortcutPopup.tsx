@@ -108,11 +108,11 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                         SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         DateKeysAvailable={shortcut.ShortcutKey ?
-                            keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-                            : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
+                            keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+                            : keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1)}
                         NumericKeysAvailable={shortcut.ShortcutKey ?
-                            keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-                            : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
+                            keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+                            : keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1)}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
@@ -146,9 +146,9 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
     }
 
     getAvailableKeys(shortcut: IShortcut): string[] {
-        return (shortcut.DataType == DataType.Number) ?
-            keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
-            : keys.filter(x => this.props.Shortcuts.filter(s => s.DataType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+        return (shortcut.ColumnType == DataType.Number) ?
+            keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == DataType.Number).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
+            : keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()
     }
 }
 

@@ -160,7 +160,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 let shortcut = sharedEntity.entity as IShortcut
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
-                        {shortcut.DataType}
+                        {shortcut.ColumnType}
                     </Col>
                     <Col md={4} >
                         {shortcut.ShortcutKey}

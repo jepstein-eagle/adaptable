@@ -46,7 +46,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
     render() {
 
         // sort out keys
-        let keyList: string[] = (this.props.Data.DataType == DataType.Number) ? this.props.NumericKeysAvailable : this.props.DateKeysAvailable
+        let keyList: string[] = (this.props.Data.ColumnType == DataType.Number) ? this.props.NumericKeysAvailable : this.props.DateKeysAvailable
 
         let optionKeys = keyList.map(x => {
             return <option value={x} key={x}>{x}</option>
@@ -81,7 +81,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                         </Col>
                     </FormGroup>
 
-                    {this.props.Data.DataType == DataType.Number ?
+                    {this.props.Data.ColumnType == DataType.Number ?
                         <span>
                             <FormGroup controlId="formInlineAction">
                                 <Col xs={3}>

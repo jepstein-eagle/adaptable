@@ -58,6 +58,11 @@ export enum MathOperation {
 
 // Enums used in Strategies
 
+export enum CellValidationMode
+{
+  WarnUser =  'Warn User',
+  StopEdit ='Stop Edit'
+}
 
 export enum LayoutSource {
     Existing = 'Existing',
@@ -110,7 +115,11 @@ export enum AuditLogTrigger {
     Ping = 'Ping'
 }
 
-
+export enum RangeOperandType
+{
+    Column = "Column",
+    Value = "Value"
+}
 
 export enum SelectionMode {
     Multi = 'Multi',

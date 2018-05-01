@@ -29,7 +29,7 @@ export module LayoutHelper {
         return returnString;
     }
 
-    export function getSortOrder(sortOrder: SortOrder): string {
+    export function getSortOrder(sortOrder: 'Unknown' |'Ascending'|'Descending'): string {
         return (sortOrder == SortOrder.Ascending) ? " [asc] " : " [desc] "
     }
 

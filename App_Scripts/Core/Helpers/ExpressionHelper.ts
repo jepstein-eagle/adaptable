@@ -1,5 +1,5 @@
 import { FilterHelper } from '../Helpers/FilterHelper'
-import { LeafExpressionOperator } from '../Enums'
+import { LeafExpressionOperator, RangeOperandType } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
@@ -425,7 +425,7 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyRangeExpression(): IRange {
-        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: "Value", Operand2Type:  "Value" }
+        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Value, Operand2Type:  RangeOperandType.Value }
     }
 
     export function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any, ): IRangeEvaluation {
@@ -438,13 +438,13 @@ export module ExpressionHelper {
         }
         switch (column.DataType) {
             case DataType.Date:
-                if (rangeExpression.Operand1Type == "Column") {
+                if (rangeExpression.Operand1Type == RangeOperandType.Column) {
                     rangeEvaluation.operand1 = Date.parse(getOtherColumnValue(rangeExpression.Operand1))
                 } else {
                     rangeEvaluation.operand1 = Date.parse(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
-                    if (rangeExpression.Operand2Type == "Column") {
+                    if (rangeExpression.Operand2Type == RangeOperandType.Column) {
                         rangeEvaluation.operand2 = Date.parse(getOtherColumnValue(rangeExpression.Operand2))
                     } else {
                         rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
@@ -453,14 +453,14 @@ export module ExpressionHelper {
                 rangeEvaluation.newValue = newValue.setHours(0, 0, 0, 0)
                 break
             case DataType.Number:
-                if (rangeExpression.Operand1Type == "Column") {
+                if (rangeExpression.Operand1Type == RangeOperandType.Column) {
                     let otherValue = getOtherColumnValue(rangeExpression.Operand1);
                     rangeEvaluation.operand1 = Number(otherValue);
                 } else {
                     rangeEvaluation.operand1 = Number(rangeExpression.Operand1)
                 }
                 if (StringExtensions.IsNotEmpty(rangeExpression.Operand2)) {  // between
-                    if (rangeExpression.Operand2Type == "Column") {
+                    if (rangeExpression.Operand2Type == RangeOperandType.Column) {
                         rangeEvaluation.operand2 = Number(getOtherColumnValue(rangeExpression.Operand2));
                     } else {
                         rangeEvaluation.operand2 = Number(rangeExpression.Operand2);
@@ -473,10 +473,10 @@ export module ExpressionHelper {
                 break;
             case DataType.Object:
             case DataType.String:
-                rangeEvaluation.operand1 = rangeExpression.Operand1Type == "Column" ?
+                rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     rangeExpression.Operand1;//.toLowerCase() - not sure what to do about case but this is currently breaking...
-                rangeEvaluation.operand2 = rangeExpression.Operand2Type == "Column" ?
+                rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     rangeExpression.Operand2;//.toLowerCase();
                 break;

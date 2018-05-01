@@ -1,7 +1,7 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle } from './Api/Interface/AdaptableBlotterObjects';
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight } from './Enums';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 
@@ -38,8 +38,8 @@ export module ObjectFactory {
             Operator: LeafExpressionOperator.Unknown,
             Operand1: "",
             Operand2: "",
-            Operand1Type: "Value",
-            Operand2Type: "Value"
+            Operand1Type: RangeOperandType.Value,
+            Operand2Type: RangeOperandType.Value
         }
     }
 
@@ -58,8 +58,8 @@ export module ObjectFactory {
                 Operator: LeafExpressionOperator.None,
                 Operand1: "",
                 Operand2: "",
-                Operand1Type: "Column",
-                Operand2Type:  "Column",
+                Operand1Type: RangeOperandType.Column,
+                Operand2Type:  RangeOperandType.Column,
             },
             HasExpression: false,
             OtherExpression: ExpressionHelper.CreateEmptyExpression(),
@@ -103,7 +103,7 @@ export module ObjectFactory {
         return {
             ShortcutKey: null,
             ShortcutResult: null,
-            DataType: DataType.Number,
+            ColumnType: DataType.Number,
             ShortcutOperation: MathOperation.Multiply,
             IsReadOnly: false,
             IsDynamic: false

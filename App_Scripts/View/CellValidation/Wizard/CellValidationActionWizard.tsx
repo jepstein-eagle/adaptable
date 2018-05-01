@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, Col, Panel,  HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { PopoverType } from '../../../Core/Enums';
+import { PopoverType, CellValidationMode } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -11,14 +11,14 @@ export interface CellValidationActionWizardProps extends AdaptableWizardStepProp
     Columns: Array<IColumn>
 }
 export interface CellValidationSettingsWizardState {
-    CellValidationMode: 'Warn User'|'Stop Edit';
+    CellValidationMode: CellValidationMode;
 }
 
 export class CellValidationActionWizard extends React.Component<CellValidationActionWizardProps, CellValidationSettingsWizardState> implements AdaptableWizardStep {
     constructor(props: CellValidationActionWizardProps) {
         super(props)
         this.state = {
-            CellValidationMode: this.props.Data.CellValidationMode,
+            CellValidationMode: this.props.Data.CellValidationMode as CellValidationMode,
         }
     }
 
@@ -39,12 +39,12 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
                     <HelpBlock><i>Show a warning</i> gives you the option to allow the edit after providing a reason (which will be audited).</HelpBlock>
                    </Col>
                     <Col xs={12} className="ab_large_margin">
-                        <Radio inline value={"Stop Edit"} checked={this.state.CellValidationMode == "Stop Edit"} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
+                        <Radio inline value={CellValidationMode.StopEdit} checked={this.state.CellValidationMode == CellValidationMode.StopEdit} onChange={(e) => this.onCellValidationModeChanged(e)}>Prevent the cell edit</Radio>
                         {' '}{' '}
                         <AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} popoverType={PopoverType.Info} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
-                        <Radio inline value={"Warn User"} checked={this.state.CellValidationMode == "Warn User"} onChange={(e) => this.onCellValidationModeChanged(e)}>Show a warning</Radio>
+                        <Radio inline value={CellValidationMode.WarnUser} checked={this.state.CellValidationMode == CellValidationMode.WarnUser} onChange={(e) => this.onCellValidationModeChanged(e)}>Show a warning</Radio>
                         {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
@@ -57,7 +57,7 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
 
     private onCellValidationModeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ CellValidationMode: e.value } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ CellValidationMode: e.value as CellValidationMode} as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 

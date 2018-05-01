@@ -8,7 +8,7 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
 import { Helper } from '../Core/Helpers/Helper';
-import { DataType } from '../Core/Enums'
+import { DataType, CellValidationMode } from '../Core/Enums'
 import { MathOperation } from '../Core/Enums'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -49,7 +49,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             let valueToReplace: any;
             switch (columnDataType) {
                 case DataType.Number: {
-                    activeShortcut = this.Shortcuts.filter(s=>s.DataType==DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.Shortcuts.filter(s=>s.ColumnType==DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         let currentCellValue: any;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -64,7 +64,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     break;
                 }
                 case DataType.Date: {
-                    activeShortcut = this.Shortcuts.filter(s=>s.DataType==DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.Shortcuts.filter(s=>s.ColumnType==DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         // Date we ONLY replace so dont need to worry about replacing values
                         if (activeShortcut.IsDynamic) {
@@ -88,8 +88,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
-                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == 'Stop Edit';
-                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode ==  'Warn User';
+                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.StopEdit;
+                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode ==  CellValidationMode.WarnUser;
 
              //   this.AuditFunctionAction("HandleKeyDown",                     "Key Pressed: " + keyEventString,                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
 

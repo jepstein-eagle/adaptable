@@ -1,6 +1,7 @@
 import * as Redux from 'redux';
 import { CellValidationState } from './Interface/IState'
 import { ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { CellValidationMode } from '../../Core/Enums';
 
 export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
@@ -17,7 +18,7 @@ export interface CellValidationDeleteAction extends Redux.Action {
 
 export interface CellValidationChangeModeAction extends Redux.Action {
     Index: number,
-    CellValidationMode: 'Warn User'|'Stop Edit';
+    CellValidationMode: CellValidationMode;
 }
 
 export const CellValidationAddUpdate = (Index: number, CellValidationRule: ICellValidationRule): CellValidationAddUpdateAction => ({
@@ -31,7 +32,7 @@ export const CellValidationDelete = (Index: number): CellValidationDeleteAction 
     Index,
 })
 
-export const CellValidationChangeMode = (Index: number, CellValidationMode: 'Warn User'|'Stop Edit'): CellValidationChangeModeAction => ({
+export const CellValidationChangeMode = (Index: number, CellValidationMode: CellValidationMode): CellValidationChangeModeAction => ({
     type: CELL_VALIDATION_CHANGE_MODE,
     Index,
     CellValidationMode

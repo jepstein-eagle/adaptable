@@ -9,7 +9,7 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }
 export interface ShortcutTypeWizardState {
-    DataType: DataType;
+    ColumnType: 'Number'|'Date';
 
 }
 
@@ -18,7 +18,7 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     constructor(props: ShortcutTypeWizardProps) {
         super(props);
         this.state = {
-            DataType: this.props.Data.DataType,
+            ColumnType: this.props.Data.ColumnType ,
         }
     }
 
@@ -36,10 +36,10 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
                         <HelpBlock>Date shortcuts replace the cell contents with a new Date value.</HelpBlock>
                     </Col>
                     <Col xs={12} className="ab_medium_margin">
-                        <Radio inline value="Number" checked={this.state.DataType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
+                        <Radio inline value="Number" checked={this.state.ColumnType == DataType.Number} onChange={(e) => this.onColumTypeChanged(e)}>Numeric Columns</Radio>
                     </Col>
                     <Col xs={12} className="ab_medium_margin">
-                        <Radio inline value="Date" checked={this.state.DataType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date Columns</Radio>
+                        <Radio inline value="Date" checked={this.state.ColumnType == DataType.Date} onChange={(e) => this.onColumTypeChanged(e)}>Date Columns</Radio>
                     </Col>
                     <Col xs={12} className="ab_medium_margin">
                     </Col>
@@ -51,18 +51,18 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     private onColumTypeChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Number") {
-            this.setState({ DataType: DataType.Number } as ShortcutTypeWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ ColumnType: DataType.Number } as ShortcutTypeWizardState, () => this.props.UpdateGoBackState())
         } else {
-            this.setState({ DataType: DataType.Date } as ShortcutTypeWizardState, () => this.props.UpdateGoBackState())
+            this.setState({ ColumnType: DataType.Date } as ShortcutTypeWizardState, () => this.props.UpdateGoBackState())
         }
     }
 
     public canNext(): boolean {
-        return this.state.DataType != null
+        return this.state.ColumnType != null
     }
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.DataType = this.state.DataType;
+        this.props.Data.ColumnType = this.state.ColumnType;
     }
     public Back(): void { /* no implementation */ }
     public GetIndexStepIncrement(){

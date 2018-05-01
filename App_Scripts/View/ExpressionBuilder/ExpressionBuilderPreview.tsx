@@ -4,7 +4,7 @@ import { IColumn } from '../../Core/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { LeafExpressionOperator } from '../../Core/Enums';
+import { LeafExpressionOperator, RangeOperandType } from '../../Core/Enums';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { Helper } from '../../Core/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
@@ -208,7 +208,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
 
     private getOperand1Value(range: IRange): string {
-        if (range.Operand1Type == "Column") {
+        if (range.Operand1Type == RangeOperandType.Column) {
             let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand1);
             return col ? "[" + col.FriendlyName + "]" : ""
         } else {
@@ -217,7 +217,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
 
     private getOperand2Value(range: IRange): string {
-        if (range.Operand2Type == "Column") {
+        if (range.Operand2Type == RangeOperandType.Column) {
             let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand2);
             return col ? "[" + col.FriendlyName + "]" : ""
         } else {

@@ -42,13 +42,32 @@ export interface IRangeExpression {
   Ranges: IRange[]
 }
 
+/**
+ * Objects which performs comparisons on values or other columns
+ */
 export interface IRange {
+  /**
+   * @prop the operator for the range (e.g. Greater Than, Equals), varies according to the column data type
+   */
   Operator: LeafExpressionOperator;
+  /**
+   * @prop comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
+   */
   Operand1: string;
+   /**
+   * @prop comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between' 
+   */
   Operand2: string;
+  /**
+   * @prop whether the first operand is a static value or the name of a column; if the latter then we look up that column's value in real time when evaluating the expression
+   */
   Operand1Type: 'Value'| 'Column'
+  /**
+   * @prop whether the second operand is a static value or the name of a column; if the latter then we look up that column's value in real time when evaluating the expression
+   */
   Operand2Type: 'Value'| 'Column'
 }
+
 
 
 
@@ -139,7 +158,7 @@ export interface IShortcut extends IAdaptableBlotterObject {
   ShortcutKey: string;
   ShortcutResult: any;
   ShortcutOperation: MathOperation
-  DataType: DataType;
+  ColumnType: 'Number'|'Date';
   IsDynamic: boolean
 }
 
@@ -158,7 +177,7 @@ export interface IUserTheme extends IAdaptableBlotterObject {
 // used in layouts to save which is the current sorted column
 export interface IGridSort {
   Column: string;
-  SortOrder: SortOrder
+  SortOrder: 'Unknown' |'Ascending'|'Descending'
 }
 
 export interface IStyle {

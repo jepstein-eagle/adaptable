@@ -12,19 +12,19 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { CellValidationMode } from "../../Core/Enums";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
     Column: IColumn
-    onChangeCellValidationMode: (index: number, CellValidationMode: 'Warn User'|'Stop Edit') => void
+    onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => void
 }
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
     render(): any {
         let cellValidation: ICellValidationRule = this.props.AdaptableBlotterObject as ICellValidationRule;
 
-        let possibleValidationModes:string[]=['Warn User','Stop Edit']
-        let CellValidationModeTypes = possibleValidationModes.map((validationMode) => {
+        let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((validationMode) => {
             return <option style={{ fontSize: "5px" }} key={validationMode} value={validationMode}>{validationMode}</option>
         })
 

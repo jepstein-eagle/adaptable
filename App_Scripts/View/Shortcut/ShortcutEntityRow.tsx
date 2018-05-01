@@ -23,7 +23,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         let shortcut: IShortcut = this.props.AdaptableBlotterObject as IShortcut;
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = shortcut.DataType == DataType.Date ? "Date" : "Numeric"
+        colItems[0].Content = shortcut.ColumnType == DataType.Date ? "Date" : "Numeric"
 
         colItems[1].Content =
             <AdaptableBlotterForm inline key={shortcut.ShortcutKey}>
@@ -37,7 +37,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
             </AdaptableBlotterForm>
 
         colItems[2].Content =
-            shortcut.DataType == DataType.Date ?
+            shortcut.ColumnType == DataType.Date ?
                 "Replace Cell"
                 :
                 <FormControl componentClass="select" value={shortcut.ShortcutOperation} onChange={(x) => this.onActionChange(x)} >
@@ -52,7 +52,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
             shortcut.IsDynamic ?
                 shortcut.ShortcutResult :
                 <FormControl
-                    type={shortcut.DataType == DataType.Date ? "date" : "number"}
+                    type={shortcut.ColumnType == DataType.Date ? "date" : "number"}
                     placeholder="Shortcut Result"
                     onChange={(e) => this.onResultChange(e)}
                     value={shortcut.ShortcutResult}
