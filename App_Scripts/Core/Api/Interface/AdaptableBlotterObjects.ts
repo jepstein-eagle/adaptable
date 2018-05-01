@@ -10,22 +10,33 @@ export interface IAdaptableBlotterObject {
   IsReadOnly: boolean
 }
 
-
+/**
+ * Any column values contained in the expression, grouped by column
+ */
 export interface IDisplayValueExpression {
   ColumnId: string,
   DisplayValues: string[]
 }
 
+/**
+ * Any raw (i.e. underlying) column values contained in the expression, grouped by column
+ */
 export interface IRawValueExpression {
   ColumnId: string,
   RawValues: string[]
 }
 
+/**
+ * Any filters - user, system or column - contained in the expression, grouped by column
+ */
 export interface IFilterExpression {
   ColumnId: string,
   Filters: string[]
 }
 
+/**
+ * Any ranges contained in the expression, grouped by column
+ */
 export interface IRangeExpression {
   ColumnId: string,
   Ranges: IRange[]
