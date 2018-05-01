@@ -110,10 +110,7 @@ export enum AuditLogTrigger {
     Ping = 'Ping'
 }
 
-export enum CellValidationMode {
-    WarnUser = 'WarnUser',
-    StopEdit = 'StopEdit'
-}
+
 
 export enum SelectionMode {
     Multi = 'Multi',
@@ -157,11 +154,6 @@ export enum QueryBuildStatus {
     ColumnSelected,
     SingleConditionsAdded,
     MultipleConditionsAdded,
-}
-
-export enum RangeOperandType {
-    Value = 'Value',
-    Column = 'Column',
 }
 
 

@@ -2,7 +2,7 @@
 import { IDataChangingEvent } from './Interface/IAuditService';
 import { IValidationService } from './Interface/IValidationService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { CellValidationMode, LeafExpressionOperator } from '../Enums';
+import {  LeafExpressionOperator } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import * as StrategyIds from '../Constants/StrategyIds'
 import { IColumn } from '../Interface/IColumn';
@@ -33,7 +33,7 @@ export class ValidationService implements IValidationService {
                     let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(expressionRule.OtherExpression, dataChangedEvent.IdentifierValue, columns, this.blotter);
                     if (isSatisfiedExpression && this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
-                        if (expressionRule.CellValidationMode == CellValidationMode.StopEdit) {
+                        if (expressionRule.CellValidationMode ==  'Stop Edit') {
                             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                                 "CheckCellChanging",
                                 "Failed",
@@ -50,7 +50,7 @@ export class ValidationService implements IValidationService {
             let noExpressionRules: ICellValidationRule[] = editingRules.filter(r => !r.HasExpression);
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
-                    if (noExpressionRule.CellValidationMode == CellValidationMode.StopEdit) {
+                    if (noExpressionRule.CellValidationMode ==   'Stop Edit') {
                         this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
                             "CheckCellChanging",
                             "Failed",

@@ -7,7 +7,7 @@ import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { MathOperation, CellValidationMode, PopoverType } from '../../Core/Enums'
+import { MathOperation, PopoverType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IColumn } from '../../Core/Interface/IColumn';

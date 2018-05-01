@@ -12,7 +12,6 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { CellValidationMode } from '../../Core/Enums'
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ObjectFactory } from '../../Core/ObjectFactory';
@@ -30,7 +29,7 @@ import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/Int
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
-    onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => CellValidationRedux.CellValidationChangeModeAction
+    onChangeCellValidationMode: (index: number, CellValidationMode: any) => CellValidationRedux.CellValidationChangeModeAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -134,7 +133,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation), EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
     }
 
-    onCellValidationModeChanged(index: number, cellValidationMode: CellValidationMode) {
+    onCellValidationModeChanged(index: number, cellValidationMode: any) {
         this.props.onChangeCellValidationMode(index, cellValidationMode);
     }
 
@@ -166,7 +165,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode)),
+        onChangeCellValidationMode: (index: number, CellValidationMode: any) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
     };
 }

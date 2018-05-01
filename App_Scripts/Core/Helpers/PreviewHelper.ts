@@ -1,5 +1,5 @@
 import { ExpressionHelper } from '../Helpers/ExpressionHelper'
-import { DataType, CellValidationMode } from '../Enums'
+import { DataType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
@@ -17,8 +17,8 @@ export module PreviewHelper {
 
         previewResults.forEach((previewResult: IPreviewResult) => {
             let hasValidationErrors: boolean = previewResult.ValidationRules.length > 0;
-            let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.StopEdit).length > 0
-            let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == CellValidationMode.WarnUser).length > 0
+            let localHasValidationPrevent: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode == 'Stop Edit').length > 0
+            let localHasValidationWarning: boolean = previewResult.ValidationRules.filter(x => x.CellValidationMode ==  'Warn User').length > 0
             globalHasValidationPrevent = globalHasValidationPrevent || localHasValidationPrevent;
             globalHasValidationWarning = globalHasValidationWarning || localHasValidationWarning;
             if (!hasValidationErrors || localHasValidationWarning) {
@@ -52,7 +52,7 @@ export module PreviewHelper {
         let newValues: ICellInfo[] = [];
         if (bypassCellValidationWarnings) {
             for (let previewResult of previewInfo.PreviewResults) {
-                if (previewResult.ValidationRules.filter(p => p.CellValidationMode == CellValidationMode.StopEdit).length == 0) {
+                if (previewResult.ValidationRules.filter(p => p.CellValidationMode ==  'Stop Edit').length == 0) {
                     newValues.push({ Id: previewResult.Id, ColumnId: previewInfo.ColumnId, Value: previewResult.ComputedValue })
                 }
             }

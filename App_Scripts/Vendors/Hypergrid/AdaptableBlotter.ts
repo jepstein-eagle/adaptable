@@ -47,7 +47,7 @@ import {  ICellValidationStrategy } from '../../Strategy/Interface/ICellValidati
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, DistinctCriteriaPairValue, CellValidationMode, SortOrder } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -967,7 +967,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (failedRules.length > 0) {
                 // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
+                if (failedRules[0].CellValidationMode ==  'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

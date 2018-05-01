@@ -3,7 +3,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { MathOperation, DataType, CellValidationMode } from '../Core/Enums'
+import { MathOperation, DataType } from '../Core/Enums'
 import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from '../Strategy/Interface/IBulkUpdateStrategy'

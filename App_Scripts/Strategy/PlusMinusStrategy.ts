@@ -8,7 +8,7 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
-import { DataType, CellValidationMode } from '../Core/Enums'
+import { DataType } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
@@ -113,7 +113,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
                         if (validationRules.length > 0) {
-                            if (validationRules[0].CellValidationMode == CellValidationMode.StopEdit) {
+                            if (validationRules[0].CellValidationMode == 'Stop Edit') {
                                 failedPreventEdits.push(validationRules[0]);
                             } else {
                                 failedWarningEdits.push(validationRules[0]);

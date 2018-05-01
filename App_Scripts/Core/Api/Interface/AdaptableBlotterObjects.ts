@@ -1,4 +1,4 @@
-import { FontWeight, FontStyle, FontSize, LeafExpressionOperator, RangeOperandType, SortOrder, CellValidationMode, ConditionalStyleScope, MathOperation, DataType, ReportColumnScope, ReportRowScope } from '../../Enums';
+import { FontWeight, FontStyle, FontSize, LeafExpressionOperator, SortOrder, ConditionalStyleScope, MathOperation, DataType, ReportColumnScope, ReportRowScope } from '../../Enums';
 import { Expression } from '../Expression';
 
 
@@ -46,8 +46,8 @@ export interface IRange {
   Operator: LeafExpressionOperator;
   Operand1: string;
   Operand2: string;
-  Operand1Type: RangeOperandType
-  Operand2Type: RangeOperandType
+  Operand1Type: 'Value'| 'Column'
+  Operand2Type: 'Value'| 'Column'
 }
 
 
@@ -78,7 +78,7 @@ export interface ICalendarEntry {
 export interface ICellValidationRule extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange,
-  CellValidationMode: CellValidationMode;
+  CellValidationMode: 'Warn User'|'Stop Edit';
   Description: string;
   HasExpression: boolean;
   OtherExpression: Expression;

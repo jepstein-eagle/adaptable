@@ -7,7 +7,7 @@ import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { MathOperation, CellValidationMode, PopoverType, DataType } from '../../Core/Enums'
+import { MathOperation, PopoverType, DataType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';

@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, DisplayAction, CellValidationMode, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import {  IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -813,7 +813,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode == CellValidationMode.StopEdit) {
+                if (failedRules[0].CellValidationMode ==  'Stop Edit' ) {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl,  Col, Panel,  HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { DataType, LeafExpressionOperator, PopoverType, RangeOperandType } from '../../../Core/Enums';
+import { DataType, LeafExpressionOperator, PopoverType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
@@ -201,8 +201,8 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operator: this.state.Operator,
             Operand1: this.state.Operand1,
             Operand2: this.state.Operand2,
-            Operand1Type: RangeOperandType.Value,
-            Operand2Type: RangeOperandType.Value
+            Operand1Type: "Value",
+            Operand2Type:  "Value"
         }
         this.props.Data.Range = rangeExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);

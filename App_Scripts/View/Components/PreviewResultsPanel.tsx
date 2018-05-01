@@ -1,7 +1,7 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { FontWeight, FontStyle, CellValidationMode, PopoverType } from '../../Core/Enums';
+import { FontWeight, FontStyle, PopoverType } from '../../Core/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
