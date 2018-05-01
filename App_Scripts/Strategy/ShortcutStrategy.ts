@@ -55,10 +55,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
                         if (this.blotter.gridHasCurrentEditValue()) {
                             currentCellValue = this.blotter.getCurrentCellEditValue()
-                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutOperation);
+                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutOperation as MathOperation);
                         } else {
                             currentCellValue = activeCell.Value;
-                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutOperation);
+                            valueToReplace = this.CalculateShortcut(currentCellValue, activeShortcut.ShortcutResult, activeShortcut.ShortcutOperation as MathOperation);
                         }
                     }
                     break;

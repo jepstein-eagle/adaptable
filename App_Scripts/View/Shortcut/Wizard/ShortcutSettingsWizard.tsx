@@ -34,7 +34,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
         this.state = {
             ShortcutKey: this.props.Data.ShortcutKey,
             ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult,
-            ShortcutOperation: this.props.Data.ShortcutOperation,
+            ShortcutOperation: this.props.Data.ShortcutOperation as MathOperation,
             IsDynamic: this.props.Data.IsDynamic
         }
     }

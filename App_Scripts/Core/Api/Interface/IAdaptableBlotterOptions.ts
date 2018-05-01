@@ -1,47 +1,47 @@
 /**
- * This is the class injected into the Blotter at startup providing all the information required to get started
+ * The class injected into the Adaptable Blotter at startup providing all the user, grid and config information required
  */
 export interface IAdaptableBlotterOptions {
 
     /**
-     * @prop a unique column in the grid (required for cell identification purposes); the only MANDATORY property
+     * Unique column in the grid (required for cell identification purposes); the only MANDATORY property
      */
     primaryKey?: string,
     /**
-     * @prop a way to identifier this Blotter - useful if Audit Log is turned on
+     * How to identifier this Blotter - useful if Audit Log is turned on
      */
     blotterId?: string,
     /**
-    * @prop the current user of the Adaptable Blotter
+    * Current user of the Adaptable Blotter
     */
     userName?: string,
     /**
-     * @prop if Audit Log is enabled, every keystroke, ata change, user action etc. is sent as JSON to the Audit Http Channel
+     * If enabled, every keystroke, data change, user action etc. is sent as JSON to the Audit Http Channel
      */
     enableAuditLog?: boolean,
     /**
-     * @prop when set to true, config is stored on a server location of your choice (rather than locally)
+     * If true, config is stored on a server location of your choice; otherwise it is stored locally
      */
     enableRemoteConfigServer?: boolean,
     /**
-     * @prop configuration properties and objects set at design-time (only used if enableRemoteConfigServer is false)
+     * Configuration properties and objects set at design-time (only used if enableRemoteConfigServer is false)
      */
     predefinedConfig?: object,
     /**
-     * @prop how many items to show in the column value listboxes when building queries (useful if you have a very large dataset)
+     * How many items to show in column value listboxes when building queries (useful when datasource is very large)
      */
     maxColumnValueItemsDisplayed: number,
     /**
-     * @prop the name of the <div> where the modals should appear; if left blank they display in the middle of the page
+     * Name of the <div> where the modals should appear; if not set, modals will be displayed in the middle of the page
      */
     modalContainer?: string,
     /**
-     * @prop which searching and filtering options, if any, should take place on ther server; leave unset to perform everything on the client
+     * Which searching and filtering options, if any, should take place on the server; leave unset to perform everything on the client
      */
-    serverSearchOption?: 'None' |'AdvancedSearch'|'AllSearch'| 'AllSearchandSort'
-        /**
-     * @prop required if using iPushPull to display / send live report data
-     */
+    serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort'
+    /**
+    * Required if using iPushPull to display / send live report data
+    */
     iPushPullConfig?: {
         api_url?: string;
         ws_url?: string;

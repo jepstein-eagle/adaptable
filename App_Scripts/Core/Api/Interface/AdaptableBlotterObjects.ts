@@ -47,25 +47,25 @@ export interface IRangeExpression {
  */
 export interface IRange {
   /**
-   * @prop the operator for the range (e.g. Greater Than, Equals), varies according to the column data type
+   * Operator for the range (e.g. Greater Than, Equals), varies according to the column data type
    */
   Operator: LeafExpressionOperator;
   /**
-   * @prop comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
+   * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
    */
   Operand1: string;
-   /**
-   * @prop comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between' 
-   */
+  /**
+  * Comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between' 
+  */
   Operand2: string;
   /**
-   * @prop whether the first operand is a static value or the name of a column; if the latter then we look up that column's value in real time when evaluating the expression
+   * Whether first operand is a static value or the name of a column; if latter then we look up that column's value in real time when evaluating the expression
    */
-  Operand1Type: 'Value'| 'Column'
+  Operand1Type: 'Value' | 'Column'
   /**
-   * @prop whether the second operand is a static value or the name of a column; if the latter then we look up that column's value in real time when evaluating the expression
+   * Whether second operand is a static value or the name of a column; if latter then we look up that column's value in real time when evaluating the expression
    */
-  Operand2Type: 'Value'| 'Column'
+  Operand2Type: 'Value' | 'Column'
 }
 
 
@@ -97,7 +97,7 @@ export interface ICalendarEntry {
 export interface ICellValidationRule extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange,
-  CellValidationMode: 'Warn User'|'Stop Edit';
+  CellValidationMode: 'Warn User' | 'Stop Edit';
   Description: string;
   HasExpression: boolean;
   OtherExpression: Expression;
@@ -154,11 +154,29 @@ export interface IPlusMinusRule extends IAdaptableBlotterObject {
   Expression: Expression
 }
 
+/**
+ * Used to define a Keyboard Shortcut as used in the Shortcuts function
+ */
 export interface IShortcut extends IAdaptableBlotterObject {
+  /**
+   * Key which when pressed on keyboard triggers the shortcut
+   */
   ShortcutKey: string;
+  /**
+   * Output of the function; if 'date' then its always a new value; if 'number' then it can be computed with existing edit value
+   */
   ShortcutResult: any;
-  ShortcutOperation: MathOperation
-  ColumnType: 'Number'|'Date';
+  /**
+   * What the function does; Date shortcuts only replace; Numeric shortcuts can make a computation based on existing value and 'ShortcutResult' property
+   */
+  ShortcutOperation: 'Add'|'Subtract'| 'Multiply'|'Divide'|'Replace'
+  /**
+   * Which columns the keyboard is active on. 
+   */
+  ColumnType: 'Number' | 'Date';
+  /**
+   * If its a system
+   */
   IsDynamic: boolean
 }
 
@@ -177,15 +195,15 @@ export interface IUserTheme extends IAdaptableBlotterObject {
 // used in layouts to save which is the current sorted column
 export interface IGridSort {
   Column: string;
-  SortOrder: 'Unknown' |'Ascending'|'Descending'
+  SortOrder: 'Unknown' | 'Ascending' | 'Descending'
 }
 
 export interface IStyle {
-    BackColor?: string
-    ForeColor?: string
-    FontWeight?: FontWeight
-    FontStyle?: FontStyle
-    FontSize?: FontSize
-    ClassName?: string
+  BackColor?: string
+  ForeColor?: string
+  FontWeight?: FontWeight
+  FontStyle?: FontStyle
+  FontSize?: FontSize
+  ClassName?: string
 }
 

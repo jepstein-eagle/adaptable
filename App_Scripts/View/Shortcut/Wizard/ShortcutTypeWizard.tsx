@@ -3,7 +3,7 @@ import { IShortcut } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import * as React from "react";
 import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
-import { DataType } from '../../../Core/Enums';
+import { DataType, MathOperation } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {
@@ -63,6 +63,9 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ColumnType = this.state.ColumnType;
+        if(this.state.ColumnType== DataType.Date){
+            this.props.Data.ShortcutOperation = MathOperation.Replace
+        }
     }
     public Back(): void { /* no implementation */ }
     public GetIndexStepIncrement(){
