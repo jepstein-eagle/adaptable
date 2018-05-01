@@ -8,7 +8,6 @@ import { IDashboardStrategy } from '../Strategy/Interface/IDashboardStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Core/Helpers/Helper';
 import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
@@ -27,8 +26,8 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         if (!Helper.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts
 
-            if (this.GetGridState().BlotterOptions.serverSearchOption == ServerSearchOption.AllSearch || ServerSearchOption.AllSearch) {
-                this.publishServerSearch(SearchChangedTrigger.Sort)
+            if (this.GetGridState().BlotterOptions.serverSearchOption == "AllSearchandSort") {
+                this.publishServerSearch("Sort")
             }
 
         }

@@ -9,8 +9,6 @@ import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interfa
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { basename } from 'path';
 import { Server } from 'https';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
-
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
     private AdvancedSearchState: AdvancedSearchState
@@ -31,8 +29,8 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             //  probably not an issue but might be worth revisiting ...
                 this.blotter.applyGridFiltering()
 
-                if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption != ServerSearchOption.None) {
-                     this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
+                if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption != 'None') {
+                     this.publishServerSearch('AdvancedSearch')
                 }
           
         }

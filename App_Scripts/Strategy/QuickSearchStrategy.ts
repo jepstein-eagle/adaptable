@@ -6,7 +6,6 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
     protected quickSearchState: QuickSearchState
@@ -26,8 +25,8 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
             this.blotter.applyGridFiltering();
             this.postSearch();
 
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == ServerSearchOption.AllSearch||ServerSearchOption.AllSearchandSort) {
-                this.publishServerSearch(SearchChangedTrigger.QuickSearch)
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+                this.publishServerSearch('QuickSearch')
             }
 
         }

@@ -8,7 +8,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { SearchChangedTrigger, IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs } from '../Core/Api/Interface/ServerSearch';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean
@@ -153,9 +153,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {
+    publishServerSearch(searchChangedTrigger: "AdvancedSearch" | "QuickSearch" | "ColumnFilter" | "UserFilter"| "DataChange"| "Sort"): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
-        if (state.Grid.BlotterOptions.serverSearchOption != ServerSearchOption.None) {
+        if (state.Grid.BlotterOptions.serverSearchOption != "None") {
 
             // lets get the searchstate
             let blotterSearchState: IBlotterSearchState = {

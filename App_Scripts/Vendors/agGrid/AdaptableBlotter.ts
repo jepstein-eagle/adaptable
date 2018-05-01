@@ -88,7 +88,7 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ServerSearchOption, ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import {  ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -1001,10 +1001,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let serverSearch: ServerSearchOption = this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption
+          
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (serverSearch == ServerSearchOption.None) {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -1015,7 +1015,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (serverSearch == ServerSearchOption.None || ServerSearchOption.AdvancedSearch) {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption ==  'None' ||  'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {

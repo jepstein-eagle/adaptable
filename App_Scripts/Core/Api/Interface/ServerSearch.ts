@@ -5,9 +5,9 @@ import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./Adapta
  */
 export interface ISearchChangedEventArgs {
   /**
-   * Enum stating what caused the Search state in the Grid to chagne
+   * Which action caused the Search state in the Grid to chagne
    */
-  SearchChangedTrigger: SearchChangedTrigger;
+  SearchChangedTrigger: "AdvancedSearch" | "QuickSearch" | "ColumnFilter" | "UserFilter"| "DataChange"| "Sort";
 
   /**
    * Overview of the current active search and filters in the Grid
@@ -58,21 +58,5 @@ export interface IBlotterSortState {
 }
 
 
-/**
- * Provide information on what action caused the search and filter state to change.
- */
-export enum SearchChangedTrigger {
-  AdvancedSearch = 'AdvancedSearch',
-  QuickSearch = 'QuickSearch',
-  ColumnFilter = 'ColumnFilter',
-  UserFilter = 'UserFilter',
-  DataChange = 'DataChange',
-  Sort = 'Sort',
-}
 
-export enum ServerSearchOption {
-  None = 'None',
-  AdvancedSearch = 'AdvancedSearch',
-  AllSearch = 'AllSearch',
-  AllSearchandSort = 'AllSearchandSort'
-}
+

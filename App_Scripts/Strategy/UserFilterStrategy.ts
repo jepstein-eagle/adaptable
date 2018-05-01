@@ -9,7 +9,6 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IUserFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]
@@ -35,12 +34,12 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             this.userFilters = this.GetUserFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption != ServerSearchOption.None) {
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption != 'None') {
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
                     || this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0) {
-                    this.publishServerSearch(SearchChangedTrigger.UserFilter)
+                    this.publishServerSearch('UserFilter')
                 }
             }
         }

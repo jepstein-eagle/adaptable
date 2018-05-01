@@ -1,8 +1,6 @@
 import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter';
 import { QuickSearchStrategy } from './QuickSearchStrategy';
-import { ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
-
 
 export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQuickSearchStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -13,7 +11,7 @@ export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQ
 
     protected postSearch() {
         let theBlotter = this.blotter as AdaptableBlotter
-        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == ServerSearchOption.AllSearch || ServerSearchOption.AllSearchandSort) {
+        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'AllSearch' ||  'AllSearchandSort') {
             //TODO : This is probably temporary and is used to reevaluate the quicksearch CellClassRules
             theBlotter.redrawRows()
         }

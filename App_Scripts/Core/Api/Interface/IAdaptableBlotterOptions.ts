@@ -1,5 +1,3 @@
-import { ServerSearchOption } from "./ServerSearch";
-
 /**
  * This is the class injected into the Blotter at startup providing all the information required to get started
  */
@@ -40,8 +38,8 @@ export interface IAdaptableBlotterOptions {
     /**
      * @prop which searching and filtering options, if any, should take place on ther server; leave unset to perform everything on the client
      */
-    serverSearchOption?: ServerSearchOption
-    /**
+    serverSearchOption?: 'None' |'AdvancedSearch'|'AllSearch'| 'AllSearchandSort'
+        /**
      * @prop required if using iPushPull to display / send live report data
      */
     iPushPullConfig?: {

@@ -4,7 +4,6 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, DisplayAction } from '../../Core/Enums'
 import { IAdvancedSearch, IColumnFilter } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { ServerSearchOption } from '../../Core/Api/Interface/ServerSearch';
 
 //All custom pipelines should extend from pipelineBase
 export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSourceIndexed.extend('FilterAndSearchDataSource', {
@@ -30,7 +29,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
 
         let blotterOptions = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
         //first we assess AdvancedSearch 
-        if (blotterOptions.serverSearchOption == ServerSearchOption.None) {
+        if (blotterOptions.serverSearchOption ==  'None') {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
@@ -41,7 +40,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         //we then assess column filters
-        if (blotterOptions.serverSearchOption == ServerSearchOption.None|| ServerSearchOption.AdvancedSearch) {
+        if (blotterOptions.serverSearchOption == 'None'  || 'AdvancedSearch') {
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {

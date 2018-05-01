@@ -7,7 +7,6 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumnFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import { SearchChangedTrigger, ServerSearchOption } from '../Core/Api/Interface/ServerSearch';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private filterState: IColumnFilter[]
@@ -25,8 +24,8 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
             this.filterState = this.GetColumnFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == ServerSearchOption.AllSearch || ServerSearchOption.AllSearchandSort) {
-                this.publishServerSearch(SearchChangedTrigger.ColumnFilter)
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+                this.publishServerSearch('ColumnFilter')
             }
         }
 
