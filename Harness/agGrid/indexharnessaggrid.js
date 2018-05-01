@@ -204,7 +204,7 @@ function InitBlotter() {
     var container = document.getElementById('content');
     var gridcontainer = document.getElementById('grid');
 
-    let serverSearch = "None"
+    let serverSearch = "AllSearchandSort"
 
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
         primaryKey: "tradeId",

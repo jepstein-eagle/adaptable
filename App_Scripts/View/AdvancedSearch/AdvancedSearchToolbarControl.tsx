@@ -64,7 +64,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                             size={"small"}
                             overrideTooltip="Clear Search"
                             overrideDisableButton={currentSearchName == selectSearchString}
-                            ConfigEntity={savedSearch}
+                            ConfigEntity={null}
                             DisplayMode="Glyph" />
                     </InputGroup.Button>
                 }

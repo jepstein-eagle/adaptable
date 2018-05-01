@@ -97,7 +97,7 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    let serverSearch = "None"
+    let serverSearch = "AllSearchandSort"
 
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
@@ -142,7 +142,9 @@ function InitBlotter() {
 
 function getTradesForSearch(searchArgs, dataGen) {
 
-    let search = searchArgs.AdvancedSearch;
+    let search = searchArgs.BlotterSortState.GridSorts;
+    let firstSort = search[0].ColumnId
+    alet(firstSort)
     alert(searchArgs.SearchChangedTrigger);
     let newTrades
     if (search == null || search.Name == "") {
@@ -203,20 +205,20 @@ var lightTheme = {
 var darkTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: '#ffffff',
-    backgroundColor: '#333333',
-    altbackground: '#333333',
+    backgroundColor: '#403E3E',
+    altbackground: '#302E2E',
     foregroundSelectionColor: '#ffffff',
-    backgroundSelectionColor: 'rgba(61, 119, 254, 0.5)',
+    backgroundSelectionColor: '#546465',
 
     columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     columnHeaderColor: '#ffffff',
-    columnHeaderBackgroundColor: '#333333',
+    columnHeaderBackgroundColor: '#626262',
     columnHeaderForegroundSelectionColor: '#ffffff',
-    columnHeaderBackgroundSelectionColor: '#3D77FE',
+    columnHeaderBackgroundSelectionColor: '#546465',
 
     rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     rowHeaderColor: '#ffffff',
-    rowHeaderBackgroundColor: '#333333',
+    rowHeaderBackgroundColor: '#07071E',
     rowHeaderForegroundSelectionColor: '#ffffff',
     rowHeaderBackgroundSelectionColor: '#3D77FE',
 
@@ -226,7 +228,7 @@ var darkTheme = {
     scrollbarHoverOver: 'visible',
     scrollbarHoverOff: 'visible',
     scrollingEnabled: true,
-
+   
     fixedRowAlign: 'center',
     fixedColAlign: 'center',
     cellPadding: 15,
