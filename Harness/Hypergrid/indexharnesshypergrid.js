@@ -1,7 +1,7 @@
 function ThemeChange(blotter, grid) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if (themeName == "Dark Theme" ||themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+        if (themeName == "Dark Theme" || themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
             grid.addProperties(darkTheme);
         }
         else {
@@ -106,8 +106,8 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-       // predefinedConfig: "",//json, // "predefinedConfig.json",
-        serverSearch: serverSearch,
+        // predefinedConfig: "",//json, // "predefinedConfig.json",
+        serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -141,24 +141,24 @@ function InitBlotter() {
 
 
 function getTradesForSearch(searchArgs, dataGen) {
-
-    let search = searchArgs.BlotterSortState.GridSorts;
-    let firstSort = search[0].ColumnId
-    alet(firstSort)
-    alert(searchArgs.SearchChangedTrigger);
-    let newTrades
-    if (search == null || search.Name == "") {
-        alert("nowt")
-        newTrades = dataGen.getTrades()
-    } else {
-        alert(search.Name);
-        if (search.Name == "barcap") {
-            newTrades = dataGen.getBarcapTrades()
-        } else {
-            newTrades = dataGen.getGSTrades()
+    if (searchArgs.SearchChangedTrigger == "QuickSearch") {
+        if (searchArgs.BlotterSearchState.QuickSearch == "server") {
+            let newTrades = dataGen.getBarcapTrades()
+            adaptableblotter.api.setDataSource(newTrades);
         }
     }
-    adaptableblotter.api.setDataSource(newTrades);
+    //  if (search == null || search.Name == "") {
+    //      alert("nowt")
+    //     newTrades = dataGen.getTrades()
+    //   } else {
+    //       alert(search.Name);
+    //      if (search.Name == "barcap") {
+    //          newTrades = dataGen.getBarcapTrades()
+    //     } else {
+    //        newTrades = dataGen.getGSTrades()
+    //   }
+    // }
+    //  adaptableblotter.api.setDataSource(newTrades);
 }
 
 var lightTheme = {
@@ -228,7 +228,7 @@ var darkTheme = {
     scrollbarHoverOver: 'visible',
     scrollbarHoverOff: 'visible',
     scrollingEnabled: true,
-   
+
     fixedRowAlign: 'center',
     fixedColAlign: 'center',
     cellPadding: 15,

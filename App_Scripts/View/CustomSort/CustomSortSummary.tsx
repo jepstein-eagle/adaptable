@@ -19,6 +19,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
@@ -115,7 +116,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     canFinishWizard() {
         let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
-        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.SortedValues) ;
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) && ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues) ;
     }
 }
 

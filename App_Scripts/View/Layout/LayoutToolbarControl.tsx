@@ -23,6 +23,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { ILayout } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -96,7 +97,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
                     size={"small"}
                     overrideTooltip="Undo Layout Changes"
-                    overrideDisableButton={!currentLayoutTitle.endsWith(("Modified"))}
+                    overrideDisableButton={!currentLayoutTitle.endsWith(("(Modified)"))}
                     ConfigEntity={layoutEntity}
                     DisplayMode="Glyph" />
 
@@ -121,10 +122,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     private isLayoutModified(layoutEntity: ILayout): boolean {
         if (layoutEntity) {
 
-            if (!Helper.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
+            if (!ArrayExtensions.areArraysEqualWithOrder(layoutEntity.Columns, this.props.Columns.filter(y => y.Visible).map(x => x.ColumnId))) {
                 return true;
             }
-            if (!Helper.areArraysEqualWithOrderandProperties(layoutEntity.GridSorts, this.props.GridSorts)) {
+            if (!ArrayExtensions.areArraysEqualWithOrderandProperties(layoutEntity.GridSorts, this.props.GridSorts)) {
                 return true;
             }
         }

@@ -3,6 +3,7 @@ import { DashboardState } from './Interface/IState'
 import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
@@ -92,7 +93,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             let actionTyped = <DashboardMoveItemAction>action;
             dashboardControls = [].concat(state.VisibleToolbars);
             index = dashboardControls.findIndex(a => a == actionTyped.StrategyId)
-            Helper.moveArray(dashboardControls, index, actionTyped.NewIndex)
+            ArrayExtensions.moveArray(dashboardControls, index, actionTyped.NewIndex)
             return Object.assign({}, state, { VisibleToolbars: dashboardControls });
         }
         case DASHBOARD_SET_FUNCTION_BUTTONS_ITEM: {

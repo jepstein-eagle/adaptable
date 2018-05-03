@@ -16,6 +16,7 @@ import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonClear } from "../Buttons/ButtonClear";
+import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { Expression } from "../../../Core/Api/Expression";
 
@@ -27,7 +28,9 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ColumnFilters: IColumnFilter[],
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
+    onHideFilterForm: () => FilterRedux.HideFilterFormAction
     ColumnValueType: DistinctCriteriaPairValue,
+
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, {}> {
@@ -69,14 +72,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
-        let clearButton = <ButtonClear cssClassName={cssClassName} onClick={() => this.onClearFilter()}
+        let clearButton = <ButtonClose cssClassName={cssClassName} onClick={() => this.onCloseForm()}
             bsStyle={"default"}
             size={"xsmall"}
-            overrideDisableButton={existingColumnFilter == null}
-            overrideTooltip="Clear Filter"
-            DisplayMode="Glyph+Text" />
+            overrideTooltip="Close Filter"
+            DisplayMode="Glyph" />
 
-        return <PanelWithButton cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="info" button={clearButton}>
+        return <PanelWithButton cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" button={clearButton}>
             <ListBoxFilterForm cssClassName={cssClassName}
                 CurrentColumn={this.props.CurrentColumn}
                 Columns={this.props.Columns}
@@ -88,6 +90,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
                 UserFilters={appropriateFilterItems}
                 onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
                 onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
+                onClearFilter={()=>this.onClearFilter()}
                 ColumnValueType={this.props.ColumnValueType}
                 Operators={leafExpressionOperators}
                 onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
@@ -157,6 +160,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         this.persistFilter([], [], [])
     }
 
+    onCloseForm() {
+       this.props.onHideFilterForm()
+    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -173,6 +180,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
     };
 }
 

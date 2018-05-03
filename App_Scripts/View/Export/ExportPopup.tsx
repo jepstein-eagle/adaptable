@@ -27,6 +27,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { IReport, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -141,7 +142,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let report = this.state.EditedAdaptableBlotterObject as IReport
         return StringExtensions.IsNotNullOrEmpty(report.Name) &&
             ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || Helper.isNotEmptyArray(report.Columns))
+            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || ArrayExtensions.IsNotNullOrEmpty(report.Columns))
     }
 
     onNew() {

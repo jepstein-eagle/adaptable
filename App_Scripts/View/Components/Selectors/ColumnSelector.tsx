@@ -14,7 +14,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     onColumnChange: (SelectedColumns: IColumn[]) => void
     SelectionMode: SelectionMode
     className?: string,
-    bsSize?: 'large' | 'lg' | 'small' | 'sm'; 
+    bsSize?: 'large' | 'lg' | 'small' | 'sm';
     cssClassName: string
 }
 
@@ -42,11 +42,11 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
 
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
-        return <Typeahead ref="typeahead" 
-        emptyLabel={"No Column"}
+        return <Typeahead ref="typeahead"
+            emptyLabel={"No Column"}
             placeholder={placeHolder}
-            labelKey={"FriendlyName"}  
-                 filterBy={["FriendlyName", "ColumnId"]}
+            labelKey={"FriendlyName"}
+            filterBy={["FriendlyName", "ColumnId"]}
             multiple={this.props.SelectionMode == SelectionMode.Multi}
             clearButton={true}
             selected={selectedColums}

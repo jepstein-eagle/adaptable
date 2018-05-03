@@ -13,6 +13,7 @@ import { ColumnSelector } from "../Selectors/ColumnSelector";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ButtonClear } from "../Buttons/ButtonClear";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
@@ -26,6 +27,7 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     onColumnValueSelectedChange: (SelectedValues: Array<any>) => void
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
     onCustomRangeExpressionChange: (rangeExpression: IRange) => void
+    onClearFilter: () => void
     ColumnValueType: DistinctCriteriaPairValue
     Operators: Array<LeafExpressionOperator>
     DataType: DataType
@@ -154,8 +156,18 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 </FormGroup>
             </AdaptableBlotterForm>
 
+let isEmptyFilter: boolean = this.state.UiSelectedColumnValues.length == 0 && this.state.UiSelectedUserFilters.length==0 && ExpressionHelper.IsEmptyRange( this.state.UiSelectedRange);
+        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.props.onClearFilter()}
+            bsStyle={"default"}
+            style={{ margin: "5px" }}
+            size={"xsmall"}
+            overrideDisableButton={isEmptyFilter}
+            overrideText={"Clear Filter"}
+            overrideTooltip="Clear Filter"
+            DisplayMode="Text" />
 
         return <div>
+            {clearButton}
             {rangeForm}
 
             {textClear}
@@ -165,6 +177,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             </ListGroup>
         </div>;
     }
+
 
     // Methods for getting the range
     private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
@@ -185,10 +198,17 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private getOperand1FormControl(): any {
         if (this.state.UiSelectedRange.Operand1Type == "Column") {
-            return <ColumnSelector cssClassName={this.props.cssClassName} SelectedColumnIds={[this.state.UiSelectedRange.Operand1]} bsSize={"small"} className={"ab_filterFormColumnSelector"}
-                ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId)}
-                onColumnChange={columns => this.onColumnOperand1SelectedChanged(columns)}
-                SelectionMode={SelectionMode.Single} />
+            let selectedColums: IColumn[] = this.props.Columns.filter(x => this.props.CurrentColumn)
+            let operand1 = (StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)) ? this.state.UiSelectedRange.Operand1 : "Select a column"
+
+            let availableColumns: any = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
+                return <MenuItem key={index} eventKey={index} onClick={() => this.onColumnOperand1SelectedChanged(column)}>{column.FriendlyName}</MenuItem>
+            })
+
+            return <DropdownButton disabled={availableColumns.length == 0} style={{ minWidth: "150px" }} className={this.props.cssClassName} bsSize={"small"} bsStyle={"default"} title={operand1} id="operand1" >
+                {availableColumns}
+            </DropdownButton>
+
         }
         else {
             return <FormControl value={String(this.state.UiSelectedRange.Operand1)} bsSize={"small"} style={rangeOperandStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand1Edit(e)} />
@@ -220,9 +240,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         this.setState({ UiSelectedRange: newRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
-    private onColumnOperand1SelectedChanged(columns: IColumn[]) {
-        let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : ""
-        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: selectedColumn, Operand2: this.state.UiSelectedRange.Operand2 }
+    private onColumnOperand1SelectedChanged(column: IColumn) {
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: column.ColumnId, Operand2: this.state.UiSelectedRange.Operand2 }
         this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
@@ -348,6 +367,11 @@ let rangeOperandStyle = {
     'marginTop': '0px',
     'marginLeft': '0px',
     'width': '150px'
+}
+let rangeSelectorStyle = {
+    'marginTop': '0px',
+    'marginLeft': '0px',
+    'width': '120px'
 }
 
 let rangeTypeStyle = {

@@ -6,6 +6,7 @@ import { SortOrder } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";
+import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>
@@ -247,7 +248,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let newSelectedValues = [...this.state.SelectedValues]
         for (let selElement of this.state.UiSelectedSelectedValues) {
             let index = newSelectedValues.indexOf(selElement)
-            Helper.moveArray(newSelectedValues, index, index - 1)
+            ArrayExtensions.moveArray(newSelectedValues, index, index - 1)
         }
 
         this.setState({
@@ -270,7 +271,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let newSelectedValues = [...this.state.SelectedValues]
         for (var index = this.state.UiSelectedSelectedValues.length - 1; index >= 0; index--) {
             let indexglob = newSelectedValues.indexOf(this.state.UiSelectedSelectedValues[index])
-            Helper.moveArray(newSelectedValues, indexglob, indexglob + 1)
+            ArrayExtensions.moveArray(newSelectedValues, indexglob, indexglob + 1)
         }
 
         this.setState({

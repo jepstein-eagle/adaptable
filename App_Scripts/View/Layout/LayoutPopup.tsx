@@ -25,6 +25,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { SortOrder } from "../../Core/Enums";
 import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
@@ -164,7 +165,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
     canFinishWizard() {
         let layout = this.state.EditedAdaptableBlotterObject as ILayout
-        if (Helper.isNotEmptyArray(layout.GridSorts)) {
+        if (ArrayExtensions.IsNotNullOrEmpty(layout.GridSorts)) {
             let canFinish: boolean = true;
             layout.GridSorts.forEach(gs => {
                 if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
@@ -176,7 +177,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             }
         }
         return StringExtensions.IsNotNullOrEmpty(layout.Name) &&
-            Helper.isNotEmptyArray(layout.Columns)
+            ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
 
     }
 }

@@ -25,6 +25,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -147,7 +148,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 
     canFinishWizard() {
         let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
-        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&  Helper.isNotEmptyArray(customSort.SortedValues) ;
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) && ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues) ;
     }
 
 }

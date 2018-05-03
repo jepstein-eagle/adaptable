@@ -393,6 +393,9 @@ export module ExpressionHelper {
         })
     }
 
+    export function IsEmptyRange(range: IRange): boolean {
+        return StringExtensions.IsNullOrEmpty (range.Operand1) // more??
+    }
 
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(

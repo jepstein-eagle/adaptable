@@ -43,7 +43,7 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import {  ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import { ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
@@ -287,7 +287,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    
+
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -967,7 +967,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (failedRules.length > 0) {
                 // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode ==  'Stop Edit') {
+                if (failedRules[0].CellValidationMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
@@ -1025,11 +1025,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             let gridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
             let cols: any[] = this.grid.behavior.getActiveColumns();
-            gridSorts.forEach((gs: IGridSort) => {
+            gridSorts.forEach((gs: IGridSort, index: number) => {
                 let foundCol = cols.find(c => c.name == gs.Column)
 
                 if (foundCol && foundCol.index == columnIndex) {
                     icon = (gs.SortOrder == SortOrder.Ascending) ? UPWARDS_BLACK_ARROW : DOWNWARDS_BLACK_ARROW;
+                    if (gridSorts.length > 1) {
+                        let gridIndex= index + 1
+                        icon += "(" + gridIndex + ") "
+                    }
                 }
             })
             return icon;
@@ -1176,7 +1180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-      public onSortSaved(gridColumnIndex: number) {
+    public onSortSaved(gridColumnIndex: number) {
         //Toggle sort one column at a time
         //we need the index property not the index of the collection
         let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
@@ -1203,7 +1207,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
 
-         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(newGridSorts));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(newGridSorts));
         this.grid.behavior.reindex();
     }
 
@@ -1225,8 +1229,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint();
     }
 
-    
-    public canMultiSort(): boolean{
+
+    public canMultiSort(): boolean {
         return false;  // needs to be true soon...
     }
 
