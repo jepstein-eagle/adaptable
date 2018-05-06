@@ -18,8 +18,8 @@ export module EnumExtensions {
         return Object.keys(e).map(k => e[k]);
     }
 
-     export function getCssFontSizeFromFontSizeEnum(fontSize: FontSize): string {
-        switch (fontSize) {
+     export function getCssFontSizeFromFontSizeEnum(fontSize: any): string {
+        switch (fontSize as FontSize) {
             case FontSize.XLarge:
                 return "x-large";
             case FontSize.Large:

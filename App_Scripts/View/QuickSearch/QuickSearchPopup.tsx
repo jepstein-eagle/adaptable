@@ -17,6 +17,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { QUICK_SEARCH_DEFAULT_BACK_COLOR, QUICK_SEARCH_DEFAULT_FORE_COLOR } from "../../Core/Constants/GeneralConstants";
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
     QuickSearchText: string;
@@ -66,7 +67,10 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     private onUseBackColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.BackColor = (e.checked) ? this.props.QuickSearchStyle.BackColor : null;
+        style.BackColor = (e.checked) ?
+            (this.props.QuickSearchStyle.BackColor) ? this.props.QuickSearchStyle.BackColor : QUICK_SEARCH_DEFAULT_BACK_COLOR
+            :
+            null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }
@@ -74,7 +78,10 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     private onUseForeColorCheckChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let style: IStyle = this.state.EditedStyle;
-        style.ForeColor = (e.checked) ? this.props.QuickSearchStyle.ForeColor : null;
+        style.ForeColor = (e.checked) ?
+            (this.props.QuickSearchStyle.ForeColor) ? this.props.QuickSearchStyle.ForeColor : QUICK_SEARCH_DEFAULT_FORE_COLOR
+            :
+            null;
         this.setState({ EditedStyle: style });
         this.props.onSetStyle(style);
     }

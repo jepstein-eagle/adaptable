@@ -49,10 +49,10 @@ export interface IRange {
   /**
    * Operator for the range (e.g. Greater Than, Equals), varies according to the column data type
    */
-  Operator: LeafExpressionOperator;
+  Operator: LeafExpressionOperator
   /**
-   * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
-   */
+  * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
+  */
   Operand1: string;
   /**
   * Comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between' 
@@ -169,7 +169,7 @@ export interface IShortcut extends IAdaptableBlotterObject {
   /**
    * What the function does; Date shortcuts only replace; Numeric shortcuts can make a computation based on existing value and 'ShortcutResult' property
    */
-  ShortcutOperation: 'Add'|'Subtract'| 'Multiply'|'Divide'|'Replace'
+  ShortcutOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'
   /**
    * Which columns the keyboard is active on. 
    */
@@ -201,9 +201,10 @@ export interface IGridSort {
 export interface IStyle {
   BackColor?: string
   ForeColor?: string
-  FontWeight?: FontWeight
-  FontStyle?: FontStyle
-  FontSize?: FontSize
+  FontWeight?: 'Normal' | 'Bold'
+  FontStyle?: 'Normal' | 'Italic'
+  FontSize?: 'XSmall' | 'Small' | 'Medium' | 'Large' | 'XLarge'
   ClassName?: string
 }
+
 

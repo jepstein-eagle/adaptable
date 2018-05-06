@@ -54,7 +54,6 @@ export interface EntitlementsState {
 export interface UserInterfaceState {
     ColorPalette: string[];
     StyleClassNames: string[]
-
 }
 
 
@@ -64,8 +63,8 @@ predefined and user config and editable by users but not Adaptable Blotter objec
 
 export interface QuickSearchState {
     QuickSearchText: string
-    Operator: LeafExpressionOperator
-    DisplayAction: DisplayAction
+    Operator: 'Contains' | 'StartsWith'
+    DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'
     Style: IStyle
 }
 

@@ -16,6 +16,8 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
+
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>
@@ -42,6 +44,7 @@ export interface ExpressionBuilderConditionSelectorState {
 }
 
 export class ExpressionBuilderConditionSelector extends React.Component<ExpressionBuilderConditionSelectorProps, ExpressionBuilderConditionSelectorState> {
+   
     constructor(props: ExpressionBuilderConditionSelectorProps) {
         super(props);
         this.state = this.buildState(this.props)
@@ -141,7 +144,16 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
-        return <PanelWithButton cssClassName={cssClassName} headerText={panelHeader} bsStyle="info" style={{ height: '427px' }}>
+        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onSelectedColumnChanged()}
+            bsStyle={"default"}
+            style={{ margin: "5px" }}
+            size={"xsmall"}
+            overrideDisableButton={this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn}
+            overrideText={"Clear"}
+            overrideTooltip="Clear"
+            DisplayMode="Text" />
+
+        return <PanelWithButton cssClassName={cssClassName} headerText={panelHeader} bsStyle="info" style={{ height: '427px' }} button={clearButton}>
 
 
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ?
@@ -160,7 +172,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         </Well>
                     }
 
-                    <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.props.SelectedColumnId]}
+                    <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.props.SelectedColumnId]}
                         ColumnList={this.props.ColumnsList}
                         onColumnChange={columns => this.onColumnSelectChange(columns)}
                         SelectionMode={SelectionMode.Single} />
@@ -214,9 +226,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         </PanelWithButton>
     }
 
-
-
-    onSelectedColumnChanged() {
+     onSelectedColumnChanged() {
         this.props.onSelectedColumnChange("")
     }
 

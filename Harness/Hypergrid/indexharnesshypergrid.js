@@ -245,12 +245,12 @@ var darkTheme = {
 
 
 let json = {
-    "Filter": {
-        "SystemFilters": [
-            "Blanks",
-            "Tomorrow",
-            "Positive"
-        ]
+    "QuickSearch": {
+        "Operator": "Contains",
+        "DisplayAction": "ShowRowAndHighlightCell",
+        "Style": {
+            "ClassName": "myQuickSearchStyle"
+        },
     },
     "Entitlements": {
         "FunctionEntitlements": [
