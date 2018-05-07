@@ -23,11 +23,21 @@ export interface IBlotterApi {
      * Selects the layout
      * @param layoutName has to be an existing layout
      */
-     setLayout(layoutName: string): void
+    setLayout(layoutName: string): void
 
-     /**
-      * Clears the currently selected layout
-      */
-     clearLayout():void
-   
+    /**
+     * Clears the currently selected layout
+     */
+    clearLayout(): void
+    /**
+     * Runs QuickSearch on the supplied text
+     * @param quickSearchText text to run QuickSearch on
+     */
+    runQuickSearch(quickSearchText: string): void
+
+    /**
+     * Clears Quick Search
+     */
+    clearQuickSearch(): void
+
 }

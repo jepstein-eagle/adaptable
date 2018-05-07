@@ -91,6 +91,7 @@ import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlo
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { IErrorService } from '../../Core/Services/Interface/IErrorService';
 import { ErrorService } from '../../Core/Services/ErrorService';
+import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -152,6 +153,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))

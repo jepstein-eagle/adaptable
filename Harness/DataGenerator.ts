@@ -44,7 +44,7 @@ export class DataGenerator {
     }
     getDollarTrades(): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 5; i++) {
+        for (let i = 1; i < 50; i++) {
             trades.push(this.createTrade(i, "USD"));
         }
         return trades;

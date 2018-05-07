@@ -7,7 +7,7 @@ function ThemeChange(blotter, container) {
 
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if (themeName == "Dark Theme" ||themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+        if (themeName == "Dark Theme" || themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
             container.className = "ag-theme-dark";
         } else if (themeName == "flatyle") {
             container.className = "ag-theme-balham";
@@ -212,7 +212,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-       // predefinedConfig: json,//"demoConfig.json",// json,
+        // predefinedConfig: json,//"demoConfig.json",// json,
         serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -227,21 +227,21 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    //  alert(searchArgs.SearchChangedTrigger)
-    let search = searchArgs.BlotterSearchState.AdvancedSearch;
-    let newTrades
-    if (search == null || search.Name == "") {
-        //   newTrades = dataGen.getTrades()
-        return;
-    } else {
-        //     alert(search.Name);
-        if (search.Name == "dollar") {
-            newTrades = dataGen.getDollarTrades()
+    if (searchArgs.SearchChangedTrigger == "DataSource") {
+        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
+            adaptableblotter.api.setDataSource(dataGen.getDollarTrades());
+            adaptableblotter.api.setLayout("Dollar View")
+        } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
+            adaptableblotter.api.setDataSource(dataGen.getGBPTrades());
+            adaptableblotter.api.setLayout("Sterling View")
+        } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
+            adaptableblotter.api.setDataSource(dataGen.getEuroTrades());
+            adaptableblotter.api.setLayout("Euro View")
         } else {
-            newTrades = dataGen.getEuroTrades()
+            adaptableblotter.api.setDataSource(dataGen.getTrades());
+            adaptableblotter.api.clearLayout();
         }
     }
-    adaptableblotter.api.setDataSource(newTrades);
 }
 
 let json = {
@@ -250,6 +250,14 @@ let json = {
             "ClassName": "styleBackGreen"
         },
 
+    },
+    "DataSource": {
+        "DataSources": [
+            "Dollar",
+            "Euro",
+            "Sterling",
+        ],
+        "CurrentDataSource": "Dollar"
     },
     "Filter": {
         "ColumnFilters": [],
@@ -324,9 +332,9 @@ let json = {
                 "Style": {
                     "ClassName": "styleBackBrown"
                 },
-             }
+            }
         ],
-        
+
     },
     "AdvancedSearch": {
         "AdvancedSearches": [

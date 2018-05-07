@@ -3,6 +3,7 @@ import { IEvent } from "../Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs } from "./Interface/ServerSearch";
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
+import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { ILayout } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 
@@ -29,6 +30,14 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs> {
         return this.blotter.SearchedChanged;
+    }
+
+    public runQuickSearch(quickSearchText: string): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText))
+    }
+
+    public clearQuickSearch(): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(QuickSearchRedux.QuickSearchApply(""))
     }
 
 }
