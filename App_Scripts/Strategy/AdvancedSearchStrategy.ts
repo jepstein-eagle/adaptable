@@ -9,6 +9,7 @@ import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interfa
 import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { basename } from 'path';
 import { Server } from 'https';
+import { SearchChangedTrigger } from '../Core/Enums';
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
     private AdvancedSearchState: AdvancedSearchState
@@ -30,7 +31,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
                 this.blotter.applyGridFiltering()
 
                 if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption != 'None') {
-                     this.publishServerSearch('AdvancedSearch')
+                     this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
                 }
           
         }

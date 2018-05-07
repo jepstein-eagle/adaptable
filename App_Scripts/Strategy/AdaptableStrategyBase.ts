@@ -9,6 +9,7 @@ import { IEntitlement } from '../Core/Interface/Interfaces';
 import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs } from '../Core/Api/Interface/ServerSearch';
+import { SearchChangedTrigger } from '../Core/Enums';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean
@@ -153,7 +154,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    publishServerSearch(searchChangedTrigger: "DataSource" | "AdvancedSearch" | "QuickSearch" | "ColumnFilter" | "UserFilter" | "DataChange" | "Sort"): void {
+    publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
         // lets get the searchstate
         let blotterSearchState: IBlotterSearchState = {

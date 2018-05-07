@@ -38,7 +38,7 @@ export interface IAdaptableBlotterOptions {
     /**
      * Which searching and filtering options, if any, should take place on the server; leave unset to perform everything on the client
      */
-    serverSearchOption?: 'None' | "StaticSearch" | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort'
+    serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort'
     /**
     * Required if using iPushPull to display / send live report data
     */

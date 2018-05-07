@@ -10,6 +10,7 @@ import { Helper } from '../Core/Helpers/Helper';
 import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { SearchChangedTrigger } from '../Core/Enums';
 
 
 
@@ -30,7 +31,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             this.GridSorts = this.GetGridState().GridSorts
 
             if (this.GetGridState().BlotterOptions.serverSearchOption == "AllSearchandSort") {
-                this.publishServerSearch("Sort")
+                this.publishServerSearch(SearchChangedTrigger.Sort)
             }
         }
     }

@@ -1008,7 +1008,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' || 'StaticSearch') {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' ) {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
@@ -1022,7 +1022,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' || 'StaticSearch' || 'AdvancedSearch') {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None'  || 'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {

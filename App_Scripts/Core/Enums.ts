@@ -58,10 +58,9 @@ export enum MathOperation {
 
 // Enums used in Strategies
 
-export enum CellValidationMode
-{
-  WarnUser =  'Warn User',
-  StopEdit ='Stop Edit'
+export enum CellValidationMode {
+    WarnUser = 'Warn User',
+    StopEdit = 'Stop Edit'
 }
 
 export enum LayoutSource {
@@ -115,8 +114,7 @@ export enum AuditLogTrigger {
     Ping = 'Ping'
 }
 
-export enum RangeOperandType
-{
+export enum RangeOperandType {
     Column = "Column",
     Value = "Value"
 }
@@ -163,6 +161,16 @@ export enum QueryBuildStatus {
     ColumnSelected,
     SingleConditionsAdded,
     MultipleConditionsAdded,
+}
+
+export enum SearchChangedTrigger {
+    DataSource = "DataSource",
+    AdvancedSearch = "AdvancedSearch",
+    QuickSearch = "QuickSearch",
+    ColumnFilter = "ColumnFilter",
+    UserFilter = "UserFilter",
+    DataChange = "DataChange",
+    Sort = "Sort",
 }
 
 

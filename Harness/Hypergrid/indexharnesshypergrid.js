@@ -21,159 +21,6 @@ function replacer(a, b, c) {
     return b.toUpperCase() + c;
 }
 
-function getSchema(data) {
-    var schema = [],
-        firstRow = Array.isArray(data) && data[0];
-
-    firstRow = (typeof firstRow === 'object') ? firstRow : {};
-    for (var p in firstRow) {
-        if (firstRow.hasOwnProperty(p)) {
-            if (p === 'notional' || p === 'ask' || p === 'bid') {
-                schema.push({ name: p, header: capitalize(p), type: 'number' });
-            }
-            else if (p === 'tradeDate') {
-                schema.push({ name: p, header: capitalize(p), type: 'date' });
-            }
-            else {
-                schema.push({ name: p, header: capitalize(p) });
-            }
-        }
-    }
-    return schema;
-}
-function InitBlotter() {
-    var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getTrades();
-
-    var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-    // dataGen.startTickingDataHypergrid(grid)
-    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
-    grid.addProperties({ renderFalsy: true })
-    //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
-    //which causes an issue.....
-    grid.addProperties({ editOnKeydown: false })
-    let behavior = grid.behavior;
-
-    grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
-        style: 'currency',
-        currency: 'USD',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }));
-
-    var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    grid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
-
-    //we enable the edit on some columns
-    grid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
-        let editorName = declaredEditorName;
-        if (options.column.name !== "tradeId"
-            //  && options.column.name !== "changeOnYear"
-            && options.column.name !== "price"
-            && options.column.name !== "bid"
-            && options.column.name !== "ask"
-            && options.column.name !== "isLive"
-            && options.column.name !== "bloomberkAsk"
-            && options.column.name !== "bloomberkBid"
-            && options.column.name !== "percentChange"
-        ) {
-            editorName = 'textfield';
-        }
-        return grid.cellEditors.create(editorName, options);
-    }
-
-    //Add Format for Notional column
-    behavior.setColumnProperties(1, {
-        format: 'USDCurrencyFormat'
-    });
-
-    //Add Edit for Trade Date column
-    behavior.setColumnProperties(15, {
-        format: 'shortDateFormat'
-    });
-
-    //Add Edit for Settlement Date column
-    behavior.setColumnProperties(16, {
-        format: 'shortDateFormat'
-    });
-
-    let serverSearch = "StaticSearch"
-
-    var container = document.getElementById('content');
-    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
-        primaryKey: "tradeId",
-        userName: "jonathan",
-        blotterId: "Demo Blotter",
-        enableAuditLog: true,
-        enableRemoteConfigServer: false,
-        predefinedConfig: json, // "predefinedConfig.json",
-        serverSearchOption: serverSearch,
-        iPushPullConfig: {
-            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-        }
-    });
-    //TEST ENV
-    // {
-    //         api_url: "https://test.ipushpull.com/api/1.0",
-    //         ws_url: "https://test.ipushpull.com",
-    //         api_key: "rG25WWuOdEhLejupBc9TfPyB4womfOibmPHdBytJ",
-    //         api_secret: "Icfcc8eceP1eNUt9EEAaa8mHjCfyAhaiG0EXBurhy2GWSqkDgakxAKr76hXBeNaymAkpG2NGfK6a3ScgCNSyZhIWxGTmuyi35YNQXMW5JT1e4zeazpfva14NUIevROE9",
-    //     }
-    var origgetCell = grid.behavior.dataModel.getCell;
-    grid.behavior.dataModel.getCell = (config, declaredRendererName) => {
-        if (config.isDataRow) {
-            var y = config.dataCell.y;
-            if (y % 2) {
-                config.backgroundColor = config.altbackground;
-            }
-        }
-        return origgetCell.call(grid.behavior.dataModel, config, declaredRendererName)
-    };
-
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, grid))
-
-    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-
-
-    grid.addProperties(lightTheme);
-}
-
-
-function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "DataSource") {
-        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
-            let newTrades = dataGen.getDollarTrades()
-            adaptableblotter.api.setDataSource(newTrades);
-            adaptableblotter.api.setLayout("first")
-        } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
-            let newTrades = dataGen.getGBPTrades()
-            adaptableblotter.api.setDataSource(newTrades);
-            adaptableblotter.api.setLayout("second")
-        } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
-            let newTrades = dataGen.getEuroTrades()
-            adaptableblotter.api.setDataSource(newTrades);
-            adaptableblotter.api.setLayout("second")
-        }else{
-            let newTrades = dataGen.getTrades()
-            adaptableblotter.api.setDataSource(newTrades);
-            adaptableblotter.api.clearLayout();
-        }
-    }
-    //  if (search == null || search.Name == "") {
-    //      alert("nowt")
-    //     newTrades = dataGen.getTrades()
-    //   } else {
-    //       alert(search.Name);
-    //      if (search.Name == "barcap") {
-    //          newTrades = dataGen.getBarcapTrades()
-    //     } else {
-    //        newTrades = dataGen.getGSTrades()
-    //   }
-    // }
-    //  adaptableblotter.api.setDataSource(newTrades);
-}
-
 var lightTheme = {
     font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
     color: '#003f59',
@@ -256,15 +103,131 @@ var darkTheme = {
     readOnly: false
 };
 
+function getSchema(data) {
+    var schema = [],
+        firstRow = Array.isArray(data) && data[0];
+
+    firstRow = (typeof firstRow === 'object') ? firstRow : {};
+    for (var p in firstRow) {
+        if (firstRow.hasOwnProperty(p)) {
+            if (p === 'notional' || p === 'ask' || p === 'bid') {
+                schema.push({ name: p, header: capitalize(p), type: 'number' });
+            }
+            else if (p === 'tradeDate') {
+                schema.push({ name: p, header: capitalize(p), type: 'date' });
+            }
+            else {
+                schema.push({ name: p, header: capitalize(p) });
+            }
+        }
+    }
+    return schema;
+}
+function InitBlotter() {
+    var dataGen = new harness.DataGenerator();
+    var trades = dataGen.getTrades();
+
+    var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+    // dataGen.startTickingDataHypergrid(grid)
+    //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
+    grid.addProperties({ renderFalsy: true })
+    //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
+    //which causes an issue.....
+    grid.addProperties({ editOnKeydown: false })
+    let behavior = grid.behavior;
+
+    grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    }));
+
+    var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    grid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
+
+    //we enable the edit on some columns
+    grid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
+        let editorName = declaredEditorName;
+        if (options.column.name !== "tradeId"
+            //  && options.column.name !== "changeOnYear"
+            && options.column.name !== "price"
+            && options.column.name !== "bid"
+            && options.column.name !== "ask"
+            && options.column.name !== "isLive"
+            && options.column.name !== "bloomberkAsk"
+            && options.column.name !== "bloomberkBid"
+            && options.column.name !== "percentChange"
+        ) {
+            editorName = 'textfield';
+        }
+        return grid.cellEditors.create(editorName, options);
+    }
+
+    //Add Format for Notional column
+    behavior.setColumnProperties(1, {
+        format: 'USDCurrencyFormat'
+    });
+
+    //Add Edit for Trade Date column
+    behavior.setColumnProperties(15, {
+        format: 'shortDateFormat'
+    });
+
+    //Add Edit for Settlement Date column
+    behavior.setColumnProperties(16, {
+        format: 'shortDateFormat'
+    });
+
+    var origgetCell = grid.behavior.dataModel.getCell;
+    grid.behavior.dataModel.getCell = (config, declaredRendererName) => {
+        if (config.isDataRow) {
+            var y = config.dataCell.y;
+            if (y % 2) {
+                config.backgroundColor = config.altbackground;
+            }
+        }
+        return origgetCell.call(grid.behavior.dataModel, config, declaredRendererName)
+    };
+
+    var container = document.getElementById('content');
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
+        primaryKey: "tradeId",
+        userName: "jonathan",
+        blotterId: "Demo Blotter",
+        enableAuditLog: false,
+        enableRemoteConfigServer: false,
+        predefinedConfig: json,
+        serverSearchOption: "None",
+        iPushPullConfig: {
+            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+        }
+    });
+
+    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    grid.addProperties(lightTheme);
+}
+
+function getTradesForSearch(searchArgs, dataGen) {
+    if (searchArgs.SearchChangedTrigger == "DataSource") {
+        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
+            adaptableblotter.api.setDataSource(dataGen.getDollarTrades());
+            adaptableblotter.api.setLayout("Dollar View")
+        } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
+            adaptableblotter.api.setDataSource(dataGen.getGBPTrades());
+            adaptableblotter.api.setLayout("Sterling View")
+        } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
+            adaptableblotter.api.setDataSource(dataGen.getEuroTrades());
+            adaptableblotter.api.setLayout("Euro View")
+        } else {
+            adaptableblotter.api.setDataSource(dataGen.getTrades());
+            adaptableblotter.api.clearLayout();
+        }
+    }
+}
 
 let json = {
-    "QuickSearch": {
-        "Operator": "Contains",
-        "DisplayAction": "ShowRowAndHighlightCell",
-        "Style": {
-            "ClassName": "myQuickSearchStyle"
-        },
-    },
     "Entitlements": {
         "FunctionEntitlements": [
             {
@@ -284,6 +247,14 @@ let json = {
                 "AccessLevel": "Hidden"
             }
         ]
+    },
+    "DataSource": {
+        "DataSources": [
+            "Dollar",
+            "Euro",
+            "Sterling",
+        ],
+        "CurrentDataSource": "Dollar"
     },
     "ConditionalStyle": {
         "ConditionalStyles": [
@@ -321,7 +292,7 @@ let json = {
         ]
     },
     "AdvancedSearch": {
-         "AdvancedSearches": [
+        "AdvancedSearches": [
             {
                 "Name": 'test',
                 "Expression": {
@@ -340,14 +311,6 @@ let json = {
                 "IsReadOnly": false
             }
         ],
-    },
-    "DataSource": {
-        "CurrentDataSource": "Dollar",
-        "DataSources": [
-            "Dollar",
-            "Euro",
-            "Sterling",
-        ]
     },
     "Dashboard": {
         "VisibleToolbars": [

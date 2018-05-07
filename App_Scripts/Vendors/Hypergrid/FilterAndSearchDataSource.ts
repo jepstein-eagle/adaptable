@@ -29,7 +29,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
 
         let serverSearchOption = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption
         //first we assess AdvancedSearch 
-        if (serverSearchOption == 'None' || 'StaticSearch') {
+        if (serverSearchOption == 'None' ) {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 // if its a static search then it wont be in advanced searches so nothing to do
@@ -43,7 +43,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         //we then assess column filters
-        if (serverSearchOption == 'None' || 'StaticSearch' || 'AdvancedSearch') {
+        if (serverSearchOption == 'None'  || 'AdvancedSearch') {
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {

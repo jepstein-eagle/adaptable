@@ -9,6 +9,7 @@ import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { basename } from 'path';
 import { Server } from 'https';
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';
+import { SearchChangedTrigger } from '../Core/Enums';
 
 export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSourceStrategy {
     private DataSourceState: DataSourceState
@@ -25,7 +26,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
         if (this.DataSourceState != this.GetDataSourceState()) {
             this.DataSourceState = this.GetDataSourceState();
 
-            this.publishServerSearch('DataSource')
+            this.publishServerSearch(SearchChangedTrigger.DataSource)
         }
     }
 
