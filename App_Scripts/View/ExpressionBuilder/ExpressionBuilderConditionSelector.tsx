@@ -144,8 +144,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
-        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onSelectedColumnChanged()}
-            bsStyle={"default"}
+        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onSelectedColumnChanged()} 
+        bsStyle={"default"}
             style={{ margin: "5px" }}
             size={"xsmall"}
             overrideDisableButton={this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn}

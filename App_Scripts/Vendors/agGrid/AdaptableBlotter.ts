@@ -53,7 +53,7 @@ import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
 
 // import other items
-import {  IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
@@ -88,7 +88,9 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import {  ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { IErrorService } from '../../Core/Services/Interface/IErrorService';
+import { ErrorService } from '../../Core/Services/ErrorService';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -102,6 +104,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
+    public ErrorService: IErrorService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public StyleService: StyleService
@@ -120,6 +123,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
+        this.ErrorService = new ErrorService(this);
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.StyleService = new StyleService(this);
@@ -1001,21 +1005,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
         gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-          
+
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None') {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' || 'StaticSearch') {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+                    // if its a static search then it wont be in advanced searches so nothing to do
                     let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
-                    if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
-                        // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
-                        return false;
+                    if (currentSearch) {
+                        if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
+                            // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
+                            return false;
+                        }
                     }
                 }
             }
             //we then assess filters
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption ==  'None' ||  'AdvancedSearch') {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' || 'StaticSearch' || 'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {

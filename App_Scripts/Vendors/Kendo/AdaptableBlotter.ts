@@ -70,6 +70,8 @@ import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort } from
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { IErrorService } from '../../Core/Services/Interface/IErrorService';
+import { ErrorService } from '../../Core/Services/ErrorService';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -81,6 +83,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
+    public ErrorService: IErrorService
 
     public StyleService: StyleService
     // public ThemeService: ThemeService
@@ -100,6 +103,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
+        this.ErrorService = new ErrorService(this);
+        
 
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);

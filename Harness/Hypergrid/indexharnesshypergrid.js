@@ -97,7 +97,7 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    let serverSearch = "AllSearchandSort"
+    let serverSearch = "StaticSearch"
 
     var container = document.getElementById('content');
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
@@ -106,7 +106,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",
         enableAuditLog: true,
         enableRemoteConfigServer: false,
-        // predefinedConfig: "",//json, // "predefinedConfig.json",
+        predefinedConfig: json, // "predefinedConfig.json",
         serverSearchOption: serverSearch,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -141,10 +141,23 @@ function InitBlotter() {
 
 
 function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "QuickSearch") {
-        if (searchArgs.BlotterSearchState.QuickSearch == "server") {
-            let newTrades = dataGen.getBarcapTrades()
+    if (searchArgs.SearchChangedTrigger == "DataSource") {
+        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
+            let newTrades = dataGen.getDollarTrades()
             adaptableblotter.api.setDataSource(newTrades);
+            adaptableblotter.api.setLayout("first")
+        } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
+            let newTrades = dataGen.getGBPTrades()
+            adaptableblotter.api.setDataSource(newTrades);
+            adaptableblotter.api.setLayout("second")
+        } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
+            let newTrades = dataGen.getEuroTrades()
+            adaptableblotter.api.setDataSource(newTrades);
+            adaptableblotter.api.setLayout("second")
+        }else{
+            let newTrades = dataGen.getTrades()
+            adaptableblotter.api.setDataSource(newTrades);
+            adaptableblotter.api.clearLayout();
         }
     }
     //  if (search == null || search.Name == "") {
@@ -297,9 +310,6 @@ let json = {
             }
         ]
     },
-    "Theme": {
-        "CurrentTheme": "Slate",
-    },
     "FormatColumn": {
         "FormatColumns": [
             {
@@ -311,7 +321,7 @@ let json = {
         ]
     },
     "AdvancedSearch": {
-        "AdvancedSearches": [
+         "AdvancedSearches": [
             {
                 "Name": 'test',
                 "Expression": {
@@ -331,11 +341,20 @@ let json = {
             }
         ],
     },
+    "DataSource": {
+        "CurrentDataSource": "Dollar",
+        "DataSources": [
+            "Dollar",
+            "Euro",
+            "Sterling",
+        ]
+    },
     "Dashboard": {
         "VisibleToolbars": [
             "AdvancedSearch",
             "Layout",
-            "QuickSearch"
+            "QuickSearch",
+            "DataSource"
         ],
         "VisibleButtons": [
             "About",

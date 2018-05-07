@@ -8,8 +8,8 @@ import { ISearchChangedEventArgs } from "./ServerSearch";
  */
 export interface IBlotterApi {
     /**
-     * Method to repopulate the grid.  Typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to the Blotter.
-     * @param dataSource - can be any datasource that is suitable for the underlying grid.  
+     * Repopulates the grid; typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to the Blotter.
+     * @param dataSource can be any datasource that is suitable for the underlying grid.  
      */
     setDataSource(dataSource: any): void;
 
@@ -18,4 +18,16 @@ export interface IBlotterApi {
      * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
      */
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
+
+    /**
+     * Selects the layout
+     * @param layoutName has to be an existing layout
+     */
+     setLayout(layoutName: string): void
+
+     /**
+      * Clears the currently selected layout
+      */
+     clearLayout():void
+   
 }

@@ -235,10 +235,10 @@ function getTradesForSearch(searchArgs, dataGen) {
         return;
     } else {
         //     alert(search.Name);
-        if (search.Name == "barcap") {
-            newTrades = dataGen.getBarcapTrades()
+        if (search.Name == "dollar") {
+            newTrades = dataGen.getDollarTrades()
         } else {
-            newTrades = dataGen.getGSTrades()
+            newTrades = dataGen.getEuroTrades()
         }
     }
     adaptableblotter.api.setDataSource(newTrades);

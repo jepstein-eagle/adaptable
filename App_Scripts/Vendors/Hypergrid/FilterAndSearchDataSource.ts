@@ -27,20 +27,23 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             return true;
         }
 
-        let blotterOptions = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions
+        let serverSearchOption = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption
         //first we assess AdvancedSearch 
-        if (blotterOptions.serverSearchOption ==  'None') {
+        if (serverSearchOption == 'None' || 'StaticSearch') {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
+                // if its a static search then it wont be in advanced searches so nothing to do
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
-                if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
-                    return false;
+                if (currentSearch) {
+                    if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
+                        return false;
+                    }
                 }
             }
         }
 
         //we then assess column filters
-        if (blotterOptions.serverSearchOption == 'None'  || 'AdvancedSearch') {
+        if (serverSearchOption == 'None' || 'StaticSearch' || 'AdvancedSearch') {
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (columnFilters.length > 0) {
                 for (let columnFilter of columnFilters) {

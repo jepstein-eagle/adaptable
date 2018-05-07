@@ -12,6 +12,7 @@ export const ColumnInfoStrategyId: string = "ColumnInfo"
 export const ConditionalStyleStrategyId: string = "ConditionalStyle"
 export const CustomSortStrategyId: string = "CustomSort"
 export const DashboardStrategyId: string = "Dashboard"
+export const DataSourceStrategyId: string = "DataSource"
 export const ExportStrategyId: string = "Export"
 export const FlashingCellsStrategyId: string = "FlashingCells"
 export const FormatColumnStrategyId: string = "FormatColumn"
@@ -52,6 +53,8 @@ export function getIdForStrategyName(strategyName: string) {
             return CustomSortStrategyId
         case StrategyNames.DashboardStrategyName:
             return DashboardStrategyId
+        case StrategyNames.DataSourceStrategyName:
+            return DataSourceStrategyId
         case StrategyNames.ExportStrategyName:
             return ExportStrategyId
         case StrategyNames.UserFilterStrategyName:

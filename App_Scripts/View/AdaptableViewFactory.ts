@@ -33,6 +33,8 @@ import * as React from "react";
 import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
+import { DataSourcePopup } from './DataSource/DataSourcePopup';
+import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   CustomSortPopup: CustomSortPopup,
@@ -53,6 +55,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CellValidationPopup: CellValidationPopup,
   LayoutPopup: LayoutPopup,
   DashboardPopup: DashboardPopup,
+  DataSourcePopup: DataSourcePopup,
   HomeButtonsPopup: HomeButtonsPopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   IPushPullLogin: IPushPullLogin,
@@ -66,6 +69,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 //here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
   [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyIds.DataSourceStrategyId, DataSourceToolbarControl],
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],

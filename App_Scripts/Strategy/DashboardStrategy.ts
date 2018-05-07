@@ -32,19 +32,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             if (this.GetGridState().BlotterOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishServerSearch("Sort")
             }
-            
-            
-            var users = [
-                { 'user': 'fred',   'age': 53 },
-                { 'user': 'barney', 'age': 48 },
-                { 'user': 'fred',   'age': 100 },
-                { 'user': 'barney', 'age': 36 }
-              ];
-              
-              var funcResult = _.orderBy(users, [(user) => 'age', (user) => user.user], ["asc", "desc"]);
-
-              let x: any = funcResult;
-
         }
     }
 

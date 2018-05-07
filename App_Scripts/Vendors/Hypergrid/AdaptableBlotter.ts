@@ -14,8 +14,10 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
+import { IErrorService } from '../../Core/Services/Interface/IErrorService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
+import { ErrorService } from '../../Core/Services/ErrorService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
@@ -69,6 +71,7 @@ import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../..
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -99,6 +102,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
+    public ErrorService: IErrorService
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
@@ -119,6 +123,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
+        this.ErrorService = new ErrorService(this);
         // this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
@@ -143,6 +148,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))

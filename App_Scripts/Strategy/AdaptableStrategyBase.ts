@@ -153,37 +153,22 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    publishServerSearch(searchChangedTrigger: "AdvancedSearch" | "QuickSearch" | "ColumnFilter" | "UserFilter"| "DataChange"| "Sort"): void {
+    publishServerSearch(searchChangedTrigger: "DataSource" | "AdvancedSearch" | "QuickSearch" | "ColumnFilter" | "UserFilter" | "DataChange" | "Sort"): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
-        if (state.Grid.BlotterOptions.serverSearchOption != "None") {
-
-            // lets get the searchstate
-            let blotterSearchState: IBlotterSearchState = {
-                AdvancedSearch: state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch),
-                QuickSearch: state.QuickSearch.QuickSearchText,
-                ColumnFilters: state.Filter.ColumnFilters
-            }
-
-            let blotterSortState: IBlotterSortState = {
-                GridSorts: state.Grid.GridSorts,
-                CustomSorts: state.CustomSort.CustomSorts
-            }
-            let searchChangedArgs: ISearchChangedEventArgs = { SearchChangedTrigger: searchChangedTrigger, BlotterSearchState: blotterSearchState, BlotterSortState: blotterSortState }
-            this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
+        // lets get the searchstate
+        let blotterSearchState: IBlotterSearchState = {
+            DataSource: state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource),
+            AdvancedSearch: state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch),
+            QuickSearch: state.QuickSearch.QuickSearchText,
+            ColumnFilters: state.Filter.ColumnFilters
         }
+
+        let blotterSortState: IBlotterSortState = {
+            GridSorts: state.Grid.GridSorts,
+            CustomSorts: state.CustomSort.CustomSorts
+        }
+        let searchChangedArgs: ISearchChangedEventArgs = { SearchChangedTrigger: searchChangedTrigger, BlotterSearchState: blotterSearchState, BlotterSortState: blotterSortState }
+        this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
-    /*this.Action = PopupRedux.PopupShow!
-            ComponentName,
-            Entitlment ? Entitlment.AccessLevel == "ReadOnly" : false,
-            this.PopupParams)
-    }*/
-
-    //  protected AuditFunctionAction(action: string, info: string, data?: any) {
-    //      this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(this.Id,
-    //          action,
-    //          info,
-    //          data)
-    //  }
-
+   
 }
-

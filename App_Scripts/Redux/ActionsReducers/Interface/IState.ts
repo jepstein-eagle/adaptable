@@ -137,6 +137,11 @@ export interface AdvancedSearchState {
     CurrentAdvancedSearch: string;
 }
 
+export interface DataSourceState {
+    DataSources: string[];
+    CurrentDataSource: string;
+}
+
 export interface FilterState {
     ColumnFilters: IColumnFilter[];
     UserFilters: IUserFilter[];

@@ -42,17 +42,24 @@ export class DataGenerator {
         }
         return trades;
     }
-    getBarcapTrades(): ITrade[] {
+    getDollarTrades(): ITrade[] {
         let trades: ITrade[] = [];
         for (let i = 1; i < 5; i++) {
-            trades.push(this.createTrade(i, "Barcap"));
+            trades.push(this.createTrade(i, "USD"));
         }
         return trades;
     }
-    getGSTrades(): ITrade[] {
+    getGBPTrades(): ITrade[] {
         let trades: ITrade[] = [];
         for (let i = 1; i < 20; i++) {
-            trades.push(this.createTrade(i, "Goldman Sachs"));
+            trades.push(this.createTrade(i, "GBP"));
+        }
+        return trades;
+    }
+    getEuroTrades(): ITrade[] {
+        let trades: ITrade[] = [];
+        for (let i = 1; i < 20; i++) {
+            trades.push(this.createTrade(i, "EUR"));
         }
         return trades;
     }
@@ -203,21 +210,21 @@ export class DataGenerator {
 
 
 
-    createTrade(i: number, counterparty?: string): ITrade {
+    createTrade(i: number, currency?: string): ITrade {
         let price = this.getMeaningfulDouble();
         let bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
         let ask = this.roundTo4Dp(price + bidOfferSpread / 2);
         let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         let tradeDate = this.generateRandomDate(-1000, 1000);
         let moodyRating = this.getRandomItem(this.getMoodysRatings())
-        let tradeCounterparty = counterparty? counterparty:  this.getRandomItem(this.getCounterparties())
+        let tradeCurrency = currency? currency:  this.getRandomItem(this.getCurrencies())
         let trade =
             {
                 "tradeId": i,
                 "notional": this.getRandomItem(this.getNotionals()),
                 "deskId": this.generateRandomInt(0, 250),
-                "counterparty": tradeCounterparty,
-                "currency": this.getRandomItem(this.getCurrencies()),
+                "counterparty": this.getRandomItem(this.getCounterparties()),
+                "currency": tradeCurrency,
                 "country": this.getRandomItem(this.getCountries()),
                 "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
                 "price": price,

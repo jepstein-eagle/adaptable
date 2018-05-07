@@ -7,7 +7,7 @@ export interface ISearchChangedEventArgs {
   /**
    * Which action in the grid caused the Search state to chagne
    */
-  SearchChangedTrigger: "AdvancedSearch" | "QuickSearch" | "ColumnFilter" | "UserFilter"| "DataChange"| "Sort";
+  SearchChangedTrigger: 'DataSource' | 'AdvancedSearch' | 'QuickSearch' | 'ColumnFilter' | 'UserFilter' | 'DataChange' | 'Sort';
 
   /**
    * All current active search and filters in the Grid
@@ -25,6 +25,11 @@ export interface ISearchChangedEventArgs {
  * The current Search and Filter in the Blotter
  */
 export interface IBlotterSearchState {
+  /**
+   * Current Static Search (if any selected)
+   */
+  DataSource: string;
+
   /**
    * Current Advanced Search (if any selected)
    */
