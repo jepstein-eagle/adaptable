@@ -64,8 +64,8 @@ export const DashboardSetIsMinimised = (IsMinimised: boolean): DashboardSetIsMin
 })
 
 const initialDashboardState: DashboardState = {
-   AvailableToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId, StrategyIds.DataSourceStrategyId],
-    VisibleToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId, StrategyIds.DataSourceStrategyId],
+    AvailableToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId, StrategyIds.DataSourceStrategyId],
+    VisibleToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId],
     VisibleButtons: [StrategyIds.AboutStrategyId, StrategyIds.DashboardStrategyId, StrategyIds.SmartEditStrategyId, StrategyIds.ColumnChooserStrategyId, StrategyIds.ConditionalStyleStrategyId, StrategyIds.TeamSharingStrategyId],
     Zoom: 1,
     IsMinimised: false
@@ -99,7 +99,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
         case DASHBOARD_SET_FUNCTION_BUTTONS_ITEM: {
             let actionTyped = <DashboardSetFunctionButtonsAction>action;
             let dashboardFunctionButtons = actionTyped.StrategyIds
-              return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
+            return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
         }
         case DASHBOARD_SET_ZOOM: {
             let actionTyped = <DashboardSetZoomAction>action;
