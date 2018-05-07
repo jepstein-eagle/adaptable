@@ -50,14 +50,14 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
             { Content: "Preview", Size: 6 },
         ]
 
-        let allToolbars: string[]=[]
-        this.props.VisibleToolbars.forEach(vt=>{
+        let allToolbars: string[] = []
+        this.props.VisibleToolbars.forEach(vt => {
             allToolbars.push(vt);
         })
 
         this.props.AvailableToolbars.forEach(at => {
-            let visibleToolbar = this.props.VisibleToolbars.find(vt=>vt==at)
-            if(!visibleToolbar){
+            let visibleToolbar = this.props.VisibleToolbars.find(vt => vt == at)
+            if (!visibleToolbar) {
                 allToolbars.push(at);
             }
         })
@@ -65,7 +65,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         let radioDashboardControls: any[] = allToolbars.map((x, i) => {
             let dashboardControl = AdaptableDashboardViewFactory.get(x);
 
-            let dashboardElememt = React.createElement(dashboardControl, { 
+            let dashboardElememt = React.createElement(dashboardControl, {
                 AdaptableBlotter: null,
                 IsReadOnly: true,
                 Columns: this.props.Columns,
@@ -75,14 +75,14 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 ColorPalette: this.props.ColorPalette
             });
             let isVisible: boolean = this.props.VisibleToolbars.find(dc => dc == x) != null
-            let visibleButton = isVisible  ?
+            let visibleButton = isVisible ?
                 <Button disabled={x == StrategyIds.HomeStrategyId} onClick={() => this.onDashboardControlVisibilityChanged(x)} bsStyle="success" bsSize="small"><Glyphicon glyph="eye-open"></Glyphicon>{' '}Visible</Button>
                 : <Button onClick={() => this.onDashboardControlVisibilityChanged(x)} bsStyle="info" bsSize="small"><Glyphicon glyph="eye-close"></Glyphicon>{' '}Hidden</Button>
 
             return <li key={"DashboardControl" + x}
                 className="list-group-item">
                 <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={colItems[0].Size}><Label  style={{ cursor: 's-resize' }} draggable={isVisible} onDragStart={(event) => this.DragStart(event, x)}
+                    <Col xs={colItems[0].Size}><Label style={{ cursor: 's-resize' }} draggable={isVisible} onDragStart={(event) => this.DragStart(event, x)}
                         onDragEnd={() => this.DragEnd()}><Glyphicon glyph="menu-hamburger" ></Glyphicon></Label>{' '}{Helper.capitalize(x)}
                     </Col>
                     <Col xs={colItems[1].Size}>{visibleButton}</Col>
@@ -93,7 +93,8 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         })
 
         return <div className={cssClassName}>
-        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.DashboardStrategyName} bsStyle="primary" infoBody={["Drag/Drop icon from items to reorder them in the Dashboard"]} glyphicon={StrategyGlyphs.DashboardGlyph} >
+
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
                     {' '}
@@ -101,13 +102,14 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 </AdaptableBlotterForm>
                 {' '}
                 <div><br /></div>
-                <PanelWithRow cssClassName={cssClassName} colItems ={colItems} bsStyle="info" />
-                <ListGroup className="ab_preview_panel" onDragEnter={(event) => this.DragEnter(event)}
-                    onDragOver={(event) => this.DragOver(event)}
-                    onDragLeave={(event) => this.DragLeave(event)}>
-                    {radioDashboardControls}
-                </ListGroup>
-
+                <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+                <div className={"ab_object_list_item_medium"}>
+                    <ListGroup className="ab_preview_panel" onDragEnter={(event) => this.DragEnter(event)}
+                        onDragOver={(event) => this.DragOver(event)}
+                        onDragLeave={(event) => this.DragLeave(event)}>
+                        {radioDashboardControls}
+                    </ListGroup>
+                </div>
             </PanelWithImage>
         </div>
 
