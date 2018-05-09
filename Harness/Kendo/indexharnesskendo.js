@@ -94,7 +94,7 @@ messages: {
                         "ColumnValueExpressions": [
                             {
                                 "ColumnId": 'country',
-                                "DisplayValues": [
+                                "ColumnValues": [
                                     'France',
                                     'Germany'
                                 ]

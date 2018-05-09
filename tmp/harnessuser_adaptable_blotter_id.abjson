@@ -38,7 +38,7 @@
 					"ColumnValueExpressions": [
 						{
 							"ColumnId": "currency",
-							"DisplayValues": [
+							"ColumnValues": [
 								"EUR"
 							]
 						}

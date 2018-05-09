@@ -50,7 +50,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             let columnValues = this.props.Expression.ColumnValueExpressions.find(colValues => colValues.ColumnId == columnId)
             let columnValuesListgroupItems: JSX.Element[]
             if (columnValues) {
-                columnValuesListgroupItems = columnValues.DisplayValues.map(y => {
+                columnValuesListgroupItems = columnValues.ColumnValues.map(y => {
                     //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
                     // since html cannot render a button within a button.
                     // https://github.com/react-bootstrap/react-bootstrap/issues/1445

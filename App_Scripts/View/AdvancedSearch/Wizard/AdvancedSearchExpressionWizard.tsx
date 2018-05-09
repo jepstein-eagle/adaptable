@@ -2,7 +2,6 @@ import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } 
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdvancedSearch } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
 export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

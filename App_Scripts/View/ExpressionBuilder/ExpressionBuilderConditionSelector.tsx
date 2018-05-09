@@ -75,7 +75,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             // get column values
             let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
             if (keyValuePair) {
-                selectedColumnValues = keyValuePair.DisplayValues
+                selectedColumnValues = keyValuePair.ColumnValues
             }
             else {
                 selectedColumnValues = []
@@ -183,7 +183,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 :
                 <div>
                     {selectedColumn &&
-                        <Tab.Container id="left-tabs-example" defaultActiveKey={QueryTab.ColumnValue} activeKey={this.props.SelectedTab} >
+                        <Tab.Container id="left-tabs-example" defaultActiveKey={this.props.SelectedTab}  >
                             <div>
                                 <Nav bsStyle="pills" >
                                     <NavItem eventKey={QueryTab.ColumnValue} onClick={()=>this.onTabChanged(QueryTab.ColumnValue)} >Column Values</NavItem>
@@ -266,11 +266,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 colValuesExpression.splice(keyValuePairIndex, 1)
             }
             else {
-                valuesCol.DisplayValues = selectedColumnValues
+                valuesCol.ColumnValues = selectedColumnValues
             }
         }
         else {
-            colValuesExpression.push({ ColumnId: this.props.SelectedColumnId, DisplayValues: selectedColumnValues })
+            colValuesExpression.push({ ColumnId: this.props.SelectedColumnId, ColumnValues: selectedColumnValues })
         }
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { ColumnValueExpressions: colValuesExpression }))
         this.setState({ SelectedColumnValues: selectedColumnValues } as ExpressionBuilderConditionSelectorState)

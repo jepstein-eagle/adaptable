@@ -11,11 +11,11 @@ export interface IAdaptableBlotterObject {
 }
 
 /**
- * Any column values contained in the expression, grouped by column
+ * Any column values contained in the expression, grouped by column (using their DISPLAY value, not their raw value)
  */
 export interface IColumnValueExpression {
   ColumnId: string,
-  DisplayValues: string[]
+  ColumnValues: string[]
 }
 
 /**

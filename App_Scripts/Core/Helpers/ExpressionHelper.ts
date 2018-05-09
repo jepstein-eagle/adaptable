@@ -19,10 +19,10 @@ export interface IRangeEvaluation {
 
 export module ExpressionHelper {
     export function CreateSingleColumnExpression(columnId: string,
-        displayValues: Array<string>,
+        columnValues: Array<string>,
         userFilters: Array<string>,
         ranges: Array<IRange>) {
-        return new Expression(displayValues && displayValues.length > 0 ? [{ ColumnId: columnId, DisplayValues: displayValues }] : [],
+        return new Expression(columnValues && columnValues.length > 0 ? [{ ColumnId: columnId, ColumnValues: columnValues }] : [],
              userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
@@ -48,9 +48,9 @@ export module ExpressionHelper {
             let columnToString = ""
 
             // Column Display Values
-            let displayValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
-            if (displayValues) {
-                columnToString = DisplayValuesKeyValuePairToString(displayValues, columnFriendlyName)
+            let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
+            if (columnValues) {
+                columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
             }
 
                 // User Filters
@@ -103,10 +103,10 @@ export module ExpressionHelper {
 
             // check for display column values
             if (!isColumnSatisfied) {
-                let displayValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
-                if (displayValues) {
-                    let columnDisplayValue = getDisplayColumnValue(displayValues.ColumnId)
-                    isColumnSatisfied = displayValues.DisplayValues.findIndex(v => v == columnDisplayValue) != -1;
+                let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
+                if (columnValues) {
+                    let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId)
+                    isColumnSatisfied = columnValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
                 }
             }
 
@@ -162,17 +162,12 @@ export module ExpressionHelper {
         return true;
     }
 
-    function DisplayValuesKeyValuePairToString(keyValuePair: { ColumnId: string, DisplayValues: Array<any> }, columnFriendlyName: string): string {
+    function ColumnValuesKeyValuePairToString(keyValuePair: { ColumnId: string, ColumnValues: Array<any> }, columnFriendlyName: string): string {
         return "[" + columnFriendlyName + "]"
-            + " In (" + keyValuePair.DisplayValues.join(", ") + ")"
+            + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
     }
 
-    function RawValuesKeyValuePairToString(keyValuePair: { ColumnId: string, RawValues: Array<any> }, columnFriendlyName: string): string {
-        return "[" + columnFriendlyName + "]"
-            + " In (" + keyValuePair.RawValues.join(", ") + ")"
-    }
-
-    function UserFiltersKeyPairToString(userFilters: string[], columnFriendlyName: string): string {
+     function UserFiltersKeyPairToString(userFilters: string[], columnFriendlyName: string): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {

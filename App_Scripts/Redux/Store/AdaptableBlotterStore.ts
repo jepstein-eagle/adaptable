@@ -303,12 +303,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) => console.log("TeamSharing share error :" + ev.message, actionTyped.Entity)
-                    xhr.ontimeout = (ev: ProgressEvent) => console.log("TeamSharing share timeout", actionTyped.Entity)
+                    xhr.onerror = (ev: ErrorEvent) =>  blotter.LoggingService.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
+                    xhr.ontimeout = (ev: ProgressEvent) =>  blotter.LoggingService.LogWarning("TeamSharing share timeout", actionTyped.Entity)
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                console.error("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                                blotter.LoggingService.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
                                 middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error Sharing item: " + xhr.statusText }))
                             }
                             else {
@@ -332,12 +332,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                 case TeamSharingRedux.TEAMSHARING_GET: {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) => console.log("TeamSharing get error :" + ev.message)
-                    xhr.ontimeout = (ev: ProgressEvent) => console.log("TeamSharing get timeout")
+                    xhr.onerror = (ev: ErrorEvent) =>  blotter.LoggingService.LogError("TeamSharing get error :" + ev.message)
+                    xhr.ontimeout = (ev: ProgressEvent) =>  blotter.LoggingService.LogWarning("TeamSharing get timeout")
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                console.error("TeamSharing get error : " + xhr.statusText);
+                                blotter.LoggingService.LogError("TeamSharing get error : " + xhr.statusText);
                             }
                             else {
                                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {

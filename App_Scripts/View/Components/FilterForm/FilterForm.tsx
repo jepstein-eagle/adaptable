@@ -54,7 +54,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: string[]= existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-                existingColumnFilter.Filter.ColumnValueExpressions[0].DisplayValues : []
+                existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
       
         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
@@ -109,7 +109,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnValueExpressions[0].DisplayValues : []
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
 
         let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
             existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
@@ -124,7 +124,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
 
         let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnValueExpressions[0].DisplayValues : []
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
 
         this.persistFilter(columnValues, userFilters, [rangeExpression]);
     }

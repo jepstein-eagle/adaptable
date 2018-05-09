@@ -27,7 +27,7 @@
 					"ColumnValueExpressions": [
 						{
 							"ColumnId": "counterparty",
-							"DisplayValues": [
+							"ColumnValues": [
 								"Credit Suisse",
 								"Deutsche Bank",
 								"Goldman Sachs"

@@ -270,7 +270,7 @@ let json = {
                     "ColumnValueExpressions": [
                         {
                             "ColumnId": 'country',
-                            "DisplayValues": [
+                            "ColumnValues": [
                                 'France',
                                 'Germany'
                             ]
@@ -300,7 +300,7 @@ let json = {
                     "ColumnValueExpressions": [
                         {
                             "ColumnId": 'bid',
-                            "DisplayValues": [
+                            "ColumnValues": [
                                 '14.3971'
                             ]
                         }
