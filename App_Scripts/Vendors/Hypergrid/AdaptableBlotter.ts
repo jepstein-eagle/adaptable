@@ -613,7 +613,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public ReindexAndRepaint() {
         this.vendorGrid.behavior.reindex();
-        this.vendorGrid.properepaintrties();
+        this.vendorGrid.repaint();
         this._onRefresh.Dispatch(this, this);
     }
 
@@ -751,15 +751,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         if (style == 'flash') {
             cellStyleHypergrid.flashBackColor = undefined
-            this.vendorGrid.properepaintrties()
+            this.vendorGrid.repaint()
         }
         if (style == 'csColumn') {
             cellStyleHypergrid.conditionalStyleColumn = undefined
-            this.vendorGrid.properepaintrties()
+            this.vendorGrid.repaint()
         }
         if (style == 'csRow') {
             cellStyleHypergrid.conditionalStyleRow = undefined
-            this.vendorGrid.properepaintrties()
+            this.vendorGrid.repaint()
         }
         if (style == 'QuickSearch') {
             cellStyleHypergrid.quickSearchStyle = undefined
@@ -775,15 +775,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             cellStyleHypergridColumns.forEach((cellStyleHypergrid) => {
                 if (style == 'flash') {
                     cellStyleHypergrid.flashBackColor = undefined
-                    this.vendorGrid.properepaintrties()
+                    this.vendorGrid.repaint()
                 }
                 if (style == 'csColumn') {
                     cellStyleHypergrid.conditionalStyleColumn = undefined
-                    this.vendorGrid.properepaintrties()
+                    this.vendorGrid.repaint()
                 }
                 if (style == 'csRow') {
                     cellStyleHypergrid.conditionalStyleRow = undefined
-                    this.vendorGrid.properepaintrties()
+                    this.vendorGrid.repaint()
                 }
                 if (style == 'QuickSearch') {
                     cellStyleHypergrid.quickSearchStyle = undefined

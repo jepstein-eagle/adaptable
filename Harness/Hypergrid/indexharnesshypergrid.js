@@ -136,7 +136,7 @@ function InitBlotter() {
     vendorGrid.addProperties({ editOnKeydown: false })
     let behavior = vendorGrid.behavior;
 
-    vendorGrid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
+    vendorGrid.localization.add('USDCurrencyFormat', new vendorGrid.localization.NumberFormatter('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0,
@@ -144,7 +144,7 @@ function InitBlotter() {
     }));
 
     var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    vendorGrid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
+    vendorGrid.localization.add('shortDateFormat', new vendorGrid.localization.DateFormatter('en-EN', shortDateOptions));
 
     //we enable the edit on some columns
     vendorGrid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
