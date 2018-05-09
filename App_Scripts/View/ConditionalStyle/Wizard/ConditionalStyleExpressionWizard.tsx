@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IConditionalStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
@@ -11,7 +11,8 @@ export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage impl
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,
-            SelectedColumnId: StringExtensions.IsNotNullOrEmpty(props2.Data.ColumnId) ? props2.Data.ColumnId : ""
+            SelectedColumnId: StringExtensions.IsNotNullOrEmpty(props2.Data.ColumnId) ? props2.Data.ColumnId : "",
+            SelectedTab: QueryTab.ColumnValue
         }
     }
 

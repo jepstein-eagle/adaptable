@@ -40,8 +40,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
             let filterContext: IColumnFilterContext = {
                 Column: blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == this.params.column.getColId()),
                 Blotter: blotter,
-                ColumnValueType: DistinctCriteriaPairValue.DisplayValue
-            };
+             };
             blotter.hideFilterFormPopup = params.hidePopup
             ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
         }

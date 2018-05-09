@@ -35,7 +35,7 @@
 				},
 				"ConditionalStyleScope": "Row",
 				"Expression": {
-					"DisplayValueExpressions": [
+					"ColumnValueExpressions": [
 						{
 							"ColumnId": "currency",
 							"DisplayValues": [
@@ -43,7 +43,6 @@
 							]
 						}
 					],
-					"RawValueExpressions": [],
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				},
@@ -67,8 +66,7 @@
 			{
 				"Name": "Trades",
 				"Expression": {
-					"DisplayValueExpressions": [],
-					"RawValueExpressions": [],
+					"ColumnValueExpressions": [],
 					"FilterExpressions": [
 						{
 							"ColumnId": "changeOnYear",

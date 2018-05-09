@@ -70,8 +70,8 @@ import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort } from
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { IErrorService } from '../../Core/Services/Interface/IErrorService';
-import { ErrorService } from '../../Core/Services/ErrorService';
+import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
+import { LoggingService } from '../../Core/Services/LoggingService';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -83,7 +83,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public ErrorService: IErrorService
+    public LoggingService: ILoggingService
 
     public StyleService: StyleService
     // public ThemeService: ThemeService
@@ -103,7 +103,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
-        this.ErrorService = new ErrorService(this);
+        this.LoggingService = new LoggingService(this);
 
 
         // this.ThemeService = new ThemeService(this);
@@ -195,7 +195,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let filterContext: IColumnFilterContext = {
             Column: this.getColumnFromColumnId(e.field),
             Blotter: this,
-            ColumnValueType: DistinctCriteriaPairValue.RawValue
         };
 
         // Remove default filter UI
@@ -351,13 +350,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: kendo.ui.GridColumn): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            console.log('column is undefined returning String for Type')
+            this.LoggingService.LogMessage('column is undefined returning String for Type')
             return DataType.String;
         }
         if (!this.vendorGrid.dataSource.options.schema.hasOwnProperty('model') ||
             !this.vendorGrid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             let type = this.getTypeFromFirstRecord(column.field);
-            console.log('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, type)
+            this.LoggingService.LogMessage('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, type)
             return type
         }
 

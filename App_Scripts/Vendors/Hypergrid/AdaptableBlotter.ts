@@ -14,10 +14,10 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
-import { IErrorService } from '../../Core/Services/Interface/IErrorService'
+import { ILoggingService } from '../../Core/Services/Interface/ILoggingService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
-import { ErrorService } from '../../Core/Services/ErrorService'
+import { LoggingService } from '../../Core/Services/LoggingService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
@@ -102,7 +102,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public ErrorService: IErrorService
+    public LoggingService: ILoggingService
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
@@ -123,7 +123,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.ErrorService = new ErrorService(this);
+        this.LoggingService = new LoggingService(this);
         // this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
@@ -374,31 +374,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            console.log('columnId is undefined returning String for Type')
+            this.LoggingService.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
         if (column) {
             if (!column.hasOwnProperty('type')) {
-                let dateType: DataType
+                let dataType: DataType
 
                 switch (column.getType()) {
                     case 'string':
-                        dateType = DataType.String;
+                        dataType = DataType.String;
                         break;
                     case 'number':
                     case 'int':
                     case 'float':
-                        dateType = DataType.Number;
+                        dataType = DataType.Number;
                         break
                     case 'boolean':
-                        dateType = DataType.Boolean;
+                        dataType = DataType.Boolean;
                         break
                     case 'date':
-                        dateType = DataType.Date;
+                        dataType = DataType.Date;
                         break
                     case 'object':
-                        dateType = DataType.Object;
+                        dataType = DataType.Object;
                         break
                     //for calculated column that's what happens
                     case 'unknown': {
@@ -406,21 +406,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let record = this.getFirstRecord()
                         var value = this.valOrFunc(record, column)
                         if (value instanceof Date) {
-                            dateType = DataType.Date
+                            dataType = DataType.Date
                         }
                         else {
                             switch (typeof value) {
                                 case 'string':
-                                    dateType = DataType.String;
+                                    dataType = DataType.String;
                                     break
                                 case 'number':
-                                    dateType = DataType.Number;
+                                    dataType = DataType.Number;
                                     break
                                 case 'boolean':
-                                    dateType = DataType.Boolean;
+                                    dataType = DataType.Boolean;
                                     break
                                 case 'object':
-                                    dateType = DataType.Object;
+                                    dataType = DataType.Object;
                                     break
                                 default:
                                     break;
@@ -431,8 +431,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     default:
                         break;
                 }
-                console.log('There is no defined type. Defaulting to type of the first value for column ' + column.name, dateType)
-                return dateType
+                this.LoggingService.LogMessage('There is no defined type. Defaulting to type of the first value for column ' + column.name + ": " + dataType)
+                return dataType
             }
 
             let type = column.type;
@@ -452,7 +452,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 //  }
             }
         }
-        console.log('columnId does not exist')
+        this.LoggingService.LogWarning('columnId does not exist')
         return DataType.String;
     }
 
@@ -950,8 +950,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let filterContext: IColumnFilterContext = {
                         Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                         Blotter: this,
-                        ColumnValueType: DistinctCriteriaPairValue.DisplayValue
-                    };
+                     };
                     this.filterContainer.style.visibility = 'visible';
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
                     this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
@@ -1037,7 +1036,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (foundCol && foundCol.index == columnIndex) {
                     icon = (gs.SortOrder == SortOrder.Ascending) ? UPWARDS_BLACK_ARROW : DOWNWARDS_BLACK_ARROW;
                     if (gridSorts.length > 1) {
-                        let gridIndex= index + 1
+                        let gridIndex = index + 1
                         icon += "(" + gridIndex + ") "
                     }
                 }
@@ -1229,7 +1228,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.behavior.reindex();
     }
 
-    public setDataSource(data: any): void {
+    public setGridData(data: any): void {
         let schema = this.vendorGrid.behavior.dataModel.dataSource.schema;
         this.vendorGrid.behavior.dataModel.dataSource.setData(data, schema);
         this.ReindexAndRepaint();

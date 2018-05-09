@@ -20,12 +20,10 @@ export interface IRangeEvaluation {
 export module ExpressionHelper {
     export function CreateSingleColumnExpression(columnId: string,
         displayValues: Array<string>,
-        rawValues: Array<any>,
         userFilters: Array<string>,
         ranges: Array<IRange>) {
         return new Expression(displayValues && displayValues.length > 0 ? [{ ColumnId: columnId, DisplayValues: displayValues }] : [],
-            rawValues && rawValues.length > 0 ? [{ ColumnId: columnId, RawValues: rawValues }] : [],
-            userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
+             userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
     }
@@ -50,21 +48,12 @@ export module ExpressionHelper {
             let columnToString = ""
 
             // Column Display Values
-            let displayValues = Expression.DisplayValueExpressions.find(x => x.ColumnId == columnId)
+            let displayValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
             if (displayValues) {
                 columnToString = DisplayValuesKeyValuePairToString(displayValues, columnFriendlyName)
             }
 
-            // Column Raw Values
-            let columnRawValues = Expression.RawValueExpressions.find(x => x.ColumnId == columnId)
-            if (columnRawValues) {
-                if (columnToString != "") {
-                    columnToString += " OR "
-                }
-                columnToString += RawValuesKeyValuePairToString(columnRawValues, columnFriendlyName)
-            }
-
-            // User Filters
+                // User Filters
             let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId)
             if (columnUserFilters) {
                 if (columnToString != "") {
@@ -114,23 +103,14 @@ export module ExpressionHelper {
 
             // check for display column values
             if (!isColumnSatisfied) {
-                let displayValues = Expression.DisplayValueExpressions.find(x => x.ColumnId == columnId)
+                let displayValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
                 if (displayValues) {
                     let columnDisplayValue = getDisplayColumnValue(displayValues.ColumnId)
                     isColumnSatisfied = displayValues.DisplayValues.findIndex(v => v == columnDisplayValue) != -1;
                 }
             }
 
-            // check for raw column values
-            if (!isColumnSatisfied) {
-                let columnRawValues = Expression.RawValueExpressions.find(x => x.ColumnId == columnId)
-                if (columnRawValues) {
-                    let columnRawValue = getColumnValue(columnRawValues.ColumnId)
-                    isColumnSatisfied = columnRawValues.RawValues.findIndex(v => v == columnRawValue) != -1;
-                }
-            }
-
-            // Check for filter expressions if column fails
+           // Check for filter expressions if column fails
             if (!isColumnSatisfied) {
                 let columnFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId)
                 if (columnFilters) {
@@ -354,15 +334,13 @@ export module ExpressionHelper {
     }
 
     export function GetColumnListFromExpression(expression: Expression): Array<string> {
-        return Array.from(new Set(expression.DisplayValueExpressions.map(x => x.ColumnId)
-            .concat(expression.RawValueExpressions.map(x => x.ColumnId))
+        return Array.from(new Set(expression.ColumnValueExpressions.map(x => x.ColumnId)
             .concat(expression.FilterExpressions.map(x => x.ColumnId))
             .concat(expression.RangeExpressions.map(x => x.ColumnId))))
     }
 
     export function IsEmptyExpression(expression: Expression): boolean {
-        return expression.DisplayValueExpressions.length == 0
-            && expression.RawValueExpressions.length == 0
+        return expression.ColumnValueExpressions.length == 0
             && expression.FilterExpressions.length == 0
             && expression.RangeExpressions.length == 0
     }
@@ -424,7 +402,7 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyExpression(): Expression {
-        return new Expression([], [], [], [])
+        return new Expression([],  [], [])
     }
 
     export function CreateEmptyRangeExpression(): IRange {

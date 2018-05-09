@@ -34,6 +34,8 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
         const selectDataSourceString: string = "Select Data Source"
         let cssClassName: string = this.props.cssClassName + "__dataSource";
 
+        let infoBody :any[] = [ "Select a datasource from the dropdown to be evaluated on the server."]
+
         let currentDataSource = StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource) ?
             selectDataSourceString : this.props.CurrentDataSource
 
@@ -69,7 +71,7 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
 
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.DataSourceStrategyName} bsStyle="primary" infoBody={["Select a datasource"]} glyphicon={StrategyGlyphs.DataSourceGlyph} >
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.DataSourceStrategyName} bsStyle="primary" infoBody={infoBody} glyphicon={StrategyGlyphs.DataSourceGlyph} >
                 {content}
             </PanelWithImage>
         </div>

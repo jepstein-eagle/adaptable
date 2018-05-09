@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IPlusMinusRule } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
@@ -12,7 +12,8 @@ export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements 
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,
-            SelectedColumnId: ""
+            SelectedColumnId: "",
+            SelectedTab: QueryTab.ColumnValue
         }
     }
 

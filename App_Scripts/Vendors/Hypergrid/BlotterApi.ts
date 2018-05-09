@@ -10,8 +10,8 @@ export class BlotterApi extends BlotterApiBase implements IBlotterApi {
         this.blotter = blotter;
     }
 
-    public setDataSource(dataSource: any): void {
+    public setGridData(dataSource: any): void {
         let theBlotter = this.blotter as AdaptableBlotter
-        theBlotter.setDataSource(dataSource);
+        theBlotter.setGridData(dataSource);
     }
 }

@@ -9,7 +9,7 @@ export class BlotterApi extends BlotterApiBase implements IBlotterApi {
         // this.blotter = blotter;
     }
 
-    public setDataSource(dataSource: any): void {
+    public setGridData(dataSource: any): void {
         // todo
     }
 }

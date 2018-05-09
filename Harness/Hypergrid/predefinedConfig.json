@@ -24,7 +24,7 @@
 			{
 				"Name": "TestJo",
 				"Expression": {
-					"DisplayValueExpressions": [
+					"ColumnValueExpressions": [
 						{
 							"ColumnId": "counterparty",
 							"DisplayValues": [
@@ -34,7 +34,6 @@
 							]
 						}
 					],
-					"RawValueExpressions": [],
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				},

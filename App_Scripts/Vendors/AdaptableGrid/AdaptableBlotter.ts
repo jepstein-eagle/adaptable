@@ -52,8 +52,8 @@ import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/Adaptable
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { IErrorService } from '../../Core/Services/Interface/IErrorService';
-import { ErrorService } from '../../Core/Services/ErrorService';
+import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
+import { LoggingService } from '../../Core/Services/LoggingService';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -67,7 +67,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public ErrorService: IErrorService
+    public LoggingService: ILoggingService
     
     public StyleService: StyleService
     //  public ThemeService: ThemeService
@@ -85,7 +85,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.ErrorService = new ErrorService(this);
+        this.LoggingService = new LoggingService(this);
         this.StyleService = new StyleService(this);
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
@@ -274,7 +274,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: AdaptableGrid.Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            console.log('columnId is undefined returning String for Type')
+            this.LoggingService.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 

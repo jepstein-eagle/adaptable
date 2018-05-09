@@ -21,7 +21,7 @@ import { IFlashingCell } from "../../Core/Api/Interface/AdaptableBlotterObjects"
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: Array<IFlashingCell>,
     onSelectColumn: (flashingCell: IFlashingCell) => FlashingCellsRedux.FlashingCellSelectAction,
-    onSelectAllColumns: (numericColumns: IFlashingCell[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
+    onSelectAllColumns: (shouldTurnOn: boolean, numericColumns: IFlashingCell[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
     onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
     onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => FlashingCellsRedux.FlashingCellChangeDownColorAction
     onChangeUpColorFlashingCell: (flashingCell: IFlashingCell, UpColor: string) => FlashingCellsRedux.FlashingCellChangeUpColorAction
@@ -83,11 +83,12 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             </FlashingCellEntityRow>
         });
 
+        let areAllLive: boolean = allPotentialFlashingCells.every(f => f.IsLive)
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12} className="ab_medium_margin">
-                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingCells.filter(x => x.IsLive == true))}
-                        checked={allPotentialFlashingCells.every(f => f.IsLive)} > All Columns </Checkbox>
+                    <Checkbox onChange={() => this.props.onSelectAllColumns(!areAllLive,  allPotentialFlashingCells)}
+                        checked={areAllLive} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
         </AdaptableBlotterForm>;
@@ -111,7 +112,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectColumn: (flashingCell: IFlashingCell) => dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),
-        onSelectAllColumns: (numericColumns: IFlashingCell[]) => dispatch(FlashingCellsRedux.FlashingCellSelectAll(numericColumns)),
+        onSelectAllColumns: (shouldTurnOn: boolean, numericColumns: IFlashingCell[]) => dispatch(FlashingCellsRedux.FlashingCellSelectAll(shouldTurnOn, numericColumns)),
         onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => dispatch(FlashingCellsRedux.FlashingCellChangeDuration(flashingCell, newFlashDuration)),
         onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeDownColor(flashingCell, DownColor)),
         onChangeUpColorFlashingCell: (flashingCell: IFlashingCell, UpColor: string) => dispatch(FlashingCellsRedux.FlashingCellChangeUpColor(flashingCell, UpColor))

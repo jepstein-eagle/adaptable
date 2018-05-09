@@ -13,17 +13,9 @@ export interface IAdaptableBlotterObject {
 /**
  * Any column values contained in the expression, grouped by column
  */
-export interface IDisplayValueExpression {
+export interface IColumnValueExpression {
   ColumnId: string,
   DisplayValues: string[]
-}
-
-/**
- * Any raw (i.e. underlying) column values contained in the expression, grouped by column
- */
-export interface IRawValueExpression {
-  ColumnId: string,
-  RawValues: string[]
 }
 
 /**

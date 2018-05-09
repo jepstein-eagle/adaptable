@@ -89,8 +89,8 @@ import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { IErrorService } from '../../Core/Services/Interface/IErrorService';
-import { ErrorService } from '../../Core/Services/ErrorService';
+import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
+import { LoggingService } from '../../Core/Services/LoggingService';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -105,7 +105,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public ErrorService: IErrorService
+    public LoggingService: ILoggingService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public StyleService: StyleService
@@ -124,7 +124,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.ErrorService = new ErrorService(this);
+        this.LoggingService = new LoggingService(this);
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.StyleService = new StyleService(this);
@@ -405,7 +405,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            console.log('columnId is undefined returning String for Type')
+            this.LoggingService.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -442,7 +442,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let row = this.vendorGrid.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
-            console.log('there is no first row so we are returning Unknown for Type')
+            this.LoggingService.LogWarning('there is no first row so we are returning Unknown for Type')
             return DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -472,7 +472,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
             }
         }
-        console.log('There is no defined type. Defaulting to type of the first value for column ' + column.getColId(), dataType)
+        this.LoggingService.LogMessage ('There is no defined type. Defaulting to type of the first value for column ' + column.getColId() + ": " + dataType)
         return dataType
     }
 

@@ -5,7 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
-import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus } from '../../Core/Enums'
+import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus, QueryTab } from '../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
@@ -30,6 +30,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
 export interface ExpressionBuilderPageState {
     Expression: Expression
     SelectedColumnId: string
+    SelectedTab: QueryTab
 }
 
 export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState> implements AdaptableWizardStep {
@@ -66,8 +67,9 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                             Expression={this.state.Expression}
                             ExpressionMode={(this.props.ExpressionMode != null) ? this.props.ExpressionMode : ExpressionMode.MultiColumn}
                             onExpressionChange={(expression) => this.onChangeExpression(expression)}
-                            onSelectedColumnChange={(columnId) => this.onSelectedColumnChange(columnId)}
+                            onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
                             SelectedColumnId={this.state.SelectedColumnId}
+                            SelectedTab={this.state.SelectedTab}
                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
                         </ExpressionBuilderConditionSelector>
                     </Col>
@@ -75,7 +77,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                         <ExpressionBuilderPreview Expression={this.state.Expression}
                           cssClassName={cssClassName} 
                           UserFilters={this.props.UserFilters}
-                            onSelectedColumnChange={(columnId) => this.onSelectedColumnChange(columnId)}
+                            onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
                             SelectedColumnId={this.state.SelectedColumnId}
                             ColumnsList={this.props.Columns}
                             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
@@ -115,12 +117,12 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     DeleteColumnValue(columnId: string, value: any) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
-        let columnValues = this.state.Expression.DisplayValueExpressions.find(x => x.ColumnId == columnId)
+        let columnValues = this.state.Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
         let index = columnValues.DisplayValues.indexOf(value)
         columnValues.DisplayValues.splice(index, 1)
         if (columnValues.DisplayValues  .length == 0) {
-            let columnValuesIndex = this.state.Expression.DisplayValueExpressions.findIndex(x => x.ColumnId == columnId)
-            this.state.Expression.DisplayValueExpressions.splice(columnValuesIndex, 1)
+            let columnValuesIndex = this.state.Expression.ColumnValueExpressions.findIndex(x => x.ColumnId == columnId)
+            this.state.Expression.ColumnValueExpressions.splice(columnValuesIndex, 1)
         }
         let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
@@ -153,9 +155,9 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     DeleteAllColumnExpression(columnId: string) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
-        let columnValuesIndex: number = this.state.Expression.DisplayValueExpressions.findIndex(x => x.ColumnId == columnId)
+        let columnValuesIndex: number = this.state.Expression.ColumnValueExpressions.findIndex(x => x.ColumnId == columnId)
         if (columnValuesIndex >= 0) {
-            this.state.Expression.DisplayValueExpressions.splice(columnValuesIndex, 1)
+            this.state.Expression.ColumnValueExpressions.splice(columnValuesIndex, 1)
         }
 
         let columnUserFilterExpressionIndex = this.state.Expression.FilterExpressions.findIndex(x => x.ColumnId == columnId)
@@ -177,8 +179,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 
-    onSelectedColumnChange(columnId: string) {
-        this.setState({ SelectedColumnId: columnId } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
+    onSelectedColumnChange(columnId: string, tab: QueryTab) {
+        this.setState({ SelectedColumnId: columnId, SelectedTab: tab } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

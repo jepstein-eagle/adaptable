@@ -213,17 +213,17 @@ function InitBlotter() {
 
 function getTradesForSearch(searchArgs, dataGen) {
     if (searchArgs.SearchChangedTrigger == "DataSource") {
-        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
-            adaptableblotter.api.setDataSource(dataGen.getDollarTrades());
-            adaptableblotter.api.setLayout("Dollar View")
+          if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
+            adaptableblotter.api.setGridData(dataGen.getDollarTrades());
+            adaptableblotter.api.selectLayout("Dollar View")
         } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
-            adaptableblotter.api.setDataSource(dataGen.getGBPTrades());
-            adaptableblotter.api.setLayout("Sterling View")
+            adaptableblotter.api.setGridData(dataGen.getGBPTrades());
+            adaptableblotter.api.selectLayout("Sterling View")
         } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
-            adaptableblotter.api.setDataSource(dataGen.getEuroTrades());
-            adaptableblotter.api.setLayout("Euro View")
+            adaptableblotter.api.setGridData(dataGen.getEuroTrades());
+            adaptableblotter.api.selectLayout("Euro View")
         } else {
-            adaptableblotter.api.setDataSource(dataGen.getTrades());
+            adaptableblotter.api.setGridData(dataGen.getTrades());
             adaptableblotter.api.clearLayout();
         }
     }
@@ -267,7 +267,7 @@ let json = {
                 },
                 "ConditionalStyleScope": 'Row',
                 "Expression": {
-                    "DisplayValueExpressions": [
+                    "ColumnValueExpressions": [
                         {
                             "ColumnId": 'country',
                             "DisplayValues": [
@@ -276,7 +276,6 @@ let json = {
                             ]
                         }
                     ],
-                    "RawValueExpressions": [],
                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },
@@ -298,7 +297,7 @@ let json = {
             {
                 "Name": 'test',
                 "Expression": {
-                    "DisplayValueExpressions": [
+                    "ColumnValueExpressions": [
                         {
                             "ColumnId": 'bid',
                             "DisplayValues": [
@@ -306,8 +305,7 @@ let json = {
                             ]
                         }
                     ],
-                    "RawValueExpressions": [],
-                    "FilterExpressions": [],
+                     "FilterExpressions": [],
                     "RangeExpressions": []
                 },
                 "IsReadOnly": false

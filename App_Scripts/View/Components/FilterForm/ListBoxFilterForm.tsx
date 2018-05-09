@@ -28,7 +28,6 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
     onCustomRangeExpressionChange: (rangeExpression: IRange) => void
     onClearFilter: () => void
-    ColumnValueType: DistinctCriteriaPairValue
     Operators: Array<LeafExpressionOperator>
     DataType: DataType
     cssClassName: string
@@ -80,16 +79,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         })
 
         let columnValuesItemsElements = this.props.ColumnValues.map((x, y) => {
-            let isActive: boolean
-            let value: any
-            if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-                isActive = this.state.UiSelectedColumnValues.indexOf(x.RawValue) >= 0;
-                value = x.RawValue;
-            }
-            else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
-                isActive = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
-                value = x.DisplayValue;
-            }
+            let isActive: boolean = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
+            let value: any = x.DisplayValue;
 
             let display: string = x.DisplayValue;
             if (StringExtensions.IsNotEmpty(this.state.FilterValue) && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
@@ -156,7 +147,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 </FormGroup>
             </AdaptableBlotterForm>
 
-let isEmptyFilter: boolean = this.state.UiSelectedColumnValues.length == 0 && this.state.UiSelectedUserFilters.length==0 && ExpressionHelper.IsEmptyRange( this.state.UiSelectedRange);
+        let isEmptyFilter: boolean = this.state.UiSelectedColumnValues.length == 0 && this.state.UiSelectedUserFilters.length == 0 && ExpressionHelper.IsEmptyRange(this.state.UiSelectedRange);
         let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.props.onClearFilter()}
             bsStyle={"default"}
             style={{ margin: "5px" }}
@@ -280,13 +271,8 @@ let isEmptyFilter: boolean = this.state.UiSelectedColumnValues.length == 0 && th
 
     onClickItemColumnValue(item: IRawValueDisplayValuePair) {
         let index: number
-        if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-            index = this.state.UiSelectedColumnValues.indexOf(item.RawValue);
-        }
-        else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
-            index = this.state.UiSelectedColumnValues.indexOf(item.DisplayValue);
-        }
-
+        index = this.state.UiSelectedColumnValues.indexOf(item.DisplayValue);
+     
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedColumnValues];
             newArray.splice(index, 1);
@@ -294,12 +280,7 @@ let isEmptyFilter: boolean = this.state.UiSelectedColumnValues.length == 0 && th
         }
         else {
             let newArray = [...this.state.UiSelectedColumnValues];
-            if (this.props.ColumnValueType == DistinctCriteriaPairValue.RawValue) {
-                newArray.push(item.RawValue)
-            }
-            else if (this.props.ColumnValueType == DistinctCriteriaPairValue.DisplayValue) {
                 newArray.push(item.DisplayValue)
-            }
             this.setState({ UiSelectedColumnValues: newArray } as ListBoxFilterFormState, () => this.raiseOnChangeColumnValues())
         }
     }

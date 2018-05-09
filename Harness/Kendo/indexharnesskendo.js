@@ -91,7 +91,7 @@ messages: {
                     },
                     "ConditionalStyleScope": 'Row',
                     "Expression": {
-                        "DisplayValueExpressions": [
+                        "ColumnValueExpressions": [
                             {
                                 "ColumnId": 'country',
                                 "DisplayValues": [
@@ -100,7 +100,6 @@ messages: {
                                 ]
                             }
                         ],
-                        "RawValueExpressions": [],
                         "FilterExpressions": [],
                         "RangeExpressions": []
                     },

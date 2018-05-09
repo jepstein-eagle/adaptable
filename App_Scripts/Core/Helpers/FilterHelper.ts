@@ -74,8 +74,8 @@ export module FilterHelper {
     export function GetColumnIdForUserFilter(userFilter: IUserFilter): string {
 
         // see if there are any columnvalues and then get the first only
-        if (userFilter.Expression.DisplayValueExpressions != null && userFilter.Expression.DisplayValueExpressions.length > 0) {
-            return userFilter.Expression.DisplayValueExpressions[0].ColumnId;
+        if (userFilter.Expression.ColumnValueExpressions != null && userFilter.Expression.ColumnValueExpressions.length > 0) {
+            return userFilter.Expression.ColumnValueExpressions[0].ColumnId;
         }
 
         // see if there are any user filter expressionss and then get the first only

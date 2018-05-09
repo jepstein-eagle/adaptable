@@ -179,5 +179,11 @@ export enum Visibility {
     Hidden = "Hidden",
 }
 
+export enum QueryTab  {
+    ColumnValue = "ColumnValue",
+    Filter = "Filter",
+    Range = "Range",
+}
+
 
 

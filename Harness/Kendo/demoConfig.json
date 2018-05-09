@@ -8,7 +8,7 @@
 				},
 				"ConditionalStyleScope": "Row",
 				"Expression": {
-					"DisplayValueExpressions": [
+					"ColumnValueExpressions": [
 						{
 							"ColumnId": "country",
 							"DisplayValues": [
@@ -17,7 +17,6 @@
 							]
 						}
 					],
-					"RawValueExpressions": [],
 					"FilterExpressions": [],
 					"RangeExpressions": []
 				}

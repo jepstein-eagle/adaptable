@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
-import { DistinctCriteriaPairValue, ReportColumnScope } from '../../../Core/Enums'
+import { DistinctCriteriaPairValue, ReportColumnScope, QueryTab } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IReport } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 
@@ -10,7 +10,8 @@ export class ReportExpressionWizard extends ExpressionBuilderPage implements Ada
         super(props2)
         this.state = {
             Expression: props2.Data.Expression,
-            SelectedColumnId:  "" // what is this????
+            SelectedColumnId:  "", // what is this????,
+            SelectedTab: QueryTab.ColumnValue
         }
     }
 
