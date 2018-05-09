@@ -74,7 +74,7 @@ export interface DashboardState {
     VisibleToolbars: string[]
     VisibleButtons: string[]
     Zoom: number,
-    DashboardVisibility: Visibility
+    DashboardVisibility: 'Minimised'| 'Visible'| 'Hidden'
 }
 
 
