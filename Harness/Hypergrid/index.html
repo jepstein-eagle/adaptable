@@ -16,18 +16,18 @@
 
     <script src="ExtLibs/angular/angular.min.js"></script>
     <script src="ExtLibs/iPushPull/ng-ipushpull-standalone.js"></script>
+    <script src="adaptableblotterhypergrid-bundle.js"></script>
+    
 </head>
 
 <body>
-    <div>
-        <div id="content"></div>
-    </div>
+    <!-- div for the adaptable blotter -->
+    <div id="adaptableBlotter"></div>
 
-
-    <script src="adaptableblotterhypergrid-bundle.js"></script>
-    <p/>
+    <!-- div for the underlying grid - please always call this 'grid' -->
     <div id="grid"></div>
 
+    <!-- script to instantiate the Adaptable Blotter-->
     <script>
         InitBlotter()
     </script>

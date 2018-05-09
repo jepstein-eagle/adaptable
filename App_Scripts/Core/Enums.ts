@@ -173,5 +173,11 @@ export enum SearchChangedTrigger {
     Sort = "Sort",
 }
 
+export enum Visibility {
+    Minimised = "Minimised",
+    Visible = "Visible",
+    Hidden = "Hidden",
+}
+
 
 

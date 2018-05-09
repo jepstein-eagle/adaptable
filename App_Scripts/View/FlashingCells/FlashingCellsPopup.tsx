@@ -86,7 +86,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12} className="ab_medium_margin">
-                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingCells.filter(x => x.IsReadOnly == true))}
+                    <Checkbox onChange={() => this.props.onSelectAllColumns(allPotentialFlashingCells.filter(x => x.IsLive == true))}
                         checked={allPotentialFlashingCells.every(f => f.IsLive)} > All Columns </Checkbox>
                 </Col>
             </FormGroup>

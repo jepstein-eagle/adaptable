@@ -1,11 +1,11 @@
-function ThemeChange(blotter, grid) {
+function ThemeChange(blotter, vendorGrid) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
         if (themeName == "Dark Theme" || themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
-            grid.addProperties(darkTheme);
+            vendorGrid.addProperties(darkTheme);
         }
         else {
-            grid.addProperties(lightTheme);
+            vendorGrid.addProperties(lightTheme);
         }
     }
 }
@@ -127,16 +127,16 @@ function InitBlotter() {
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades();
 
-    var grid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-    // dataGen.startTickingDataHypergrid(grid)
+    var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+    dataGen.startTickingDataHypergrid(vendorGrid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
-    grid.addProperties({ renderFalsy: true })
+    vendorGrid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
     //which causes an issue.....
-    grid.addProperties({ editOnKeydown: false })
-    let behavior = grid.behavior;
+    vendorGrid.addProperties({ editOnKeydown: false })
+    let behavior = vendorGrid.behavior;
 
-    grid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
+    vendorGrid.localization.add('USDCurrencyFormat', new grid.localization.NumberFormatter('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0,
@@ -144,10 +144,10 @@ function InitBlotter() {
     }));
 
     var shortDateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    grid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
+    vendorGrid.localization.add('shortDateFormat', new grid.localization.DateFormatter('en-EN', shortDateOptions));
 
     //we enable the edit on some columns
-    grid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
+    vendorGrid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
         let editorName = declaredEditorName;
         if (options.column.name !== "tradeId"
             //  && options.column.name !== "changeOnYear"
@@ -161,7 +161,7 @@ function InitBlotter() {
         ) {
             editorName = 'textfield';
         }
-        return grid.cellEditors.create(editorName, options);
+        return vendorGrid.cellEditors.create(editorName, options);
     }
 
     //Add Format for Notional column
@@ -179,19 +179,18 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    var origgetCell = grid.behavior.dataModel.getCell;
-    grid.behavior.dataModel.getCell = (config, declaredRendererName) => {
+    var origgetCell = vendorGrid.behavior.dataModel.getCell;
+    vendorGrid.behavior.dataModel.getCell = (config, declaredRendererName) => {
         if (config.isDataRow) {
             var y = config.dataCell.y;
             if (y % 2) {
                 config.backgroundColor = config.altbackground;
             }
         }
-        return origgetCell.call(grid.behavior.dataModel, config, declaredRendererName)
+        return origgetCell.call(vendorGrid.behavior.dataModel, config, declaredRendererName)
     };
 
-    var container = document.getElementById('content');
-    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(grid, container, {
+    var blotterOptions ={
         primaryKey: "tradeId",
         userName: "jonathan",
         blotterId: "Demo Blotter",
@@ -203,10 +202,13 @@ function InitBlotter() {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
-    });
+    }
+
+    var abContainer = document.getElementById('adaptableBlotter');
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions, abContainer,vendorGrid);
 
     adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-    grid.addProperties(lightTheme);
+    vendorGrid.addProperties(lightTheme);
 }
 
 function getTradesForSearch(searchArgs, dataGen) {

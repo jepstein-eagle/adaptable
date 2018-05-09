@@ -113,9 +113,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
     private cellFlashIntervalHypergridMap: Map<any, Map<string, number>> = new Map()
 
-    constructor(private grid: any, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: any) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
 
@@ -164,21 +164,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
 
-        this.filterContainer = this.container.ownerDocument.createElement("div")
+        this.filterContainer = this.abContainer.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
         this.filterContainer.style.position = 'absolute'
         this.filterContainer.style.visibility = "hidden"
-        this.container.ownerDocument.body.appendChild(this.filterContainer)
+        this.abContainer.ownerDocument.body.appendChild(this.filterContainer)
 
-        this.contextMenuContainer = this.container.ownerDocument.createElement("div")
+        this.contextMenuContainer = this.abContainer.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
         this.contextMenuContainer.style.position = 'absolute'
-        this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
+        this.abContainer.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
         iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
 
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -189,12 +189,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
-                () => this.initInternalGridLogic(grid),
+                () => this.initInternalGridLogic(vendorGrid),
                 (e) => {
                     console.error('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
-                    this.initInternalGridLogic(grid)
+                    this.initInternalGridLogic(vendorGrid)
                 })
 
         // get the api ready
@@ -229,8 +229,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setColumnIntoStore() {
-        // let columns: IColumn[] = this.grid.behavior.columns.map((x: any) => {
-        let activeColumns: IColumn[] = this.grid.behavior.getActiveColumns().map((x: any, index: number) => {
+        // let columns: IColumn[] = this.vendorGrid.behavior.columns.map((x: any) => {
+        let activeColumns: IColumn[] = this.vendorGrid.behavior.getActiveColumns().map((x: any, index: number) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
@@ -239,7 +239,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: index
             }
         });
-        let hiddenColumns: IColumn[] = this.grid.behavior.getHiddenColumns().map((x: any) => {
+        let hiddenColumns: IColumn[] = this.vendorGrid.behavior.getHiddenColumns().map((x: any) => {
             return {
                 ColumnId: x.name ? x.name : "Unknown Column",
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
@@ -259,14 +259,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         VisibleColumnList.forEach((column, index) => {
             //we use allcolumns so we can show previously hidden columns
-            let oldcolindex = this.grid.behavior.allColumns.findIndex((x: any) => x.name == column.ColumnId)
-            this.grid.behavior.showColumns(false, oldcolindex, index, false)
+            let oldcolindex = this.vendorGrid.behavior.allColumns.findIndex((x: any) => x.name == column.ColumnId)
+            this.vendorGrid.behavior.showColumns(false, oldcolindex, index, false)
             //this.grid.swapColumns(index, oldcolindex);
         })
-        this.grid.behavior.getActiveColumns().filter((x: any) => VisibleColumnList.findIndex(y => y.ColumnId == x.name) < 0).forEach(((col: any) => {
-            this.grid.behavior.hideColumns(false, this.grid.behavior.allColumns.indexOf(col))
+        this.vendorGrid.behavior.getActiveColumns().filter((x: any) => VisibleColumnList.findIndex(y => y.ColumnId == x.name) < 0).forEach(((col: any) => {
+            this.vendorGrid.behavior.hideColumns(false, this.vendorGrid.behavior.allColumns.indexOf(col))
         }))
-        this.grid.behavior.changed()
+        this.vendorGrid.behavior.changed()
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
         this.setColumnIntoStore();
@@ -312,22 +312,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public gridHasCurrentEditValue(): boolean {
-        return this.grid.cellEditor;
+        return this.vendorGrid.cellEditor;
     }
 
     public getCurrentCellEditValue(): any {
-        if (this.grid.cellEditor) {
-            return this.grid.cellEditor.getEditorValue()
+        if (this.vendorGrid.cellEditor) {
+            return this.vendorGrid.cellEditor.getEditorValue()
         }
         return "";
     }
 
     getActiveCell(): ICellInfo {
-        let currentCell = this.grid.selectionModel.getLastSelection();
+        let currentCell = this.vendorGrid.selectionModel.getLastSelection();
 
         if (currentCell) {
-            let column = this.grid.behavior.getActiveColumns()[currentCell.origin.x]
-            let row = this.grid.behavior.dataModel.dataSource.getRow(currentCell.origin.y)
+            let column = this.vendorGrid.behavior.getActiveColumns()[currentCell.origin.x]
+            let row = this.vendorGrid.behavior.dataModel.dataSource.getRow(currentCell.origin.y)
             let primaryKey = this.getPrimaryKeyValueFromRecord(row)
 
             let value = this.valOrFunc(row, column)
@@ -340,15 +340,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getSelectedCells(): ISelectedCells {
 
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
-        var selected: Array<any> = this.grid.selectionModel.getSelections();
+        var selected: Array<any> = this.vendorGrid.selectionModel.getSelections();
 
         for (let rectangle of selected) {
             //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
             //for (let columnIndex = rectangle.firstSelectedCell.x; columnIndex <= rectangle.lastSelectedCell.x; columnIndex++) {
             for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
-                let column = this.grid.behavior.getActiveColumns()[columnIndex]
+                let column = this.vendorGrid.behavior.getActiveColumns()[columnIndex]
                 for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
-                    let row = this.grid.behavior.dataModel.dataSource.getRow(rowIndex)
+                    let row = this.vendorGrid.behavior.dataModel.dataSource.getRow(rowIndex)
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
                     let value = this.valOrFunc(row, column)
                     //this line is pretty much doing the same....just keeping it for the record
@@ -459,10 +459,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValue(cellInfo: ICellInfo): void {
         //there is a bug in hypergrid 15/12/16 and the row object on the cellEditor is the row below the one currently edited
         //so we just close editor for now even if not the one where we set the value
-        //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.grid.cellEditor.row) == id)
+        //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.vendorGrid.cellEditor.row) == id)
         this.cancelEdit()
 
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, cellInfo.Id)
+        let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, cellInfo.Id)
 
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
@@ -486,7 +486,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //no need to have a batch mode so far.... we'll see in the future performance
         let dataChangedEvents: IDataChangedEvent[] = []
         for (let element of batchValues) {
-            let row = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, element.Id)
+            let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, element.Id)
             let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
 
@@ -507,26 +507,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public cancelEdit() {
-        this.grid.cancelEditing()
+        this.vendorGrid.cancelEditing()
     }
 
     public forAllRecordsDo(func: (record: any) => any): any {
-        //we use getData instead of this.grid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
-        let ds = this.grid.behavior.getData()
+        //we use getData instead of this.vendorGrid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
+        let ds = this.vendorGrid.behavior.getData()
         ds.forEach((row: any) => func(row))
     }
 
     public forAllVisibleRecordsDo(func: (record: any) => any) {
-        let rowCount = this.grid.behavior.dataModel.dataSource.getRowCount()
+        let rowCount = this.vendorGrid.behavior.dataModel.dataSource.getRowCount()
         for (var index = 0; index < rowCount; index++) {
-            var element = this.grid.behavior.dataModel.dataSource.getRow(index)
+            var element = this.vendorGrid.behavior.dataModel.dataSource.getRow(index)
             func(element)
         }
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            let record = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id);
+            let record = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id);
             return (columnId: string) => {
                 let column = this.getHypergridColumn(columnId);
                 return this.valOrFunc(record, column);
@@ -568,24 +568,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public isColumnReadonly(columnId: string): boolean {
-        if (this.grid.cellEditor) {
-            if (this.grid.cellEditor.column.name == columnId) {
+        if (this.vendorGrid.cellEditor) {
+            if (this.vendorGrid.cellEditor.column.name == columnId) {
                 //we are already editing that column so that's an easy answer
                 return false
             }
             //in our current use cases as of 02/10/2017 it should never happens that we
             //check for editable on a different column that we edit
             else {
-                console.warn("Editing " + this.grid.cellEditor.column.name + " but checking for editable on column " + columnId)
+                console.warn("Editing " + this.vendorGrid.cellEditor.column.name + " but checking for editable on column " + columnId)
             }
         }
         else {
             //now instead of checking if editor was defined at design time on the column we try to instantiate the editor
             //for that column directly
-            let cellEvent = new this.grid.behavior.CellEvent
+            let cellEvent = new this.vendorGrid.behavior.CellEvent
             //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
             cellEvent.resetGridCY(this.getColumnIndex(columnId), 1);
-            let editor = this.grid.behavior.getCellEditorAt(cellEvent);
+            let editor = this.vendorGrid.behavior.getCellEditorAt(cellEvent);
             if (editor) {
                 editor.cancelEditing()
                 editor = null
@@ -612,8 +612,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public ReindexAndRepaint() {
-        this.grid.behavior.reindex();
-        this.grid.repaint();
+        this.vendorGrid.behavior.reindex();
+        this.vendorGrid.properepaintrties();
         this._onRefresh.Dispatch(this, this);
     }
 
@@ -621,7 +621,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         let column = this.getHypergridColumn(columnId);
         //We bypass the whole DataSource Stuff as we need to get ALL the data
-        let data = this.grid.behavior.dataModel.getData()
+        let data = this.vendorGrid.behavior.dataModel.getData()
         for (var index = 0; index < data.length; index++) {
             var element = data[index]
             let displayString = this.getDisplayValueFromRecord(element, columnId)
@@ -638,7 +638,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getDisplayValue(id: any, columnId: string): string {
-        let row = this.grid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id)
+        let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id)
         return this.getDisplayValueFromRecord(row, columnId)
     }
 
@@ -726,10 +726,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getRowIndexHypergrid(rowIdentifierValue: any): number {
         //11/01/17 We cannot use findRow as it returns the rowIndex from the original DataSource
         //I leave the getIndexedData for now but we would need to optimize that.... since we create a big array every iteration
-        // let row = this.grid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
-        // let rowIndex = this.grid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
+        // let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.primaryKey, rowIdentifierValue)
+        // let rowIndex = this.vendorGrid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
         // return rowIndex
-        let rowIndex = this.grid.behavior.dataModel.getIndexedData().findIndex((x: any) => {
+        let rowIndex = this.vendorGrid.behavior.dataModel.getIndexedData().findIndex((x: any) => {
             if (x && x.hasOwnProperty(this.blotterOptions.primaryKey)) {
                 return x[this.blotterOptions.primaryKey] == rowIdentifierValue
             }
@@ -751,15 +751,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         if (style == 'flash') {
             cellStyleHypergrid.flashBackColor = undefined
-            this.grid.repaint()
+            this.vendorGrid.properepaintrties()
         }
         if (style == 'csColumn') {
             cellStyleHypergrid.conditionalStyleColumn = undefined
-            this.grid.repaint()
+            this.vendorGrid.properepaintrties()
         }
         if (style == 'csRow') {
             cellStyleHypergrid.conditionalStyleRow = undefined
-            this.grid.repaint()
+            this.vendorGrid.properepaintrties()
         }
         if (style == 'QuickSearch') {
             cellStyleHypergrid.quickSearchStyle = undefined
@@ -775,15 +775,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             cellStyleHypergridColumns.forEach((cellStyleHypergrid) => {
                 if (style == 'flash') {
                     cellStyleHypergrid.flashBackColor = undefined
-                    this.grid.repaint()
+                    this.vendorGrid.properepaintrties()
                 }
                 if (style == 'csColumn') {
                     cellStyleHypergrid.conditionalStyleColumn = undefined
-                    this.grid.repaint()
+                    this.vendorGrid.properepaintrties()
                 }
                 if (style == 'csRow') {
                     cellStyleHypergrid.conditionalStyleRow = undefined
-                    this.grid.repaint()
+                    this.vendorGrid.properepaintrties()
                 }
                 if (style == 'QuickSearch') {
                     cellStyleHypergrid.quickSearchStyle = undefined
@@ -801,29 +801,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
 
-        let colIndex = this.grid.behavior.getColumns().findIndex((x: any) => x.name == calculatedColumnID)
+        let colIndex = this.vendorGrid.behavior.getColumns().findIndex((x: any) => x.name == calculatedColumnID)
         if (colIndex > -1) {
-            this.grid.behavior.getColumns().splice(colIndex, 1)
+            this.vendorGrid.behavior.getColumns().splice(colIndex, 1)
             //we re-index the Column Object since we are removing the Schema 
-            for (let i = colIndex; i < this.grid.behavior.getColumns().length; i++) {
-                this.grid.behavior.getColumns()[i]._index = this.grid.behavior.getColumns()[i].index - 1
+            for (let i = colIndex; i < this.vendorGrid.behavior.getColumns().length; i++) {
+                this.vendorGrid.behavior.getColumns()[i]._index = this.vendorGrid.behavior.getColumns()[i].index - 1
             }
         }
-        let activecolIndex = this.grid.behavior.getActiveColumns().findIndex((x: any) => x.name == calculatedColumnID)
+        let activecolIndex = this.vendorGrid.behavior.getActiveColumns().findIndex((x: any) => x.name == calculatedColumnID)
         if (activecolIndex > -1) {
-            this.grid.behavior.getActiveColumns().splice(activecolIndex, 1)
+            this.vendorGrid.behavior.getActiveColumns().splice(activecolIndex, 1)
             //No need to do it here since the collections share the same instance of Column
-            // for (let i = activecolIndex; i < this.grid.behavior.getActiveColumns().length; i++) {
-            //     this.grid.behavior.getActiveColumns()[i]._index = this.grid.behavior.getActiveColumns()[i].index - 1
+            // for (let i = activecolIndex; i < this.vendorGrid.behavior.getActiveColumns().length; i++) {
+            //     this.vendorGrid.behavior.getActiveColumns()[i]._index = this.vendorGrid.behavior.getActiveColumns()[i].index - 1
             // }
         }
 
         //needs to be last since column.name load up the schema
-        let schemaIndex = this.grid.behavior.dataModel.schema.findIndex((x: any) => x.name == calculatedColumnID)
+        let schemaIndex = this.vendorGrid.behavior.dataModel.schema.findIndex((x: any) => x.name == calculatedColumnID)
         if (schemaIndex > -1) {
-            this.grid.behavior.dataModel.schema.splice(schemaIndex, 1)
+            this.vendorGrid.behavior.dataModel.schema.splice(schemaIndex, 1)
         }
-        this.grid.behavior.changed()
+        this.vendorGrid.behavior.changed()
         this.setColumnIntoStore();
     }
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
@@ -838,25 +838,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 return this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, dataRow)
             }
         }
-        this.grid.behavior.dataModel.schema.push(
+        this.vendorGrid.behavior.dataModel.schema.push(
             newSchema
         );
-        this.grid.behavior.addColumn({
-            index: this.grid.behavior.getColumns().length,
+        this.vendorGrid.behavior.addColumn({
+            index: this.vendorGrid.behavior.getColumns().length,
             header: newSchema.header,
             calculator: newSchema.calculator
         })
 
-        this.grid.behavior.changed()
+        this.vendorGrid.behavior.changed()
         this.setColumnIntoStore();
     }
 
     public getFirstRecord() {
-        return this.grid.behavior.dataModel.getData()[0];
+        return this.vendorGrid.behavior.dataModel.getData()[0];
     }
 
     destroy() {
-        ReactDOM.unmountComponentAtNode(this.container);
+        ReactDOM.unmountComponentAtNode(this.abContainer);
         ReactDOM.unmountComponentAtNode(this.filterContainer);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
@@ -874,36 +874,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getHypergridColumn(columnId: string): any {
-        return this.grid.behavior.allColumns.find((x: any) => x.name == columnId);
+        return this.vendorGrid.behavior.allColumns.find((x: any) => x.name == columnId);
     }
 
     //TEMPORARY : JO
     public getIPPStyle(): IPPStyle {
-        let headerFontStyle = this.buildFontCSSProperties(this.grid.properties.columnHeaderFont)
-        let fontStyle = this.buildFontCSSProperties(this.grid.properties.font)
+        let headerFontStyle = this.buildFontCSSProperties(this.vendorGrid.properties.columnHeaderFont)
+        let fontStyle = this.buildFontCSSProperties(this.vendorGrid.properties.font)
         return {
             Header: {
-                headerColor: this.grid.properties.columnHeaderColor,
-                headerBackColor: this.grid.properties.columnHeaderBackgroundColor,
+                headerColor: this.vendorGrid.properties.columnHeaderColor,
+                headerBackColor: this.vendorGrid.properties.columnHeaderBackgroundColor,
                 headerFontFamily: headerFontStyle.fontFamily,
                 headerFontSize: headerFontStyle.fontSize,
                 headerFontStyle: headerFontStyle.fontStyle,
                 headerFontWeight: headerFontStyle.fontWeight,
-                height: this.grid.properties.defaultRowHeight,
+                height: this.vendorGrid.properties.defaultRowHeight,
                 Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let colHypergrid = this.getHypergridColumn(col.ColumnId)
                     return { columnFriendlyName: col.FriendlyName, width: colHypergrid.getWidth(), textAlign: colHypergrid.properties.columnHeader.halign }
                 })
             },
             Row: {
-                color: this.grid.properties.color,
-                backColor: this.grid.properties.backgroundColor,
-                altBackColor: this.grid.properties.altbackground || this.grid.properties.backgroundColor,
+                color: this.vendorGrid.properties.color,
+                backColor: this.vendorGrid.properties.backgroundColor,
+                altBackColor: this.vendorGrid.properties.altbackground || this.vendorGrid.properties.backgroundColor,
                 fontFamily: fontStyle.fontFamily,
                 fontSize: fontStyle.fontSize,
                 fontStyle: fontStyle.fontStyle,
                 fontWeight: fontStyle.fontWeight,
-                height: this.grid.properties.defaultRowHeight,
+                height: this.vendorGrid.properties.defaultRowHeight,
                 Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let colHypergrid = this.getHypergridColumn(col.ColumnId)
                     return { columnFriendlyName: col.FriendlyName, width: colHypergrid.getWidth(), textAlign: colHypergrid.properties.halign }
@@ -939,11 +939,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (e.detail.primitiveEvent.isHeaderCell) {
                 //try to check if we are clicking on the filter icon
                 //we remove the scroll as get boundscell look at visible columns only
-                let scrolledX = e.detail.gridCell.x - this.grid.getHScrollValue();
+                let scrolledX = e.detail.gridCell.x - this.vendorGrid.getHScrollValue();
                 let y = e.detail.gridCell.y;
-                let headerBounds = this.grid.getBoundsOfCell({ x: scrolledX, y: y });
+                let headerBounds = this.vendorGrid.getBoundsOfCell({ x: scrolledX, y: y });
                 let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse;
-                let iconPadding = this.grid.properties.iconPadding;
+                let iconPadding = this.vendorGrid.properties.iconPadding;
                 let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
                 let filterIconWidth = getFilterIcon(filterIndex >= 0).width;
                 if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
@@ -967,7 +967,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         grid.addEventListener("fin-before-cell-edit", (event: any) => {
             let dataChangingEvent: IDataChangingEvent;
-            let row = this.grid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
+            let row = this.vendorGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
             dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
@@ -1019,7 +1019,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
         grid.addEventListener("fin-after-cell-edit", (e: any) => {
-            this.grid.behavior.reindex();
+            this.vendorGrid.behavior.reindex();
         });
         grid.addEventListener('fin-selection-changed', () => {
             this._onSelectedCellsChanged.Dispatch(this, this)
@@ -1030,7 +1030,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var icon = '';
 
             let gridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
-            let cols: any[] = this.grid.behavior.getActiveColumns();
+            let cols: any[] = this.vendorGrid.behavior.getActiveColumns();
             gridSorts.forEach((gs: IGridSort, index: number) => {
                 let foundCol = cols.find(c => c.name == gs.Column)
 
@@ -1146,7 +1146,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
 
-                return originalGetCellReturn || this.grid.cellRenderers.get(declaredRendererName);
+                return originalGetCellReturn || this.vendorGrid.cellRenderers.get(declaredRendererName);
             }
             catch (err) {
                 console.error("Error during GetCell", err)
@@ -1156,7 +1156,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.onSortSaved(e.detail.column);
             //in case we want multi column
             //keys =  event.detail.keys;
-            //    this.grid.behavior.reindex();
+            //    this.vendorGrid.behavior.reindex();
         });
         //We add our sorter pipe last into the existing pipeline
         let currentDataSources = grid.behavior.dataModel.DataSources;
@@ -1173,11 +1173,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getRowInfo(): any {
-        return this.grid.behavior.dataModel.dataSource.getRowCount()
+        return this.vendorGrid.behavior.dataModel.dataSource.getRowCount()
     }
 
     public getColumnInfo(): any {
-        return this.grid.behavior.getActiveColumns().length + this.grid.behavior.getHiddenColumns().length
+        return this.vendorGrid.behavior.getActiveColumns().length + this.vendorGrid.behavior.getHiddenColumns().length
     }
 
     public selectColumn(columnId: string) {
@@ -1189,12 +1189,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public onSortSaved(gridColumnIndex: number) {
         //Toggle sort one column at a time
         //we need the index property not the index of the collection
-        let gridColumnIndexTransposed = this.grid.behavior.getActiveColumns()[gridColumnIndex].index;
+        let gridColumnIndexTransposed = this.vendorGrid.behavior.getActiveColumns()[gridColumnIndex].index;
 
         let currentGridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
         let newGridSorts: IGridSort[] = [].concat(currentGridSorts)
 
-        let column = this.grid.behavior.getActiveColumns()[gridColumnIndex].name
+        let column = this.vendorGrid.behavior.getActiveColumns()[gridColumnIndex].name
 
 
         // not rigth for existing sorts in terms of turning off...
@@ -1214,24 +1214,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(newGridSorts));
-        this.grid.behavior.reindex();
+        this.vendorGrid.behavior.reindex();
     }
 
     public setGridSort(gridSorts: IGridSort[]): void {
         //   if (gridSorts.length> 0) { 
         //      let gridSort: IGridSort = gridSorts[0];   // we know that for hypergrid tehre is only one sort
-        //      this.sortColumnGridIndex = this.grid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
+        //      this.sortColumnGridIndex = this.vendorGrid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
         //       this.sortColumnName = gridSort.Column;
         //       this.sortOrder = gridSort.SortOrder;
         //   } else {
         //       this.sortColumnGridIndex = -1;
         //   }
-        this.grid.behavior.reindex();
+        this.vendorGrid.behavior.reindex();
     }
 
     public setDataSource(data: any): void {
-        let schema = this.grid.behavior.dataModel.dataSource.schema;
-        this.grid.behavior.dataModel.dataSource.setData(data, schema);
+        let schema = this.vendorGrid.behavior.dataModel.dataSource.schema;
+        this.vendorGrid.behavior.dataModel.dataSource.setData(data, schema);
         this.ReindexAndRepaint();
     }
 

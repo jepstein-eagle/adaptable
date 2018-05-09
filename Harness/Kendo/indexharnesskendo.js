@@ -119,9 +119,7 @@ messages: {
         }
     }
 
-    var grid = $("#grid").data("kendoGrid");
-    var container = document.getElementById('content');
-    adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(grid, container, {
+    var adaptableBlotterOptions={
         primaryKey: "tradeId",
         userName: "harnessuser",
         enableAuditLog: false,
@@ -131,7 +129,11 @@ messages: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
-    });
+  
+    }
+    var vendorGrid = $("#grid").data("kendoGrid");
+    var abContainer = document.getElementById('adaptableBlotter');
+    adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(adaptableBlotterOptions, abContainer, vendorGrid);
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter))
 }
 
@@ -141,7 +143,7 @@ function setEditDecimals(container, options) {
         .kendoNumericTextBox({ decimals: 4 });
 }
 var themeName = ""
-function ThemeChange(blotter, grid) {
+function ThemeChange(blotter) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
         if (themeName == "Dark Theme" || themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {

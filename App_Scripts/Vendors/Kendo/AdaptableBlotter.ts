@@ -46,7 +46,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import {  IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
@@ -92,9 +92,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private blotterOptions: IAdaptableBlotterOptions
     private contextMenuContainer: HTMLDivElement
 
-    constructor(private grid: kendo.ui.Grid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: kendo.ui.Grid, ) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
 
@@ -104,14 +104,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
         this.ErrorService = new ErrorService(this);
-        
+
 
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 
-          // store the options in state - and also later anything else that we need...
-          this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
+        // store the options in state - and also later anything else that we need...
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
 
         this.Strategies = new Map<string, IStrategy>();
 
@@ -137,21 +137,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
-       // removing theme from kendo until we can get the table issue working properly
-       // this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
+        // removing theme from kendo until we can get the table issue working properly
+        // this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
 
 
-        this.contextMenuContainer = this.container.ownerDocument.createElement("div")
+        this.contextMenuContainer = this.abContainer.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
         this.contextMenuContainer.style.position = 'absolute'
-        this.container.ownerDocument.body.appendChild(this.contextMenuContainer)
+        this.abContainer.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
         iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
 
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -162,21 +162,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
-                () => this.initInternalGridLogic(grid),
+                () => this.initInternalGridLogic(vendorGrid),
                 (e) => {
                     console.error('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
-                    this.initInternalGridLogic(grid)
+                    this.initInternalGridLogic(vendorGrid)
                 })
 
-                 // get the api ready
+        // get the api ready
         this.api = new BlotterApi(this);
     }
 
     public InitAuditService() {
         //Probably Temporary but we init the Audit service with current data
-        this.AuditService.Init(this.grid.dataSource.data())
+        this.AuditService.Init(this.vendorGrid.dataSource.data())
     }
 
     private kendoPopup: kendo.ui.Popup
@@ -226,7 +226,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         //Some columns can have no ID or Title. We set it to Unknown columns 
         //but as of today it creates issues in all functions as we cannot identify the column....
-        let columns: IColumn[] = this.grid.columns.map((x: kendo.ui.GridColumn, index: number) => {
+        let columns: IColumn[] = this.vendorGrid.columns.map((x: kendo.ui.GridColumn, index: number) => {
             let isVisible: boolean = this.isGridColumnVisible(x);
             return {
                 ColumnId: x.field ? x.field : "Unknown Column",
@@ -241,15 +241,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
         VisibleColumnList.forEach((column, index) => {
-            let col = this.grid.columns.find(x => x.field == column.ColumnId)
+            let col = this.vendorGrid.columns.find(x => x.field == column.ColumnId)
             //if not then not need to set it because it was already visible.........
             if (col.hasOwnProperty('hidden')) {
-                this.grid.showColumn(col)
+                this.vendorGrid.showColumn(col)
             }
-            this.grid.reorderColumn(index, col);
+            this.vendorGrid.reorderColumn(index, col);
         })
-        this.grid.columns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.field) < 0).forEach((col => {
-            this.grid.hideColumn(col)
+        this.vendorGrid.columns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.field) < 0).forEach((col => {
+            this.vendorGrid.hideColumn(col)
         }))
         //if the event columnReorder starts to be fired when changing the order programmatically 
         //we'll need to remove that line
@@ -275,9 +275,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;
     }
-    
+
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    
+
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -305,10 +305,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getActiveCell(): ICellInfo {
         let activeCell = $('#grid_active_cell')
         let row = activeCell.closest("tr");
-        let item = this.grid.dataItem(row);
+        let item = this.vendorGrid.dataItem(row);
         let uuid = this.getPrimaryKeyValueFromRecord(item);
         let idx = activeCell.index();
-        let col = <string>(this.grid.columns[idx].field);
+        let col = <string>(this.vendorGrid.columns[idx].field);
         return {
             Id: uuid, ColumnId: col, Value: item.get(col)
         };
@@ -327,13 +327,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getSelectedCells(): ISelectedCells {
 
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
-        var selected = this.grid.select().not("tr");
+        var selected = this.vendorGrid.select().not("tr");
         selected.each((i, element) => {
             var row = $(element).closest("tr");
-            var item = this.grid.dataItem(row);
+            var item = this.vendorGrid.dataItem(row);
             var uuid = this.getPrimaryKeyValueFromRecord(item);
             var idx = $(element).index();
-            var col = <string>(this.grid.columns[idx].field);
+            var col = <string>(this.vendorGrid.columns[idx].field);
             var value = item.get(col);
             var valueArray = selectionMap.get(uuid);
             if (valueArray == undefined) {
@@ -354,14 +354,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             console.log('column is undefined returning String for Type')
             return DataType.String;
         }
-        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') ||
-            !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
+        if (!this.vendorGrid.dataSource.options.schema.hasOwnProperty('model') ||
+            !this.vendorGrid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             let type = this.getTypeFromFirstRecord(column.field);
             console.log('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, type)
             return type
         }
 
-        let type = this.grid.dataSource.options.schema.model.fields[column.field].type;
+        let type = this.vendorGrid.dataSource.options.schema.model.fields[column.field].type;
 
         switch (type) {
             case 'string':
@@ -380,7 +380,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getTypeFromFirstRecord(columnId: string): DataType {
-        let row = this.grid.dataSource.data()[0]
+        let row = this.vendorGrid.dataSource.data()[0]
         let value = row[columnId]
         if (value instanceof Date) {
             return DataType.Date
@@ -402,7 +402,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValue(cellInfo: ICellInfo): void {
-        let model = this.grid.dataSource.getByUid(cellInfo.Id)
+        let model = this.vendorGrid.dataSource.getByUid(cellInfo.Id)
         let oldValue = model.get(cellInfo.ColumnId)
         model.set(cellInfo.ColumnId, cellInfo.Value);
 
@@ -421,41 +421,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValueBatch(batchValues: ICellInfo[]): void {
         // first update the model, then sync the grid, then tell the AuditService (which will fire an event picked up by Flashing Cells)
         var dataChangedEvents: IDataChangedEvent[] = []
-         for (let item of batchValues) {
-            let model: any = this.grid.dataSource.getByUid(item.Id);
+        for (let item of batchValues) {
+            let model: any = this.vendorGrid.dataSource.getByUid(item.Id);
             let oldValue = model[item.ColumnId]
             model[item.ColumnId] = item.Value;
 
             let dataChangedEvent: IDataChangedEvent =
-            {
-                OldValue: oldValue,
-                NewValue: item.Value,
-                ColumnId: item.ColumnId,
-                IdentifierValue: item.Id,
-                Timestamp: null,
-                Record: null
-            }
+                {
+                    OldValue: oldValue,
+                    NewValue: item.Value,
+                    ColumnId: item.ColumnId,
+                    IdentifierValue: item.Id,
+                    Timestamp: null,
+                    Record: null
+                }
             dataChangedEvents.push(dataChangedEvent);
-        
+
         }
 
         // this line triggers a Databound changed event 
-        this.grid.dataSource.sync();
+        this.vendorGrid.dataSource.sync();
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
-       // for (let item of batchValues) {
-       //     // todo: work out why we have this line?  seems superfluous....
-       //     let model: any = this.grid.dataSource.getByUid(item.Id);
-       //     this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId, model);
-       // }
+        // for (let item of batchValues) {
+        //     // todo: work out why we have this line?  seems superfluous....
+        //     let model: any = this.vendorGrid.dataSource.getByUid(item.Id);
+        //     this.AuditService.CreateAuditEvent(item.Id, item.Value, item.ColumnId, model);
+        // }
     }
 
     public cancelEdit() {
-        this.grid.closeCell()
+        this.vendorGrid.closeCell()
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            let record: any = this.grid.dataSource.getByUid(id);
+            let record: any = this.vendorGrid.dataSource.getByUid(id);
             return (columnId: string) => { return record[columnId]; }
         }
         else {
@@ -485,11 +485,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 selectorQuery = selectorQuery.add(cellSelect)
             }
         }
-        this.grid.select(selectorQuery);
+        this.vendorGrid.select(selectorQuery);
     }
 
     public getColumnIndex(columnId: string): number {
-        return this.grid.columns.findIndex(x => x.field == columnId);
+        return this.vendorGrid.columns.findIndex(x => x.field == columnId);
     }
 
     private getColumnFromColumnId(columnId: string): IColumn {
@@ -497,11 +497,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isColumnReadonly(columnId: string): boolean {
-        if (!this.grid.dataSource.options.schema.hasOwnProperty('model') || !this.grid.dataSource.options.schema.model.hasOwnProperty('fields')) {
+        if (!this.vendorGrid.dataSource.options.schema.hasOwnProperty('model') || !this.vendorGrid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             //field cannot be readonly in that scenario
             return false;
         }
-        let column = this.grid.dataSource.options.schema.model.fields[columnId];
+        let column = this.vendorGrid.dataSource.options.schema.model.fields[columnId];
         if (column) {
             if (column.hasOwnProperty('editable')) {
                 return !column.editable
@@ -516,7 +516,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
-        let column = this.grid.columns.find(x => x.field == columnId);
+        let column = this.vendorGrid.columns.find(x => x.field == columnId);
 
         if (column) {
             column.sortable = { compare: comparer }
@@ -526,7 +526,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeCustomSort(columnId: string): void {
-        let column = this.grid.columns.find(x => x.field == columnId);
+        let column = this.vendorGrid.columns.find(x => x.field == columnId);
 
         if (column) {
             column.sortable = {}
@@ -537,13 +537,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private ReInitGrid() {
-        this.grid.setDataSource(this.grid.dataSource);
+        this.vendorGrid.setDataSource(this.vendorGrid.dataSource);
         this._onRefresh.Dispatch(this, this)
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
-        this.grid.dataSource.data().forEach((row: any) => {
+        this.vendorGrid.dataSource.data().forEach((row: any) => {
             let displayValue = this.getDisplayValueFromRecord(row, columnId)
             let rawValue = row[columnId]
             if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
@@ -559,7 +559,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {
         //be careful here if we ever change to real primary key for kendo as we rely on UID
-        return this.grid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
+        return this.vendorGrid.table.find("tr[data-uid='" + rowIdentifierValue + "']");
     }
 
     private getCellByColumnIndexAndRow(row: any, columnIndex: number): JQuery {
@@ -570,12 +570,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        let record: kendo.data.Model = this.grid.dataSource.getByUid(id);
+        let record: kendo.data.Model = this.vendorGrid.dataSource.getByUid(id);
         return this.getDisplayValueFromRecord(record, columnId)
     }
 
     public getDisplayValueFromRecord(row: any, columnId: string): string {
-        let column = this.grid.columns.find(x => x.field == columnId);
+        let column = this.vendorGrid.columns.find(x => x.field == columnId);
         let rawValue = row[columnId]
         if (column.format) {
             return kendo.format(column.format, rawValue)
@@ -610,7 +610,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeAllCellStylesWithRegex(regex: RegExp): void {
-        this.grid.table.find("td").removeClass((index, classes) => {
+        this.vendorGrid.table.find("td").removeClass((index, classes) => {
             return classes.split(/\s+/).filter(c => {
                 return regex.test(c);
             }).join(' ');
@@ -618,7 +618,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public removeAllRowStylesWithRegex(regex: RegExp): void {
-        this.grid.table.find("tr").removeClass((index, classes) => {
+        this.vendorGrid.table.find("tr").removeClass((index, classes) => {
             return classes.split(/\s+/).filter(c => {
                 return regex.test(c);
             }).join(' ');
@@ -641,14 +641,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public forAllRecordsDo(func: (record: any) => any) {
-        let dataSource = this.grid.dataSource.data();
+        let dataSource = this.vendorGrid.dataSource.data();
         dataSource.forEach(row => {
             func(row)
         });
     }
 
     public forAllVisibleRecordsDo(func: (record: any) => any) {
-        let dataSource = this.grid.dataSource.view();
+        let dataSource = this.vendorGrid.dataSource.view();
         dataSource.forEach(row => {
             func(row)
         });
@@ -731,7 +731,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 return true;
             }
         }
-        this.grid.dataSource.filter(myFilter);
+        this.vendorGrid.dataSource.filter(myFilter);
         quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"))
         this._onRefresh.Dispatch(this, this);
     }
@@ -746,7 +746,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     destroy() {
-        ReactDOM.unmountComponentAtNode(this.container);
+        ReactDOM.unmountComponentAtNode(this.abContainer);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
@@ -809,7 +809,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
             let dataChangingEvent: IDataChangingEvent;
-            for (let col of this.grid.columns) {
+            for (let col of this.vendorGrid.columns) {
                 if (e.values.hasOwnProperty(col.field)) {
                     dataChangingEvent = { ColumnId: col.field, NewValue: e.values[col.field], IdentifierValue: this.getPrimaryKeyValueFromRecord(e.model) };
                     break;
@@ -818,7 +818,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
                 // first see if its an error = should only be one item in array if so
-                if (failedRules[0].CellValidationMode ==  'Stop Edit' ) {
+                if (failedRules[0].CellValidationMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorMsg: errorMessage
@@ -853,16 +853,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             else {
 
                 let dataChangedEvent: IDataChangedEvent =
-                {
-                    OldValue: (e.model as any)[dataChangingEvent.ColumnId],
-                    NewValue: dataChangingEvent.NewValue,
-                    ColumnId: dataChangingEvent.ColumnId,
-                    IdentifierValue: dataChangingEvent.IdentifierValue,
-                    Timestamp: null,
-                    Record: null
-                }
-            this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
-             }
+                    {
+                        OldValue: (e.model as any)[dataChangingEvent.ColumnId],
+                        NewValue: dataChangingEvent.NewValue,
+                        ColumnId: dataChangingEvent.ColumnId,
+                        IdentifierValue: dataChangingEvent.IdentifierValue,
+                        Timestamp: null,
+                        Record: null
+                    }
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+            }
         });
         grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
@@ -884,7 +884,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
         grid.bind("sort", () => {
-           this.onSortChanged()
+            this.onSortChanged()
         });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
             e.preventDefault();
@@ -897,10 +897,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getRowInfo(): any {
-        return this.grid.dataSource.data().length;
+        return this.vendorGrid.dataSource.data().length;
     }
     public getColumnInfo(): any {
-        return this.grid.columns.length;
+        return this.vendorGrid.columns.length;
     }
 
     public selectColumn(columnId: string) {
@@ -908,7 +908,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let columnIndex = this.getColumnIndex(columnId);
 
-        let rows = this.grid.dataSource.data();
+        let rows = this.vendorGrid.dataSource.data();
 
         rows.forEach((row: any) => {
             var uid = row["uid"];
@@ -922,38 +922,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         })
 
-        this.grid.select(selectorQuery);
+        this.vendorGrid.select(selectorQuery);
     }
 
     private onSortChanged(): void {
-        let sortModel: any[]=  this.grid.dataSource.sort()
+        let sortModel: any[] = this.vendorGrid.dataSource.sort()
         let gridSorts: IGridSort[];
         if (sortModel != null) {
             if (sortModel.length > 0) {
                 // for now assuming just single column sorts...
                 let sortObject: any = sortModel[0];
-                
-                gridSorts = [{Column :sortObject.field, SortOrder : (sortObject.dir == "asc") ? SortOrder.Ascending : SortOrder.Descending}]
-             }
+
+                gridSorts = [{ Column: sortObject.field, SortOrder: (sortObject.dir == "asc") ? SortOrder.Ascending : SortOrder.Descending }]
+            }
         }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
     }
 
-    public setGridSort(gridSorts:IGridSort[]):void{
-         // get the sort model
-         let sortModel: any[] = []
-         if (gridSorts.length > 0) {
-             let gridSort: IGridSort = gridSorts[0]; // just one for now
-             let sortDescription: string = (gridSort.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
-             this.grid.dataSource.sort({field: gridSort.Column, dir: sortDescription});
-         }else{
-            this.grid.dataSource.sort({});          
-         }
-        
-       
+    public setGridSort(gridSorts: IGridSort[]): void {
+        // get the sort model
+        let sortModel: any[] = []
+        if (gridSorts.length > 0) {
+            let gridSort: IGridSort = gridSorts[0]; // just one for now
+            let sortDescription: string = (gridSort.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
+            this.vendorGrid.dataSource.sort({ field: gridSort.Column, dir: sortDescription });
+        } else {
+            this.vendorGrid.dataSource.sort({});
+        }
+
+
     }
 
-    public canMultiSort(): boolean{
+    public canMultiSort(): boolean {
         return true;
     }
 

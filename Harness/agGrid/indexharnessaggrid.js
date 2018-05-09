@@ -167,63 +167,52 @@ function notionalCellRenderer(params) {
     }
 }
 
-
-
 function InitBlotter() {
+    // get some dummy data
+    let trades = new harness.DataGenerator().getTrades();
 
-    var dataGen = new harness.DataGenerator();
-
-    var trades = dataGen.getTrades();
-
-    // let the grid know which columns and what data to use
-    var gridOptions = {
-        columnDefs: getSchema(trades),
-        rowData: trades,//[],
+    // populate the agGrid gridOptions object with the data, column scheme and other properties
+    // setting columnTypes for easier identification of underlying agGrid column types
+    let gridOptions = {
+        columnDefs: getSchema(trades),  // returns a list of agGrid column definitions
+        rowData: trades,                // the dummy data we are using
         enableSorting: true,
         enableRangeSelection: true,
-        groupMultiAutoColumn: false,
-        groupUseEntireRow: false,
-        animateRows: true,
         enableFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: true,
-        columnTypes: {
+        columnTypes: {                  // not required but helpful for column data type identification
             "abColDefNumber": {},
             "abColDefString": {},
             "abColDefBoolean": {},
             "abColDefDate": {},
             "abColDefObject": {},
         }
-
     };
 
-    var eGridDiv = document.getElementById('grid');
-    var grid = new agGrid.Grid(eGridDiv, gridOptions);
-    dataGen.startTickingDataagGrid(gridOptions);
+    let adaptableBlotterOptions = {
+        primaryKey: "tradeId",                  // pk for blotter - required
+        userName: "demo user",                  // name of current user
+        blotterId: "Demo Blotter",              // id for blotter 
+        enableAuditLog: false,                  // not running audit log
+        enableRemoteConfigServer: false,        // not running remote config
+        predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
+        serverSearchOption: "Advancedsearch",   // performing AdvancedSearch on the server, not the client
+    }
 
-    var container = document.getElementById('content');
-    var gridcontainer = document.getElementById('grid');
+    // set the container for the underlying grid
+    let gridcontainer = document.getElementById('grid');
+    // initialise the agGrid
+    let grid = new agGrid.Grid(gridcontainer, gridOptions);
+    // set the container for the Adaptable Blotter
+    let abContainer = document.getElementById('adaptableBlotter');
 
-    let serverSearch = "AllSearchandSort"
-
-    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(gridOptions, container, gridcontainer, {
-        primaryKey: "tradeId",
-        userName: "demo user",
-        blotterId: "Demo Blotter",
-        enableAuditLog: true,
-        enableRemoteConfigServer: false,
-        // predefinedConfig: json,//"demoConfig.json",// json,
-        serverSearchOption: serverSearch,
-        iPushPullConfig: {
-            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-        }
-    });
-
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
-
-    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-
+    // instantiate the Adaptable Blotter, passing in 
+    // 1   the AdaptableBlotterOptions
+    // 2.  the AdaptableBlotter Container 
+    // 3.  the GridOptions
+    // 4.  the underlying Grid Container (required for agGrid)
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
 }
 
 function getTradesForSearch(searchArgs, dataGen) {

@@ -4,7 +4,7 @@ import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
 export class ButtonMinimise extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="Configure"
+        return <ButtonBase ToolTipAndText="Minimise"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
             ConfigEntity={this.props.ConfigEntity}

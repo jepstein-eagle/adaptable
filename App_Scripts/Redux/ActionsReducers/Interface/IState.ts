@@ -1,4 +1,4 @@
-import { MathOperation, LeafExpressionOperator, DisplayAction } from '../../../Core/Enums'
+import { MathOperation, LeafExpressionOperator, DisplayAction, Visibility } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
@@ -74,7 +74,7 @@ export interface DashboardState {
     VisibleToolbars: string[]
     VisibleButtons: string[]
     Zoom: number,
-    IsMinimised: boolean
+    DashboardVisibility: Visibility
 }
 
 

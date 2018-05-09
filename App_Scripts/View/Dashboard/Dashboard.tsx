@@ -12,7 +12,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { HomeToolbarControl } from '../Home/HomeToolbarControl'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import { DistinctCriteriaPairValue } from "../../Core/Enums";
+import { DistinctCriteriaPairValue, Visibility } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 
@@ -24,7 +24,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
     BlotterOptions: IAdaptableBlotterOptions
     AdaptableBlotter: IAdaptableBlotter
     onClick: (action: Redux.Action) => Redux.Action
-    onSetDashboardMinimised: (isMinimised: boolean) => DashboardRedux.DashboardSetIsMinimisedAction
+    onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
 }
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
@@ -66,28 +66,31 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
         let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId)
         let homeToolbarElement = <Nav key={"home"} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
-            {React.createElement(homeToolbar, {cssClassName: cssClassName, AdaptableBlotter: this.props.AdaptableBlotter })}
+            {React.createElement(homeToolbar, { cssClassName: cssClassName, AdaptableBlotter: this.props.AdaptableBlotter })}
         </Nav>
 
         return <div className={cssBaseClassName}>
-            <div className="ab_no_margin">
-                {this.props.DashboardState.IsMinimised ?
+            {this.props.DashboardState.DashboardVisibility != Visibility.Hidden &&
+                <div className="ab_no_margin">
+                    {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ?
 
-                    <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="ab_no_padding_no_margin" >
-                        <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
-                            <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.props.onSetDashboardMinimised(false)}>
-                                {blotterName} <Glyphicon glyph={"chevron-down"} />
-                            </Button>
-                        </OverlayTrigger>
-                    </ButtonToolbar> :
-                    <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.Zoom }}>
-                        <div className="ab_no_margin">
-                            {homeToolbarElement}
-                            {visibleDashboardElements}
-                        </div>
-                    </Navbar>
-                }
-            </div>
+                        <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="ab_no_padding_no_margin" >
+                            <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
+                                <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}>
+                                    {blotterName} <Glyphicon glyph={"chevron-down"} />
+                                </Button>
+                            </OverlayTrigger>
+                        </ButtonToolbar>
+                        :
+                        <Navbar key={"mainnavbar"} fluid style={{ zoom: this.props.DashboardState.Zoom }}>
+                            <div className="ab_no_margin">
+                                {homeToolbarElement}
+                                {visibleDashboardElements}
+                            </div>
+                        </Navbar>
+                    }
+                </div>
+            }
         </div>
     }
 
@@ -111,7 +114,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
-        onSetDashboardMinimised: (isMinimised: boolean) => dispatch(DashboardRedux.DashboardSetIsMinimised(isMinimised)),
+        onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
 
     };
 }

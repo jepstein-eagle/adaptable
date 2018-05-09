@@ -114,9 +114,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private blotterOptions: IAdaptableBlotterOptions
 
 
-    constructor(private gridOptions: GridOptions, private container: HTMLElement, private gridContainer: HTMLElement, options?: IAdaptableBlotterOptions) {
+    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions,   private gridContainer: HTMLElement) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
 
@@ -128,7 +128,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         this.StyleService = new StyleService(this);
-        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
+        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.vendorGrid.api.getValue(columnId, record));
 
         // store the options in state - and also later anything else that we need...
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
@@ -172,7 +172,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
 
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -183,12 +183,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
-                () => this.initInternalGridLogic(gridOptions, gridContainer),
+                () => this.initInternalGridLogic(vendorGrid, gridContainer),
                 (e) => {
                     console.error('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
-                    this.initInternalGridLogic(gridOptions, gridContainer)
+                    this.initInternalGridLogic(vendorGrid, gridContainer)
                 }
             )
 
@@ -199,14 +199,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private createFilterWrapper(col: Column) {
-        this.gridOptions.api.destroyFilter(col)
-        this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
+        this.vendorGrid.api.destroyFilter(col)
+        this.vendorGrid.api.getColumnDef(col).filter = FilterWrapperFactory(this)
         col.initialise()
     }
 
     public InitAuditService() {
         //Probably Temporary but we init the Audit service with current data
-        this.AuditService.Init(this.gridOptions.rowData)
+        this.AuditService.Init(this.vendorGrid.rowData)
     }
 
     private _currentEditor: ICellEditor
@@ -234,24 +234,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
 
     public applyGridFiltering() {
-        this.gridOptions.api.onFilterChanged()
+        this.vendorGrid.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
     }
 
     public setColumnIntoStore() {
-        let visibleColumns = this.gridOptions.columnApi.getAllGridColumns().filter(x => x.isVisible()).map((col, index) => {
+        let visibleColumns = this.vendorGrid.columnApi.getAllGridColumns().filter(x => x.isVisible()).map((col, index) => {
             return {
                 ColumnId: col.getColId(),
-                FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(col, 'header'),
+                FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
                 DataType: this.getColumnDataType(col),
                 Visible: col.isVisible(),
                 Index: index
             }
         })
-        let hiddenColumns = this.gridOptions.columnApi.getAllColumns().filter(x => !x.isVisible()).map(col => {
+        let hiddenColumns = this.vendorGrid.columnApi.getAllColumns().filter(x => !x.isVisible()).map(col => {
             return {
                 ColumnId: col.getColId(),
-                FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(col, 'header'),
+                FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
                 DataType: this.getColumnDataType(col),
                 Visible: col.isVisible(),
                 Index: -1
@@ -306,16 +306,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-        let allColumns = this.gridOptions.columnApi.getAllGridColumns()
+        let allColumns = this.vendorGrid.columnApi.getAllGridColumns()
         VisibleColumnList.forEach((column, index) => {
-            let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
+            let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
-                this.gridOptions.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
+                this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
             }
-            this.gridOptions.columnApi.moveColumn(col, index, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            this.vendorGrid.columnApi.moveColumn(col, index, "api") // not sure if this right - there is a new parametr of columneventtype here...
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
-            this.gridOptions.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
         // need to do this?  seems so but not sure.  if we dont then we dont get the initial column load.
         this.setColumnIntoStore();
@@ -334,7 +334,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: RowNode): any {
-        return this.gridOptions.api.getValue(this.blotterOptions.primaryKey, record)
+        return this.vendorGrid.api.getValue(this.blotterOptions.primaryKey, record)
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -353,16 +353,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getActiveCell(): ICellInfo {
-        let activeCell = this.gridOptions.api.getFocusedCell()
+        let activeCell = this.vendorGrid.api.getFocusedCell()
         if (activeCell) {
-            let rowNode = this.gridOptions.api.getModel().getRow(activeCell.rowIndex)
+            let rowNode = this.vendorGrid.api.getModel().getRow(activeCell.rowIndex)
             //if the selected cell is from a group cell we don't return it
             //that's a design choice as this is used only when editing and you cant edit those cells
             if (rowNode && !rowNode.group) {
                 return {
                     ColumnId: activeCell.column.getColId(),
                     Id: this.getPrimaryKeyValueFromRecord(rowNode),
-                    Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
+                    Value: this.vendorGrid.api.getValue(activeCell.column, rowNode)
                 }
             }
         }
@@ -371,7 +371,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public getSelectedCells(): ISelectedCells {
         let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
-        let selected = this.gridOptions.api.getRangeSelections();
+        let selected = this.vendorGrid.api.getRangeSelections();
         if (selected) {
             //we iterate for each ranges
             selected.forEach((rangeSelection, index) => {
@@ -379,12 +379,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                     let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                     for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
-                        let rowNode = this.gridOptions.api.getModel().getRow(rowIndex)
+                        let rowNode = this.vendorGrid.api.getModel().getRow(rowIndex)
                         //if the selected cells are from a group cell we don't return it
                         //that's a design choice as this is used only when editing and you cant edit those cells
                         if (rowNode && !rowNode.group) {
                             let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
-                            let value = this.gridOptions.api.getValue(column, rowNode)
+                            let value = this.vendorGrid.api.getValue(column, rowNode)
                             let valueArray = selectionMap.get(primaryKey);
                             if (valueArray == undefined) {
                                 valueArray = []
@@ -439,7 +439,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         }
 
-        let row = this.gridOptions.api.getModel().getRow(0)
+        let row = this.vendorGrid.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
             console.log('there is no first row so we are returning Unknown for Type')
@@ -449,7 +449,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (row.group) {
             row = row.childrenAfterGroup[0]
         }
-        let value = this.gridOptions.api.getValue(column, row)
+        let value = this.vendorGrid.api.getValue(column, row)
         let dataType: DataType
         if (value instanceof Date) {
             dataType = DataType.Date
@@ -495,9 +495,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValue(cellInfo: ICellInfo): void {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
+        this.vendorGrid.api.getModel().forEachNode(rowNode => {
             if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-                let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
+                let oldValue = this.vendorGrid.api.getValue(cellInfo.ColumnId, rowNode)
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
                 // this seems to loop unnecessarily... ????
 
@@ -523,11 +523,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // using new method... (JW, 11/3/18)
         var itemsToUpdate: any[] = [];
         var dataChangedEvents: IDataChangedEvent[] = []
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
+        this.vendorGrid.api.getModel().forEachNode(rowNode => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
 
-                let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
+                let oldValue = this.vendorGrid.api.getValue(value.ColumnId, rowNode)
 
                 var data: any = rowNode.data;
                 data[value.ColumnId] = value.Value;
@@ -535,7 +535,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                 //   rowNode.setDataValue(value.ColumnId, value.Value)
 
-                //    var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
+                //    var res = this.vendorGrid.api.updateRowData({ update: itemsToUpdate });
 
 
                 let dataChangedEvent: IDataChangedEvent = {
@@ -553,7 +553,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 dataChangedEvents.push(dataChangedEvent)
             }
         })
-        var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
+        var res = this.vendorGrid.api.updateRowData({ update: itemsToUpdate });
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
 
@@ -562,7 +562,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public cancelEdit() {
-        this.gridOptions.api.stopEditing(true)
+        this.vendorGrid.api.stopEditing(true)
     }
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
@@ -570,12 +570,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let rowNodeSearch: RowNode
             //ag-grid doesn't support FindRow based on data
             // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
-            this.gridOptions.api.getModel().forEachNode(rowNode => {
+            this.vendorGrid.api.getModel().forEachNode(rowNode => {
                 if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                     rowNodeSearch = rowNode
                 }
             })
-            return (columnId: string) => { return this.gridOptions.api.getValue(columnId, rowNodeSearch); }
+            return (columnId: string) => { return this.vendorGrid.api.getValue(columnId, rowNodeSearch); }
         }
         else {
             return (columnId: string) => { return this.getDisplayValue(id, columnId); }
@@ -584,7 +584,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            return (columnId: string) => { return this.gridOptions.api.getValue(columnId, record) }
+            return (columnId: string) => { return this.vendorGrid.api.getValue(columnId, record) }
         }
         else {
             return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
@@ -604,7 +604,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
         //also looks like the column object already has the Iseditable function... need to check that
-        let colDef = this.gridOptions.api.getColumnDef(columnId)
+        let colDef = this.vendorGrid.api.getColumnDef(columnId)
         if (typeof colDef.editable == 'boolean') {
             return !colDef.editable;
         }
@@ -615,34 +615,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setCustomSort(columnId: string, comparer: Function): void {
 
-        let sortModel = this.gridOptions.api.getSortModel()
-        let columnDef = this.gridOptions.api.getColumnDef(columnId);
+        let sortModel = this.vendorGrid.api.getSortModel()
+        let columnDef = this.vendorGrid.api.getColumnDef(columnId);
 
         if (columnDef) {
             columnDef.comparator = <any>comparer
         }
-        this.gridOptions.api.setSortModel(sortModel)
+        this.vendorGrid.api.setSortModel(sortModel)
     }
 
     public removeCustomSort(columnId: string): void {
-        let sortModel = this.gridOptions.api.getSortModel()
-        let columnDef = this.gridOptions.api.getColumnDef(columnId);
+        let sortModel = this.vendorGrid.api.getSortModel()
+        let columnDef = this.vendorGrid.api.getColumnDef(columnId);
 
         if (columnDef) {
             columnDef.comparator = null
         }
-        this.gridOptions.api.setSortModel(sortModel)
+        this.vendorGrid.api.setSortModel(sortModel)
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         //we use forEachNode as we want to get all data even the one filtered out...
-        let data = this.gridOptions.api.forEachNode(rowNode => {
+        let data = this.vendorGrid.api.forEachNode(rowNode => {
             //we do not return the values of the aggregates when in grouping mode
             //otherwise they would appear in the filter dropdown etc....
             if (!rowNode.group) {
                 let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
-                let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+                let rawValue = this.vendorGrid.api.getValue(columnId, rowNode)
                 if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
                     returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
                 }
@@ -658,7 +658,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue: string
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
+        this.vendorGrid.api.getModel().forEachNode(rowNode => {
             if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 returnValue = this.getDisplayValueFromRecord(rowNode, columnId)
             }
@@ -669,8 +669,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
         //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
-        let colDef = this.gridOptions.api.getColumnDef(columnId)
-        let rawValue = this.gridOptions.api.getValue(columnId, row)
+        let colDef = this.vendorGrid.api.getColumnDef(columnId)
+        let rawValue = this.vendorGrid.api.getValue(columnId, row)
         if (colDef.valueFormatter) {
             let formatter: any = colDef.valueFormatter
             let formattedValue = formatter({ value: rawValue })
@@ -697,7 +697,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
-        let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
+        let localCellClassRules = this.vendorGrid.columnApi.getColumn(columnId).getColDef().cellClassRules
         if (localCellClassRules) {
 
             if (type == "FormatColumn") {
@@ -738,37 +738,37 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         else {
-            this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+            this.vendorGrid.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
     }
 
     public forAllRecordsDo(func: (record: any) => any) {
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
+        this.vendorGrid.api.getModel().forEachNode(rowNode => {
             func(rowNode)
         });
     }
 
     public forAllVisibleRecordsDo(func: (record: any) => any) {
-        this.gridOptions.api.forEachNodeAfterFilterAndSort(rowNode => {
+        this.vendorGrid.api.forEachNodeAfterFilterAndSort(rowNode => {
             func(rowNode)
         });
     }
 
     public redrawRows() {
-        this.gridOptions.api.redrawRows();
+        this.vendorGrid.api.redrawRows();
         this._onRefresh.Dispatch(this, this)
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
-        this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
+        this.vendorGrid.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
     }
 
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
-        let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
+        let colDef = this.vendorGrid.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDef.findIndex(x => x.headerName == calculatedColumnID)
         if (colDefIndex > -1) {
             colDef.splice(colDefIndex, 1)
-            this.gridOptions.api.setColumnDefs(colDef)
+            this.vendorGrid.api.setColumnDefs(colDef)
         }
         for (let columnList of this.calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
@@ -779,13 +779,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.setColumnIntoStore();
     }
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
-        let colDef = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
+        let colDef = this.vendorGrid.columnApi.getAllColumns().map(x => x.getColDef())
         colDef.push({
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
             valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
         })
-        this.gridOptions.api.setColumnDefs(colDef)
+        this.vendorGrid.api.setColumnDefs(colDef)
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
         for (let column of columnList) {
             let childrenColumnList = this.calculatedColumnPathMap.get(column)
@@ -796,7 +796,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
         this.setColumnIntoStore();
-        let col = this.gridOptions.columnApi.getAllGridColumns().find(col => col.getColId() == calculatedColumn.ColumnId)
+        let col = this.vendorGrid.columnApi.getAllGridColumns().find(col => col.getColId() == calculatedColumn.ColumnId)
         if (col) {
             this.createFilterWrapper(col)
         }
@@ -804,7 +804,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getFirstRecord() {
         let record: RowNode
-        this.gridOptions.api.forEachNode(rowNode => {
+        this.vendorGrid.api.forEachNode(rowNode => {
             if (!rowNode.group) {
                 if (!record) {
                     record = rowNode
@@ -815,7 +815,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     destroy() {
-        ReactDOM.unmountComponentAtNode(this.container);
+        ReactDOM.unmountComponentAtNode(this.abContainer);
     }
 
     //TEMPORARY : JO
@@ -862,8 +862,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    private initInternalGridLogic(gridOptions: GridOptions, gridContainer: HTMLElement) {
-        // gridOptions.api.addGlobalListener((type: string, event: any) => {
+    private initInternalGridLogic(vendorGrid: GridOptions, gridContainer: HTMLElement) {
+        // vendorGrid.api.addGlobalListener((type: string, event: any) => {
         //     //console.log(event)
         // });
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
@@ -874,15 +874,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
         Events.EVENT_COLUMN_VISIBLE,
         Events.EVENT_NEW_COLUMNS_LOADED];
-        gridOptions.api.addGlobalListener((type: string, event: any) => {
+        vendorGrid.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 this.setColumnIntoStore();
             }
         });
         gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
-        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
-            let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].cellComps[params.column.getColId()].cellEditor;
+            let editor = (<any>this.vendorGrid.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].cellComps[params.column.getColId()].cellEditor;
             //No need to register for the keydown on the editor since we already register on the main div
             //TODO: check that it works when edit is popup. That's why I left the line below
             //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
@@ -920,7 +920,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             ConfirmationMsg: warningMessage,
                             ConfirmationText: "Bypass Rule",
                             CancelAction: null,
-                            ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node)),
+                            ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, this.vendorGrid.api.getValue(params.column.getColId(), params.node)),
                             ShowCommentBox: true
                         };
                         this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
@@ -933,7 +933,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //no failed validation so we raise the edit auditlog
                     let dataChangedEvent: IDataChangedEvent =
                         {
-                            OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+                            OldValue: this.vendorGrid.api.getValue(params.column.getColId(), params.node),
                             NewValue: dataChangingEvent.NewValue,
                             ColumnId: dataChangingEvent.ColumnId,
                             IdentifierValue: dataChangingEvent.IdentifierValue,
@@ -946,33 +946,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             };
             this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
         });
-        gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null;
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
             this.applyGridFiltering();
         });
-        gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
-        gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
-        gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
         });
-        //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+        //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
         //  });
-        //  gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+        //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
         //});
-        gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
             // not sure about this - doing it to make sure that we set the columns properly at least once!
             this.checkColumnsDataTypeSet();
         });
 
 
-        gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
+        vendorGrid.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
@@ -981,21 +981,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columnList = this.calculatedColumnPathMap.get(params.colDef.field);
             if (columnList) {
                 columnList.forEach(x => {
-                    let newValue = this.gridOptions.api.getValue(x, params.node);
+                    let newValue = this.vendorGrid.api.getValue(x, params.node);
                     this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
                 });
             }
         });
 
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
-        let originalisExternalFilterPresent = gridOptions.isExternalFilterPresent;
-        gridOptions.isExternalFilterPresent = () => {
+        let originalisExternalFilterPresent = vendorGrid.isExternalFilterPresent;
+        vendorGrid.isExternalFilterPresent = () => {
             let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0;
             if (isFilterActive) {
                 //used in particular at init time to show the filter icon correctly
                 for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
-                    if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
-                        this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
+                    if (!this.vendorGrid.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
+                        this.vendorGrid.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
                     }
                 }
             }
@@ -1004,8 +1004,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //it means that originaldoesExternalFilterPass will be called to we reinit that collection
             return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false);
         };
-        let originaldoesExternalFilterPass = gridOptions.doesExternalFilterPass;
-        gridOptions.doesExternalFilterPass = (node: RowNode) => {
+        let originaldoesExternalFilterPass = vendorGrid.doesExternalFilterPass;
+        vendorGrid.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
@@ -1066,11 +1066,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
-        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+        this.vendorGrid.columnApi.getAllGridColumns().forEach(col => {
             this.createFilterWrapper(col);
         });
-        let originalgetMainMenuItems = gridOptions.getMainMenuItems;
-        gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
+        let originalgetMainMenuItems = vendorGrid.getMainMenuItems;
+        vendorGrid.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 
             //but you can also clsoe the menu from filter and clicking outside the menu....
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
@@ -1087,7 +1087,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             colMenuItems.push('separator');
             this.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.forEach(x => {
-                let glyph = this.container.ownerDocument.createElement("span");
+                let glyph = this.abContainer.ownerDocument.createElement("span");
                 glyph.className = "glyphicon glyphicon-" + x.GlyphIcon;
                 colMenuItems.push({
                     name: x.Label,
@@ -1106,7 +1106,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private onSortChanged(params: any): void {
-        let sortModel: any[] = this.gridOptions.api.getSortModel();
+        let sortModel: any[] = this.vendorGrid.api.getSortModel();
         let gridSorts: IGridSort[] = [];
         if (sortModel != null) {
             if (sortModel.length > 0) {
@@ -1121,24 +1121,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getRowInfo(): any {
-        return this.gridOptions.api.getModel().getRowCount()
+        return this.vendorGrid.api.getModel().getRowCount()
     }
 
     public getColumnInfo(): any {
-        return this.gridOptions.columnApi.getAllColumns().length;
+        return this.vendorGrid.columnApi.getAllColumns().length;
     }
 
     public selectColumn(columnId: string) {
-        this.gridOptions.api.clearRangeSelection();
+        this.vendorGrid.api.clearRangeSelection();
         let rangeSelectionParams: AddRangeSelectionParams = {
             rowStart: 0,
-            rowEnd: this.gridOptions.api.getDisplayedRowCount(),
+            rowEnd: this.vendorGrid.api.getDisplayedRowCount(),
             columnStart: columnId,
             columnEnd: columnId,
             floatingStart: "top",
             floatingEnd: "bottom"
         }
-        this.gridOptions.api.addRangeSelection(rangeSelectionParams)
+        this.vendorGrid.api.addRangeSelection(rangeSelectionParams)
     }
 
     public setGridSort(gridSorts: IGridSort[]): void {
@@ -1148,12 +1148,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let sortDescription: string = (gs.SortOrder == SortOrder.Ascending) ? "asc" : "desc"
             sortModel.push({ colId: gs.Column, sort: sortDescription })
         })
-        this.gridOptions.api.setSortModel(sortModel)
-        this.gridOptions.api.onSortChanged();
+        this.vendorGrid.api.setSortModel(sortModel)
+        this.vendorGrid.api.onSortChanged();
     }
 
     public setData(dataSource: any) {
-        this.gridOptions.api.setRowData(dataSource)
+        this.vendorGrid.api.setRowData(dataSource)
     }
 
     public canMultiSort(): boolean {

@@ -4,12 +4,13 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
+import { Visibility } from '../../Core/Enums';
 
 const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_SET_FUNCTION_BUTTONS_ITEM = 'DASHBOARD_SET_FUNCTION_BUTTONS_ITEM';
 const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
-const DASHBOARD_SET_IS_MINIMISED = 'DASHBOARD_SET_IS_MINIMISED';
+const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
 
 export interface DashboardChangeControlVisibilityAction extends Redux.Action {
     StrategyId: string;
@@ -32,8 +33,8 @@ export interface DashboardSetZoomAction extends Redux.Action {
     Zoom: Number
 }
 
-export interface DashboardSetIsMinimisedAction extends Redux.Action {
-    IsMinimised: boolean
+export interface DashboardSetVisibilityAction extends Redux.Action {
+    Visibility: Visibility
 }
 
 export const ChangeVisibilityDashboardControl = (StrategyId: string): DashboardChangeControlVisibilityAction => ({
@@ -58,9 +59,9 @@ export const DashboardSetZoom = (Zoom: Number): DashboardSetZoomAction => ({
     Zoom
 })
 
-export const DashboardSetIsMinimised = (IsMinimised: boolean): DashboardSetIsMinimisedAction => ({
-    type: DASHBOARD_SET_IS_MINIMISED,
-    IsMinimised
+export const DashboardSetVisibility = (Visibility: Visibility): DashboardSetVisibilityAction => ({
+    type: DASHBOARD_SET_VISIBILITY,
+    Visibility
 })
 
 const initialDashboardState: DashboardState = {
@@ -68,7 +69,7 @@ const initialDashboardState: DashboardState = {
     VisibleToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId],
     VisibleButtons: [StrategyIds.AboutStrategyId, StrategyIds.DashboardStrategyId, StrategyIds.SmartEditStrategyId, StrategyIds.ColumnChooserStrategyId, StrategyIds.ConditionalStyleStrategyId, StrategyIds.TeamSharingStrategyId],
     Zoom: 1,
-    IsMinimised: false
+    DashboardVisibility: Visibility.Visible
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
@@ -105,9 +106,9 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             let actionTyped = <DashboardSetZoomAction>action;
             return Object.assign({}, state, { Zoom: actionTyped.Zoom });
         }
-        case DASHBOARD_SET_IS_MINIMISED: {
-            let actionTyped = <DashboardSetIsMinimisedAction>action;
-            return Object.assign({}, state, { IsMinimised: actionTyped.IsMinimised });
+        case DASHBOARD_SET_VISIBILITY: {
+            let actionTyped = <DashboardSetVisibilityAction>action;
+            return Object.assign({}, state, { DashboardVisibility: actionTyped.Visibility });
         }
         default:
             return state
