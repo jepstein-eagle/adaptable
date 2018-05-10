@@ -1,4 +1,5 @@
 import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
+import { IPP_LOGIN } from "../../Redux/ActionsReducers/ExportRedux";
 
 
 export module iPushPullHelper {
@@ -13,6 +14,12 @@ export module iPushPullHelper {
     export function isIPushPullLoaded(iPPConfig?: any) {
         try {
             let angular = (<any>window).angular
+
+            // if no ipushpullconfig then return
+            if(!iPPConfig){
+                return false;
+            }
+            
             //first we check if angular is loaded (dependency from ipushpull)
             if (typeof angular == 'undefined') {
                 return false;

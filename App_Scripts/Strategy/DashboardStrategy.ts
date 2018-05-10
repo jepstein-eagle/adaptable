@@ -24,10 +24,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyNames.DashboardStrategyName, ScreenPopups.DashboardPopup, StrategyGlyphs.DashboardGlyph);
-
-        this.blotter.LoggingService.LogError("This is an error")
-        this.blotter.LoggingService.LogMessage("my message")
-        this.blotter.LoggingService.LogWarning("be careful")
     }
 
     protected addColumnMenuItem(columnId: string): void {
