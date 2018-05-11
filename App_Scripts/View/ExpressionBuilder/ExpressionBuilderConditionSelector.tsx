@@ -13,7 +13,6 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -183,7 +182,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 :
                 <div>
                     {selectedColumn &&
-                        <Tab.Container id="left-tabs-example" defaultActiveKey={this.props.SelectedTab}  >
+                        <Tab.Container id="left-tabs-example" defaultActiveKey={this.props.SelectedTab} activeKey={this.props.SelectedTab} onSelect={()=>this.onSelectTab()}  >
                             <div>
                                 <Nav bsStyle="pills" >
                                     <NavItem eventKey={QueryTab.ColumnValue} onClick={()=>this.onTabChanged(QueryTab.ColumnValue)} >Column Values</NavItem>
@@ -226,6 +225,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 </div>
             }
         </PanelWithButton>
+    }
+
+    onSelectTab(): any {
+        // empty
     }
 
     onTabChanged(tab :QueryTab): any {
