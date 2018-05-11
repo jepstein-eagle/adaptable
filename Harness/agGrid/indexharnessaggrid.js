@@ -196,7 +196,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: "",    // passing in predefined config with a file    
         serverSearchOption: "Advancedsearch",   // performing AdvancedSearch on the server, not the client
     }
 

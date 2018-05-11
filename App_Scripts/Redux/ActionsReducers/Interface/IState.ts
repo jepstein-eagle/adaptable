@@ -17,7 +17,7 @@ export interface GridState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
     BlotterOptions: IAdaptableBlotterOptions;
-    BlotterRestrictions: string[]
+    BlotterRestrictions: string[];
 }
 
 export interface MenuState {

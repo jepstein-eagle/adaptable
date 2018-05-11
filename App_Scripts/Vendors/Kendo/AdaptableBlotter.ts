@@ -57,7 +57,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
@@ -66,7 +66,7 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
@@ -949,12 +949,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.vendorGrid.dataSource.sort({});
         }
 
-
     }
 
-    public canMultiSort(): boolean {
-        return true;
+    public getVendorGridState(visibleCols: string[]): any {
+        return null;
     }
+
+    public setVendorGridState(vendorGridState: any): void {
+        // todo
+    }
+
 
 }
 

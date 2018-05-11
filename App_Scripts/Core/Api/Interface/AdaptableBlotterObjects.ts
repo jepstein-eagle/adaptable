@@ -1,5 +1,6 @@
 import { FontWeight, FontStyle, FontSize, LeafExpressionOperator, SortOrder, ConditionalStyleScope, MathOperation, DataType, ReportColumnScope, ReportRowScope } from '../../Enums';
 import { Expression } from '../Expression';
+import { KeyValuePair } from '../../../View/UIInterfaces';
 
 
 /**
@@ -137,6 +138,7 @@ export interface ILayout extends IAdaptableBlotterObject {
   Name: string;
   Columns: string[];
   GridSorts: IGridSort[]
+  VendorGridInfo?: any
 }
 
 export interface IPlusMinusRule extends IAdaptableBlotterObject {

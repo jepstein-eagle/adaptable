@@ -39,7 +39,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         ModalContainer: modalContainer,
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
-        cssClassName: cssClassName + StyleConstants.MODAL_BODY
+        cssClassName: cssClassName + StyleConstants.MODAL_BODY,
       }
 
       var body: any = React.createElement(bodyElement, commonProps);
@@ -50,8 +50,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
 
       <Modal show={this.props.showModal} onHide={this.props.onHide} className={cssClassName + StyleConstants.BASE}
         container={modalContainer} >
-        <div className={cssClassName +StyleConstants.MODAL_BASE}>
-          <Modal.Body className={cssClassName +StyleConstants.MODAL_BODY}>
+        <div className={cssClassName + StyleConstants.MODAL_BASE}>
+          <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
             <div className="ab_main_popup">
               <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 {body}
@@ -61,8 +61,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
           <Modal.Footer className={cssClassName + StyleConstants.MODAL_FOOTER}>
             <Button className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON} onClick={() => this.props.onHide()}>Close</Button>
           </Modal.Footer>
-          </div>
-         </Modal>
+        </div>
+      </Modal>
     );
   }
 }

@@ -5,15 +5,12 @@ import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IConditionalStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { UIHelper } from '../../UIHelper';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IConditionalStyle>) {
         super(props2)
-        this.state = {
-            Expression: props2.Data.Expression,
-            SelectedColumnId: StringExtensions.IsNotNullOrEmpty(props2.Data.ColumnId) ? props2.Data.ColumnId : "",
-            SelectedTab: QueryTab.ColumnValue
-        }
+        this.state = UIHelper.getExpressionBuilderState(this.props2.Data.Expression)
     }
 
     public Next(): void {

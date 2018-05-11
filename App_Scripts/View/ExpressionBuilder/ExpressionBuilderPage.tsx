@@ -19,7 +19,6 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     Columns: Array<IColumn>
     UserFilters: Array<IUserFilter>
     SystemFilters: Array<string>
-    SelectedColumnId: string
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
@@ -28,9 +27,9 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
 }
 
 export interface ExpressionBuilderPageState {
-    Expression: Expression
+    Expression: Expression,
     SelectedColumnId: string
-    SelectedTab: QueryTab
+    SelectedTab :QueryTab
 }
 
 export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState> implements AdaptableWizardStep {
@@ -78,7 +77,6 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                           cssClassName={cssClassName} 
                           UserFilters={this.props.UserFilters}
                             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
-                            SelectedColumnId={this.state.SelectedColumnId}
                             ColumnsList={this.props.Columns}
                             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
                             DeleteUserFilterExpression={(columnId, index) => this.DeleteUserFilterExpression(columnId, index)}
@@ -112,7 +110,6 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
 
     onSelectedColumnChanged() {
         this.setState({ SelectedColumnId: "" } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
-
     }
 
     DeleteColumnValue(columnId: string, value: any) {

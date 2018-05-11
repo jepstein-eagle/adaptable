@@ -4,17 +4,14 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { UIHelper } from '../../UIHelper';
 
 
 
 export class UserFilterExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IUserFilter>) {
         super(props2)
-        this.state = {
-            Expression: props2.Data.Expression,
-            SelectedColumnId: props2.Data.ColumnId,
-            SelectedTab: QueryTab.ColumnValue
-        }
+        this.state = UIHelper.getExpressionBuilderState(this.props2.Data.Expression)
     }
 
     public Next(): void {

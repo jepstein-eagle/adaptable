@@ -3,15 +3,14 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { IAdvancedSearch } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { Expression } from '../../../Core/Api/Expression';
+import { UIHelper } from "./../../UIHelper";
+
 
 export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(public props2: ExpressionWizardProps<IAdvancedSearch>) {
         super(props2)
-        this.state = {
-            Expression: props2.Data.Expression,
-            SelectedColumnId: props2.SelectedColumnId,
-            SelectedTab: QueryTab.ColumnValue
-        }
+        this.state = UIHelper.getExpressionBuilderState(this.props2.Data.Expression)
     }
 
     public Next(): void {
@@ -20,7 +19,7 @@ export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implem
 
     public Back(): void {
         // todo
-     }
+    }
 
-     public StepName = this.props.StepName
+    public StepName = this.props.StepName
 }

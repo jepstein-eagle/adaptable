@@ -4,12 +4,19 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
 import { IStyle } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
+import { Expression } from '../Core/Api/Expression';
 
 
 export module UIHelper {
     export function EmptyConfigState(): EditableConfigEntityState {
         return {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
+        }
+    }
+    export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
+        return {
+            Expression: expression, SelectedColumnId: "", SelectedTab: null,
         }
     }
 

@@ -55,6 +55,8 @@ import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { Helper } from '../../Core/Helpers/Helper';
+import { IColumn } from '../../Core/Interface/IColumn';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -303,8 +305,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) =>  blotter.LoggingService.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
-                    xhr.ontimeout = (ev: ProgressEvent) =>  blotter.LoggingService.LogWarning("TeamSharing share timeout", actionTyped.Entity)
+                    xhr.onerror = (ev: ErrorEvent) => blotter.LoggingService.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
+                    xhr.ontimeout = (ev: ProgressEvent) => blotter.LoggingService.LogWarning("TeamSharing share timeout", actionTyped.Entity)
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
@@ -332,8 +334,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                 case TeamSharingRedux.TEAMSHARING_GET: {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) =>  blotter.LoggingService.LogError("TeamSharing get error :" + ev.message)
-                    xhr.ontimeout = (ev: ProgressEvent) =>  blotter.LoggingService.LogWarning("TeamSharing get timeout")
+                    xhr.onerror = (ev: ErrorEvent) => blotter.LoggingService.LogError("TeamSharing get error :" + ev.message)
+                    xhr.ontimeout = (ev: ProgressEvent) => blotter.LoggingService.LogWarning("TeamSharing get timeout")
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
@@ -437,12 +439,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         }
                         case StrategyIds.LayoutStrategyId: {
                             let layout = actionTyped.Entity as ILayout
-                            if (middlewareAPI.getState().Layout.Layouts.find(x => x.Name == layout.Name)) {
+                            let layoutIndex: number = middlewareAPI.getState().Layout.Layouts.findIndex(x => x.Name == layout.Name)
+                            if (layoutIndex != -1) {
                                 overwriteConfirmation = true
-                                importAction = LayoutRedux.LayoutSave(layout)
-                            } else {
-                                importAction = LayoutRedux.LayoutAddUpdate(-1, layout)
                             }
+                            importAction = LayoutRedux.LayoutPreSave(layoutIndex, layout)
                             break;
                         }
                         case StrategyIds.ExportStrategyId: {
@@ -540,11 +541,20 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     if (currentLayout) {
                         let gridState: GridState = middlewareAPI.getState().Grid;
                         // set columns
-                        let columns = currentLayout.Columns.map(columnId => gridState.Columns.find(x => x.ColumnId == columnId));
-                        middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columns))
+                        let blotterColumns: IColumn[] = []
+                        currentLayout.Columns.forEach(c => {
+                            let column: IColumn = gridState.Columns.find(x => x.ColumnId == c)
+                            if (column) {
+                                blotterColumns.push(column);
+                            }
+                        })
+
+                        middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns))
                         // set sort 
                         middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
                         blotter.setGridSort(currentLayout.GridSorts);
+                        // set vendor specific info
+                        blotter.setVendorGridState(currentLayout.VendorGridInfo)
                     }
                     return returnAction;
                 }
@@ -555,6 +565,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     if (!currentLayout) { // we have deleted the current layout (allowed) so lets make the layout default
                         middlewareAPI.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
                     }
+                    return returnAction;
+                }
+                case LayoutRedux.LAYOUT_PRESAVE: {
+                    let returnAction = next(action);
+                    let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
+                    let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
+                    layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
+                    middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
                     return returnAction;
                 }
                 case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
@@ -778,13 +796,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let currentLayout = DEFAULT_LAYOUT
                     let gridState: GridState = middlewareAPI.getState().Grid
                     if (middlewareAPI.getState().Layout.Layouts.length == 0) {
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], DEFAULT_LAYOUT)
-                        middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(-1, layout));
+                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
+                        middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     }
                     else {
                         //update default layout with latest columns and sort
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, DEFAULT_LAYOUT)
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSave(layout))
+                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, null, DEFAULT_LAYOUT)
+                        middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout)) // think this is right that has to be 0
                         currentLayout = middlewareAPI.getState().Layout.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout
@@ -812,11 +830,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     //    })
 
                     blotter.InitAuditService()
-                    return returnAction;
-                }
-                case FilterRedux.COLUMN_FILTER_ADD_UPDATE: {
-                    let returnAction = next(action);
-                    let s: string = "first";
                     return returnAction;
                 }
                 case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:

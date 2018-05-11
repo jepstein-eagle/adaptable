@@ -4,16 +4,13 @@ import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuild
 import { ICellValidationRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
+import { UIHelper } from '../../UIHelper';
 
 
 export class CellValidationExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<ICellValidationRule>) {
         super(props2)
-        this.state = {
-            Expression: props2.Data.OtherExpression,
-            SelectedColumnId: "",
-            SelectedTab: QueryTab.ColumnValue
-        }
+        this.state = UIHelper.getExpressionBuilderState(this.props2.Data.OtherExpression)
     }
 
     public Next(): void {

@@ -59,7 +59,7 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
@@ -67,7 +67,7 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
@@ -431,7 +431,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     default:
                         break;
                 }
-                this.LoggingService.LogMessage('There is no defined type. Defaulting to type of the first value for column ' + column.name + ": " + dataType)
+                this.LoggingService.LogMessage ('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                 return dataType
             }
 
@@ -1233,10 +1233,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.behavior.dataModel.dataSource.setData(data, schema);
         this.ReindexAndRepaint();
     }
+    
+    public getVendorGridState(visibleCols: string[]): any {
+        return null;
+    }
 
-
-    public canMultiSort(): boolean {
-        return false;  // needs to be true soon...
+    public setVendorGridState(vendorGridState: any): void {
+        // todo
     }
 
 }

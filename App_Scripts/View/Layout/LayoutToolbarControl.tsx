@@ -28,7 +28,7 @@ import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-    onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
+    onPreSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutPreSaveAction;
     onNewLayout: () => PopupRedux.PopupShowAction;
     Layouts: ILayout[];
     CurrentLayout: string;
@@ -142,8 +142,11 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onSave() {
-        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSorts, this.props.CurrentLayout)
-        this.props.onSaveLayout(layoutToSave);
+        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSorts, null, this.props.CurrentLayout)
+        let currentLayoutIndex = this.props.Layouts.findIndex(l => l.Name == this.props.CurrentLayout)
+        if (currentLayoutIndex != -1) {
+            this.props.onPreSaveLayout(currentLayoutIndex, layoutToSave);
+        }
     }
 
     private onUndo() {
@@ -162,7 +165,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-        onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
+        onPreSaveLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
         onNewLayout: () => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, false, "New")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(dashboardControl)),
         onConfigure: (isReadonly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, isReadonly))

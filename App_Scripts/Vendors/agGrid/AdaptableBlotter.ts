@@ -78,23 +78,25 @@ import { FilterWrapperFactory } from './FilterWrapper'
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
 import { LoggingService } from '../../Core/Services/LoggingService';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
+import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
+    private testState: any = null
 
     public api: IBlotterApi
     public GridName: string = "ag-Grid"
@@ -113,8 +115,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private blotterOptions: IAdaptableBlotterOptions
 
+    private COLUMN_STATE: string = "ColumnState"
+    private COLUMN_GROUP_STATE: string = "ColumnGroupState"
 
-    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions,   private gridContainer: HTMLElement) {
+    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions, private gridContainer: HTMLElement) {
         //we init with defaults then overrides with options passed in the constructor
         this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
@@ -167,7 +171,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         // not able to select a column in hypergrid currently
-        //this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
 
 
         iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
@@ -239,7 +243,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setColumnIntoStore() {
-        let visibleColumns = this.vendorGrid.columnApi.getAllGridColumns().filter(x => x.isVisible()).map((col, index) => {
+        let allVendorGridColumns = this.vendorGrid.columnApi.getAllGridColumns().filter(c => !ColumnHelper.isSpecialColumn(c.getColId()))
+        let visibleColumns = allVendorGridColumns.filter(x => x.isVisible()).map((col, index) => {
             return {
                 ColumnId: col.getColId(),
                 FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
@@ -248,7 +253,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: index
             }
         })
-        let hiddenColumns = this.vendorGrid.columnApi.getAllColumns().filter(x => !x.isVisible()).map(col => {
+        let hiddenColumns = allVendorGridColumns.filter(x => !x.isVisible()).map(col => {
             return {
                 ColumnId: col.getColId(),
                 FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
@@ -472,7 +477,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
             }
         }
-        this.LoggingService.LogMessage ('There is no defined type. Defaulting to type of the first value for column ' + column.getColId() + ": " + dataType)
+        this.LoggingService.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
         return dataType
     }
 
@@ -1010,7 +1015,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' ) {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
@@ -1024,7 +1029,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None'  || 'AdvancedSearch') {
+            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' || 'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
@@ -1107,6 +1112,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private onSortChanged(params: any): void {
         let sortModel: any[] = this.vendorGrid.api.getSortModel();
+
         let gridSorts: IGridSort[] = [];
         if (sortModel != null) {
             if (sortModel.length > 0) {
@@ -1156,9 +1162,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.api.setRowData(dataSource)
     }
 
-    public canMultiSort(): boolean {
-        return true;
-    }
+
 
     private checkColumnsDataTypeSet(): any {
         // check that we have no unknown columns - if we do then ok
@@ -1166,6 +1170,47 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (firstCol.DataType == DataType.Unknown) {
             this.setColumnIntoStore();
         }
+    }
+
+    public getVendorGridState(visibleCols: string[]): any {
+        let columnState = this.vendorGrid.columnApi.getColumnState();
+        // Dont like this but not sure we have a choice to avoid other issues...
+        // Going to update the state to make sure that visibility matches those given here
+
+        columnState.forEach(c => {
+            // to do
+            let colId: string = c.colId;
+            if (visibleCols.find(v => v == colId)) {
+                c.hide = false;
+            } else {
+                c.hide = true;
+            }
+        })
+        //  let columnKVP: KeyValuePair = { Key: this.COLUMN_STATE, Value: this.vendorGrid.columnApi.getColumnState() };
+        //  let columnGroupKVP: KeyValuePair = { Key: this.COLUMN_GROUP_STATE, Value: this.vendorGrid.columnApi.getColumnGroupState() };
+        //  let myArray = [columnKVP, columnGroupKVP]
+        let mystring: any = JSON.stringify(columnState)
+        return mystring;
+    }
+
+    public setVendorGridState(vendorGridState: any): void {
+        if (vendorGridState) {
+            let columnState: any = JSON.parse(vendorGridState);
+            if (columnState) {
+                this.vendorGrid.columnApi.setColumnState(columnState, "api")
+            }
+        }
+        //   let columnStateKVP: KeyValuePair = vendorGridInfo.find(vgi => vgi.Key == this.COLUMN_STATE)
+        //    if (columnStateKVP) {
+        //        this.vendorGrid.columnApi.setState(columnStateKVP.Value, "api");
+        //  }
+
+        //  let columnGroupStateKVP: KeyValuePair = vendorGridInfo.find(vgi => vgi.Key == this.COLUMN_GROUP_STATE)
+        //  if (columnGroupStateKVP) {
+        //      this.vendorGrid.columnApi.setColumnGroupState(columnGroupStateKVP.Value, "api");
+        //   }
+
+
     }
 
 }

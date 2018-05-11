@@ -25,7 +25,6 @@ export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Exp
     Expression: Expression
     UserFilters: IUserFilter[]
     onSelectedColumnChange: (ColumnId: string, tab: QueryTab) => void
-    SelectedColumnId: string
     ColumnsList: Array<IColumn>
     DeleteRange: (ColumnId: string, index: number) => void
     DeleteUserFilterExpression: (ColumnId: string, index: number) => void
@@ -39,7 +38,7 @@ export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<Exp
 
 export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderPreviewProps, {}> {
     componentWillReceiveProps(nextProps: ExpressionBuilderPreviewProps, nextContext: any) {
-        this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)
+ //       this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)
     }
     render() {
         let cssClassName: string = this.props.cssClassName + "__querypreview"

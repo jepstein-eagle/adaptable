@@ -38,4 +38,7 @@ export module LayoutHelper {
         return (column) ? column.FriendlyName : GeneralConstants.MISSING_COLUMN;
     }
 
+
+
+    
 }

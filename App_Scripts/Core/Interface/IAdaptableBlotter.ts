@@ -9,18 +9,18 @@ import { IValidationService } from '../Services/Interface/IValidationService'
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { ICalculatedColumn, IGridSort } from '../Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ILayout } from '../Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs } from '../Api/Interface/ServerSearch';
 import { ILoggingService } from '../Services/Interface/ILoggingService';
 
 export interface IAdaptableBlotter {
-   /**
-    * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
-    */
+    /**
+     * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
+     */
     api: IBlotterApi
 
     GridName: string
@@ -44,7 +44,7 @@ export interface IAdaptableBlotter {
 
     // not sure if this is right but putting the event here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
-   
+
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
@@ -85,7 +85,7 @@ export interface IAdaptableBlotter {
 
     //CalculatedColumn
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void
-     removeCalculatedColumnFromGrid(calculatedColumnID: string) :void
+    removeCalculatedColumnFromGrid(calculatedColumnID: string): void
     getFirstRecord(): any
 
     // Filtering
@@ -98,6 +98,7 @@ export interface IAdaptableBlotter {
     getRowInfo(): any
     getColumnInfo(): any
 
-    // temp : JW  -- until we are able to get multi column sort working on hypergrid
-    canMultiSort(): boolean
+    // layout
+    getVendorGridState(visibleCols: string[]): any
+    setVendorGridState(vendorGridState: any): void
 }

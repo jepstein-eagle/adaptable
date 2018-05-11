@@ -30,7 +30,7 @@ export class ReportSettingsWizard extends React.Component<ReportSettingsWizardPr
                 <AdaptableBlotterForm horizontal>
                     <Col xs={10}>
                         <FormGroup controlId="formInlineName" validationState={validationState}>
-                            <FormControl type="text" placeholder="Enter Report Name" value={this.state.ReportName} onChange={(e) => this.onSaveLayoutNameChanged(e)} />
+                            <FormControl type="text" placeholder="Enter Report Name" value={this.state.ReportName} onChange={(e) => this.onReportNameChanged(e)} />
                             <FormControl.Feedback />
                             <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                         </FormGroup>
@@ -42,7 +42,7 @@ export class ReportSettingsWizard extends React.Component<ReportSettingsWizardPr
         </div>
     }
 
-    private onSaveLayoutNameChanged(event: React.FormEvent<any>) {
+    private onReportNameChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({
             ReportName: e.value,

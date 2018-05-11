@@ -10,6 +10,7 @@ import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/Act
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs } from '../Core/Api/Interface/ServerSearch';
 import { SearchChangedTrigger } from '../Core/Enums';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean
@@ -30,8 +31,11 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         if (this.buildContextMenu != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu) {
             this.buildContextMenu = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu;
             if (this.buildContextMenu) {
+                let columnId = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId;
+                if (!ColumnHelper.isSpecialColumn(columnId)){
                 this.addColumnMenuItem(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
             }
+        }
         }
     }
 

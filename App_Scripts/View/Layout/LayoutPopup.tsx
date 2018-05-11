@@ -30,7 +30,7 @@ import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
     CurrentLayoutName: string;
-    onAddUpdateLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutAddUpdateAction,
+    onPreSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutPreSaveAction,
     onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
 }
@@ -132,7 +132,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateLayout([], [], ""), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateLayout([], [], null, ""), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
     onEdit(index: number, layout: ILayout) {
@@ -153,8 +153,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             let previousLayout = this.props.Layouts[this.state.EditedAdaptableBlotterObjectIndex + 1];
             layoutNameChanged = previousLayout.Name == this.props.CurrentLayoutName;
         }
-
-        this.props.onAddUpdateLayout(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
+        // note: add 1 to index if editing because default layout not included in collection
+        let index = (this.state.EditedAdaptableBlotterObjectIndex > -1) ? this.state.EditedAdaptableBlotterObjectIndex + 1 : this.state.EditedAdaptableBlotterObjectIndex
+        this.props.onPreSaveLayout(index, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
 
         if (layoutNameChanged) { // its new so make it the selected layout or name has changed.
@@ -191,7 +192,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutAddUpdate(index, layout)),
+        onPreSaveLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
         onSelectLayout: (selectedSearchName: string) => dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
     };

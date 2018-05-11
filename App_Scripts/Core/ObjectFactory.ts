@@ -4,6 +4,7 @@ import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
+import { KeyValuePair } from '../View/UIInterfaces';
 
 export module ObjectFactory {
 
@@ -138,11 +139,12 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], name: string): ILayout {
+    export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], vendorGridInfo: KeyValuePair[], name: string): ILayout {
         return {
             Columns: (columns)? columns.map(x => x.ColumnId): [],
             GridSorts: gridSorts,
             Name: name,
+            VendorGridInfo: vendorGridInfo,
             IsReadOnly: false
         }
     }

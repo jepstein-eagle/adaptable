@@ -8,7 +8,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ILayout, IGridSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
-
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>
@@ -30,9 +30,9 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
 
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-selection"
-       
+
         return <div className={cssClassName}>
-        <Panel header="Select Source for Layout" bsStyle="primary">
+            <Panel header="Select Source for Layout" bsStyle="primary">
                 <AdaptableBlotterForm inline>
                     <Col xs={12}>
                         <HelpBlock>Choose whether to create a new layout using the Grid's current columns and sort order.</HelpBlock>
@@ -42,11 +42,11 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="Existing" checked={this.state.LayoutSource == LayoutSource.Existing} onChange={(e) => this.onScopeSelectChanged(e)}>Copy current Grid setup</Radio>
-                        {' '} {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} popoverType={PopoverType.Info} />
+                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} popoverType={PopoverType.Info} />
                     </Col>
-                      <Col xs={12} className="ab_large_margin">
+                    <Col xs={12} className="ab_large_margin">
                         <Radio inline value="New" checked={this.state.LayoutSource == LayoutSource.New} onChange={(e) => this.onScopeSelectChanged(e)}>Create a new Layout</Radio>
-                        {' '} {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} popoverType={PopoverType.Info} />
+                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>
@@ -66,9 +66,9 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
     public canBack(): boolean { return true; }
     public Next(): void {
         if (this.state.LayoutSource == LayoutSource.Existing) { // need to popuplate the layout
-            let visibleColumns = this.props.Columns.filter(c => c.Visible).map(c => c.ColumnId)
+            let visibleColumns = this.props.Columns.filter(c => c.Visible ).map(c => c.ColumnId)
             this.props.Data.Columns = visibleColumns;
-               this.props.Data.GridSorts = this.props.GridSorts
+            this.props.Data.GridSorts = this.props.GridSorts
         }
     }
     public Back(): void {
