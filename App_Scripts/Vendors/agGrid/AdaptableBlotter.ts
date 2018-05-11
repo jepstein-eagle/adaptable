@@ -242,26 +242,72 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
+
+
+    public hideFilterFormPopup: Function
+    public hideFilterForm() {
+        if (this.hideFilterFormPopup) {
+            this.hideFilterFormPopup()
+        }
+    }
+
+    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
+        let allColumns = this.vendorGrid.columnApi.getAllGridColumns()
+        let startIndex: number = 0;
+
+        //  this is not quite right as it assumes that only the first column can be grouped 
+        //  but lets do this for now and then refine and refactor later to deal with weirder use cases
+        if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
+            startIndex++;
+        }
+
+
+        VisibleColumnList.forEach((column, index) => {
+            let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
+            if (!col.isVisible()) {
+                this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            }
+            this.vendorGrid.columnApi.moveColumn(col, startIndex+ index, "api") // not sure if this right - there is a new parametr of columneventtype here...
+        })
+        allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
+            this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
+        }))
+        // need to do this?  seems so but not sure.  if we dont then we dont get the initial column load.
+        this.setColumnIntoStore();
+        //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
+    }
+
     public setColumnIntoStore() {
-        let allVendorGridColumns = this.vendorGrid.columnApi.getAllGridColumns().filter(c => !ColumnHelper.isSpecialColumn(c.getColId()))
-        let visibleColumns = allVendorGridColumns.filter(x => x.isVisible()).map((col, index) => {
-            return {
-                ColumnId: col.getColId(),
-                FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
-                DataType: this.getColumnDataType(col),
-                Visible: col.isVisible(),
-                Index: index
+        let hiddenColumns: IColumn[] = []
+        let visibleColumns: IColumn[] = []
+
+        let vendorCols: any[] = this.vendorGrid.columnApi.getAllGridColumns()
+
+        vendorCols.forEach((col, index) => {
+            let colId: string = col.getColId()
+            if (!ColumnHelper.isSpecialColumn(colId)) {
+                if (col.isVisible()) {
+                    let visibleCol: IColumn = {
+                        ColumnId: colId,
+                        FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
+                        DataType: this.getColumnDataType(col),
+                        Visible: true,
+                        Index: index
+                    }
+                    visibleColumns.push(visibleCol)
+                } else {
+                    let hiddenCol: IColumn = {
+                        ColumnId: colId,
+                        FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
+                        DataType: this.getColumnDataType(col),
+                        Visible: false,
+                        Index: index
+                    }
+                    visibleColumns.push(hiddenCol)
+                }
             }
         })
-        let hiddenColumns = allVendorGridColumns.filter(x => !x.isVisible()).map(col => {
-            return {
-                ColumnId: col.getColId(),
-                FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
-                DataType: this.getColumnDataType(col),
-                Visible: col.isVisible(),
-                Index: -1
-            }
-        })
+
 
         let allColumns = visibleColumns.concat(hiddenColumns)
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(allColumns));
@@ -301,30 +347,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.setCellClassRules(cellClassRules, col.ColumnId, "QuickSearch")
         }
 
-    }
-
-    public hideFilterFormPopup: Function
-    public hideFilterForm() {
-        if (this.hideFilterFormPopup) {
-            this.hideFilterFormPopup()
-        }
-    }
-
-    public setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void {
-        let allColumns = this.vendorGrid.columnApi.getAllGridColumns()
-        VisibleColumnList.forEach((column, index) => {
-            let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
-            if (!col.isVisible()) {
-                this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
-            }
-            this.vendorGrid.columnApi.moveColumn(col, index, "api") // not sure if this right - there is a new parametr of columneventtype here...
-        })
-        allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
-            this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
-        }))
-        // need to do this?  seems so but not sure.  if we dont then we dont get the initial column load.
-        this.setColumnIntoStore();
-        //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
     public createMenu() {

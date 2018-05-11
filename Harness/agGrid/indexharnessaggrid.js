@@ -119,7 +119,7 @@ function getSchema(data) {
     var schema = []
 
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber" });
-    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"] });
+    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"] , enableValue: true});
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
@@ -169,7 +169,9 @@ function notionalCellRenderer(params) {
 
 function InitBlotter() {
     // get some dummy data
-    let trades = new harness.DataGenerator().getTrades();
+    let dataGen = new harness.DataGenerator();
+
+    let trades = dataGen.getTrades();
 
     // populate the agGrid gridOptions object with the data, column scheme and other properties
     // setting columnTypes for easier identification of underlying agGrid column types
@@ -198,6 +200,10 @@ function InitBlotter() {
         enableRemoteConfigServer: false,        // not running remote config
         predefinedConfig: "",    // passing in predefined config with a file    
         serverSearchOption: "Advancedsearch",   // performing AdvancedSearch on the server, not the client
+        iPushPullConfig: {
+            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+        }
     }
 
     // set the container for the underlying grid
@@ -213,6 +219,10 @@ function InitBlotter() {
     // 3.  the GridOptions
     // 4.  the underlying Grid Container (required for agGrid)
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
+ //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
@@ -254,7 +264,7 @@ let json = {
             "Name": "April 2018",
             "Expression": {
                 "ColumnValueExpressions": [],
-               "FilterExpressions": [],
+                "FilterExpressions": [],
                 "RangeExpressions": [{
                     "ColumnId": "tradeDate",
                     "Ranges": [{
@@ -336,7 +346,7 @@ let json = {
                             ]
                         }
                     ],
-                     "FilterExpressions": [],
+                    "FilterExpressions": [],
                     "RangeExpressions": []
                 },
                 "IsReadOnly": false

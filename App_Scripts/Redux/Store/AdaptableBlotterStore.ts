@@ -48,7 +48,7 @@ import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
 import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
 import { format } from 'util';
-import { GridState, AdvancedSearchState } from '../ActionsReducers/Interface/IState';
+import { GridState, AdvancedSearchState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
@@ -795,7 +795,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     //create the default layout so we can revert to it if needed
                     let currentLayout = DEFAULT_LAYOUT
                     let gridState: GridState = middlewareAPI.getState().Grid
-                    if (middlewareAPI.getState().Layout.Layouts.length == 0) {
+                    let layoutState: LayoutState = middlewareAPI.getState().Layout
+                    if (layoutState.Layouts.length == 0) {
                         let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     }
@@ -803,7 +804,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         //update default layout with latest columns and sort
                         let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, null, DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout)) // think this is right that has to be 0
-                        currentLayout = middlewareAPI.getState().Layout.CurrentLayout
+                        currentLayout = layoutState.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
