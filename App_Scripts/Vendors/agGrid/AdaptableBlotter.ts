@@ -93,6 +93,8 @@ import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
 import { LoggingService } from '../../Core/Services/LoggingService';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -261,20 +263,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             startIndex++;
         }
 
-
         VisibleColumnList.forEach((column, index) => {
             let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
                 this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
             }
-            this.vendorGrid.columnApi.moveColumn(col, startIndex+ index, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            this.vendorGrid.columnApi.moveColumn(col, startIndex + index, "api") // not sure if this right - there is a new parametr of columneventtype here...
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
             this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
-        // need to do this?  seems so but not sure.  if we dont then we dont get the initial column load.
+        // we need to do this to make sure agGrid and Blotter cols collections are in sync
         this.setColumnIntoStore();
-        //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
     }
 
     public setColumnIntoStore() {
@@ -903,7 +903,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         Events.EVENT_NEW_COLUMNS_LOADED];
         vendorGrid.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
-                this.setColumnIntoStore();
+                // bit messy but better than alternative which was calling setColumnIntoStore for every single column
+                let popupState = this.AdaptableBlotterStore.TheStore.getState().Popup.ScreenPopup;
+                if (popupState.ShowPopup && popupState.ComponentName == ScreenPopups.ColumnChooserPopup) {
+                    // ignore
+                } else {
+                    this.setColumnIntoStore();
+                }
             }
         });
         gridContainer.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
