@@ -554,7 +554,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
                         blotter.setGridSort(currentLayout.GridSorts);
                         // set vendor specific info
-                        blotter.setVendorGridState(currentLayout.VendorGridInfo)
+                        if (layoutState.IncludeVendorState) {
+                            blotter.setVendorGridState(currentLayout.VendorGridInfo)
+                        }
                     }
                     return returnAction;
                 }
@@ -571,7 +573,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let returnAction = next(action);
                     let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
                     let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
-                    layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
+                    if (middlewareAPI.getState().Layout.IncludeVendorState) {
+                        layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
+                    }
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
                     return returnAction;
                 }

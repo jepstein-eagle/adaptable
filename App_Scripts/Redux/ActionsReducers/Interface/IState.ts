@@ -74,7 +74,7 @@ export interface DashboardState {
     VisibleToolbars: string[]
     VisibleButtons: string[]
     Zoom: number,
-    DashboardVisibility: 'Minimised'| 'Visible'| 'Hidden'
+    DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'
 }
 
 
@@ -155,6 +155,7 @@ export interface CellValidationState {
 export interface LayoutState {
     CurrentLayout: string;
     Layouts: ILayout[]
+    IncludeVendorState: boolean;
 }
 
 export interface CalculatedColumnState {

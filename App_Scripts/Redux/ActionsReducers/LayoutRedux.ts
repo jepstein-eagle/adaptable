@@ -51,6 +51,7 @@ export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
 })
 
 const initialLayoutState: LayoutState = {
+    IncludeVendorState: false,
     CurrentLayout: "",
     Layouts: []
 }
