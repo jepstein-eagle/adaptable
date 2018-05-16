@@ -49,7 +49,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
     public componentDidMount() {
         this.props.onBulkUpdateCheckSelectedCells();
-        this.props.onBulkUpdateValueChange("");
+  //      this.props.onBulkUpdateValueChange("");
     }
 
 
@@ -219,7 +219,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        PreviewInfo: state.BulkUpdate.PreviewInfo,
+        PreviewInfo: state.Popup.PreviewInfo,
     };
 }
 

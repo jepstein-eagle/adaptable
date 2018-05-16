@@ -3,6 +3,7 @@ import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ServerSearch";
 import { IAdvancedSearch } from "./AdaptableBlotterObjects";
+import { IEntitlement } from "../../Interface/Interfaces";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -19,59 +20,62 @@ export interface IBlotterApi {
      * Selects the layout
      * @param layoutName has to be an existing layout
      */
-    selectLayout(layoutName: string): void
+    layoutSet(layoutName: string): void
 
     /**
      * Clears the currently selected layout
      */
-    clearLayout(): void
+    layoutClear(): void
     /**
      * Runs QuickSearch on the supplied text
      * @param quickSearchText text to run QuickSearch on
      */
-    runQuickSearch(quickSearchText: string): void
+    quickSearchRun(quickSearchText: string): void
 
     /**
      * Clears Quick Search
      */
-    clearQuickSearch(): void
+    quickSearchClear(): void
 
     /**
     * Selects the dataSource
     * @param dataSource has to be an existing dataSource
     */
-    selectDataSource(dataSource: string): void
+    dataSourceSet(dataSource: string): void
 
     /**
      * Clears the currently selected dataSource
      */
-    clearDataSource(): void
+    dataSourceClear(): void
 
 
     /**
     * Selects the dataSource
     * @param advancedSearch has to be an existing advanced search
     */
-    selectAdvancedSearch(advancedSearch: string): void
+    advancedSearchSet(advancedSearch: string): void
 
     /**
      * Clears the currently selected advanced search
      */
-    clearAdvancedSearch(): void
+    advancedSearchClear(): void
 
-    addAdvancedSearch(advancedSearch: IAdvancedSearch): void
+    advancedSearchAdd(advancedSearch: IAdvancedSearch): void
 
-    editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void
+    advancedSearchEdit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void
 
-    deleteAdvancedSearch(advancedSearchName: string): void
+    advancedSearchDelete(advancedSearchName: string): void
 
-    getCurentAdvancedSearch(): IAdvancedSearch
+    advancedSearchSelectCurrent(): IAdvancedSearch
 
-    getAdvancedSearchByName(advancedSearchName: string): IAdvancedSearch
-
-
+    advancedSearchSelectByName(advancedSearchName: string): IAdvancedSearch
 
 
+    entitlementSelectAll(): IEntitlement[]
+    entitlementSelectByFunction(functionName: string): IEntitlement
+    entitlementSelectAccessLevelForFunction(functionName: string): string
+    entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Default"): void
+    entitlementDelete(functionName: string): void
 
     /**
     * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.

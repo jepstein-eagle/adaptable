@@ -10,7 +10,7 @@ import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrat
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 
 /*
-Created by the system  at run-time and not part of predefined or user config
+Created by the system  at run-time and not part of predefined or user config and not saved
 */
 
 export interface GridState {
@@ -32,6 +32,7 @@ export interface PopupState {
     InfoPopup: IInfoPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
+    PreviewInfo: IPreviewInfo
 }
 
 export interface TeamSharingState {
@@ -41,11 +42,10 @@ export interface TeamSharingState {
 
 export interface BulkUpdateState {
     BulkUpdateValue: string
-    PreviewInfo: IPreviewInfo
 }
 
 /*
-predefined config only - never editable by users
+predefined config only - never editable by users at runtime
 */
 export interface EntitlementsState {
     FunctionEntitlements: IEntitlement[];
@@ -79,9 +79,8 @@ export interface DashboardState {
 
 
 export interface SmartEditState {
-    SmartEditValue: string
-    SmartEditOperation: MathOperation
-    PreviewInfo: IPreviewInfo // not saved with state
+    SmartEditValue: number
+    MathOperation:  'Add'|'Subtract'|'Multiply'| 'Divide'| 'Replace'
 }
 
 
@@ -89,8 +88,6 @@ export interface CalendarState {
     CurrentCalendar: string;
     AvailableCalendars: ICalendar[]
 }
-
-
 
 export interface ThemeState {
     CurrentTheme: string;
@@ -102,17 +99,41 @@ export interface ThemeState {
 predefined and user config and editable by users - includes Adaptable Blotter objects 
 */
 
-export interface PlusMinusState {
-    PlusMinusRules: IPlusMinusRule[]
+
+export interface AdvancedSearchState {
+    AdvancedSearches: IAdvancedSearch[];
+    CurrentAdvancedSearch: string;
+}
+
+export interface DataSourceState {
+    DataSources: string[];
+    CurrentDataSource: string;
+}
+
+export interface LayoutState {
+    CurrentLayout: string;
+    Layouts: ILayout[]
+    IncludeVendorState: boolean;
 }
 
 export interface CustomSortState {
     CustomSorts: ICustomSort[];
 }
 
+export interface FilterState {
+    ColumnFilters: IColumnFilter[];
+    UserFilters: IUserFilter[];
+    SystemFilters: string[];
+}
+
 export interface ShortcutState {
     Shortcuts: IShortcut[];
 }
+
+export interface PlusMinusState {
+    PlusMinusRules: IPlusMinusRule[]
+}
+
 
 export interface ExportState {
     IPPDomainsPages: IPPDomain[]
@@ -131,31 +152,8 @@ export interface ConditionalStyleState {
     ConditionalStyles: IConditionalStyle[];
 }
 
-
-export interface AdvancedSearchState {
-    AdvancedSearches: IAdvancedSearch[];
-    CurrentAdvancedSearch: string;
-}
-
-export interface DataSourceState {
-    DataSources: string[];
-    CurrentDataSource: string;
-}
-
-export interface FilterState {
-    ColumnFilters: IColumnFilter[];
-    UserFilters: IUserFilter[];
-    SystemFilters: string[];
-}
-
 export interface CellValidationState {
     CellValidations: ICellValidationRule[]
-}
-
-export interface LayoutState {
-    CurrentLayout: string;
-    Layouts: ILayout[]
-    IncludeVendorState: boolean;
 }
 
 export interface CalculatedColumnState {

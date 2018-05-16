@@ -24,7 +24,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
-            ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
+            ConditionalStyleScope: this.props.Data.ConditionalStyleScope as ConditionalStyleScope,
         }
     }
 

@@ -22,7 +22,7 @@ interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupCompo
     AvailableToolbars: Array<string>;
     VisibleToolbars: Array<string>;
     Zoom: Number;
-    onChangeControlVisibility: (strategyName: string) => DashboardRedux.DashboardChangeControlVisibilityAction
+    onChangeControlVisibility: (strategyName: string) => DashboardRedux.DashboardSetToolbarVisibilityAction
     onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
     onMoveControl: (strategyName: string, newIndex: number) => DashboardRedux.DashboardMoveItemAction
 }
@@ -203,7 +203,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onChangeControlVisibility: (controlName: string) => dispatch(DashboardRedux.ChangeVisibilityDashboardControl(controlName)),
+        onChangeControlVisibility: (controlName: string) => dispatch(DashboardRedux.DashboardSetToolbarVisibility(controlName)),
         onSetDashboardZoom: (zoom: number) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),
         onMoveControl: (controlName: string, NewIndex: number) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex)),
     };

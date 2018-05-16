@@ -8,18 +8,17 @@ export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';
 export const SMARTEDIT_CHANGE_OPERATION = 'SMARTEDIT_CHANGE_OPERATION';
 export const SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
 export const SMARTEDIT_FETCH_PREVIEW = 'SMARTEDIT_FETCH_PREVIEW';
-export const SMARTEDIT_SET_PREVIEW = 'SMARTEDIT_SET_PREVIEW';
 
 export interface SmartEditApplyAction extends Redux.Action {
     bypassCellValidationWarnings: boolean
 }
 
 export interface SmartEditChangeValueAction extends Redux.Action {
-    value: string
+    value: number
 }
 
 export interface SmartEditChangeOperationAction extends Redux.Action {
-    SmartEditOperation: MathOperation
+    MathOperation: MathOperation
 }
 
 export interface SmartEditCheckCellSelectionAction extends Redux.Action {
@@ -37,34 +36,27 @@ export const SmartEditApply = (bypassCellValidationWarnings: boolean): SmartEdit
     bypassCellValidationWarnings
 })
 
-export const SmartEditChangeValue = (value: string): SmartEditChangeValueAction => ({
+export const SmartEditChangeValue = (value: number): SmartEditChangeValueAction => ({
     type: SMARTEDIT_CHANGE_VALUE,
     value
 })
 
-export const SmartEditChangeOperation = (SmartEditOperation: MathOperation): SmartEditChangeOperationAction => ({
+export const SmartEditChangeOperation = (MathOperation: MathOperation): SmartEditChangeOperationAction => ({
     type: SMARTEDIT_CHANGE_OPERATION,
-    SmartEditOperation
+    MathOperation
 })
 
 export const SmartEditCheckCellSelection = (): SmartEditCheckCellSelectionAction => ({
     type: SMARTEDIT_CHECK_CELL_SELECTION
 })
 
-export const SmartEditFetchPreview = (): SmartEditFetchPreviewAction => ({
-    type: SMARTEDIT_FETCH_PREVIEW
-})
 
-export const SmartEditSetPreview = (PreviewInfo: IPreviewInfo): SmartEditSetPreviewAction => ({
-    type: SMARTEDIT_SET_PREVIEW,
-    PreviewInfo
-})
+
 
 const initialSmartEditState: SmartEditState = {
-    SmartEditValue: "1",
-    SmartEditOperation: MathOperation.Add,
-    PreviewInfo: null
-}
+    SmartEditValue: 1,
+    MathOperation: MathOperation.Add,
+ }
 
 export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {
     switch (action.type) {
@@ -74,14 +66,10 @@ export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEdit
         case SMARTEDIT_CHANGE_VALUE:
             return Object.assign({}, state, { SmartEditValue: (<SmartEditChangeValueAction>action).value })
         case SMARTEDIT_CHANGE_OPERATION:
-            return Object.assign({}, state, { SmartEditOperation: (<SmartEditChangeOperationAction>action).SmartEditOperation })
-        case SMARTEDIT_FETCH_PREVIEW:
-            return state
+            return Object.assign({}, state, { MathOperation: (<SmartEditChangeOperationAction>action).MathOperation })
         case SMARTEDIT_CHECK_CELL_SELECTION:
             return state
-        case SMARTEDIT_SET_PREVIEW:
-            return Object.assign({}, state, { PreviewInfo: (<SmartEditSetPreviewAction>action).PreviewInfo })
-        default:
+         default:
             return state
     }
 }

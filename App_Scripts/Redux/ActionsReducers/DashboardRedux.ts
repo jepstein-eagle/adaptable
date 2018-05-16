@@ -6,13 +6,18 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { Visibility } from '../../Core/Enums';
 
-const DASHBOARD_CHANGE_CONTROL_VISIBILITY = 'DASHBOARD_CHANGE_CONTROL_VISIBILITY';
+const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
+const DASHBOARD_SET_TOOLBAR_VISIBILITY = 'DASHBOARD_SET_TOOLBAR_VISIBILITY';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
-const DASHBOARD_SET_FUNCTION_BUTTONS_ITEM = 'DASHBOARD_SET_FUNCTION_BUTTONS_ITEM';
+const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
 const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
 const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
 
-export interface DashboardChangeControlVisibilityAction extends Redux.Action {
+export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
+    StrategyIds: string[];
+}
+
+export interface DashboardSetToolbarVisibilityAction extends Redux.Action {
     StrategyId: string;
 }
 
@@ -37,8 +42,13 @@ export interface DashboardSetVisibilityAction extends Redux.Action {
     Visibility: Visibility
 }
 
-export const ChangeVisibilityDashboardControl = (StrategyId: string): DashboardChangeControlVisibilityAction => ({
-    type: DASHBOARD_CHANGE_CONTROL_VISIBILITY,
+export const DashboardSetAvailableToolbars = (StrategyIds: string[]): DashboardSetAvailableToolbarsAction => ({
+    type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
+    StrategyIds
+})
+
+export const DashboardSetToolbarVisibility = (StrategyId: string): DashboardSetToolbarVisibilityAction => ({
+    type: DASHBOARD_SET_TOOLBAR_VISIBILITY,
     StrategyId
 })
 
@@ -49,7 +59,7 @@ export const DashboardMoveItem = (StrategyId: string, NewIndex: number): Dashboa
 })
 
 export const DashboardSetFunctionButtons = (StrategyIds: string[]): DashboardSetFunctionButtonsAction => ({
-    type: DASHBOARD_SET_FUNCTION_BUTTONS_ITEM,
+    type: DASHBOARD_SET_FUNCTION_BUTTONS,
     StrategyIds,
 
 })
@@ -78,8 +88,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
     let dashboardControl: string
 
     switch (action.type) {
-        case DASHBOARD_CHANGE_CONTROL_VISIBILITY: {
-            let actionTypedVisibility = <DashboardChangeControlVisibilityAction>action;
+        case DASHBOARD_SET_AVAILABLE_TOOLBARS:
+            return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyIds })
+        case DASHBOARD_SET_TOOLBAR_VISIBILITY: {
+            let actionTypedVisibility = <DashboardSetToolbarVisibilityAction>action;
             dashboardControls = [].concat(state.VisibleToolbars);
             index = dashboardControls.findIndex(a => a == actionTypedVisibility.StrategyId)
 
@@ -97,7 +109,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             ArrayExtensions.moveArray(dashboardControls, index, actionTyped.NewIndex)
             return Object.assign({}, state, { VisibleToolbars: dashboardControls });
         }
-        case DASHBOARD_SET_FUNCTION_BUTTONS_ITEM: {
+        case DASHBOARD_SET_FUNCTION_BUTTONS: {
             let actionTyped = <DashboardSetFunctionButtonsAction>action;
             let dashboardFunctionButtons = actionTyped.StrategyIds
             return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });

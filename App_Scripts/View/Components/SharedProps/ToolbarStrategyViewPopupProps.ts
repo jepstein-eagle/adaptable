@@ -9,6 +9,6 @@ export interface ToolbarStrategyViewPopupProps<View> extends StrategyViewPopupPr
     IsReadOnly: boolean,
     AdaptableBlotter: IAdaptableBlotter
     onClick: (action: Redux.Action) => Redux.Action,
-    onClose: (dashboardControl: string) => DashboardRedux.DashboardChangeControlVisibilityAction
+    onClose: (dashboardControl: string) => DashboardRedux.DashboardSetToolbarVisibilityAction
     onConfigure: (isReadonly: boolean) => PopupRedux.PopupShowAction;
   }

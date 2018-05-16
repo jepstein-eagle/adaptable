@@ -24,10 +24,10 @@ import { ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterOb
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
-    SmartEditOperation: MathOperation;
+    MathOperation: MathOperation;
     PreviewInfo: IPreviewInfo;
-    onSmartEditValueChange: (value: string) => SmartEditRedux.SmartEditChangeValueAction;
-    onSmartEditOperationChange: (SmartEditOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
+    onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
+    onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SmartEditRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
@@ -83,7 +83,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
                     <AdaptableBlotterForm inline onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                         <FormGroup controlId="formInlineName">
                             <InputGroup>
-                                <DropdownButton title={MathOperation[this.props.SmartEditOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
+                                <DropdownButton title={MathOperation[this.props.MathOperation]} id="SmartEdit_Operation" componentClass={InputGroup.Button}>
                                     {operationMenuItems}
                                 </DropdownButton>
                                 <FormControl onKeyPress={(e) => this.onKeyPress(e)} value={this.props.SmartEditValue.toString()} type="number" placeholder="Enter a Number" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
@@ -114,7 +114,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     private onSmartEditValueChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
-        this.props.onSmartEditValueChange(e.value);
+        this.props.onSmartEditValueChange(Number(e.value));
     }
 
     private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
@@ -162,14 +162,14 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SmartEditValue: state.SmartEdit.SmartEditValue,
-        SmartEditOperation: state.SmartEdit.SmartEditOperation,
-        PreviewInfo: state.SmartEdit.PreviewInfo,
+        MathOperation: state.SmartEdit.MathOperation,
+        PreviewInfo: state.Popup.PreviewInfo,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSmartEditValueChange: (value: string) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
+        onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: MathOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
         onSmartEditCheckSelectedCells: () => dispatch(SmartEditRedux.SmartEditCheckCellSelection()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),

@@ -1,4 +1,4 @@
-import { ExportDestination } from '../../Core/Enums';
+import { ExportDestination, MathOperation } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -640,8 +640,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         //We show the Error Popup
                         middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
                     } else {
-                        let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue), state.SmartEdit.SmartEditOperation);
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiPreviewReturn));
+                        let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
+                        middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiPreviewReturn));
                     }
                     return returnAction;
                 }
@@ -657,15 +657,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
 
-                    let apiReturn = SmartEditStrategy.BuildPreviewValues(parseFloat(state.SmartEdit.SmartEditValue), state.SmartEdit.SmartEditOperation);
-                    middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn));
+                    let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
+                    middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiReturn));
                     return returnAction;
                 }
 
                 case SmartEditRedux.SMARTEDIT_APPLY: {
                     let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
-                    let thePreview = middlewareAPI.getState().SmartEdit.PreviewInfo
+                    let thePreview = middlewareAPI.getState().Popup.PreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     SmartEditStrategy.ApplySmartEdit(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
@@ -676,7 +676,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                 /*  *********
                 BULK UPDATE ACTIONS
                 ************ */
-                case BulkUpdateRedux.BulkUpdate_CHECK_CELL_SELECTION: {
+                case BulkUpdateRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
                     let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
@@ -689,14 +689,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
                     } else {
                         let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiPreviewReturn));
+                        middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiPreviewReturn));
                     }
                     return returnAction;
                 }
 
                 // Here we have all actions that triggers a refresh of the BulkUpdatePreview
-                case BulkUpdateRedux.BulkUpdate_CHANGE_VALUE:
-                case BulkUpdateRedux.BulkUpdate_FETCH_PREVIEW: {
+                case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE:{
                     //all our logic needs to be executed AFTER the main reducers 
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
@@ -705,20 +704,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     let state = middlewareAPI.getState();
 
                     let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-                    middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiReturn));
+                    middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiReturn));
                     return returnAction;
                 }
 
-                case BulkUpdateRedux.BulkUpdate_APPLY: {
+                case BulkUpdateRedux.BULK_UPDATE_APPLY: {
                     let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
-                    let thePreview = middlewareAPI.getState().BulkUpdate.PreviewInfo
+                    let thePreview = middlewareAPI.getState().Popup.PreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     BulkUpdateStrategy.ApplyBulkUpdate(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
                     return next(action);
                 }
-
 
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
                     let plusMinusStrategy = <IPlusMinusStrategy>(blotter.Strategies.get(StrategyIds.PlusMinusStrategyId));

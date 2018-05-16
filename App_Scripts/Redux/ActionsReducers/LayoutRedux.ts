@@ -9,6 +9,8 @@ export const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
 export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 export const LAYOUT_PRESAVE = 'LAYOUT_PRESAVE';
+export const LAYOUT_INCLUDE_VENDOR_STATE = 'LAYOUT_INCLUDE_VENDOR_STATE';
+export const LAYOUT_EXCLUDE_VENDOR_STATE = 'LAYOUT_EXCLUDE_VENDOR_STATE';
 
 export interface LayoutPreSaveAction extends Redux.Action {
     Index: number,
@@ -26,6 +28,12 @@ export interface LayoutSelectAction extends Redux.Action {
 
 export interface LayoutDeleteAction extends Redux.Action {
     LayoutName: string
+}
+
+export interface LayoutIncludeVendorStateAction extends Redux.Action {
+}
+
+export interface LayoutExcludeVendorStateAction extends Redux.Action {
 }
 
 export const LayoutPreSave = (Index: number, Layout: ILayout): LayoutPreSaveAction => ({
@@ -48,6 +56,14 @@ export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
 export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
     type: LAYOUT_DELETE,
     LayoutName
+})
+
+export const LayoutIncludeVendorState = (): LayoutIncludeVendorStateAction => ({
+    type: LAYOUT_INCLUDE_VENDOR_STATE
+})
+
+export const LayoutExcludeVendorState = (): LayoutExcludeVendorStateAction => ({
+    type: LAYOUT_EXCLUDE_VENDOR_STATE
 })
 
 const initialLayoutState: LayoutState = {
@@ -80,6 +96,10 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);
             return Object.assign({}, state, { Layouts: layouts })
+        case LAYOUT_INCLUDE_VENDOR_STATE:
+            return Object.assign({}, state, { IncludeVendorState: true })
+        case LAYOUT_EXCLUDE_VENDOR_STATE:
+            return Object.assign({}, state, { IncludeVendorState: false })
         default:
             return state
     }

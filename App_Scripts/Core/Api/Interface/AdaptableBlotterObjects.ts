@@ -103,7 +103,7 @@ export interface IColumnFilter extends IAdaptableBlotterObject {
 
 export interface IConditionalStyle extends IAdaptableBlotterObject {
   ColumnId: string
-  ConditionalStyleScope: ConditionalStyleScope
+  ConditionalStyleScope: 'Column'| 'Row'
   Expression: Expression
   Style: IStyle
 }

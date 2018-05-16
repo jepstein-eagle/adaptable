@@ -3,16 +3,15 @@
 
 
 
-function ThemeChange(blotter, container) {
-
-    if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
-        themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if (themeName == "Dark Theme" || themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+function ThemeChange(theme, container) {
+    if (themeName != theme.CurrentTheme) {
+        themeName = theme.CurrentTheme
+        if (themeName == "Dark Theme") {
             container.className = "ag-theme-dark";
-        } else if (themeName == "flatyle") {
+        } else if (themeName == "Flat Theme") {
             container.className = "ag-theme-balham";
         }
-        else {
+        else { // White theme
             container.className = "ag-theme-balham";
         }
     }
@@ -220,8 +219,8 @@ function InitBlotter() {
     // 4.  the underlying Grid Container (required for agGrid)
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
 
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter, gridcontainer); });
-    //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
+    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 
 }
 
@@ -230,6 +229,7 @@ function getTradesForSearch(searchArgs, dataGen) {
         if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             adaptableblotter.api.setGridData(dataGen.getDollarTrades());
             adaptableblotter.api.selectLayout("Dollar View")
+          //  adaptableblotter.api.selectCurrentTheme("Dark Theme")
         } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
             adaptableblotter.api.setGridData(dataGen.getGBPTrades());
             adaptableblotter.api.selectLayout("Sterling View")
