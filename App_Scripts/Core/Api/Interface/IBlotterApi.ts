@@ -2,7 +2,7 @@ import { EventDispatcher } from "../../EventDispatcher";
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ServerSearch";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 
 /**
@@ -108,7 +108,7 @@ export interface IBlotterApi {
     // filter api methods
     filterSetColumnFilters(columnFilters: IColumnFilter[]): void
     filterSetUserFilters(userFilters: IUserFilter[]): void
-    filterSetSystemFilters(systemFilters: string[]): voi
+    filterSetSystemFilters(systemFilters: string[]): void
 
     // Entitlement Methods
     entitlementGetAll(): IEntitlement[]
@@ -129,6 +129,13 @@ export interface IBlotterApi {
     calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void
     calculatedColumnEditExpression(column: string, columnExpression: string): void
     calculatedColumnDelete(column: string): void
+
+
+    // CellValidation State
+    cellValidationGetAll(): ICellValidationRule[]
+    cellValidationAdd(cellValidationRule: ICellValidationRule): void
+    cellValidationDelete(cellValidationRule: ICellValidationRule): void
+
 
     clearConfig(): void
 

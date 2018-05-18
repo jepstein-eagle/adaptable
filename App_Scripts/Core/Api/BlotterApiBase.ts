@@ -11,6 +11,7 @@ import * as UserInterfaceRedux from '../../Redux/ActionsReducers/UserInterfaceRe
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
+import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as CalendarRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
@@ -18,7 +19,7 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
-import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement } from "../Interface/Interfaces";
@@ -331,6 +332,20 @@ export abstract class BlotterApiBase implements IBlotterApi {
     public calculatedColumnDelete(column: string): void {
         let calcColumnIndex: number = this.calculatedColumnGetAll().findIndex(cc => cc.ColumnId == column);
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex))
+    }
+
+    // CellValidation State
+    public cellValidationGetAll(): ICellValidationRule[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation.CellValidations;
+    }
+
+    public cellValidationAdd(cellValidationRule: ICellValidationRule): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(CellValidationRedux.CellValidationAddUpdate(-1, cellValidationRule))
+    }
+
+    public cellValidationDelete(cellValidationRule: ICellValidationRule): void {
+        let index: number = this.cellValidationGetAll().findIndex(cv=>cv== cellValidationRule)
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(CellValidationRedux.CellValidationDelete(index))
     }
 
 
