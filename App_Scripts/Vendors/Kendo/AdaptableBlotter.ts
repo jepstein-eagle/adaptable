@@ -24,7 +24,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
-import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
+import { DataManagementStrategy } from '../../Strategy/DataManagementStrategy'
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
@@ -89,14 +89,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-    private blotterOptions: IAdaptableBlotterOptions
+    public BlotterOptions: IAdaptableBlotterOptions
     private contextMenuContainer: HTMLDivElement
 
     constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: kendo.ui.Grid, ) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -107,11 +107,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         // this.ThemeService = new ThemeService(this);
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 
         // store the options in state - and also later anything else that we need...
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
+     //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         this.Strategies = new Map<string, IStrategy>();
 
@@ -139,7 +139,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         // removing theme from kendo until we can get the table issue working properly
         // this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
 
 
@@ -149,7 +149,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.abContainer.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
-        iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
@@ -553,7 +553,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
         })
-        return Array.from(returnMap.values()).slice(0, this.blotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
     private getRowByRowIdentifier(rowIdentifierValue: any): JQuery {

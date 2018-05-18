@@ -16,12 +16,15 @@ import { ICalculatedColumn, IGridSort, ILayout } from '../Api/Interface/Adaptabl
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs } from '../Api/Interface/ServerSearch';
 import { ILoggingService } from '../Services/Interface/ILoggingService';
+import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 
 export interface IAdaptableBlotter {
     /**
      * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
      */
     api: IBlotterApi
+
+    BlotterOptions: IAdaptableBlotterOptions
 
     GridName: string
     AdaptableBlotterStore: IAdaptableBlotterStore;

@@ -12,6 +12,8 @@ export const COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
 export const COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
 export const HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
 
+export const SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';
+
 
 export interface UserFilterAddUpdateAction extends Redux.Action {
     Index: number
@@ -34,6 +36,10 @@ export interface ColumnFilterClearAction extends Redux.Action {
 
 export interface ColumnFilterDeleteAction extends Redux.Action {
     columnFilter: IColumnFilter
+}
+
+export interface SystemFilterSetAction extends Redux.Action {
+    SystemFilters: string[]
 }
 
 export const UserFilterAddUpdate = (Index: number,UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
@@ -65,6 +71,10 @@ export const ColumnFilterDelete = (columnFilter: IColumnFilter): ColumnFilterDel
     columnFilter
 })
 
+export const SystemFilterSet = (SystemFilters: string[]): SystemFilterSetAction => ({
+    type: SYSTEM_FILTER_SET,
+    SystemFilters
+})
 
 const initialFilterState:
     FilterState = {
@@ -137,7 +147,9 @@ export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = i
             columnFilters.splice(index, 1);
             return Object.assign({}, state, { ColumnFilters: columnFilters })
         }
-
+        case SYSTEM_FILTER_SET:
+        return Object.assign({}, state, { SystemFilters: (<SystemFilterSetAction>action).SystemFilters })
+   
         default:
             return state
     }

@@ -25,7 +25,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
             this.filterState = this.GetColumnFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishServerSearch(SearchChangedTrigger.ColumnFilter)
             }
         }

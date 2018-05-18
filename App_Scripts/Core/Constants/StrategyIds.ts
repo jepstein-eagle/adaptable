@@ -25,7 +25,7 @@ export const SelectColumnStrategyId: string = "SelectColumn"
 export const SmartEditStrategyId: string = "SmartEdit"
 export const TeamSharingStrategyId: string = "TeamSharing"
 export const ThemeStrategyId: string = "Theme"
-export const UserDataManagementStrategyId: string = "UserDataManagement"
+export const DataManagementStrategyId: string = "UserDataManagement"
 export const UserFilterStrategyId: string = "UserFilter"
 
 
@@ -81,5 +81,7 @@ export function getIdForStrategyName(strategyName: string) {
             return TeamSharingStrategyId
         case StrategyNames.ThemeStrategyName:
             return ThemeStrategyId
+        case StrategyNames.DataManagementStrategyName:
+            return DataManagementStrategyId
     }
 }

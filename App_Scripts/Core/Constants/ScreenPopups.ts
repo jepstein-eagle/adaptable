@@ -23,5 +23,6 @@ export const ShortcutPopup :string = "ShortcutPopup"
 export const SmartEditPopup :string = "SmartEditPopup"
 export const TeamSharingPopup :string = "TeamSharingPopup"
 export const ThemePopup :string = "ThemePopup"
+export const DataManagementPopup :string = "DataManagementPopup"
 
 

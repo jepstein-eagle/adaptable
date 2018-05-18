@@ -32,7 +32,7 @@ import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
-import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
+import { DataManagementStrategy } from '../../Strategy/DataManagementStrategy'
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
@@ -115,16 +115,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
-    private blotterOptions: IAdaptableBlotterOptions
+    public BlotterOptions: IAdaptableBlotterOptions
 
     private COLUMN_STATE: string = "ColumnState"
     private COLUMN_GROUP_STATE: string = "ColumnGroupState"
 
     constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions, private gridContainer: HTMLElement) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -132,12 +132,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
         this.LoggingService = new LoggingService(this);
         //   this.ThemeService = new ThemeService(this)
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.vendorGrid.api.getValue(columnId, record));
 
         // store the options in state - and also later anything else that we need...
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
+     //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         // store any grid-specific info in this object (to be improved!) and then accessible later
         let blotterRestrictions: string[] = ["UseClassSytleNames"]
@@ -170,13 +170,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         // not able to select a column in hypergrid currently
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
 
 
-        iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
@@ -361,7 +361,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: RowNode): any {
-        return this.vendorGrid.api.getValue(this.blotterOptions.primaryKey, record)
+        return this.vendorGrid.api.getValue(this.BlotterOptions.primaryKey, record)
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -678,7 +678,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
         })
-        return Array.from(returnMap.values()).slice(0, this.blotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
     public getDisplayValue(id: any, columnId: string): string {
@@ -1043,7 +1043,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None') {
+            if (this.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
@@ -1057,7 +1057,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption == 'None' || 'AdvancedSearch') {
+            if (this.BlotterOptions.serverSearchOption == 'None' || 'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {

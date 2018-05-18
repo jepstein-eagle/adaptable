@@ -27,6 +27,7 @@ import { HomeToolbarControl } from './Home/HomeToolbarControl'
 import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
 import { AboutPopup } from './About/AboutPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
+import { DataManagementPopup } from './DataManagement/DataManagementPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as React from "react";
@@ -52,6 +53,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   UserFilterPopup: UserFilterPopup,
   FormatColumnPopup: FormatColumnPopup,
   ThemePopup: ThemePopup,
+  DataManagementPopup: DataManagementPopup,
   CellValidationPopup: CellValidationPopup,
   LayoutPopup: LayoutPopup,
   DashboardPopup: DashboardPopup,

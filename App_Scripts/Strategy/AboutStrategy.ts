@@ -20,7 +20,7 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
     }
 
     private convertBlotterOptionsToString(): string {
-        let options: IAdaptableBlotterOptions = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions;
+        let options: IAdaptableBlotterOptions = this.blotter.BlotterOptions;
         let output: string = ""
 
             output += "Vendor Grid:"

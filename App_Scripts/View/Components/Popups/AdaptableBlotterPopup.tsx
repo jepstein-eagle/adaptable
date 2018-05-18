@@ -24,7 +24,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
 
     let cssClassName: string = StyleConstants.AB_STYLE
 
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions, document);
+    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
     if (this.props.ComponentName) {
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
@@ -32,7 +32,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
-        TeamSharingActivated: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.enableRemoteConfigServer,
+        TeamSharingActivated: this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer,
         Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
         UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
         SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
@@ -40,6 +40,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
         cssClassName: cssClassName + StyleConstants.MODAL_BODY,
+        BlotterOptions: this.props.AdaptableBlotter.BlotterOptions,
+        BlotterApi: this.props.AdaptableBlotter.api
       }
 
       var body: any = React.createElement(bodyElement, commonProps);

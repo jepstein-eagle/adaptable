@@ -101,7 +101,31 @@ export const InitState = (): ResetUserDataAction => ({
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
         //This trigger the persist of the state with nothing
-        state = undefined
+        state.AdvancedSearch = undefined
+        state.BulkUpdate = undefined
+        state.CalculatedColumn = undefined
+        state.Calendar = undefined
+        state.CellValidation = undefined
+        state.ConditionalStyle = undefined
+        state.CustomSort = undefined
+        state.Dashboard = undefined
+        state.DataSource = undefined
+        state.Entitlements = undefined
+        state.Export = undefined
+        state.AdvancedSearch = undefined
+        state.FlashingCell = undefined
+        state.FormatColumn = undefined
+        state.Filter.ColumnFilters = []
+        state.Filter.UserFilters = []
+        state.Filter.SystemFilters = []
+        state.Layout = undefined
+        state.PlusMinus = undefined
+        state.QuickSearch = undefined
+        state.Shortcut = undefined
+        state.SmartEdit = undefined
+        state.TeamSharing = undefined
+        state.Theme = undefined
+        state.UserInterface = undefined
     }
 
     return rootReducer(state, action)
@@ -113,7 +137,7 @@ const configServerTeamSharingUrl = "/adaptableblotter-teamsharing"
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     public Load: PromiseLike<any>
-    constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
+    constructor(private blotter: IAdaptableBlotter) {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
@@ -121,11 +145,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         let engineWithMigrate: ReduxStorage.StorageEngine
         let engineReduxStorage: ReduxStorage.StorageEngine
 
-        if (blotterOptions.enableRemoteConfigServer) {
-            engineReduxStorage = createEngineRemote(configServerUrl, blotterOptions.userName, blotterOptions.blotterId, blotter);
+        if (blotter.BlotterOptions.enableRemoteConfigServer) {
+            engineReduxStorage = createEngineRemote(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
-            engineReduxStorage = createEngineLocal(blotterOptions.blotterId, blotterOptions.predefinedConfig);
+            engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
         }
         // const someExampleMigration = {
         //     version: 1,
@@ -160,7 +184,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             reducerWithStorage,
             composeEnhancers(Redux.applyMiddleware(
                 diffStateAuditMiddleware(blotter),
-                adaptableBlotterMiddleware(blotter, blotterOptions),
+                adaptableBlotterMiddleware(blotter),
                 middlewareReduxStorage,
                 functionLogMiddleware(blotter),
 
@@ -297,7 +321,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
 
 
 
-var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function (next: Redux.Dispatch<AdaptableBlotterState>) {
         return function (action: Redux.Action) {
             switch (action.type) {
@@ -323,8 +347,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                     xhr.setRequestHeader("Content-type", "application/json");
                     let obj: ISharedEntity = {
                         entity: actionTyped.Entity,
-                        user: blotterOptions.userName,
-                        blotter_id: blotterOptions.blotterId,
+                        user: blotter.BlotterOptions.userName,
+                        blotter_id: blotter.BlotterOptions.blotterId,
                         strategy: actionTyped.Strategy,
                         timestamp: new Date()
                     }
@@ -739,7 +763,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
-                        iPushPullHelper.GetDomainPages(blotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+                        iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         }).catch((err: any) => {
@@ -764,7 +788,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter, blotterOptions: IA
                         let report = middlewareAPI.getState().Popup.ScreenPopup.Params
                         middlewareAPI.dispatch(PopupRedux.PopupHide())
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
-                        iPushPullHelper.GetDomainPages(blotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+                        iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         }).catch((error: any) => {

@@ -30,7 +30,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             //  probably not an issue but might be worth revisiting ...
                 this.blotter.applyGridFiltering()
 
-                if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption != 'None') {
+                if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
                      this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
                 }
           

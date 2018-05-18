@@ -27,7 +27,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             return true;
         }
 
-        let serverSearchOption = blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions.serverSearchOption
+        let serverSearchOption = blotter.BlotterOptions.serverSearchOption
         //first we assess AdvancedSearch 
         if (serverSearchOption == 'None' ) {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch

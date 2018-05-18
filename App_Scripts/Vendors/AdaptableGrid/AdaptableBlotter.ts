@@ -23,7 +23,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
-import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
+import { DataManagementStrategy } from '../../Strategy/DataManagementStrategy'
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
@@ -73,13 +73,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-    private blotterOptions: IAdaptableBlotterOptions
+    public BlotterOptions: IAdaptableBlotterOptions
 
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -88,11 +88,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.LoggingService = new LoggingService(this);
         this.StyleService = new StyleService(this);
         //   this.ThemeService = new ThemeService(this)
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
 
           // store the options in state - and also later anything else that we need...
-          this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
+       //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -102,7 +102,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))

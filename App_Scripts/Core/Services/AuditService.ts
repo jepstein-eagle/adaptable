@@ -19,7 +19,7 @@ export class AuditService implements IAuditService {
     //just need to refactor the whole lot. For now it's called only from aggrid and kendo
     Init(initialData: any): void {
         let colummns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let blotterOptions = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.BlotterOptions;
+        let blotterOptions = this.blotter.BlotterOptions;
         for (let record of initialData) {
             for (let prop in record) {
                 if (record.hasOwnProperty(prop) && colummns.find(x => x.ColumnId == prop)) {

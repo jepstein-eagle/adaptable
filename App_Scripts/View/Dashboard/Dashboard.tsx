@@ -21,7 +21,6 @@ import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlo
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState
-    BlotterOptions: IAdaptableBlotterOptions
     AdaptableBlotter: IAdaptableBlotter
     onClick: (action: Redux.Action) => Redux.Action
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
@@ -34,7 +33,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
         let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
-        let optionsBlotterName: string = this.props.BlotterOptions.blotterId;
+        let optionsBlotterName: string = this.props.AdaptableBlotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Toolbars"
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars//.filter(dc => dc.IsVisible);
@@ -101,7 +100,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         DashboardState: state.Dashboard,
         EntitlementsState: state.Entitlements,
-        BlotterOptions: state.Grid.BlotterOptions,
         // need to get these props so we can 'feed' the toolbars...
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,

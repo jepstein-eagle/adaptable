@@ -16,7 +16,6 @@ Created by the system  at run-time and not part of predefined or user config and
 export interface GridState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
-    BlotterOptions: IAdaptableBlotterOptions;
     BlotterRestrictions: string[];
 }
 

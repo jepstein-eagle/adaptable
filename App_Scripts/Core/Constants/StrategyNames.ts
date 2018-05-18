@@ -24,7 +24,7 @@ export const SelectColumnStrategyName: string = "Select Column"
 export const SmartEditStrategyName: string = "Smart Edit"
 export const TeamSharingStrategyName: string = "Team Sharing"
 export const ThemeStrategyName: string = "Theme"
-export const UserDataManagementStrategyName: string = "User Data Management"
+export const DataManagementStrategyName: string = "Manage State"
 export const UserFilterStrategyName: string = "User Filter"
 
 

@@ -13,12 +13,15 @@ import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as CalendarRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort } from "./Interface/AdaptableBlotterObjects";
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
+import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement } from "../Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation } from "../Enums";
-import { CustomSortAdd } from "../../Redux/ActionsReducers/CustomSortRedux";
+import { ResetUserData, AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -40,7 +43,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
     }
 
-     public layoutSelectCurrent(): ILayout {
+    public layoutGetCurrent(): ILayout {
         let layoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
     }
@@ -93,7 +96,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(QuickSearchRedux.QuickSearchApply(""))
     }
 
-    public quickSearchSelectValue(): string {
+    public quickSearchGetValue(): string {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
     }
 
@@ -114,7 +117,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CalendarRedux.CalendarSelect(calendar))
     }
 
-    public calendarSelectCurrent(): string {
+    public calendarGetCurrent(): string {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar.CurrentCalendar;
     }
 
@@ -142,7 +145,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(SmartEditRedux.SmartEditChangeOperation(mathOperation as MathOperation))
     }
 
-    public smartEditSelectMathOperation(): string {
+    public smartEditGetMathOperation(): string {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.MathOperation;
     }
 
@@ -150,7 +153,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(SmartEditRedux.SmartEditChangeValue(smartEditValue))
     }
 
-    public smartEditSelectValue(): number {
+    public smartEditGetValue(): number {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.SmartEditValue;
     }
 
@@ -166,6 +169,24 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public uiAddStyleClassNames(styleClassNames: string[]): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames))
+    }
+
+
+    // filter api methods
+    public filterSetColumnFilters(columnFilters: IColumnFilter[]): void {
+        columnFilters.forEach(cf => {
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(FilterRedux.ColumnFilterAddUpdate(cf))
+        })
+    }
+
+    public filterSetUserFilters(userFilters: IUserFilter[]): void {
+        userFilters.forEach(uf => {
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(FilterRedux.UserFilterAddUpdate(-1, uf))
+        })
+    }
+
+    public filterSetSystemFilters(systemFilters: string[]): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(FilterRedux.SystemFilterSet(systemFilters));
     }
 
 
@@ -204,33 +225,33 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public advancedSearchDelete(advancedSearchName: string): void {
-        let searchToDelete = this.advancedSearchSelectByName(advancedSearchName)
+        let searchToDelete = this.advancedSearchGetByName(advancedSearchName)
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete))
     }
 
     public advancedSearchSelectCurrent(): IAdvancedSearch {
         let currentAdvancedSearchName: string = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
-        return this.advancedSearchSelectByName(currentAdvancedSearchName)
+        return this.advancedSearchGetByName(currentAdvancedSearchName)
     }
 
-    public advancedSearchSelectByName(advancedSearchName: string): IAdvancedSearch {
+    public advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
     }
 
-    public advancedSearchSelectAll(): IAdvancedSearch[] {
+    public advancedSearchGetAll(): IAdvancedSearch[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches;
     }
 
     // Entitlement Methods
-    public entitlementSelectAll(): IEntitlement[] {
+    public entitlementGetAll(): IEntitlement[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
     }
 
-    public entitlementSelectByFunction(functionName: string): IEntitlement {
+    public entitlementGetByFunction(functionName: string): IEntitlement {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
     }
 
-    public entitlementSelectAccessLevelForFunction(functionName: string): string {
+    public entitlementGetAccessLevelForFunction(functionName: string): string {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
     }
 
@@ -244,27 +265,31 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     // Custom Sort Methods
-     public customSortSelectAll(): ICustomSort[] {
+    public customSortGetAll(): ICustomSort[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
     }
 
-     public customSortSelectByColumn(columnn: string): ICustomSort {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts.find(cs=>cs.ColumnId == columnn);
+    public customSortGetByColumn(columnn: string): ICustomSort {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
     }
 
     public customSortAdd(column: string, values: string[]): void {
-        let customSort: ICustomSort = {ColumnId: column, SortedValues: values, IsReadOnly: false}
+        let customSort: ICustomSort = { ColumnId: column, SortedValues: values, IsReadOnly: false }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CustomSortRedux.CustomSortAdd(customSort))
     }
 
     public customSortEdit(column: string, values: string[]): void {
-        let customSort: ICustomSort = {ColumnId: column, SortedValues: values, IsReadOnly: false}
+        let customSort: ICustomSort = { ColumnId: column, SortedValues: values, IsReadOnly: false }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CustomSortRedux.CustomSortEdit(customSort))
     }
 
     public customSortDelete(column: string): void {
-       let customSort: ICustomSort = this.customSortSelectByColumn(column);
+        let customSort: ICustomSort = this.customSortGetByColumn(column);
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CustomSortRedux.CustomSortDelete(customSort))
+    }
+
+    public clearConfig(): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())
     }
 
     // Events
@@ -280,3 +305,4 @@ export abstract class BlotterApiBase implements IBlotterApi {
         return true;
     }
 }
+

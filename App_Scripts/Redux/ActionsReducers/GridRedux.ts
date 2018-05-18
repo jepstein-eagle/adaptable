@@ -10,7 +10,6 @@ export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
-export const GRID_SET_BLOTTER_OPTIONS = 'GRID_SET_BLOTTER_OPTIONS';
 export const GRID_SET_BLOTTER_RESTRICTIONS = 'GRID_SET_BLOTTER_RESTRICTIONS';
 
 
@@ -32,10 +31,6 @@ export interface GridSelectColumnAction extends Redux.Action {
 
 export interface GridSetSortAction extends Redux.Action {
     GridSorts: IGridSort[];
-}
-
-export interface GridSetBlotterOptionsAction extends Redux.Action {
-    BlotterOptions: IAdaptableBlotterOptions;
 }
 
 export interface GridSetBlotterRestrictionsAction extends Redux.Action {
@@ -69,11 +64,6 @@ export const GridSetSort = (GridSorts: IGridSort[]): GridSetSortAction => ({
     GridSorts
 })
 
-export const GridSetBlotterOptions = (BlotterOptions: IAdaptableBlotterOptions): GridSetBlotterOptionsAction => ({
-    type: GRID_SET_BLOTTER_OPTIONS,
-    BlotterOptions
-})
-
 export const GridSetBlotterRestrictions = (BlotterRestrictions: string[]): GridSetBlotterRestrictionsAction => ({
     type: GRID_SET_BLOTTER_RESTRICTIONS,
     BlotterRestrictions
@@ -82,7 +72,6 @@ export const GridSetBlotterRestrictions = (BlotterRestrictions: string[]): GridS
 const initialGridState: GridState = {
     Columns: [],
     GridSorts: [],
-    BlotterOptions: null,
     BlotterRestrictions: []
 }
 
@@ -92,11 +81,7 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             return Object.assign({}, state, { Columns: [].concat((<GridSetColumnsAction>action).Columns) })
         case GRID_SET_SORT:
             return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
-        case GRID_SET_BLOTTER_OPTIONS:
-            let actionTypedOptions = <GridSetBlotterOptionsAction>action;
-            let blotterOptions = actionTypedOptions.BlotterOptions
-            return Object.assign({}, state, { BlotterOptions: blotterOptions })
-        case GRID_SET_BLOTTER_RESTRICTIONS:
+          case GRID_SET_BLOTTER_RESTRICTIONS:
             let actionTypedRestrictions = <GridSetBlotterRestrictionsAction>action;
             let blotterRestrictions = actionTypedRestrictions.BlotterRestrictions
             return Object.assign({}, state, { BlotterRestrictions: blotterRestrictions })

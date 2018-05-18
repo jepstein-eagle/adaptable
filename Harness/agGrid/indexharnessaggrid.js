@@ -225,7 +225,7 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "DataSource") {
+    if (searchArgs.SearchChangedTrigger == "DataSourcesssss") {
         if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             adaptableblotter.api.setGridData(dataGen.getDollarTrades());
             adaptableblotter.api.selectLayout("Dollar View")
@@ -299,7 +299,11 @@ let json = {
             {
                 "ColumnId": '',
                 "Style": {
-                    "ClassName": "styleForeYellow"
+                    "BackColor": null,
+                    "ForeColor": "#ff0000",
+                    "FontWeight": "Normal",
+                    "FontStyle": "Normal",
+                    "FontSize": null
                 },
                 "ConditionalStyleScope": 'Row',
                 "Expression": {
@@ -327,7 +331,11 @@ let json = {
             {
                 "ColumnId": "notional",
                 "Style": {
-                    "ClassName": "styleBackBrown"
+                    "BackColor": "#ff0000",
+                    "ForeColor": null,
+                    "FontWeight": "Normal",
+                    "FontStyle": "Normal",
+                    "FontSize": null
                 },
             }
         ],

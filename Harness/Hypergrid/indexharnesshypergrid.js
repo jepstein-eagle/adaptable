@@ -212,19 +212,19 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "DataSource") {
+    if (searchArgs.SearchChangedTrigger == "DataSourcexxxx") {
           if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             adaptableblotter.api.setGridData(dataGen.getDollarTrades());
-            adaptableblotter.api.selectLayout("Dollar View")
+            adaptableblotter.api.layoutSet("Dollar View")
         } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
             adaptableblotter.api.setGridData(dataGen.getGBPTrades());
-            adaptableblotter.api.selectLayout("Sterling View")
+            adaptableblotter.api.layoutSet("Sterling View")
         } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
             adaptableblotter.api.setGridData(dataGen.getEuroTrades());
-            adaptableblotter.api.selectLayout("Euro View")
+            adaptableblotter.api.layoutSet("Euro View")
         } else {
             adaptableblotter.api.setGridData(dataGen.getTrades());
-            adaptableblotter.api.clearLayout();
+            adaptableblotter.api.layoutClear();
         }
     }
 }

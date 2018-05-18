@@ -26,6 +26,7 @@ export const SmartEditGlyph: string = "pencil"
 export const TeamSharingGlyph: string = "share"
 export const ThemeGlyph: string = "leaf"
 export const UserFilterGlyph: string = "user"
+export const DataManagementGlyph: string = "folder-close"
 
 export function getGhyphiconForStrategy(strategyID: string) {
     switch (strategyID) {
@@ -59,6 +60,8 @@ export function getGhyphiconForStrategy(strategyID: string) {
             return SelectColumnGlyph
         case StrategyIds.UserFilterStrategyId:
             return UserFilterGlyph;
+        case StrategyIds.DataManagementStrategyId:
+            return DataManagementGlyph;
 
     }
 }

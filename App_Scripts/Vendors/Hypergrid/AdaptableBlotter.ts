@@ -25,7 +25,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
-import { UserDataManagementStrategy } from '../../Strategy/UserDataManagementStrategy'
+import { DataManagementStrategy } from '../../Strategy/DataManagementStrategy'
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
@@ -108,16 +108,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
     private contextMenuContainer: HTMLDivElement
-    private blotterOptions: IAdaptableBlotterOptions
+    public BlotterOptions: IAdaptableBlotterOptions
 
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
     private cellFlashIntervalHypergridMap: Map<any, Map<string, number>> = new Map()
 
     constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: any) {
         //we init with defaults then overrides with options passed in the constructor
-        this.blotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this, this.blotterOptions);
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -125,14 +125,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
         this.LoggingService = new LoggingService(this);
         // this.ThemeService = new ThemeService(this)
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
         });
 
         // store the options in state - and also later anything else that we need...
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.blotterOptions));
+       // this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -162,7 +162,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.UserDataManagementStrategyId, new UserDataManagementStrategy(this))
+        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
 
         this.filterContainer = this.abContainer.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
@@ -176,7 +176,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.abContainer.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
-        iPushPullHelper.isIPushPullLoaded(this.blotterOptions.iPushPullConfig)
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
@@ -308,7 +308,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getPrimaryKeyValueFromRecord(record: any): any {
-        return record[this.blotterOptions.primaryKey]
+        return record[this.BlotterOptions.primaryKey]
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -462,7 +462,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.vendorGrid.cellEditor.row) == id)
         this.cancelEdit()
 
-        let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, cellInfo.Id)
+        let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
 
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
@@ -486,7 +486,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //no need to have a batch mode so far.... we'll see in the future performance
         let dataChangedEvents: IDataChangedEvent[] = []
         for (let element of batchValues) {
-            let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, element.Id)
+            let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, element.Id)
             let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
 
@@ -526,7 +526,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
-            let record = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id);
+            let record = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
             return (columnId: string) => {
                 let column = this.getHypergridColumn(columnId);
                 return this.valOrFunc(record, column);
@@ -633,12 +633,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
             }
         }
-        return Array.from(returnMap.values()).slice(0, this.blotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
 
     public getDisplayValue(id: any, columnId: string): string {
-        let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id)
+        let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
         return this.getDisplayValueFromRecord(row, columnId)
     }
 
@@ -730,8 +730,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // let rowIndex = this.vendorGrid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
         // return rowIndex
         let rowIndex = this.vendorGrid.behavior.dataModel.getIndexedData().findIndex((x: any) => {
-            if (x && x.hasOwnProperty(this.blotterOptions.primaryKey)) {
-                return x[this.blotterOptions.primaryKey] == rowIdentifierValue
+            if (x && x.hasOwnProperty(this.BlotterOptions.primaryKey)) {
+                return x[this.BlotterOptions.primaryKey] == rowIdentifierValue
             }
             return false
         })

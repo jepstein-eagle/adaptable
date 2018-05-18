@@ -46,7 +46,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         if (!ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts
 
-            if (this.GetGridState().BlotterOptions.serverSearchOption == "AllSearchandSort") {
+            if (this.blotter.BlotterOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishServerSearch(SearchChangedTrigger.Sort)
             }
         }
