@@ -2,7 +2,7 @@ import { EventDispatcher } from "../../EventDispatcher";
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ServerSearch";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 
 /**
@@ -47,7 +47,6 @@ export interface IBlotterApi {
     quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
     quickSearchSetStyle(style: IStyle): void
 
-
     /**
     * Selects the dataSource
     * @param dataSource has to be an existing dataSource
@@ -69,7 +68,6 @@ export interface IBlotterApi {
     advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch
     advancedSearchGetAll(): IAdvancedSearch[]
 
-
     // Dashboard api methods
     dashboardSetAvailableToolbars(availableToolbars: string[]): void
     dashboardSetVisibleToolbars(visibleToolbars: string[]): void
@@ -79,11 +77,9 @@ export interface IBlotterApi {
     dashboardSetZoom(zoom: Number): void
     dashboardSetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void
 
-
     // Calendar State
     calendarSetCurrent(calendar: string): void
     calendarGetCurrent(): string
-
 
     // Theme State
     themeSelectCurrent(theme: string): void
@@ -93,6 +89,10 @@ export interface IBlotterApi {
     themeSystemThemeGetAll(): string[]
     themeUserThemeGetAll(): IUserTheme[]
 
+    // SmartEdit api methods
+    shortcutGetAll(): IShortcut[]
+    shortcutAdd(shortcut: IShortcut): void
+    shortcutDelete(shortcut: IShortcut): void
 
     // SmartEdit api methods
     smartEditSetMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void
@@ -100,19 +100,15 @@ export interface IBlotterApi {
     smartEditSetValue(smartEditValue: number): void
     smartEditGetValue(): number
 
-
-
     // user interface api methods
     uiSetColorPalette(colorPalette: string[]): void
     uiAddColorsToPalette(colorPalette: string[]): void
     uiAddStyleClassNames(styleClassNames: string[]): void
 
-
     // filter api methods
     filterSetColumnFilters(columnFilters: IColumnFilter[]): void
     filterSetUserFilters(userFilters: IUserFilter[]): void
-    filterSetSystemFilters(systemFilters: string[]): void
-
+    filterSetSystemFilters(systemFilters: string[]): voi
 
     // Entitlement Methods
     entitlementGetAll(): IEntitlement[]
@@ -127,6 +123,12 @@ export interface IBlotterApi {
     customSortAdd(column: string, values: string[]): void
     customSortEdit(column: string, values: string[]): void
     customSortDelete(column: string): void
+
+    // Calculated Column State
+    calculatedColumnGetAll(): ICalculatedColumn[]
+    calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void
+    calculatedColumnEditExpression(column: string, columnExpression: string): void
+    calculatedColumnDelete(column: string): void
 
     clearConfig(): void
 

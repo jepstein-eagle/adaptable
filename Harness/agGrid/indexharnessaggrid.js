@@ -225,7 +225,7 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    alert(searchArgs.SearchChangedTrigger)
+    //alert(searchArgs.SearchChangedTrigger)
     if (searchArgs.SearchChangedTrigger == "DataSource") {
         if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
             adaptableblotter.api.themeSelectCurrent("Dark Theme");
@@ -300,36 +300,7 @@ let json = {
             "styleForeYellow"
         ]
     },
-    "ConditionalStyle": {
-        "ConditionalStyles": [
-            {
-                "ColumnId": '',
-                "Style": {
-                    "BackColor": null,
-                    "ForeColor": "#ff0000",
-                    "FontWeight": "Normal",
-                    "FontStyle": "Normal",
-                    "FontSize": null
-                },
-                "ConditionalStyleScope": 'Row',
-                "Expression": {
-                    "ColumnValueExpressions": [
-                        {
-                            "ColumnId": 'country',
-                            "ColumnValues": [
-                                'France',
-                                'Germany'
-                            ]
-                        }
-                    ],
-                    "FilterExpressions": [],
-                    "RangeExpressions": []
-                },
-                "IsReadOnly": true
-            }
-        ]
-    },
-    "Theme": {
+       "Theme": {
         "CurrentTheme": "Default",
     },
     "FormatColumn": {

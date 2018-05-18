@@ -10,13 +10,15 @@ import * as EntitlementsRedux from '../../Redux/ActionsReducers/EntitlementsRedu
 import * as UserInterfaceRedux from '../../Redux/ActionsReducers/UserInterfaceRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
+import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
+import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as CalendarRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
-import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement } from "../Interface/Interfaces";
@@ -145,6 +147,19 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public themeUserThemeGetAll(): IUserTheme[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.UserThemes;
+    }
+
+    // Shortuct State
+    public shortcutGetAll(): IShortcut[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
+    }
+
+    public shortcutAdd(shortcut: IShortcut): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ShortcutRedux.ShortcutAdd(shortcut))
+    }
+
+    public shortcutDelete(shortcut: IShortcut): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ShortcutRedux.ShortcutDelete(shortcut))
     }
 
 
@@ -295,6 +310,29 @@ export abstract class BlotterApiBase implements IBlotterApi {
         let customSort: ICustomSort = this.customSortGetByColumn(column);
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CustomSortRedux.CustomSortDelete(customSort))
     }
+
+
+    // Calculated Column State
+    public calculatedColumnGetAll(): ICalculatedColumn[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;
+    }
+
+    public calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn))
+    }
+
+    public calculatedColumnEditExpression(column: string, columnExpression: string): void {
+        let calcColumn: ICalculatedColumn = this.calculatedColumnGetAll().find(cc => cc.ColumnId == column);
+        let calcColumnIndex: number = this.calculatedColumnGetAll().findIndex(cc => cc.ColumnId == column);
+        calcColumn.ColumnExpression = columnExpression;
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calcColumnIndex, calcColumn))
+    }
+
+    public calculatedColumnDelete(column: string): void {
+        let calcColumnIndex: number = this.calculatedColumnGetAll().findIndex(cc => cc.ColumnId == column);
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex))
+    }
+
 
     public clearConfig(): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())

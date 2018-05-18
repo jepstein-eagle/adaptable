@@ -94,6 +94,7 @@ import { LoggingService } from '../../Core/Services/LoggingService';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -725,6 +726,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.vendorGrid.columnApi.getColumn(columnId).getColDef().cellClassRules
+      
         if (localCellClassRules) {
 
             if (type == "FormatColumn") {
@@ -735,8 +737,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             else if (type == "ConditionalStyle") {
+                let cssStyles: string[]= this.AdaptableBlotterStore.TheStore.getState().ConditionalStyle.ConditionalStyles.map(c=>c.Style.ClassName);
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StyleConstants.CONDITIONAL_STYLE_STYLE)) {
+                    if (prop.includes(StyleConstants.CONDITIONAL_STYLE_STYLE) || ArrayExtensions.ContainsItem( cssStyles, prop)) {
                         delete localCellClassRules[prop]
                     }
                 }
