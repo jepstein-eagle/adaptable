@@ -225,7 +225,12 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "DataSourcesssss") {
+    alert(searchArgs.SearchChangedTrigger)
+    if (searchArgs.SearchChangedTrigger == "DataSource") {
+        if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
+            adaptableblotter.api.themeSelectCurrent("Dark Theme");
+         }
+        /*
         if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             adaptableblotter.api.setGridData(dataGen.getDollarTrades());
             adaptableblotter.api.selectLayout("Dollar View")
@@ -240,6 +245,7 @@ function getTradesForSearch(searchArgs, dataGen) {
             adaptableblotter.api.setGridData(dataGen.getTrades());
             adaptableblotter.api.clearLayout();
         }
+        */
     }
 }
 

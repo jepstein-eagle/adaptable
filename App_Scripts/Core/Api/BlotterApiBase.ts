@@ -16,7 +16,7 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
-import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement } from "../Interface/Interfaces";
@@ -137,6 +137,14 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public themeSetUserThemes(userThemes: string[]): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ThemeRedux.ThemeSetUserThemes(userThemes))
+    }
+
+    public themeSystemThemeGetAll(): string[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.SystemThemes;
+    }
+
+    public themeUserThemeGetAll(): IUserTheme[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.UserThemes;
     }
 
 

@@ -2,7 +2,7 @@ import { EventDispatcher } from "../../EventDispatcher";
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ServerSearch";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 
 /**
@@ -59,6 +59,17 @@ export interface IBlotterApi {
      */
     dataSourceClear(): void
 
+    // Advanced Search api methods
+    advancedSearchSet(advancedSearchName: string): void
+    advancedSearchClear(): void
+    advancedSearchAdd(advancedSearch: IAdvancedSearch): void
+    advancedSearchEdit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void
+    advancedSearchDelete(advancedSearchName: string): void
+    advancedSearchSelectCurrent(): IAdvancedSearch
+    advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch
+    advancedSearchGetAll(): IAdvancedSearch[]
+
+
     // Dashboard api methods
     dashboardSetAvailableToolbars(availableToolbars: string[]): void
     dashboardSetVisibleToolbars(visibleToolbars: string[]): void
@@ -67,7 +78,6 @@ export interface IBlotterApi {
     dashboardSetVisibleButtons(functionButtons: string[]): void
     dashboardSetZoom(zoom: Number): void
     dashboardSetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void
-
 
 
     // Calendar State
@@ -80,6 +90,8 @@ export interface IBlotterApi {
     themeGetCurrent(): string
     themeSetSystemThemes(systemThemes: string[]): void
     themeSetUserThemes(userThemes: string[]): void
+    themeSystemThemeGetAll(): string[]
+    themeUserThemeGetAll(): IUserTheme[]
 
 
     // SmartEdit api methods
@@ -100,19 +112,6 @@ export interface IBlotterApi {
     filterSetColumnFilters(columnFilters: IColumnFilter[]): void
     filterSetUserFilters(userFilters: IUserFilter[]): void
     filterSetSystemFilters(systemFilters: string[]): void
-
-
-
-
-    // Advanced Search api methods
-    advancedSearchSet(advancedSearchName: string): void
-    advancedSearchClear(): void
-    advancedSearchAdd(advancedSearch: IAdvancedSearch): void
-    advancedSearchEdit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void
-    advancedSearchDelete(advancedSearchName: string): void
-    advancedSearchSelectCurrent(): IAdvancedSearch
-    advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch
-    advancedSearchGetAll(): IAdvancedSearch[]
 
 
     // Entitlement Methods
