@@ -47,6 +47,11 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
             output += (options.enableRemoteConfigServer) ? "On" : "Off"
             output += "|"
         }
+        if (options.serverSearchOption != undefined) {
+            output += "Server Search Option:"
+            output += (options.serverSearchOption) 
+            output += "|"
+        }
              output += "Rows:"
             output += this.blotter.getRowInfo()
             output += "|"

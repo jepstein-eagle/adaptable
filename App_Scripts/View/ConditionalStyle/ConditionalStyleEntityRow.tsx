@@ -11,6 +11,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { IConditionalStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 
@@ -22,15 +23,15 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content =
-        conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                column ? column.FriendlyName : conditionalStyle.ColumnId + GeneralConstants.MISSING_COLUMN :
+            conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column ?
+                ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns) :
                 "Whole Row"
 
         colItems[1].Content = <StyleVisualItem Style={conditionalStyle.Style} />
         colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns, this.props.UserFilters)
         let buttons: any = <EntityListActionButtons
-        cssClassName={this.props.cssClassName} 
-          editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}
+            cssClassName={this.props.cssClassName}
+            editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             ConfigEntity={conditionalStyle}

@@ -1,8 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
-import { DistinctCriteriaPairValue, ReportColumnScope, QueryTab } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from '../../UIInterfaces';
+import {  ReportColumnScope } from '../../../Core/Enums'
 import { IReport } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { UIHelper } from '../../UIHelper';
 

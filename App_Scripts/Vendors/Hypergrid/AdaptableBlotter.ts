@@ -5,7 +5,7 @@ import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { IAdaptableBlotterStore, AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../../Strategy/Interface/IStrategy';
 import { IMenuItem, } from '../../Core/Interface/IMenu';
@@ -14,10 +14,8 @@ import { ICalendarService } from '../../Core/Services/Interface/ICalendarService
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { IAuditService, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
-import { ILoggingService } from '../../Core/Services/Interface/ILoggingService'
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
-import { LoggingService } from '../../Core/Services/LoggingService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
@@ -61,7 +59,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -72,6 +70,7 @@ import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
+import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -102,8 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public LoggingService: ILoggingService
-    //  public ThemeService: ThemeService
+   
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
@@ -123,9 +121,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.LoggingService = new LoggingService(this);
-        // this.ThemeService = new ThemeService(this)
-        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
+         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
@@ -201,6 +197,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
     }
 
+    private getState(): AdaptableBlotterState {
+        return this.AdaptableBlotterStore.TheStore.getState()
+    }
+    
     public InitAuditService() {
         // do somethign?
     }
@@ -374,7 +374,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            this.LoggingService.LogMessage('columnId is undefined returning String for Type')
+            AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -431,7 +431,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     default:
                         break;
                 }
-                this.LoggingService.LogMessage ('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
+                AdaptableBlotterLogger.LogMessage ('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                 return dataType
             }
 
@@ -452,7 +452,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 //  }
             }
         }
-        this.LoggingService.LogWarning('columnId does not exist')
+        AdaptableBlotterLogger.LogWarning('columnId does not exist')
         return DataType.String;
     }
 
@@ -619,6 +619,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
+       
+        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumndId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+            })
+        } else {
+       
         let column = this.getHypergridColumn(columnId);
         //We bypass the whole DataSource Stuff as we need to get ALL the data
         let data = this.vendorGrid.behavior.dataModel.getData()
@@ -633,6 +642,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
             }
         }
+    }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 

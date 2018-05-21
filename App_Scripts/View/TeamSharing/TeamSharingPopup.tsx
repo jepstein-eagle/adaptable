@@ -21,6 +21,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../Core/Enums";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
@@ -53,7 +54,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         <StrategyProfile cssClassName={cssClassName} StrategyId={x.strategy} />
                     </Col>
                     <Col xs={3}>
-                        {x.user}{<br/>}{x.timestamp.toLocaleString()}
+                        {x.user}{<br />}{x.timestamp.toLocaleString()}
                     </Col>
                     <Col xs={6} style={{ fontSize: 'small' }}>
                         <Panel bsStyle="primary" className="ab_small-padding-panel">
@@ -68,18 +69,18 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                 </Row>
             </li>
         })
-      
+
         return <div className={cssClassName}>
-        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
-            bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
-            {this.props.Entities.length == 0 ?
-                <Well bsSize="small">Shared Items will appear here when available.</Well>
-                : <PanelWithRow cssClassName={cssClassName} colItems ={colItems} bsStyle="info" />
-            }
-            <ListGroup >
-                {sharedItems}
-            </ListGroup>
-        </PanelWithImage>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
+                bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
+                {this.props.Entities.length == 0 ?
+                    <Well bsSize="small">Shared Items will appear here when available.</Well>
+                    : <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+                }
+                <ListGroup >
+                    {sharedItems}
+                </ListGroup>
+            </PanelWithImage>
         </div>
     }
 
@@ -87,9 +88,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         switch (sharedEntity.strategy) {
             case StrategyIds.CustomSortStrategyId: {
                 let customSort = sharedEntity.entity as ICustomSort
-                let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
                 return <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={4}>{column ? column.FriendlyName : customSort.ColumnId + GeneralConstants.MISSING_COLUMN}</Col>
+                    <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}</Col>
                     <Col xs={8} >
                         {customSort.SortedValues.join(', ')}
                     </Col>
@@ -108,10 +108,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.CellValidationStrategyId: {
                 let cellVal = sharedEntity.entity as ICellValidationRule
-                let column = this.props.Columns.find(c => c.ColumnId == cellVal.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
-                    <Col xs={4}>
-                        {column ? column.FriendlyName : cellVal.ColumnId + GeneralConstants.MISSING_COLUMN}
+                    <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
                         {cellVal.Description}
@@ -125,11 +123,10 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.ConditionalStyleStrategyId: {
                 let cs = sharedEntity.entity as IConditionalStyle
-                let column = this.props.Columns.find(c => c.ColumnId == cs.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
                         {cs.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                            column ? column.FriendlyName : cs.ColumnId + GeneralConstants.MISSING_COLUMN :
+                            ColumnHelper.getFriendlyNameFromColumnId(cs.ColumnId, this.props.Columns) :
                             "Whole Row"
                         }
                     </Col>
@@ -143,10 +140,9 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.PlusMinusStrategyId: {
                 let plusMinus = sharedEntity.entity as IPlusMinusRule
-                let column = this.props.Columns.find(c => c.ColumnId == plusMinus.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
-                        {column ? column.FriendlyName : plusMinus.ColumnId + GeneralConstants.MISSING_COLUMN}
+                        {ColumnHelper.getFriendlyNameFromColumnId(plusMinus.ColumnId, this.props.Columns)}
                     </Col>
                     <Col xs={3}>
                         {plusMinus.NudgeValue.toString()}
@@ -207,10 +203,9 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.FormatColumnStrategyId: {
                 let fc = sharedEntity.entity as IFormatColumn
-                let column = this.props.Columns.find(c => c.ColumnId == fc.ColumnId)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
-                   <Col xs={4}>{column ? column.FriendlyName : fc.ColumnId + GeneralConstants.MISSING_COLUMN}</Col>
-                      <Col md={8} >
+                    <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(fc.ColumnId, this.props.Columns)}</Col>
+                    <Col md={8} >
                         <StyleVisualItem Style={fc.Style} />
                     </Col>
                 </Row>
@@ -239,7 +234,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Entities: state.TeamSharing.SharedEntities,
-      };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

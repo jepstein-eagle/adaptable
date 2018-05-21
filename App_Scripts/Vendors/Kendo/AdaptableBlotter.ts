@@ -70,8 +70,7 @@ import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayo
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
-import { LoggingService } from '../../Core/Services/LoggingService';
+import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -83,8 +82,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public LoggingService: ILoggingService
-
+    
     public StyleService: StyleService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -103,8 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
-        this.LoggingService = new LoggingService(this);
-
+        
 
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
@@ -350,13 +347,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: kendo.ui.GridColumn): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            this.LoggingService.LogMessage('column is undefined returning String for Type')
+            AdaptableBlotterLogger.LogMessage('column is undefined returning String for Type')
             return DataType.String;
         }
         if (!this.vendorGrid.dataSource.options.schema.hasOwnProperty('model') ||
             !this.vendorGrid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             let type = this.getTypeFromFirstRecord(column.field);
-            this.LoggingService.LogMessage('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, type)
+            AdaptableBlotterLogger.LogMessage('There is no Schema model for the grid. Defaulting to type of the first record for column ' + column.field, type)
             return type
         }
 

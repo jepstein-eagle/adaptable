@@ -3,6 +3,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IGridSort, ILayout } from '../Api/Interface/AdaptableBlotterObjects';
 import { SortOrder } from '../Enums';
 import { IColumn } from '../Interface/IColumn';
+import { ColumnHelper } from './ColumnHelper';
 
 
 
@@ -24,7 +25,7 @@ export module LayoutHelper {
 
         let returnString: string = ""
         gridSorts.forEach((gs: IGridSort) => {
-            returnString += getColumnDescription(gs.Column, columns) + getSortOrder(gs.SortOrder)
+            returnString += ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + getSortOrder(gs.SortOrder)
         })
         return returnString;
     }
@@ -33,11 +34,7 @@ export module LayoutHelper {
         return (sortOrder == SortOrder.Ascending) ? " [asc] " : " [desc] "
     }
 
-    export function getColumnDescription(columnId: string, columns: IColumn[]): string {
-        let column: IColumn = columns.find(c => c.ColumnId == columnId);
-        return (column) ? column.FriendlyName : GeneralConstants.MISSING_COLUMN;
-    }
-
+   
 
 
     

@@ -8,6 +8,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
 import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';
+import { ColumnHelper } from './ColumnHelper';
 
 export interface IRangeEvaluation {
     operand1: any;
@@ -36,15 +37,8 @@ export module ExpressionHelper {
 
         let columnList = GetColumnListFromExpression(Expression)
         for (let columnId of columnList) {
-            let column = columns.find(x => x.ColumnId == columnId)
-            let columnFriendlyName: string
-            if (column) {
-                columnFriendlyName = column.FriendlyName
-            }
-            else {
-                columnFriendlyName = columnId + GeneralConstants.MISSING_COLUMN
-                console.warn("Could not find column id:" + columnId)
-            }
+            let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(columnId, columns)
+       
             let columnToString = ""
 
             // Column Display Values
@@ -323,9 +317,8 @@ export module ExpressionHelper {
         if (rangeOperandType == "Value") {
             return operand;
         } else {
-            let column: IColumn = columns.find(c => c.ColumnId == operand);
-            return (column) ? "[" + column.FriendlyName + "]" : GeneralConstants.MISSING_COLUMN
-        }
+            return "[" + ColumnHelper.getFriendlyNameFromColumnId(operand, columns)+ "]";
+         }
     }
 
     export function GetColumnListFromExpression(expression: Expression): Array<string> {

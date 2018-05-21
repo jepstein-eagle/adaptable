@@ -2,7 +2,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
-import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
+import { IAdaptableBlotterStore, AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 // import redux
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
@@ -81,7 +81,7 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
@@ -89,12 +89,12 @@ import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ILayo
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
-import { LoggingService } from '../../Core/Services/LoggingService';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
+import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
+import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -110,9 +110,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public LoggingService: ILoggingService
-    // public ThemeService: ThemeService
-    public AuditLogService: AuditLogService
+     public AuditLogService: AuditLogService
     public StyleService: StyleService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
@@ -131,14 +129,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.LoggingService = new LoggingService(this);
-        //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.vendorGrid.api.getValue(columnId, record));
 
         // store the options in state - and also later anything else that we need...
-     //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
+        //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         // store any grid-specific info in this object (to be improved!) and then accessible later
         let blotterRestrictions: string[] = ["UseClassSytleNames"]
@@ -203,6 +199,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
 
 
+    }
+
+    private getState(): AdaptableBlotterState {
+        return this.AdaptableBlotterStore.TheStore.getState()
     }
 
     private createFilterWrapper(col: Column) {
@@ -433,12 +433,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            this.LoggingService.LogMessage('columnId is undefined returning String for Type')
+            AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
         // get the column type if already in store (and not unknwown)
-        let existingColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == column.getId());
+        let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == column.getId());
         if (existingColumn && existingColumn.DataType != DataType.Unknown) {
             return existingColumn.DataType;
         }
@@ -470,7 +470,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let row = this.vendorGrid.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
-            this.LoggingService.LogWarning('there is no first row so we are returning Unknown for Type')
+            AdaptableBlotterLogger.LogWarning('there is no first row so we are returning Unknown for Type')
             return DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -500,7 +500,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
             }
         }
-        this.LoggingService.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
+        AdaptableBlotterLogger.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
         return dataType
     }
 
@@ -664,21 +664,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
-        //we use forEachNode as we want to get all data even the one filtered out...
-        let data = this.vendorGrid.api.forEachNode(rowNode => {
-            //we do not return the values of the aggregates when in grouping mode
-            //otherwise they would appear in the filter dropdown etc....
-            if (!rowNode.group) {
-                let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
-                let rawValue = this.vendorGrid.api.getValue(columnId, rowNode)
-                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+
+        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumndId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+            })
+        } else {
+            //we use forEachNode as we want to get all data even the one filtered out...
+            let data = this.vendorGrid.api.forEachNode(rowNode => {
+                //we do not return the values of the aggregates when in grouping mode
+                //otherwise they wxould appear in the filter dropdown etc....
+                if (!rowNode.group) {
+                    let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
+                    let rawValue = this.vendorGrid.api.getValue(columnId, rowNode)
+                    if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                    }
+                    else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                        returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                    }
                 }
-                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                }
-            }
-        })
+            })
+        }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
@@ -726,7 +735,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.vendorGrid.columnApi.getColumn(columnId).getColDef().cellClassRules
-      
+
         if (localCellClassRules) {
 
             if (type == "FormatColumn") {
@@ -737,9 +746,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             else if (type == "ConditionalStyle") {
-                let cssStyles: string[]= this.AdaptableBlotterStore.TheStore.getState().ConditionalStyle.ConditionalStyles.map(c=>c.Style.ClassName);
+                let cssStyles: string[] = this.getState().ConditionalStyle.ConditionalStyles.map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StyleConstants.CONDITIONAL_STYLE_STYLE) || ArrayExtensions.ContainsItem( cssStyles, prop)) {
+                    if (prop.includes(StyleConstants.CONDITIONAL_STYLE_STYLE) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -830,6 +839,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (col) {
             this.createFilterWrapper(col)
         }
+        let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
+           conditionalStyleagGridStrategy.InitStyles();     
     }
 
     public getFirstRecord() {
@@ -866,7 +877,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 headerFontStyle: headerColStyle.fontStyle,
                 headerFontWeight: headerColStyle.fontWeight,
                 height: Number(headerColStyle.height.replace("px", "")),
-                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                Columns: this.getState().Grid.Columns.map(col => {
                     let headerColumn: HTMLElement = document.querySelector(".ag-header-cell[col-id='" + col.ColumnId + "']") as HTMLElement
                     let headerColumnStyle = window.getComputedStyle(headerColumn || headerFirstCol, null)
                     return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
@@ -881,7 +892,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 fontStyle: firstRowStyle.fontStyle,
                 fontWeight: firstRowStyle.fontWeight,
                 height: Number(firstRowStyle.height.replace("px", "")),
-                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                Columns: this.getState().Grid.Columns.map(col => {
                     let cellElement: HTMLElement = document.querySelector(".ag-cell[col-id='" + col.ColumnId + "']") as HTMLElement
                     let headerColumnStyle = window.getComputedStyle(cellElement || firstRow, null)
                     return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
@@ -907,7 +918,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         vendorGrid.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
-                let popupState = this.AdaptableBlotterStore.TheStore.getState().Popup.ScreenPopup;
+                let popupState = this.getState().Popup.ScreenPopup;
                 if (popupState.ShowPopup && popupState.ComponentName == ScreenPopups.ColumnChooserPopup) {
                     // ignore
                 } else {
@@ -1026,31 +1037,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = vendorGrid.isExternalFilterPresent;
         vendorGrid.isExternalFilterPresent = () => {
-            let isFilterActive = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0;
+            let isFilterActive = this.getState().Filter.ColumnFilters.length > 0;
             if (isFilterActive) {
                 //used in particular at init time to show the filter icon correctly
-                for (let colFilter of this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters) {
+                for (let colFilter of this.getState().Filter.ColumnFilters) {
                     if (!this.vendorGrid.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
                         this.vendorGrid.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
                     }
                 }
             }
-            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch);
-            let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText);
+            let isSearchActive = StringExtensions.IsNotNullOrEmpty(this.getState().AdvancedSearch.CurrentAdvancedSearch);
+            let isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(this.getState().QuickSearch.QuickSearchText);
             //it means that originaldoesExternalFilterPass will be called to we reinit that collection
             return isFilterActive || isSearchActive || isQuickSearchActive || (originalisExternalFilterPresent ? originalisExternalFilterPresent() : false);
         };
         let originaldoesExternalFilterPass = vendorGrid.doesExternalFilterPass;
         vendorGrid.doesExternalFilterPass = (node: RowNode) => {
-            let columns = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.getState().Grid.Columns;
 
             // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
-                let currentSearchName = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
+                let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
-                    let currentSearch = this.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
+                    let currentSearch = this.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
                     if (currentSearch) {
                         if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
                             // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
@@ -1061,7 +1072,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             //we then assess filters
             if (this.BlotterOptions.serverSearchOption == 'None' || 'AdvancedSearch') {
-                let columnFilters: IColumnFilter[] = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+                let columnFilters: IColumnFilter[] = this.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
@@ -1072,7 +1083,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
                 //we assess quicksearch
                 let recordReturnValue = false;
-                let quickSearchState = this.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+                let quickSearchState = this.getState().QuickSearch;
                 if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
                     && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
@@ -1080,7 +1091,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
                         let rowId = this.getPrimaryKeyValueFromRecord(node);
                         let stringValueLowerCase = displayValue.toLowerCase();
-                        switch (this.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
+                        switch (quickSearchState.Operator) {
                             case LeafExpressionOperator.Contains:
                                 {
                                     if (stringValueLowerCase.includes(quickSearchLowerCase)) {
@@ -1122,7 +1133,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 colMenuItems = params.defaultItems.slice(0);
             }
             colMenuItems.push('separator');
-            this.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.forEach(x => {
+            this.getState().Menu.ContextMenu.Items.forEach(x => {
                 let glyph = this.abContainer.ownerDocument.createElement("span");
                 glyph.className = "glyphicon glyphicon-" + x.GlyphIcon;
                 colMenuItems.push({
@@ -1197,7 +1208,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private checkColumnsDataTypeSet(): any {
         // check that we have no unknown columns - if we do then ok
-        let firstCol = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns[0];
+        let firstCol = this.getState().Grid.Columns[0];
         if (firstCol.DataType == DataType.Unknown) {
             this.setColumnIntoStore();
         }

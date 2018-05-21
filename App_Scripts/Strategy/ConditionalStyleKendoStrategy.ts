@@ -41,7 +41,7 @@ export class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy impl
         })
     }
 
-    protected InitStyles(): void {
+    public InitStyles(): void {
         let theBlotter = this.blotter as AdaptableBlotter
         theBlotter.removeAllCellStylesWithRegex(new RegExp("^" + StyleConstants.CONDITIONAL_STYLE_STYLE));
         theBlotter.removeAllRowStylesWithRegex(new RegExp("^" + StyleConstants.CONDITIONAL_STYLE_STYLE));

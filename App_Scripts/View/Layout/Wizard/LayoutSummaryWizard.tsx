@@ -9,6 +9,7 @@ import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
 import { ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: IColumn[]
@@ -37,11 +38,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
     }
 
     private getColumnNames():string{
-        let returnValue: string = ""
-        this.props.Data.Columns.forEach(c=> { 
-            returnValue = returnValue + this.props.Columns.find(col => col.ColumnId == c).FriendlyName + ", "
-        })
-        return returnValue;
+        return ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.Columns, this.props.Columns).join(", ");
     }
 
     public canBack(): boolean { return true; }

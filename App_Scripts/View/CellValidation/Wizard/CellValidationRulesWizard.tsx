@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Radio, FormGroup, FormControl,  Col, Panel,  HelpBlock } from 'react-bootstrap';
+import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { DataType, LeafExpressionOperator, PopoverType, RangeOperandType } from '../../../Core/Enums';
@@ -8,6 +8,7 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule, IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -34,15 +35,15 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             return <option key={operator} value={operator.toString()}>{ExpressionHelper.OperatorToLongFriendlyString(operator, this.getColumnDataTypeFromState())}</option>
         })
 
-        let columnFriendlyName: string = this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName;
+        let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
 
         let validationRuleHeader: string = "Validation Rule for Column: " + columnFriendlyName;
-       
-        let helpText : string = "Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
+
+        let helpText: string = "Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).";
         let cssClassName: string = this.props.cssClassName + "-rules"
-       
+
         return <div className={cssClassName}>
-        <Panel header={validationRuleHeader} bsStyle="primary">
+            <Panel header={validationRuleHeader} bsStyle="primary">
 
                 <AdaptableBlotterForm >
                     <Col xs={12}>
@@ -50,11 +51,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow edits where the new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 
@@ -147,7 +148,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         }
     }
 
-    
+
 
     createCellValidationDescription(CellValidation: ICellValidationRule): string {
 
@@ -202,20 +203,20 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             Operand1: this.state.Operand1,
             Operand2: this.state.Operand2,
             Operand1Type: RangeOperandType.Value,
-            Operand2Type:  RangeOperandType.Value
+            Operand2Type: RangeOperandType.Value
         }
         this.props.Data.Range = rangeExpression;
         this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
     }
 
-    public Back(): void { 
+    public Back(): void {
         //todo
     }
 
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

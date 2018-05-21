@@ -9,6 +9,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     Columns: IColumn[]
@@ -20,14 +21,14 @@ export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<I
 export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: UserFilterSummaryWizardProps) {
         super(props)
-       
+
     }
     render() {
         let cssClassName: string = this.props.cssClassName + "-summary"
-       
+
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
-            { Key: "Column", Value: this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName },
+            { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
         ]
 
@@ -38,13 +39,13 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     }
 
 
-   
-    public canNext(): boolean {        return true;    }
+
+    public canNext(): boolean { return true; }
 
 
     public canBack(): boolean { return true; }
 
-    public Next(): void  { /* no implementation */ }
+    public Next(): void { /* no implementation */ }
     public Back(): void { /* no implementation */ }
     public GetIndexStepIncrement() {
         return 1;

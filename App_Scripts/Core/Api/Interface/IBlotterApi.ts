@@ -2,7 +2,7 @@ import { EventDispatcher } from "../../EventDispatcher";
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ServerSearch";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 
 /**
@@ -136,7 +136,17 @@ export interface IBlotterApi {
     cellValidationAdd(cellValidationRule: ICellValidationRule): void
     cellValidationDelete(cellValidationRule: ICellValidationRule): void
 
+    // FormatColumn State
+     formatColumnGetAll(): IFormatColumn[] 
+     formatColumnnAdd(column: string, style: IStyle): void 
+     formatColumnnUpdate(column: string, style: IStyle): void 
+     formatColumnDelete(formatColumn: IFormatColumn): void 
+     
 
+    /**
+     * Clears the  configuration for the current user, reverting everyting to system defaults.
+     * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
+     *  */
     clearConfig(): void
 
 

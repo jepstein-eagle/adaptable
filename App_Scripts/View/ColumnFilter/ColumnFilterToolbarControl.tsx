@@ -18,6 +18,7 @@ import { PopoverType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
@@ -42,8 +43,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
             let column: IColumn = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
             if (column) {
                 let expression: string = ExpressionHelper.ConvertExpressionToString(x.Filter, this.props.Columns, this.props.UserFilters)
-                infoBody.push(<b> {column.FriendlyName} </b>)
-                infoBody.push(expression, <br/>)    
+                infoBody.push(<b> {ColumnHelper.getFriendlyNameFromColumnId(x.ColumnId, this.props.Columns)} </b>)
+                infoBody.push(expression, <br />)
             }
         })
 
@@ -52,28 +53,28 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 {collapsedText}
                 {' '}
                 {infoBody.length > 0 &&
-                    <AdaptablePopover  cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} popoverType={PopoverType.Info} />
+                    <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} popoverType={PopoverType.Info} />
                 }
                 {' '}
                 <ButtonClear onClick={() => this.props.onClearFilters()}
-                 bsStyle={"primary"}
-                 cssClassName={cssClassName}
-                 size={"small"}
-                   overrideTooltip="Clear Column Filters"
+                    bsStyle={"primary"}
+                    cssClassName={cssClassName}
+                    size={"small"}
+                    overrideTooltip="Clear Column Filters"
                     DisplayMode="Text+Glyph"
                     overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>
         </span>
 
-return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.ColumnFilterStrategyName} glyphicon={StrategyGlyphs.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
-     }
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-           ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.Filter.ColumnFilters,
     };
 }
 

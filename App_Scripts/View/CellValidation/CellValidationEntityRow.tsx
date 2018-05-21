@@ -13,6 +13,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { CellValidationMode } from "../../Core/Enums";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
@@ -37,8 +38,8 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
                 {CellValidationModeTypes}
             </FormControl>
         colItems[3].Content = <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+            cssClassName={this.props.cssClassName}
+            ConfirmDeleteAction={this.props.onDeleteConfirm}
             showShare={this.props.TeamSharingActivated}
             editClick={() => this.props.onEdit(this.props.Index, cellValidation)}
             shareClick={() => this.props.onShare()}
@@ -47,10 +48,10 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             EntityName={StrategyNames.CellValidationStrategyName} />
 
 
-        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems ={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 
-  
+
 
     setExpressionDescription(CellValidation: ICellValidationRule): string {
         return (CellValidation.HasExpression) ?
@@ -58,16 +59,16 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             "No Expression";
     }
 
-     private getColumnandRule(cellValidation: ICellValidationRule):string {
-        let columnInfo: string =   this.props.Column ? this.props.Column.FriendlyName : cellValidation.ColumnId + GeneralConstants.MISSING_COLUMN
-        columnInfo += ": " +        cellValidation.Description
+    private getColumnandRule(cellValidation: ICellValidationRule): string {
+        let columnInfo: string = ColumnHelper.getFriendlyNameFromColumn(cellValidation.ColumnId, this.props.Column)
+        columnInfo += ": " + cellValidation.Description
         return columnInfo
-       }
+    }
 
     onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-      let returnValue: any =(  e.value == 'Stop Edit')? 'Stop Edit': 'Warn Value';
-        this.props.onChangeCellValidationMode(index, returnValue );
+        let returnValue: any = (e.value == 'Stop Edit') ? 'Stop Edit' : 'Warn Value';
+        this.props.onChangeCellValidationMode(index, returnValue);
     }
 }
 

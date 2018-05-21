@@ -15,7 +15,6 @@ import { EventDispatcher } from '../EventDispatcher';
 import { ICalculatedColumn, IGridSort, ILayout } from '../Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs } from '../Api/Interface/ServerSearch';
-import { ILoggingService } from '../Services/Interface/ILoggingService';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 
 export interface IAdaptableBlotter {
@@ -34,8 +33,7 @@ export interface IAdaptableBlotter {
     CalendarService: ICalendarService
     AuditService: IAuditService
     ValidationService: IValidationService
-    LoggingService: ILoggingService
-    AuditLogService: AuditLogService
+     AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     InitAuditService(): void
 

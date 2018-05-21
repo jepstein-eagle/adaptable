@@ -13,6 +13,7 @@ import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Core/Enums";
 import { IConditionalStyle, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: IColumn[]
@@ -29,7 +30,10 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
         let cssClassName: string = this.props.cssClassName + "-summary"
 
         let keyValuePairs: KeyValuePair[] = [
-            { Key: "Scope", Value: this.props.Data.ConditionalStyleScope == ConditionalStyleScope.Row ? "Row" : this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName },
+            {
+                Key: "Scope", Value: this.props.Data.ConditionalStyleScope == ConditionalStyleScope.Row ? "Row" :
+                    ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+            },
             { Key: "Style", Value: <StyleVisualItem Style={this.props.Data.Style} /> },
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
         ]

@@ -5,11 +5,11 @@ import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard'
-import { DistinctCriteriaPairValue, DataType } from '../../../Core/Enums'
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { DataType } from "../../../Core/Enums";
 
 
 export interface PlusMinusWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {

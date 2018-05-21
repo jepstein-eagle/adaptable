@@ -46,7 +46,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
         let titleRow = <StrategyHeader
             key={StrategyNames.ConditionalStyleStrategyName}
             cssClassName={this.props.cssClassName}
-                        StrategyId={StrategyIds.ConditionalStyleStrategyId}
+            StrategyId={StrategyIds.ConditionalStyleStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.ConditionalStyleStrategyName}
@@ -58,8 +58,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column) {
                 let detailRow =
                     <StrategyDetail
-                    cssClassName={this.props.cssClassName}
-                    key={"CS" + index}
+                        cssClassName={this.props.cssClassName}
+                        key={"CS" + index}
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
@@ -79,8 +79,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
             {this.state.EditedAdaptableBlotterObject &&
                 <ConditionalStyleWizard
-                cssClassName={cssWizardClassName}
-                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
@@ -92,7 +92,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={()=>this.canFinishWizard()}
+                    canFinishWizard={() => this.canFinishWizard()}
                 />
             }
         </div>
@@ -120,7 +120,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
     canFinishWizard() {
         let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle
-        return (conditionalStyle.ConditionalStyleScope== ConditionalStyleScope.Row ||  StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
+        return (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Row || StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
             ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
             UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     }
@@ -133,7 +133,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
         ColorPalette: state.UserInterface.ColorPalette,
-        StyleClassNames : state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames
     };
 }
 

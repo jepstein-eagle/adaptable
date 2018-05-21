@@ -7,7 +7,6 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';

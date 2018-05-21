@@ -6,7 +6,6 @@ import { LayoutColumnWizard } from './LayoutColumnWizard'
 import { LayoutSettingsWizard } from './LayoutSettingsWizard'
 import { LayoutGridSortWizard } from './LayoutGridSortWizard'
 import { LayoutSummaryWizard } from './LayoutSummaryWizard'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";

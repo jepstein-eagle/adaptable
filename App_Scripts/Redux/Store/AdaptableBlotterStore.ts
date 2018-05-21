@@ -57,6 +57,7 @@ import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFil
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
+import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -329,12 +330,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) => blotter.LoggingService.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
-                    xhr.ontimeout = (ev: ProgressEvent) => blotter.LoggingService.LogWarning("TeamSharing share timeout", actionTyped.Entity)
+                    xhr.onerror = (ev: ErrorEvent) => AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
+                    xhr.ontimeout = (ev: ProgressEvent) => AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity)
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                blotter.LoggingService.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                                AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
                                 middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error Sharing item: " + xhr.statusText }))
                             }
                             else {
@@ -358,12 +359,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 case TeamSharingRedux.TEAMSHARING_GET: {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) => blotter.LoggingService.LogError("TeamSharing get error :" + ev.message)
-                    xhr.ontimeout = (ev: ProgressEvent) => blotter.LoggingService.LogWarning("TeamSharing get timeout")
+                    xhr.onerror = (ev: ErrorEvent) => AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message)
+                    xhr.ontimeout = (ev: ProgressEvent) => AdaptableBlotterLogger.LogWarning("TeamSharing get timeout")
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                blotter.LoggingService.LogError("TeamSharing get error : " + xhr.statusText);
+                                AdaptableBlotterLogger.LogError("TeamSharing get error : " + xhr.statusText);
                             }
                             else {
                                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
@@ -570,6 +571,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                             let column: IColumn = gridState.Columns.find(x => x.ColumnId == c)
                             if (column) {
                                 blotterColumns.push(column);
+                            }else{
+                                AdaptableBlotterLogger.LogWarning("Column '" + c + "' not found")
                             }
                         })
 

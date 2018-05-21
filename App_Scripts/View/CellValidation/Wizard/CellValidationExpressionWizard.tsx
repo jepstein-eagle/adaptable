@@ -2,7 +2,6 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from './../../ExpressionBuilder/ExpressionBuilderPage'
 import { ICellValidationRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
-import { DistinctCriteriaPairValue, QueryTab } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { UIHelper } from '../../UIHelper';
 

@@ -6,6 +6,7 @@ import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     UserFilters: IUserFilter[]
@@ -26,7 +27,7 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     render() {
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
         let cssClassName: string = this.props.cssClassName + "-settings"
-       
+
         return <div className={cssClassName}>
             <Panel header="Filter Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
@@ -58,7 +59,8 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
         this.setState({
             FilterName: e.value,
             ErrorMessage: this.props.UserFilters.findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1 ?
-                "A User Filter already exists with that name for column: " + this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName :
+                "A User Filter already exists with that name for column: " + ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+                :
                 null
 
         } as UserFilterSettingsWizardState, () => this.props.UpdateGoBackState())

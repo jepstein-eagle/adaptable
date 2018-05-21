@@ -8,7 +8,6 @@ import { CellValidationExpressionWizard } from './CellValidationExpressionWizard
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';

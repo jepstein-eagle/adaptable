@@ -9,6 +9,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
@@ -23,11 +24,11 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
             "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.", <br />, <br />,
             "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
 
-            return <div className={cssClassName}>
-            <PanelWithImage  cssClassName={cssClassName} header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
-                <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x => x.FriendlyName)}
-                   cssClassName={cssClassName}
-                   SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => x.FriendlyName)}
+        return <div className={cssClassName}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
+                <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))}
+                    cssClassName={cssClassName}
+                    SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))}
                     HeaderAvailable="Hidden Columns"
                     HeaderSelected="Visible Columns"
                     onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}></DualListBoxEditor>

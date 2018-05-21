@@ -10,6 +10,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ICellValidationRule, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
@@ -27,7 +28,7 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
         let cssClassName: string = this.props.cssClassName + "-summary"
 
         let keyValuePairs: KeyValuePair[] = [
-            { Key: "Column", Value: this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName },
+            { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Mode", Value: this.props.Data.CellValidationMode },
             { Key: "Rule", Value: this.props.Data.Description },
             {

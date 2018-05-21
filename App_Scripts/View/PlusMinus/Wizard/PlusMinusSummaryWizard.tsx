@@ -11,6 +11,7 @@ import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
 import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: IColumn[]
@@ -25,7 +26,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
         let cssClassName: string = this.props.cssClassName + "-summary"
 
         let keyValuePairs: KeyValuePair[] = [
-            { Key: "Name", Value: this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName },
+            { Key: "Name", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId,  this.props.Columns)},
             { Key: "Nudge Value", Value: this.props.Data.NudgeValue },
             { Key: "Is Column Default", Value: this.props.Data.IsDefaultNudge ? "True" : "False" },
             {

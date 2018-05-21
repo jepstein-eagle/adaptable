@@ -26,6 +26,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -70,7 +71,6 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         ]
 
         let customSorts = this.props.CustomSorts.map((customSort: ICustomSort, index) => {
-            let column = this.props.Columns.find(x => x.ColumnId == customSort.ColumnId);
             return <CustomSortEntityRow
                 cssClassName={cssClassName}
                 colItems={colItems}
@@ -81,7 +81,8 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onShare={() => this.props.onShare(customSort)}
                 onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-                ColumnLabel={column ? column.FriendlyName : customSort.ColumnId + GeneralConstants.MISSING_COLUMN} />
+                ColumnLabel={ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}
+            />
         });
 
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
@@ -148,7 +149,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
 
     canFinishWizard() {
         let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
-        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) && ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues) ;
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) && ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues);
     }
 
 }

@@ -39,13 +39,13 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
         }
     }
 
-    protected InitStyles(): void {
+    public InitStyles(): void {
 
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let theBlotter = this.blotter as AdaptableBlotter
 
         // adding this check as things can get mixed up during 'clean user data'
-        if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyles.length > 0) {
+        if (columns.length > 0 && this.ConditionalStyleState != null && this.ConditionalStyleState.ConditionalStyles.length > 0) {
 
             for (let column of columns) {
                 let cellClassRules: any = {};

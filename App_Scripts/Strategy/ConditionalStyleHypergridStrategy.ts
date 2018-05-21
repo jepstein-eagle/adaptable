@@ -47,7 +47,7 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
         })
     }
 
-    protected InitStyles(): void {
+    public InitStyles(): void {
         let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         theBlotter.removeAllCellStyleHypergrid('csColumn')

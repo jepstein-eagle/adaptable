@@ -1,4 +1,3 @@
-import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Enums'
 import { IStrategy } from '../../Strategy/Interface/IStrategy'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -21,11 +20,14 @@ export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
 
 
 
-
-
 export interface IEntitlement {
     FunctionName: string;
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
+}
+
+export interface IPermittedColumnValues {
+    ColumndId: string;
+    PermittedValues: any[]
 }
 
 

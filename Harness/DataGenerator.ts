@@ -237,8 +237,8 @@ export class DataGenerator {
                 "sandpRating": this.getRatingFromMoodyRating(moodyRating),
                 "tradeDate": tradeDate,
                 "settlementDate": this.addDays(tradeDate, 3),
-                "bloombergAsk": this.roundTo4Dp(ask + 0.01),
-                "bloombergBid": this.roundTo4Dp(bid - 0.01),
+                "bloombergAsk": this.getSimilarNumber(ask),
+                "bloombergBid": this.getSimilarNumber(bid),
                 "percentChange": this.generateRandomNullableDouble(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
                 "lastUpdatedBy": this.getRandomItem(this.getNames()),
@@ -553,7 +553,12 @@ export class DataGenerator {
         return moodysRatings;
     }
 
-
+    protected getSimilarNumber(originalNumber: number): number {
+        let direction = this.generateRandomInt(1, 2);
+      //  let randomDouble = this.generateRandomDouble();
+        let returnValue = (direction==1)? this.roundTo4Dp(originalNumber+ 0.01): this.roundTo4Dp(originalNumber - 0.01);
+        return returnValue
+    }
 
 
 

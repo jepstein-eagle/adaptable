@@ -9,6 +9,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IFormatColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
@@ -26,7 +27,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
         let cssClassName: string = this.props.cssClassName + "-summary"
        
         let keyValuePairs: KeyValuePair[] = [
-            { Key: "Scope", Value: this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName },
+            { Key: "Scope", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId,  this.props.Columns)},
             { Key: "Style", Value: <StyleVisualItem Style={this.props.Data.Style} /> },
          ]
 

@@ -30,12 +30,12 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     protected addColumnMenuItem(columnId: string): void {
-            this.createMenuItemColumnMenu(
-                "Create " + StrategyNames.ConditionalStyleStrategyName,
-                ScreenPopups.ConditionalStylePopup,
-                StrategyGlyphs.ConditionalStyleGlyph,
-                "New|" + columnId)
-            }
+        this.createMenuItemColumnMenu(
+            "Create " + StrategyNames.ConditionalStyleStrategyName,
+            ScreenPopups.ConditionalStylePopup,
+            StrategyGlyphs.ConditionalStyleGlyph,
+            "New|" + columnId)
+    }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
     protected abstract handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void;
@@ -47,7 +47,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
         }
     }
 
-    protected abstract InitStyles(): void;
+    public abstract InitStyles(): void;
 
 }
 

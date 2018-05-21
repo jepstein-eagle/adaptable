@@ -190,7 +190,7 @@ function InitBlotter() {
         return origgetCell.call(vendorGrid.behavior.dataModel, config, declaredRendererName)
     };
 
-    var blotterOptions ={
+    var blotterOptions = {
         primaryKey: "tradeId",
         userName: "jonathan",
         blotterId: "Demo Blotter",
@@ -205,7 +205,7 @@ function InitBlotter() {
     }
 
     var abContainer = document.getElementById('adaptableBlotter');
-    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions, abContainer,vendorGrid);
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions, abContainer, vendorGrid);
 
     adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     vendorGrid.addProperties(lightTheme);
@@ -213,7 +213,7 @@ function InitBlotter() {
 
 function getTradesForSearch(searchArgs, dataGen) {
     if (searchArgs.SearchChangedTrigger == "DataSourcexxxx") {
-          if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
+        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             adaptableblotter.api.setGridData(dataGen.getDollarTrades());
             adaptableblotter.api.layoutSet("Dollar View")
         } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
@@ -230,6 +230,26 @@ function getTradesForSearch(searchArgs, dataGen) {
 }
 
 let json = {
+    "UserInterface": {
+        "PermittedColumnValues": [
+            {
+                "ColumndId": "country",
+                "PermittedValues": [
+                    "France",
+                    "Russia",
+                    "Israel"
+                ]
+            },
+            {
+                "ColumndId": "currency",
+                "PermittedValues": [
+                    "EUR",
+                    "USD",
+                    "NIS"
+                ]
+            },
+        ]
+    },
     "Entitlements": {
         "FunctionEntitlements": [
             {
@@ -305,7 +325,7 @@ let json = {
                             ]
                         }
                     ],
-                     "FilterExpressions": [],
+                    "FilterExpressions": [],
                     "RangeExpressions": []
                 },
                 "IsReadOnly": false

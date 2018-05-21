@@ -19,12 +19,15 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
-import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule } from "./Interface/AdaptableBlotterObjects";
+import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
+import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement } from "../Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation } from "../Enums";
 import { ResetUserData, AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
+import { ObjectFactory } from "../ObjectFactory";
+import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -348,6 +351,25 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CellValidationRedux.CellValidationDelete(index))
     }
 
+    // Format Column State
+    public formatColumnGetAll(): IFormatColumn[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn.FormatColumns;
+    }
+
+    public formatColumnnAdd(column: string, style: IStyle): void {
+        let formatColumn:IFormatColumn = {ColumnId: column, Style: style, IsReadOnly: false}
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn))
+    }
+
+    public formatColumnnUpdate(column: string, style: IStyle): void {
+        let formatColumn:IFormatColumn = {ColumnId: column, Style: style, IsReadOnly: false}
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn))
+    }
+
+    public formatColumnDelete(formatColumn: IFormatColumn): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(FormatColumnRedux.FormatColumnDelete(formatColumn))
+    }
+
 
     public clearConfig(): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())
@@ -360,7 +382,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     private checkItemExists(item: any, name: string, type: string): boolean {
         if (!item) {
-            this.blotter.LoggingService.LogError("No " + type + " found with the name: " + name)
+            AdaptableBlotterLogger.LogError("No " + type + " found with the name: " + name)
             return false;
         }
         return true;

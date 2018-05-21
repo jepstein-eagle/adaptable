@@ -4,7 +4,7 @@ import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement } from '../../../Core/Interface/Interfaces';
+import { IEntitlement, IPermittedColumnValues } from '../../../Core/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
@@ -53,6 +53,7 @@ export interface EntitlementsState {
 export interface UserInterfaceState {
     ColorPalette: string[];
     StyleClassNames: string[]
+    PermittedColumnValues: IPermittedColumnValues[]
 }
 
 

@@ -198,7 +198,7 @@ function InitBlotter() {
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
         predefinedConfig: json,    // passing in predefined config with a file    
-        serverSearchOption: "Advancedsearch",   // performing AdvancedSearch on the server, not the client
+        serverSearchOption: "None",   // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -229,7 +229,7 @@ function getTradesForSearch(searchArgs, dataGen) {
     if (searchArgs.SearchChangedTrigger == "DataSource") {
         if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
             adaptableblotter.api.themeSelectCurrent("Dark Theme");
-         }
+        }
         /*
         if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             adaptableblotter.api.setGridData(dataGen.getDollarTrades());
@@ -298,9 +298,27 @@ let json = {
         "StyleClassNames": [
             "styleBackBrown",
             "styleForeYellow"
+        ],
+        "PermittedColumnValues": [
+            {
+                "ColumndId": "country",
+                "PermittedValues": [
+                    "France",
+                    "Russia",
+                    "Israel"
+                ]
+            },
+            {
+                "ColumndId": "currency",
+                "PermittedValues": [
+                    "EUR",
+                    "USD",
+                    "NIS"
+                ]
+            },
         ]
     },
-       "Theme": {
+    "Theme": {
         "CurrentTheme": "Default",
     },
     "FormatColumn": {

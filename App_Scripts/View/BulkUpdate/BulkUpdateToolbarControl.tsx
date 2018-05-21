@@ -18,7 +18,6 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { SortOrder, DistinctCriteriaPairValue } from '../../Core/Enums';
 import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";

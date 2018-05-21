@@ -13,6 +13,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
 import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -139,9 +140,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     }
                 })
             }
-            let column = this.props.ColumnsList.find(x => x.ColumnId == columnId)
-            let columnFriendlyName = column ? column.FriendlyName : columnId + GeneralConstants.MISSING_COLUMN
-
+          
+            let columnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(columnId, this.props.ColumnsList)
 
             return <div key={columnId + "div"} className={this.props.ReadOnlyMode ? GeneralConstants.READ_ONLY_STYLE : ""}>
 

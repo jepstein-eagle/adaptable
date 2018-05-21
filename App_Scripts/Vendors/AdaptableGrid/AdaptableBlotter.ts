@@ -52,8 +52,7 @@ import { ICalculatedColumn, IGridSort, ILayout } from '../../Core/Api/Interface/
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { ILoggingService } from '../../Core/Services/Interface/ILoggingService';
-import { LoggingService } from '../../Core/Services/LoggingService';
+import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -67,7 +66,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    public LoggingService: ILoggingService
     
     public StyleService: StyleService
     //  public ThemeService: ThemeService
@@ -85,8 +83,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-        this.LoggingService = new LoggingService(this);
-        this.StyleService = new StyleService(this);
+         this.StyleService = new StyleService(this);
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
@@ -274,7 +271,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: AdaptableGrid.Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            this.LoggingService.LogMessage('columnId is undefined returning String for Type')
+           AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 

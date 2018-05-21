@@ -5,7 +5,6 @@ import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard'
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';

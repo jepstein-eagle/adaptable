@@ -1,4 +1,4 @@
- export const MISSING_COLUMN = "[MISSING]";
+ export const MISSING_COLUMN = " [MISSING]";
  export const DEFAULT_LAYOUT = "Ab_Default_Layout";
  export const DEFAULT_THEME = "Default";
    

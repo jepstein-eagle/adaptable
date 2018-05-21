@@ -1,10 +1,12 @@
 import * as Redux from 'redux';
 import { UserInterfaceState } from './Interface/IState'
+import { IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 
 
 export const COLOR_PALETTE_SET = 'COLOR_PALETTE_SET';
 export const COLOR_PALETTE_ADD = 'COLOR_PALETTE_ADD';
-export const SYTLE_CLASSNAMES_ADD = 'SYTLE_CLASSNAMES_ADD';
+export const STYLE_CLASSNAMES_ADD = 'STYLE_CLASSNAMES_ADD';
+export const PERMITTED_COLUMNVALUES_ADD = 'PERMITTED_COLUMNVALUES_ADD';
 
 export interface ColorPaletteSetAction extends Redux.Action {
     ColorPalette: string[]
@@ -18,6 +20,10 @@ export interface StyleClassNameAddAction extends Redux.Action {
     StyleClassNames: string[]
 }
 
+export interface PermittedColumnValuesAddAction extends Redux.Action {
+    PermittedColumnValues: IPermittedColumnValues
+}
+
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
     type: COLOR_PALETTE_SET,
     ColorPalette
@@ -29,8 +35,13 @@ export const ColorPaletteAdd = (ColorPalette: string[]): ColorPaletteAddAction =
 })
 
 export const StyleClassNamesAdd = (StyleClassNames: string[]): StyleClassNameAddAction => ({
-    type: SYTLE_CLASSNAMES_ADD,
+    type: STYLE_CLASSNAMES_ADD,
     StyleClassNames
+})
+
+export const PermittedColumnValuesAdd = (PermittedColumnValues: IPermittedColumnValues): PermittedColumnValuesAddAction => ({
+    type: PERMITTED_COLUMNVALUES_ADD,
+    PermittedColumnValues
 })
 
 const initialUserInterfaceState: UserInterfaceState = {
@@ -60,7 +71,7 @@ const initialUserInterfaceState: UserInterfaceState = {
         "#FFA500", //  {/* orange */}
     ],
     StyleClassNames: [],
-
+    PermittedColumnValues: []
 
 }
 
@@ -75,13 +86,20 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (sta
                 existingColors.push(cp)
             })
             return Object.assign({}, state, { ColorPalette: existingColors })
-        case SYTLE_CLASSNAMES_ADD:
+        case STYLE_CLASSNAMES_ADD:
             let actionTypedAddStyles = (<StyleClassNameAddAction>action)
             let existingStyleNames = [].concat(state.StyleClassNames);
             actionTypedAddStyles.StyleClassNames.forEach(sc => {
                 existingStyleNames.push(sc)
             })
             return Object.assign({}, state, { StyleClassNames: existingStyleNames })
+        case PERMITTED_COLUMNVALUES_ADD:
+            let actionTypedAddColumnValues = (<PermittedColumnValuesAddAction>action)
+            let permittedColumnValues = [].concat(state.PermittedColumnValues)
+            permittedColumnValues.push(actionTypedAddColumnValues.PermittedColumnValues);
+            return Object.assign({}, state, {
+                PermittedColumnValues: permittedColumnValues
+            });
         default:
             return state
     }

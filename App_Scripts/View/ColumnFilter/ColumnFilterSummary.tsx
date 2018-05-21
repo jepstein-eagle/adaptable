@@ -32,7 +32,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
-        
+
         let columnFilter: IColumnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let description: string = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters)
 
@@ -40,12 +40,14 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         summaryItems.push(<b>{<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
         summaryItems.push(description);
         summaryItems.push(
-            <ButtonClear cssClassName={this.props.cssClassName} size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
+            <ButtonClear cssClassName={this.props.cssClassName}
+                bsStyle={"primary"}
+                size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null} />)
 
-        return  <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
-     }
+        return <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
+    }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
