@@ -9,6 +9,7 @@ import { IColumn } from '../Interface/IColumn';
 import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';
 import { ColumnHelper } from './ColumnHelper';
+import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 
 export interface IRangeEvaluation {
     operand1: any;
@@ -91,7 +92,7 @@ export module ExpressionHelper {
 
             let column = columnBlotterList.find(x => x.ColumnId == columnId)
             if (!column) {
-                console.warn("Could not find column id:" + columnId)
+                AdaptableBlotterLogger.LogWarning("Could not find column id:" + columnId)
                 isColumnSatisfied = true
             }
 

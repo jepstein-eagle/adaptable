@@ -198,7 +198,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                 .then(
                     () => this.TheStore.dispatch(InitState()),
                     (e) => {
-                        console.error('Failed to load previous adaptable blotter state : ', e);
+                        AdaptableBlotterLogger.LogError('Failed to load previous adaptable blotter state : ', e);
                         //for now i'm still initializing the AB even if loading state has failed.... 
                         //we may revisit that later
                         this.TheStore.dispatch(InitState())
@@ -498,7 +498,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Successfully Imported" }))
                     }
                     else {
-                        console.error("Unknown item type", actionTyped.Entity)
+                        AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
                         middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Item not recognized. Cannot import" }))
                     }
                     return returnAction;
@@ -799,7 +799,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         })
                         middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, report))
                     }).catch((error: string) => {
-                        console.error("Login failed", error);
+                        AdaptableBlotterLogger.LogError("Login failed", error);
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
                     })
                     return next(action);

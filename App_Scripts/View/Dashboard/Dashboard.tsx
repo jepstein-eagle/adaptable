@@ -15,6 +15,7 @@ import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue, Visibility } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogger";
 
 
 
@@ -59,7 +60,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 </Nav>
             }
             else {
-                console.error("Cannot find Dashboard Control for " + control)
+                AdaptableBlotterLogger.LogError("Cannot find Dashboard Control for " + control)
             }
         })
 

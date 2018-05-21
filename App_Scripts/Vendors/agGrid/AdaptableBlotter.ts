@@ -180,7 +180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
-                    console.error('Failed to Init AdaptableBlotterStore : ', e);
+                    AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now i'm still initializing the strategies even if loading state has failed.... 
                     //we may revisit that later
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
@@ -188,7 +188,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(
                 () => this.initInternalGridLogic(vendorGrid, gridContainer),
                 (e) => {
-                    console.error('Failed to Init Strategies : ', e);
+                    AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
                     this.initInternalGridLogic(vendorGrid, gridContainer)
@@ -1145,7 +1145,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return colMenuItems;
         };
         this.AdaptableBlotterStore.Load.then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            console.error('Failed to Init AdaptableBlotterStore : ', e);
+            AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now i'm still initializing the strategies even if loading state has failed.... 
             //we may revisit that later
             this.Strategies.forEach(strat => strat.InitializeWithRedux());

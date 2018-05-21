@@ -1,6 +1,7 @@
 import { SortOrder } from '../../Core/Enums'
 import { StringExtensions } from '../Extensions/StringExtensions'
 import * as fs from 'fs'
+import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 
 export module Helper {
     export function getCharFromKey(event: JQueryKeyEventObject): string;
@@ -149,13 +150,13 @@ export module Helper {
             try {
                 return document.execCommand("copy");  // Security exception may be thrown by some browsers.
             } catch (ex) {
-                console.warn("Copy to clipboard failed.", ex);
+                AdaptableBlotterLogger.LogWarning("Copy to clipboard failed.", ex);
                 return false;
             } finally {
                 document.body.removeChild(textarea);
             }
         }
-        console.warn("Copy not available on this computer.");
+        AdaptableBlotterLogger.LogWarning("Copy not available on this computer.");
     }
 
     export function ReturnItemCount(items: any[], itemName: string): string {

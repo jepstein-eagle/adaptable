@@ -37,8 +37,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     }
 
     private ColumnListChange(columnList: Array<string>) {
-        this.props.onNewColumnListOrder(columnList.map(friendlyName => this.props.Columns.find(x => x.FriendlyName == friendlyName)))
-        //  this.setState(this.state)
+        let test = ColumnHelper.getColumnsFromFriendlyNames(columnList, this.props.Columns)
     }
 }
 

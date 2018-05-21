@@ -3,6 +3,7 @@ import * as fetch from 'isomorphic-fetch';
 import { MergeState } from './AdaptableBlotterReduxMerger'
 import { Helper } from '../../Core/Helpers/Helper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 
 const checkStatus = (response: Response) => {
     const error = new Error(response.statusText);
@@ -32,12 +33,12 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
                 .then(response => response.json())
            //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
-                .catch(err => console.error(err));
+                .catch(err => AdaptableBlotterLogger.LogError(err));
         } else if (this.predefinedConfig != null) {
             return new Promise (( resolve )=> resolve(this.predefinedConfig))
           //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
-                .catch(err => console.error(err));
+                .catch(err => AdaptableBlotterLogger.LogError(err));
         }
         else {
             return new Promise((resolve) => {

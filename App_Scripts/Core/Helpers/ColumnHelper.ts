@@ -50,5 +50,10 @@ export module ColumnHelper {
         })
         return columnIds;
     }
+
+    export function getColumnsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): IColumn[] {
+        // not sure if this is right as might ignore bad cols
+        return friendlyNames.map(friendlyName => columns.find(x => x.FriendlyName == friendlyName))
+    }
 }
 

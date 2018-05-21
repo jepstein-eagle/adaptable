@@ -1,5 +1,6 @@
 import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
 import { IPP_LOGIN } from "../../Redux/ActionsReducers/ExportRedux";
+import { AdaptableBlotterLogger } from "./AdaptableBlotterLogger";
 
 
 export module iPushPullHelper {
@@ -75,7 +76,7 @@ export module iPushPullHelper {
                     resolve(result);
                 })
                 .catch((x: any) => {
-                    console.error("couldn't get Domain/Pages from IPP : ", x)
+                    AdaptableBlotterLogger.LogError("couldn't get Domain/Pages from IPP : ", x)
                     reject(x.message)
                 })
         })
@@ -90,7 +91,7 @@ export module iPushPullHelper {
             let page = new serv(pageIPP, folderIPP)
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
-                console.log("Page Ready : " + pageIPP)
+               AdaptableBlotterLogger.LogMessage("Page Ready : " + pageIPP)
                 pages.set(pageIPP, page)
                 resolve(page);
                 //we return true so it removes the listener for new content.
@@ -105,7 +106,7 @@ export module iPushPullHelper {
         if (pageIPP) {
             pageIPP.destroy()
             pages.delete(page)
-            console.log("Page Unloaded : " + page)
+           AdaptableBlotterLogger.LogMessage("Page Unloaded : " + page)
         }
     }
 
@@ -173,10 +174,10 @@ export module iPushPullHelper {
             pageIPP.Content.canDoDelta = false;
             pageIPP.Content.update(newData, true);
             pageIPP.push().then(function () {
-                console.log('Data pushed for page : ' + page);
+               AdaptableBlotterLogger.LogMessage('Data pushed for page : ' + page);
                 resolve()
             }, (err: any) => {
-                console.log('Error pushing Data for page : ' + page);
+               AdaptableBlotterLogger.LogMessage('Error pushing Data for page : ' + page);
                 reject();
             });
         })

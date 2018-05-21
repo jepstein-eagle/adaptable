@@ -179,7 +179,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
-                    console.error('Failed to Init AdaptableBlotterStore : ', e);
+                    AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now i'm still initializing the strategies even if loading state has failed.... 
                     //we may revisit that later
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
@@ -187,7 +187,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(
                 () => this.initInternalGridLogic(vendorGrid),
                 (e) => {
-                    console.error('Failed to Init Strategies : ', e);
+                    AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
                     this.initInternalGridLogic(vendorGrid)
@@ -576,7 +576,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //in our current use cases as of 02/10/2017 it should never happens that we
             //check for editable on a different column that we edit
             else {
-                console.warn("Editing " + this.vendorGrid.cellEditor.column.name + " but checking for editable on column " + columnId)
+                AdaptableBlotterLogger.LogWarning("Editing " + this.vendorGrid.cellEditor.column.name + " but checking for editable on column " + columnId)
             }
         }
         else {
@@ -1158,7 +1158,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 return originalGetCellReturn || this.vendorGrid.cellRenderers.get(declaredRendererName);
             }
             catch (err) {
-                console.error("Error during GetCell", err)
+                AdaptableBlotterLogger.LogError("Error during GetCell", err)
             }
         };
         grid.addEventListener('fin-column-sort', (e: any) => {

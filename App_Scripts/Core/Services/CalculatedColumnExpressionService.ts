@@ -1,6 +1,7 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ICalculatedColumnExpressionService } from "./Interface/ICalculatedColumnExpressionService";
 import * as math from 'mathjs'
+import { AdaptableBlotterLogger } from '../Helpers/AdaptableBlotterLogger';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {
@@ -20,7 +21,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
             return { IsValid: true };
         }
         catch (e) {
-            console.error(e);
+            AdaptableBlotterLogger.LogWarning(e);
             return { IsValid: false, ErrorMsg: e.message };
         }
     }
@@ -38,7 +39,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
             })
         }
         catch (e) {
-            console.error(e);
+            AdaptableBlotterLogger.LogError(e);
             return null;
         }
     }

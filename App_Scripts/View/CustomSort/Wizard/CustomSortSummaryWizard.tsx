@@ -9,6 +9,7 @@ import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -18,12 +19,12 @@ export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<I
 export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: CustomSortSummaryWizardProps) {
         super(props);
-     }
+    }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
         let keyValuePairs: KeyValuePair[] = [
-            { Key: "Column", Value: this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).FriendlyName   },
-            { Key: "Values", Value: this.props.Data.SortedValues.join(', ')}
+            { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
+            { Key: "Values", Value: this.props.Data.SortedValues.join(', ') }
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.CustomSortStrategyName} />
@@ -32,14 +33,14 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
         </div>
     }
 
-       public canNext(): boolean { return true }
+    public canNext(): boolean { return true }
     public canBack(): boolean { return true; }
-    public Next(): void {  }
+    public Next(): void { }
     public Back(): void { }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName
