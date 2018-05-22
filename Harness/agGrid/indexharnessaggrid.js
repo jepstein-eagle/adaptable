@@ -195,9 +195,9 @@ function InitBlotter() {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "Demo Blotter",              // id for blotter 
-        enableAuditLog: false,                  // not running audit log
+        enableAuditLog: true,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: json,    // passing in predefined config with a file    
+       // predefinedConfig:  json,    // passing in predefined config with a file    
         serverSearchOption: "None",   // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

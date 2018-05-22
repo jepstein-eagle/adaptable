@@ -71,7 +71,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.TeamSharingStrategyName} style={panelStyle} infoBody={infoBody}
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.TeamSharingStrategyName} infoBody={infoBody}
                 bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
                 {this.props.Entities.length == 0 ?
                     <Well bsSize="small">Shared Items will appear here when available.</Well>
@@ -248,9 +248,3 @@ export let TeamSharingPopup = connect(mapStateToProps, mapDispatchToProps)(TeamS
 
 
 
-//make the screen a little bit more reactive instead of having a static width
-let panelStyle = {
-    width: '80vw',
-    maxWidth: '1100px',
-    minWidth: '600px'
-}
