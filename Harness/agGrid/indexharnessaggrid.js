@@ -197,7 +197,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: true,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-       // predefinedConfig:  json,    // passing in predefined config with a file    
+       predefinedConfig:  json,    // passing in predefined config with a file    
         serverSearchOption: "None",   // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -301,7 +301,7 @@ let json = {
         ],
         "PermittedColumnValues": [
             {
-                "ColumndId": "country",
+                "ColumnId": "country",
                 "PermittedValues": [
                     "France",
                     "Russia",

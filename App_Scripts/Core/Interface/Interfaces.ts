@@ -26,7 +26,7 @@ export interface IEntitlement {
 }
 
 export interface IPermittedColumnValues {
-    ColumndId: string;
+    ColumnId: string;
     PermittedValues: any[]
 }
 
