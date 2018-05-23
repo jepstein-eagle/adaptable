@@ -309,7 +309,7 @@ let json = {
                 ]
             },
             {
-                "ColumndId": "currency",
+                "ColumnId": "currency",
                 "PermittedValues": [
                     "EUR",
                     "USD",

@@ -666,7 +666,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
         let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumndId == columnId);
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
         if (permittedValuesForColumn) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });

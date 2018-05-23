@@ -233,7 +233,7 @@ let json = {
     "UserInterface": {
         "PermittedColumnValues": [
             {
-                "ColumndId": "country",
+                "ColumnId": "country",
                 "PermittedValues": [
                     "France",
                     "Russia",
@@ -241,7 +241,7 @@ let json = {
                 ]
             },
             {
-                "ColumndId": "currency",
+                "ColumnId": "currency",
                 "PermittedValues": [
                     "EUR",
                     "USD",
