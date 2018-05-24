@@ -36,6 +36,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
+                    ErrorHeader: "Bulk Update Error",
                     ErrorMsg: "No cells are selected.\nPlease select some cells."
                 }
             }
@@ -46,6 +47,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             if (pair[1].length > 1) {
                 return {
                     Error: {
+                        ErrorHeader: "Bulk Update Error",
                         ErrorMsg: "Bulk Update only supports single column edit.\nPlease adjust cell selection."
                     }
                 }
@@ -59,6 +61,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             else if (columnId != selectedColumnId) {
                 return {
                     Error: {
+                        ErrorHeader: "Bulk Update Error",
                         ErrorMsg: "Bulk Update only supports single column edit.\nPlease adjust cell selection."
                     }
                 }
@@ -68,6 +71,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             if (this.blotter.isColumnReadonly(selectedColumnId)) {
                 return {
                     Error: {
+                        ErrorHeader: "Bulk Update Error",
                         ErrorMsg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection."
                     }
                 }

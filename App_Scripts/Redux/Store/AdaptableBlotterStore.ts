@@ -202,7 +202,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                         //for now i'm still initializing the AB even if loading state has failed.... 
                         //we may revisit that later
                         this.TheStore.dispatch(InitState())
-                        this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error loading your configuration:" + e }))
+                        this.TheStore.dispatch(PopupRedux.PopupShowError({ErrorHeader: "Configurtion", ErrorMsg: "Error loading your configuration:" + e }))
                     })
     }
 }
@@ -336,10 +336,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Error Sharing item: " + xhr.statusText }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ErrorHeader: "Team Sharing Error", ErrorMsg: "Couldn't share item: " + xhr.statusText }))
                             }
                             else {
-                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Shared Successfully" }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({InfoHeader:"Team Sharing", InfoMsg: "Item Shared Successfully" }))
                             }
                         }
                     }
@@ -495,11 +495,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     else if (importAction) {
                         middlewareAPI.dispatch(importAction)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoMsg: "Item Successfully Imported" }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({InfoHeader:"Team Sharing", InfoMsg: "Item Successfully Imported" }))
                     }
                     else {
                         AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Item not recognized. Cannot import" }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ErrorHeader:"Team Sharing Error:", ErrorMsg: "Item not recognized. Cannot import" }))
                     }
                     return returnAction;
                 }

@@ -75,11 +75,33 @@ export const DashboardSetVisibility = (Visibility: Visibility): DashboardSetVisi
 })
 
 const initialDashboardState: DashboardState = {
-    AvailableToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId, StrategyIds.DataSourceStrategyId],
-    VisibleToolbars: [StrategyIds.AdvancedSearchStrategyId, StrategyIds.QuickSearchStrategyId, StrategyIds.LayoutStrategyId, StrategyIds.ExportStrategyId, StrategyIds.ColumnFilterStrategyId],
-    VisibleButtons: [StrategyIds.AboutStrategyId, StrategyIds.DashboardStrategyId, StrategyIds.SmartEditStrategyId, StrategyIds.ColumnChooserStrategyId, StrategyIds.ConditionalStyleStrategyId, StrategyIds.TeamSharingStrategyId],
+    AvailableToolbars: [
+        StrategyIds.AdvancedSearchStrategyId,
+        StrategyIds.QuickSearchStrategyId,
+        StrategyIds.LayoutStrategyId,
+        StrategyIds.ExportStrategyId,
+        StrategyIds.ColumnFilterStrategyId,
+        StrategyIds.DataSourceStrategyId,
+        StrategyIds.ApplicationStrategyId
+    ],
+    VisibleToolbars: [
+        StrategyIds.AdvancedSearchStrategyId,
+        StrategyIds.QuickSearchStrategyId,
+        StrategyIds.LayoutStrategyId,
+        StrategyIds.ExportStrategyId,
+        StrategyIds.ColumnFilterStrategyId
+    ],
+    VisibleButtons: [
+        StrategyIds.AboutStrategyId,
+        StrategyIds.DashboardStrategyId,
+        StrategyIds.SmartEditStrategyId,
+        StrategyIds.ColumnChooserStrategyId,
+        StrategyIds.ConditionalStyleStrategyId,
+        StrategyIds.TeamSharingStrategyId
+    ],
     Zoom: 1,
-    DashboardVisibility: Visibility.Visible
+    DashboardVisibility: Visibility.Visible,
+    ShowSystemStatusButton: false
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {

@@ -34,20 +34,26 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
- 
+
         return (
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
 
-                <AdaptableBlotterPopupError Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
+                <AdaptableBlotterPopupError
+                    Header={this.props.PopupState.ErrorPopup.ErrorHeader}
+                    Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
                     onClose={this.props.onCloseErrorPopup}
                     ShowPopup={this.props.PopupState.ErrorPopup.ShowErrorPopup} />
 
-                <AdaptableBlotterPopupWarning Msg={this.props.PopupState.WarningPopup.WarningMsg}
+                <AdaptableBlotterPopupWarning
+                   Header={this.props.PopupState.WarningPopup.WarningHeader}
+                   Msg={this.props.PopupState.WarningPopup.WarningMsg}
                     onClose={this.props.onCloseWarningPopup}
                     ShowPopup={this.props.PopupState.WarningPopup.ShowWarningPopup} />
 
-                <AdaptableBlotterPopupInfo Msg={this.props.PopupState.InfoPopup.InfoMsg}
+                <AdaptableBlotterPopupInfo
+                     Header={this.props.PopupState.InfoPopup.InfoHeader}
+                     Msg={this.props.PopupState.InfoPopup.InfoMsg}
                     onClose={this.props.onCloseInfoPopup}
                     ShowPopup={this.props.PopupState.InfoPopup.ShowInfoPopup} />
 

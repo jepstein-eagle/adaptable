@@ -7,6 +7,7 @@ export interface AdaptableBlotterPopupWarningProps extends React.ClassAttributes
     ShowPopup: boolean
     onClose: Function
     Msg: string
+    Header: string
 }
 
 export class AdaptableBlotterPopupWarning extends React.Component<AdaptableBlotterPopupWarningProps, {}> {
@@ -14,7 +15,7 @@ export class AdaptableBlotterPopupWarning extends React.Component<AdaptableBlott
         return this.props.ShowPopup && <div className={StyleConstants.POPUP_WARNING}>
             <SweetAlert
                 warning
-                confirmBtnBsStyle="warning" title="Warning" bsSize="small"
+                confirmBtnBsStyle="warning" title={this.props.Header} bsSize="small"
                 btnSize="sm"
                 onConfirm={() => this.props.onClose()} >
                 <p>

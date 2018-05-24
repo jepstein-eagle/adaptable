@@ -111,6 +111,12 @@ button.placeholder:before {
 .ab_object_list_item_medium{
   overflow-y: auto;
   min-height: 80px;
+  max-height: 390px;
+}
+
+.ab_object_list_item_small{
+  overflow-y: auto;
+  min-height: 80px;
   max-height: 350px;
 }
 

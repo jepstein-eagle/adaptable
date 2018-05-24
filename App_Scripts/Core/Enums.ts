@@ -186,6 +186,18 @@ export enum QueryTab  {
 }
 
 
+export enum StatusColour {
+    Red = 'Red',
+    Amber = 'Amber',
+    Green = 'Green'
+}
+
+
+export enum AlertType {
+    Info = 'Info',
+    Warning = 'Warning',
+    Error = 'Error'
+}
 
 
 

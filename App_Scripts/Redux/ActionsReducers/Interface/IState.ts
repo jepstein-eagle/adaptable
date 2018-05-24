@@ -4,7 +4,7 @@ import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement, IPermittedColumnValues } from '../../../Core/Interface/Interfaces';
+import { IEntitlement, IPermittedColumnValues, ISystemStatus } from '../../../Core/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
@@ -17,6 +17,7 @@ export interface GridState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
     BlotterRestrictions: string[];
+    SystemStatus: ISystemStatus
 }
 
 export interface MenuState {
@@ -56,6 +57,10 @@ export interface UserInterfaceState {
     PermittedColumnValues: IPermittedColumnValues[]
 }
 
+export interface ApplicationState {
+
+}
+
 
 /* 
 predefined and user config and editable by users but not Adaptable Blotter objects 
@@ -75,12 +80,13 @@ export interface DashboardState {
     VisibleButtons: string[]
     Zoom: number,
     DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'
+    ShowSystemStatusButton: boolean
 }
 
 
 export interface SmartEditState {
     SmartEditValue: number
-    MathOperation:  'Add'|'Subtract'|'Multiply'| 'Divide'| 'Replace'
+    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'
 }
 
 

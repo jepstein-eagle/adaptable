@@ -18,16 +18,18 @@ import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
-import { IEntitlement } from "../Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation } from "../Enums";
+import { IEntitlement, ISystemStatus } from "../Interface/Interfaces";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType } from "../Enums";
 import { ResetUserData, AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
 import { ObjectFactory } from "../ObjectFactory";
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
+import { IUIInfo, IUIWarning, IUIError } from "../Interface/IMessage";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -347,7 +349,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public cellValidationDelete(cellValidationRule: ICellValidationRule): void {
-        let index: number = this.cellValidationGetAll().findIndex(cv=>cv== cellValidationRule)
+        let index: number = this.cellValidationGetAll().findIndex(cv => cv == cellValidationRule)
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(CellValidationRedux.CellValidationDelete(index))
     }
 
@@ -357,12 +359,12 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public formatColumnnAdd(column: string, style: IStyle): void {
-        let formatColumn:IFormatColumn = {ColumnId: column, Style: style, IsReadOnly: false}
+        let formatColumn: IFormatColumn = { ColumnId: column, Style: style, IsReadOnly: false }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn))
     }
 
     public formatColumnnUpdate(column: string, style: IStyle): void {
-        let formatColumn:IFormatColumn = {ColumnId: column, Style: style, IsReadOnly: false}
+        let formatColumn: IFormatColumn = { ColumnId: column, Style: style, IsReadOnly: false }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn))
     }
 
@@ -373,6 +375,44 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public clearConfig(): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())
+    }
+
+
+    // System Status 
+    public setSystemStatus(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
+        let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSystemStatus(systemStatus))
+    }
+
+    public clearSystemStatus(): void {
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridClearSystemStatus())
+    }
+
+    // Alerts
+    public showAlert(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void {
+        switch (alertType as AlertType) {
+            case AlertType.Info:
+                let info: IUIInfo = {
+                    InfoHeader: alertHeader,
+                    InfoMsg: alertMessage
+                }
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowInfo(info))
+                return;
+            case AlertType.Warning:
+                let warning: IUIWarning = {
+                    WarningHeader: alertHeader,
+                    WarningMsg: alertMessage
+                }
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowWarning(warning))
+                return;
+            case AlertType.Error:
+                let error: IUIError = {
+                    ErrorHeader: alertHeader,
+                    ErrorMsg: alertMessage
+                }
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError(error))
+                return;
+        }
     }
 
     // Events

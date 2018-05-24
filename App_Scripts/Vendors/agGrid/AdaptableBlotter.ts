@@ -80,6 +80,7 @@ import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
+import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
@@ -110,7 +111,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-     public AuditLogService: AuditLogService
+    public AuditLogService: AuditLogService
     public StyleService: StyleService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
@@ -145,6 +146,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
+        this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
@@ -840,7 +842,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.createFilterWrapper(col)
         }
         let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
-           conditionalStyleagGridStrategy.InitStyles();     
+        conditionalStyleagGridStrategy.InitStyles();
     }
 
     public getFirstRecord() {
@@ -946,6 +948,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (failedRules[0].CellValidationMode == "Stop Edit") {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                         let error: IUIError = {
+                            ErrorHeader: "Validation Error",
                             ErrorMsg: errorMessage
                         };
                         this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));

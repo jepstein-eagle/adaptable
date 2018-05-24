@@ -20,16 +20,23 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { Visibility } from "../../Core/Enums";
+import { Visibility, StatusColour } from "../../Core/Enums";
+import { ISystemStatus } from "../../Core/Interface/Interfaces";
+import { IUIInfo, IUIError, IUIWarning } from "../../Core/Interface/IMessage";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
     MenuState: MenuState,
     DashboardState: DashboardState,
     Columns: IColumn[],
+    SystemStatus: ISystemStatus,
     HeaderText: string,
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
+    onShowStatusMessageGreen: (info: IUIInfo) => PopupRedux.PopupShowInfoAction
+    onShowStatusMessageAmber: (warning: IUIWarning) => PopupRedux.PopupHideWarningAction
+    onShowStatusMessageRed: (error: IUIError) => PopupRedux.PopupShowErrorAction
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -60,6 +67,11 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             </div>
         });
 
+        // status button
+        let statusButton = <OverlayTrigger key={"systemstatus"} overlay={<Tooltip id="tooltipButton" > {"System Status"}</Tooltip >}>
+            <ButtonDashboard glyph={this.getGlyphForSystemStatusButton()} cssClassName={cssClassName} bsStyle={this.getStyleForSystemStatusButton()} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()} />
+        </OverlayTrigger >
+
         // shortcuts
         let shortcutsArray: string[] = this.props.DashboardState.VisibleButtons
         let shortcuts: any
@@ -88,6 +100,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             headerText={blotterName} glyphicon={"home"} showGlyphIcon={false}
             onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
+            {this.props.DashboardState.ShowSystemStatusButton &&
+                statusButton
+            }
+
             <DropdownButton bsStyle={"default"}
                 className={cssDropdownClassName}
                 bsSize={"small"}
@@ -96,6 +112,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 id={"dropdown-functions"}>
                 {menuItems}
             </DropdownButton>
+
 
             {shortcuts}
             <DropdownButton bsStyle={"default"}
@@ -113,6 +130,36 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onClick(menuItem.Action)
     }
 
+    onClickStatus() {
+        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
+        switch (statusColor) {
+            case StatusColour.Green:
+                let info: IUIInfo = {
+                    InfoHeader: "System Status",
+                    InfoMsg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
+                        this.props.SystemStatus.StatusMessage :
+                        "No issues"
+                }
+                this.props.onShowStatusMessageGreen(info)
+                return;
+            case StatusColour.Amber:
+                let warning: IUIWarning = {
+                    WarningHeader: "System Status",
+                    WarningMsg: this.props.SystemStatus.StatusMessage
+                }
+                this.props.onShowStatusMessageAmber(warning)
+                return;
+            case StatusColour.Red:
+                let error: IUIError = {
+                    ErrorHeader: "System Status",
+                    ErrorMsg: this.props.SystemStatus.StatusMessage
+                }
+                this.props.onShowStatusMessageRed(error)
+                return;
+        }
+
+    }
+
     onSetColumnVisibility(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let changedColumnn: IColumn = this.props.Columns.find(c => c.ColumnId == e.value);
@@ -125,13 +172,38 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         columns[index] = changedColumnn;
         this.props.onNewColumnListOrder(columns.filter(c => c.Visible))
     }
+
+    getStyleForSystemStatusButton(): string {
+        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
+        switch (statusColor) {
+            case StatusColour.Green:
+                return "success"
+            case StatusColour.Amber:
+                return "warning"
+            case StatusColour.Red:
+                return "danger"
+        }
+    }
+
+    getGlyphForSystemStatusButton(): string {
+        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
+        switch (statusColor) {
+            case StatusColour.Green:
+                return "ok-circle"
+            case StatusColour.Amber:
+                return "ban-circle"
+            case StatusColour.Red:
+                return "remove-circle"
+        }
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         MenuState: state.Menu,
         DashboardState: state.Dashboard,
-        Columns: state.Grid.Columns
+        Columns: state.Grid.Columns,
+        SystemStatus: state.Grid.SystemStatus
     };
 }
 
@@ -142,6 +214,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup, isReadOnly)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
+        onShowStatusMessageGreen: (info: IUIInfo) => dispatch(PopupRedux.PopupShowInfo(info)),
+        onShowStatusMessageAmber: (warning: IUIWarning) => dispatch(PopupRedux.PopupShowWarning(warning)),
+        onShowStatusMessageRed: (error: IUIError) => dispatch(PopupRedux.PopupShowError(error)),
     };
 }
 

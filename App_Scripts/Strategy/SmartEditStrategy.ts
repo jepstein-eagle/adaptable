@@ -25,7 +25,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public ApplySmartEdit(newValues: ICellInfo[]): void {
-          this.blotter.setValueBatch(newValues)
+        this.blotter.setValueBatch(newValues)
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
@@ -33,6 +33,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
+                    ErrorHeader: "Smart Edit Error",
                     ErrorMsg: "No cells are selected.\nPlease select some cells."
                 }
             }
@@ -43,6 +44,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             if (pair[1].length > 1) {
                 return {
                     Error: {
+                        ErrorHeader: "Smart Edit Error",
                         ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
                     }
                 }
@@ -56,6 +58,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             else if (columnId != selectedColumnId) {
                 return {
                     Error: {
+                        ErrorHeader: "Smart Edit Error",
                         ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
                     }
                 }
@@ -66,6 +69,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             if (selectedColumn.DataType != DataType.Number) {
                 return {
                     Error: {
+                        ErrorHeader: "Smart Edit Error",
                         ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
                     }
                 }
@@ -75,6 +79,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             if (this.blotter.isColumnReadonly(selectedColumnId)) {
                 return {
                     Error: {
+                        ErrorHeader: "Smart Edit Error",
                         ErrorMsg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection."
                     }
                 }
@@ -122,7 +127,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
                 let previewResult: IPreviewResult = { Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue, ValidationRules: validationRules }
-                      previewResults.push(previewResult)
+                previewResults.push(previewResult)
                 columnId = columnValuePair.columnID;
             }
         }
@@ -130,7 +135,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         return {
             ColumnId: columnId,
             PreviewResults: previewResults,
-            PreviewValidationSummary: PreviewHelper.GetPreviewValidationSummary(previewResults)       
+            PreviewValidationSummary: PreviewHelper.GetPreviewValidationSummary(previewResults)
         }
     }
 

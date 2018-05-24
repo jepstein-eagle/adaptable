@@ -1,6 +1,7 @@
 import * as StrategyNames from './StrategyNames';
 
 export const AboutStrategyId: string = "About"
+export const ApplicationStrategyId: string = "Application"
 export const AdvancedSearchStrategyId: string = "AdvancedSearch"
 export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
@@ -33,6 +34,8 @@ export function getIdForStrategyName(strategyName: string) {
     switch (strategyName) {
         case StrategyNames.AboutStrategyName:
             return AboutStrategyId
+        case StrategyNames.ApplicationStrategyName:
+            return ApplicationStrategyId
         case StrategyNames.AdvancedSearchStrategyName:
             return AdvancedSearchStrategyId
         case StrategyNames.BulkUpdateStrategyName:

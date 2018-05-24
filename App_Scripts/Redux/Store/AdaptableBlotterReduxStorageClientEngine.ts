@@ -47,7 +47,7 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
     };
 
     return fetch(this.url, saveOptions).then(checkStatus).catch(error => {
-      this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorMsg: "Cannot save config:" + error.message }))
+      this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Cannot Save Config", ErrorMsg: error.message }))
       return Promise.reject("Cannot save config:" + error.message)
     });;
   }

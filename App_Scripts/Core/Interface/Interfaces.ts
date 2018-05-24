@@ -25,6 +25,11 @@ export interface IEntitlement {
     AccessLevel: "ReadOnly" | "Hidden" | "Default";
 }
 
+export interface ISystemStatus {
+    StatusMessage: string;
+    StatusColour: "Red" | "Amber" | "Green";
+}
+
 export interface IPermittedColumnValues {
     ColumnId: string;
     PermittedValues: any[]

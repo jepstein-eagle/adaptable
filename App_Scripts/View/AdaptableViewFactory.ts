@@ -11,6 +11,7 @@ import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup'
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup'
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl'
+import { ApplicationToolbarControl } from './Application/ApplicationToolbarControl'
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl'
@@ -26,6 +27,7 @@ import { IPushPullLogin } from './Export/IPushPullLogin'
 import { HomeToolbarControl } from './Home/HomeToolbarControl'
 import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
 import { AboutPopup } from './About/AboutPopup'
+import { ApplicationPopup } from './Application/ApplicationPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { DataManagementPopup } from './DataManagement/DataManagementPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
@@ -65,6 +67,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   TeamSharingPopup: TeamSharingPopup,
   ColumnFilterPopup: ColumnFilterPopup,
   AboutPopup: AboutPopup,
+  ApplicationPopup: ApplicationPopup,
   BulkUpdatePopup: BulkUpdatePopup,
 }
 
@@ -75,6 +78,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
   [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
+  [StrategyIds.ApplicationStrategyId, ApplicationToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl],
   [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl]
 ]);

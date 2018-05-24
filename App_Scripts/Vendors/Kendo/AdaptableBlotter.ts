@@ -817,7 +817,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (failedRules[0].CellValidationMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
-                        ErrorMsg: errorMessage
+                        ErrorHeader: "Validation Error",
+                            ErrorMsg: errorMessage
                     };
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
                     e.preventDefault();

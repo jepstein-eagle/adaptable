@@ -1,14 +1,17 @@
 import * as Redux from 'redux';
 
 export interface IUIError {
+    ErrorHeader: string,
     ErrorMsg: string;
 }
 
 export interface IUIWarning {
+    WarningHeader: string,
     WarningMsg: string;
 }
 
 export interface IUIInfo {
+    InfoHeader: string,
     InfoMsg: string;
 }
 
@@ -42,16 +45,19 @@ export interface IScreenPopup {
 
 export interface IErrorPopup {
     ShowErrorPopup: boolean;
+    ErrorHeader: string,
     ErrorMsg: string;
 }
 
 export interface IWarningPopup {
     ShowWarningPopup: boolean;
+    WarningHeader: string,
     WarningMsg: string;
 }
 
 export interface IInfoPopup {
     ShowInfoPopup: boolean;
+    InfoHeader: string,
     InfoMsg: string;
 }
 
@@ -64,7 +70,7 @@ export interface IConfirmationPopup {
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
     ShowCommentBox: boolean,
-    ConfirmationComment:string;
+    ConfirmationComment: string;
 }
 
 export interface IPromptPopup {

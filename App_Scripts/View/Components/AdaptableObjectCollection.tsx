@@ -21,7 +21,7 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
     render(): any {
         let allowOverflow: any = this.props.allowOverflow ? "visible" : "auto";
         let bsStyle: string = (this.props.bsStyle) ? this.props.bsStyle : "info"
-        let className: string = (this.props.reducedPanel == true) ? "ab_object_list_item_medium" : "ab_object_list_item"
+        let className: string = (this.props.reducedPanel == true) ? "ab_object_list_item_small" : "ab_object_list_item"
         let bsSize: any = (this.props.bsSize)? this.props.bsSize: "small"
         return <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
             <PanelWithRow cssClassName={this.props.cssClassName} colItems={this.props.colItems} bsStyle={bsStyle} bsSize={bsSize} />

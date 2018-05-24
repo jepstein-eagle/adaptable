@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { ICellInfo, ISystemStatus } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
@@ -11,6 +11,8 @@ export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_BLOTTER_RESTRICTIONS = 'GRID_SET_BLOTTER_RESTRICTIONS';
+export const GRID_SET_SYSTEM_STATUS = 'GRID_SET_SYSTEM_STATUS';
+export const GRID_CLEAR_SYSTEM_STATUS = 'GRID_CLEAR_SYSTEM_STATUS';
 
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -35,6 +37,14 @@ export interface GridSetSortAction extends Redux.Action {
 
 export interface GridSetBlotterRestrictionsAction extends Redux.Action {
     BlotterRestrictions: string[];
+}
+
+export interface GridSetSystemStatusAction extends Redux.Action {
+    SystemStatus: ISystemStatus;
+}
+
+export interface GridClearSystemStatusAction extends Redux.Action {
+
 }
 
 
@@ -69,10 +79,22 @@ export const GridSetBlotterRestrictions = (BlotterRestrictions: string[]): GridS
     BlotterRestrictions
 })
 
+export const GridSetSystemStatus = (SystemStatus: ISystemStatus): GridSetSystemStatusAction => ({
+    type: GRID_SET_SYSTEM_STATUS,
+    SystemStatus
+})
+
+export const GridClearSystemStatus = (): GridClearSystemStatusAction => ({
+    type: GRID_CLEAR_SYSTEM_STATUS,
+
+})
+
 const initialGridState: GridState = {
     Columns: [],
     GridSorts: [],
-    BlotterRestrictions: []
+    BlotterRestrictions: [],
+    SystemStatus: { StatusMessage: "", StatusColour: "Green" }
+
 }
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
@@ -81,10 +103,14 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             return Object.assign({}, state, { Columns: [].concat((<GridSetColumnsAction>action).Columns) })
         case GRID_SET_SORT:
             return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
-          case GRID_SET_BLOTTER_RESTRICTIONS:
+        case GRID_SET_BLOTTER_RESTRICTIONS:
             let actionTypedRestrictions = <GridSetBlotterRestrictionsAction>action;
             let blotterRestrictions = actionTypedRestrictions.BlotterRestrictions
             return Object.assign({}, state, { BlotterRestrictions: blotterRestrictions })
+        case GRID_SET_SYSTEM_STATUS:
+            return Object.assign({}, state, { SystemStatus: (<GridSetSystemStatusAction>action).SystemStatus })
+        case GRID_CLEAR_SYSTEM_STATUS:
+            return Object.assign({}, state, { SystemStatus: { StatusMessage: "", StatusColour: "Green" } })
         default:
             return state
     }

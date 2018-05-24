@@ -7,6 +7,7 @@ export interface AdaptableBlotterPopupInfoProps extends React.ClassAttributes<Ad
     ShowPopup: boolean
     onClose: Function
     Msg: string
+    Header: string
 }
 
 export class AdaptableBlotterPopupInfo extends React.Component<AdaptableBlotterPopupInfoProps, {}> {
@@ -14,7 +15,7 @@ export class AdaptableBlotterPopupInfo extends React.Component<AdaptableBlotterP
         return this.props.ShowPopup && <div className={StyleConstants.POPUP_INFO}>
             <SweetAlert
                 success
-                confirmBtnBsStyle="success" title="Info" onConfirm={() => this.props.onClose()} >
+                confirmBtnBsStyle="success" title={this.props.Header} onConfirm={() => this.props.onClose()} >
                 <p>
                     {this.props.Msg.split("\n").map(function (item, index) {
                         return (

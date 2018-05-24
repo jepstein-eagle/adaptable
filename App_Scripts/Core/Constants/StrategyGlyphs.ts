@@ -1,6 +1,7 @@
 import * as StrategyIds from './StrategyIds';
 
 export const AboutGlyph: string = "info-sign"
+export const ApplicationGlyph: string = "header"
 export const AdvancedSearchGlyph: string = "search"
 export const BulkUpdateGlyph: string = "hand-up"
 export const CalculatedColumnGlyph: string = "th-list"
@@ -12,7 +13,7 @@ export const ColumnInfoGlyph: string = "stats"
 export const ConditionalStyleGlyph: string = "tint"
 export const CustomSortGlyph: string = "sort-by-attributes"
 export const DashboardGlyph: string = "dashboard"
-export const DataSourceGlyph: string = "cloud-download"
+export const DataSourceGlyph: string = "book"
 export const ExportGlyph: string = "export"
 export const FormatColumnGlyph: string = "picture"
 export const FlashingCellGlyph: string = "flash"

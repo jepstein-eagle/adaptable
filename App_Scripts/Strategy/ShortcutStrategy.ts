@@ -1,4 +1,4 @@
-import {  IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
+import { IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
@@ -19,12 +19,12 @@ import { IShortcut, ICellValidationRule } from '../Core/Api/Interface/AdaptableB
 
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
-  
+
     private Shortcuts: IShortcut[]
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
-          blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+        blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
     protected addPopupMenuItem() {
@@ -49,7 +49,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             let valueToReplace: any;
             switch (columnDataType) {
                 case DataType.Number: {
-                    activeShortcut = this.Shortcuts.filter(s=>s.ColumnType==DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.Shortcuts.filter(s => s.ColumnType == DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         let currentCellValue: any;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -64,7 +64,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     break;
                 }
                 case DataType.Date: {
-                    activeShortcut = this.Shortcuts.filter(s=>s.ColumnType==DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.Shortcuts.filter(s => s.ColumnType == DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         // Date we ONLY replace so dont need to worry about replacing values
                         if (activeShortcut.IsDynamic) {
@@ -89,9 +89,9 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
                 let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.StopEdit;
-                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode ==  CellValidationMode.WarnUser;
+                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.WarnUser;
 
-             //   this.AuditFunctionAction("HandleKeyDown",                     "Key Pressed: " + keyEventString,                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
+                //   this.AuditFunctionAction("HandleKeyDown",                     "Key Pressed: " + keyEventString,                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
 
                 //We cancel the edit before doing anything so there is no issue when showing a popup or performing the shortcut
                 this.blotter.cancelEdit()
@@ -135,6 +135,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
 
     private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {
         let error: IUIError = {
+            ErrorHeader: "Shortcut Failed",
             ErrorMsg: ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter)
         }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));

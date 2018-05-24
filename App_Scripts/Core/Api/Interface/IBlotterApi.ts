@@ -137,12 +137,24 @@ export interface IBlotterApi {
     cellValidationDelete(cellValidationRule: ICellValidationRule): void
 
     // FormatColumn State
-     formatColumnGetAll(): IFormatColumn[] 
-     formatColumnnAdd(column: string, style: IStyle): void 
-     formatColumnnUpdate(column: string, style: IStyle): void 
-     formatColumnDelete(formatColumn: IFormatColumn): void 
-     
+    formatColumnGetAll(): IFormatColumn[]
+    formatColumnnAdd(column: string, style: IStyle): void
+    formatColumnnUpdate(column: string, style: IStyle): void
+    formatColumnDelete(formatColumn: IFormatColumn): void
 
+    // System Status
+    setSystemStatus(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
+    clearSystemStatus(): void
+
+    // Alerts
+    /**
+     * Shows an alert as a popup
+     * @param alertHeader Title to appear in the popup
+     * @param alertMessage Main message of the alert
+     * @param alertType Type (Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
+     */
+     showAlert(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void 
+   
     /**
      * Clears the  configuration for the current user, reverting everyting to system defaults.
      * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).

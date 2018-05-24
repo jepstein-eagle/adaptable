@@ -150,9 +150,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     failedMessages.push(failedMessage)
                 }
             })
-            let errorMessage: string = failedRules.length + " Nudge(s) failed rule:\n" + failedMessages.toString();;
             let error: IUIError = {
-                ErrorMsg: errorMessage
+                ErrorHeader: failedRules.length + "Nudge(s) failed rule",
+                ErrorMsg: failedMessages.toString()
             }
             this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
         }

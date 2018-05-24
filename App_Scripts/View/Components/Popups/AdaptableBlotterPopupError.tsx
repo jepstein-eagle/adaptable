@@ -7,13 +7,14 @@ export interface AdaptableBlotterPopupErrorProps extends React.ClassAttributes<A
     ShowPopup: boolean
     onClose: Function
     Msg: string
+    Header: string
 }
 
 export class AdaptableBlotterPopupError extends React.Component<AdaptableBlotterPopupErrorProps, {}> {
 
     render() {
         return this.props.ShowPopup && <div className={StyleConstants.POPUP_ERROR}>
-            <SweetAlert danger confirmBtnBsStyle="danger" title="Error" onConfirm={() => this.props.onClose()} >
+            <SweetAlert danger confirmBtnBsStyle="danger" title={this.props.Header} onConfirm={() => this.props.onClose()} >
                 <p>
                     {this.props.Msg.split("\n").map(function (item, index) {
                         return (

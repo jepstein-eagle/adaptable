@@ -1,4 +1,5 @@
 export const AboutPopup :string = "AboutPopup"
+export const ApplicationPopup :string = "ApplicationPopup"
 export const AdvancedSearchPopup :string = "AdvancedSearchPopup"
 export const BulkUpdatePopup :string = "BulkUpdatePopup"
 export const QuickSearchPopup :string = "QuickSearchPopup"
