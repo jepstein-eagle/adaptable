@@ -37,7 +37,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 130; i++) {
+        for (let i = 1; i < 50000; i++) {
             trades.push(this.createTrade(i));
         }
         return trades;

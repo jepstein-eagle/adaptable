@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import { ButtonToolbar, Col, InputGroup } from 'react-bootstrap';
+import { ButtonToolbar, Col, InputGroup, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
@@ -43,6 +43,7 @@ interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopu
 
 interface BulkUpdateToolbarControlComponentState {
     SelectedColumnId: string
+    Disabled: boolean
     SubFunc: any
 }
 
@@ -51,27 +52,13 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         super(props);
         this.state = {
             SelectedColumnId: "",
+            Disabled: true,
             SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
                 this.onSelectionChanged(event)
             }
         }
     }
-
-    componentWillReceiveProps(nextProps: BulkUpdateToolbarControlComponentProps, nextContext: any) {
-        //if there was a selected search and parent unset the column we then clear the component 
-        // otherwise it's correctly unselected but the input still have the previsous selected text
-        //      if (StringExtensions.IsNullOrEmpty(nextProps.CurrentBulkUpdateName) && StringExtensions.IsNotNullOrEmpty(this.props.CurrentBulkUpdateName)) {
-        //          (this.refs.typeahead as any).getInstance().clear()
-        //      }
-    }
-
     public componentDidMount() {
-        //  this.props.onBulkUpdateCheckSelectedCells();
-        //   this.props.onBulkUpdateValueChange("");
-
-
-
-
         if (this.props.AdaptableBlotter) {
             this.props.AdaptableBlotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc)
         }
@@ -84,13 +71,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     }
 
 
-
     render() {
-
-
-        // if (this.props.PreviewInfo) {
-        //    col = this.props.Columns.find(c => c.ColumnId == "counterparty") // hardcoding until can get it from selected cells!
-        // }
 
         // missing datatype validation for time being
 
@@ -101,21 +82,33 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         // we dont want to show the panel in the form but will need to appear in a popup....
         let cssClassName: string = this.props.cssClassName + "__bulkupdate";
 
+        let visibleButton = this.state.Disabled ?
+            <Button  style={{ marginRight: "3px" }}onClick={() => this.onDisabledChanged()} bsStyle="danger" bsSize="small">Off</Button>
+            : <Button  style={{ marginRight: "3px" }}onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
+
 
         let content = <span>
             <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
+                    <InputGroup.Button>
+                        {visibleButton}
+                    </InputGroup.Button>
+
                     <ColumnValueSelector
+                        style={{ minWidth: "120px", maxWidth: "120px" }}
                         cssClassName={cssClassName}
-                        disabled={StringExtensions.IsNullOrEmpty( this.state.SelectedColumnId)}
-                        bsSize={"sm"}
+                        disabled={StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)}
+                        bsSize={"small"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
-                        SelectedColumn={this.props.Columns.find(c => c.ColumnId ==  this.state.SelectedColumnId)}
+                        SelectedColumn={this.props.Columns.find(c => c.ColumnId == this.state.SelectedColumnId)}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
+
+
                     <InputGroup.Button>
 
                         <ButtonApply cssClassName={cssClassName}
+                            style={{ marginLeft: "3px" }}
                             onClick={() => this.onApplyBulkUpdate()}
                             size={"small"}
                             bsStyle={"success"}
@@ -136,13 +129,19 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     }
 
     private onSelectionChanged(blotter: IAdaptableBlotter): void {
+        if (!this.state.Disabled) {
+           this.getSelectedCells(blotter);
+        }
+    }
+
+    private getSelectedCells(blotter: IAdaptableBlotter){
         let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells
         let selectedColumnId: string = null
-            if (selectedCells != null && selectedCells.Selection != null) {
+        if (selectedCells != null && selectedCells.Selection != null) {
             if (selectedCells.Selection.size > 0) {
                 let selectedRows: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
                 if (selectedRows.length == 1 && !selectedRows[0].readonly) {
-                     selectedColumnId = selectedRows[0].columnId;
+                    selectedColumnId = selectedRows[0].columnId;
                 }
             }
         }
@@ -150,6 +149,18 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             this.setState({ SelectedColumnId: selectedColumnId });
         }
         this.props.onBulkUpdateValueChange("");
+    }
+
+
+    onDisabledChanged() {
+        let newDisabledState: boolean = !this.state.Disabled
+        if (newDisabledState) {
+            this.setState({ SelectedColumnId: "" });
+        }else{
+            this.getSelectedCells(this.props.AdaptableBlotter)
+        }
+        this.setState({ Disabled: newDisabledState });
+
     }
 
     onApplyBulkUpdate(): any {

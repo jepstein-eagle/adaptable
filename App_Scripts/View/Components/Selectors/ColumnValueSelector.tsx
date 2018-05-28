@@ -16,8 +16,12 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
     cssClassName: string
 }
-export class ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
+export class    ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
 
+    onkeyDown(): any {
+        let s: string = "hello"
+        
+    }
     componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
         if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) && StringExtensions.IsNullOrEmpty(nextProps.SelectedColumnValue)) {
             let typeahed: any = (this.refs.typeahead as any);
@@ -30,7 +34,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_VALUE_SELECTOR;
         let sortedColumnValues: IRawValueDisplayValuePair[] = []
         let selectedValue: string = ""
-        let placeholderText = "Select existing column value"
+        let placeholderText = "Select column value"
         let allowNew = (this.props.AllowNew != null) ? this.props.AllowNew : true;
         if (allowNew) {
             placeholderText += " or enter free text"
@@ -45,13 +49,14 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
                 let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
                 selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
             }
-            sortedColumnValues= Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
+            sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
         }
 
         return <Typeahead ref="typeahead"
+            bsSize={this.props.bsSize}
             emptyLabel={""}
             placeholder={placeholderText}
-             labelKey={"DisplayValue"}
+            labelKey={"DisplayValue"}
             multiple={false}
             clearButton={true}
             selected={[selectedValue]}
@@ -61,6 +66,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
             allowNew={allowNew}
             newSelectionPrefix={"new value: "}
             filterBy={["DisplayValue"]}
+            onMenuShow={this.onkeyDown()}
         />
 
     }

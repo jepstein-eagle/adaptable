@@ -72,7 +72,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         return <div className={cssBaseClassName}>
             {this.props.DashboardState.DashboardVisibility != Visibility.Hidden &&
                 <div className="ab_no_margin">
-                    {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ?
+                    {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ?    
 
                         <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="ab_no_padding_no_margin" >
                             <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
