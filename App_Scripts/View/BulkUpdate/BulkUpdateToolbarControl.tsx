@@ -23,7 +23,7 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
-import { ISelectedCells } from "../../Core/Interface/Interfaces";
+import { ISelectedCells, ISelectedCellInfo } from "../../Core/Interface/Interfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
@@ -42,7 +42,7 @@ interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopu
 }
 
 interface BulkUpdateToolbarControlComponentState {
-    SelectedColumn: IColumn
+    SelectedColumnId: string
     SubFunc: any
 }
 
@@ -50,7 +50,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     constructor(props: BulkUpdateToolbarControlComponentProps) {
         super(props);
         this.state = {
-            SelectedColumn: null,
+            SelectedColumnId: "",
             SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
                 this.onSelectionChanged(event)
             }
@@ -106,11 +106,11 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
                     <ColumnValueSelector
-                       cssClassName={cssClassName}     
-                       disabled={this.state.SelectedColumn == null}
-                        bsSize={"small"}
+                        cssClassName={cssClassName}
+                        disabled={StringExtensions.IsNullOrEmpty( this.state.SelectedColumnId)}
+                        bsSize={"sm"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
-                        SelectedColumn={this.state.SelectedColumn}
+                        SelectedColumn={this.props.Columns.find(c => c.ColumnId ==  this.state.SelectedColumnId)}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
                     <InputGroup.Button>
@@ -127,33 +127,27 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             </div>
         </span>
 
-return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.BulkUpdateStrategyName} glyphicon={StrategyGlyphs.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
-                {content}
-            </PanelDashboard>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.BulkUpdateStrategyName} glyphicon={StrategyGlyphs.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+            {content}
+        </PanelDashboard>
     }
     private onColumnValueSelectedChanged(selectedColumnValue: any) {
         this.props.onBulkUpdateValueChange(selectedColumnValue);
     }
 
-    private onSelectionChanged(event: any): any {
-        let selectedCells: ISelectedCells = event.getSelectedCells();
-        let selectedColumn: IColumn = null
-        if (selectedCells.Selection.size > 0) {
-
-            for (let pair of selectedCells.Selection) {
-                if (pair[1].length == 1) {
-
-                    let selectedColumnId: string = pair[1][0].columnID;
-                    // test column is not readonly
-                    if (!event.isColumnReadonly(selectedColumnId)) {
-                        selectedColumn = this.props.Columns.find(c => c.ColumnId == selectedColumnId)
-                    }
+    private onSelectionChanged(blotter: IAdaptableBlotter): void {
+        let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells
+        let selectedColumnId: string = null
+            if (selectedCells != null && selectedCells.Selection != null) {
+            if (selectedCells.Selection.size > 0) {
+                let selectedRows: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
+                if (selectedRows.length == 1 && !selectedRows[0].readonly) {
+                     selectedColumnId = selectedRows[0].columnId;
                 }
-                break;
             }
         }
-        if (selectedColumn != this.state.SelectedColumn) {
-            this.setState({ SelectedColumn: selectedColumn });
+        if (selectedColumnId != this.state.SelectedColumnId) {
+            this.setState({ SelectedColumnId: selectedColumnId });
         }
         this.props.onBulkUpdateValueChange("");
     }
@@ -167,7 +161,7 @@ return <PanelDashboard cssClassName={cssClassName}  headerText={StrategyNames.Bu
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        PreviewInfo: state.Popup .PreviewInfo,
+        PreviewInfo: state.Popup.PreviewInfo,
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
     };

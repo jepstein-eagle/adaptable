@@ -10,7 +10,7 @@ import { ISmartEditStrategy } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
-import { ICellInfo } from '../Core/Interface/Interfaces';
+import { ICellInfo, ISelectedCellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
@@ -29,7 +29,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCells = this.blotter.getSelectedCells();
+        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
@@ -39,59 +39,40 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
         }
 
-        let columnId: string
-        for (let pair of selectedCells.Selection) {
-            if (pair[1].length > 1) {
-                return {
-                    Error: {
-                        ErrorHeader: "Smart Edit Error",
-                        ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
-                    }
-                }
-            }
+        let selectedRows: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
 
-            let selectedColumnId: string = pair[1][0].columnID;
-            //for multiple range the column can be different for all records
-            if (!columnId) {
-                columnId = selectedColumnId
-            }
-            else if (columnId != selectedColumnId) {
-                return {
-                    Error: {
-                        ErrorHeader: "Smart Edit Error",
-                        ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
-                    }
+        if (selectedRows.length != 1) {
+            return {
+                Error: {
+                    ErrorHeader: "Smart Edit Error",
+                    ErrorMsg: "Smart Edit only supports single column edit.\nPlease adjust cell selection."
                 }
-            }
-
-            // test column is numeric
-            let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedColumnId);
-            if (selectedColumn.DataType != DataType.Number) {
-                return {
-                    Error: {
-                        ErrorHeader: "Smart Edit Error",
-                        ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
-                    }
-                }
-            }
-
-            // test column is not readonly
-            if (this.blotter.isColumnReadonly(selectedColumnId)) {
-                return {
-                    Error: {
-                        ErrorHeader: "Smart Edit Error",
-                        ErrorMsg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection."
-                    }
-                }
-
             }
         }
-        return { ActionReturn: true };
 
+       if (selectedRows[0].dataType != DataType.Number) {
+            return {
+                Error: {
+                    ErrorHeader: "Smart Edit Error",
+                    ErrorMsg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection."
+                }
+            }
+        }
+
+        if (selectedRows[0].readonly) {
+            return {
+                Error: {
+                    ErrorHeader: "Smart Edit Error",
+                    ErrorMsg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection."
+                }
+            }
+
+        }
+        return { ActionReturn: true };
     }
 
     public BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): IPreviewInfo {
-        let selectedCells = this.blotter.getSelectedCells();
+        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
         let previewResults: IPreviewResult[] = [];
         let columnId: string;
 
@@ -118,7 +99,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 let dataChangedEvent: IDataChangedEvent = {
                     OldValue: Number(columnValuePair.value),
                     NewValue: newValue,
-                    ColumnId: columnValuePair.columnID,
+                    ColumnId: columnValuePair.columnId,
                     IdentifierValue: pair[0],
                     Timestamp: Date.now(),
                     Record: null
@@ -128,7 +109,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
                 let previewResult: IPreviewResult = { Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue, ValidationRules: validationRules }
                 previewResults.push(previewResult)
-                columnId = columnValuePair.columnID;
+                columnId = columnValuePair.columnId;
             }
         }
 

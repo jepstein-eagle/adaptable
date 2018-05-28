@@ -2,11 +2,11 @@
 	"Entitlements": {
 		"FunctionEntitlements": [
 			{
-				"FunctionName": "Export",
+				"FunctionName": "AdvancedSearch",
 				"AccessLevel": "ReadOnly"
 			},
 			{
-				"FunctionName": "CustomSort",
+				"FunctionName": "QuickSearch",
 				"AccessLevel": "ReadOnly"
 			},
 			{
@@ -17,49 +17,6 @@
 				"FunctionName": "SmartEdit",
 				"AccessLevel": "Hidden"
 			}
-		]
-	},
-	"ConditionalStyle": {
-		"ConditionalStyles": [
-			{
-				"ColumnId": "",
-				"Style": {
-					"ClassName": "styleForeYellow"
-				},
-				"ConditionalStyleScope": "Row",
-				"Expression": {
-					"ColumnValueExpressions": [
-						{
-							"ColumnId": "country",
-							"ColumnValues": [
-								"France",
-								"Germany"
-							]
-						}
-					],
-					"FilterExpressions": [],
-					"RangeExpressions": []
-				}
-			}
-		]
-	},
-	"FormatColumn": {
-		"FormatColumns": [
-			{
-				"ColumnId": "notional",
-				"Style": {
-					"ClassName": "styleBackBrown"
-				}
-			}
-		]
-	},
-	"UserInterface": {
-		"ColorPalette": [
-			"#000000",
-			"#ffffff",
-			"#C0C0C0",
-			"#808080",
-			"#800000"
 		]
 	},
 	"Dashboard": {
@@ -73,8 +30,11 @@
 			"Dashboard",
 			"QuickSearch",
 			"SmartEdit",
-			"ColumnChooser"
+			"ColumnChooser",
+			"BulkUpdate"
 		],
-		"Zoom": "0.85"
+		"Zoom": "0.9",
+		"DashboardVisibility": "Minimised",
+		"ShowSystemStatusButton": true
 	}
 }

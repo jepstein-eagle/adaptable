@@ -8,11 +8,19 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { DataType } from '../Enums';
 
+
+export interface ISelectedCellInfo{
+    columnId: string, 
+    dataType:DataType, 
+    readonly: Boolean,
+    value: any
+}
 
 export interface ISelectedCells {
     //map of UUID with their associated values/columns
-    Selection: Map<any, { columnID: string, value: any }[]>
+    Selection: Map<any, ISelectedCellInfo[]>
 }
 
 export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {

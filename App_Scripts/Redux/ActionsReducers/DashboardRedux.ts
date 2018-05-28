@@ -82,14 +82,16 @@ const initialDashboardState: DashboardState = {
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
         StrategyIds.DataSourceStrategyId,
-        StrategyIds.ApplicationStrategyId
+        StrategyIds.ApplicationStrategyId,
+        StrategyIds.BulkUpdateStrategyId
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
         StrategyIds.QuickSearchStrategyId,
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
-        StrategyIds.ColumnFilterStrategyId
+        StrategyIds.ColumnFilterStrategyId,
+        StrategyIds.BulkUpdateStrategyId
     ],
     VisibleButtons: [
         StrategyIds.AboutStrategyId,

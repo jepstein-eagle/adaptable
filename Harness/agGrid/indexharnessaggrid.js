@@ -197,8 +197,8 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: json,    // passing in predefined config with a file    
-        serverSearchOption: "None",   // performing AdvancedSearch on the server, not the client
+       //predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
+        serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -226,7 +226,7 @@ function InitBlotter() {
 
 function getTradesForSearch(searchArgs, dataGen) {
     //alert(searchArgs.SearchChangedTrigger)
-    if (searchArgs.SearchChangedTrigger == "DataSource") {
+    if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
         if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
        //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
             adaptableblotter.api.setSystemStatus("its all fucked", "Red")

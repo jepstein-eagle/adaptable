@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { ICellInfo, ISystemStatus } from '../../Core/Interface/Interfaces';
+import { ICellInfo, ISystemStatus, ISelectedCells } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
@@ -13,6 +13,7 @@ export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_BLOTTER_RESTRICTIONS = 'GRID_SET_BLOTTER_RESTRICTIONS';
 export const GRID_SET_SYSTEM_STATUS = 'GRID_SET_SYSTEM_STATUS';
 export const GRID_CLEAR_SYSTEM_STATUS = 'GRID_CLEAR_SYSTEM_STATUS';
+export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -47,6 +48,9 @@ export interface GridClearSystemStatusAction extends Redux.Action {
 
 }
 
+export interface GridSetSelectedCellsAction extends Redux.Action {
+    SelectedCells: ISelectedCells;
+}
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
     type: GRID_SET_COLUMNS,
@@ -86,14 +90,19 @@ export const GridSetSystemStatus = (SystemStatus: ISystemStatus): GridSetSystemS
 
 export const GridClearSystemStatus = (): GridClearSystemStatusAction => ({
     type: GRID_CLEAR_SYSTEM_STATUS,
+})
 
+export const GridSetSelectedCells = (SelectedCells: ISelectedCells): GridSetSelectedCellsAction => ({
+    type: GRID_SET_SELECTED_CELLS,
+    SelectedCells
 })
 
 const initialGridState: GridState = {
     Columns: [],
     GridSorts: [],
     BlotterRestrictions: [],
-    SystemStatus: { StatusMessage: "", StatusColour: "Green" }
+    SystemStatus: { StatusMessage: "", StatusColour: "Green" },
+    SelectedCells: null
 
 }
 
@@ -111,6 +120,8 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             return Object.assign({}, state, { SystemStatus: (<GridSetSystemStatusAction>action).SystemStatus })
         case GRID_CLEAR_SYSTEM_STATUS:
             return Object.assign({}, state, { SystemStatus: { StatusMessage: "", StatusColour: "Green" } })
+        case GRID_SET_SELECTED_CELLS:
+            return Object.assign({}, state, { SelectedCells: (<GridSetSelectedCellsAction>action).SelectedCells })
         default:
             return state
     }

@@ -100,7 +100,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
 
@@ -250,22 +250,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
-    public getSelectedCells(): ISelectedCells {
-        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+    public setSelectedCells(): void {
+        let selectionMap: Map<string, ISelectedCells[]> = new Map<string, ISelectedCells[]>();
         let cells: any = this.grid.getSelectedCells();
         cells.forEach((c: AdaptableGrid.Cell) => {
-            var valueArray = selectionMap.get(c.getRowId());
+            var valueArray: ISelectedCells[] = selectionMap.get(c.getRowId());
             if (valueArray == undefined) {
                 valueArray = []
                 selectionMap.set(c.getRowId(), valueArray);
             }
-            valueArray.push({ columnID: c.getColId(), value: c.getRawValue() });
+        //    valueArray.push({ columnId: "hello", dataType: DataType.String, readonly: false, value: c.getRawValue() });
         });
 
-        return {
-            Selection: selectionMap
-        };
-
+     //   let selectedCells: ISelectedCells = { Selection: selectionMap }
+     //   console.log("sending selected cells to redux")
+      //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
     }
 
     private getColumnDataType(column: AdaptableGrid.Column): DataType {
@@ -336,9 +335,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public selectCells(cells: ICellInfo[]): void {
-        // todo
-    }
 
     public getColumnIndex(columnId: string): number {
         let column: AdaptableGrid.Column = this.grid.getColumnFromId(columnId);

@@ -27,8 +27,17 @@ export interface IBlotterApi {
      */
     layoutClear(): void
 
+    /**
+     * Retrieves all Layouts in State
+     */
     layoutGetCurrent(): ILayout
+    /**
+     * Sets the IncludeVendorState property to true meaning that Layouts will include vendor grid info (e.g. column widths or grouping info)
+     */
     layoutIncludeVendorState(): void
+    /**
+     * Sets the IncludeVendorState property to false meaning that Layouts will not include vendor grid info
+     */
     layoutExcludeVendorState(): void
 
     /**
@@ -143,7 +152,16 @@ export interface IBlotterApi {
     formatColumnDelete(formatColumn: IFormatColumn): void
 
     // System Status
+    /**
+     * Sets which coloured System Status button is displayed in the Home Toolbar
+     * @param statusMessage The message to show when the button is clicked
+     * @param statusColour The colour of the buttton - also influences the type of message (red: error, amber: warning etc)
+     */
     setSystemStatus(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
+
+    /**
+     * Clears any System Status messages - and sets teh button to green
+     */
     clearSystemStatus(): void
 
     // Alerts

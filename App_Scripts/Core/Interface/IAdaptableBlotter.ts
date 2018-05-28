@@ -33,7 +33,7 @@ export interface IAdaptableBlotter {
     CalendarService: ICalendarService
     AuditService: IAuditService
     ValidationService: IValidationService
-     AuditLogService: AuditLogService
+    AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     InitAuditService(): void
 
@@ -53,9 +53,7 @@ export interface IAdaptableBlotter {
     setGridSort(gridSorts: IGridSort[]): void
 
     // cell selection
-    getSelectedCells(): ISelectedCells
     getActiveCell(): ICellInfo
-    selectCells(cells: ICellInfo[]): void
     selectColumn(columnId: string): void
 
     // column related

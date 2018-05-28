@@ -59,7 +59,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues, ISelectedCellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -71,6 +71,8 @@ import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlo
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
+import * as _ from 'lodash'
+
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -101,7 +103,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-   
+
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     private filterContainer: HTMLDivElement
@@ -121,14 +123,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
         });
 
         // store the options in state - and also later anything else that we need...
-       // this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
+        // this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -151,7 +153,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         // this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
@@ -197,10 +199,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
     }
 
+
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
-    
+
     public InitAuditService() {
         // do somethign?
     }
@@ -336,10 +339,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
-    public getSelectedCells(): ISelectedCells {
+    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
 
-        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+    //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
+    public setSelectedCells(): void {
+        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
         var selected: Array<any> = this.vendorGrid.selectionModel.getSelections();
 
         for (let rectangle of selected) {
@@ -347,6 +351,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //for (let columnIndex = rectangle.firstSelectedCell.x; columnIndex <= rectangle.lastSelectedCell.x; columnIndex++) {
             for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
                 let column = this.vendorGrid.behavior.getActiveColumns()[columnIndex]
+                let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == column.name);
+                let isReadonly: boolean = this.isColumnReadonly(column.name)
                 for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
                     let row = this.vendorGrid.behavior.dataModel.dataSource.getRow(rowIndex)
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
@@ -354,19 +360,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
                     // let value = column.getValue(rowIndex)
-                    let valueArray = selectionMap.get(primaryKey);
+                    let valueArray: ISelectedCellInfo[] = selectionMap.get(primaryKey);
                     if (valueArray == undefined) {
                         valueArray = []
                         selectionMap.set(primaryKey, valueArray);
                     }
-                    valueArray.push({ columnID: column.name, value: value });
+                    let selectedCellInfo: ISelectedCellInfo = { columnId: column.name, dataType: selectedColumn.DataType, readonly: isReadonly, value: value }
+                    valueArray.push(selectedCellInfo);
                 }
             }
         }
-
-        return {
-            Selection: selectionMap
-        };
+        let selectedCells: ISelectedCells = { Selection: selectionMap }
+        console.log("sending selected cells to redux")
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
     }
 
 
@@ -431,7 +437,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     default:
                         break;
                 }
-                AdaptableBlotterLogger.LogMessage ('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
+                AdaptableBlotterLogger.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                 return dataType
             }
 
@@ -550,10 +556,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
 
-    public selectCells(cells: ICellInfo[]): void {
-        // do something?
-    }
-
     public getColumnIndex(columnId: string): number {
         //this returns the index of the column in the collection which is as well the index y of the cell in the grid
         // it doesnt return the index from the schema
@@ -619,7 +621,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
-       
+
         let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
         let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
         if (permittedValuesForColumn) {
@@ -627,22 +629,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
             })
         } else {
-       
-        let column = this.getHypergridColumn(columnId);
-        //We bypass the whole DataSource Stuff as we need to get ALL the data
-        let data = this.vendorGrid.behavior.dataModel.getData()
-        for (var index = 0; index < data.length; index++) {
-            var element = data[index]
-            let displayString = this.getDisplayValueFromRecord(element, columnId)
-            let rawValue = this.valOrFunc(element, column)
-            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-            }
-            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+
+            let column = this.getHypergridColumn(columnId);
+            //We bypass the whole DataSource Stuff as we need to get ALL the data
+            let data = this.vendorGrid.behavior.dataModel.getData()
+            for (var index = 0; index < data.length; index++) {
+                var element = data[index]
+                let displayString = this.getDisplayValueFromRecord(element, columnId)
+                let rawValue = this.valOrFunc(element, column)
+                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                }
             }
         }
-    }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
 
@@ -960,7 +962,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let filterContext: IColumnFilterContext = {
                         Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                         Blotter: this,
-                     };
+                    };
                     this.filterContainer.style.visibility = 'visible';
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
                     this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
@@ -1032,7 +1034,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.vendorGrid.behavior.reindex();
         });
         grid.addEventListener('fin-selection-changed', () => {
-            this._onSelectedCellsChanged.Dispatch(this, this)
+             this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....
@@ -1244,7 +1246,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.behavior.dataModel.dataSource.setData(data, schema);
         this.ReindexAndRepaint();
     }
-    
+
     public getVendorGridState(visibleCols: string[]): any {
         return null;
     }
@@ -1252,6 +1254,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setVendorGridState(vendorGridState: any): void {
         // todo
     }
+
+  
 
 }
 

@@ -397,12 +397,14 @@ export abstract class BlotterApiBase implements IBlotterApi {
                     InfoMsg: alertMessage
                 }
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowInfo(info))
+                AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)         
                 return;
             case AlertType.Warning:
                 let warning: IUIWarning = {
                     WarningHeader: alertHeader,
                     WarningMsg: alertMessage
                 }
+                AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)         
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowWarning(warning))
                 return;
             case AlertType.Error:
@@ -410,6 +412,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
                     ErrorHeader: alertHeader,
                     ErrorMsg: alertMessage
                 }
+                AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)         
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError(error))
                 return;
         }

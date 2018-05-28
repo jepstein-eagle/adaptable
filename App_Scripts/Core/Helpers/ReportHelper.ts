@@ -2,7 +2,7 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { ReportColumnScope, ReportRowScope } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
-import { ISelectedCells } from '../Interface/Interfaces';
+import { ISelectedCells, ISelectedCellInfo } from '../Interface/Interfaces';
 import { IReport, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../Api/Expression';
@@ -56,7 +56,7 @@ export module ReportHelper {
                 ReportColumns = gridColumns.filter(c => c.Visible);
                 break;
             case ReportColumnScope.SelectedColumns:
-                let selectedCells: ISelectedCells = blotter.getSelectedCells();
+                let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
 
                 if (selectedCells.Selection.size == 0) {
                     // some way of saying we cannot export anything
@@ -64,9 +64,9 @@ export module ReportHelper {
                 }
 
                 // first get column names - just look at first entry as colnames will be same for each
-                let firstRow: any = selectedCells.Selection.values().next().value
-                for (var columnValuePair of firstRow) {
-                    ReportColumns.push(gridColumns.find(c => c.ColumnId == columnValuePair.columnID));
+                let firstRow: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
+                for (let selectedCellInfo of firstRow) {
+                    ReportColumns.push(gridColumns.find(c => c.ColumnId == selectedCellInfo.columnId));
                 }
                 break;
             case ReportColumnScope.BespokeColumns:
@@ -106,7 +106,7 @@ export module ReportHelper {
                 break;
 
             case ReportRowScope.SelectedRows:
-                let selectedCells: ISelectedCells = blotter.getSelectedCells();
+                let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
                 let colNames: string[] = ReportColumns.map(c => c.FriendlyName);
                 for (var keyValuePair of selectedCells.Selection) {
                     let values: any[] = []
@@ -114,11 +114,11 @@ export module ReportHelper {
                         return { ActionReturn: [], Error: {ErrorHeader: "Report Error", ErrorMsg: "Selected cells report should have the same set of columns" } };
                     }
                     for (var cvPair of keyValuePair[1]) {
-                        if (!colNames.find(x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnID).FriendlyName)) {
+                        if (!colNames.find(x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName)) {
                             return { ActionReturn: [], Error: { ErrorHeader: "Report Error", ErrorMsg: "Selected cells report should have the same set of columns" } };
                         }
                         //we want the displayValue now
-                        values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnID));
+                        values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));
 
                     }
                     dataToExport.push(values);

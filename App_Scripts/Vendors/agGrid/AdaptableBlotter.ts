@@ -82,7 +82,7 @@ import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues, ISelectedCellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
@@ -96,6 +96,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
+import * as _ from 'lodash'
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -163,7 +164,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
@@ -203,9 +204,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
+
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
+
 
     private createFilterWrapper(col: Column) {
         this.vendorGrid.api.destroyFilter(col)
@@ -398,16 +401,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
+
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
-    public getSelectedCells(): ISelectedCells {
-        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+    public setSelectedCells(): void {
+        console.log("Ive been called")
+        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
         let selected = this.vendorGrid.api.getRangeSelections();
         if (selected) {
             //we iterate for each ranges
             selected.forEach((rangeSelection, index) => {
-                for (let column of rangeSelection.columns) {
-                    let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                     let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                    for (let column of rangeSelection.columns) {
+                    let colId: string = column.getColId();
+                    let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
+                    let dataType = DataType.Number;
+                     let isReadonly: boolean = this.isColumnReadonly(colId)
                     for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
                         let rowNode = this.vendorGrid.api.getModel().getRow(rowIndex)
                         //if the selected cells are from a group cell we don't return it
@@ -415,20 +425,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         if (rowNode && !rowNode.group) {
                             let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
                             let value = this.vendorGrid.api.getValue(column, rowNode)
-                            let valueArray = selectionMap.get(primaryKey);
+                            let valueArray: ISelectedCellInfo[] = selectionMap.get(primaryKey);
                             if (valueArray == undefined) {
                                 valueArray = []
                                 selectionMap.set(primaryKey, valueArray);
                             }
-                            valueArray.push({ columnID: column.getColId(), value: value });
+                            let selectedCellInfo: ISelectedCellInfo = { columnId: colId, dataType: selectedColumn.DataType, readonly: isReadonly, value: value }
+                            valueArray.push(selectedCellInfo);
                         }
                     }
                 }
             });
         }
-        return {
-            Selection: selectionMap
-        };
+        let selectedCells: ISelectedCells = { Selection: selectionMap }
+        console.log("sending selected cells to redux")
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
+       this._onSelectedCellsChanged.Dispatch(this, this)
     }
 
     //We deduce the type here. I couldnt find a way to get it through the definition
@@ -589,6 +601,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         this.applyGridFiltering();
+
+        this.testing();
     }
 
     public cancelEdit() {
@@ -621,9 +635,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public selectCells(cells: ICellInfo[]): void {
-        // todo?
-    }
 
     public getColumnIndex(columnId: string): number {
         return null
@@ -1002,14 +1013,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
             this.applyGridFiltering();
+            this.testing();
         });
         vendorGrid.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
-            this._onSelectedCellsChanged.Dispatch(this, this)
+            this.testing();
         });
         vendorGrid.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
-            this._onSelectedCellsChanged.Dispatch(this, this)
+            this.testing();
+         //   this._onSelectedCellsChanged.Dispatch(this, this)
         });
-        vendorGrid.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
+         vendorGrid.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
         });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
@@ -1255,6 +1268,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //      this.vendorGrid.columnApi.setColumnGroupState(columnGroupStateKVP.Value, "api");
         //   }
 
+
+    }
+
+
+    private testing(): void {
+       this.debouncedSetSelectedCells()
 
     }
 

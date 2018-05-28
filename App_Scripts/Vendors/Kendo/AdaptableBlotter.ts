@@ -60,7 +60,7 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, ISelectedCellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -128,7 +128,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsKendoStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnKendoStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this, false))
+        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
@@ -320,9 +320,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
-    public getSelectedCells(): ISelectedCells {
+    public setSelectedCells(): void {
 
-        let selectionMap: Map<string, { columnID: string, value: any }[]> = new Map<string, { columnID: string, value: any }[]>();
+        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
         var selected = this.vendorGrid.select().not("tr");
         selected.each((i, element) => {
             var row = $(element).closest("tr");
@@ -330,18 +330,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             var uuid = this.getPrimaryKeyValueFromRecord(item);
             var idx = $(element).index();
             var col = <string>(this.vendorGrid.columns[idx].field);
+            let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == col);
+            let isReadonly: boolean = this.isColumnReadonly(col)
             var value = item.get(col);
             var valueArray = selectionMap.get(uuid);
             if (valueArray == undefined) {
                 valueArray = []
                 selectionMap.set(uuid, valueArray);
             }
-            valueArray.push({ columnID: col, value: value });
+            valueArray.push({ columnId: col, dataType: selectedColumn.DataType, readonly: isReadonly, value: value });
         });
 
-        return {
-            Selection: selectionMap
-        };
+        let selectedCells: ISelectedCells = { Selection: selectionMap }
+        console.log("sending selected cells to redux")
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
     }
 
     private getColumnDataType(column: kendo.ui.GridColumn): DataType {

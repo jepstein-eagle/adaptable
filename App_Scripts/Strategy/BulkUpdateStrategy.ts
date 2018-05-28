@@ -10,7 +10,7 @@ import { IBulkUpdateStrategy } from '../Strategy/Interface/IBulkUpdateStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
-import { ICellInfo } from '../Core/Interface/Interfaces';
+import { ICellInfo, ISelectedCellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
@@ -25,14 +25,14 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     public ApplyBulkUpdate(newValues: ICellInfo[]): void {
-      
-       // this.AuditFunctionAction("ApplyBulkUpdate", "", { BulkUpdateValue: this.GetBulkUpdateState().BulkUpdateValue, NewValues: newValues })
+
+        // this.AuditFunctionAction("ApplyBulkUpdate", "", { BulkUpdateValue: this.GetBulkUpdateState().BulkUpdateValue, NewValues: newValues })
 
         this.blotter.setValueBatch(newValues)
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCells = this.blotter.getSelectedCells();
+        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
         if (selectedCells.Selection.size == 0) {
             return {
                 Error: {
@@ -42,55 +42,39 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             }
         }
 
-        let columnId: string
-        for (let pair of selectedCells.Selection) {
-            if (pair[1].length > 1) {
-                return {
-                    Error: {
-                        ErrorHeader: "Bulk Update Error",
-                        ErrorMsg: "Bulk Update only supports single column edit.\nPlease adjust cell selection."
-                    }
-                }
-            }
+        let selectedRows: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
 
-            let selectedColumnId: string = pair[1][0].columnID;
-            //for multiple range the column can be different for all records
-            if (!columnId) {
-                columnId = selectedColumnId
-            }
-            else if (columnId != selectedColumnId) {
-                return {
-                    Error: {
-                        ErrorHeader: "Bulk Update Error",
-                        ErrorMsg: "Bulk Update only supports single column edit.\nPlease adjust cell selection."
-                    }
-                }
-            }
-
-            // test column is not readonly
-            if (this.blotter.isColumnReadonly(selectedColumnId)) {
-                return {
-                    Error: {
-                        ErrorHeader: "Bulk Update Error",
-                        ErrorMsg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection."
-                    }
+        if (selectedRows.length != 1) {
+            return {
+                Error: {
+                    ErrorHeader: "Bulk Update Error",
+                    ErrorMsg: "Bulk Update only supports single column edit.\nPlease adjust cell selection."
                 }
             }
         }
-        return { ActionReturn: true };
 
+        // test column is not readonly
+        if (selectedRows[0].readonly) {
+            return {
+                Error: {
+                    ErrorHeader: "Bulk Update Error",
+                    ErrorMsg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection."
+                }
+            }
+
+        }
+        return { ActionReturn: true };
     }
 
     public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
-        let selectedCells = this.blotter.getSelectedCells();
+        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
         let previewResults: IPreviewResult[] = [];
         let columnId: string;
 
         for (let pair of selectedCells.Selection) {
             let typedBulkUpdateValue;
-            let selectedColumnId: string = pair[1][0].columnID;
-            let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedColumnId);
-            switch (selectedColumn.DataType) {
+            let selectedColumnDataType: DataType = pair[1][0].dataType;
+            switch (selectedColumnDataType) {
                 case DataType.Number:
                     typedBulkUpdateValue = Number(bulkUpdateValue);
                     break;
@@ -107,7 +91,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                 let dataChangedEvent: IDataChangedEvent = {
                     OldValue: columnValuePair.value,
                     NewValue: typedBulkUpdateValue,
-                    ColumnId: columnValuePair.columnID,
+                    ColumnId: columnValuePair.columnId,
                     IdentifierValue: pair[0],
                     Timestamp: Date.now(),
                     Record: null
@@ -118,7 +102,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                 let previewResult: IPreviewResult = { Id: pair[0], InitialValue: columnValuePair.value, ComputedValue: typedBulkUpdateValue, ValidationRules: validationRules }
 
                 previewResults.push(previewResult)
-                columnId = columnValuePair.columnID;
+                columnId = columnValuePair.columnId;
             }
         }
 

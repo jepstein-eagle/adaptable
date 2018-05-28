@@ -21,7 +21,7 @@ import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjec
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
-    constructor(blotter: IAdaptableBlotter, private reSelectCells: boolean) {
+    constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.PlusMinusStrategyId, blotter)
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
@@ -63,7 +63,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
 
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let selectedCell = this.blotter.getSelectedCells()
+            let selectedCell = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells
 
             let failedPreventEdits: ICellValidationRule[] = []
             let failedWarningEdits: ICellValidationRule[] = []
@@ -71,8 +71,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCell.Selection) {
                 for (var columnValuePair of keyValuePair[1]) {
-                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnID);
-                    if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnID)) {
+                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnId);
+                    if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnId)) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof columnValuePair.value != "number") {
                             columnValuePair.value = parseFloat(columnValuePair.value)
@@ -80,17 +80,17 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let newValue: ICellInfo;
 
                         //we try to find a condition with an expression for that column that matches the record
-                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusRules.filter(x => x.ColumnId == columnValuePair.columnID && !x.IsDefaultNudge)
+                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusRules.filter(x => x.ColumnId == columnValuePair.columnId && !x.IsDefaultNudge)
                         for (let columnNudge of columnNudgesWithExpression) {
                             if (ExpressionHelper.checkForExpression(columnNudge.Expression, keyValuePair[0], columns, this.blotter)) {
-                                newValue = { Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.NudgeValue * side) }
+                                newValue = { Id: keyValuePair[0], ColumnId: columnValuePair.columnId, Value: columnValuePair.value + (columnNudge.NudgeValue * side) }
                             }
                         }
                         //we havent found any Condition with an Expression so we look for a general one for the column
                         if (!newValue) {
-                            let columnNudge = this.PlusMinusState.PlusMinusRules.find(x => x.ColumnId == columnValuePair.columnID && x.IsDefaultNudge)
+                            let columnNudge = this.PlusMinusState.PlusMinusRules.find(x => x.ColumnId == columnValuePair.columnId && x.IsDefaultNudge)
                             if (columnNudge) {
-                                newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnID, Value: columnValuePair.value + (columnNudge.NudgeValue * side) })
+                                newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnId, Value: columnValuePair.value + (columnNudge.NudgeValue * side) })
                             }
                             //we havent found a condition so we return - this will allow a minus to be entered into the column
                             else {
@@ -104,7 +104,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         let dataChangedEvent: IDataChangedEvent = {
                             OldValue: Number(columnValuePair.value),
                             NewValue: newValue.Value,
-                            ColumnId: columnValuePair.columnID,
+                            ColumnId: columnValuePair.columnId,
                             IdentifierValue: keyValuePair[0],
                             Timestamp: Date.now(),
                             Record: null
@@ -187,17 +187,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
         if (successfulValues.length > 0) {
-           
-            
-            this.blotter.setValueBatch(successfulValues);
+             this.blotter.setValueBatch(successfulValues);
 
-            if (this.reSelectCells) {  // not sure this is quite right as warning values are not included even if they pass and it doesnt work post-alert
-                //I know interface is different but we leverage on the fact that we havent name the interface so they are "compatible" in that order...
-                this.blotter.selectCells(successfulValues);
-            }
         }
     }
-
 
 
 
