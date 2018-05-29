@@ -405,7 +405,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
-        console.log("Ive been called")
         let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
         let selected = this.vendorGrid.api.getRangeSelections();
         if (selected) {
@@ -438,7 +437,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
         }
         let selectedCells: ISelectedCells = { Selection: selectionMap }
-        console.log("sending selected cells to redux")
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
        this._onSelectedCellsChanged.Dispatch(this, this)
     }
