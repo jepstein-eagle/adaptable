@@ -110,7 +110,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                             size={"small"}
                             bsStyle={this.getStyleForApplyButton()}
                             overrideTooltip="Apply Bulk Update"
-                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue)|| this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent }
+                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue)|| (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) }
                             DisplayMode="Glyph" />
                     </InputGroup.Button>
                 </InputGroup>

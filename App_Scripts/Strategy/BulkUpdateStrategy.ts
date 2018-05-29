@@ -71,41 +71,42 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         let previewResults: IPreviewResult[] = [];
         let columnId: string;
 
-        for (let pair of selectedCells.Selection) {
-            let typedBulkUpdateValue;
-            let selectedColumnDataType: DataType = pair[1][0].dataType;
-            switch (selectedColumnDataType) {
-                case DataType.Number:
-                    typedBulkUpdateValue = Number(bulkUpdateValue);
-                    break;
-                case DataType.String:
-                    typedBulkUpdateValue = bulkUpdateValue;
-                    break;
-                case DataType.Date:
-                    typedBulkUpdateValue = new Date(bulkUpdateValue);
-                    break;
-            }
-
-            for (var columnValuePair of pair[1]) {
-
-                let dataChangedEvent: IDataChangedEvent = {
-                    OldValue: columnValuePair.value,
-                    NewValue: typedBulkUpdateValue,
-                    ColumnId: columnValuePair.columnId,
-                    IdentifierValue: pair[0],
-                    Timestamp: Date.now(),
-                    Record: null
+        if (selectedCells != null && selectedCells.Selection != null) {
+            for (let pair of selectedCells.Selection) {
+                let typedBulkUpdateValue;
+                let selectedColumnDataType: DataType = pair[1][0].dataType;
+                switch (selectedColumnDataType) {
+                    case DataType.Number:
+                        typedBulkUpdateValue = Number(bulkUpdateValue);
+                        break;
+                    case DataType.String:
+                        typedBulkUpdateValue = bulkUpdateValue;
+                        break;
+                    case DataType.Date:
+                        typedBulkUpdateValue = new Date(bulkUpdateValue);
+                        break;
                 }
 
-                let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
+                for (var columnValuePair of pair[1]) {
 
-                let previewResult: IPreviewResult = { Id: pair[0], InitialValue: columnValuePair.value, ComputedValue: typedBulkUpdateValue, ValidationRules: validationRules }
+                    let dataChangedEvent: IDataChangedEvent = {
+                        OldValue: columnValuePair.value,
+                        NewValue: typedBulkUpdateValue,
+                        ColumnId: columnValuePair.columnId,
+                        IdentifierValue: pair[0],
+                        Timestamp: Date.now(),
+                        Record: null
+                    }
 
-                previewResults.push(previewResult)
-                columnId = columnValuePair.columnId;
+                    let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
+
+                    let previewResult: IPreviewResult = { Id: pair[0], InitialValue: columnValuePair.value, ComputedValue: typedBulkUpdateValue, ValidationRules: validationRules }
+
+                    previewResults.push(previewResult)
+                    columnId = columnValuePair.columnId;
+                }
             }
         }
-
         return {
             ColumnId: columnId,
             PreviewResults: previewResults,
