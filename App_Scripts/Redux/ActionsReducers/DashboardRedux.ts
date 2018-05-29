@@ -91,7 +91,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-        StrategyIds.BulkUpdateStrategyId
+       // StrategyIds.BulkUpdateStrategyId
     ],
     VisibleButtons: [
         StrategyIds.AboutStrategyId,
