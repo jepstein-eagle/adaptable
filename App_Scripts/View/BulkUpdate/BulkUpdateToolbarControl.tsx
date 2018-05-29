@@ -29,6 +29,10 @@ import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { AdaptablePopover } from "../AdaptablePopover";
+import { PopoverType, StatusColour } from "../../Core/Enums";
+import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -45,7 +49,7 @@ interface BulkUpdateToolbarControlComponentState {
     SelectedColumnId: string
     Disabled: boolean
     SubFunc: any
-}
+  }
 
 class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolbarControlComponentProps, BulkUpdateToolbarControlComponentState> {
     constructor(props: BulkUpdateToolbarControlComponentProps) {
@@ -73,16 +77,27 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
     render() {
 
+        let statusColour:StatusColour = this.getStatusColour()
         // missing datatype validation for time being
-
 
         // we dont want to show the panel in the form but will need to appear in a popup....
         let cssClassName: string = this.props.cssClassName + "__bulkupdate";
 
         let visibleButton = this.state.Disabled ?
-            <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="danger" bsSize="small">Off</Button>
+            <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="default" bsSize="small">Off</Button>
             : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
 
+        let selctedColumn = ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns);
+        let previewPanel =
+            <PreviewResultsPanel
+                cssClassName={cssClassName}
+                UpdateValue={this.props.BulkUpdateValue}
+                PreviewInfo={this.props.PreviewInfo}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SelectedColumn={selctedColumn}
+                ShowPanel={true}
+            />
 
         let content = <span>
             <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
@@ -101,18 +116,28 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
 
+                    {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
 
-                    <InputGroup.Button>
+                        <InputGroup.Button>
+                            <ButtonApply cssClassName={cssClassName}
+                                style={{ marginLeft: "3px" }}
+                                onClick={() => this.onApplyClick()}
+                                size={"small"}
+                                glyph={this.getGlyphForApplyButton(statusColour)}
+                                bsStyle={this.getStyleForApplyButton(statusColour)}
+                                overrideTooltip="Apply Bulk Update"
+                                overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
+                                DisplayMode="Glyph" />
+                        </InputGroup.Button>
+                    }
+                    {statusColour == StatusColour.Red &&
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Validation Erorrs" bodyText={[previewPanel]} popoverType={PopoverType.Error} triggerAction={"click"} />
+                    }
+                    {statusColour == StatusColour.Amber &&
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Validation Warning" bodyText={[previewPanel]} popoverType={PopoverType.Warning} triggerAction={"click"} />
+                    }
 
-                        <ButtonApply cssClassName={cssClassName}
-                            style={{ marginLeft: "3px" }}
-                            onClick={() => this.onApplyBulkUpdate()}
-                            size={"small"}
-                            bsStyle={this.getStyleForApplyButton()}
-                            overrideTooltip="Apply Bulk Update"
-                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue)|| (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) }
-                            DisplayMode="Glyph" />
-                    </InputGroup.Button>
+
                 </InputGroup>
             </div>
         </span>
@@ -146,20 +171,42 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         if (selectedColumnId != this.state.SelectedColumnId) {
             this.setState({ SelectedColumnId: selectedColumnId });
         }
-        
+
     }
 
-    private getStyleForApplyButton() : string {
-            if (this.props.PreviewInfo) {
-                if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                    return "danger";
-                }
-                if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                    return "warning";
-                }
+    private getStatusColour(): StatusColour {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && this.props.PreviewInfo) {
+            if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
+                return StatusColour.Red;
             }
-            return "success";
+            if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
+                return StatusColour.Amber;
+            }
         }
+        return StatusColour.Green;
+    }
+
+    private getStyleForApplyButton(statusColour: StatusColour): string {
+        switch (statusColour) {
+            case StatusColour.Red:
+                return "danger"
+            case StatusColour.Amber:
+                return "warning";
+            case StatusColour.Green:
+                return "success";
+        }
+    }
+
+    private getGlyphForApplyButton(statusColour: StatusColour): string {
+        switch (statusColour) {
+            case StatusColour.Red:
+                return "remove"
+            case StatusColour.Amber:
+                return "warning-sign";
+            case StatusColour.Green:
+                return "ok";
+        }
+    }
 
     onDisabledChanged() {
         let newDisabledState: boolean = !this.state.Disabled
@@ -170,6 +217,25 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         }
         this.setState({ Disabled: newDisabledState });
 
+    }
+
+    private onApplyClick(): void {
+        this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ?
+            this.onConfirmWarningCellValidation() :
+            this.onApplyBulkUpdate()
+    }
+
+    private onConfirmWarningCellValidation() {
+        let confirmation: IUIConfirmation = {
+            CancelText: "Cancel Edit",
+            ConfirmationTitle: "Cell Validation Failed",
+            ConfirmationMsg: "Do you want to continue?",
+            ConfirmationText: "Bypass Rule",
+            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
+            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
+            ShowCommentBox: true
+        }
+        this.props.onConfirmWarningCellValidation(confirmation)
     }
 
     onApplyBulkUpdate(): any {

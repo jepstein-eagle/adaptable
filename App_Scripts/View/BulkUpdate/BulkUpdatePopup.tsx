@@ -49,7 +49,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
     public componentDidMount() {
         this.props.onBulkUpdateCheckSelectedCells();
-  //      this.props.onBulkUpdateValueChange("");
+        //      this.props.onBulkUpdateValueChange("");
     }
 
 
@@ -127,7 +127,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                             <Col xs={3}>
                                                 <Button bsStyle={this.getButtonStyle()}
                                                     disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent}
-                                                    onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                                    onClick={() => { this.onApplyClick() }} >Apply to Grid</Button>
                                             </Col>
                                         </Row>
                                     </div> :
@@ -146,7 +146,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                             <Col xs={4}>
                                                 <Button bsStyle={this.getButtonStyle()}
                                                     disabled={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError}
-                                                    onClick={() => { this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() }} >Apply to Grid</Button>
+                                                    onClick={() => { this.onApplyClick() }} >Apply to Grid</Button>
                                                 {' '}
                                                 {(hasDataTypeError) &&
                                                     <AdaptablePopover cssClassName={cssClassName} headerText={"Update Error"} bodyText={[dataTypeErrorMessage]} popoverType={PopoverType.Error} />}
@@ -185,6 +185,11 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         this.props.onBulkUpdateValueChange(e.value);
     }
 
+    private onApplyClick(): void {
+        this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ?
+            this.onConfirmWarningCellValidation() :
+            this.onApplyBulkUpdate()
+    }
 
     private onApplyBulkUpdate(): void {
         this.props.onApplyBulkUpdate()

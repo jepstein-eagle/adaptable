@@ -67,7 +67,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
     onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let returnValue: any = (e.value == 'Stop Edit') ? 'Stop Edit' : 'Warn Value';
+        let returnValue: any = (e.value == 'Stop Edit') ? 'Stop Edit' : 'Warn User';
         this.props.onChangeCellValidationMode(index, returnValue);
     }
 }

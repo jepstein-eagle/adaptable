@@ -10,6 +10,8 @@ export module ColumnHelper {
         return columnId == "ag-Grid-AutoColumn"
     }
 
+   
+
     export function getFriendlyNameFromColumn(columnId: string, column: IColumn): string {
         if (columnId.includes(GeneralConstants.MISSING_COLUMN)) {
             return columnId;
@@ -54,6 +56,11 @@ export module ColumnHelper {
     export function getColumnsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): IColumn[] {
         // not sure if this is right as might ignore bad cols
         return friendlyNames.map(friendlyName => columns.find(x => x.FriendlyName == friendlyName))
+    }
+
+    export function getColumnFromId(columnId: string, columns: IColumn[]): IColumn {
+       // TODO check for missing column
+       return columns.find(c=>c.ColumnId==columnId)
     }
 }
 

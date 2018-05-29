@@ -2,12 +2,18 @@ import * as React from "react";
 import { ButtonBase, ButtonProps } from './ButtonBase'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
-export class ButtonApply extends React.Component<ButtonProps, {}> {
+
+export interface ApplyButtonProps extends ButtonProps {
+   glyph: string
+}
+
+
+export class ButtonApply extends React.Component<ApplyButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Apply"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            glyph="ok"
+            glyph={this.props.glyph}
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}
