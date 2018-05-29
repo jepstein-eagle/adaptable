@@ -75,16 +75,13 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
         // missing datatype validation for time being
 
-        //    let globalValidationMessage: string = PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.BulkUpdateValue);
-
-        //    let showPanel: boolean = this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && StringExtensions.IsNotNullOrEmpty(globalValidationMessage)
 
         // we dont want to show the panel in the form but will need to appear in a popup....
         let cssClassName: string = this.props.cssClassName + "__bulkupdate";
 
         let visibleButton = this.state.Disabled ?
-            <Button  style={{ marginRight: "3px" }}onClick={() => this.onDisabledChanged()} bsStyle="danger" bsSize="small">Off</Button>
-            : <Button  style={{ marginRight: "3px" }}onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
+            <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="danger" bsSize="small">Off</Button>
+            : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
 
 
         let content = <span>
@@ -111,9 +108,9 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                             style={{ marginLeft: "3px" }}
                             onClick={() => this.onApplyBulkUpdate()}
                             size={"small"}
-                            bsStyle={"success"}
+                            bsStyle={this.getStyleForApplyButton()}
                             overrideTooltip="Apply Bulk Update"
-                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue)}
+                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue)|| this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent }
                             DisplayMode="Glyph" />
                     </InputGroup.Button>
                 </InputGroup>
@@ -130,11 +127,11 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
     private onSelectionChanged(blotter: IAdaptableBlotter): void {
         if (!this.state.Disabled) {
-           this.getSelectedCells(blotter);
+            this.getSelectedCells(blotter);
         }
     }
 
-    private getSelectedCells(blotter: IAdaptableBlotter){
+    private getSelectedCells(blotter: IAdaptableBlotter) {
         let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells
         let selectedColumnId: string = null
         if (selectedCells != null && selectedCells.Selection != null) {
@@ -145,18 +142,30 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                 }
             }
         }
+        this.props.onBulkUpdateValueChange("");
         if (selectedColumnId != this.state.SelectedColumnId) {
             this.setState({ SelectedColumnId: selectedColumnId });
         }
-        this.props.onBulkUpdateValueChange("");
+        
     }
 
+    private getStyleForApplyButton() : string {
+            if (this.props.PreviewInfo) {
+                if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
+                    return "danger";
+                }
+                if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
+                    return "warning";
+                }
+            }
+            return "success";
+        }
 
     onDisabledChanged() {
         let newDisabledState: boolean = !this.state.Disabled
         if (newDisabledState) {
             this.setState({ SelectedColumnId: "" });
-        }else{
+        } else {
             this.getSelectedCells(this.props.AdaptableBlotter)
         }
         this.setState({ Disabled: newDisabledState });

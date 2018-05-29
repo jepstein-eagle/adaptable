@@ -5,8 +5,8 @@ import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 export class ButtonCancel extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase ToolTipAndText="Close Wizard"
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.size}
+            bsStyle={this.props.bsStyle}
+            bsSize={this.props.size}
             ConfigEntity={this.props.ConfigEntity}
             glyph="remove"
             onClick={() => this.props.onClick()}
