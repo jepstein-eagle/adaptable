@@ -33,7 +33,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
         let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
-        if (selectedCells.Selection.size == 0) {
+        if (selectedCells==null || selectedCells.Selection.size == 0) {
             return {
                 Error: {
                     ErrorHeader: "Bulk Update Error",

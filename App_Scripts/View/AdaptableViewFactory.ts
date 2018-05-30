@@ -15,6 +15,7 @@ import { ApplicationToolbarControl } from './Application/ApplicationToolbarContr
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl'
+import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl'
 import { UserFilterPopup } from './UserFilter/UserFilterPopup'
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup'
 import { ThemePopup } from './Theme/ThemePopup'
@@ -80,7 +81,8 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
   [StrategyIds.ApplicationStrategyId, ApplicationToolbarControl],
   [StrategyIds.ExportStrategyId, ExportToolbarControl],
-  [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl]
+  [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
+  [StrategyIds.SmartEditStrategyId, SmartEditToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([

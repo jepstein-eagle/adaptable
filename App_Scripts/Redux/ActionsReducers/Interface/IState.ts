@@ -33,7 +33,6 @@ export interface PopupState {
     InfoPopup: IInfoPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
-    PreviewInfo: IPreviewInfo
 }
 
 export interface TeamSharingState {
@@ -43,6 +42,8 @@ export interface TeamSharingState {
 
 export interface BulkUpdateState {
     BulkUpdateValue: string
+    IsValidSelection: boolean
+    PreviewInfo: IPreviewInfo
 }
 
 /*
@@ -88,6 +89,9 @@ export interface DashboardState {
 export interface SmartEditState {
     SmartEditValue: number
     MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'
+    IsValidSelection: boolean
+    PreviewInfo: IPreviewInfo
+
 }
 
 

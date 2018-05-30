@@ -8,6 +8,9 @@ export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';
 export const SMARTEDIT_CHANGE_OPERATION = 'SMARTEDIT_CHANGE_OPERATION';
 export const SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
 export const SMARTEDIT_FETCH_PREVIEW = 'SMARTEDIT_FETCH_PREVIEW';
+export const SMARTEDIT_SET_VALID_SELECTION = 'SMARTEDIT_SET_VALID_SELECTION';
+export const SMARTEDIT_SET_PREVIEW = 'SMARTEDIT_SET_PREVIEW';
+
 
 export interface SmartEditApplyAction extends Redux.Action {
     bypassCellValidationWarnings: boolean
@@ -31,6 +34,10 @@ export interface SmartEditSetPreviewAction extends Redux.Action {
     PreviewInfo: IPreviewInfo
 }
 
+export interface SmartEditSetValidSelectionAction extends Redux.Action {
+    IsValidSelection: boolean
+}
+
 export const SmartEditApply = (bypassCellValidationWarnings: boolean): SmartEditApplyAction => ({
     type: SMARTEDIT_APPLY,
     bypassCellValidationWarnings
@@ -50,26 +57,40 @@ export const SmartEditCheckCellSelection = (): SmartEditCheckCellSelectionAction
     type: SMARTEDIT_CHECK_CELL_SELECTION
 })
 
+export const SmartEditSetValidSelection = (IsValidSelection: boolean): SmartEditSetValidSelectionAction => ({
+    type: SMARTEDIT_SET_VALID_SELECTION,
+    IsValidSelection
+})
 
-
+export const SmartEditSetPreview = (PreviewInfo: IPreviewInfo): SmartEditSetPreviewAction => ({
+    type: SMARTEDIT_SET_PREVIEW,
+    PreviewInfo
+})
 
 const initialSmartEditState: SmartEditState = {
     SmartEditValue: 1,
     MathOperation: MathOperation.Add,
- }
+    IsValidSelection: false,
+    PreviewInfo: null
+}
 
 export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {
     switch (action.type) {
-        case SMARTEDIT_APPLY:
-            //we apply logic in the middleware since it's an API call
-            return Object.assign({}, state, { PreviewInfo: null })
+        // case SMARTEDIT_APPLY:
+        //we apply logic in the middleware since it's an API call
+        //   return Object.assign({}, state, { PreviewInfo: null })
         case SMARTEDIT_CHANGE_VALUE:
             return Object.assign({}, state, { SmartEditValue: (<SmartEditChangeValueAction>action).value })
         case SMARTEDIT_CHANGE_OPERATION:
             return Object.assign({}, state, { MathOperation: (<SmartEditChangeOperationAction>action).MathOperation })
+        case SMARTEDIT_SET_VALID_SELECTION:
+            return Object.assign({}, state, { IsValidSelection: (<SmartEditSetValidSelectionAction>action).IsValidSelection })
         case SMARTEDIT_CHECK_CELL_SELECTION:
             return state
-         default:
+        case SMARTEDIT_SET_PREVIEW:
+            return Object.assign({}, state, { PreviewInfo: (<SmartEditSetPreviewAction>action).PreviewInfo })
+
+        default:
             return state
     }
 }

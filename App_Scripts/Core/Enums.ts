@@ -45,8 +45,8 @@ export enum LeafExpressionOperator {
 export enum PopoverType {
     Info = 'Info',
     Warning = 'Warning',
-    Error = 'Error'
-}
+    Error = 'Error',
+ }
 
 export enum MathOperation {
     Add = 'Add',

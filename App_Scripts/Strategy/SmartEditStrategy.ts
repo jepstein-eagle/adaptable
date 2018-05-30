@@ -30,7 +30,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
         let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
-        if (selectedCells.Selection.size == 0) {
+        if (selectedCells == null || selectedCells.Selection.size == 0) {
             return {
                 Error: {
                     ErrorHeader: "Smart Edit Error",

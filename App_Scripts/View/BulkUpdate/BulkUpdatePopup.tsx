@@ -91,6 +91,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                 UserFilters={this.props.UserFilters}
                 SelectedColumn={col}
                 ShowPanel={showPanel}
+                ShowHeader={true}
             /> :
             null
 
@@ -224,7 +225,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        PreviewInfo: state.Popup.PreviewInfo,
+        PreviewInfo: state.BulkUpdate.PreviewInfo,
     };
 }
 

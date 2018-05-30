@@ -18,7 +18,6 @@ export const POPUP_SHOW_INFO = 'POPUP_SHOW_INFO';
 export const POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
 export const POPUP_CONFIRMATION = 'POPUP_CONFIRMATION';
 export const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
-export const POPUP_SET_PREVIEW = 'POPUP_SET_PREVIEW';
 
 export interface PopupShowAction extends Redux.Action {
     ComponentName: string,
@@ -55,7 +54,6 @@ export interface PopupShowConfirmationAction extends Redux.Action { Confirmation
 
 export interface PopupClearParamAction extends Redux.Action { }
 
-export interface PopupSetPreviewAction extends Redux.Action { PreviewInfo: IPreviewInfo }
 
 export const PopupShow = (ComponentName: string, IsReadOnly?: boolean, Params?: string): PopupShowAction => ({
     type: POPUP_SHOW,
@@ -128,10 +126,7 @@ export const PopupClearParam = (): PopupClearParamAction => ({
 })
 
 
-export const PopupSetPreview = (PreviewInfo: IPreviewInfo): PopupSetPreviewAction => ({
-    type: POPUP_SET_PREVIEW,
-    PreviewInfo
-})
+
 
 const initialPopupState: PopupState = {
     ScreenPopup: {
@@ -172,7 +167,7 @@ const initialPopupState: PopupState = {
         PromptMsg: "",
         ConfirmAction: null
     },
-    PreviewInfo: null
+    
 }
 
 export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = initialPopupState, action: Redux.Action): PopupState => {
@@ -283,9 +278,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             let newScreenPopup: IScreenPopup = { ShowPopup: state.ScreenPopup.ShowPopup, IsReadOnly: state.ScreenPopup.IsReadOnly, ComponentName: state.ScreenPopup.ComponentName, Params: null }
             return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
-        case POPUP_SET_PREVIEW:
-            return Object.assign({}, state, { PreviewInfo: (<PopupSetPreviewAction>action).PreviewInfo })
-
+     
         default:
             return state
     }

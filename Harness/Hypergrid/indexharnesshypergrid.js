@@ -128,7 +128,7 @@ function InitBlotter() {
     var trades = dataGen.getTrades();
 
     var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-    dataGen.startTickingDataHypergrid(vendorGrid)
+  //  dataGen.startTickingDataHypergrid(vendorGrid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     vendorGrid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
@@ -206,6 +206,7 @@ function InitBlotter() {
 
     var abContainer = document.getElementById('adaptableBlotter');
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions, abContainer, vendorGrid);
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
 
     adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     vendorGrid.addProperties(lightTheme);

@@ -1,8 +1,10 @@
 import * as React from "react";
-import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
+import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { PopoverType } from '../Core/Enums';
 import * as StyleConstants from '../Core/Constants/StyleConstants';
+import { ButtonApply } from "./Components/Buttons/ButtonApply";
+import { ButtonInfo } from "./Components/Buttons/ButtonInfo";
 
 
 /*
@@ -19,7 +21,9 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     bodyText: any[],
     popoverType: PopoverType
     cssClassName: string,
-    triggerAction? : string
+    triggerAction?: string
+    useButton?: boolean
+    tooltipText?: string
 }
 
 
@@ -27,19 +31,31 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON
 
-        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : "hover";
-       
+        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['hover', 'focus'];
+
+        let useButton = (this.props.useButton != null) ? this.props.useButton : false
 
         const popoverClickRootClose = (
-            <Popover id={"ab_popover"} title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
+            <Popover style={{margin:"0px", padding: "0px"}} id={"ab_popover"} title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
                 {this.props.bodyText.map((textOrHTML: any, index: any) => <span key={index}>{textOrHTML}</span>)}
             </Popover>);
 
         return <span className={cssClassName}>
-            <OverlayTrigger rootClose trigger={triggerAction} placement="bottom" overlay={popoverClickRootClose}>
-                <Label bsSize="large" bsStyle={this.getStyle()} className="ab_medium_padding">
-                    <Glyphicon glyph={this.getGlyphName()} />
-                </Label>
+            <OverlayTrigger rootClose trigger={triggerAction} placement={'bottom'} overlay={popoverClickRootClose}>
+                {useButton ?
+                    <ButtonInfo cssClassName={cssClassName}
+                        onClick={() => null}
+                        size={"small"}
+                        glyph={this.getGlyphName()}
+                        bsStyle={this.getStyle()}
+                        DisplayMode="Glyph"
+                        tooltipText={"Show Preview Results"}
+                    />
+                    :
+                    <Label bsSize="large" bsStyle={this.getStyle()} className="ab_medium_padding">
+                        <Glyphicon glyph={this.getGlyphName()} />
+                    </Label>
+                }
             </OverlayTrigger>
         </span>
     }
@@ -54,8 +70,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
             case PopoverType.Info:
                 return "info";
         }
-
-
     }
 
     private getGlyphName(): string {

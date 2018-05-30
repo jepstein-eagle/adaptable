@@ -6,6 +6,8 @@ import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
 export const BULK_UPDATE_APPLY = 'BULK_UPDATE_APPLY';
 export const BULK_UPDATE_CHANGE_VALUE = 'BULK_UPDATE_CHANGE_VALUE';
 export const BULK_UPDATE_CHECK_CELL_SELECTION = 'BULK_UPDATE_CHECK_CELL_SELECTION';
+export const BULK_UPDATE_SET_VALID_SELECTION = 'BULK_UPDATE_SET_VALID_SELECTION';
+export const BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
 
 export interface BulkUpdateApplyAction extends Redux.Action {
     bypassCellValidationWarnings: boolean
@@ -18,6 +20,13 @@ export interface BulkUpdateChangeValueAction extends Redux.Action {
 export interface BulkUpdateCheckCellSelectionAction extends Redux.Action {
 }
 
+export interface BulkUpdateSetPreviewAction extends Redux.Action {
+    PreviewInfo: IPreviewInfo
+}
+
+export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
+    IsValidSelection: boolean
+}
 
 export const BulkUpdateApply = (bypassCellValidationWarnings: boolean): BulkUpdateApplyAction => ({
     type: BULK_UPDATE_APPLY,
@@ -34,11 +43,21 @@ export const BulkUpdateCheckCellSelection = (): BulkUpdateCheckCellSelectionActi
     type: BULK_UPDATE_CHECK_CELL_SELECTION
 })
 
+export const BulkUpdateSetValidSelection = (IsValidSelection: boolean): BulkUpdateSetValidSelectionAction => ({
+    type: BULK_UPDATE_SET_VALID_SELECTION,
+    IsValidSelection
+})
 
+export const BulkUpdateSetPreview = (PreviewInfo: IPreviewInfo): BulkUpdateSetPreviewAction => ({
+    type: BULK_UPDATE_SET_PREVIEW,
+    PreviewInfo
+})
 
 const initialBulkUpdateState: BulkUpdateState = {
     BulkUpdateValue: "",
-  }
+    IsValidSelection: false,
+    PreviewInfo: null
+}
 
 export const BulkUpdateReducer: Redux.Reducer<BulkUpdateState> = (state: BulkUpdateState = initialBulkUpdateState, action: Redux.Action): BulkUpdateState => {
     switch (action.type) {
@@ -47,9 +66,13 @@ export const BulkUpdateReducer: Redux.Reducer<BulkUpdateState> = (state: BulkUpd
             return Object.assign({}, state, { PreviewInfo: null })
         case BULK_UPDATE_CHANGE_VALUE:
             return Object.assign({}, state, { BulkUpdateValue: (<BulkUpdateChangeValueAction>action).value })
-          case BULK_UPDATE_CHECK_CELL_SELECTION:
+        case BULK_UPDATE_SET_VALID_SELECTION:
+            return Object.assign({}, state, { IsValidSelection: (<BulkUpdateSetValidSelectionAction>action).IsValidSelection })
+        case BULK_UPDATE_CHECK_CELL_SELECTION:
             return state
-         default:
+        case BULK_UPDATE_SET_PREVIEW:
+            return Object.assign({}, state, { PreviewInfo: (<BulkUpdateSetPreviewAction>action).PreviewInfo })
+        default:
             return state
     }
 }

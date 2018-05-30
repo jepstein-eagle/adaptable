@@ -58,6 +58,8 @@ import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlo
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
@@ -159,7 +161,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UserInterface", "Popup", "Entitlements", "Menu", "Grid", "Blotter", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "PreviewInfo"]]);
+        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UserInterface", "Popup", "Entitlements", "Menu", "Grid", "Blotter", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "IsValidSelection"], ["SmartEdit", "PreviewInfo"]]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -202,7 +204,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                         //for now i'm still initializing the AB even if loading state has failed.... 
                         //we may revisit that later
                         this.TheStore.dispatch(InitState())
-                        this.TheStore.dispatch(PopupRedux.PopupShowError({ErrorHeader: "Configurtion", ErrorMsg: "Error loading your configuration:" + e }))
+                        this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Configurtion", ErrorMsg: "Error loading your configuration:" + e }))
                     })
     }
 }
@@ -336,10 +338,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ErrorHeader: "Team Sharing Error", ErrorMsg: "Couldn't share item: " + xhr.statusText }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Team Sharing Error", ErrorMsg: "Couldn't share item: " + xhr.statusText }))
                             }
                             else {
-                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({InfoHeader:"Team Sharing", InfoMsg: "Item Shared Successfully" }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoHeader: "Team Sharing", InfoMsg: "Item Shared Successfully" }))
                             }
                         }
                     }
@@ -495,11 +497,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     else if (importAction) {
                         middlewareAPI.dispatch(importAction)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({InfoHeader:"Team Sharing", InfoMsg: "Item Successfully Imported" }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoHeader: "Team Sharing", InfoMsg: "Item Successfully Imported" }))
                     }
                     else {
                         AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ErrorHeader:"Team Sharing Error:", ErrorMsg: "Item not recognized. Cannot import" }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Team Sharing Error:", ErrorMsg: "Item not recognized. Cannot import" }))
                     }
                     return returnAction;
                 }
@@ -571,7 +573,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                             let column: IColumn = gridState.Columns.find(x => x.ColumnId == c)
                             if (column) {
                                 blotterColumns.push(column);
-                            }else{
+                            } else {
                                 AdaptableBlotterLogger.LogWarning("Column '" + c + "' not found")
                             }
                         })
@@ -662,13 +664,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
 
                     if (apiReturn.Error) {
-                        //We close the SmartEditPopup
-                        middlewareAPI.dispatch(PopupRedux.PopupHide());
-                        //We show the Error Popup
-                        middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                        // check if Smared is showing as popup and then close and show error (dont want to do that if from toolbar)
+                        let popup = state.Popup.ScreenPopup;
+                        if (popup.ComponentName == ScreenPopups.SmartEditPopup) {  //We close the SmartEditPopup
+                            middlewareAPI.dispatch(PopupRedux.PopupHide());
+                            //We show the Error Popup
+                            middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                        }
+                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetValidSelection(false));
                     } else {
+                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetValidSelection(true));
                         let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
-                        middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiPreviewReturn));
+                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiPreviewReturn));
                     }
                     return returnAction;
                 }
@@ -685,14 +692,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let state = middlewareAPI.getState();
 
                     let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
-                    middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiReturn));
+                    middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn));
                     return returnAction;
                 }
 
                 case SmartEditRedux.SMARTEDIT_APPLY: {
                     let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
-                    let thePreview = middlewareAPI.getState().Popup.PreviewInfo
+                    let thePreview = middlewareAPI.getState().SmartEdit.PreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     SmartEditStrategy.ApplySmartEdit(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());
@@ -710,19 +717,25 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
 
                     if (apiReturn.Error) {
-                        //We close the BulkUpdatePopup
-                        middlewareAPI.dispatch(PopupRedux.PopupHide());
-                        //We show the Error Popup
-                        middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                        // check if BulkUpdate is showing as popup
+                        let popup = state.Popup.ScreenPopup;
+                        if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
+                            //We close the BulkUpdatePopup
+                            middlewareAPI.dispatch(PopupRedux.PopupHide());
+                            //We show the Error Popup
+                            middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                        }
+                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(false));
                     } else {
+                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(true)); 
                         let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-                        middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiPreviewReturn));
+                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiPreviewReturn));
                     }
                     return returnAction;
                 }
 
                 // Here we have all actions that triggers a refresh of the BulkUpdatePreview
-                case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE:{
+                case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE: {
                     //all our logic needs to be executed AFTER the main reducers 
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
@@ -731,14 +744,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let state = middlewareAPI.getState();
 
                     let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-                    middlewareAPI.dispatch(PopupRedux.PopupSetPreview(apiReturn));
+                    middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiReturn));
                     return returnAction;
                 }
 
                 case BulkUpdateRedux.BULK_UPDATE_APPLY: {
                     let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
-                    let thePreview = middlewareAPI.getState().Popup.PreviewInfo
+                    let thePreview = middlewareAPI.getState().BulkUpdate.PreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     BulkUpdateStrategy.ApplyBulkUpdate(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHide());

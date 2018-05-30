@@ -82,8 +82,9 @@ const initialDashboardState: DashboardState = {
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
         StrategyIds.DataSourceStrategyId,
+        StrategyIds.BulkUpdateStrategyId,
+        StrategyIds.SmartEditStrategyId,
         StrategyIds.ApplicationStrategyId,
-        StrategyIds.BulkUpdateStrategyId
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -91,7 +92,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-       // StrategyIds.BulkUpdateStrategyId
+        // StrategyIds.BulkUpdateStrategyId
     ],
     VisibleButtons: [
         StrategyIds.AboutStrategyId,

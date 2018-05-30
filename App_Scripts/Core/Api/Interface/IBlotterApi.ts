@@ -171,8 +171,8 @@ export interface IBlotterApi {
      * @param alertMessage Main message of the alert
      * @param alertType Type (Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
      */
-     showAlert(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void 
-   
+    showAlert(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void
+
     /**
      * Clears the  configuration for the current user, reverting everyting to system defaults.
      * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
