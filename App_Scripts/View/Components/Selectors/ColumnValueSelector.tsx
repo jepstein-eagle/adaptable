@@ -36,7 +36,7 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
             placeholderText += " or enter free text"
         }
 
-        if (this.props.SelectedColumn != null) {
+        if (this.props.SelectedColumn != null && this.props.getColumnValueDisplayValuePairDistinctList!= null) {
             let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
 
             if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
