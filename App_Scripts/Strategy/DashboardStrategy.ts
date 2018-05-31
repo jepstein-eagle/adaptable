@@ -29,12 +29,12 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     protected addColumnMenuItem(columnId: string): void {
         // for now just show / hide = lets worry about minimise later..
         if (this.GetDashboardState().DashboardVisibility == Visibility.Hidden) {
-            this.createMenuItemReduxAction(
+            this.createContextMenuItemReduxAction(
                 "Show Dashboard",
                 StrategyGlyphs.DashboardGlyph,
                 DashboardRedux.DashboardSetVisibility(Visibility.Visible))
         } else {
-            this.createMenuItemReduxAction(
+            this.createContextMenuItemReduxAction(
                 "Hide Dashboard",
                 StrategyGlyphs.DashboardGlyph,
                 DashboardRedux.DashboardSetVisibility(Visibility.Hidden))

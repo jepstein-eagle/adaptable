@@ -360,7 +360,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
             if (menuItem != null) {
-                menuItems.push(menuItem);
+                if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
+                    menuItems.push(menuItem);
+                }
             }
         })
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
@@ -411,12 +413,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //we iterate for each ranges
             selected.forEach((rangeSelection, index) => {
                 let y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
-                    let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
-                    for (let column of rangeSelection.columns) {
+                let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
+                for (let column of rangeSelection.columns) {
                     let colId: string = column.getColId();
                     let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
                     let dataType = DataType.Number;
-                     let isReadonly: boolean = this.isColumnReadonly(colId)
+                    let isReadonly: boolean = this.isColumnReadonly(colId)
                     for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
                         let rowNode = this.vendorGrid.api.getModel().getRow(rowIndex)
                         //if the selected cells are from a group cell we don't return it
@@ -438,7 +440,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         let selectedCells: ISelectedCells = { Selection: selectionMap }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
-       this._onSelectedCellsChanged.Dispatch(this, this)
+        this._onSelectedCellsChanged.Dispatch(this, this)
     }
 
     //We deduce the type here. I couldnt find a way to get it through the definition
@@ -1018,9 +1020,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         vendorGrid.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
             this.testing();
-         //   this._onSelectedCellsChanged.Dispatch(this, this)
+            //   this._onSelectedCellsChanged.Dispatch(this, this)
         });
-         vendorGrid.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
+        vendorGrid.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
         });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
@@ -1271,7 +1273,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     private testing(): void {
-       this.debouncedSetSelectedCells()
+        this.debouncedSetSelectedCells()
 
     }
 

@@ -32,7 +32,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
                 let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
                 if (flashingCell && flashingCell.IsLive) {
-                    this.createMenuItemReduxAction(
+                    this.createContextMenuItemReduxAction(
                         "Turn Flashing Cell Off",
                         StrategyGlyphs.FlashingCellGlyph,
                         FlashingCellsRedux.FlashingCellSelect(flashingCell)
@@ -43,7 +43,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                         let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
                         flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
                     }
-                    this.createMenuItemReduxAction(
+                    this.createContextMenuItemReduxAction(
                         "Turn Flashing Cell On",
                         StrategyGlyphs.FlashingCellGlyph,
                         FlashingCellsRedux.FlashingCellSelect(flashingCell)

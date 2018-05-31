@@ -11,6 +11,7 @@ import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs } from '../Core/Api/Interface/ServerSearch';
 import { SearchChangedTrigger } from '../Core/Enums';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean
@@ -32,10 +33,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.buildContextMenu = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu;
             if (this.buildContextMenu) {
                 let columnId = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId;
-                if (!ColumnHelper.isSpecialColumn(columnId)){
-                this.addColumnMenuItem(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
+                if (!ColumnHelper.isSpecialColumn(columnId)) {
+                    this.addColumnMenuItem(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
+                }
             }
-        }
         }
     }
 
@@ -97,27 +98,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         return false;
     }
 
-
-    // direct actions called by the context menu - invisible if strategy is hidden or readonly
-    createMenuItemReduxAction(Label: string,
-        GlyphIcon: string,
-        Action: Action): any {
-        if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.AddItemColumnContextMenu(
-                    new MenuItemDoReduxAction(
-                        Label,
-                        this.Id,
-                        Action,
-                        GlyphIcon,
-                        false,
-                        true
-                    ))
-            )
-        }
-    }
-
-
+    // creates the menu items in the main dropdown
     createMenuItemShowPopup(Label: string,
         ComponentName: string,
         GlyphIcon: string,
@@ -130,15 +111,30 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.isReadOnlyStrategy(),
             this.isVisibleStrategy(),
             PopupParams)
-        //    this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-        //        MenuRedux.AddItemColumnContextMenu(
-        //            menuItemShowPopup
-        //        ))
         this.popupMenuItem = menuItemShowPopup;
     }
 
-    // same as show popup but we hide it completely if the entitlement is hidden or readonly as they are actions
-    createMenuItemColumnMenu(Label: string,
+
+    // direct actions called by the context menu - invisible if strategy is hidden or readonly
+    createContextMenuItemReduxAction(Label: string,
+        GlyphIcon: string,
+        Action: Action): any {
+        if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
+
+            let menuItemShowPopup: MenuItemDoReduxAction = new MenuItemDoReduxAction(
+                Label,
+                this.Id,
+                Action,
+                GlyphIcon,
+                false,
+                true)
+            this.addContextMenuItemToStore(menuItemShowPopup);
+        }
+    }
+
+
+    // popups called by the context menu - invisible if strategy is hidden or readonly
+    createContextMenuItemShowPopup(Label: string,
         ComponentName: string,
         GlyphIcon: string,
         PopupParams?: string) {
@@ -151,9 +147,18 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                 false,
                 true,
                 PopupParams)
+            this.addContextMenuItemToStore(menuItemShowPopup);
+
+        }
+    }
+
+    addContextMenuItemToStore(menuItem: IMenuItem): void {
+        // check for duplicates here
+        let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m=>m.StrategyId)
+        if (!ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 MenuRedux.AddItemColumnContextMenu(
-                    menuItemShowPopup
+                    menuItem
                 ))
         }
     }
@@ -175,5 +180,5 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         let searchChangedArgs: ISearchChangedEventArgs = { SearchChangedTrigger: searchChangedTrigger, BlotterSearchState: blotterSearchState, BlotterSortState: blotterSortState }
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
-   
+
 }

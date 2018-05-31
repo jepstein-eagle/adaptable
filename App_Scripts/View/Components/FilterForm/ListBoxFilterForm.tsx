@@ -1,5 +1,5 @@
 import * as React from "react";
-import {  LeafExpressionOperator, DataType, SelectionMode } from '../../../Core/Enums'
+import { LeafExpressionOperator, DataType, SelectionMode } from '../../../Core/Enums'
 import { MenuItem, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
@@ -27,7 +27,6 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     onColumnValueSelectedChange: (SelectedValues: Array<any>) => void
     onUserFilterSelectedChange: (SelectedValues: Array<any>) => void
     onCustomRangeExpressionChange: (rangeExpression: IRange) => void
-    onClearFilter: () => void
     Operators: Array<LeafExpressionOperator>
     DataType: DataType
     cssClassName: string
@@ -147,18 +146,8 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 </FormGroup>
             </AdaptableBlotterForm>
 
-        let isEmptyFilter: boolean = this.state.UiSelectedColumnValues.length == 0 && this.state.UiSelectedUserFilters.length == 0 && ExpressionHelper.IsEmptyRange(this.state.UiSelectedRange);
-        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.props.onClearFilter()}
-            bsStyle={"default"}
-            style={{ margin: "5px" }}
-            size={"xsmall"}
-            overrideDisableButton={isEmptyFilter}
-            overrideText={"Clear Filter"}
-            overrideTooltip="Clear Filter"
-            DisplayMode="Text" />
-
+  
         return <div>
-            {clearButton}
             {rangeForm}
 
             {textClear}
@@ -272,7 +261,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
     onClickItemColumnValue(item: IRawValueDisplayValuePair) {
         let index: number
         index = this.state.UiSelectedColumnValues.indexOf(item.DisplayValue);
-     
+
         if (index >= 0) {
             let newArray = [...this.state.UiSelectedColumnValues];
             newArray.splice(index, 1);
@@ -280,7 +269,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         }
         else {
             let newArray = [...this.state.UiSelectedColumnValues];
-                newArray.push(item.DisplayValue)
+            newArray.push(item.DisplayValue)
             this.setState({ UiSelectedColumnValues: newArray } as ListBoxFilterFormState, () => this.raiseOnChangeColumnValues())
         }
     }

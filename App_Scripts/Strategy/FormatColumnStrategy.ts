@@ -24,7 +24,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
             let label = formatExists ? "Edit " : "Create "
             let popupParam = formatExists ? "Edit|" : "New|"
 
-            this.createMenuItemColumnMenu(
+            this.createContextMenuItemShowPopup(
                 label + StrategyNames.FormatColumnStrategyName,
                 ScreenPopups.FormatColumnPopup,
                 StrategyGlyphs.FormatColumnGlyph,

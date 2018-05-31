@@ -18,6 +18,8 @@ import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { Expression } from "../../../Core/Api/Expression";
+import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
+import { ButtonClear } from "../Buttons/ButtonClear";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -28,7 +30,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
-    
+
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, {}> {
@@ -52,24 +54,39 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         }
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-        let uiSelectedColumnValues: string[]= existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-                existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
-      
+        let uiSelectedColumnValues: string[] = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
+
         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
 
-        let UiSelectedRangeExpression: IRange = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
+        let uiSelectedRangeExpression: IRange = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
             existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper.CreateEmptyRangeExpression();
 
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
-        let clearButton = <ButtonClose cssClassName={cssClassName} onClick={() => this.onCloseForm()}
+        let isEmptyFilter: boolean = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ExpressionHelper.IsEmptyRange(uiSelectedRangeExpression);
+        // let isEmptyFilter: boolean = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ;
+
+        let closeButton = <ButtonClose cssClassName={cssClassName} onClick={() => this.onCloseForm()}
             bsStyle={"default"}
             size={"xsmall"}
-            overrideTooltip="Close Filter"
-            DisplayMode="Glyph" />
+            DisplayMode="Glyph"
+            hideToolTip={true}
+        />
 
-        return <PanelWithButton cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" button={clearButton}>
+        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onClearFilter()}
+            bsStyle={"default"}
+            style={{ margin: "5px" }}
+            size={"xsmall"}
+            overrideDisableButton={isEmptyFilter}
+            overrideText={"Clear Filter"}
+            DisplayMode="Text"
+            hideToolTip={true}
+        />
+
+
+        return <PanelWithTwoButtons cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" buttonOne={clearButton} buttonTwo={closeButton}>
             <ListBoxFilterForm cssClassName={cssClassName}
                 CurrentColumn={this.props.CurrentColumn}
                 Columns={this.props.Columns}
@@ -77,15 +94,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
                 DataType={this.props.CurrentColumn.DataType}
                 UiSelectedColumnValues={uiSelectedColumnValues}
                 UiSelectedUserFilters={uiSelectedUserFilters}
-                UiSelectedRange={UiSelectedRangeExpression}
+                UiSelectedRange={uiSelectedRangeExpression}
                 UserFilters={appropriateFilterItems}
                 onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
                 onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
-                onClearFilter={()=>this.onClearFilter()}
                 Operators={leafExpressionOperators}
                 onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
             </ListBoxFilterForm>
-        </PanelWithButton>
+        </PanelWithTwoButtons>
     }
 
     getLeafExpressionOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
@@ -130,9 +146,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
     persistFilter(columnValues: string[], userFilters: string[], rangeExpressions: IRange[]): void {
         let expression: Expression
-         expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues,  userFilters, rangeExpressions)
-      
-         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
+        expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, userFilters, rangeExpressions)
+
+        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
 
         //delete if empty
         if (columnValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
@@ -147,7 +163,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
     }
 
     onCloseForm() {
-       this.props.onHideFilterForm()
+        this.props.onHideFilterForm()
     }
 
 }

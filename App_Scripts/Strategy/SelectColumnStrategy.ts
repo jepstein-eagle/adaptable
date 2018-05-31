@@ -16,7 +16,7 @@ export class SelectColumnStrategy extends AdaptableStrategyBase implements ISele
 
     protected addColumnMenuItem(columnId: string): void {
 
-        this.createMenuItemReduxAction(
+        this.createContextMenuItemReduxAction(
             StrategyNames.SelectColumnStrategyName,
             StrategyGlyphs.SelectColumnGlyph,
             GridRedux.GridSelectColumn(columnId)

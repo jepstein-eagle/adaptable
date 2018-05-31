@@ -29,7 +29,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
         let label = (customSort) ? "Edit " : "Create "
         let popupParam = (customSort) ? "Edit|" : "New|"
-        this.createMenuItemColumnMenu(
+        this.createContextMenuItemShowPopup(
             label + StrategyNames.CustomSortStrategyName,
             ScreenPopups.CustomSortPopup,
             StrategyGlyphs.CustomSortGlyph,

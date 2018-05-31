@@ -20,7 +20,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
 
     protected addColumnMenuItem(columnId: string): void {
         if (!this.isReadOnlyStrategy()) {
-            this.createMenuItemReduxAction(
+            this.createContextMenuItemReduxAction(
                 "Hide Column",
                 StrategyGlyphs.ColumnChooserGlyph,
                 GridRedux.GridHideColumn(columnId))

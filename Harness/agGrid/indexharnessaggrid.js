@@ -197,7 +197,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-       //predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -225,18 +225,25 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
+    if (searchArgs.SearchChangedTrigger == "DataSource") {
+        if (searchArgs.SearchChangedTrigger == "Euro") {
+            alert("clearing config")
+            adaptableblotter.api.clearConfig()
+        }
+    }
+
     //alert(searchArgs.SearchChangedTrigger)
     if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
-        if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
-       //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
-            adaptableblotter.api.setSystemStatus("its all fucked", "Red")
+        if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
+            //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
+            adaptableblotter.api.setSystemStatus("its all broken", "Red")
             adaptableblotter.api.showAlert("Error Header", "Error message", "Error")
         } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
-     //       adaptableblotter.api.themeSelectCurrent("White Theme");
+            //       adaptableblotter.api.themeSelectCurrent("White Theme");
             adaptableblotter.api.clearSystemStatus()
             adaptableblotter.api.showAlert("Info Header", "Info message", "Info")
         } else if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
-      //      adaptableblotter.api.themeSelectCurrent("White Theme");
+            //      adaptableblotter.api.themeSelectCurrent("White Theme");
             adaptableblotter.api.setSystemStatus("a few issues perhaps", "Amber")
             adaptableblotter.api.showAlert("Warning Header", "Warning message", "Warning")
         }

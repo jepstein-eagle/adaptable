@@ -23,7 +23,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     protected addColumnMenuItem(columnId: string): void {
-        this.createMenuItemColumnMenu(
+        this.createContextMenuItemShowPopup(
             "Create User Filter",
             ScreenPopups.UserFilterPopupPopup,
             StrategyGlyphs.UserFilterGlyph,

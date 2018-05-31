@@ -122,6 +122,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.Filter.UserFilters = []
         state.Filter.SystemFilters = []
         state.Layout = undefined
+        state.Menu = undefined
         state.PlusMinus = undefined
         state.QuickSearch = undefined
         state.Shortcut = undefined

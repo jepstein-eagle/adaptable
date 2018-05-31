@@ -15,8 +15,8 @@ class ApplicationPopupComponent extends React.Component<ApplicationPopupComponen
         let cssClassName: string = this.props.cssClassName + "__Application";
        
         return <div className={cssClassName}>
-           Hello world
-           
+      
+      
         </div>
     }
 
