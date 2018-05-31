@@ -18,11 +18,7 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
 }
 export class    ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
 
-    onkeyDown(): any {
-        let s: string = "hello"
-        
-    }
-    componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
+      componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
         if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) && StringExtensions.IsNullOrEmpty(nextProps.SelectedColumnValue)) {
             let typeahed: any = (this.refs.typeahead as any);
             if (typeahed) {
@@ -66,8 +62,7 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
             allowNew={allowNew}
             newSelectionPrefix={"new value: "}
             filterBy={["DisplayValue"]}
-            onMenuShow={this.onkeyDown()}
-        />
+          />
 
     }
 

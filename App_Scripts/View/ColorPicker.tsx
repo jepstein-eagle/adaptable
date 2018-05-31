@@ -15,7 +15,7 @@ export class ColorPicker extends React.Component<ColorPickerProps, {}> {
         let ABcolorChoices = <datalist id={'ABcolorChoices'}>
             {ABcolorChoicesOptions}
         </datalist>
-        return <div className={"hello"} >
+        return <div className={"ColorPicker"} >
             <FormControl {...restProps} type="color" style={{ width: '70px' }} list='ABcolorChoices' />
             {ABcolorChoices}
         </div>

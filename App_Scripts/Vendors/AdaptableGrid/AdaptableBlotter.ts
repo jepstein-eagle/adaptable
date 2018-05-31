@@ -259,12 +259,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 valueArray = []
                 selectionMap.set(c.getRowId(), valueArray);
             }
-        //    valueArray.push({ columnId: "hello", dataType: DataType.String, readonly: false, value: c.getRawValue() });
-        });
-
-     //   let selectedCells: ISelectedCells = { Selection: selectionMap }
-     //   console.log("sending selected cells to redux")
-      //  this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
+         });
     }
 
     private getColumnDataType(column: AdaptableGrid.Column): DataType {

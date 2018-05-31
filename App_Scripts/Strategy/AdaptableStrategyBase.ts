@@ -78,10 +78,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     isVisibleStrategy(): boolean {
         let entitlement: IEntitlement = this.getStrategyEntitlement();
         if (entitlement) {
-            if (entitlement.AccessLevel == "Hidden") {
-                let s = "hello"
-            }
-            return entitlement.AccessLevel != "Hidden"
+             return entitlement.AccessLevel != "Hidden"
         }
         return true;
     }
