@@ -66,13 +66,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 
-//if you add an import from a different folder for aggrid
-//you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, IFilterComp, ColDef, AddRangeSelectionParams } from "ag-grid"
-import { Events } from "ag-grid/dist/lib/eventKeys"
-import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
-import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
-import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
+
 
 import { FilterWrapperFactory } from './FilterWrapper'
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
@@ -101,6 +95,14 @@ import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { StyleHelper } from '../../Core/Helpers/StyleHelper';
 
+// ag-Grid imports
+//if you add an import from a different folder for aggrid
+//you need to add it to externals in the webpack prod file
+import { GridOptions, Column, RowNode, ICellEditor, IFilterComp, ColDef, AddRangeSelectionParams } from "ag-grid"
+import { Events } from "ag-grid/dist/lib/eventKeys"
+import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
+import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
