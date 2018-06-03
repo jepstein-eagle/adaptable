@@ -40,7 +40,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
         let titleRow = <StrategyHeader
             key={StrategyNames.CellValidationStrategyName}
             cssClassName={this.props.cssClassName}
-                        StrategyId={StrategyIds.CellValidationStrategyId}
+            StrategyId={StrategyIds.CellValidationStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyNames.CellValidationStrategyName}
@@ -52,8 +52,8 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 let detailRow =
                     <StrategyDetail
-                    cssClassName={this.props.cssClassName}
-                    key={"CV" + index}
+                        cssClassName={this.props.cssClassName}
+                        key={"CV" + index}
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.CellValidationMode)}
                         Item2={item.Description}
                         ConfigEnity={item}
@@ -72,9 +72,10 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
             {this.state.EditedAdaptableBlotterObject &&
                 <CellValidationWizard
-                cssClassName={cssWizardClassName}
-                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                     ConfigEntities={null}
+                    BlotterOptions={this.props.BlotterOptions}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
@@ -83,7 +84,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={()=>this.canFinishWizard()}  />
+                    canFinishWizard={() => this.canFinishWizard()} />
             }
         </div>
     }
@@ -110,7 +111,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
     canFinishWizard() {
         let cellValidatinRule = this.state.EditedAdaptableBlotterObject as ICellValidationRule
         return true;
-      }
+    }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {

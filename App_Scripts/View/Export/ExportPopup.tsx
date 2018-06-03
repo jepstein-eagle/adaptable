@@ -111,6 +111,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                     <ReportWizard
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReport}
+                        BlotterOptions={this.props.BlotterOptions}
                         ModalContainer={this.props.ModalContainer}
                         ConfigEntities={this.props.Reports}
                         Columns={this.props.Columns}

@@ -113,6 +113,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
                         ConfigEntities={this.props.AdvancedSearches}
+                        BlotterOptions={this.props.BlotterOptions}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}

@@ -41,7 +41,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";
-       
+
         let formatColumn: IFormatColumn = this.props.FormatColumns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let noFormatColumn: boolean = formatColumn == null;
 
@@ -60,7 +60,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
             formatColumnRow = <StrategyDetail
                 key={StrategyNames.FormatColumnStrategyName}
                 cssClassName={this.props.cssClassName}
-                        Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.FormatColumnStrategyId} />}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.FormatColumnStrategyId} />}
                 Item2={<StyleVisualItem Style={formatColumn.Style} />}
                 ConfigEnity={formatColumn}
                 showShare={this.props.TeamSharingActivated}
@@ -77,8 +77,9 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
             {this.state.EditedAdaptableBlotterObject &&
                 <FormatColumnWizard
-                cssClassName={cssWizardClassName}
-                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+                    BlotterOptions={this.props.BlotterOptions}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     ConfigEntities={this.props.FormatColumns}
@@ -90,8 +91,8 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={()=>this.canFinishWizard()}
-                    />
+                    canFinishWizard={() => this.canFinishWizard()}
+                />
             }
         </div>
     }
@@ -120,7 +121,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
-    
+
     canFinishWizard() {
         let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
         return StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&

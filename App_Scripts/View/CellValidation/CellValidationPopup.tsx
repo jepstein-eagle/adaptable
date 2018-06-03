@@ -110,6 +110,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                         ConfigEntities={null}
+                        BlotterOptions={this.props.BlotterOptions}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}

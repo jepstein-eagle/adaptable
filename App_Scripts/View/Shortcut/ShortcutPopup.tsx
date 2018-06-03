@@ -102,6 +102,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={shortcut}
                         ConfigEntities={null}
+                        BlotterOptions={this.props.BlotterOptions}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}

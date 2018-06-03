@@ -13,6 +13,7 @@ import { ObjectFactory } from "../../Core/ObjectFactory";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
+import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
@@ -24,7 +25,8 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
     cssClassName: string
-  //  UseOnlyColumnValuesInQueries: boolean
+    BlotterOptions: IAdaptableBlotterOptions
+
 }
 
 export interface ExpressionBuilderPageState {
@@ -64,7 +66,9 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
                             SelectedColumnId={this.state.SelectedColumnId}
                             SelectedTab={this.state.SelectedTab}
-                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}>
+                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                            BlotterOptions={this.props.BlotterOptions}
+                        >
                         </ExpressionBuilderConditionSelector>
                     </Col>
                     <Col xs={6}>

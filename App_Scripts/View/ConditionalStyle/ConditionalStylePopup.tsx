@@ -103,6 +103,7 @@ class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleCo
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                         ConfigEntities={null}
+                        BlotterOptions={this.props.BlotterOptions}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
                         StyleClassNames={this.props.StyleClassNames}

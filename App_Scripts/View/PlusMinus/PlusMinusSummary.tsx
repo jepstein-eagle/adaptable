@@ -74,9 +74,10 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
             {this.state.EditedAdaptableBlotterObject &&
                 <PlusMinusWizard
-                cssClassName={cssWizardClassName}
-                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                     ConfigEntities={null}
+                    BlotterOptions={this.props.BlotterOptions}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}
@@ -87,7 +88,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                     canFinishWizard={() => this.canFinishWizard()}
-                    />
+                />
             }
         </div>
     }

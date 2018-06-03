@@ -105,6 +105,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
+                        BlotterOptions={this.props.BlotterOptions}
                         StyleClassNames={this.props.StyleClassNames}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}

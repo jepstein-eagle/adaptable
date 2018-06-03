@@ -82,6 +82,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     cssClassName={cssWizardClassName}
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                     ConfigEntities={null}
+                    BlotterOptions={this.props.BlotterOptions}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}

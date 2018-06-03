@@ -40,6 +40,10 @@ export interface IAdaptableBlotterOptions {
      */
     serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort'
     /**
+     * Whether the query builder will include just ColumnValues (or also Filters and Ranges).  Used primarily if running search on Server
+     */
+    columnValuesOnlyInQueries: boolean
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

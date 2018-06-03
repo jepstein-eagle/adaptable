@@ -16,6 +16,7 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -31,7 +32,7 @@ export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttr
     SelectedTab: QueryTab
     QueryBuildStatus: QueryBuildStatus
     cssClassName: string
-
+    BlotterOptions: IAdaptableBlotterOptions
 }
 
 export interface ExpressionBuilderConditionSelectorState {
@@ -44,8 +45,8 @@ export interface ExpressionBuilderConditionSelectorState {
 }
 
 export class ExpressionBuilderConditionSelector extends React.Component<ExpressionBuilderConditionSelectorProps, ExpressionBuilderConditionSelectorState> {
-   
-    
+
+
     constructor(props: ExpressionBuilderConditionSelectorProps) {
         super(props);
         this.state = this.buildState(this.props)
@@ -145,8 +146,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
-        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onSelectedColumnChanged()} 
-        bsStyle={"default"}
+        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onSelectedColumnChanged()}
+            bsStyle={"default"}
             style={{ margin: "5px" }}
             size={"xsmall"}
             overrideDisableButton={this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn}
@@ -182,45 +183,57 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 :
                 <div>
                     {selectedColumn &&
-                        <Tab.Container id="left-tabs-example" defaultActiveKey={this.props.SelectedTab} activeKey={this.props.SelectedTab} onSelect={()=>this.onSelectTab()}  >
-                            <div>
-                                <Nav bsStyle="pills" >
-                                    <NavItem eventKey={QueryTab.ColumnValue} onClick={()=>this.onTabChanged(QueryTab.ColumnValue)} >Column Values</NavItem>
-                                    <NavItem eventKey={QueryTab.Filter} onSelect={()=>this.onTabChanged(QueryTab.Filter)} >Filters</NavItem>
-                                    <NavItem eventKey={QueryTab.Range} onClick={()=>this.onTabChanged(QueryTab.Range)} >Ranges</NavItem>
-                                </Nav>
-                                <Tab.Content animation>
-                                    <Tab.Pane eventKey={QueryTab.ColumnValue} >
-                                        {selectedColumn.DataType != DataType.Boolean &&
-                                            <ExpressionBuilderColumnValues
-                                                cssClassName={cssClassName}
-                                                ColumnValues={this.state.ColumnValues}
-                                                SelectedValues={this.state.SelectedColumnValues}
-                                                onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
-                                            </ExpressionBuilderColumnValues>
+                        <div>
+                            {this.props.BlotterOptions.columnValuesOnlyInQueries ?
+                                <ExpressionBuilderColumnValues
+                                    cssClassName={cssClassName}
+                                    ColumnValues={this.state.ColumnValues}
+                                    SelectedValues={this.state.SelectedColumnValues}
+                                    onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
+                                </ExpressionBuilderColumnValues>
+                                :
+                                <Tab.Container id="left-tabs-example" defaultActiveKey={this.props.SelectedTab} activeKey={this.props.SelectedTab} onSelect={() => this.onSelectTab()}  >
+                                    <div>
+                                        <Nav bsStyle="pills" >
+                                            <NavItem eventKey={QueryTab.ColumnValue} onClick={() => this.onTabChanged(QueryTab.ColumnValue)} >Column Values</NavItem>
+                                            <NavItem eventKey={QueryTab.Filter} onSelect={() => this.onTabChanged(QueryTab.Filter)} >Filters</NavItem>
+                                            <NavItem eventKey={QueryTab.Range} onClick={() => this.onTabChanged(QueryTab.Range)} >Ranges</NavItem>
+                                        </Nav>
+                                        <Tab.Content animation>
+                                            <Tab.Pane eventKey={QueryTab.ColumnValue} >
+                                                {selectedColumn.DataType != DataType.Boolean &&
+                                                    <ExpressionBuilderColumnValues
+                                                        cssClassName={cssClassName}
+                                                        ColumnValues={this.state.ColumnValues}
+                                                        SelectedValues={this.state.SelectedColumnValues}
+                                                        onColumnValuesChange={(selectedValues) => this.onSelectedColumnValuesChange(selectedValues)}>
+                                                    </ExpressionBuilderColumnValues>
 
-                                        }
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey={QueryTab.Filter} >
-                                        <ExpressionBuilderUserFilter
-                                            cssClassName={cssClassName}
-                                            AvailableFilterNames={availableFilterNames}
-                                            SelectedFilterNames={this.state.SelectedFilterExpressions}
-                                            onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
-                                        </ExpressionBuilderUserFilter>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey={QueryTab.Range}  >
-                                        <ExpressionBuilderRanges
-                                            cssClassName={cssClassName}
-                                            SelectedColumn={selectedColumn}
-                                            Ranges={this.state.SelectedColumnRanges}
-                                            Columns={this.props.ColumnsList}
-                                            onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
-                                        </ExpressionBuilderRanges>
-                                    </Tab.Pane>
-                                </Tab.Content>
-                            </div>
-                        </Tab.Container>
+                                                }
+                                            </Tab.Pane>
+                                            <Tab.Pane eventKey={QueryTab.Filter} >
+                                                <ExpressionBuilderUserFilter
+                                                    cssClassName={cssClassName}
+                                                    AvailableFilterNames={availableFilterNames}
+                                                    SelectedFilterNames={this.state.SelectedFilterExpressions}
+                                                    onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
+                                                </ExpressionBuilderUserFilter>
+                                            </Tab.Pane>
+                                            <Tab.Pane eventKey={QueryTab.Range}  >
+                                                <ExpressionBuilderRanges
+                                                    cssClassName={cssClassName}
+                                                    SelectedColumn={selectedColumn}
+                                                    Ranges={this.state.SelectedColumnRanges}
+                                                    Columns={this.props.ColumnsList}
+                                                    onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
+                                                </ExpressionBuilderRanges>
+                                            </Tab.Pane>
+                                        </Tab.Content>
+                                    </div>
+                                </Tab.Container>
+
+                            }
+                        </div>
                     }
                 </div>
             }
@@ -231,11 +244,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         // empty
     }
 
-    onTabChanged(tab :QueryTab): any {
+    onTabChanged(tab: QueryTab): any {
         this.props.onSelectedColumnChange(this.props.SelectedColumnId, tab)
     }
 
-     onSelectedColumnChanged() {
+    onSelectedColumnChanged() {
         this.props.onSelectedColumnChange("", QueryTab.ColumnValue)
     }
 

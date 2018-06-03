@@ -35,5 +35,5 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '315px',
+    'height': '350px',
 }

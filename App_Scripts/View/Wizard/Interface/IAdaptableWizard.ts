@@ -2,6 +2,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 
 export interface AdaptableWizardStep {
     StepName: string
@@ -26,6 +27,7 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
     UserFilters: IUserFilter[],
     SystemFilters: string[],
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    BlotterOptions: IAdaptableBlotterOptions
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
@@ -34,6 +36,7 @@ export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> ext
     UserFilters: IUserFilter[]
     SystemFilters: string[]
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    BlotterOptions: IAdaptableBlotterOptions
 }
 
 // props for a basic wizard

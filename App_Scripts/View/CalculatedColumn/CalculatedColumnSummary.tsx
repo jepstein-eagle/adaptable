@@ -64,7 +64,8 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                     ConfigEntities={this.props.CalculatedColumns}
                     Columns={this.props.Columns}
-                    ModalContainer={this.props.ModalContainer}
+                    BlotterOptions={this.props.BlotterOptions}
+                        ModalContainer={this.props.ModalContainer}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}

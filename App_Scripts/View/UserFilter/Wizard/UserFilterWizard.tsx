@@ -40,7 +40,9 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
                             UserFilters={this.props.UserFilters}
                             SystemFilters={this.props.SystemFilters}
                             ExpressionMode={ExpressionMode.SingleColumn}
-                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
+                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                            BlotterOptions={this.props.BlotterOptions}
+                        />,
                         <UserFilterSettingsWizard
                             cssClassName={this.props.cssClassName} StepName={stepNames[2]}
                             UserFilters={this.props.UserFilters}
