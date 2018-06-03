@@ -278,12 +278,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
-                this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
+                this.tempSetColumnVisibleFixForBuild(this.vendorGrid.columnApi, col, true, "api")
+               // this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
             }
-            this.vendorGrid.columnApi.moveColumn(col, startIndex + index, "api") // not sure if this right - there is a new parametr of columneventtype here...
+          //  this.vendorGrid.columnApi.moveColumn(col, startIndex + index, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            this.tempMoveColumnFixForBuild( this.vendorGrid.columnApi, col, startIndex + index, "api");
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
-            this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            this.tempSetColumnVisibleFixForBuild(this.vendorGrid.columnApi, col, false, "api")
+        //    this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
         // we need to do this to make sure agGrid and Blotter cols collections are in sync
         this.setColumnIntoStore();
@@ -1292,6 +1295,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.debouncedSetSelectedCells()
 
     }
+
+    private tempSetColumnVisibleFixForBuild(columnApi:any, col: any, isVisible: boolean, columnEventType: string){
+       columnApi.setColumnVisible(col, true, "api")
+    }
+
+    private tempMoveColumnFixForBuild(columnApi:any, col: any, index: number, columnEventType: string){
+        columnApi.moveColumn(col, index, "api")
+    }
+
+
 
 }
 
