@@ -5,6 +5,10 @@ export module ArrayExtensions {
         return array.indexOf(itemToCheck) > -1;
     }
 
+    export function RetrieveDistinct(array: any[]): any[] {
+        return  [...new Set(array.map(item => item))];
+    }
+
     export function IsNull(arrayToCheck: any[]) : boolean {
         return arrayToCheck == null;
     }

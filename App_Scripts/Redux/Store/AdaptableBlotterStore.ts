@@ -35,6 +35,7 @@ import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
+import * as SelectedCellsRedux from '../ActionsReducers/SelectedCellsRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
@@ -59,6 +60,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -85,6 +87,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
     UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
+    SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     FormatColumn: FormatColumnRedux.FormatColumnReducer
 });
@@ -127,6 +130,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.QuickSearch = undefined
         state.Shortcut = undefined
         state.SmartEdit = undefined
+        state.SelectedCells = undefined
         state.TeamSharing = undefined
         state.Theme = undefined
         state.UserInterface = undefined
@@ -162,7 +166,21 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //     }
         // }
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-        engineWithFilter = filter(engineWithMigrate, [], ["TeamSharing", "UserInterface", "Popup", "Entitlements", "Menu", "Grid", "Blotter", "BulkUpdate", "SystemFilter", ["Calendar", "AvailableCalendars"], ["Theme", "AvailableThemes"], ["Export", "CurrentLiveReports"], ["SmartEdit", "IsValidSelection"], ["SmartEdit", "PreviewInfo"]]);
+        engineWithFilter = filter(engineWithMigrate, [], [
+            "TeamSharing",
+            "UserInterface",
+            "Popup", "Entitlements",
+            "Menu",
+            "Grid", "Blotter",
+            "BulkUpdate",
+            "SystemFilter",
+            ["Calendar", "AvailableCalendars"],
+            ["Theme", "AvailableThemes"],
+            ["Export", "CurrentLiveReports"],
+            ["SmartEdit", "IsValidSelection"],
+            ["SmartEdit", "PreviewInfo"],
+            ["SelectedCells", "SelectedCellSummary"]
+        ]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
@@ -656,6 +674,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 }
 
                 /*  *********
+                SELECTED CELL ACTIONS
+                ************ */
+                case SelectedCellsRedux.SELECTED_CELLS_CREATE_SUMMARY: {
+                    let SelectedCellsStrategy = <ISelectedCellsStrategy>(blotter.Strategies.get(StrategyIds.SelectedCellsStrategyId));
+                    let state = middlewareAPI.getState();
+                    let returnAction = next(action);
+                    let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo
+                    let apiSummaryReturn: ISelectedCellSummmary = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
+                    middlewareAPI.dispatch(SelectedCellsRedux.SelectedCellSetSummary(apiSummaryReturn));
+                    return returnAction;
+                }
+
+                /*  *********
                 SMART EDIT ACTIONS
                 ************ */
                 case SmartEditRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
@@ -728,7 +759,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         }
                         middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(false));
                     } else {
-                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(true)); 
+                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(true));
                         let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
                         middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiPreviewReturn));
                     }

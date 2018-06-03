@@ -157,7 +157,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        // this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+     //   this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
@@ -354,7 +354,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         for (let rectangle of selected) {
             //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
-           for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
+            for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
                 let column = this.vendorGrid.behavior.getActiveColumns()[columnIndex]
                 let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == column.name);
                 columns.push(selectedColumn)
@@ -515,6 +515,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
+        this.ClearSelection();
+    }
+
+    private ClearSelection() {
+        this.vendorGrid.selectionModel.clear();
+        this.debouncedSetSelectedCells()
     }
 
     public cancelEdit() {
@@ -1039,7 +1045,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.vendorGrid.behavior.reindex();
         });
         grid.addEventListener('fin-selection-changed', () => {
+          //  let test = this.vendorGrid.selectionModel.getSelectedColumns()
             this.debouncedSetSelectedCells()
+        });
+        grid.addEventListener('fin-column-selection-changed', () => {
+         //   let test = this.vendorGrid.selectionModel.getSelectedColumns()
+        //    this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....
@@ -1198,9 +1209,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public selectColumn(columnId: string) {
-
+        // still not got this working. i can select a column but it doesnt trigger the correct selections so nothing appens
+        // it seems as though we can set the ColumnSelections and RowSelections collections but not the main Selection collection which is what we need
+        // stupid stupid grid.
+        //   let test = this.vendorGrid.selectionModel.getSelectedColumns()
+        let index = this.vendorGrid.behavior.getActiveColumns().findIndex((c: any) => c.name == columnId)
+        this.vendorGrid.selectionModel.clear();
         // not implementing until can work out how to do it!
-
+        this.vendorGrid.selectionModel.selectColumn(index, index)
+        this.vendorGrid.selectionModel.selectRow(index, index)
+        this.vendorGrid.selectionModel.setLastSelectionType("cell")
+        this.debouncedSetSelectedCells()
     }
 
     public onSortSaved(gridColumnIndex: number) {
@@ -1235,7 +1254,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setGridSort(gridSorts: IGridSort[]): void {
-         this.vendorGrid.behavior.reindex();
+        this.vendorGrid.behavior.reindex();
     }
 
     public setGridData(data: any): void {

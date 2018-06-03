@@ -27,6 +27,7 @@ export interface AdaptableBlotterState {
     UserInterface: AdaptableBlotterStates.UserInterfaceState;
     TeamSharing: AdaptableBlotterStates.TeamSharingState;
     FormatColumn: AdaptableBlotterStates.FormatColumnState;
+    SelectedCells: AdaptableBlotterStates.SelectedCellsState;
 }
 
 export interface IAdaptableBlotterStore {

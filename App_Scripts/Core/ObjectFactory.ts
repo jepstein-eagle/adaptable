@@ -6,6 +6,7 @@ import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { KeyValuePair } from '../View/UIInterfaces';
 import { ColumnHelper } from './Helpers/ColumnHelper';
+import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 
 export module ObjectFactory {
 
@@ -158,6 +159,19 @@ export module ObjectFactory {
             FontStyle: FontStyle.Normal, 
             FontSize: null, 
             ClassName: ""
+        }
+    }
+
+    export function CreateEmptySelectedCellSummmary(): ISelectedCellSummmary {
+        return {
+            Sum: null,
+            Average:  null,
+            Mode:  null,
+            Median:  null,
+            Distinct:  null,
+            Max:  null,
+            Min: null,
+            Count: null,
         }
     }
 

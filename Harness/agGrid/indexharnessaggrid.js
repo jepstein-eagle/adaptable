@@ -206,7 +206,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        //  predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
+         predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -229,25 +229,25 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
-    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+//    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
     //alert(searchArgs.SearchChangedTrigger)
-    if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
-        if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
+    if (searchArgs.SearchChangedTrigger == "DataSource") {
+        if (searchArgs.BlotterSearchState.DataSource == "Eurssso") {
             //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
-            adaptableblotter.api.setSystemStatus("its all broken", "Red")
-            adaptableblotter.api.showAlert("Error Header", "Error message", "Error")
+            adaptableblotter.api.systemStatusSet("its all broken", "Red")
+            adaptableblotter.api.alertShow("Error Header", "Error message", "Error")
         } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
             //       adaptableblotter.api.themeSelectCurrent("White Theme");
-            adaptableblotter.api.clearSystemStatus()
-            adaptableblotter.api.showAlert("Info Header", "Info message", "Info")
+            adaptableblotter.api.systemStatusClear()
+            adaptableblotter.api.alertShow("Hello Arjun", "This is a message sent from the Server...", "Info")
         } else if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
             //      adaptableblotter.api.themeSelectCurrent("White Theme");
-            adaptableblotter.api.setSystemStatus("a few issues perhaps", "Amber")
-            adaptableblotter.api.showAlert("Warning Header", "Warning message", "Warning")
+            adaptableblotter.api.systemStatusSet("a few issues perhaps", "Amber")
+            adaptableblotter.api.alertShow("Warning Header", "Warning message", "Warning")
         }
         /*
         if (searchArgs.BlotterSearchState.DataSource == "Dollar") {

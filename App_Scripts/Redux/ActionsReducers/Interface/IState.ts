@@ -8,7 +8,7 @@ import { IEntitlement, IPermittedColumnValues, ISystemStatus } from '../../../Co
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISelectedCellInfo } from '../../../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 
 /*
 Created by the system  at run-time and not part of predefined or user config and not saved
@@ -93,6 +93,11 @@ export interface SmartEditState {
     IsValidSelection: boolean
     PreviewInfo: IPreviewInfo
 
+}
+
+export interface SelectedCellsState {
+    SelectedCellOperation: 'Sum' | 'Average'
+    SelectedCellSummary: ISelectedCellSummmary
 }
 
 

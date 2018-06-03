@@ -14,6 +14,8 @@ export module UIHelper {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
         }
     }
+
+ 
     export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
         return {
             Expression: expression, SelectedColumnId: "", SelectedTab: null

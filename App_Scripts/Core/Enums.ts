@@ -200,7 +200,14 @@ export enum AlertType {
 }
 
 export enum SelectedCellOperation{
-    Sum='Sum'
+    Sum='Sum',
+    Average='Average',
+    Mode ='Mode',
+    Median ='Median',
+    Distinct='Distinct',
+    Max='Max',
+    Min='Min',
+    Count = 'Count'
 }
 
 
