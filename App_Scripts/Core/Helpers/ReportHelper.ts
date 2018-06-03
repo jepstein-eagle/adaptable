@@ -2,10 +2,10 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { ReportColumnScope, ReportRowScope } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
-import { ISelectedCells, ISelectedCellInfo } from '../Interface/Interfaces';
 import { IReport, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../Api/Expression';
+import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
 export module ReportHelper {
 
     export const ALL_DATA_REPORT = 'All Data'
@@ -56,7 +56,7 @@ export module ReportHelper {
                 ReportColumns = gridColumns.filter(c => c.Visible);
                 break;
             case ReportColumnScope.SelectedColumns:
-                let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
+                let selectedCells: ISelectedCellInfo = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
 
                 if (selectedCells.Selection.size == 0) {
                     // some way of saying we cannot export anything
@@ -64,7 +64,7 @@ export module ReportHelper {
                 }
 
                 // first get column names - just look at first entry as colnames will be same for each
-                let firstRow: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
+                let firstRow: ISelectedCell[] = selectedCells.Selection.values().next().value
                 for (let selectedCellInfo of firstRow) {
                     ReportColumns.push(gridColumns.find(c => c.ColumnId == selectedCellInfo.columnId));
                 }
@@ -106,7 +106,7 @@ export module ReportHelper {
                 break;
 
             case ReportRowScope.SelectedRows:
-                let selectedCells: ISelectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
+                let selectedCells: ISelectedCellInfo = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
                 let colNames: string[] = ReportColumns.map(c => c.FriendlyName);
                 for (var keyValuePair of selectedCells.Selection) {
                     let values: any[] = []

@@ -154,7 +154,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             overrideTooltip="Clear"
             DisplayMode="Text" />
 
-        return <PanelWithButton cssClassName={cssClassName} headerText={panelHeader} bsStyle="info" style={{ height: '427px' }} button={clearButton}>
+        return <PanelWithButton cssClassName={cssClassName} headerText={panelHeader} bsStyle="info" style={{ height: '447px' }} button={clearButton}>
 
 
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ?

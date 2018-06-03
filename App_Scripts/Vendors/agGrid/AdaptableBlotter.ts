@@ -82,7 +82,7 @@ import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues, ISelectedCellInfo } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
@@ -97,6 +97,9 @@ import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as _ from 'lodash'
+import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
+import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { StyleHelper } from '../../Core/Helpers/StyleHelper';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -174,6 +177,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         // not able to select a column in hypergrid currently
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
 
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
@@ -298,7 +302,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
                         DataType: this.getColumnDataType(col),
                         Visible: true,
-                        Index: index
+                        Index: index,
+                        ReadOnly: this.isColumnReadonly(colId)
                     }
                     visibleColumns.push(visibleCol)
                 } else {
@@ -307,7 +312,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
                         DataType: this.getColumnDataType(col),
                         Visible: false,
-                        Index: index
+                        Index: index,
+                        ReadOnly: this.isColumnReadonly(colId)
                     }
                     visibleColumns.push(hiddenCol)
                 }
@@ -318,7 +324,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let allColumns = visibleColumns.concat(hiddenColumns)
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(allColumns));
         let blotter = this
-        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ? blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName : StyleConstants.QUICK_SEARCH_STYLE
+        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ?
+            blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName :
+            StyleHelper.CreateStyleName(StrategyIds.QuickSearchStrategyId, this)
         for (let col of allColumns) {
             let cellClassRules: any = {};
             cellClassRules[quickSearchClassName] = function (params: any) {
@@ -407,8 +415,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
-        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
+        let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
         let selected = this.vendorGrid.api.getRangeSelections();
+        let columns: IColumn[] = []
         if (selected) {
             //we iterate for each ranges
             selected.forEach((rangeSelection, index) => {
@@ -416,9 +425,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex)
                 for (let column of rangeSelection.columns) {
                     let colId: string = column.getColId();
-                    let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
-                    let dataType = DataType.Number;
-                    let isReadonly: boolean = this.isColumnReadonly(colId)
+                    if (index == 0) {
+                        let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
+                        //   let dataType = DataType.Number;
+                        //   let isReadonly: boolean = this.isColumnReadonly(colId)
+                        columns.push(selectedColumn);
+                    }
+
                     for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
                         let rowNode = this.vendorGrid.api.getModel().getRow(rowIndex)
                         //if the selected cells are from a group cell we don't return it
@@ -426,19 +439,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         if (rowNode && !rowNode.group) {
                             let primaryKey = this.getPrimaryKeyValueFromRecord(rowNode)
                             let value = this.vendorGrid.api.getValue(column, rowNode)
-                            let valueArray: ISelectedCellInfo[] = selectionMap.get(primaryKey);
+                            let valueArray: ISelectedCell[] = selectionMap.get(primaryKey);
                             if (valueArray == undefined) {
                                 valueArray = []
                                 selectionMap.set(primaryKey, valueArray);
                             }
-                            let selectedCellInfo: ISelectedCellInfo = { columnId: colId, dataType: selectedColumn.DataType, readonly: isReadonly, value: value }
+                            let selectedCellInfo: ISelectedCell = { columnId: colId, value: value }
                             valueArray.push(selectedCellInfo);
                         }
                     }
                 }
             });
         }
-        let selectedCells: ISelectedCells = { Selection: selectionMap }
+        let selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
         this._onSelectedCellsChanged.Dispatch(this, this)
     }
@@ -556,6 +569,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         })
         this.applyGridFiltering();
+        this.vendorGrid.api.clearRangeSelection();
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
@@ -602,7 +616,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.applyGridFiltering();
 
-        this.testing();
+        this.vendorGrid.api.clearRangeSelection();
     }
 
     public cancelEdit() {
@@ -640,7 +654,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    public isColumnReadonly(columnId: string): boolean {
+    private isColumnReadonly(columnId: string): boolean {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
@@ -753,7 +767,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             if (type == "FormatColumn") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StyleConstants.FORMAT_COLUMN_STYLE)) {
+                    if (prop.includes(StrategyIds.FormatColumnStrategyId)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -761,7 +775,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             else if (type == "ConditionalStyle") {
                 let cssStyles: string[] = this.getState().ConditionalStyle.ConditionalStyles.map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StyleConstants.CONDITIONAL_STYLE_STYLE) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
+                    if (prop.includes(StrategyIds.ConditionalStyleStrategyId) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -769,7 +783,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //Is initialized in setColumnIntoStore
             else if (type == "QuickSearch") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StyleConstants.QUICK_SEARCH_STYLE)) {
+                    if (prop.includes(StrategyIds.QuickSearchStrategyId)) {
                         delete localCellClassRules[prop]
                     }
                 }

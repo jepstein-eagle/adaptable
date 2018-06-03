@@ -22,6 +22,7 @@
         percentChange: number;
          lastUpdated: Date;
         lastUpdatedBy: string;
+        /*
         extraCol1: string;
         extraCol2: string;
         extraCol3: string;
@@ -40,4 +41,5 @@
         extraCol16: string;
         extraCol17: string;
         extraCol18: string;
+        */
     }

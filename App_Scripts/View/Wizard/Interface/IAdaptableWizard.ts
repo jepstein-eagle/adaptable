@@ -28,6 +28,14 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
 }
 
+// props for a wizard that wraps a config entity that contans an Expression
+export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
+    Columns: Array<IColumn>
+    UserFilters: IUserFilter[]
+    SystemFilters: string[]
+    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+}
+
 // props for a basic wizard
 export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View> {
     WizardStartIndex: number
@@ -44,10 +52,3 @@ export interface IAdaptableBlotterObjectAdaptableWizardProps<View> extends IAdap
     EditedAdaptableBlotterObject: IAdaptableBlotterObject
 }
 
-// props for a wizard that wraps a config entity that contans an Expression
-export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
-    Columns: Array<IColumn>
-    UserFilters: IUserFilter[]
-    SystemFilters: string[]
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-}

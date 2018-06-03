@@ -4,6 +4,9 @@ import { FlashingCellState, QuickSearchState, ConditionalStyleState, FormatColum
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import * as StyleConstants from '../../Core/Constants/StyleConstants'
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { StyleHelper } from '../Helpers/StyleHelper';
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+
 
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
@@ -41,22 +44,26 @@ export class StyleService {
             this.clearCSSRules()
 
             this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
-                this.addCSSRule("." + StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(formatColumn),
+                let styleName = StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(formatColumn), this.blotter)
+                this.addCSSRule("." + styleName,
                     'background-color: ' + formatColumn.Style.BackColor + ' !important;color: ' + formatColumn.Style.ForeColor + ' !important;font-weight: ' + formatColumn.Style.FontWeight + ' !important;font-style: ' + formatColumn.Style.FontStyle + ' !important;' + (formatColumn.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(formatColumn.Style.FontSize) + ' !important') : ''))
             });
 
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+                let styleName = StyleHelper.CreateIndexedStyleName(StrategyIds.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
+                this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column).forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.CONDITIONAL_STYLE_STYLE + this.ConditionalStyleState.ConditionalStyles.indexOf(element), 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+                let styleName = StyleHelper.CreateIndexedStyleName(StrategyIds.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
+                this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
 
 
             // quick search
             if (StringExtensions.IsNullOrEmpty(this.QuickSearchState.Style.ClassName)) {
-                this.addCSSRule("." + StyleConstants.QUICK_SEARCH_STYLE, 'background-color: ' + this.QuickSearchState.Style.BackColor + ' !important;color: ' + this.QuickSearchState.Style.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.Style.FontWeight + ' !important;font-style: ' + this.QuickSearchState.Style.FontStyle + ' !important;' + (this.QuickSearchState.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.Style.FontSize) + ' !important') : ''))
+                let styleName = StyleHelper.CreateStyleName(StrategyIds.QuickSearchStrategyId, this.blotter)
+                this.addCSSRule("." + styleName, 'background-color: ' + this.QuickSearchState.Style.BackColor + ' !important;color: ' + this.QuickSearchState.Style.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.Style.FontWeight + ' !important;font-style: ' + this.QuickSearchState.Style.FontStyle + ' !important;' + (this.QuickSearchState.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.Style.FontSize) + ' !important') : ''))
             }
             //we define last Flash since it has the highest priority
             this.FlashingCellState.FlashingCells.forEach((element, index) => {

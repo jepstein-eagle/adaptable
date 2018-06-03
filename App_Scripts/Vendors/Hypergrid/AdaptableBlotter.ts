@@ -59,7 +59,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, IPermittedColumnValues, ISelectedCellInfo } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -72,6 +72,8 @@ import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as _ from 'lodash'
+import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
+import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 
 //icon to indicate toggle state
@@ -156,6 +158,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
         // this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
@@ -239,7 +242,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: true,
-                Index: index
+                Index: index,
+                ReadOnly: this.isColumnReadonly(x.name)
             }
         });
         let hiddenColumns: IColumn[] = this.vendorGrid.behavior.getHiddenColumns().map((x: any) => {
@@ -248,7 +252,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: false,
-                Index: -1
+                Index: -1,
+                ReadOnly: this.isColumnReadonly(x.name)
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -343,16 +348,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
-        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
-        var selected: Array<any> = this.vendorGrid.selectionModel.getSelections();
+        let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
+        let selected: Array<any> = this.vendorGrid.selectionModel.getSelections();
+        let columns: IColumn[] = [];
 
         for (let rectangle of selected) {
             //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
-            //for (let columnIndex = rectangle.firstSelectedCell.x; columnIndex <= rectangle.lastSelectedCell.x; columnIndex++) {
-            for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
+           for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
                 let column = this.vendorGrid.behavior.getActiveColumns()[columnIndex]
                 let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == column.name);
-                let isReadonly: boolean = this.isColumnReadonly(column.name)
+                columns.push(selectedColumn)
                 for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
                     let row = this.vendorGrid.behavior.dataModel.dataSource.getRow(rowIndex)
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row)
@@ -360,17 +365,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //this line is pretty much doing the same....just keeping it for the record
                     //maybe we could get it directly from the row..... dunno wht's best
                     // let value = column.getValue(rowIndex)
-                    let valueArray: ISelectedCellInfo[] = selectionMap.get(primaryKey);
+                    let valueArray: ISelectedCell[] = selectionMap.get(primaryKey);
                     if (valueArray == undefined) {
                         valueArray = []
                         selectionMap.set(primaryKey, valueArray);
                     }
-                    let selectedCellInfo: ISelectedCellInfo = { columnId: column.name, dataType: selectedColumn.DataType, readonly: isReadonly, value: value }
+                    let selectedCellInfo: ISelectedCell = { columnId: column.name, value: value }
                     valueArray.push(selectedCellInfo);
                 }
             }
         }
-        let selectedCells: ISelectedCells = { Selection: selectionMap }
+        let selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
         this._onSelectedCellsChanged.Dispatch(this, this)
     }
@@ -569,7 +574,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public isColumnReadonly(columnId: string): boolean {
+    private isColumnReadonly(columnId: string): boolean {
         if (this.vendorGrid.cellEditor) {
             if (this.vendorGrid.cellEditor.column.name == columnId) {
                 //we are already editing that column so that's an easy answer
@@ -1034,7 +1039,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.vendorGrid.behavior.reindex();
         });
         grid.addEventListener('fin-selection-changed', () => {
-             this.debouncedSetSelectedCells()
+            this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....
@@ -1230,15 +1235,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setGridSort(gridSorts: IGridSort[]): void {
-        //   if (gridSorts.length> 0) { 
-        //      let gridSort: IGridSort = gridSorts[0];   // we know that for hypergrid tehre is only one sort
-        //      this.sortColumnGridIndex = this.vendorGrid.behavior.getColumns().find((c: any) => c.name == gridSort.Column).index;
-        //       this.sortColumnName = gridSort.Column;
-        //       this.sortOrder = gridSort.SortOrder;
-        //   } else {
-        //       this.sortColumnGridIndex = -1;
-        //   }
-        this.vendorGrid.behavior.reindex();
+         this.vendorGrid.behavior.reindex();
     }
 
     public setGridData(data: any): void {
@@ -1252,10 +1249,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setVendorGridState(vendorGridState: any): void {
-        // todo
+        // todo - but we dont know how to ;(
     }
 
-  
+
 
 }
 

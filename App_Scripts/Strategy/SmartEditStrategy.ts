@@ -10,10 +10,11 @@ import { ISmartEditStrategy } from '../Strategy/Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
-import { ICellInfo, ISelectedCellInfo } from '../Core/Interface/Interfaces';
+import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { ISelectedCell } from './Interface/ISelectedCellsStrategy';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -29,8 +30,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
-        if (selectedCells == null || selectedCells.Selection.size == 0) {
+        let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Error: {
                     ErrorHeader: "Smart Edit Error",
@@ -39,9 +40,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
         }
 
-        let selectedRows: ISelectedCellInfo[] = selectedCells.Selection.values().next().value
-
-        if (selectedRows.length != 1) {
+        if (selectedCellInfo.Columns.length != 1) {
             return {
                 Error: {
                     ErrorHeader: "Smart Edit Error",
@@ -50,7 +49,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
         }
 
-       if (selectedRows[0].dataType != DataType.Number) {
+       if (selectedCellInfo.Columns[0].DataType != DataType.Number) {
             return {
                 Error: {
                     ErrorHeader: "Smart Edit Error",
@@ -59,7 +58,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             }
         }
 
-        if (selectedRows[0].readonly) {
+        if (selectedCellInfo.Columns[0].ReadOnly) {
             return {
                 Error: {
                     ErrorHeader: "Smart Edit Error",
@@ -72,34 +71,34 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): IPreviewInfo {
-        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells;
+        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         let previewResults: IPreviewResult[] = [];
-        let columnId: string;
-
+        let columnId: string = selectedCells.Columns[0].ColumnId
+       
         for (let pair of selectedCells.Selection) {
-            for (var columnValuePair of pair[1]) {
+            for (var selectedCell of pair[1]) {
                 let newValue: number;
                 switch (smartEditOperation) {
                     case MathOperation.Add:
-                        newValue = Number(columnValuePair.value) + smartEditValue
+                        newValue = Number(selectedCell.value) + smartEditValue
                         break;
                     case MathOperation.Subtract:
-                        newValue = Number(columnValuePair.value) - smartEditValue
+                        newValue = Number(selectedCell.value) - smartEditValue
                         break;
                     case MathOperation.Multiply:
-                        newValue = Number(columnValuePair.value) * smartEditValue
+                        newValue = Number(selectedCell.value) * smartEditValue
                         break;
                     case MathOperation.Divide:
-                        newValue = Number(columnValuePair.value) / smartEditValue
+                        newValue = Number(selectedCell.value) / smartEditValue
                         break;
                 }
                 //avoid the 0.0000000000x 
                 newValue = parseFloat(newValue.toFixed(12))
 
                 let dataChangedEvent: IDataChangedEvent = {
-                    OldValue: Number(columnValuePair.value),
+                    OldValue: Number(selectedCell.value),
                     NewValue: newValue,
-                    ColumnId: columnValuePair.columnId,
+                    ColumnId: selectedCell.columnId,
                     IdentifierValue: pair[0],
                     Timestamp: Date.now(),
                     Record: null
@@ -107,9 +106,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
 
-                let previewResult: IPreviewResult = { Id: pair[0], InitialValue: Number(columnValuePair.value), ComputedValue: newValue, ValidationRules: validationRules }
+                let previewResult: IPreviewResult = { Id: pair[0], InitialValue: Number(selectedCell.value), ComputedValue: newValue, ValidationRules: validationRules }
                 previewResults.push(previewResult)
-                columnId = columnValuePair.columnId;
             }
         }
 

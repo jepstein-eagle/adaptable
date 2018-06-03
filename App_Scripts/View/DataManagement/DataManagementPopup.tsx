@@ -30,8 +30,6 @@ interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagement
 
 class DataManagementPopupComponent extends React.Component<DataManagementPopupProps, {}> {
 
-
-
     constructor() {
         super();
         this.state = UIHelper.EmptyConfigState();
@@ -68,7 +66,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     }
 
     onClear() {
-        this.props.BlotterApi.clearConfig();
+        this.props.BlotterApi.configClear();
     }
 
 

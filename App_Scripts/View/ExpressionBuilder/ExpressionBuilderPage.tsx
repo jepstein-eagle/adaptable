@@ -24,6 +24,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
     cssClassName: string
+  //  UseOnlyColumnValuesInQueries: boolean
 }
 
 export interface ExpressionBuilderPageState {
@@ -49,7 +50,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText="Query Builder"
                 button={newButton}
-                bsStyle="primary" style={{ height: '500px' }}>
+                bsStyle="primary" style={{ height: '520px' }}>
                 <Row>
                     <Col xs={6}>
                         <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}

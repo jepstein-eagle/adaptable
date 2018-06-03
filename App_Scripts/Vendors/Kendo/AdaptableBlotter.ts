@@ -60,7 +60,7 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells, ISelectedCellInfo } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -71,6 +71,8 @@ import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
+import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
+import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -82,7 +84,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    
+
     public StyleService: StyleService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -101,14 +103,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
-        
+
 
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
 
         // store the options in state - and also later anything else that we need...
-     //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
+        //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         this.Strategies = new Map<string, IStrategy>();
 
@@ -134,6 +136,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         // removing theme from kendo until we can get the table issue working properly
         // this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
@@ -229,7 +232,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 FriendlyName: x.title ? x.title : (x.field ? x.field : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: isVisible,
-                Index: isVisible ? index : -1
+                Index: isVisible ? index : -1,
+                ReadOnly: this.isColumnReadonly(x.field)
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(columns));
@@ -322,8 +326,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
 
-        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
+        let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
         var selected = this.vendorGrid.select().not("tr");
+        let cols: IColumn[]=[]
         selected.each((i, element) => {
             var row = $(element).closest("tr");
             var item = this.vendorGrid.dataItem(row);
@@ -338,10 +343,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 valueArray = []
                 selectionMap.set(uuid, valueArray);
             }
-            valueArray.push({ columnId: col, dataType: selectedColumn.DataType, readonly: isReadonly, value: value });
+            valueArray.push({ columnId: col, value: value });
         });
 
-        let selectedCells: ISelectedCells = { Selection: selectionMap }
+        let selectedCells: ISelectedCellInfo = {Columns: null, Selection: selectionMap }
         console.log("sending selected cells to redux")
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
     }
@@ -494,7 +499,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.GetGridState().Columns.find(c => c.ColumnId == columnId);
     }
 
-    public isColumnReadonly(columnId: string): boolean {
+    private isColumnReadonly(columnId: string): boolean {
         if (!this.vendorGrid.dataSource.options.schema.hasOwnProperty('model') || !this.vendorGrid.dataSource.options.schema.model.hasOwnProperty('fields')) {
             //field cannot be readonly in that scenario
             return false;
@@ -820,7 +825,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     let error: IUIError = {
                         ErrorHeader: "Validation Error",
-                            ErrorMsg: errorMessage
+                        ErrorMsg: errorMessage
                     };
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
                     e.preventDefault();

@@ -63,34 +63,34 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
 
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let selectedCell = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCells
+            let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo
 
             let failedPreventEdits: ICellValidationRule[] = []
             let failedWarningEdits: ICellValidationRule[] = []
             let warningValues: ICellInfo[] = [];
 
-            for (var keyValuePair of selectedCell.Selection) {
-                for (var columnValuePair of keyValuePair[1]) {
-                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == columnValuePair.columnId);
-                    if (selectedColumn.DataType == DataType.Number && !this.blotter.isColumnReadonly(columnValuePair.columnId)) {
+            for (var keyValuePair of selectedCellInfo.Selection) {
+                for (var selectedCell of keyValuePair[1]) {
+                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedCell.columnId);
+                    if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
-                        if (typeof columnValuePair.value != "number") {
-                            columnValuePair.value = parseFloat(columnValuePair.value)
+                        if (typeof selectedCell.value != "number") {
+                            selectedCell.value = parseFloat(selectedCell.value)
                         }
                         let newValue: ICellInfo;
 
                         //we try to find a condition with an expression for that column that matches the record
-                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusRules.filter(x => x.ColumnId == columnValuePair.columnId && !x.IsDefaultNudge)
+                        let columnNudgesWithExpression = this.PlusMinusState.PlusMinusRules.filter(x => x.ColumnId == selectedCell.columnId && !x.IsDefaultNudge)
                         for (let columnNudge of columnNudgesWithExpression) {
                             if (ExpressionHelper.checkForExpression(columnNudge.Expression, keyValuePair[0], columns, this.blotter)) {
-                                newValue = { Id: keyValuePair[0], ColumnId: columnValuePair.columnId, Value: columnValuePair.value + (columnNudge.NudgeValue * side) }
+                                newValue = { Id: keyValuePair[0], ColumnId: selectedCell.columnId, Value: selectedCell.value + (columnNudge.NudgeValue * side) }
                             }
                         }
                         //we havent found any Condition with an Expression so we look for a general one for the column
                         if (!newValue) {
-                            let columnNudge = this.PlusMinusState.PlusMinusRules.find(x => x.ColumnId == columnValuePair.columnId && x.IsDefaultNudge)
+                            let columnNudge = this.PlusMinusState.PlusMinusRules.find(x => x.ColumnId == selectedCell.columnId && x.IsDefaultNudge)
                             if (columnNudge) {
-                                newValue = ({ Id: keyValuePair[0], ColumnId: columnValuePair.columnId, Value: columnValuePair.value + (columnNudge.NudgeValue * side) })
+                                newValue = ({ Id: keyValuePair[0], ColumnId: selectedCell.columnId, Value: selectedCell.value + (columnNudge.NudgeValue * side) })
                             }
                             //we havent found a condition so we return - this will allow a minus to be entered into the column
                             else {
@@ -102,9 +102,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         newValue.Value = parseFloat(newValue.Value.toFixed(12))
 
                         let dataChangedEvent: IDataChangedEvent = {
-                            OldValue: Number(columnValuePair.value),
+                            OldValue: Number(selectedCell.value),
                             NewValue: newValue.Value,
-                            ColumnId: columnValuePair.columnId,
+                            ColumnId: selectedCell.columnId,
                             IdentifierValue: keyValuePair[0],
                             Timestamp: Date.now(),
                             Record: null

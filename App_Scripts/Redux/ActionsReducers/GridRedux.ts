@@ -1,9 +1,10 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { ICellInfo, ISystemStatus, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { ICellInfo, ISystemStatus } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
@@ -49,7 +50,7 @@ export interface GridClearSystemStatusAction extends Redux.Action {
 }
 
 export interface GridSetSelectedCellsAction extends Redux.Action {
-    SelectedCells: ISelectedCells;
+    SelectedCellInfo: ISelectedCellInfo;
 }
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
@@ -92,9 +93,9 @@ export const GridClearSystemStatus = (): GridClearSystemStatusAction => ({
     type: GRID_CLEAR_SYSTEM_STATUS,
 })
 
-export const GridSetSelectedCells = (SelectedCells: ISelectedCells): GridSetSelectedCellsAction => ({
+export const GridSetSelectedCells = (SelectedCellInfo: ISelectedCellInfo): GridSetSelectedCellsAction => ({
     type: GRID_SET_SELECTED_CELLS,
-    SelectedCells
+    SelectedCellInfo
 })
 
 const initialGridState: GridState = {
@@ -102,7 +103,7 @@ const initialGridState: GridState = {
     GridSorts: [],
     BlotterRestrictions: [],
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
-    SelectedCells: null
+    SelectedCellInfo: null
 
 }
 
@@ -121,7 +122,7 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
         case GRID_CLEAR_SYSTEM_STATUS:
             return Object.assign({}, state, { SystemStatus: { StatusMessage: "", StatusColour: "Green" } })
         case GRID_SET_SELECTED_CELLS:
-            return Object.assign({}, state, { SelectedCells: (<GridSetSelectedCellsAction>action).SelectedCells })
+            return Object.assign({}, state, { SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo })
         default:
             return state
     }

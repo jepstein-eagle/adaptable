@@ -1,6 +1,6 @@
 import { DataType, DistinctCriteriaPairValue } from '../Enums'
 import { IStrategy } from '../../Strategy/Interface/IStrategy'
-import { ICellInfo, IAdaptableStrategyCollection, ISelectedCells } from '../../Core/Interface/Interfaces'
+import { ICellInfo, IAdaptableStrategyCollection } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
@@ -62,7 +62,6 @@ export interface IAdaptableBlotter {
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
-    isColumnReadonly(columnId: string): boolean
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void

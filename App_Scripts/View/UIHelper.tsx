@@ -16,7 +16,7 @@ export module UIHelper {
     }
     export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
         return {
-            Expression: expression, SelectedColumnId: "", SelectedTab: null,
+            Expression: expression, SelectedColumnId: "", SelectedTab: null
         }
     }
 

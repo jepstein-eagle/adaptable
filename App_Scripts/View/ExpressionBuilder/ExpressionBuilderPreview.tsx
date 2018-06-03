@@ -182,7 +182,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             {this.props.ShowPanel &&
 
                 <PanelWithButton cssClassName={cssClassName} headerText="Preview" bsStyle="info"  >
-                    <div style={{ height: '355px', overflowY: 'auto' }}>
+                    <div style={{ height: '375px', overflowY: 'auto' }}>
                         {previewLists}
                     </div>
                 </PanelWithButton>

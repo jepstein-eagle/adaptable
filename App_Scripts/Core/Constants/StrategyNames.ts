@@ -22,6 +22,7 @@ export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
 export const ShortcutStrategyName: string = "Shortcut"
 export const SelectColumnStrategyName: string = "Select Column"
+export const SelectedCellsStrategyName: string = "Selected Cells"
 export const SmartEditStrategyName: string = "Smart Edit"
 export const TeamSharingStrategyName: string = "Team Sharing"
 export const ThemeStrategyName: string = "Theme"
@@ -75,6 +76,8 @@ export function getNameForStrategy(strategyID: string) {
             return ShortcutStrategyName
         case StrategyIds.SelectColumnStrategyId:
             return SelectColumnStrategyName;
+        case StrategyIds.SelectedCellsStrategyId:
+            return SelectedCellsStrategyName;
         case StrategyIds.SmartEditStrategyId:
             return SmartEditStrategyName
         case StrategyIds.TeamSharingStrategyId:

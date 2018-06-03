@@ -51,7 +51,14 @@ export interface IBlotterApi {
      */
     quickSearchClear(): void
 
+    /**
+     * Retrieves the current quick search text
+     */
     quickSearchGetValue(): string
+    /**
+     * Sets the Quick Search Operator
+     * @param operator Either 'Contains' to return any cell containing the text or 'StartsWith' to return only those where the value starts with the text
+     */
     quickSearchSetOperator(operator: 'Contains' | 'StartsWith'): void
     quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
     quickSearchSetStyle(style: IStyle): void
@@ -91,7 +98,7 @@ export interface IBlotterApi {
     calendarGetCurrent(): string
 
     // Theme State
-    themeSelectCurrent(theme: string): void
+    themeSetCurrent(theme: string): void
     themeGetCurrent(): string
     themeSetSystemThemes(systemThemes: string[]): void
     themeSetUserThemes(userThemes: string[]): void
@@ -157,12 +164,16 @@ export interface IBlotterApi {
      * @param statusMessage The message to show when the button is clicked
      * @param statusColour The colour of the buttton - also influences the type of message (red: error, amber: warning etc)
      */
-    setSystemStatus(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
+    systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
+
+    systemStatusSetRed(statusMessage: string): void
+    systemStatusSetAmber(statusMessage: string): void
+    systemStatusSetGreen(statusMessage: string): void
 
     /**
      * Clears any System Status messages - and sets teh button to green
      */
-    clearSystemStatus(): void
+    systemStatusClear(): void
 
     // Alerts
     /**
@@ -171,13 +182,20 @@ export interface IBlotterApi {
      * @param alertMessage Main message of the alert
      * @param alertType Type (Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
      */
-    showAlert(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void
+    alertShow(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void
+
+    alertShowMessage(alertHeader: string, alertMessage: string): void
+    alertShowWarning(alertHeader: string, alertMessage: string): void
+    alertShowError(alertHeader: string, alertMessage: string): void
+
+
+    // General Config
 
     /**
      * Clears the  configuration for the current user, reverting everyting to system defaults.
      * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
      *  */
-    clearConfig(): void
+    configClear(): void
 
 
     /**

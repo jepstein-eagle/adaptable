@@ -25,7 +25,7 @@ import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort,
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement, ISystemStatus } from "../Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType } from "../Enums";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour } from "../Enums";
 import { ResetUserData, AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
 import { ObjectFactory } from "../ObjectFactory";
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
@@ -131,7 +131,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
 
     // Theme State
-    public themeSelectCurrent(theme: string): void {
+    public themeSetCurrent(theme: string): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ThemeRedux.ThemeSelect(theme))
     }
 
@@ -373,23 +373,36 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
 
-    public clearConfig(): void {
+    // General Config
+    public configClear(): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())
     }
 
 
     // System Status 
-    public setSystemStatus(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
+    public systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
         let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSystemStatus(systemStatus))
     }
+    public systemStatusSetRed(statusMessage: string): void {
+        let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Red }
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSystemStatus(systemStatus))
+    }
+    public systemStatusSetAmber(statusMessage: string): void {
+        let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Amber }
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSystemStatus(systemStatus))
+    }
+    public systemStatusSetGreen(statusMessage: string): void {
+        let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Green }
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSystemStatus(systemStatus))
+    }
 
-    public clearSystemStatus(): void {
+    public systemStatusClear(): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridClearSystemStatus())
     }
 
     // Alerts
-    public showAlert(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void {
+    public alertShow(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void {
         switch (alertType as AlertType) {
             case AlertType.Info:
                 let info: IUIInfo = {
@@ -397,14 +410,14 @@ export abstract class BlotterApiBase implements IBlotterApi {
                     InfoMsg: alertMessage
                 }
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowInfo(info))
-                AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)         
+                AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)
                 return;
             case AlertType.Warning:
                 let warning: IUIWarning = {
                     WarningHeader: alertHeader,
                     WarningMsg: alertMessage
                 }
-                AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)         
+                AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowWarning(warning))
                 return;
             case AlertType.Error:
@@ -412,10 +425,22 @@ export abstract class BlotterApiBase implements IBlotterApi {
                     ErrorHeader: alertHeader,
                     ErrorMsg: alertMessage
                 }
-                AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)         
+                AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError(error))
                 return;
         }
+    }
+
+    public alertShowMessage(alertHeader: string, alertMessage: string): void {
+       this.alertShow(alertHeader, alertMessage, "Info")
+    }
+
+    public alertShowWarning(alertHeader: string, alertMessage: string): void {
+        this.alertShow(alertHeader, alertMessage, "Warning")
+    }
+
+    public alertShowError(alertHeader: string, alertMessage: string): void {
+        this.alertShow(alertHeader, alertMessage, "Error")
     }
 
     // Events

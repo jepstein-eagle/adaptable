@@ -39,6 +39,8 @@ import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelecto
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
+import { SelectedCellsPopup } from './SelectedCells/SelectedCellsPopup';
+import { SelectedCellsToolbarControl } from './SelectedCells/SelectedCellsToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   CustomSortPopup: CustomSortPopup,
@@ -70,6 +72,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   AboutPopup: AboutPopup,
   ApplicationPopup: ApplicationPopup,
   BulkUpdatePopup: BulkUpdatePopup,
+  SelectedCellsPopup: SelectedCellsPopup,
 }
 
 //here we put the dashboard control for each strategy
@@ -83,6 +86,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.ExportStrategyId, ExportToolbarControl],
   [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyIds.SmartEditStrategyId, SmartEditToolbarControl],
+  [StrategyIds.SelectedCellsStrategyId, SelectedCellsToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([

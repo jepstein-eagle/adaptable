@@ -45,7 +45,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, ISelectedCells } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
@@ -53,6 +53,7 @@ import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
+import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -162,21 +163,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setColumnIntoStore() {
         let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableGrid.Column, index: number) => {
+           let columnId = x.getId();
             return {
-                ColumnId: x.getId() ? x.getId() : "Unknown Column",
-                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
+                ColumnId:columnId ? columnId : "Unknown Column",
+                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (columnId? columnId : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: true,
-                Index: index
+                Index: index,
+                ReadOnly: true
             }
         });
         let hiddenColumns: IColumn[] = this.grid.getHiddenColumns().map((x: any) => {
+            let columnId = x.getId();
             return {
-                ColumnId: x.getId() ? x.getId() : "Unknown Column",
-                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (x.getId() ? x.getId() : "Unknown Column"),
+                ColumnId: columnId ? columnId : "Unknown Column",
+                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (columnId ? columnId: "Unknown Column"),
                 DataType: this.getColumnDataType(x.name),
                 Visible: false,
-                Index: -1
+                Index: -1,
+                ReadOnly: true
+        
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -251,10 +257,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
-        let selectionMap: Map<string, ISelectedCells[]> = new Map<string, ISelectedCells[]>();
+        let selectionMap: Map<string, ISelectedCellInfo[]> = new Map<string, ISelectedCellInfo[]>();
         let cells: any = this.grid.getSelectedCells();
         cells.forEach((c: AdaptableGrid.Cell) => {
-            var valueArray: ISelectedCells[] = selectionMap.get(c.getRowId());
+            var valueArray: ISelectedCellInfo[] = selectionMap.get(c.getRowId());
             if (valueArray == undefined) {
                 valueArray = []
                 selectionMap.set(c.getRowId(), valueArray);
@@ -337,11 +343,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return columnIndex;
     }
 
-
-    public isColumnReadonly(columnId: string): boolean {
-
-        return null
-    }
 
     public setCustomSort(columnId: string, comparer: Function): void {
         // todo

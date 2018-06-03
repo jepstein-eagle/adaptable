@@ -10,9 +10,9 @@ import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
-      ColorPalette: string[],
-      StyleClassNames: string[]
-  }
+    ColorPalette: string[],
+    StyleClassNames: string[]
+}
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
@@ -25,25 +25,25 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Steps={[
-                    <ConditionalStyleScopeWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <ConditionalStyleStyleWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
+                    <ConditionalStyleScopeWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <ConditionalStyleStyleWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
                     <ConditionalStyleExpressionWizard
-                         cssClassName={this.props.cssClassName} StepName={stepNames[2]}
+                        cssClassName={this.props.cssClassName} StepName={stepNames[2]}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     />,
-                    < ConditionalStyleSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters}/>
+                    < ConditionalStyleSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
 
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
+                onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
-                />
-         
+            />
+
         </div>
     }
 }

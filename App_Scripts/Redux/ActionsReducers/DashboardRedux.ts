@@ -84,6 +84,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.DataSourceStrategyId,
         StrategyIds.BulkUpdateStrategyId,
         StrategyIds.SmartEditStrategyId,
+        StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
     ],
     VisibleToolbars: [
@@ -92,6 +93,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
+        StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
     ],
     VisibleButtons: [

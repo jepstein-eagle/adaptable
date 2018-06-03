@@ -37,7 +37,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 10000; i++) {
+        for (let i = 1; i < 5001; i++) {
             trades.push(this.createTrade(i));
         }
         return trades;
@@ -242,6 +242,7 @@ export class DataGenerator {
                 "percentChange": this.generateRandomNullableDouble(),
                 "lastUpdated": this.generateRandomDateAndTime(-7, 0),
                 "lastUpdatedBy": this.getRandomItem(this.getNames()),
+               /*
                 "extraCol1": "1",
                 "extraCol2": "2",
                 "extraCol3": "3",
@@ -260,7 +261,7 @@ export class DataGenerator {
                 "extraCol16": "16",
                 "extraCol17": "17",
                 "extraCol18": "18"
-                /*
+                
                   "bid2": bid,
                   "ask2": ask,
                   "bidOfferSpread2": bidOfferSpread,

@@ -4,6 +4,8 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { StyleHelper } from '../Core/Helpers/StyleHelper';
+import * as StrategyIds from '../Core/Constants/StrategyIds'
 
 export class FormatColumnKendoStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -22,8 +24,11 @@ export class FormatColumnKendoStrategy extends FormatColumnStrategy implements I
                 if (columnIndex > 0) {
                     theBlotter.forAllRecordsDo((row: any) => {
                         let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row)
-                        let styleName : string = (StringExtensions.IsNullOrEmpty(fc.Style.ClassName))? StyleConstants.FORMAT_COLUMN_STYLE + this.FormatColumnState.FormatColumns.indexOf(fc): fc.Style.ClassName;
-                         theBlotter.addCellStyle(primaryKey, columnIndex, styleName)
+                        let styleName: string = (StringExtensions.IsNullOrEmpty(fc.Style.ClassName)) ?
+                            StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(fc), this.blotter) :
+                            fc.Style.ClassName;
+
+                        theBlotter.addCellStyle(primaryKey, columnIndex, styleName)
 
                     })
                 }

@@ -23,7 +23,6 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
-import { ISelectedCells, ISelectedCellInfo } from "../../Core/Interface/Interfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";

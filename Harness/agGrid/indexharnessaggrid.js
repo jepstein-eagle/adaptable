@@ -117,7 +117,7 @@ function replacer(a, b, c) {
 function getSchema(data) {
     var schema = []
 
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber" });
+    schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber" });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"], enableValue: true });
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
@@ -197,7 +197,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
+       //  predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -225,14 +225,7 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "DataSource") {
-        if (searchArgs.SearchChangedTrigger == "Euro") {
-            alert("clearing config")
-            adaptableblotter.api.clearConfig()
-        }
-    }
-
-    //alert(searchArgs.SearchChangedTrigger)
+        //alert(searchArgs.SearchChangedTrigger)
     if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
         if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
             //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
