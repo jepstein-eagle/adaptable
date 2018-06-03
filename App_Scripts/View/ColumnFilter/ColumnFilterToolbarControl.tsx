@@ -19,6 +19,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { Label, ControlLabel, FormControl } from "react-bootstrap";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearFilters: () => FilterRedux.ColumnFilterClearAction,
@@ -50,19 +51,23 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
         let content = <span>
             <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
-                {collapsedText}
+                <FormControl bsSize="small" style={{ width: "80px" }} value={collapsedText} disabled={true} type="string" />
                 {' '}
                 {infoBody.length > 0 &&
-                    <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} popoverType={PopoverType.Info} />
+                    <span>
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} popoverType={PopoverType.Info} useButton={true} triggerAction={"click"} />
+
+                        {' '}
+                        <ButtonClear onClick={() => this.props.onClearFilters()}
+                            bsStyle={"primary"}
+                            cssClassName={cssClassName}
+                            size={"small"}
+                            overrideTooltip="Clear Column Filters"
+                            DisplayMode="Text+Glyph"
+                            overrideDisableButton={this.props.ColumnFilters.length == 0}
+                        />
+                    </span>
                 }
-                {' '}
-                <ButtonClear onClick={() => this.props.onClearFilters()}
-                    bsStyle={"primary"}
-                    cssClassName={cssClassName}
-                    size={"small"}
-                    overrideTooltip="Clear Column Filters"
-                    DisplayMode="Text+Glyph"
-                    overrideDisableButton={this.props.ColumnFilters.length == 0} />
             </div>
         </span>
 

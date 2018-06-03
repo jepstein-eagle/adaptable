@@ -199,6 +199,8 @@ export enum AlertType {
     Error = 'Error'
 }
 
-
+export enum SelectedCellOperation{
+    Sum='Sum'
+}
 
 

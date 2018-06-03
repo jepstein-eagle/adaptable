@@ -12,7 +12,11 @@ import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ISelectedCellInfo, ISelectedCell } from "../../Strategy/Interface/ISelectedCellsStrategy";
-import { DataType } from "../../Core/Enums";
+import { DataType, SelectedCellOperation } from "../../Core/Enums";
+import { FormControl, DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
+import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+
 
 interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SelectedCellsToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo
@@ -50,11 +54,26 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
 
         let cssClassName: string = this.props.cssClassName + "__SelectedCells";
 
+        let operationMenuItems = EnumExtensions.getNames(SelectedCellOperation).map((selectedCellOperation: SelectedCellOperation, index) => {
+            return <MenuItem key={index} eventKey="index" >{selectedCellOperation as SelectedCellOperation}</MenuItem>
+        })
+
+        let content = <span>
+            <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                <InputGroup>
+
+                    <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={"Sum"} id="SelectedCells_Operation" bsSize="small" componentClass={InputGroup.Button}>
+                        {operationMenuItems}
+                    </DropdownButton>
+                    <ControlLabel style={{ marginTop: "5px", marginLeft: "3px" }}>{this.state.Sum} </ControlLabel>
+                </InputGroup>
 
 
+            </div>
+        </span>
 
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.SelectedCellsStrategyName} glyphicon={StrategyGlyphs.SelectedCellsGlyph} onClose={() => this.props.onClose(StrategyIds.SelectedCellsStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
-            <span>Sum: {this.state.Sum} </span>
+            {content}
 
         </PanelDashboard>
     }

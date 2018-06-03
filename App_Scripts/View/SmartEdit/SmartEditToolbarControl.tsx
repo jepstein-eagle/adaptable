@@ -122,7 +122,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
                 {this.props.IsValidSelection &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} popoverType={this.getPopoverType(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} popoverType={this.getPopoverType(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 

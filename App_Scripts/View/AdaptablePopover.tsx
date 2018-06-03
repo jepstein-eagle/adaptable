@@ -49,7 +49,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
                         glyph={this.getGlyphName()}
                         bsStyle={this.getStyle()}
                         DisplayMode="Glyph"
-                        tooltipText={"Show Preview Results"}
+                        tooltipText={this.props.tooltipText}
                     />
                     :
                     <Label bsSize="large" bsStyle={this.getStyle()} className="ab_medium_padding">

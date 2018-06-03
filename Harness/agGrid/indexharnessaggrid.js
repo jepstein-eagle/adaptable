@@ -125,17 +125,26 @@ function getSchema(data) {
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text' });
 
-    schema.push({
-        headerName: "Pricing",
-        children: [
-            { headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' },
-            { headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true },
-            { headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' },
-            { headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' },
-            { headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' },
-            { headerName: "Bloomberg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' }
-        ]
-    })
+    schema.push({ headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
+    schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true });
+    schema.push({ headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' });
+    schema.push({ headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' });
+    schema.push({ headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' });
+    schema.push({ headerName: "Bloomberg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' }); 
+
+    /*
+        schema.push({
+            headerName: "Pricing",
+            children: [
+                { headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' },
+                { headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true },
+                { headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' },
+                { headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' },
+                { headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' },
+                { headerName: "Bloomberg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' }
+            ]
+        })
+        */
     schema.push({
         headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
             return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
@@ -197,7 +206,7 @@ function InitBlotter() {
         blotterId: "Demo Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-       //  predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
+        //  predefinedConfig: json,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -225,7 +234,7 @@ function InitBlotter() {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-        //alert(searchArgs.SearchChangedTrigger)
+    //alert(searchArgs.SearchChangedTrigger)
     if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
         if (searchArgs.SearchChangedTrigger == "DataSourcezzzz") {
             //     adaptableblotter.api.themeSelectCurrent("Dark Theme");

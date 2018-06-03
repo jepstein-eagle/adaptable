@@ -68,24 +68,25 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
         let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         let previewResults: IPreviewResult[] = [];
-        let columnId: string = selectedCells.Columns[0].ColumnId
-        let typedBulkUpdateValue;
-        let selectedColumnDataType: DataType = selectedCells.Columns[0].DataType
-        switch (selectedColumnDataType) {
-            case DataType.Number:
-                typedBulkUpdateValue = Number(bulkUpdateValue);
-                break;
-            case DataType.String:
-                typedBulkUpdateValue = bulkUpdateValue;
-                break;
-            case DataType.Date:
-                typedBulkUpdateValue = new Date(bulkUpdateValue);
-                break;
-        }
-        if (selectedCells != null && selectedCells.Selection != null) {
+        let columnId: string = "";
+        if (selectedCells != null && selectedCells.Columns.length > 0) {
+            columnId = selectedCells.Columns[0].ColumnId
+            let typedBulkUpdateValue;
+            switch (selectedCells.Columns[0].DataType) {
+                case DataType.Number:
+                    typedBulkUpdateValue = Number(bulkUpdateValue);
+                    break;
+                case DataType.String:
+                    typedBulkUpdateValue = bulkUpdateValue;
+                    break;
+                case DataType.Date:
+                    typedBulkUpdateValue = new Date(bulkUpdateValue);
+                    break;
+            }
+
             for (let pair of selectedCells.Selection) {
                 for (let selectedCell of pair[1]) {
-                   
+
                     let dataChangedEvent: IDataChangedEvent = {
                         OldValue: selectedCell.value,
                         NewValue: typedBulkUpdateValue,
