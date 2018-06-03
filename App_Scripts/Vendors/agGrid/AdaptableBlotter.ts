@@ -1274,21 +1274,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (vendorGridState) {
             let columnState: any = JSON.parse(vendorGridState);
             if (columnState) {
-                this.vendorGrid.columnApi.setColumnState(columnState, "api")
+               this.tempSetColumnStateFixForBuild(this.vendorGrid.columnApi, columnState);
+              //  this.vendorGrid.columnApi.setColumnState(columnState, "api")
             }
         }
-        //   let columnStateKVP: KeyValuePair = vendorGridInfo.find(vgi => vgi.Key == this.COLUMN_STATE)
-        //    if (columnStateKVP) {
-        //        this.vendorGrid.columnApi.setState(columnStateKVP.Value, "api");
-        //  }
-
-        //  let columnGroupStateKVP: KeyValuePair = vendorGridInfo.find(vgi => vgi.Key == this.COLUMN_GROUP_STATE)
-        //  if (columnGroupStateKVP) {
-        //      this.vendorGrid.columnApi.setColumnGroupState(columnGroupStateKVP.Value, "api");
-        //   }
-
-
-    }
+     }
 
 
     private testing(): void {
@@ -1302,6 +1292,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private tempMoveColumnFixForBuild(columnApi:any, col: any, index: number, columnEventType: string){
         columnApi.moveColumn(col, index, "api")
+    }
+
+    private tempSetColumnStateFixForBuild(columnApi:any, columnState: any){
+        columnApi.setColumnState(columnState, "api")
     }
 
 
