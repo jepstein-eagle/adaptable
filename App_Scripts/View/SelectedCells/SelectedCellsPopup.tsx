@@ -16,6 +16,7 @@ import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
 import { Helper } from "../../Core/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
+import { SelectedCellOperation } from "../../Core/Enums";
 
 
 interface SelectedCellsPopupProps extends StrategyViewPopupProps<SelectedCellsPopupComponent> {
@@ -38,14 +39,15 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
         let infoBody: any[] = ["Selected cells info."]
 
         let rowElements: any[] = []
-        rowElements.push(this.createRow(colItems, "Sum", this.props.SelectedCellSummary.Sum, cssClassName));
-        rowElements.push(this.createRow(colItems, "Average", this.props.SelectedCellSummary.Average, cssClassName));
-        rowElements.push(this.createRow(colItems, "Mode", this.props.SelectedCellSummary.Mode, cssClassName));
-        rowElements.push(this.createRow(colItems, "Median", this.props.SelectedCellSummary.Median, cssClassName));
-        rowElements.push(this.createRow(colItems, "Distinct", this.props.SelectedCellSummary.Distinct, cssClassName));
-        rowElements.push(this.createRow(colItems, "Max", this.props.SelectedCellSummary.Max, cssClassName));
-        rowElements.push(this.createRow(colItems, "Min", this.props.SelectedCellSummary.Min, cssClassName));
-        rowElements.push(this.createRow(colItems, "Count", this.props.SelectedCellSummary.Count, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Sum, this.props.SelectedCellSummary.Sum, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Average, this.props.SelectedCellSummary.Average, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Mode, this.props.SelectedCellSummary.Mode, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Median, this.props.SelectedCellSummary.Median, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Distinct, this.props.SelectedCellSummary.Distinct, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Max, this.props.SelectedCellSummary.Max, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Min, this.props.SelectedCellSummary.Min, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Count, this.props.SelectedCellSummary.Count, cssClassName));
+        rowElements.push(this.createRow(colItems, SelectedCellOperation.Only, this.props.SelectedCellSummary.Only, cssClassName));
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.SelectedCellsStrategyName} className="ab_main_popup"
@@ -63,7 +65,7 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
         </div>
     }
 
-    private createRow(colItems: IColItem[], key: any, value: any, cssClassName: string): any {
+    private createRow(colItems: IColItem[], key: SelectedCellOperation, value: any, cssClassName: string): any {
         let rowColItems: IColItem[] = Helper.cloneObject(colItems)
         rowColItems[0].Content = key
         rowColItems[1].Content = value

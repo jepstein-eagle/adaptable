@@ -22,26 +22,26 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
         this.createMenuItemShowPopup(StrategyNames.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyGlyphs.SelectedCellsGlyph);
     }
 
-   public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {
+    public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {
         let numericValues: number[] = []
         let allValues: any[] = []
         let numericColumns: number[] = []
-    
+
         if (selectedCellInfo.Selection.size > 0) {
             selectedCellInfo.Columns.map((c, index) => {
                 if (c.DataType == DataType.Number) {
                     numericColumns.push(index)
                 }
             })
-    
+
             selectedCellInfo.Selection.forEach(selectedCells => {
                 let i: number
                 for (i = 0; i < selectedCells.length; i++) {
                     let selectedCell: ISelectedCell = selectedCells[i];
                     let value = selectedCell.value;
                     allValues.push(value);
-    
-    
+
+
                     if (numericColumns.indexOf(i) != -1) {
                         numericValues.push(value)
                     }
@@ -49,16 +49,18 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
             })
         }
         let hasNumericColumns: boolean = numericColumns.length > 0;
+        let distinct = ArrayExtensions.RetrieveDistinct(allValues).length;
         let selectedCellSummary: ISelectedCellSummmary = {
-            Sum: (hasNumericColumns) ? math.round(math.sum(numericValues), 4) : "N/A",
-            Average: (hasNumericColumns) ? math.round(math.mean(numericValues), 4) : "N/A",
-            Mode: (allValues.length > 0) ? math.mode(allValues).join(",") : "N/A",
-            Median: (hasNumericColumns) ? math.round(math.median(numericValues), 4) : "N/A",
-            Distinct: ArrayExtensions.RetrieveDistinct(allValues).length,
-            Max: (hasNumericColumns) ? math.round(math.max(numericValues), 4) : "N/A",
-            Min: (hasNumericColumns) ? math.round(math.min(numericValues), 4) : "N/A",
+            Sum: (hasNumericColumns) ? math.round(math.sum(numericValues), 4) : "",
+            Average: (hasNumericColumns) ? math.round(math.mean(numericValues), 4) : "",
+            Mode: (allValues.length > 0) ? math.mode(allValues).join(",") : "",
+            Median: (hasNumericColumns) ? math.round(math.median(numericValues), 4) : "",
+            Distinct: distinct,
+            Max: (hasNumericColumns) ? math.round(math.max(numericValues), 4) : "",
+            Min: (hasNumericColumns) ? math.round(math.min(numericValues), 4) : "",
             Count: allValues.length,
-        
+            Only: (distinct == 1) ? allValues[0] : ""
+
         }
         return selectedCellSummary;
     }

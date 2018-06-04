@@ -19,14 +19,15 @@ export interface ISelectedCellInfo {
 
 
 export interface ISelectedCellSummmary{
-    Sum: any, // can be number or N/A
-    Average: any, // can be number or N/A
+    Sum: any, // can be number or blank
+    Average: any, // can be number or blank
     Mode: any, // any value
-    Median: any, // can be number or N/A
+    Median: any, // can be number or blank
     Distinct: any, // always a number
-    Max: any, // can be number or N/A
-    Min: any, // can be number or N/A
+    Max: any, // can be number or blank
+    Min: any, // can be number or blank
     Count: any, // always a number
+    Only: any// can be value or blank
    }
 
    

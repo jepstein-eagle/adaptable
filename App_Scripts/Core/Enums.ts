@@ -207,7 +207,8 @@ export enum SelectedCellOperation{
     Distinct='Distinct',
     Max='Max',
     Min='Min',
-    Count = 'Count'
+    Count = 'Count',
+    Only = 'Only'
 }
 
 

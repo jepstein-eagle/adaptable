@@ -111,6 +111,8 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
                 return this.props.SelectedCellSummary.Distinct;
             case SelectedCellOperation.Count:
                 return this.props.SelectedCellSummary.Count;
+            case SelectedCellOperation.Only:
+                return this.props.SelectedCellSummary.Only;
         }
     }
 }

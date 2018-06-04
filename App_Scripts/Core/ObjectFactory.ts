@@ -172,6 +172,7 @@ export module ObjectFactory {
             Max:  null,
             Min: null,
             Count: null,
+            Only: null
         }
     }
 
