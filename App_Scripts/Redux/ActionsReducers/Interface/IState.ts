@@ -89,7 +89,7 @@ export interface DashboardState {
 
 export interface SmartEditState {
     SmartEditValue: number
-    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'
+    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide'
     IsValidSelection: boolean
     PreviewInfo: IPreviewInfo
 

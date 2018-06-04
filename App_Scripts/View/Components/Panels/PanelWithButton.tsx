@@ -30,9 +30,9 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
         if (this.props.className) {
             className += " " + this.props.className
         }
-        if (buttonContent || this.props.button) {
+      //  if (buttonContent || this.props.button) {
             className += " " + "ab_panel-with-button-reduce-header-padding"
-        }
+     //   }
         let buttonStyle: string = (this.props.buttonStyle) ? this.props.buttonStyle : "default"
 
 

@@ -56,7 +56,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // https://github.com/react-bootstrap/react-bootstrap/issues/1445
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
-                    return <ListGroupItem key={y} >
+                    return <ListGroupItem bsSize={"xsmall"} key={y} >
                         <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.ColumnValue)} style={{ cursor: 'pointer', fontSize: 'small' }}>
                             <AdaptableBlotterForm inline>
                                 {y}
@@ -182,8 +182,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             {this.props.ShowPanel &&
 
                 <PanelWithButton cssClassName={cssClassName} headerText="Preview" bsStyle="info"  >
-                    <div style={{ height: '375px', overflowY: 'auto' }}>
-                        {previewLists}
+                     <div style={{ height: '385px', overflowY: 'auto', 'overflowX': 'hidden' }}>
+                       {previewLists}
                     </div>
                 </PanelWithButton>
             }

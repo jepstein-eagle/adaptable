@@ -2,7 +2,7 @@ import * as React from "react";
 import { Helper } from '../../../Core/Helpers/Helper'
 import { SortOrder, SelectionMode } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
-import { ListGroupItem, ListGroup,  ListGroupProps } from 'react-bootstrap';
+import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
@@ -14,7 +14,7 @@ export interface SingleListBoxProps extends ListGroupProps {
     DisplayMember?: string
     ValueMember?: string
     SortMember?: string
-    SelectionMode : SelectionMode
+    SelectionMode: SelectionMode
     cssClassName: string
 }
 
@@ -64,7 +64,8 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
                     onClick={() => this.onClickItem(x)}
                     bsSize={"small"}
                     active={isActive}
-                    value={value} >{display}</ListGroupItem>
+                    value={value} >{display}
+                </ListGroupItem>
             }
         })
 
@@ -119,8 +120,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         }
         else {
             let newArray = [...this.state.UiSelectedValues];
-            if(this.props.SelectionMode == SelectionMode.Single)
-            {
+            if (this.props.SelectionMode == SelectionMode.Single) {
                 newArray = []
             }
             if (this.props.ValueMember) {

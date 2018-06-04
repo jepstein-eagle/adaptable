@@ -28,7 +28,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
         let selectedColumnDataType = this.props.SelectedColumn.DataType
         let addButton = <Button bsSize={"small"} bsStyle={"default"} onClick={() => this.addRange()}><Glyphicon glyph="plus" /> Add Range</Button>
-        
+
         let rangesElement: JSX.Element[] = this.props.Ranges.map((range, index) => {
 
             let optionLeafOperators = ExpressionHelper.GetOperatorsForDataType(selectedColumnDataType).map((operator: LeafExpressionOperator) => {
@@ -36,11 +36,11 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
             })
 
             let rangeMenuItemsOperand1 = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType) => {
-                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand1(index, rangeOperand)}>{rangeOperand }</MenuItem>
+                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand1(index, rangeOperand)}>{rangeOperand}</MenuItem>
             })
 
             let rangeMenuItemsOperand2 = EnumExtensions.getNames(RangeOperandType).map((rangeOperand: RangeOperandType) => {
-                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand2(index, rangeOperand)}>{rangeOperand }</MenuItem>
+                return <MenuItem key={index + rangeOperand} eventKey={index + rangeOperand} onClick={() => this.onRangeTypeChangedOperand2(index, rangeOperand)}>{rangeOperand}</MenuItem>
             })
 
             let deleteButton = <Button bsSize={"small"} bsStyle={"default"} style={deleteButtonStyle} onClick={() => this.onRangeDelete(index)}><Glyphicon glyph="trash" /></Button>
@@ -82,7 +82,7 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
                                     {rangeMenuItemsOperand2}
                                 </DropdownButton>
 
-                                {range.Operand2Type == RangeOperandType.Column?
+                                {range.Operand2Type == RangeOperandType.Column ?
                                     <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[range.Operand2]}
                                         ColumnList={this.props.Columns.filter(c => c.DataType == selectedColumnDataType && c.ColumnId != this.props.SelectedColumn.ColumnId)}
                                         onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
@@ -184,7 +184,8 @@ export class ExpressionBuilderRanges extends React.Component<ExpressionBuilderRa
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '300px',
+    'overflowX': 'hidden',
+    'height': '350px',
 }
 
 let betweenDivStyle: React.CSSProperties = {
@@ -203,7 +204,7 @@ let dropDownStyle = {
 }
 
 let operandStyle = {
-    'width': '200px',
+    'width': '190px',
     'marginLeft': '0px',
     'marginRight': '2px',
     'marginTop': '0px'
