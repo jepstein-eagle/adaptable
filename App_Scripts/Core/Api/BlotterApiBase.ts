@@ -30,6 +30,7 @@ import { ResetUserData, AdaptableBlotterStore } from '../../Redux/Store/Adaptabl
 import { ObjectFactory } from "../ObjectFactory";
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 import { IUIInfo, IUIWarning, IUIError } from "../Interface/IMessage";
+import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -375,10 +376,18 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // General Config
     public configClear(): void {
-
-     //   let test =    window.localStorage.getItem(this.blotter.BlotterOptions.blotterId);
-     //let more = JSON.parse(test);
+        // let test = window.localStorage.getItem(this.blotter.BlotterOptions.blotterId);
+        // let more = JSON.parse(test);
+        //let state = this.blotter.AdaptableBlotterStore.TheStore.getState()
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())
+    }
+
+    public configGet(): AdaptableBlotterState {
+
+        let test = window.localStorage.getItem(this.blotter.BlotterOptions.blotterId);
+        let more = JSON.parse(test);
+        let state = this.blotter.AdaptableBlotterStore.TheStore.getState()
+        return state;
     }
 
 
@@ -435,7 +444,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public alertShowMessage(alertHeader: string, alertMessage: string): void {
-       this.alertShow(alertHeader, alertMessage, "Info")
+        this.alertShow(alertHeader, alertMessage, "Info")
     }
 
     public alertShowWarning(alertHeader: string, alertMessage: string): void {

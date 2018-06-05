@@ -4,6 +4,7 @@ import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs } from "./ServerSearch";
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
+import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -196,6 +197,7 @@ export interface IBlotterApi {
      * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
      *  */
     configClear(): void
+    configGet(): AdaptableBlotterState
 
 
     /**
