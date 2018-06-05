@@ -125,6 +125,8 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.Filter.UserFilters = []
         state.Filter.SystemFilters = []
         state.Layout = undefined
+        state.Menu.ContextMenu = undefined
+        state.Menu.MenuItems = []
         state.Menu = undefined
         state.PlusMinus = undefined
         state.QuickSearch = undefined
@@ -169,11 +171,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         engineWithFilter = filter(engineWithMigrate, [], [
             "TeamSharing",
             "UserInterface",
-            "Popup", "Entitlements",
+            "Popup", 
+            "Entitlements",
             "Menu",
-            "Grid", "Blotter",
+            "Grid", 
             "BulkUpdate",
-            "SystemFilter",
             ["Calendar", "AvailableCalendars"],
             ["Theme", "AvailableThemes"],
             ["Export", "CurrentLiveReports"],
