@@ -239,9 +239,11 @@ function getTradesForSearch(searchArgs, dataGen) {
         if (searchArgs.BlotterSearchState.DataSource == "Eurssso") {
             //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
             adaptableblotter.api.systemStatusSet("its all broken", "Red")
+            adaptableblotter.api.systemStatusSet("its all broken", "Red")
             adaptableblotter.api.alertShow("Error Header", "Error message", "Error")
         } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
             //       adaptableblotter.api.themeSelectCurrent("White Theme");
+            adaptableblotter.api.configClear()
             adaptableblotter.api.systemStatusClear()
             adaptableblotter.api.alertShow("Hello Arjun", "This is a message sent from the Server...", "Info")
         } else if (searchArgs.BlotterSearchState.DataSource == "Dollar") {

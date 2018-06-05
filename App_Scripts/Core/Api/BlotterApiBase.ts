@@ -375,6 +375,9 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // General Config
     public configClear(): void {
+
+     //   let test =    window.localStorage.getItem(this.blotter.BlotterOptions.blotterId);
+     //let more = JSON.parse(test);
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(ResetUserData())
     }
 

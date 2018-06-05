@@ -1287,7 +1287,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private tempSetColumnVisibleFixForBuild(columnApi:any, col: any, isVisible: boolean, columnEventType: string){
-       columnApi.setColumnVisible(col, true, "api")
+       columnApi.setColumnVisible(col, isVisible, "api")
     }
 
     private tempMoveColumnFixForBuild(columnApi:any, col: any, index: number, columnEventType: string){
