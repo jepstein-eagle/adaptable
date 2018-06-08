@@ -19,7 +19,6 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IColumn } from "../../Core/Interface/IColumn";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";

@@ -19,15 +19,13 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import { ILayout, IAdaptableBlotterObject, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement, ISystemStatus } from "../Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour } from "../Enums";
-import { ResetUserData, AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
-import { ObjectFactory } from "../ObjectFactory";
+import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 import { IUIInfo, IUIWarning, IUIError } from "../Interface/IMessage";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";

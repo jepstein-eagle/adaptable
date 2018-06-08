@@ -1,11 +1,8 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { MenuState, EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';

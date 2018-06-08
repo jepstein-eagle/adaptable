@@ -1,5 +1,4 @@
-import { DataType, DistinctCriteriaPairValue } from '../Enums'
-import { IStrategy } from '../../Strategy/Interface/IStrategy'
+import {  DistinctCriteriaPairValue } from '../Enums'
 import { ICellInfo, IAdaptableStrategyCollection } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -50,8 +49,7 @@ export interface IAdaptableBlotter {
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
     hideFilterForm(): void
-    setGridSort(gridSorts: IGridSort[]): void
-
+  
     // cell selection
     getActiveCell(): ICellInfo
     selectColumn(columnId: string): void
@@ -77,9 +75,10 @@ export interface IAdaptableBlotter {
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
 
-    // Custom Sort
+    //  Sort
     setCustomSort(columnId: string, comparer: Function): void
     removeCustomSort(columnId: string): void
+    setGridSort(gridSorts: IGridSort[]): void
 
     //CalculatedColumn
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void

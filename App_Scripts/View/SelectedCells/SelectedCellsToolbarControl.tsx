@@ -12,14 +12,11 @@ import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/Toolbar
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
-import { ISelectedCellInfo, ISelectedCell, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
-import { DataType, SelectedCellOperation } from "../../Core/Enums";
-import { FormControl, DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
+import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
+import { SelectedCellOperation } from "../../Core/Enums";
+import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import * as math from 'mathjs'
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { ObjectFactory } from "../../Core/ObjectFactory";
 
 interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SelectedCellsToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo
