@@ -96,7 +96,7 @@ export interface SmartEditState {
 }
 
 export interface SelectedCellsState {
-    SelectedCellOperation: 'Sum' | 'Average'
+    SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only'
     SelectedCellSummary: ISelectedCellSummmary
 }
 
