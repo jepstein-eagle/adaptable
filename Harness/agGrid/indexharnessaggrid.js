@@ -229,7 +229,7 @@ function InitBlotter() {
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
-    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+  //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 
 }
 

@@ -177,7 +177,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
-        // not able to select a column in hypergrid currently
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
 
@@ -279,14 +278,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
                 this.tempSetColumnVisibleFixForBuild(this.vendorGrid.columnApi, col, true, "api")
-               // this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
+                // this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
             }
-          //  this.vendorGrid.columnApi.moveColumn(col, startIndex + index, "api") // not sure if this right - there is a new parametr of columneventtype here...
-            this.tempMoveColumnFixForBuild( this.vendorGrid.columnApi, col, startIndex + index, "api");
+            //  this.vendorGrid.columnApi.moveColumn(col, startIndex + index, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            this.tempMoveColumnFixForBuild(this.vendorGrid.columnApi, col, startIndex + index, "api");
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
             this.tempSetColumnVisibleFixForBuild(this.vendorGrid.columnApi, col, false, "api")
-        //    this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
+            //    this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
         // we need to do this to make sure agGrid and Blotter cols collections are in sync
         this.setColumnIntoStore();
@@ -562,14 +561,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 // this seems to loop unnecessarily... ????
 
                 let dataChangedEvent: IDataChangedEvent =
-                    {
-                        OldValue: oldValue,
-                        NewValue: cellInfo.Value,
-                        ColumnId: cellInfo.ColumnId,
-                        IdentifierValue: cellInfo.Id,
-                        Timestamp: null,
-                        Record: null
-                    }
+                {
+                    OldValue: oldValue,
+                    NewValue: cellInfo.Value,
+                    ColumnId: cellInfo.ColumnId,
+                    IdentifierValue: cellInfo.Id,
+                    Timestamp: null,
+                    Record: null
+                }
                 this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         })
@@ -1012,14 +1011,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (!whatToReturn) {
                     //no failed validation so we raise the edit auditlog
                     let dataChangedEvent: IDataChangedEvent =
-                        {
-                            OldValue: this.vendorGrid.api.getValue(params.column.getColId(), params.node),
-                            NewValue: dataChangingEvent.NewValue,
-                            ColumnId: dataChangingEvent.ColumnId,
-                            IdentifierValue: dataChangingEvent.IdentifierValue,
-                            Timestamp: null,
-                            Record: null
-                        }
+                    {
+                        OldValue: this.vendorGrid.api.getValue(params.column.getColId(), params.node),
+                        NewValue: dataChangingEvent.NewValue,
+                        ColumnId: dataChangingEvent.ColumnId,
+                        IdentifierValue: dataChangingEvent.IdentifierValue,
+                        Timestamp: null,
+                        Record: null
+                    }
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                 }
                 return whatToReturn;
@@ -1274,11 +1273,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (vendorGridState) {
             let columnState: any = JSON.parse(vendorGridState);
             if (columnState) {
-               this.tempSetColumnStateFixForBuild(this.vendorGrid.columnApi, columnState);
-              //  this.vendorGrid.columnApi.setColumnState(columnState, "api")
+                this.tempSetColumnStateFixForBuild(this.vendorGrid.columnApi, columnState);
+                //  this.vendorGrid.columnApi.setColumnState(columnState, "api")
             }
         }
-     }
+    }
 
 
     private testing(): void {
@@ -1286,15 +1285,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    private tempSetColumnVisibleFixForBuild(columnApi:any, col: any, isVisible: boolean, columnEventType: string){
-       columnApi.setColumnVisible(col, isVisible, "api")
+    private tempSetColumnVisibleFixForBuild(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
+        columnApi.setColumnVisible(col, isVisible, "api")
     }
 
-    private tempMoveColumnFixForBuild(columnApi:any, col: any, index: number, columnEventType: string){
+    private tempMoveColumnFixForBuild(columnApi: any, col: any, index: number, columnEventType: string) {
         columnApi.moveColumn(col, index, "api")
     }
 
-    private tempSetColumnStateFixForBuild(columnApi:any, columnState: any){
+    private tempSetColumnStateFixForBuild(columnApi: any, columnState: any) {
         columnApi.setColumnState(columnState, "api")
     }
 
