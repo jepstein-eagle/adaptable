@@ -1,0 +1,258 @@
+{
+	"SmartEdit": {
+		"SmartEditValue": 1,
+		"MathOperation": "Add"
+	},
+	"CustomSort": {
+		"CustomSorts": []
+	},
+	"Shortcut": {
+		"Shortcuts": []
+	},
+	"PlusMinus": {
+		"PlusMinusRules": []
+	},
+	"Export": {
+		"IPPDomainsPages": [],
+		"Reports": [],
+		"CurrentReport": "",
+		"ErrorMsg": ""
+	},
+	"FlashingCell": {
+		"FlashingCells": []
+	},
+	"Calendar": {
+		"CurrentCalendar": "United States"
+	},
+	"ConditionalStyle": {
+		"ConditionalStyles": []
+	},
+	"QuickSearch": {
+		"QuickSearchText": "",
+		"Operator": "Contains",
+		"DisplayAction": "HighlightCell",
+		"Style": {
+			"BackColor": "#FFFFCC",
+			"ForeColor": "#000000"
+		}
+	},
+	"AdvancedSearch": {
+		"AdvancedSearches": [],
+		"CurrentAdvancedSearch": ""
+	},
+	"DataSource": {
+		"DataSources": [],
+		"CurrentDataSource": ""
+	},
+	"Filter": {
+		"ColumnFilters": [],
+		"UserFilters": [],
+		"SystemFilters": [
+			"Blanks",
+			"Non Blanks",
+			"Today",
+			"In Past",
+			"In Future",
+			"Yesterday",
+			"Tomorrow",
+			"Next Working Day",
+			"Previous Working Day",
+			"This Year",
+			"Positive",
+			"Negative",
+			"Zero",
+			"True",
+			"False"
+		]
+	},
+	"Theme": {
+		"CurrentTheme": "Default",
+		"SystemThemes": [
+			"Light Theme",
+			"Dark Theme"
+		],
+		"UserThemes": []
+	},
+	"CellValidation": {
+		"CellValidations": []
+	},
+	"Layout": {
+		"CurrentLayout": "contry group",
+		"Layouts": [
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"deskId",
+					"counterparty",
+					"country",
+					"currency",
+					"changeOnYear",
+					"bidOfferSpread",
+					"price",
+					"ask",
+					"bid",
+					"bloombergAsk",
+					"bloombergBid",
+					"isLive",
+					"fitchRating",
+					"moodysRating",
+					"sandpRating",
+					"tradeDate",
+					"settlementDate",
+					"percentChange",
+					"lastUpdatedBy",
+					"lastUpdated"
+				],
+				"GridSorts": [],
+				"Name": "Ab_Default_Layout",
+				"VendorGridInfo": "[{\"colId\":\"tradeId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"notional\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"deskId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"counterparty\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"country\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"currency\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"changeOnYear\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bidOfferSpread\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"price\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"ask\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergAsk\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergBid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"isLive\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"fitchRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"moodysRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"sandpRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"tradeDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"settlementDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"percentChange\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdatedBy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdated\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]",
+				"IsReadOnly": false
+			},
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"deskId",
+					"counterparty",
+					"country",
+					"currency",
+					"changeOnYear",
+					"bidOfferSpread",
+					"price",
+					"ask",
+					"bid",
+					"bloombergAsk",
+					"bloombergBid",
+					"isLive",
+					"fitchRating",
+					"moodysRating",
+					"sandpRating",
+					"tradeDate",
+					"settlementDate",
+					"percentChange",
+					"lastUpdatedBy",
+					"lastUpdated"
+				],
+				"GridSorts": [],
+				"Name": "big cpt",
+				"VendorGridInfo": "[{\"colId\":\"tradeId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"notional\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"deskId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"counterparty\",\"hide\":false,\"aggFunc\":null,\"width\":458,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"country\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"currency\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"changeOnYear\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bidOfferSpread\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"price\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"ask\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergAsk\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergBid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"isLive\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"fitchRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"moodysRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"sandpRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"tradeDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"settlementDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"percentChange\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdatedBy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdated\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]",
+				"IsReadOnly": false
+			},
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"deskId",
+					"counterparty",
+					"country",
+					"currency",
+					"changeOnYear",
+					"bidOfferSpread",
+					"price",
+					"ask",
+					"bid",
+					"bloombergAsk",
+					"bloombergBid",
+					"isLive",
+					"fitchRating",
+					"moodysRating",
+					"sandpRating",
+					"tradeDate",
+					"settlementDate",
+					"percentChange",
+					"lastUpdatedBy",
+					"lastUpdated"
+				],
+				"GridSorts": [],
+				"Name": "contry group",
+				"VendorGridInfo": "[{\"colId\":\"tradeId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"notional\",\"hide\":false,\"aggFunc\":null,\"width\":478,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"deskId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"counterparty\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"country\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":0},{\"colId\":\"currency\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"changeOnYear\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bidOfferSpread\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"price\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"ask\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergAsk\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergBid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"isLive\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"fitchRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"moodysRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"sandpRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"tradeDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"settlementDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"percentChange\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdatedBy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdated\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]",
+				"IsReadOnly": false
+			}
+		]
+	},
+	"Dashboard": {
+		"AvailableToolbars": [
+			"AdvancedSearch",
+			"QuickSearch",
+			"Layout",
+			"Export",
+			"ColumnFilter",
+			"DataSource",
+			"BulkUpdate",
+			"SmartEdit",
+			"SelectedCells",
+			"Application"
+		],
+		"VisibleToolbars": [
+			"AdvancedSearch",
+			"QuickSearch",
+			"Layout",
+			"Export",
+			"ColumnFilter"
+		],
+		"VisibleButtons": [
+			"About",
+			"Dashboard",
+			"SmartEdit",
+			"ColumnChooser",
+			"ConditionalStyle",
+			"TeamSharing"
+		],
+		"Zoom": 1,
+		"DashboardVisibility": "Visible",
+		"ShowSystemStatusButton": false
+	},
+	"CalculatedColumn": {
+		"CalculatedColumns": [],
+		"CalculatedColumnErrorMessage": ""
+	},
+	"SelectedCells": {
+		"SelectedCellOperation": "Sum"
+	},
+	"FormatColumn": {
+		"FormatColumns": [
+			{
+				"ColumnId": "notional",
+				"Style": {
+					"BackColor": "#ff0000",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				}
+			},
+			{
+				"ColumnId": "notional",
+				"Style": {
+					"BackColor": "#ff0000",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				}
+			},
+			{
+				"ColumnId": "notional",
+				"Style": {
+					"BackColor": "#ff0000",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				}
+			},
+			{
+				"ColumnId": "notional",
+				"Style": {
+					"BackColor": "#ff0000",
+					"ForeColor": null,
+					"FontWeight": "Normal",
+					"FontStyle": "Normal",
+					"FontSize": null
+				}
+			}
+		]
+	},
+	"AdaptableStoreVersion": 0
+}

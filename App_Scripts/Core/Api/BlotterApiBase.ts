@@ -56,14 +56,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
     }
 
-    public layoutIncludeVendorState(): void {
-        this.dispatchAction(LayoutRedux.LayoutIncludeVendorState())
-    }
-
-    public layoutExcludeVendorState(): void {
-        this.dispatchAction(LayoutRedux.LayoutExcludeVendorState())
-    }
-
     // Dashboard api methods
     public dashboardSetAvailableToolbars(availableToolbars: string[]): void {
         this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars))

@@ -1,3 +1,16 @@
 {
-
+    "FormatColumn": {
+        "FormatColumns": [
+            {
+                "ColumnId": "notional",
+                "Style": {
+                    "BackColor": "#ff0000",
+                    "ForeColor": null,
+                    "FontWeight": "Normal",
+                    "FontStyle": "Normal",
+                    "FontSize": null
+                }
+            }
+        ]
+    }
 }

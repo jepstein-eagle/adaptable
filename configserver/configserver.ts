@@ -24,7 +24,7 @@ if (process.argv.length <= 2) {
 }
 
 const arg: { configfolder: string } = (argList => {
-    let arg = { configfolder: "" }, a, opt, thisOpt, curOpt;
+   let arg = { configfolder: "" }, a, opt, thisOpt, curOpt;
     for (a = 0; a < argList.length; a++) {
         thisOpt = argList[a].trim();
         opt = thisOpt.replace(/^\-+/, '');
@@ -44,6 +44,9 @@ const arg: { configfolder: string } = (argList => {
 
 /** Configuration **/
 let ABConfigFolder = arg.configfolder;
+if (!fs.existsSync(ABConfigFolder)) {
+    fs.mkdirSync(ABConfigFolder);
+}
 if (!ABConfigFolder.endsWith("/")) {
     ABConfigFolder += "/"
 }

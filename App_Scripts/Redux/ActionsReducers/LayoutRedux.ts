@@ -9,8 +9,6 @@ export const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
 export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 export const LAYOUT_PRESAVE = 'LAYOUT_PRESAVE';
-export const LAYOUT_INCLUDE_VENDOR_STATE = 'LAYOUT_INCLUDE_VENDOR_STATE';
-export const LAYOUT_EXCLUDE_VENDOR_STATE = 'LAYOUT_EXCLUDE_VENDOR_STATE';
 
 export interface LayoutPreSaveAction extends Redux.Action {
     Index: number,
@@ -58,17 +56,9 @@ export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
     LayoutName
 })
 
-export const LayoutIncludeVendorState = (): LayoutIncludeVendorStateAction => ({
-    type: LAYOUT_INCLUDE_VENDOR_STATE
-})
-
-export const LayoutExcludeVendorState = (): LayoutExcludeVendorStateAction => ({
-    type: LAYOUT_EXCLUDE_VENDOR_STATE
-})
 
 const initialLayoutState: LayoutState = {
-    IncludeVendorState: false,
-    CurrentLayout: "",
+     CurrentLayout: "",
     Layouts: []
 }
 
@@ -96,11 +86,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
             index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName)
             layouts.splice(index, 1);
             return Object.assign({}, state, { Layouts: layouts })
-        case LAYOUT_INCLUDE_VENDOR_STATE:
-            return Object.assign({}, state, { IncludeVendorState: true })
-        case LAYOUT_EXCLUDE_VENDOR_STATE:
-            return Object.assign({}, state, { IncludeVendorState: false })
-        default:
+         default:
             return state
     }
 }

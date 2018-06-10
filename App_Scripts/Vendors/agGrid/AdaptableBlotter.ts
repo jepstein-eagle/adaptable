@@ -1,16 +1,18 @@
 ﻿import '../../../stylesheets/adaptableblotter-style.css'
-import * as React from "react";
 import * as ReactDOM from "react-dom";
+import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
+import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StyleConstants from '../../Core/Constants/StyleConstants'
+import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+// redux / store
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
-// import redux
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-// import service
+// services
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
@@ -19,16 +21,15 @@ import { IValidationService } from '../../Core/Services/Interface/IValidationSer
 import { AuditService } from '../../Core/Services/AuditService'
 import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
-//import { ThemeService } from '../../Core/Services/ThemeService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StyleConstants from '../../Core/Constants/StyleConstants'
 // import strategy
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
-import { IMenuItem } from '../../Core/Interface/IMenu';
-import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
+import { AboutStrategy } from '../../Strategy/AboutStrategy';
+import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
+import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -51,68 +52,52 @@ import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStr
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
+import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
+import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
+import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 
 // import other items
-import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
+import { IMenuItem } from '../../Core/Interface/IMenu';
 import { IEvent } from '../../Core/Interface/IEvent';
+import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { Helper } from '../../Core/Helpers/Helper';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../../Core/Enums'
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
-
-
-
 import { FilterWrapperFactory } from './FilterWrapper'
-import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
-import { AboutStrategy } from '../../Strategy/AboutStrategy';
-import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
-import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
-import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
-import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
-import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
-import * as _ from 'lodash'
-import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+// Helpers
 import { StyleHelper } from '../../Core/Helpers/StyleHelper';
+import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
+import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
+import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 
-// ag-Grid imports
-//if you add an import from a different folder for aggrid
-//you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, IFilterComp, ColDef, AddRangeSelectionParams } from "ag-grid"
+// ag-Grid 
+//if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
-import { RefreshCellsParams } from "ag-grid/dist/lib/gridApi"
 
 export class AdaptableBlotter implements IAdaptableBlotter {
-
-    private testState: any = null
 
     public api: IBlotterApi
     public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
-    private calculatedColumnPathMap: Map<string, string[]> = new Map()
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -123,13 +108,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public BlotterOptions: IAdaptableBlotterOptions
 
-    private COLUMN_STATE: string = "ColumnState"
-    private COLUMN_GROUP_STATE: string = "ColumnGroupState"
+    private calculatedColumnPathMap: Map<string, string[]> = new Map()
 
-    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions, private gridContainer: HTMLElement) {
+    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions, gridContainer: HTMLElement) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
+         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -140,8 +125,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.vendorGrid.api.getValue(columnId, record));
 
-        // store the options in state - and also later anything else that we need...
-        //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         // store any grid-specific info in this object (to be improved!) and then accessible later
         let blotterRestrictions: string[] = ["UseClassSytleNames"]
@@ -205,8 +188,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // get the api ready
         this.api = new BlotterApi(this);
-
-
     }
 
 
@@ -468,7 +449,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return DataType.String;
         }
 
-        // get the column type if already in store (and not unknwown)
+        // get the column type if already in store (and not unknown)
         let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == column.getId());
         if (existingColumn && existingColumn.DataType != DataType.Unknown) {
             return existingColumn.DataType;
@@ -950,7 +931,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
                 let popupState = this.getState().Popup.ScreenPopup;
-                if (popupState.ShowPopup && popupState.ComponentName == ScreenPopups.ColumnChooserPopup) {
+                if (!popupState.ShowPopup && popupState.ComponentName == ScreenPopups.ColumnChooserPopup) {
                     // ignore
                 } else {
                     this.setColumnIntoStore();
@@ -972,7 +953,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 dataChangingEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) };
                 let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
                 if (failedRules.length > 0) {
-                    let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].CellValidationMode == "Stop Edit") {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
@@ -1031,14 +1011,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
             this.applyGridFiltering();
-            this.testing();
+            this.debouncedSetSelectedCells();
         });
         vendorGrid.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
-            this.testing();
+            this.debouncedSetSelectedCells();
         });
         vendorGrid.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
-            this.testing();
-            //   this._onSelectedCellsChanged.Dispatch(this, this)
+            this.debouncedSetSelectedCells();
         });
         vendorGrid.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
@@ -1116,14 +1095,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
                 //we assess quicksearch
-                let recordReturnValue = false;
-                let quickSearchState = this.getState().QuickSearch;
+                 let quickSearchState = this.getState().QuickSearch;
                 if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
                     && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                     for (let column of columns.filter(c => c.Visible)) {
                         let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
-                        let rowId = this.getPrimaryKeyValueFromRecord(node);
                         let stringValueLowerCase = displayValue.toLowerCase();
                         switch (quickSearchState.Operator) {
                             case LeafExpressionOperator.Contains:
@@ -1238,8 +1215,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.api.setRowData(dataSource)
     }
 
-
-
     private checkColumnsDataTypeSet(): any {
         // check that we have no unknown columns - if we do then ok
         let firstCol = this.getState().Grid.Columns[0];
@@ -1262,9 +1237,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 c.hide = true;
             }
         })
-        //  let columnKVP: KeyValuePair = { Key: this.COLUMN_STATE, Value: this.vendorGrid.columnApi.getColumnState() };
-        //  let columnGroupKVP: KeyValuePair = { Key: this.COLUMN_GROUP_STATE, Value: this.vendorGrid.columnApi.getColumnGroupState() };
-        //  let myArray = [columnKVP, columnGroupKVP]
+
         let mystring: any = JSON.stringify(columnState)
         return mystring;
     }
@@ -1273,28 +1246,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (vendorGridState) {
             let columnState: any = JSON.parse(vendorGridState);
             if (columnState) {
-                this.tempSetColumnStateFixForBuild(this.vendorGrid.columnApi, columnState);
-                //  this.vendorGrid.columnApi.setColumnState(columnState, "api")
+                this.tempSetColumnStateFixForBuild(this.vendorGrid.columnApi, columnState, "api");
             }
         }
     }
 
-
-    private testing(): void {
-        this.debouncedSetSelectedCells()
-
-    }
-
     private tempSetColumnVisibleFixForBuild(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
-        columnApi.setColumnVisible(col, isVisible, "api")
+        columnApi.setColumnVisible(col, isVisible, columnEventType)
     }
 
     private tempMoveColumnFixForBuild(columnApi: any, col: any, index: number, columnEventType: string) {
-        columnApi.moveColumn(col, index, "api")
+        columnApi.moveColumn(col, index, columnEventType)
     }
 
-    private tempSetColumnStateFixForBuild(columnApi: any, columnState: any) {
-        columnApi.setColumnState(columnState, "api")
+    private tempSetColumnStateFixForBuild(columnApi: any, columnState: any, columnEventType: string) {
+        columnApi.setColumnState(columnState, columnEventType)
     }
 
 

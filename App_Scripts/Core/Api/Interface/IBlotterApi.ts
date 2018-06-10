@@ -32,18 +32,9 @@ export interface IBlotterApi {
      */
     layoutGetCurrent(): ILayout
     /**
-     * Sets the IncludeVendorState property to true meaning that Layouts will include vendor grid info (e.g. column widths or grouping info)
-     */
-    layoutIncludeVendorState(): void
-    /**
-     * Sets the IncludeVendorState property to false meaning that Layouts will not include vendor grid info
-     */
-    layoutExcludeVendorState(): void
-
-    /**
-     * Runs QuickSearch on the supplied text
-     * @param quickSearchText text to run QuickSearch on
-     */
+  * Runs QuickSearch on the supplied text
+  * @param quickSearchText text to run QuickSearch on
+  */
     quickSearchRun(quickSearchText: string): void
 
     /**

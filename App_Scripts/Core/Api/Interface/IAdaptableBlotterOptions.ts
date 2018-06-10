@@ -44,6 +44,11 @@ export interface IAdaptableBlotterOptions {
      */
     columnValuesOnlyInQueries: boolean
     /**
+     * Whether to include vendor state (e.g. column widths, grouping info) when creating a layout
+     */
+    includeVendorStateInLayouts: boolean;
+
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

@@ -19,7 +19,7 @@ export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdap
 export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Source", "Columns", "Sort", "Name", "Summary"]
+        let stepNames: string[] = ["Source", "Columns", "Sort", "Settings", "Summary"]
         let layouts: ILayout[] = this.props.ConfigEntities as ILayout[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard

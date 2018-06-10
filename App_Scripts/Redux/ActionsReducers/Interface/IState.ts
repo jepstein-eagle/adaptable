@@ -130,8 +130,7 @@ export interface DataSourceState {
 export interface LayoutState {
     CurrentLayout: string;
     Layouts: ILayout[]
-    IncludeVendorState: boolean;
-}
+ }
 
 export interface CustomSortState {
     CustomSorts: ICustomSort[];

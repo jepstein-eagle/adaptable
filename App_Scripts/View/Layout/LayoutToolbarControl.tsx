@@ -142,7 +142,10 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onSave() {
-        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSorts, null, this.props.CurrentLayout)
+        let currentLayoutObject: ILayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayout)
+        let gridState: any = (currentLayoutObject)? currentLayoutObject.VendorGridInfo: null
+        
+        let layoutToSave = ObjectFactory.CreateLayout(this.props.Columns.filter(c => c.Visible), this.props.GridSorts, gridState,  this.props.CurrentLayout)
         let currentLayoutIndex = this.props.Layouts.findIndex(l => l.Name == this.props.CurrentLayout)
         if (currentLayoutIndex != -1) {
             this.props.onPreSaveLayout(currentLayoutIndex, layoutToSave);

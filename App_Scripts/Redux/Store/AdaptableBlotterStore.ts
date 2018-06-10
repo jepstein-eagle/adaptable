@@ -168,14 +168,17 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //         state.SmartEdit.SmartEditValue = "2"; return { ...state }
         //     }
         // }
+
+        // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
+        // perhaps would be better to have 2 stores - persistence store and in-memory store
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
         engineWithFilter = filter(engineWithMigrate, [], [
             "TeamSharing",
             "UserInterface",
-            "Popup", 
+            "Popup",
             "Entitlements",
             "Menu",
-            "Grid", 
+            "Grid",
             "BulkUpdate",
             ["Calendar", "AvailableCalendars"],
             ["Theme", "AvailableThemes"],
@@ -189,12 +192,12 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //I think that is a part where we push a bit redux and should have two distinct stores....
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter,
             [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
-            PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION, 
-            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_CONFIRMATION, PopupRedux.POPUP_HIDE, PopupRedux.POPUP_HIDE_ERROR, 
-            PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_HIDE_WARNING, PopupRedux.POPUP_SHOW, PopupRedux.POPUP_SHOW_ERROR, 
+            PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION,
+            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_CONFIRMATION, PopupRedux.POPUP_HIDE, PopupRedux.POPUP_HIDE_ERROR,
+            PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_HIDE_WARNING, PopupRedux.POPUP_SHOW, PopupRedux.POPUP_SHOW_ERROR,
             PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_SHOW_WARNING]);
-       
-            //here we use our own merger function which is derived from redux simple merger
+
+        //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
         loadStorage = ReduxStorage.createLoader(engineWithFilter);
         let composeEnhancers
@@ -609,7 +612,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
                         blotter.setGridSort(currentLayout.GridSorts);
                         // set vendor specific info
-                        if (layoutState.IncludeVendorState) {
+                        if (blotter.BlotterOptions.includeVendorStateInLayouts) {
                             blotter.setVendorGridState(currentLayout.VendorGridInfo)
                         }
                     }
@@ -628,7 +631,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
                     let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
-                    if (middlewareAPI.getState().Layout.IncludeVendorState) {
+                    if (blotter.BlotterOptions.includeVendorStateInLayouts) {
                         layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
                     }
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
@@ -878,7 +881,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let gridState: GridState = middlewareAPI.getState().Grid
                     let layoutState: LayoutState = middlewareAPI.getState().Layout
                     if (layoutState.Layouts.length == 0) {
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
+                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null,  DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     }
                     else {

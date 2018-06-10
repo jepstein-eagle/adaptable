@@ -1,0 +1,171 @@
+{
+	"SmartEdit": {
+		"SmartEditValue": 1,
+		"MathOperation": "Add"
+	},
+	"CustomSort": {
+		"CustomSorts": []
+	},
+	"Shortcut": {
+		"Shortcuts": []
+	},
+	"PlusMinus": {
+		"PlusMinusRules": []
+	},
+	"Export": {
+		"IPPDomainsPages": [],
+		"Reports": [],
+		"CurrentReport": "",
+		"ErrorMsg": ""
+	},
+	"FlashingCell": {
+		"FlashingCells": []
+	},
+	"Calendar": {
+		"CurrentCalendar": "United States"
+	},
+	"ConditionalStyle": {
+		"ConditionalStyles": []
+	},
+	"QuickSearch": {
+		"QuickSearchText": "",
+		"Operator": "Contains",
+		"DisplayAction": "HighlightCell",
+		"Style": {
+			"BackColor": "#FFFFCC",
+			"ForeColor": "#000000"
+		}
+	},
+	"AdvancedSearch": {
+		"AdvancedSearches": [],
+		"CurrentAdvancedSearch": ""
+	},
+	"DataSource": {
+		"DataSources": [],
+		"CurrentDataSource": ""
+	},
+	"Filter": {
+		"ColumnFilters": [],
+		"UserFilters": [],
+		"SystemFilters": [
+			"Blanks",
+			"Non Blanks",
+			"Today",
+			"In Past",
+			"In Future",
+			"Yesterday",
+			"Tomorrow",
+			"Next Working Day",
+			"Previous Working Day",
+			"This Year",
+			"Positive",
+			"Negative",
+			"Zero",
+			"True",
+			"False"
+		]
+	},
+	"Theme": {
+		"CurrentTheme": "Default",
+		"SystemThemes": [
+			"Light Theme",
+			"Dark Theme"
+		],
+		"UserThemes": []
+	},
+	"CellValidation": {
+		"CellValidations": []
+	},
+	"Layout": {
+		"CurrentLayout": "wide tradeid",
+		"Layouts": [
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"dealType",
+					"baseCcy",
+					"baseAmount",
+					"secondCcy",
+					"secondAmount",
+					"rate",
+					"pnL",
+					"counterparty",
+					"trader",
+					"tradeDate",
+					"effectiveDate",
+					"lastUpdated"
+				],
+				"GridSorts": [],
+				"Name": "Ab_Default_Layout",
+				"VendorGridInfo": "[{\"colId\":\"tradeId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"notional\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"dealType\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"baseCcy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"baseAmount\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"secondCcy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"secondAmount\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"rate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"pnL\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"counterparty\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"trader\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"tradeDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"effectiveDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdated\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]",
+				"IsReadOnly": false
+			},
+			{
+				"Columns": [
+					"tradeId",
+					"notional",
+					"dealType",
+					"baseCcy",
+					"baseAmount",
+					"secondCcy",
+					"secondAmount",
+					"rate",
+					"pnL",
+					"counterparty",
+					"trader",
+					"tradeDate",
+					"effectiveDate",
+					"lastUpdated"
+				],
+				"GridSorts": [],
+				"Name": "wide tradeid",
+				"VendorGridInfo": "[{\"colId\":\"tradeId\",\"hide\":false,\"aggFunc\":null,\"width\":773,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"notional\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"dealType\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"baseCcy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"baseAmount\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"secondCcy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"secondAmount\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"rate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"pnL\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"counterparty\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"trader\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"tradeDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"effectiveDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdated\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]",
+				"IsReadOnly": false
+			}
+		]
+	},
+	"Dashboard": {
+		"AvailableToolbars": [
+			"AdvancedSearch",
+			"QuickSearch",
+			"Layout",
+			"Export",
+			"ColumnFilter",
+			"DataSource",
+			"BulkUpdate",
+			"SmartEdit",
+			"SelectedCells",
+			"Application"
+		],
+		"VisibleToolbars": [
+			"AdvancedSearch",
+			"QuickSearch",
+			"Layout",
+			"Export",
+			"ColumnFilter"
+		],
+		"VisibleButtons": [
+			"About",
+			"Dashboard",
+			"SmartEdit",
+			"ColumnChooser",
+			"ConditionalStyle",
+			"TeamSharing"
+		],
+		"Zoom": 1,
+		"DashboardVisibility": "Visible",
+		"ShowSystemStatusButton": false
+	},
+	"CalculatedColumn": {
+		"CalculatedColumns": [],
+		"CalculatedColumnErrorMessage": ""
+	},
+	"SelectedCells": {
+		"SelectedCellOperation": "Sum"
+	},
+	"FormatColumn": {
+		"FormatColumns": []
+	},
+	"AdaptableStoreVersion": 0
+}
