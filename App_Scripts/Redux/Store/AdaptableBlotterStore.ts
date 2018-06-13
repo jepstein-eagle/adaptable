@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation } from '../../Core/Enums';
+import { ExportDestination, MathOperation, DataType } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -551,11 +551,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 }
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
                     let returnAction = next(action);
-                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    blotter.addCalculatedColumnToGrid((<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn)
+                    let calculatedColumn: ICalculatedColumn = (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn
+                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
+
+                    blotter.addCalculatedColumnToGrid(calculatedColumn)
                     let newCalculatedColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn.ColumnId)
                     if (newCalculatedColumn) {
-                        columnsLocalLayout.push(newCalculatedColumn)
+                        //      columnsLocalLayout.push(newCalculatedColumn)
                     }
                     //otherwise it will show hidden columns in AgGrid as we are recreating the column collection
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
@@ -578,11 +580,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-                    let index = calculatedColumnState.CalculatedColumns.findIndex(x => x.ColumnId == actionTyped.CalculatedColumn.ColumnId)
-                    blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
-                    let returnAction = next(action);
-                    blotter.addCalculatedColumnToGrid(actionTyped.CalculatedColumn)
+                    let index = actionTyped.Index;
+                    let isNameChanged: boolean = columnsLocalLayout.find(c=> c.ColumnId== actionTyped.CalculatedColumn.ColumnId) == null
+                    if (isNameChanged) { // name has changed so we are going to delete and then add to ensure all col names are correct
+                        blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
+                        blotter.addCalculatedColumnToGrid(actionTyped.CalculatedColumn)
+                        blotter.setColumnIntoStore();
+                        columnsLocalLayout = middlewareAPI.getState().Grid.Columns // need to get again
+                    } else {  // it exists so just edit
+                        blotter.editCalculatedColumnInGrid(actionTyped.CalculatedColumn)
+                    }
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+                    let returnAction = next(action);
                     return returnAction;
                 }
                 case FilterRedux.HIDE_FILTER_FORM: {
@@ -881,7 +890,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let gridState: GridState = middlewareAPI.getState().Grid
                     let layoutState: LayoutState = middlewareAPI.getState().Layout
                     if (layoutState.Layouts.length == 0) {
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null,  DEFAULT_LAYOUT)
+                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
                         middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     }
                     else {
@@ -895,7 +904,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         blotter.addCalculatedColumnToGrid(x)
                     })
                     if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
-                        blotter.setColumnIntoStore();
+                        //     blotter.setColumnIntoStore();
                         //12/09/17 : fortunately it's not needed anymore as I changed the init process... That was dirty
                         // //We force clone of the state so strategies get reinitialized with the new column.
                         // //it's not ideal and will probably need optimization

@@ -88,7 +88,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName}   headerText={StrategyNames.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&
@@ -103,8 +103,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                 {this.state.EditedAdaptableBlotterObject &&
 
                     <CalculatedColumnWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                         ConfigEntities={this.props.CalculatedColumns}
                         Columns={this.props.Columns}
                         ModalContainer={this.props.ModalContainer}
@@ -117,7 +117,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
-                        canFinishWizard={()=>this.canFinishWizard()}  />
+                        canFinishWizard={() => this.canFinishWizard()} />
 
                 }
             </PanelWithButton>
@@ -149,11 +149,11 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
-    
+
     canFinishWizard() {
         let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn
-        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId)  && StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
-      }
+        return StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) && StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
+    }
 
 }
 

@@ -4,6 +4,9 @@ export module ArrayExtensions {
     export function ContainsItem(array: any[], itemToCheck: any): boolean {
         return array.indexOf(itemToCheck) > -1;
     }
+    export function NotContainsItem(array: any[], itemToCheck: any): boolean {
+        return !ContainsItem(array, itemToCheck)
+    }
 
     export function RetrieveDistinct(array: any[]): any[] {
         return  [...new Set(array.map(item => item))];

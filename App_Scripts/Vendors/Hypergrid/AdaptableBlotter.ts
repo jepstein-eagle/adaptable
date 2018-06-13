@@ -157,7 +157,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-     //   this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        //   this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
@@ -479,14 +479,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         row[cellInfo.ColumnId] = cellInfo.Value;
 
         let dataChangedEvent: IDataChangedEvent =
-            {
-                OldValue: oldValue,
-                NewValue: cellInfo.Value,
-                ColumnId: cellInfo.ColumnId,
-                IdentifierValue: cellInfo.Id,
-                Timestamp: null,
-                Record: null
-            }
+        {
+            OldValue: oldValue,
+            NewValue: cellInfo.Value,
+            ColumnId: cellInfo.ColumnId,
+            IdentifierValue: cellInfo.Id,
+            Timestamp: null,
+            Record: null
+        }
         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
@@ -502,14 +502,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             row[element.ColumnId] = element.Value
 
             let dataChangedEvent: IDataChangedEvent =
-                {
-                    OldValue: oldValue,
-                    NewValue: element.Value,
-                    ColumnId: element.ColumnId,
-                    IdentifierValue: element.Id,
-                    Timestamp: null,
-                    Record: null
-                }
+            {
+                OldValue: oldValue,
+                NewValue: element.Value,
+                ColumnId: element.ColumnId,
+                IdentifierValue: element.Id,
+                Timestamp: null,
+                Record: null
+            }
             dataChangedEvents.push(dataChangedEvent);
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
@@ -570,13 +570,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnIndex(columnId: string): number {
         //this returns the index of the column in the collection which is as well the index y of the cell in the grid
         // it doesnt return the index from the schema
-        let column = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
-        if (column) {
-            return column.Index
-        }
-        else {
-            return -1;
-        }
+        return this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.findIndex(x => x.ColumnId == columnId)
+        //  if (column) {
+        //      return 14;//column.Index
+        //  }
+        //  else {
+        //      return -1;
+        //  }
     }
 
 
@@ -849,6 +849,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.behavior.changed()
         this.setColumnIntoStore();
     }
+
+    public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
+        let newSchema = {
+            name: calculatedColumn.ColumnId,
+            header: calculatedColumn.ColumnId,
+            calculator: (dataRow: any, columnId: string) => {
+                //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
+                if (Object.keys(dataRow).length == 0) {
+                    return calculatedColumn.ColumnId
+                }
+                return this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, dataRow)
+            }
+        }
+        let schemaIndex = this.vendorGrid.behavior.dataModel.schema.findIndex((x: any) => x.name == calculatedColumn.ColumnId)
+
+        this.vendorGrid.behavior.dataModel.schema[schemaIndex] = newSchema
+
+        let existingColumnIndex = this.vendorGrid.behavior.columns.findIndex((c: any) => c.name == calculatedColumn.ColumnId)
+        let existingColumn = this.vendorGrid.behavior.columns.find((c: any) => c.name == calculatedColumn.ColumnId)
+        existingColumn.calculator = newSchema.calculator
+        this.vendorGrid.behavior.columns[existingColumnIndex] = existingColumn
+
+        this.vendorGrid.behavior.changed()
+    }
+
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         let newSchema = {
             name: calculatedColumn.ColumnId,
@@ -872,6 +897,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.vendorGrid.behavior.changed()
         this.setColumnIntoStore();
+    }
+
+    public isGroupRecord(record: any): boolean {
+        return false;
     }
 
     public getFirstRecord() {
@@ -1030,14 +1059,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             else {
                 let dataChangedEvent: IDataChangedEvent =
-                    {
-                        OldValue: (row)[dataChangingEvent.ColumnId],
-                        NewValue: dataChangingEvent.NewValue,
-                        ColumnId: dataChangingEvent.ColumnId,
-                        IdentifierValue: dataChangingEvent.IdentifierValue,
-                        Timestamp: null,
-                        Record: null
-                    }
+                {
+                    OldValue: (row)[dataChangingEvent.ColumnId],
+                    NewValue: dataChangingEvent.NewValue,
+                    ColumnId: dataChangingEvent.ColumnId,
+                    IdentifierValue: dataChangingEvent.IdentifierValue,
+                    Timestamp: null,
+                    Record: null
+                }
             }
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
@@ -1045,12 +1074,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.vendorGrid.behavior.reindex();
         });
         grid.addEventListener('fin-selection-changed', () => {
-          //  let test = this.vendorGrid.selectionModel.getSelectedColumns()
+            //  let test = this.vendorGrid.selectionModel.getSelectedColumns()
             this.debouncedSetSelectedCells()
         });
         grid.addEventListener('fin-column-selection-changed', () => {
-         //   let test = this.vendorGrid.selectionModel.getSelectedColumns()
-        //    this.debouncedSetSelectedCells()
+            //   let test = this.vendorGrid.selectionModel.getSelectedColumns()
+            //    this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....

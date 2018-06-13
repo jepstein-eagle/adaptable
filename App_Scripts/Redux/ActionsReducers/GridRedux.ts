@@ -7,6 +7,7 @@ import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlo
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
+export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
@@ -19,6 +20,9 @@ export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 
 export interface GridSetColumnsAction extends Redux.Action {
     Columns: IColumn[];
+}
+export interface GridAddColumnAction extends Redux.Action {
+    Column: IColumn;
 }
 export interface GridHideColumnAction extends Redux.Action {
     ColumnId: string;
@@ -56,6 +60,11 @@ export interface GridSetSelectedCellsAction extends Redux.Action {
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
     type: GRID_SET_COLUMNS,
     Columns
+})
+
+export const GridAddColumn = (Column: IColumn): GridAddColumnAction => ({
+    type: GRID_ADD_COLUMN,
+    Column
 })
 
 export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
@@ -111,6 +120,11 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
     switch (action.type) {
         case GRID_SET_COLUMNS:
             return Object.assign({}, state, { Columns: [].concat((<GridSetColumnsAction>action).Columns) })
+        case GRID_ADD_COLUMN:
+            let actionTypedAddUpdate = (<GridAddColumnAction>action)
+            let columns = [].concat(state.Columns)
+            columns.push(actionTypedAddUpdate.Column)
+            return Object.assign({}, state, { Columns: columns })
         case GRID_SET_SORT:
             return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
         case GRID_SET_BLOTTER_RESTRICTIONS:

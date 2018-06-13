@@ -21,7 +21,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter)
-       this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
     protected addPopupMenuItem() {
@@ -30,6 +30,8 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     protected addColumnMenuItem(columnId: string): void {
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
+            if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
+
                 let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
                 if (flashingCell && flashingCell.IsLive) {
                     this.createContextMenuItemReduxAction(
@@ -49,7 +51,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                         FlashingCellsRedux.FlashingCellSelect(flashingCell)
                     )
                 }
-            
+            }
         }
     }
 

@@ -74,6 +74,7 @@ export interface IAdaptableBlotter {
     // Row Methods
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
+    isGroupRecord(record:any): boolean
 
     //  Sort
     setCustomSort(columnId: string, comparer: Function): void
@@ -83,6 +84,7 @@ export interface IAdaptableBlotter {
     //CalculatedColumn
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void
+    editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void
     getFirstRecord(): any
 
     // Filtering

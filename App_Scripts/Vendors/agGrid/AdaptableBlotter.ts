@@ -16,15 +16,14 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
 import { CalendarService } from '../../Core/Services/CalendarService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import { IAuditService, IDataChangedEvent } from '../../Core/Services/Interface/IAuditService'
+import { IAuditService, IDataChangedEvent, IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { IValidationService } from '../../Core/Services/Interface/IValidationService'
 import { AuditService } from '../../Core/Services/AuditService'
-import { IDataChangingEvent } from '../../Core/Services/Interface/IAuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
-// import strategy
+// strategies
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
@@ -55,7 +54,6 @@ import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrateg
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
-
 // import other items
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { IEvent } from '../../Core/Interface/IEvent';
@@ -84,12 +82,11 @@ import { StyleHelper } from '../../Core/Helpers/StyleHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
 import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
-import { NewValueParams, ValueGetterParams } from "ag-grid/dist/lib/entities/colDef"
+import { NewValueParams, ValueGetterParams, ColDef } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -98,6 +95,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
+    public BlotterOptions: IAdaptableBlotterOptions
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -106,15 +104,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
-    public BlotterOptions: IAdaptableBlotterOptions
-
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
 
     constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: GridOptions, gridContainer: HTMLElement) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
 
-         // create the store
+        // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
@@ -125,11 +121,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.vendorGrid.api.getValue(columnId, record));
 
-
         // store any grid-specific info in this object (to be improved!) and then accessible later
         let blotterRestrictions: string[] = ["UseClassSytleNames"]
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterRestrictionsAction>(GridRedux.GridSetBlotterRestrictions(blotterRestrictions));
-
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -163,7 +157,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
 
-
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
@@ -172,16 +165,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
                     AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
-                    //for now i'm still initializing the strategies even if loading state has failed.... 
-                    //we may revisit that later
+                    //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
                 () => this.initInternalGridLogic(vendorGrid, gridContainer),
                 (e) => {
                     AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
-                    //for now i'm still initializing the grid even if loading state has failed.... 
-                    //we may revisit that later
+                    //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
                     this.initInternalGridLogic(vendorGrid, gridContainer)
                 }
             )
@@ -190,11 +181,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
     }
 
-
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
-
 
     private createFilterWrapper(col: Column) {
         this.vendorGrid.api.destroyFilter(col)
@@ -236,8 +225,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
-
-
     public hideFilterFormPopup: Function
     public hideFilterForm() {
         if (this.hideFilterFormPopup) {
@@ -259,94 +246,94 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let col = this.vendorGrid.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
                 this.tempSetColumnVisibleFixForBuild(this.vendorGrid.columnApi, col, true, "api")
-                // this.vendorGrid.columnApi.setColumnVisible(col, true, "api") // not sure if this right - there is a new parametr of columneventtype here...
             }
-            //  this.vendorGrid.columnApi.moveColumn(col, startIndex + index, "api") // not sure if this right - there is a new parametr of columneventtype here...
             this.tempMoveColumnFixForBuild(this.vendorGrid.columnApi, col, startIndex + index, "api");
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
             this.tempSetColumnVisibleFixForBuild(this.vendorGrid.columnApi, col, false, "api")
-            //    this.vendorGrid.columnApi.setColumnVisible(col, false, "api") // not sure if this right - there is a new parametr of columneventtype here...
         }))
-        // we need to do this to make sure agGrid and Blotter cols collections are in sync
+        // we need to do this to make sure agGrid and Blotter column collections are in sync
         this.setColumnIntoStore();
     }
 
     public setColumnIntoStore() {
-        let hiddenColumns: IColumn[] = []
-        let visibleColumns: IColumn[] = []
+        let allColumns: IColumn[] = []
+        let existingColumns: IColumn[] = this.getState().Grid.Columns;
+        let vendorCols: Column[] = this.vendorGrid.columnApi.getAllGridColumns()
+        let quickSearchClassName = this.getQuickSearchClassName();
 
-        let vendorCols: any[] = this.vendorGrid.columnApi.getAllGridColumns()
-
-        vendorCols.forEach((col, index) => {
-            let colId: string = col.getColId()
+        vendorCols.forEach((vendorColumn, index) => {
+            let colId: string = vendorColumn.getColId()
             if (!ColumnHelper.isSpecialColumn(colId)) {
-                if (col.isVisible()) {
-                    let visibleCol: IColumn = {
-                        ColumnId: colId,
-                        FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
-                        DataType: this.getColumnDataType(col),
-                        Visible: true,
-                        Index: index,
-                        ReadOnly: this.isColumnReadonly(colId)
-                    }
-                    visibleColumns.push(visibleCol)
+                let existingColumn: IColumn = existingColumns.find(c => c.ColumnId == colId);
+                if (existingColumn) {
+                    existingColumn.Visible = vendorColumn.isVisible()
                 } else {
-                    let hiddenCol: IColumn = {
-                        ColumnId: colId,
-                        FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(col, 'header'),
-                        DataType: this.getColumnDataType(col),
-                        Visible: false,
-                        Index: index,
-                        ReadOnly: this.isColumnReadonly(colId)
-                    }
-                    visibleColumns.push(hiddenCol)
+                    existingColumn = this.createColumn(vendorColumn, quickSearchClassName)
                 }
+                allColumns.push(existingColumn);
             }
         })
 
-
-        let allColumns = visibleColumns.concat(hiddenColumns)
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(allColumns));
+    }
+
+    private createColumn(vendorColumn: Column, quickSearchClassName: string): IColumn {
+        let colId: string = vendorColumn.getColId()
+        let abColumn: IColumn = {
+            ColumnId: colId,
+            FriendlyName: this.vendorGrid.columnApi.getDisplayNameForColumn(vendorColumn, 'header'),
+            DataType: this.getColumnDataType(vendorColumn),
+            Visible: vendorColumn.isVisible(),
+            ReadOnly: this.isColumnReadonly(colId)
+        }
+        this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
+        return abColumn;
+    }
+
+    private getQuickSearchClassName(): string {
         let blotter = this
         let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ?
             blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName :
             StyleHelper.CreateStyleName(StrategyIds.QuickSearchStrategyId, this)
-        for (let col of allColumns) {
-            let cellClassRules: any = {};
-            cellClassRules[quickSearchClassName] = function (params: any) {
-                let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-                let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-                if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
-                    && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
-                        || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
-                    let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                    let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
-                    let rowId = blotter.getPrimaryKeyValueFromRecord(params.node);
-                    let stringValueLowerCase = displayValue.toLowerCase();
-                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
-                        case LeafExpressionOperator.Contains:
-                            {
-                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    return true
-                                }
-                            }
-                            break;
-                        case LeafExpressionOperator.StartsWith:
-                            {
-                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    return true
-                                }
-                            }
-                            break;
-                    }
-                }
-                return false;
-            }
-            this.setCellClassRules(cellClassRules, col.ColumnId, "QuickSearch")
-        }
-
+        return quickSearchClassName;
     }
+
+    private addQuickSearchStyleToColumn(col: IColumn, quickSearchClassName: string): void {
+        let blotter = this
+        let cellClassRules: any = {};
+        cellClassRules[quickSearchClassName] = function (params: any) {
+            let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+            let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+            if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
+                && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
+                    || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
+                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
+
+                let stringValueLowerCase = displayValue.toLowerCase();
+                switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
+                    case LeafExpressionOperator.Contains:
+                        {
+                            if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                return true
+                            }
+                        }
+                        break;
+                    case LeafExpressionOperator.StartsWith:
+                        {
+                            if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                return true
+                            }
+                        }
+                        break;
+                }
+            }
+            return false;
+        }
+        this.setCellClassRules(cellClassRules, col.ColumnId, "QuickSearch")
+    }
+
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];
@@ -411,9 +398,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 for (let column of rangeSelection.columns) {
                     let colId: string = column.getColId();
                     if (index == 0) {
-                        let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
-                        //   let dataType = DataType.Number;
-                        //   let isReadonly: boolean = this.isColumnReadonly(colId)
+                        let selectedColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == colId);
                         columns.push(selectedColumn);
                     }
 
@@ -441,7 +426,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onSelectedCellsChanged.Dispatch(this, this)
     }
 
-    //We deduce the type here. I couldnt find a way to get it through the definition
+    //We deduce the type here, as there is no way to get it through the definition
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
@@ -574,11 +559,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 data[value.ColumnId] = value.Value;
                 itemsToUpdate.push(data);
 
-                //   rowNode.setDataValue(value.ColumnId, value.Value)
-
-                //    var res = this.vendorGrid.api.updateRowData({ update: itemsToUpdate });
-
-
                 let dataChangedEvent: IDataChangedEvent = {
                     OldValue: oldValue,
                     NewValue: value.Value,
@@ -587,10 +567,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-                //     this.AuditService.CreateAuditChangedEvent(dataChangedEvent);
-
-                //   this.AuditLogService.AddEditCellAuditLog(dataChangedEvent)
-
                 dataChangedEvents.push(dataChangedEvent)
             }
         })
@@ -598,9 +574,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
 
-
         this.applyGridFiltering();
-
         this.vendorGrid.api.clearRangeSelection();
     }
 
@@ -628,8 +602,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         if (type == "getColumnValue") {
             return (columnId: string) => { return this.vendorGrid.api.getValue(columnId, record) }
-        }
-        else {
+        } else {
             return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
         }
     }
@@ -814,12 +787,43 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
     }
 
+    public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
+        // first change the value getter in the coldefs - nothing else needs to change
+        let colDefs: ColDef[] = this.vendorGrid.columnApi.getAllColumns().map(x => x.getColDef())
+        let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
+
+        let newColDef: ColDef = colDefs[colDefIndex];
+        newColDef.valueGetter = (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
+
+        colDefs[colDefIndex] = newColDef
+        this.vendorGrid.api.setColumnDefs(colDefs)
+
+        // for column list its an itnernal map only so we can first delete
+        for (let columnList of this.calculatedColumnPathMap.values()) {
+            let index = columnList.indexOf(calculatedColumn.ColumnId);
+            if (index > -1) {
+                columnList.splice(index, 1);
+            }
+        }
+        // and then add
+        let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
+        for (let column of columnList) {
+            let childrenColumnList = this.calculatedColumnPathMap.get(column)
+            if (!childrenColumnList) {
+                childrenColumnList = []
+                this.calculatedColumnPathMap.set(column, childrenColumnList)
+            }
+            childrenColumnList.push(calculatedColumn.ColumnId)
+        }
+
+    }
+
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
-        let colDef = this.vendorGrid.columnApi.getAllColumns().map(x => x.getColDef())
-        let colDefIndex = colDef.findIndex(x => x.headerName == calculatedColumnID)
+        let colDefs: ColDef[] = this.vendorGrid.columnApi.getAllColumns().map(x => x.getColDef())
+        let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumnID)
         if (colDefIndex > -1) {
-            colDef.splice(colDefIndex, 1)
-            this.vendorGrid.api.setColumnDefs(colDef)
+            colDefs.splice(colDefIndex, 1)
+            this.vendorGrid.api.setColumnDefs(colDefs)
         }
         for (let columnList of this.calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
@@ -830,13 +834,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.setColumnIntoStore();
     }
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
-        let colDef = this.vendorGrid.columnApi.getAllColumns().map(x => x.getColDef())
-        colDef.push({
+        let venderCols = this.vendorGrid.columnApi.getAllColumns()
+        let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
+        colDefs.push({
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
+            hide: true,
             valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
         })
-        this.vendorGrid.api.setColumnDefs(colDef)
+        this.vendorGrid.api.setColumnDefs(colDefs)
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
         for (let column of columnList) {
             let childrenColumnList = this.calculatedColumnPathMap.get(column)
@@ -846,13 +852,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
-        this.setColumnIntoStore();
-        let col = this.vendorGrid.columnApi.getAllGridColumns().find(col => col.getColId() == calculatedColumn.ColumnId)
-        if (col) {
-            this.createFilterWrapper(col)
+
+        let vendorColumn = this.vendorGrid.columnApi.getAllColumns().find(vc => vc.getColId() == calculatedColumn.ColumnId)
+        let hiddenCol: IColumn = {
+            ColumnId: calculatedColumn.ColumnId,
+            FriendlyName: calculatedColumn.ColumnId,
+            DataType: this.getColumnDataType(vendorColumn),
+            Visible: false,
+            ReadOnly: true
         }
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(hiddenCol));
+
+        let quickSearchClassName = this.getQuickSearchClassName();
+        this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
+
+        this.createFilterWrapper(vendorColumn)
         let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
         conditionalStyleagGridStrategy.InitStyles();
+    }
+
+    public isGroupRecord(record: any): boolean {
+        let rowNode: RowNode = record as RowNode
+        return rowNode.group;
     }
 
     public getFirstRecord() {
@@ -931,7 +952,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
                 let popupState = this.getState().Popup.ScreenPopup;
-                if (!popupState.ShowPopup && popupState.ComponentName == ScreenPopups.ColumnChooserPopup) {
+                if (popupState.ShowPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
                     // ignore
                 } else {
                     this.setColumnIntoStore();
@@ -1068,7 +1089,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         vendorGrid.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.getState().Grid.Columns;
 
-            // let rowId = this.getPrimaryKeyValueFromRecord(node)
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
@@ -1095,7 +1115,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
                 //we assess quicksearch
-                 let quickSearchState = this.getState().QuickSearch;
+                let quickSearchState = this.getState().QuickSearch;
                 if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
                     && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
@@ -1263,12 +1283,4 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         columnApi.setColumnState(columnState, columnEventType)
     }
 
-
-
 }
-
-
-
-
-
-

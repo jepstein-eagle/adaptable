@@ -16,10 +16,12 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IFlashingCell } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IFlashingCell, ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
-    FlashingCells: Array<IFlashingCell>,
+    FlashingCells: IFlashingCell[],
+    CalculatedColumns: ICalculatedColumn[]
     onSelectColumn: (flashingCell: IFlashingCell) => FlashingCellsRedux.FlashingCellSelectAction,
     onSelectAllColumns: (shouldTurnOn: boolean, numericColumns: IFlashingCell[]) => FlashingCellsRedux.FlashingCellSelectAllAction,
     onChangeFlashDuration: (flashingCell: IFlashingCell, newFlashDuration: number) => FlashingCellsRedux.FlashingCellChangeDurationAction
@@ -35,12 +37,6 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
         let infoBody: any[] = ["Make numeric cells flash briefly as their value changes", <br />, <br />, "Click the 'Live' checkbox to turn on flashing for a particular column; or the 'All Columns' checkbox to turn on flashing for all Columns", <br />, <br />, "Defaults are Green for positive change, Red for negative change and a Duration of 0.5 seconds, but these can be amended for each column."]
 
-        let flashingCellDurations: number[] =[250, 500, 750, 1000]
-     
-
-        let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
-        numericColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericColumns, "FriendlyName")
-
         let colItems: IColItem[] = [
             { Content: "Live", Size: 1 },
             { Content: "Column", Size: 4 },
@@ -49,8 +45,16 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             { Content: "Down Colour", Size: 2 },
         ]
 
+        let flashingCellDurations: number[] = [250, 500, 750, 1000]
+
+        let calculatedColumns: string[] = this.props.CalculatedColumns.map(c => c.ColumnId);
+        let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number)
+        let numericNonCalcColumns = numericColumns.filter(c => ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId));
+        numericNonCalcColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericNonCalcColumns, "FriendlyName")
+
+
         let allPotentialFlashingCells: IFlashingCell[] = [];
-        numericColumns.forEach(nc => {
+        numericNonCalcColumns.forEach(nc => {
             let existingfc = this.props.FlashingCells.find(e => e.ColumnId == nc.ColumnId)
             if (!existingfc) {
                 allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc))
@@ -87,16 +91,16 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         let setAllOption = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
                 <Col xs={12} className="ab_medium_margin">
-                    <Checkbox onChange={() => this.props.onSelectAllColumns(!areAllLive,  allPotentialFlashingCells)}
+                    <Checkbox onChange={() => this.props.onSelectAllColumns(!areAllLive, allPotentialFlashingCells)}
                         checked={areAllLive} > All Columns </Checkbox>
                 </Col>
             </FormGroup>
         </AdaptableBlotterForm>;
 
         return <div className={cssClassName}>
-            <PanelWithImage  cssClassName={cssClassName} header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="ab_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="ab_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
                 {setAllOption}
-                <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={allFlashingCells} reducedPanel={true} />
+                <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={allFlashingCells} reducedPanel={true} />
 
             </PanelWithImage>
         </div>
@@ -106,6 +110,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         FlashingCells: state.FlashingCell.FlashingCells,
+        CalculatedColumns: state.CalculatedColumn.CalculatedColumns
     };
 }
 

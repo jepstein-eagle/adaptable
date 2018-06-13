@@ -738,12 +738,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"))
         this._onRefresh.Dispatch(this, this);
     }
+    public editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void{
+        // nothing to do
+    }
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
         // todo
     }
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         // todo
     }
+
+    public isGroupRecord(record:any): boolean{
+        return false;
+    }
+    
     public getFirstRecord(): any {
         return null;
     }

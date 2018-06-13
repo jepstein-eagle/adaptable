@@ -38,7 +38,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
                         let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
-                        if (params.value > auditLogValue) {
+                        if (auditLogValue && params.value > auditLogValue) {
                             let key = primaryKey + col.ColumnId
                             let currentFlashTimer = currentFlashing.get(key)
                             if (currentFlashTimer) {
@@ -55,7 +55,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                     cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
                         let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
-                        if (params.value < auditLogValue) {
+                        if (auditLogValue && params.value < auditLogValue) {
                             let key = primaryKey + col.ColumnId
                             let currentFlashTimer = currentFlashing.get(key)
                             if (currentFlashTimer) {

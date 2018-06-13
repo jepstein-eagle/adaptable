@@ -485,6 +485,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 
+    public editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void{
+        // nothing to do
+    }
+
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         // todo
     }
@@ -492,6 +496,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
+    public isGroupRecord(record:any): boolean{
+        return false;
+    }
+    
     public getFirstRecord(): any {
         return null;
     }

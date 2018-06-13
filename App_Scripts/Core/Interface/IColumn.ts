@@ -5,6 +5,6 @@ export interface IColumn {
     FriendlyName: string
     DataType: DataType
     Visible: boolean,
-    Index: number,
+  //  Index: number,
     ReadOnly: boolean 
 }

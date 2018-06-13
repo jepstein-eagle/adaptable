@@ -28,6 +28,9 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
     ComputeExpressionValue(expression: string, record: any): any {
         try {
+            if(this.blotter.isGroupRecord(record)){
+                return null;
+            }
             return math.eval(expression, {
                 node: record,
                 Col: (columnId: string) => {

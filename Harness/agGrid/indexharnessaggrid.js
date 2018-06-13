@@ -56,7 +56,7 @@ function getFxSchema() {
 
 function InitTradeBlotter() {
      let dataGen = new harness.DataGenerator();
-    let trades = dataGen.getTrades();
+     let trades = dataGen.getTrades();
 
     let gridOptions = {
         columnDefs: getTradeSchema(),  // returns a list of agGrid column definitions
@@ -75,15 +75,17 @@ function InitTradeBlotter() {
         }
     };
 
+    dataGen.startTickingDataagGrid(gridOptions)
+  
     let adaptableBlotterOptions = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
-        blotterId: "Trades_Blotter",              // id for blotter 
+        blotterId: "Trades Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
-        enableRemoteConfigServer: true,        // not running remote config
+        enableRemoteConfigServer: false,        // not running remote config
         //  predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
-        includeVendorStateInLayouts: false,
+        includeVendorStateInLayouts: true,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
