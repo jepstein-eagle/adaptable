@@ -6,7 +6,7 @@ module.exports = {
         'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
-        'adaptableBlotterReactWrapper': ["./App_Scripts/View/AdaptableBlotterReact.tsx"],
+      //  'adaptableBlotterReactWrapper': ["./App_Scripts/View/AdaptableBlotterReact.tsx"],
     },
     output: {
         path: __dirname + '/dist',
