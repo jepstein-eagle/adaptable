@@ -134,6 +134,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
+    public Render(){
+        // todo
+    }
+    
     public InitAuditService() {
         // todo?
     }

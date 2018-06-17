@@ -160,7 +160,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
-
+  
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
@@ -179,7 +179,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // get the api ready
         this.api = new BlotterApi(this);
+
+     }
+
+    public Render(abContainer = "adaptableBlotter"){
+      let abContainerElement: HTMLElement ;
+        if(! abContainer){
+            abContainer = 'adaptableBlotter'
+        }
+        abContainerElement = document.getElementById(abContainer);
+        if(abContainerElement==null){
+            AdaptableBlotterLogger.LogError("There is no Div called " + abContainer + " so cannot render the Adaptable Blotter")
+            return;
+        }
+        ReactDOM.render(AdaptableBlotterApp(this), abContainerElement);
     }
+
 
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()

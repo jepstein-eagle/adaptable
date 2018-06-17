@@ -174,6 +174,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
     }
 
+    public Render(){
+        // todo
+    }
+
     public InitAuditService() {
         //Probably Temporary but we init the Audit service with current data
         this.AuditService.Init(this.vendorGrid.dataSource.data())
@@ -738,6 +742,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"))
         this._onRefresh.Dispatch(this, this);
     }
+
     public editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void{
         // nothing to do
     }

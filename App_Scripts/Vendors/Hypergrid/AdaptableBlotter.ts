@@ -43,7 +43,6 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
-import { ICellValidationStrategy } from '../../Strategy/Interface/ICellValidationStrategy';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
@@ -57,15 +56,14 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
-import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
@@ -130,9 +128,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
         });
-
-        // store the options in state - and also later anything else that we need...
-        // this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -202,6 +197,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
     }
 
+    public Render(){
+        // todo
+    }
 
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
@@ -608,7 +606,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public setCustomSort(columnId: string, comparer: Function): void {
+    public setCustomSort(columnId: string): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
         let gridSort: IGridSort = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
         if (gridSort) {
@@ -726,7 +724,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid, timeout?: number): void {
+    public addRowStyleHypergrid(rowIdentifierValue: any, style: CellStyleHypergrid): void {
         let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(rowIdentifierValue);
         if (!cellStyleHypergridColumns) {
             cellStyleHypergridColumns = new Map()
@@ -854,7 +852,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let newSchema = {
             name: calculatedColumn.ColumnId,
             header: calculatedColumn.ColumnId,
-            calculator: (dataRow: any, columnId: string) => {
+            calculator: (dataRow: any) => {
                 //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
                 if (Object.keys(dataRow).length == 0) {
                     return calculatedColumn.ColumnId
@@ -878,7 +876,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let newSchema = {
             name: calculatedColumn.ColumnId,
             header: calculatedColumn.ColumnId,
-            calculator: (dataRow: any, columnId: string) => {
+            calculator: (dataRow: any) => {
                 //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
                 if (Object.keys(dataRow).length == 0) {
                     return calculatedColumn.ColumnId
@@ -899,7 +897,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.setColumnIntoStore();
     }
 
-    public isGroupRecord(record: any): boolean {
+    public isGroupRecord(): boolean {
         return false;
     }
 
@@ -979,7 +977,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._onKeyDown.Dispatch(this, e.detail.keyEvent);
         });
         //we hide the filterform if scrolling on the x axis
-        grid.addEventListener('fin-scroll-x', (e: any) => {
+        grid.addEventListener('fin-scroll-x', () => {
             if (this.filterContainer.style.visibility == 'visible') {
                 this.hideFilterForm();
             }
@@ -1057,20 +1055,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     event.preventDefault();
                 }
             }
-            else {
-                let dataChangedEvent: IDataChangedEvent =
-                {
-                    OldValue: (row)[dataChangingEvent.ColumnId],
-                    NewValue: dataChangingEvent.NewValue,
-                    ColumnId: dataChangingEvent.ColumnId,
-                    IdentifierValue: dataChangingEvent.IdentifierValue,
-                    Timestamp: null,
-                    Record: null
-                }
-            }
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
-        grid.addEventListener("fin-after-cell-edit", (e: any) => {
+        grid.addEventListener("fin-after-cell-edit", () => {
             this.vendorGrid.behavior.reindex();
         });
         grid.addEventListener('fin-selection-changed', () => {
@@ -1134,23 +1121,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                         //Lowest priority first then every step will override the properties it needs to override.
                         //probably not needed to optimise as we just assign properties.......
-                        if (formatStyle) {
-                            if (formatStyle.ClassName) {
-                                // if a classname has been set then just use that
-                                let s: string = formatStyle.ClassName;
-                            } else {
-                                if (formatStyle.BackColor) {
-                                    config.backgroundColor = formatStyle.BackColor;
-                                }
-                                if (formatStyle.ForeColor) {
-                                    config.color = formatStyle.ForeColor;
-                                }
-                                if (formatStyle.FontStyle
-                                    || formatStyle.FontWeight
-                                    || formatStyle.ForeColor
-                                    || formatStyle.FontSize) {
-                                    config.font = this.buildFontCSSShorthand(config.font, formatStyle);
-                                }
+                        if (formatStyle && !formatStyle.ClassName) {
+                            if (formatStyle.BackColor) {
+                                config.backgroundColor = formatStyle.BackColor;
+                            }
+                            if (formatStyle.ForeColor) {
+                                config.color = formatStyle.ForeColor;
+                            }
+                            if (formatStyle.FontStyle
+                                || formatStyle.FontWeight
+                                || formatStyle.ForeColor
+                                || formatStyle.FontSize) {
+                                config.font = this.buildFontCSSShorthand(config.font, formatStyle);
                             }
                         }
                         if (conditionalStyleRow) {
@@ -1252,9 +1234,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public onSortSaved(gridColumnIndex: number) {
-        //Toggle sort one column at a time
-        //we need the index property not the index of the collection
-        let gridColumnIndexTransposed = this.vendorGrid.behavior.getActiveColumns()[gridColumnIndex].index;
 
         let currentGridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
         let newGridSorts: IGridSort[] = [].concat(currentGridSorts)
@@ -1282,7 +1261,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.behavior.reindex();
     }
 
-    public setGridSort(gridSorts: IGridSort[]): void {
+    public setGridSort(): void {
         this.vendorGrid.behavior.reindex();
     }
 
@@ -1292,11 +1271,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint();
     }
 
-    public getVendorGridState(visibleCols: string[]): any {
+    public getVendorGridState(): any {
         return null;
     }
 
-    public setVendorGridState(vendorGridState: any): void {
+    public setVendorGridState(): void {
         // todo - but we dont know how to ;(
     }
 

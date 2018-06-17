@@ -15,5 +15,4 @@ export class BlotterApi extends BlotterApiBase implements IBlotterApi {
         theBlotter.setData(dataSource)
     }
 
-    
 }

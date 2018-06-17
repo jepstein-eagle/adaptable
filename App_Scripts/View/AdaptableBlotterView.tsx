@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
-import { PopupState, MenuState, DashboardState, EntitlementsState } from '../Redux/ActionsReducers/Interface/IState';
+import { PopupState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupError } from './Components/Popups/AdaptableBlotterPopupError'
@@ -12,7 +12,6 @@ import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotte
 import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
-import { UIHelper } from "./UIHelper";
 import * as StyleConstants from '../Core/Constants/StyleConstants';
 
 

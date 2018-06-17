@@ -21,12 +21,14 @@ export interface IAdaptableBlotter {
      * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
      */
     api: IBlotterApi
-
     BlotterOptions: IAdaptableBlotterOptions
 
     GridName: string
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
+
+    // Render
+    Render(abContainer: string): void
 
     // Services
     CalendarService: ICalendarService
