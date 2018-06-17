@@ -1,6 +1,7 @@
 var adaptableBlotterHypergrid = require('./dist/adaptableblotterhypergrid-bundle.min');
 var adaptableBlotterKendo = require('./dist/adaptableblotterkendo-bundle.min');
 var adaptableBlotteragGrid = require('./dist/adaptableblotteraggrid-bundle.min');
+var adaptableBlotterReactWrapper = require('./dist/adaptableBlotterReactWrapper-bundle.min');
 
 // interfaces
 //var IAdaptableBlotter = require('./dist/App_Scripts/Core/Interface/IAdaptableBlotter.d.ts');
@@ -10,6 +11,7 @@ var adaptableBlotteragGrid = require('./dist/adaptableblotteraggrid-bundle.min')
 module.exports.adaptableBlotterHypergrid = adaptableBlotterHypergrid;
 module.exports.adaptableBlotterKendo = adaptableBlotterKendo;
 module.exports.adaptableBlotteragGrid = adaptableBlotteragGrid;
+module.exports.adaptableBlotterReactWrapper = adaptableBlotterReactWrapper;
 
 // interfaces
 //module.exports.IAdaptableBlotter = IAdaptableBlotter;

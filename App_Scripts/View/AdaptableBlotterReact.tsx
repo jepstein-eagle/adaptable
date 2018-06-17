@@ -1,6 +1,4 @@
 ﻿import * as React from "react";
-import * as Redux from "redux";
-import { Provider, connect } from 'react-redux';
 import { IAdaptableBlotterOptions } from "../Core/Api/Interface/IAdaptableBlotterOptions";
 
 export interface AdaptableBlotterReactProps extends React.ClassAttributes<AdaptableBlotterReact> {
@@ -14,3 +12,4 @@ export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReact
 
     }
 }
+
