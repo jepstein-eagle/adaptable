@@ -7,6 +7,8 @@ function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
     let trades = dataGen.getTrades();
 
+    // Create a GridOptions object.  This is used to create the ag-Grid
+    // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
     let gridOptions = {
         columnDefs: getTradeSchema(),  // returns a list of agGrid column definitions
         rowData: trades,                // the dummy data we are using
@@ -23,32 +25,35 @@ function InitTradeBlotter() {
             "abColDefObject": {},
         }
     };
+
+    // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
 
-      dataGen.startTickingDataagGrid(gridOptions)
-
-    let adaptableBlotterOptions = {
+   // Create an Adaptable
+    let adaptableBlotterOptionsAgGrid = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "Trades Blotter",              // id for blotter 
-        enableAuditLog: true,                  // not running audit log
+        enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
         //  predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
-        // ag Grid properties
-        //agGridContainerName: "grid",
-        includeVendorStateInLayouts: true,
-        gridOptions: gridOptions,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-        }
+        },
+        // ag Grid properties
+        agGridContainerName: "grid",            // the name of the div which contains the ag-Grid
+        includeVendorStateInLayouts: true,      // whether layouts should include things like column size
+        gridOptions: gridOptions,               // the ag-Grid grid options object - MANDATORY
+        
     }
 
-   // instantiate the Adaptable Blotter, passing in  the AdaptableBlotterOptions
-    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
+   // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptionsAgGrid);
+    // tell the Adaptable Blotter to render - this will add the toolbar into the "adaptableBlotter"
     adaptableblotter.Render();
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
