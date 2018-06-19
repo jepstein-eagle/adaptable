@@ -29,7 +29,7 @@ if (process.env.arg == "kendo") {
 else if (process.env.arg == "aggrid") {
     conditionalEntry = {
         'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
-        harness: "./Harness/DataGenerator.ts"
+        harness: ["./Harness/DataGenerator.ts", "./Harness/agGrid/index.tsx"]
     };
 }
 
