@@ -10,6 +10,7 @@ import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';
 import { ColumnHelper } from './ColumnHelper';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 
 export interface IRangeEvaluation {
     operand1: any;
@@ -101,7 +102,7 @@ export module ExpressionHelper {
                 let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
                 if (columnValues) {
                     let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId)
-                    isColumnSatisfied = columnValues.ColumnValues.findIndex(v => v == columnDisplayValue) != -1;
+                    isColumnSatisfied = ArrayExtensions.ContainsItem(columnValues.ColumnValues, columnDisplayValue) 
                 }
             }
 

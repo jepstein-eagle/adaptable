@@ -6,30 +6,30 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy'
 import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase implements IFormatColumnStrategy {
     protected FormatColumnState: FormatColumnState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.FormatColumnStrategyId, blotter)
-            }
+    }
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph);
     }
 
     protected addColumnMenuItem(columnId: string): void {
-            let formatExists: boolean = this.FormatColumnState.FormatColumns.findIndex(x => x.ColumnId == columnId) > -1
-            let label = formatExists ? "Edit " : "Create "
-            let popupParam = formatExists ? "Edit|" : "New|"
+        let formatExists: boolean = ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f=>f.ColumnId), columnId)
+        let label = formatExists ? "Edit " : "Create "
+        let popupParam = formatExists ? "Edit|" : "New|"
 
-            this.createContextMenuItemShowPopup(
-                label + StrategyNames.FormatColumnStrategyName,
-                ScreenPopups.FormatColumnPopup,
-                StrategyGlyphs.FormatColumnGlyph,
-                popupParam + columnId)
-        
+        this.createContextMenuItemShowPopup(
+            label + StrategyNames.FormatColumnStrategyName,
+            ScreenPopups.FormatColumnPopup,
+            StrategyGlyphs.FormatColumnGlyph,
+            popupParam + columnId)
+
     }
 
     protected InitState() {

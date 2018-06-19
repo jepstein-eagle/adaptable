@@ -6,9 +6,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IDashboardStrategy } from '../Strategy/Interface/IDashboardStrategy'
 import { GridState, DashboardState } from '../Redux/ActionsReducers/Interface/IState';
-import { Helper } from '../Core/Helpers/Helper';
 import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import * as _ from 'lodash'
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { SearchChangedTrigger, Visibility } from '../Core/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
@@ -26,7 +24,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         this.createMenuItemShowPopup(StrategyNames.DashboardStrategyName, ScreenPopups.DashboardPopup, StrategyGlyphs.DashboardGlyph);
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    protected addColumnMenuItem(): void {
         // for now just show / hide = lets worry about minimise later..
         if (this.GetDashboardState().DashboardVisibility == Visibility.Hidden) {
             this.createContextMenuItemReduxAction(

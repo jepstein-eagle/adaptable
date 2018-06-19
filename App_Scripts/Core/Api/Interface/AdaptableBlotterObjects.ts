@@ -1,6 +1,5 @@
-import { FontWeight, FontStyle, FontSize, LeafExpressionOperator, SortOrder, ConditionalStyleScope, MathOperation, DataType, ReportColumnScope, ReportRowScope } from '../../Enums';
+import { LeafExpressionOperator, ReportColumnScope, ReportRowScope } from '../../Enums';
 import { Expression } from '../Expression';
-import { KeyValuePair } from '../../../View/UIInterfaces';
 
 
 /**

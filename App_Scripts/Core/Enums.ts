@@ -208,7 +208,8 @@ export enum SelectedCellOperation{
     Max='Max',
     Min='Min',
     Count = 'Count',
-    Only = 'Only'
+    Only = 'Only',
+   // VWAP = 'VWAP'
 }
 
 

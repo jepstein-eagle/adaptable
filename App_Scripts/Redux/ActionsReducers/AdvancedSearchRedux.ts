@@ -48,7 +48,6 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state:
         case ADVANCED_SEARCH_ADD_UPDATE:
             let actionTypedAddUpdate = (<AdvancedSearchAddUpdateAction>action)
             advancedSearches = [].concat(state.AdvancedSearches)
-            let currentSearchName = actionTypedAddUpdate.AdvancedSearch.Name;
             if (actionTypedAddUpdate.Index != -1) {  // it exists
                 advancedSearches[actionTypedAddUpdate.Index] = actionTypedAddUpdate.AdvancedSearch
             } else {

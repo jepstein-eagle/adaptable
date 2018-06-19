@@ -1,7 +1,6 @@
 import { FormatColumnStrategy } from './FormatColumnStrategy';
 import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { StyleHelper } from '../Core/Helpers/StyleHelper';

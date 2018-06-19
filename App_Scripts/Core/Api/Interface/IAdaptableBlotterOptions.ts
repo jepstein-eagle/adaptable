@@ -1,3 +1,5 @@
+
+
 /**
  * The class injected into the Adaptable Blotter at startup providing all the user, grid and config information required
  */
@@ -44,9 +46,9 @@ export interface IAdaptableBlotterOptions {
      */
     columnValuesOnlyInQueries: boolean
     /**
-     * Whether to include vendor state (e.g. column widths, grouping info) when creating a layout
+     * The name of the container which contains the Adaptable Blotter - defaults to "adaptableBlotter"
      */
-    includeVendorStateInLayouts: boolean;
+    abContainerName?: string
 
     /**
     * Required if using iPushPull to display / send live report data

@@ -5,6 +5,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICalculatedColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
@@ -49,7 +50,7 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
         let e = event.target as HTMLInputElement;
         this.setState({
             ColumnId: e.value,
-            ErrorMessage: this.props.Columns.findIndex(x => x.ColumnId == e.value) > -1 ? "A Column already exists with that name" : null
+            ErrorMessage: ArrayExtensions.ContainsItem(this.props.Columns, e.value) ? "A Column already exists with that name" : null
         }, () => this.props.UpdateGoBackState())
 
     }

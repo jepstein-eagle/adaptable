@@ -10,5 +10,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     maxColumnValueItemsDisplayed: 5000,
     serverSearchOption: 'None',
     columnValuesOnlyInQueries: false,
-    includeVendorStateInLayouts: false
+    abContainerName: "adaptableBlotter"
 }
+
+

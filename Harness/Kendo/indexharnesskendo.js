@@ -118,21 +118,23 @@ messages: {
         }
     }
 
+    var vendorGrid = $("#grid").data("kendoGrid");
+  
     var adaptableBlotterOptions={
         primaryKey: "tradeId",
         userName: "harnessuser",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
         predefinedConfig: json,
+        kendoGrid: vendorGrid,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
   
     }
-    var vendorGrid = $("#grid").data("kendoGrid");
-    var abContainer = document.getElementById('adaptableBlotter');
-    adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(adaptableBlotterOptions, abContainer, vendorGrid);
+    adaptableblotter = new adaptableblotterkendo.AdaptableBlotter(adaptableBlotterOptions);
+    adaptableblotter.Render()
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter))
 }
 

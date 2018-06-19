@@ -4,6 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: ILayout[]
@@ -51,7 +52,7 @@ export class LayoutSettingsWizard extends React.Component<LayoutSettingsWizardPr
         let e = event.target as HTMLInputElement;
         this.setState({
             LayoutName: e.value,
-            ErrorMessage: this.props.Layouts.findIndex(x => x.Name == e.value) > -1 ? "A Layout already exists with that name" : null
+            ErrorMessage: ArrayExtensions.ContainsItem( this.props.Layouts.map(l=>l.Name), e.value)  ? "A Layout already exists with that name" : null
         } as LayoutSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 

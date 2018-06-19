@@ -17,7 +17,6 @@ import { IValidationService } from '../../Core/Services/Interface/IValidationSer
 import { AuditService } from '../../Core/Services/AuditService'
 import { ValidationService } from '../../Core/Services/ValidationService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-//import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
@@ -72,6 +71,7 @@ import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogge
 import * as _ from 'lodash'
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { IAdaptableBlotterOptionsHypergrid, DefaultAdaptableBlotterOptionsHypergrid } from './IAdaptableBlotterOptionsHypergrid';
 
 
 //icon to indicate toggle state
@@ -103,19 +103,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-    private filterContainer: HTMLDivElement
-    private contextMenuContainer: HTMLDivElement
     public BlotterOptions: IAdaptableBlotterOptions
 
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
     private cellFlashIntervalHypergridMap: Map<any, Map<string, number>> = new Map()
+    private abContainerElement: HTMLElement;
+    private vendorGrid: any
+    private filterContainer: HTMLDivElement
+    private contextMenuContainer: HTMLDivElement
 
-    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: any) {
+    constructor(blotterOptions: IAdaptableBlotterOptionsHypergrid) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptionsHypergrid, blotterOptions)
+        let hyperGridOptions = this.BlotterOptions as IAdaptableBlotterOptionsHypergrid
+        this.vendorGrid = hyperGridOptions.hypergrid;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -160,21 +163,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
 
-        this.filterContainer = this.abContainer.ownerDocument.createElement("div")
+        this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
+        if (this.abContainerElement == null) {
+            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
+            return;
+        }
+        this.abContainerElement.innerHTML = ""
+
+        this.filterContainer = this.abContainerElement.ownerDocument.createElement("div")
         this.filterContainer.id = "filterContainer"
         this.filterContainer.style.position = 'absolute'
         this.filterContainer.style.visibility = "hidden"
-        this.abContainer.ownerDocument.body.appendChild(this.filterContainer)
+        this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        this.contextMenuContainer = this.abContainer.ownerDocument.createElement("div")
+        this.contextMenuContainer = this.abContainerElement.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
         this.contextMenuContainer.style.position = 'absolute'
-        this.abContainer.ownerDocument.body.appendChild(this.contextMenuContainer)
+        this.abContainerElement.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
-
-        ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -185,20 +193,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
-                () => this.initInternalGridLogic(vendorGrid),
+                () => this.initInternalGridLogic(),
                 (e) => {
                     AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
-                    this.initInternalGridLogic(vendorGrid)
+                    this.initInternalGridLogic()
                 })
 
         // get the api ready
         this.api = new BlotterApi(this);
     }
 
-    public Render(){
-        // todo
+    public Render() {
+        if (this.abContainerElement != null) {
+            ReactDOM.render(AdaptableBlotterApp(this), this.abContainerElement);
+        }
     }
 
     private getState(): AdaptableBlotterState {
@@ -638,12 +648,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
             })
         } else {
-
             let column = this.getHypergridColumn(columnId);
-            //We bypass the whole DataSource Stuff as we need to get ALL the data
+            //We bypass the whole DataSource stuff as we need to get ALL the data
             let data = this.vendorGrid.behavior.dataModel.getData()
             for (var index = 0; index < data.length; index++) {
-                var element = data[index]
+               var element = data[index]
                 let displayString = this.getDisplayValueFromRecord(element, columnId)
                 let rawValue = this.valOrFunc(element, column)
                 if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
@@ -652,11 +661,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
+                if(returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed){
+                    return Array.from(returnMap.values()) 
+                }
             }
         }
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values())//.slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
-
 
     public getDisplayValue(id: any, columnId: string): string {
         let row = this.vendorGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
@@ -906,7 +917,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     destroy() {
-        ReactDOM.unmountComponentAtNode(this.abContainer);
+        ReactDOM.unmountComponentAtNode(this.abContainerElement);
         ReactDOM.unmountComponentAtNode(this.filterContainer);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
@@ -963,26 +974,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    private initInternalGridLogic(grid: any) {
-        grid.addEventListener("fin-keydown", (e: any) => {
+    private initInternalGridLogic() {
+        this.vendorGrid.addEventListener("fin-keydown", (e: any) => {
             //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
             //like that we avoid the need to have different logic for different grids....
             this._onKeyDown.Dispatch(this, e.detail.primitiveEvent);
         });
         //we'll see if we need to handle differently keydown when in edit mode internally or not....
         //I think we don't need to but hey.... you never know
-        grid.addEventListener("fin-editor-keydown", (e: any) => {
+        this.vendorGrid.addEventListener("fin-editor-keydown", (e: any) => {
             //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
             //like that we avoid the need to have different logic for different grids....
             this._onKeyDown.Dispatch(this, e.detail.keyEvent);
         });
         //we hide the filterform if scrolling on the x axis
-        grid.addEventListener('fin-scroll-x', () => {
+        this.vendorGrid.addEventListener('fin-scroll-x', () => {
             if (this.filterContainer.style.visibility == 'visible') {
                 this.hideFilterForm();
             }
         });
-        grid.addEventListener('fin-click', (e: any) => {
+        this.vendorGrid.addEventListener('fin-click', (e: any) => {
             if (this.filterContainer.style.visibility == 'visible') {
                 this.hideFilterForm();
             }
@@ -1009,12 +1020,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 e.preventDefault();
             }
         });
-        grid.addEventListener("fin-context-menu", (e: any) => {
+        this.vendorGrid.addEventListener("fin-context-menu", (e: any) => {
             if (e.detail.primitiveEvent.isHeaderCell) {
                 this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
             }
         });
-        grid.addEventListener("fin-before-cell-edit", (event: any) => {
+        this.vendorGrid.addEventListener("fin-before-cell-edit", (event: any) => {
             let dataChangingEvent: IDataChangingEvent;
             let row = this.vendorGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
             dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
@@ -1057,20 +1068,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
-        grid.addEventListener("fin-after-cell-edit", () => {
+        this.vendorGrid.addEventListener("fin-after-cell-edit", () => {
             this.vendorGrid.behavior.reindex();
         });
-        grid.addEventListener('fin-selection-changed', () => {
+        this.vendorGrid.addEventListener('fin-selection-changed', () => {
             //  let test = this.vendorGrid.selectionModel.getSelectedColumns()
             this.debouncedSetSelectedCells()
         });
-        grid.addEventListener('fin-column-selection-changed', () => {
+        this.vendorGrid.addEventListener('fin-column-selection-changed', () => {
             //   let test = this.vendorGrid.selectionModel.getSelectedColumns()
             //    this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....
-        grid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
+        this.vendorGrid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
 
             let gridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
@@ -1088,14 +1099,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
             return icon;
         };
-        let originGetCell = grid.behavior.dataModel.getCell;
-        grid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
+        let originGetCell = this.vendorGrid.behavior.dataModel.getCell;
+        this.vendorGrid.behavior.dataModel.getCell = (config: any, declaredRendererName: string) => {
             try {
                 //we run the original one as we don't want it to override our styles. i.e. for ex background color for our flash
                 let originalGetCellReturn: any
                 if (originGetCell) {
                     //we need to maintain the context of the call
-                    originalGetCellReturn = originGetCell.call(grid.behavior.dataModel, config, declaredRendererName)
+                    originalGetCellReturn = originGetCell.call(this.vendorGrid.behavior.dataModel, config, declaredRendererName)
                 }
                 if (config.isHeaderRow && !config.isHandleColumn) {
                     let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
@@ -1191,21 +1202,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 AdaptableBlotterLogger.LogError("Error during GetCell", err)
             }
         };
-        grid.addEventListener('fin-column-sort', (e: any) => {
+        this.vendorGrid.addEventListener('fin-column-sort', (e: any) => {
             this.onSortSaved(e.detail.column);
             //in case we want multi column
             //keys =  event.detail.keys;
             //    this.vendorGrid.behavior.reindex();
         });
         //We add our sorter pipe last into the existing pipeline
-        let currentDataSources = grid.behavior.dataModel.DataSources;
+        let currentDataSources = this.vendorGrid.behavior.dataModel.DataSources;
         currentDataSources.push(FilterAndSearchDataSource(this));
         currentDataSources.push(CustomSortDataSource(this));
-        grid.setPipeline(currentDataSources, {
+        this.vendorGrid.setPipeline(currentDataSources, {
             stash: 'default',
             apply: false //  Set the new pipeline without calling reindex. We might need to reindex.... Not sure yet
         });
-        grid.addEventListener("fin-column-changed-event", () => {
+        this.vendorGrid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
     }

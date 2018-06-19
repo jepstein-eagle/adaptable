@@ -5,7 +5,7 @@ export interface AdaptableBlotterReactProps extends React.ClassAttributes<Adapta
     BlotterOptions: IAdaptableBlotterOptions
 }
 
-export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReactProps, {}> {
+export class AdaptableBlotterReac AdaptableBlotterReact extends React.Component<AdaptableBlotterReactProps, {}> {
     render() {
 
         return <h1>BlotterId : +{this.props.BlotterOptions.blotterId} </h1>;

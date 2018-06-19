@@ -4,6 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/In
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IAdvancedSearch } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[]
@@ -47,19 +48,17 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
         </div>
     }
 
-
     onAdvancedSearchNameChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({
             AdvancedSearchName: e.value,
-            ErrorMessage: this.props.AdvancedSearches.findIndex(x => x.Name == e.value) > -1 ? "A Search already exists with that name" : null
+            ErrorMessage: ArrayExtensions.ContainsItem( this.props.AdvancedSearches.map(s=>s.Name),  e.value) ? "A Search already exists with that name" : null
         } as AdvancedSearchSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
         return StringExtensions.IsNotEmpty(this.state.AdvancedSearchName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
     }
-
 
     public canBack(): boolean { return true; }
 

@@ -1,16 +1,15 @@
 import { IColumnValueExpression, IFilterExpression, IRangeExpression } from "./Interface/AdaptableBlotterObjects";
 
-
 /**
- * The main Expression object - comprised of 4 collections
+ * The main Expression object - comprised of 3 collections: Column Values, Filters and Ranges
  */
 export class Expression {
   /**
      * @property {ColumnValueExpressions} - Column values (as displayed in the Grid)
      */
-   /**
-  * @property {FilterExpressions} - User, System and Column Filters contained in the expression
-  */
+  /**
+ * @property {FilterExpressions} - User, System and Column Filters contained in the expression
+ */
   /**
    * @property {RangeExpressions} - Ranges contained in the expression
    */

@@ -28,7 +28,7 @@ export interface IAdaptableBlotter {
     Strategies: IAdaptableStrategyCollection
 
     // Render
-    Render(abContainer: string): void
+    Render(): void
 
     // Services
     CalendarService: ICalendarService

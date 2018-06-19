@@ -73,6 +73,7 @@ import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { IAdaptableBlotterOptionsKendo, DefaultAdaptableBlotterOptionsKendo } from './IAdaptableBlotterOptionsKendo';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -91,10 +92,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
     private contextMenuContainer: HTMLDivElement
-
-    constructor(blotterOptions: IAdaptableBlotterOptions, private abContainer: HTMLElement, private vendorGrid: kendo.ui.Grid, ) {
+    private vendorGrid: kendo.ui.Grid
+    private abContainerElement: HTMLElement;
+   
+    constructor(blotterOptions: IAdaptableBlotterOptionsKendo ) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptionsKendo, blotterOptions)
+        let kendoOtions = this.BlotterOptions as IAdaptableBlotterOptionsKendo
+        this.vendorGrid = kendoOtions.kendoGrid;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -142,17 +147,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
 
+        this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
+        if (this.abContainerElement == null) {
+            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
+            return;
+        }
+        this.abContainerElement.innerHTML = ""
 
-        this.contextMenuContainer = this.abContainer.ownerDocument.createElement("div")
+        this.contextMenuContainer = this.abContainerElement.ownerDocument.createElement("div")
         this.contextMenuContainer.id = "contextMenuContainer"
         this.contextMenuContainer.style.position = 'absolute'
-        this.abContainer.ownerDocument.body.appendChild(this.contextMenuContainer)
+        this.abContainerElement.ownerDocument.body.appendChild(this.contextMenuContainer)
         ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
-        ReactDOM.render(AdaptableBlotterApp(this), this.abContainer);
-
+        
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
@@ -162,20 +172,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
-                () => this.initInternalGridLogic(vendorGrid),
+                () => this.initInternalGridLogic(),
                 (e) => {
                     AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
-                    this.initInternalGridLogic(vendorGrid)
+                    this.initInternalGridLogic()
                 })
 
         // get the api ready
         this.api = new BlotterApi(this);
     }
 
-    public Render(){
-        // todo
+    public Render() {
+        if (this.abContainerElement != null) {
+            ReactDOM.render(AdaptableBlotterApp(this), this.abContainerElement);
+        }
     }
 
     public InitAuditService() {
@@ -762,7 +774,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     destroy() {
-        ReactDOM.unmountComponentAtNode(this.abContainer);
+        ReactDOM.unmountComponentAtNode(this.abContainerElement);
         ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
@@ -814,16 +826,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.AdaptableBlotterStore.TheStore.getState().Grid;
     }
 
-    private initInternalGridLogic(grid: kendo.ui.Grid) {
+    private initInternalGridLogic() {
         //not sure if there is a difference but I prefer the second method since you get correct type of arg at compile time
         //grid.table.bind("keydown",
-        grid.table.keydown((event) => {
+        this.vendorGrid.table.keydown((event) => {
             this._onKeyDown.Dispatch(this, <any>event);
         });
-        grid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
+        this.vendorGrid.bind("dataBound", (e: kendo.ui.GridDataBoundEvent) => {
             this._onGridDataBound.Dispatch(this, this);
         });
-        grid.bind("save", (e: kendo.ui.GridSaveEvent) => {
+        this.vendorGrid.bind("save", (e: kendo.ui.GridSaveEvent) => {
             let dataChangingEvent: IDataChangingEvent;
             for (let col of this.vendorGrid.columns) {
                 if (e.values.hasOwnProperty(col.field)) {
@@ -881,7 +893,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         });
-        grid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
+        this.vendorGrid.dataSource.bind("change", (e: kendo.data.DataSourceChangeEvent) => {
             if (e.action == "itemchange") {
                 let itemsArray: any = e.items[0]; // type: kendo.data.DataSourceItemOrGroup
                 let changedValue = itemsArray[e.field];
@@ -890,24 +902,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         //WARNING: this event is not raised when reordering columns programmatically!!!!!!!!! 
-        grid.bind("columnReorder", () => {
+        this.vendorGrid.bind("columnReorder", () => {
             // we want to fire this after the DOM manipulation. 
             // Why Kendo don't have the concept of columnReordering and columnReordered is beyond my understanding
             // http://www.telerik.com/forums/column-reorder-event-delay
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
         //I find that kendo hasnt' been too smart in their naming since it looks like very much the change on the datasource
-        grid.bind("change", () => {
+        this.vendorGrid.bind("change", () => {
             this._onSelectedCellsChanged.Dispatch(this, this)
         });
-        grid.bind("sort", () => {
+        this.vendorGrid.bind("sort", () => {
             this.onSortChanged()
         });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
             e.preventDefault();
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
         });
-        grid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
+        this.vendorGrid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);
         });
     }

@@ -581,7 +581,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
                     let index = actionTyped.Index;
-                    let isNameChanged: boolean = columnsLocalLayout.find(c=> c.ColumnId== actionTyped.CalculatedColumn.ColumnId) == null
+                    let isNameChanged: boolean = columnsLocalLayout.find(c => c.ColumnId == actionTyped.CalculatedColumn.ColumnId) == null
                     if (isNameChanged) { // name has changed so we are going to delete and then add to ensure all col names are correct
                         blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
                         blotter.addCalculatedColumnToGrid(actionTyped.CalculatedColumn)
@@ -621,9 +621,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
                         blotter.setGridSort(currentLayout.GridSorts);
                         // set vendor specific info
-                        if (blotter.BlotterOptions.includeVendorStateInLayouts) {
-                            blotter.setVendorGridState(currentLayout.VendorGridInfo)
-                        }
+                        blotter.setVendorGridState(currentLayout.VendorGridInfo)
                     }
                     return returnAction;
                 }
@@ -640,9 +638,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
                     let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
-                    if (blotter.BlotterOptions.includeVendorStateInLayouts) {
-                        layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
-                    }
+                    layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
                     return returnAction;
                 }

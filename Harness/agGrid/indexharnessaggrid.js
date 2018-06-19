@@ -3,60 +3,9 @@
 var themeName = ""
 var adaptableblotter
 
-
-function InitFxBlotter() {
-    let dataGen = new harness.DataGenerator();
-    let data = dataGen.getFX();
-    let gridOptions = {
-        columnDefs: getFxSchema(),  // returns a list of agGrid column definitions
-        rowData: data,                // the dummy data we are using
-        enableSorting: true,
-        enableFilter: true,
-        enableColResize: true,
-    };
-
-    let adaptableBlotterOptions = {
-        primaryKey: "tradeId",                  // pk for blotter - required
-        userName: "demo user",                  // name of current user
-        blotterId: "FX_Blotter",              // id for blotter 
-        enableAuditLog: false,                  // not running audit log
-        enableRemoteConfigServer: false,        // not running remote config
-        //   predefinedConfig: // "demoConfig.json",    // passing in predefined config with a file    
-        serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
-        includeVendorStateInLayouts: true
-    }
-
-    let gridcontainer = document.getElementById('grid');
-    gridcontainer.innerHTML = ""
-    let grid = new agGrid.Grid(gridcontainer, gridOptions);
-    let abContainer = document.getElementById('adaptableBlotter');
-    abContainer.innerHTML = ""
-    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
-}
-
-
-function getFxSchema() {
-    var schema = []
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber" });
-    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"], enableValue: true });
-    schema.push({ headerName: "dealType", field: "dealType", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
-    schema.push({ headerName: "baseCcy", field: "baseCcy", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "baseAmount", field: "baseAmount", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "secondCcy", field: "secondCcy", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "secondAmount", field: "secondAmount", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "rate", field: "rate", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "pnL", field: "pnL", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "trader", field: "trader", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "tradeDate", field: "tradeDate", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "effectiveDate", field: "effectiveDate", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "lastUpdated", field: "lastUpdated", editable: true, filter: 'text', enableRowGroup: true });
-    return schema;
-}
-
 function InitTradeBlotter() {
-     let dataGen = new harness.DataGenerator();
-     let trades = dataGen.getTrades();
+    let dataGen = new harness.DataGenerator();
+    let trades = dataGen.getTrades();
 
     let gridOptions = {
         columnDefs: getTradeSchema(),  // returns a list of agGrid column definitions
@@ -65,7 +14,7 @@ function InitTradeBlotter() {
         enableRangeSelection: true,
         enableFilter: true,
         enableColResize: true,
-        suppressColumnVirtualisation: true,
+        suppressColumnVirtualisation: false,
         columnTypes: {                  // not required but helpful for column data type identification
             "abColDefNumber": {},
             "abColDefString": {},
@@ -74,37 +23,33 @@ function InitTradeBlotter() {
             "abColDefObject": {},
         }
     };
+    let gridcontainer = document.getElementById('grid');
+    gridcontainer.innerHTML = ""
+    new agGrid.Grid(gridcontainer, gridOptions);
 
-    dataGen.startTickingDataagGrid(gridOptions)
-  
+      dataGen.startTickingDataagGrid(gridOptions)
+
     let adaptableBlotterOptions = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "Trades Blotter",              // id for blotter 
-        enableAuditLog: false,                  // not running audit log
+        enableAuditLog: true,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
         //  predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
+        // ag Grid properties
+        //agGridContainerName: "grid",
         includeVendorStateInLayouts: true,
+        gridOptions: gridOptions,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
     }
 
-    let gridcontainer = document.getElementById('grid');
-    gridcontainer.innerHTML = ""
-    let grid = new agGrid.Grid(gridcontainer, gridOptions);
-    let abContainer = document.getElementById('adaptableBlotter');
-    abContainer.innerHTML = ""
-
-    // instantiate the Adaptable Blotter, passing in 
-    // 1   the AdaptableBlotterOptions
-    // 2.  the AdaptableBlotter Container 
-    // 3.  the GridOptions
-    // 4.  the underlying Grid Container (required for agGrid)
-    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions, abContainer, gridOptions, gridcontainer);
-
+   // instantiate the Adaptable Blotter, passing in  the AdaptableBlotterOptions
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
+    adaptableblotter.Render();
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 }
