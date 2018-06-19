@@ -1,3 +1,6 @@
+// var themeName = ""
+// var adaptableblotter;
+
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
     let trades = dataGen.getTrades();

@@ -1,14 +1,27 @@
 ﻿import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IAdaptableBlotterOptions } from "../Core/Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptionsAgGrid } from "../Vendors/agGrid/IAdaptableBlotterOptionsAgGrid";
+import { AdaptableBlotter } from "../Vendors/agGrid/AdaptableBlotter";
+import { AdaptableBlotterApp } from "../View/AdaptableBlotterView";
+import { IAdaptableBlotter } from "../Core/Interface/IAdaptableBlotter";
 
 export interface AdaptableBlotterReactProps extends React.ClassAttributes<AdaptableBlotterReact> {
-  BlotterOptions: IAdaptableBlotterOptions
+  BlotterOptions: IAdaptableBlotterOptionsAgGrid
 }
 
-export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReactProps, {}> {
+export interface AdaptableBlotterReactState extends React.ClassAttributes<AdaptableBlotterReact> {
+  AdaptableBlotter: IAdaptableBlotter
+}
+
+export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReactProps, AdaptableBlotterReactState> {
+  constructor(props: AdaptableBlotterReactProps) {
+    super();
+    this.state = {
+      AdaptableBlotter: new AdaptableBlotter(props.BlotterOptions)
+    }
+  }
   render() {
-    return <h1>Welcome</h1>
+    return <AdaptableBlotterApp {...this.state.AdaptableBlotter} />
   }
 }
 

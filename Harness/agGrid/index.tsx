@@ -1,15 +1,15 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
-import { IAdaptableBlotterOptions } from "../../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptionsAgGrid } from "../../App_Scripts/Vendors/agGrid/IAdaptableBlotterOptionsAgGrid";
 
-// var themeName = ""
-// var adaptableblotter;
-
-let gridOptions: IAdaptableBlotterOptions = {
+let adaptableBlotterOptionsAgGrid: IAdaptableBlotterOptionsAgGrid = {
   primaryKey: 'Test',
   maxColumnValueItemsDisplayed: 1,
-  columnValuesOnlyInQueries: true
+  columnValuesOnlyInQueries: true,
+  includeVendorStateInLayouts: true,
+  agGridContainerName: 'grid',
+  gridOptions: null
 };
 
-ReactDOM.render(<AdaptableBlotterReact BlotterOptions={gridOptions} />, document.getElementById('adaptableBlotter'));
+ReactDOM.render(<AdaptableBlotterReact BlotterOptions={adaptableBlotterOptionsAgGrid} />, document.getElementById('adaptableBlotter'));
