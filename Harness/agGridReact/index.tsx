@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
 import { IAdaptableBlotterOptionsAgGrid } from "../../App_Scripts/Vendors/agGrid/IAdaptableBlotterOptionsAgGrid";
-import { AdaptableBlotterAgGridHarness } from './indexharnessaggrid.ts';
+import { AdaptableBlotterAgGridHarness } from './indexharnessaggrid';
 import * as agGrid from 'ag-grid';
 import { DataGenerator } from '../DataGenerator';
 

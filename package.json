@@ -87,6 +87,7 @@
     "dev-kendo": "cross-env arg=kendo webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
     "dev-hypergrid": "cross-env arg=hypergrid webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
     "dev-aggrid": "cross-env arg=aggrid webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
+    "dev-aggrid-react": "cross-env arg=aggrid-react webpack-dev-server --config webpack.dev.js --content-base Harness/agGridReact/",
     "dev-adaptablegrid": "cross-env arg=adaptablegrid webpack-dev-server --config webpack.dev.js --content-base Harness/AdaptableGrid/",
     "openfin": "node openfin-launcher.js",
     "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan"
