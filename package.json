@@ -21,7 +21,7 @@
     "@types/react-dom": "^15.5.0",
     "@types/react-redux": "^4.4.40",
     "@types/redux-storage": "^4.0.7",
-    "ag-grid": "^17.1.1",
+    "ag-grid": "^18.0.1",
     "ag-grid-react": "^18.0.0",
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.23.0",
