@@ -14,12 +14,18 @@ export interface AdaptableBlotterReactState extends React.ClassAttributes<Adapta
 }
 
 export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReactProps, AdaptableBlotterReactState> {
-  constructor(props: AdaptableBlotterReactProps) {
+  constructor() {
     super();
     this.state = {
-      AdaptableBlotter: new AdaptableBlotter(props.BlotterOptions)
+      AdaptableBlotter: null
     }
   }
+
+  componentWillMount() {
+    let ab: AdaptableBlotter = new AdaptableBlotter(this.props.BlotterOptions);
+    this.setState({ AdaptableBlotter: ab });
+  }
+
   render() {
     return <AdaptableBlotterApp {...this.state.AdaptableBlotter} />
   }
