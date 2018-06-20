@@ -57,12 +57,12 @@ export default class App extends React.Component<{}, GridOptions> {
       <div id="react-app">
         <div id="adaptableBlotter">
           <AdaptableBlotterReact BlotterOptions={this.adaptableBlotterOptionsAgGrid()} />
-        </div>,
+        </div>
         <div id="grid" className="ag-blue">
           <AgGridReact {...this.state} />
         </div>
       </div>
-    )
+    );
   }
 }
 
