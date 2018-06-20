@@ -1,7 +1,7 @@
 var themeName: string = "";
 var adaptableblotter: any;
 
-export class AdaptableBlotterAgGridHarness {
+export class AdaptableBlotterAgGridReactHarness {
 
   public currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -59,22 +59,6 @@ export class AdaptableBlotterAgGridHarness {
               adaptableblotter.api.systemStatusSet("a few issues perhaps", "Amber")
               adaptableblotter.api.alertShow("Warning Header", "Warning message", "Warning")
           }
-          /*
-          if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
-              adaptableblotter.api.setGridData(dataGen.getDollarTrades());
-              adaptableblotter.api.selectLayout("Dollar View")
-            //  adaptableblotter.api.selectCurrentTheme("Dark Theme")
-          } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
-              adaptableblotter.api.setGridData(dataGen.getGBPTrades());
-              adaptableblotter.api.selectLayout("Sterling View")
-          } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
-              adaptableblotter.api.setGridData(dataGen.getEuroTrades());
-              adaptableblotter.api.selectLayout("Euro View")
-          } else {
-              adaptableblotter.api.setGridData(dataGen.getTrades());
-              adaptableblotter.api.clearLayout();
-          }
-          */
       }
   }
 

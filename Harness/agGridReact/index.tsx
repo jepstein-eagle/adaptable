@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
+import { AdaptableBlotterReact } from '../../App_Scripts/Vendors/agGrid/AdaptableBlotterAgGridReact';
 import { IAdaptableBlotterOptionsAgGrid } from "../../App_Scripts/Vendors/agGrid/IAdaptableBlotterOptionsAgGrid";
-import { AdaptableBlotterAgGridHarness } from './indexharnessaggrid';
+import { AdaptableBlotterAgGridReactHarness } from './indexharnessaggrid';
 import * as agGrid from 'ag-grid';
 import { DataGenerator } from '../DataGenerator';
 
@@ -12,7 +12,7 @@ let trades = dataGen.getTrades();
 // Create a GridOptions object.  This is used to create the ag-Grid
 // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
 let gridOptions = {
-    columnDefs: new AdaptableBlotterAgGridHarness().getTradeSchema(),  // returns a list of agGrid column definitions
+    columnDefs: new AdaptableBlotterAgGridReactHarness().getTradeSchema(),  // returns a list of agGrid column definitions
     rowData: trades,                // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
@@ -50,7 +50,7 @@ let adaptableBlotterOptionsAgGrid: IAdaptableBlotterOptionsAgGrid = {
   includeVendorStateInLayouts: true,      // whether layouts should include things like column size
   gridOptions: gridOptions,               // the ag-Grid grid options object - MANDATORY
   maxColumnValueItemsDisplayed: 0,
-  columnValuesOnlyInQueries: true
+  columnValuesOnlyInQueries: false
 };
 
 ReactDOM.render(<AdaptableBlotterReact BlotterOptions={adaptableBlotterOptionsAgGrid} />, document.getElementById('adaptableBlotter'));
