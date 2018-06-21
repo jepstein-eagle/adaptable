@@ -5,10 +5,12 @@ import { IAdaptableBlotterOptionsAgGrid } from "../../App_Scripts/Vendors/agGrid
 import { AdaptableBlotterAgGridReactHarness } from './indexharnessaggrid';
 import { AgGridReact } from 'ag-grid-react';
 import { DataGenerator } from '../DataGenerator';
-import { GridOptions } from "ag-grid";
+import { GridOptions, GridApi, ColumnApi } from "ag-grid";
 
 export interface AppState extends React.ClassAttributes<App> {
-  gridOptions: GridOptions
+  gridOptions: GridOptions,
+  api?: GridApi,
+  columnApi?: ColumnApi
 }
 
 export default class App extends React.Component<{}, AppState> {
@@ -52,7 +54,7 @@ export default class App extends React.Component<{}, AppState> {
       },
       agGridContainerName: "grid",
       includeVendorStateInLayouts: true,
-      gridOptions: this.state.gridOptions,
+      gridOptions: { ...this.state.gridOptions, api: this.state.api, columnApi: this.state.columnApi },
       maxColumnValueItemsDisplayed: 0,
       columnValuesOnlyInQueries: false
     }
@@ -60,13 +62,10 @@ export default class App extends React.Component<{}, AppState> {
 
   onGridReady(grid: GridOptions) {
     this.setState({
-      gridOptions: {
-        ...this.state.gridOptions,
-        api: grid.api,
-        columnApi: grid.columnApi
-      }
+      api: grid.api,
+      columnApi: grid.columnApi
     });
-}
+  }
 
   render() {
     return (
