@@ -181,6 +181,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // get the api ready
         this.api = new BlotterApi(this);
+
+        // Set the abContainerElement property
+        this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
     }
 
     public Render() {

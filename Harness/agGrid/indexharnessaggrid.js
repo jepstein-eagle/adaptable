@@ -25,12 +25,12 @@ function InitTradeBlotter() {
             "abColDefObject": {},
         }
     };
-
+    
     // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
-
+    
    // Create an Adaptable
     let adaptableBlotterOptionsAgGrid = {
         primaryKey: "tradeId",                  // pk for blotter - required

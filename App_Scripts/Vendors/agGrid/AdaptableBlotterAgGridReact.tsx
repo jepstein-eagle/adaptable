@@ -21,13 +21,16 @@ export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReact
     }
   }
 
-  componentWillMount() {
-    let ab: AdaptableBlotter = new AdaptableBlotter(this.props.BlotterOptions);
-    this.setState({ AdaptableBlotter: ab });
+  componentWillUpdate(nextProps: AdaptableBlotterReactProps) {
+    if (!this.props.BlotterOptions.gridOptions.columnApi && nextProps.BlotterOptions.gridOptions.columnApi) {
+      let ab: AdaptableBlotter = new AdaptableBlotter(nextProps.BlotterOptions);
+      this.setState({ AdaptableBlotter: ab });
+    }
   }
 
   render() {
-    return <AdaptableBlotterApp {...this.state.AdaptableBlotter} />
+    return this.state.AdaptableBlotter ?
+      <AdaptableBlotterApp {...this.state.AdaptableBlotter} /> : null;
   }
 }
 

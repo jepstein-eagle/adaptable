@@ -7,7 +7,11 @@ import { AgGridReact } from 'ag-grid-react';
 import { DataGenerator } from '../DataGenerator';
 import { GridOptions } from "ag-grid";
 
-export default class App extends React.Component<{}, GridOptions> {
+export interface AppState extends React.ClassAttributes<App> {
+  gridOptions: GridOptions
+}
+
+export default class App extends React.Component<{}, AppState> {
   constructor() {
     super();
 
@@ -15,19 +19,21 @@ export default class App extends React.Component<{}, GridOptions> {
     let trades = dataGen.getTrades();
 
     this.state = {
-      columnDefs: new AdaptableBlotterAgGridReactHarness().getTradeSchema(),
-      rowData: trades,
-      enableSorting: true,
-      enableRangeSelection: true,
-      enableFilter: true,
-      enableColResize: true,
-      suppressColumnVirtualisation: false,
-      columnTypes: {
-        "abColDefNumber": {},
-        "abColDefString": {},
-        "abColDefBoolean": {},
-        "abColDefDate": {},
-        "abColDefObject": {},
+      gridOptions: {
+        columnDefs: new AdaptableBlotterAgGridReactHarness().getTradeSchema(),
+        rowData: trades,
+        enableSorting: true,
+        enableRangeSelection: true,
+        enableFilter: true,
+        enableColResize: true,
+        suppressColumnVirtualisation: false,
+        columnTypes: {
+          "abColDefNumber": {},
+          "abColDefString": {},
+          "abColDefBoolean": {},
+          "abColDefDate": {},
+          "abColDefObject": {},
+        }
       }
     }
   }
@@ -46,17 +52,30 @@ export default class App extends React.Component<{}, GridOptions> {
       },
       agGridContainerName: "grid",
       includeVendorStateInLayouts: true,
-      gridOptions: this.state,
+      gridOptions: this.state.gridOptions,
       maxColumnValueItemsDisplayed: 0,
       columnValuesOnlyInQueries: false
     }
   }
 
+  onGridReady(grid: GridOptions) {
+    this.setState({
+      gridOptions: {
+        ...this.state.gridOptions,
+        api: grid.api,
+        columnApi: grid.columnApi
+      }
+    });
+}
+
   render() {
     return (
       <div id="react-app">
         <div id="grid" className="ag-theme-balham" style={{ width: '100%', height: '100%', position: 'absolute' }} >
-          <AgGridReact {...this.state}></AgGridReact>
+          <AgGridReact
+            onGridReady={(g)=>this.onGridReady(g)}
+            {...this.state.gridOptions}
+          />
         </div>
         <div id="adaptableBlotter">
           <AdaptableBlotterReact BlotterOptions={this.adaptableBlotterOptionsAgGrid()} />
