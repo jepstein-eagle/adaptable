@@ -5,15 +5,15 @@ import { AdaptableBlotter } from "./AdaptableBlotter";
 import { AdaptableBlotterApp } from "../../View/AdaptableBlotterView";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 
-export interface AdaptableBlotterReactProps extends React.ClassAttributes<AdaptableBlotterReact> {
+export interface AdaptableBlotterReactProps extends React.ClassAttributes<AdaptableBlotterAgGridReact> {
   BlotterOptions: IAdaptableBlotterOptionsAgGrid
 }
 
-export interface AdaptableBlotterReactState extends React.ClassAttributes<AdaptableBlotterReact> {
+export interface AdaptableBlotterReactState extends React.ClassAttributes<AdaptableBlotterAgGridReact> {
   AdaptableBlotter: IAdaptableBlotter
 }
 
-export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReactProps, AdaptableBlotterReactState> {
+export class AdaptableBlotterAgGridReact extends React.Component<AdaptableBlotterReactProps, AdaptableBlotterReactState> {
   constructor() {
     super();
     this.state = {

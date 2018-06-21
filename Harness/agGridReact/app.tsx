@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AdaptableBlotterReact } from '../../App_Scripts/Vendors/agGrid/AdaptableBlotterAgGridReact';
+import { AdaptableBlotterAgGridReact } from '../../App_Scripts/Vendors/agGrid/AdaptableBlotterAgGridReact';
 import { IAdaptableBlotterOptionsAgGrid } from "../../App_Scripts/Vendors/agGrid/IAdaptableBlotterOptionsAgGrid";
 import { AdaptableBlotterAgGridReactHarness } from './indexharnessaggrid';
 import { AgGridReact } from 'ag-grid-react';
@@ -70,14 +70,14 @@ export default class App extends React.Component<{}, AppState> {
   render() {
     return (
       <div id="react-app">
+        <div id="adaptableBlotter">
+          <AdaptableBlotterAgGridReact BlotterOptions={this.adaptableBlotterOptionsAgGrid()} />
+        </div>
         <div id="grid" className="ag-theme-balham" style={{ width: '100%', height: '100%', position: 'absolute' }} >
           <AgGridReact
             onGridReady={(g)=>this.onGridReady(g)}
             {...this.state.gridOptions}
           />
-        </div>
-        <div id="adaptableBlotter">
-          <AdaptableBlotterReact BlotterOptions={this.adaptableBlotterOptionsAgGrid()} />
         </div>
       </div>
     );
