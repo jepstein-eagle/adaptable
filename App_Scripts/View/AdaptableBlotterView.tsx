@@ -33,7 +33,6 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}> {
     render() {
-
         return (
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
@@ -111,6 +110,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 let AdaptableBlotterWrapper: React.ComponentClass<any> = connect(mapStateToProps, mapDispatchToProps)(AdaptableBlotterView);
 
-export const AdaptableBlotterApp = (AdaptableBlotter: IAdaptableBlotter) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
+export const AdaptableBlotterApp = ({ AdaptableBlotter } : {AdaptableBlotter: IAdaptableBlotter}) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
     <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
 </Provider>;

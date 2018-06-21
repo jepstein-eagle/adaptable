@@ -22,7 +22,8 @@ export class AdaptableBlotterAgGridReact extends React.Component<AdaptableBlotte
   }
 
   componentWillUpdate(nextProps: AdaptableBlotterReactProps) {
-    if (!this.props.BlotterOptions.gridOptions.columnApi && nextProps.BlotterOptions.gridOptions.columnApi) {
+    if (!this.props.BlotterOptions.gridOptions.api &&
+      nextProps.BlotterOptions.gridOptions.api && nextProps.BlotterOptions.gridOptions.columnApi) {
       let ab: AdaptableBlotter = new AdaptableBlotter(nextProps.BlotterOptions);
       this.setState({ AdaptableBlotter: ab });
     }
@@ -30,7 +31,7 @@ export class AdaptableBlotterAgGridReact extends React.Component<AdaptableBlotte
 
   render() {
     return this.state.AdaptableBlotter ?
-      <AdaptableBlotterApp {...this.state.AdaptableBlotter} /> : null;
+      <AdaptableBlotterApp AdaptableBlotter={this.state.AdaptableBlotter} /> : null;
   }
 }
 

@@ -6,6 +6,7 @@ import { AdaptableBlotterAgGridReactHarness } from './indexharnessaggrid';
 import { AgGridReact } from 'ag-grid-react';
 import { DataGenerator } from '../DataGenerator';
 import { GridOptions, GridApi, ColumnApi } from "ag-grid";
+import "ag-grid-enterprise";
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,

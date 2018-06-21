@@ -123,7 +123,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.container.ownerDocument.body.appendChild(this.filterContainer)
 
-        ReactDOM.render(AdaptableBlotterApp(this), this.container);
+        ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.container);
 
         $(grid).keydown((event) => {
             this._onKeyDown.Dispatch(this, <any>event)
