@@ -32,6 +32,12 @@ else if (process.env.arg == "aggrid") {
         harness: "./Harness/DataGenerator.ts"
     };
 }
+else if (process.env.arg == "aggrid-react") {
+  conditionalEntry = {
+      'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+      harness: ["./Harness/DataGenerator.ts", "./Harness/agGridReact/app.tsx"]
+  };
+}
 
 module.exports = {
     entry: conditionalEntry,

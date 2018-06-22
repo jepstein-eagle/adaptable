@@ -26,13 +26,19 @@ function InitTradeBlotter() {
             "abColDefObject": {},
         }
     };
-
+    
     // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
+<<<<<<< HEAD
   new agGrid.Grid(gridcontainer, gridOptions);
    
     // Create an Adaptable
+=======
+    new agGrid.Grid(gridcontainer, gridOptions);
+    
+   // Create an Adaptable
+>>>>>>> 6c299c2d9050b024e24ea7b87af432097600a1bd
     let adaptableBlotterOptionsAgGrid = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
@@ -398,4 +404,3 @@ let oldjson = {
         "ShowSystemStatusButton": true
     }
 }
-
