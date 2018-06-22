@@ -1,0 +1,24 @@
+﻿html, body {
+    height: 100%
+    }
+    
+    #grid{
+        height: 90%
+    }
+
+    .styleBackBrown{
+        background-color : rosybrown 
+      }
+    .styleBackGreen{
+        background-color :lightgreen 
+      }
+
+    .styleForeYellow{
+        color: orange;
+        font-stretch: expanded;
+        vertical-align: baseline;
+        font-family: cursive;
+        font-size: xx-large;
+
+      }
+

@@ -186,7 +186,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public Render() {
         if (this.abContainerElement != null) {
-            ReactDOM.render(AdaptableBlotterApp(this), this.abContainerElement);
+            ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
         }
     }
 

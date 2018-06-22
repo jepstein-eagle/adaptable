@@ -1,4 +1,4 @@
-﻿/// <reference path="trade.d.ts" />
+﻿/// <reference path="Trade.d.ts" />
 
 export interface IBond {
     tradeId: number;

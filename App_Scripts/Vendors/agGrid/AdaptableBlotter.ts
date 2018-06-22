@@ -181,6 +181,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // get the api ready
         this.api = new BlotterApi(this);
+
+        // Set the abContainerElement property
+        this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
     }
 
     public Render() {
@@ -193,7 +196,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return;
         }
         this.abContainerElement.innerHTML = ""
-        ReactDOM.render(AdaptableBlotterApp(this), this.abContainerElement);
+        ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
     }
 
 

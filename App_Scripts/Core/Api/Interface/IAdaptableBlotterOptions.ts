@@ -32,7 +32,7 @@ export interface IAdaptableBlotterOptions {
     /**
      * How many items to show in column value listboxes when building queries (useful when datasource is very large)
      */
-    maxColumnValueItemsDisplayed: number,
+    maxColumnValueItemsDisplayed?: number,
     /**
      * Name of the <div> where the modals should appear; if not set, modals will be displayed in the middle of the page
      */
@@ -44,7 +44,7 @@ export interface IAdaptableBlotterOptions {
     /**
      * Whether the query builder will include just ColumnValues (or also Filters and Ranges).  Used primarily if running search on Server
      */
-    columnValuesOnlyInQueries: boolean
+    columnValuesOnlyInQueries?: boolean
     /**
      * The name of the container which contains the Adaptable Blotter - defaults to "adaptableBlotter"
      */
