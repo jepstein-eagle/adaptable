@@ -37,7 +37,7 @@ export class DataGenerator {
 
     getTrades(): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 15001; i++) {
+        for (let i = 1; i < 500; i++) {
             trades.push(this.createTrade(i));
         }
         return trades;
@@ -227,6 +227,7 @@ export class DataGenerator {
                 "currency": tradeCurrency,
                 "country": this.getRandomItem(this.getCountries()),
                 "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
+                "amount": this.getRandomItem(this.getAmounts()),
                 "price": price,
                 "bid": bid,
                 "ask": ask,
@@ -545,6 +546,17 @@ export class DataGenerator {
             "Thailand"
         ];
         return countries;
+    }
+
+    protected getAmounts(): number[] {
+        let amounts = [
+            1000,
+            1500,
+            2000,
+            2500,
+            3000
+        ];
+        return amounts;
     }
 
     protected getMoodysRatings(): string[] {

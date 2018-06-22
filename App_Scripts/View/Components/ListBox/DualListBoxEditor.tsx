@@ -126,7 +126,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     value={x}>{x}</ListGroupItem>
             }
             else {
-                return <ListGroupItem key={x} className="Selected"
+                return <ListGroupItem key={x} className="Selected" style={listGroupItemStyle}
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
                     active={isActive}
@@ -144,7 +144,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 return null;
             }
             else {
-                return <ListGroupItem active={isActive} className="Available"
+                return <ListGroupItem active={isActive} className="Available" style={listGroupItemStyle}
                     draggable={true}
                     onClick={() => this.onClickAvailableValuesItem(x)}
                     key={value}
@@ -652,18 +652,18 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
 var listGroupStyleAvailableLarge: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '430px',
+    'height': '455px',
     'marginBottom': '0'
 };
 
 var listGroupStyleSelectedLarge: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '470px',
+    'height': '490px',
     'marginBottom': '0'
 };
 var listGroupStyleAvailableSmall: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '345px',
+    'height': '350px',
     'marginBottom': '0'
 };
 
@@ -672,6 +672,11 @@ var listGroupStyleSelectedSmall: React.CSSProperties = {
     'height': '385px',
     'marginBottom': '0'
 };
+
+var listGroupItemStyle: React.CSSProperties = {
+    'fontSize': 'small',
+    'padding': '8px',
+ };
 
 var colButtonStyle = {
     transform: 'translateY(100px)',

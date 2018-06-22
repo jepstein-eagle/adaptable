@@ -4,8 +4,6 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary, ISelectedCell } from "../Strategy/Interface/ISelectedCellsStrategy";
 import { DataType } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
@@ -25,7 +23,7 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
     public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {
         let selectedCellSummary: ISelectedCellSummmary;
 
-          if (selectedCellInfo && selectedCellInfo.Selection.size > 0) {
+        if (selectedCellInfo && selectedCellInfo.Selection.size > 0) {
             let numericValues: number[] = []
             let allValues: any[] = []
             let numericColumns: number[] = []
@@ -60,10 +58,27 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
                 Max: (hasNumericColumns) ? math.round(math.max(numericValues), 4) : "",
                 Min: (hasNumericColumns) ? math.round(math.min(numericValues), 4) : "",
                 Count: allValues.length,
-                Only: (distinct == 1) ? allValues[0] : ""
-
+                Only: (distinct == 1) ? allValues[0] : "",
+                VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
             }
         }
         return selectedCellSummary;
+    }
+
+    private calculateVwap(numericValues: number[]): any {
+        let firstColValues: number[] = []
+        let secondColComputedValues: number[] = []
+        for (var i = 0; i < numericValues.length; i++) {
+            if (i % 2 === 0) { // index is odd
+                firstColValues.push(numericValues[i]);
+            } else {
+                let newValue: any = math.multiply(numericValues[i], numericValues[i - 1]);
+                secondColComputedValues.push(newValue)
+            }
+        }
+        let firstColTotal: number = math.sum(firstColValues)
+        let secondColTotal: number = math.sum(secondColComputedValues)
+        let result: any = math.round(math.divide(secondColTotal, firstColTotal), 4)
+        return result;
     }
 }

@@ -42,18 +42,20 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
 
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
-        return <Typeahead ref="typeahead"
-            emptyLabel={"No Column"}
-            placeholder={placeHolder}
-            labelKey={"FriendlyName"}
-            filterBy={["FriendlyName", "ColumnId"]}
-            multiple={this.props.SelectionMode == SelectionMode.Multi}
-            clearButton={true}
-            selected={selectedColums}
-            onChange={(selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds) }}
-            options={sortedColumns}
-            disabled={this.props.disabled}
-        />
+        return <div className={cssClassName}>
+            <Typeahead ref="typeahead"
+                emptyLabel={"No Column"}
+                placeholder={placeHolder}
+                labelKey={"FriendlyName"}
+                filterBy={["FriendlyName", "ColumnId"]}
+                multiple={this.props.SelectionMode == SelectionMode.Multi}
+                clearButton={true}
+                selected={selectedColums}
+                onChange={(selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds) }}
+                options={sortedColumns}
+                disabled={this.props.disabled}
+            />
+        </div>
     }
 
     onColumnChange(selected: IColumn[], isEmptySelection: boolean) {

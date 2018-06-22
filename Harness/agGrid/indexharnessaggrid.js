@@ -17,6 +17,7 @@ function InitTradeBlotter() {
         enableFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
+        rowSelection: "multiple",
         columnTypes: {                  // not required but helpful for column data type identification
             "abColDefNumber": {},
             "abColDefString": {},
@@ -29,9 +30,9 @@ function InitTradeBlotter() {
     // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
-    new agGrid.Grid(gridcontainer, gridOptions);
-
-   // Create an Adaptable
+  new agGrid.Grid(gridcontainer, gridOptions);
+   
+    // Create an Adaptable
     let adaptableBlotterOptionsAgGrid = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
@@ -48,26 +49,37 @@ function InitTradeBlotter() {
         agGridContainerName: "grid",            // the name of the div which contains the ag-Grid
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         gridOptions: gridOptions,               // the ag-Grid grid options object - MANDATORY
-        
+
     }
 
-   // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
+    // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptionsAgGrid);
     // tell the Adaptable Blotter to render - this will add the toolbar into the "adaptableBlotter"
     adaptableblotter.Render();
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    gridOptions.columnApi.autoSizeAllColumns();
 }
+
+function formatCurrency(value) {
+    // return currency notation with two digits:
+    return '$' + value.toFixed(2)
+  
+    // you could also use math.format inside the callback:
+    // return '$' + math.format(value, {notation: 'fixed', precision: 2})
+  }
+ 
 
 function getTradeSchema() {
     var schema = []
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber" });
+    schema.push({ headerName: "Trade Id", field: "tradeId", checkboxSelection: true, editable: false, filter: 'text', type: "abColDefNumber" });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"], enableValue: true });
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text' });
+    schema.push({ headerName: "Amount", field: "amount", editable: true, filter: 'text', enableRowGroup: true, type: ["abColDefNumber"], enableValue: true });
 
     schema.push({ headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
     schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true });

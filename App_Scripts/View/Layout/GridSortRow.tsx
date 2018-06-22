@@ -32,7 +32,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         let sortOrders = EnumExtensions.getNames(SortOrder).map((enumName) => {
-            return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
+            return <option key={enumName} value={enumName}>{enumName}</option>
         })
 
         colItems[0].Content = <ColumnSelector cssClassName={this.props.cssClassName} SelectedColumnIds={[this.props.GridSort.Column]}
@@ -46,6 +46,10 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
             {sortOrders}
 
         </FormControl>
+
+
+
+
 
         let deleteButton = <ButtonDelete
             cssClassName={this.props.cssClassName}

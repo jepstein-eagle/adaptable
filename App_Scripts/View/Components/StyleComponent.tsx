@@ -72,7 +72,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     <Row>
                         <Col xs={6}>
                             <Panel header="Cell Colours" bsStyle="info"  >
-                                <div style={{ height: '355px', overflowY: 'auto' }}>
+                                <div style={{ height: '355px' }}>
                                     <Col xs={12}>
                                         <HelpBlock>Set the colour by ticking a checkbox and selecting a colour from the dropdown; leave unchecked to use colours from the cell's existing style.</HelpBlock>
                                     </Col>
@@ -104,7 +104,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                         </Col>
                         <Col xs={6}>
                             <Panel header="Font Properties" bsStyle="info"  >
-                                <div style={{ height: '355px', overflowY: 'auto' }}>
+                                <div style={{ height: '355px' }}>
                                     <AdaptableBlotterForm horizontal>
                                         <FormGroup controlId="fontWeight">
                                             <Col xs={12} >

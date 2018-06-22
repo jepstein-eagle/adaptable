@@ -17,6 +17,7 @@ import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterOb
 import { Expression } from "../../Core/Api/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -72,7 +73,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             let selectedColumnFilterExpressions: Array<string>
             let selectedColumnRanges: Array<IRange>
 
-            // get column values
+            // get selectedcolumn values
             let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
             if (keyValuePair) {
                 selectedColumnValues = keyValuePair.ColumnValues
@@ -81,7 +82,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 selectedColumnValues = []
             }
 
-            // get  filter expressions
+            let availableColumnValues = ArrayExtensions.IsNullOrEmpty(this.state.ColumnValues) ?
+                this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue) :
+                this.state.ColumnValues;
+
+
+            // get selected filter expressions
             let filterExpressions = theProps.Expression.FilterExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
             selectedColumnFilterExpressions = []
             if (filterExpressions) {
@@ -98,16 +104,16 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     }
                 })
             }
-            let combinedFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf));
+            let availableFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf));
 
             // get ranges
             let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
             selectedColumnRanges = (ranges) ? ranges.Ranges : []
 
             return {
-                ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(theProps.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue),
+                ColumnValues: availableColumnValues,
                 SelectedColumnValues: selectedColumnValues,
-                AllFilterExpresions: combinedFilterExpressions,
+                AllFilterExpresions: availableFilterExpressions,
                 SelectedFilterExpressions: selectedColumnFilterExpressions,
                 SelectedColumnRanges: selectedColumnRanges,
                 QueryBuildStatus: this.props.QueryBuildStatus

@@ -61,6 +61,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -124,6 +125,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.Filter.ColumnFilters = []
         state.Filter.UserFilters = []
         state.Filter.SystemFilters = []
+        state.Filter = undefined
         state.Grid = undefined
         state.Layout = undefined
         state.Menu.ContextMenu = undefined

@@ -7,6 +7,7 @@
         currency: string;
         country: string;
         changeOnYear: number;
+        amount: number;
         price: number;
         bid: number;
         ask: number;

@@ -48,6 +48,7 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Min, this.props.SelectedCellSummary.Min, cssClassName));
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Count, this.props.SelectedCellSummary.Count, cssClassName));
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Only, this.props.SelectedCellSummary.Only, cssClassName));
+            rowElements.push(this.createRow(colItems, SelectedCellOperation.VWAP, this.props.SelectedCellSummary.VWAP, cssClassName));
         }
 
         return <div className={cssClassName}>

@@ -48,7 +48,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     //we know for Kendo we receive a JQueryKeyEventObject
-    // changing the logic here - you now have to explicity register the column as having plus minus
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
         //it's a speacial key so we handle the string representation of the key '
         let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
@@ -58,9 +57,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
             }
-
-            let popup = this.blotter.AdaptableBlotterStore.TheStore.getState().Popup.ScreenPopup
-
 
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo

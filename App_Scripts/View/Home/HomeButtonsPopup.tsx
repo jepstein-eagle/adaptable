@@ -10,6 +10,7 @@ import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
+import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 
 interface HomeButtonsPopupComponentProps extends StrategyViewPopupProps<HomeButtonsPopupComponent> {
     IsReadOnly: boolean,
@@ -33,14 +34,14 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label)
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName}  header="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph} className="ab_main_popup">
                 <DualListBoxEditor AvailableValues={availableValues}
-                   cssClassName={cssClassName}
-                   SelectedValues={selectedValues}
+                    cssClassName={cssClassName}
+                    SelectedValues={selectedValues}
                     HeaderAvailable="Available Function Buttons"
                     HeaderSelected="Visible Function Buttons"
                     onChange={(SelectedValues) => this.ListChange(SelectedValues)}></DualListBoxEditor>
-            </PanelWithImage>
+            </PanelWithButton>
         </div>
     }
 

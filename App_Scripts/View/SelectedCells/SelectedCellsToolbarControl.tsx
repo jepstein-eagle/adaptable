@@ -110,6 +110,8 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
                 return this.props.SelectedCellSummary.Count;
             case SelectedCellOperation.Only:
                 return this.props.SelectedCellSummary.Only;
+            case SelectedCellOperation.VWAP:
+                return this.props.SelectedCellSummary.VWAP;
         }
     }
 }

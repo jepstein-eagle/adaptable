@@ -47,7 +47,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         let colItems: IColItem[] = [
             { Content: "Control", Size: 4 },
             { Content: "Show/Hide", Size: 2 },
-            { Content: "Preview", Size: 6 },
+            { Content: "Preview", Size: 5 },
         ]
 
         let allToolbars: string[] = []

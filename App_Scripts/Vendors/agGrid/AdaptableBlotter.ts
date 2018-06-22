@@ -404,6 +404,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
+       
+       let test: RowNode[] = this.gridOptions.api.getSelectedNodes();
+       if(test){
+           let s: any = test.length;
+       }
         let selected = this.gridOptions.api.getRangeSelections();
         let columns: IColumn[] = []
         if (selected) {
@@ -1141,7 +1146,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                     for (let column of columns.filter(c => c.Visible)) {
-                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
+                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId).toLowerCase();
                         let stringValueLowerCase = displayValue.toLowerCase();
                         switch (quickSearchState.Operator) {
                             case LeafExpressionOperator.Contains:

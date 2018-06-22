@@ -25,7 +25,8 @@ export interface ISelectedCellSummmary{
     Max: any, // can be number or blank
     Min: any, // can be number or blank
     Count: any, // always a number
-    Only: any// can be value or blank
+    Only: any, // can be value or blank
+    VWAP: any  // number
    }
 
    
