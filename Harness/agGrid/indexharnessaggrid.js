@@ -60,8 +60,8 @@ function InitTradeBlotter() {
 function getTradeSchema() {
     var schema = []
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber" });
-    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber", "randon"], enableValue: true });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, type: ["randon", "another"] });
+    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber"], enableValue: true });
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true});
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });

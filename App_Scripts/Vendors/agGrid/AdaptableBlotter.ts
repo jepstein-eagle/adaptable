@@ -184,16 +184,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public Render() {
-       // if (!abContainer) {
-        //    abContainer = 'adaptableBlotter'
-       // }
         this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
         if (this.abContainerElement == null) {
             AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
             return;
         }
         this.abContainerElement.innerHTML = ""
-        ReactDOM.render(AdaptableBlotterApp(this), this.abContainerElement);
+        ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
     }
 
 

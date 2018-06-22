@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AdaptableBlotterAgGridReact } from '../../App_Scripts/Vendors/agGrid/AdaptableBlotterAgGridReact';
@@ -27,7 +28,7 @@ let gridOptions: GridOptions = {
 }
 
 let gridcontainer = document.getElementById('grid');
-new Grid(gridcontainer, gridOptions);
+let grid : any = new Grid(gridcontainer, gridOptions);
 
 let adaptableBlotterOptionsAgGrid: IAdaptableBlotterOptionsAgGrid = {
   primaryKey: "tradeId",
