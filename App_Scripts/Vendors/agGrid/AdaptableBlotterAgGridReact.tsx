@@ -14,24 +14,14 @@ export interface AdaptableBlotterReactState extends React.ClassAttributes<Adapta
 }
 
 export class AdaptableBlotterAgGridReact extends React.Component<AdaptableBlotterReactProps, AdaptableBlotterReactState> {
-  constructor() {
-    super();
+  componentWillMount() {
     this.state = {
-      AdaptableBlotter: null
-    }
-  }
-
-  componentWillUpdate(nextProps: AdaptableBlotterReactProps) {
-    if (!this.props.BlotterOptions.gridOptions.api &&
-      nextProps.BlotterOptions.gridOptions.api && nextProps.BlotterOptions.gridOptions.columnApi) {
-      let ab: AdaptableBlotter = new AdaptableBlotter(nextProps.BlotterOptions);
-      this.setState({ AdaptableBlotter: ab });
-    }
+      AdaptableBlotter: new AdaptableBlotter(this.props.BlotterOptions)
+    };
   }
 
   render() {
-    return this.state.AdaptableBlotter ?
-      <AdaptableBlotterApp AdaptableBlotter={this.state.AdaptableBlotter} /> : null;
+    return <AdaptableBlotterApp AdaptableBlotter={this.state.AdaptableBlotter} />;
   }
 }
 
