@@ -150,7 +150,7 @@ const configServerTeamSharingUrl = "/adaptableblotter-teamsharing"
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     public Load: PromiseLike<any>
-    constructor(private blotter: IAdaptableBlotter) {
+    constructor( blotter: IAdaptableBlotter) {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>

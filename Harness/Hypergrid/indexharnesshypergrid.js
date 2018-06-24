@@ -170,12 +170,12 @@ function InitBlotter() {
     });
 
     //Add Edit for Trade Date column
-    behavior.setColumnProperties(15, {
+    behavior.setColumnProperties(16, {
         format: 'shortDateFormat'
     });
 
     //Add Edit for Settlement Date column
-    behavior.setColumnProperties(16, {
+    behavior.setColumnProperties(17, {
         format: 'shortDateFormat'
     });
 
@@ -193,12 +193,12 @@ function InitBlotter() {
     var blotterOptions = {
         primaryKey: "tradeId",
         userName: "jonathan",
-        blotterId: "Demo Blotter",
+        blotterId: "my Blotter",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
        // predefinedConfig: json,
         serverSearchOption: "None",
-        hypergrid: vendorGrid,
+        vendorGrid: vendorGrid,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -207,9 +207,9 @@ function InitBlotter() {
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
     adaptableblotter.Render();
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
+//    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
 
-    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+ //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     vendorGrid.addProperties(lightTheme);
 }
 
