@@ -6,9 +6,13 @@
 export interface IAdaptableBlotterOptions {
 
     /**
-     * Unique column in the grid (required for cell identification purposes); the only MANDATORY property
+     * Unique column in the grid (required for cell identification purposes); one of the two MANDATORY properties
      */
     primaryKey?: string,
+     /**
+     * The underlying vendor grid or grid object; the other MANDATORY property
+     */
+    vendorGrid?: any,
     /**
      * How to identifier this Blotter - useful if Audit Log is turned on
      */
@@ -61,4 +65,15 @@ export interface IAdaptableBlotterOptions {
         transport?: string;
         storage_prefix?: string;
     }
+
+    /**
+     * Whether layouts should also include vendor related state - only currently available for ag-Grid and defaults to false
+     */
+    includeVendorStateInLayouts?: boolean;
+    
+    /**
+     * The name of the div which contains the vendor grid.  defaults to "grid"
+     */
+    containerName?: string
+
 }

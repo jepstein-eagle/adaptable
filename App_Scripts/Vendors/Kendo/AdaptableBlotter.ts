@@ -73,7 +73,6 @@ import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { IAdaptableBlotterOptionsKendo, DefaultAdaptableBlotterOptionsKendo } from './IAdaptableBlotterOptionsKendo';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -95,11 +94,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private vendorGrid: kendo.ui.Grid
     private abContainerElement: HTMLElement;
    
-    constructor(blotterOptions: IAdaptableBlotterOptionsKendo ) {
+    constructor(blotterOptions: IAdaptableBlotterOptions ) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptionsKendo, blotterOptions)
-        let kendoOtions = this.BlotterOptions as IAdaptableBlotterOptionsKendo
-        this.vendorGrid = kendoOtions.kendoGrid;
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.vendorGrid = this.BlotterOptions.vendorGrid;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -183,7 +181,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // get the api ready
         this.api = new BlotterApi(this);
     }
-
+  
     public Render() {
         if (this.abContainerElement != null) {
             ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);

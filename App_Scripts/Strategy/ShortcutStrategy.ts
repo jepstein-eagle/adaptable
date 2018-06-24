@@ -38,7 +38,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
-        if (this.Shortcuts.length==0) { return; }
+        if (this.Shortcuts && this.Shortcuts.length==0) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
         let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);

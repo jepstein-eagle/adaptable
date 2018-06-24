@@ -87,7 +87,7 @@ import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } fr
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
-import { DefaultAdaptableBlotterOptionsAgGrid, IAdaptableBlotterOptionsAgGrid } from './IAdaptableBlotterOptionsAgGrid';
+import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -108,12 +108,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
 
-    constructor(blotterOptions: IAdaptableBlotterOptionsAgGrid) {
+    constructor(blotterOptions: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptionsAgGrid, blotterOptions)
-        let agGridOptions = this.BlotterOptions as IAdaptableBlotterOptionsAgGrid
-        this.gridOptions = agGridOptions.gridOptions
-
+        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.gridOptions = this.BlotterOptions.vendorGrid
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -124,10 +122,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
+        // get the api ready
+        this.api = new BlotterApi(this);
 
-        // store any grid-specific info in this object (to be improved!) and then accessible later
-        let blotterRestrictions: string[] = ["UseClassSytleNames"]
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterRestrictionsAction>(GridRedux.GridSetBlotterRestrictions(blotterRestrictions));
+        // this.AdaptableBlotterStore.Initialise();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -179,20 +177,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             )
 
-        // get the api ready
-        this.api = new BlotterApi(this);
+
     }
 
-    public Render() {
-        this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
-        if (this.abContainerElement == null) {
-            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
-            return;
+     public Render() {
+        if (this.abContainerElement == null) {  
+            this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
         }
-        this.abContainerElement.innerHTML = ""
-        ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+        if (this.abContainerElement != null) {
+            this.abContainerElement.innerHTML = ""
+            ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+        }
     }
-
 
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
@@ -232,6 +228,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
+    public BlotterInitialised: EventDispatcher<IAdaptableBlotter, GridOptions> = new EventDispatcher<IAdaptableBlotter, GridOptions>();
 
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
@@ -401,11 +398,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
-       
-       let test: RowNode[] = this.gridOptions.api.getSelectedNodes();
-       if(test){
-           let s: any = test.length;
-       }
+
+        let test: RowNode[] = this.gridOptions.api.getSelectedNodes();
+        if (test) {
+            let s: any = test.length;
+        }
         let selected = this.gridOptions.api.getRangeSelections();
         let columns: IColumn[] = []
         if (selected) {
@@ -956,8 +953,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private initInternalGridLogic() {
-        let agGridOptions = this.BlotterOptions as IAdaptableBlotterOptionsAgGrid
-        let gridContainerElement = document.getElementById(agGridOptions.agGridContainerName);
+        if (this.abContainerElement == null) {
+             this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
+         }
+          if (this.abContainerElement == null) {
+            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
+            return
+        }
+
+        let gridContainerElement = document.getElementById(this.BlotterOptions.containerName);
         if (gridContainerElement) {
             gridContainerElement.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
         }
@@ -1268,8 +1272,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getVendorGridState(visibleCols: string[]): any {
         let mystring: any = null;
-        let agGridOptions = this.BlotterOptions as IAdaptableBlotterOptionsAgGrid
-        if (agGridOptions.includeVendorStateInLayouts) {
+        if (this.BlotterOptions.includeVendorStateInLayouts) {
             let columnState = this.gridOptions.columnApi.getColumnState();
             // Dont like this but not sure we have a choice to avoid other issues...
             // Going to update the state to make sure that visibility matches those given here

@@ -1,49 +1,63 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AdaptableBlotterAgGridReact } from '../../App_Scripts/Vendors/agGrid/AdaptableBlotterAgGridReact';
-import { IAdaptableBlotterOptionsAgGrid } from "../../App_Scripts/Vendors/agGrid/IAdaptableBlotterOptionsAgGrid";
-import { AdaptableBlotterAgGridReactHarness } from './indexharnessaggrid';
+import { AgGridReactWrapper } from '../../App_Scripts/Vendors/agGrid/AgGridReactWrapper';
+import { ReactHarnessHelper } from './ReactHarnessHelper';
 import { DataGenerator } from '../DataGenerator';
-import { Grid, GridOptions, GridApi, ColumnApi } from "ag-grid";
+import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
+import { IAdaptableBlotterOptions } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
 
-let dataGen = new DataGenerator();
-let trades = dataGen.getTrades();
-let gridOptions: GridOptions = {
-  columnDefs: new AdaptableBlotterAgGridReactHarness().getTradeSchema(),
-  rowData: trades,
-  enableSorting: true,
-  enableRangeSelection: true,
-  enableFilter: true,
-  enableColResize: true,
-  suppressColumnVirtualisation: false,
-  columnTypes: {
-    "abColDefNumber": {},
-    "abColDefString": {},
-    "abColDefBoolean": {},
-    "abColDefDate": {},
-    "abColDefObject": {},
+export interface AppState extends React.ClassAttributes<App> {
+  gridOptions: GridOptions,
+  blotterOptions: IAdaptableBlotterOptions
+}
+
+export default class App extends React.Component<{}, AppState> {
+  constructor() {
+    super();
+    let gridOptions: GridOptions = this.createGridOptions();
+    let adaptableBlotterOptions: IAdaptableBlotterOptions = this.createAdaptableBlotterOptions(gridOptions);
+    this.state = {
+      gridOptions: gridOptions,
+      blotterOptions: adaptableBlotterOptions
+    }
+  }
+
+  createGridOptions(): GridOptions {
+    return {
+      columnDefs: new ReactHarnessHelper().getTradeSchema(),
+      rowData: new DataGenerator().getTrades(),
+      enableSorting: true,
+      enableRangeSelection: true,
+      enableFilter: true,
+      enableColResize: true,
+      suppressColumnVirtualisation: false,
+    }
+  }
+
+  createAdaptableBlotterOptions(gridOptions: GridOptions): IAdaptableBlotterOptions {
+    return {
+      primaryKey: "tradeId",
+      vendorGrid: gridOptions,
+      userName: "demo user",
+      blotterId: "Trades Blotter",
+      enableAuditLog: false,
+      enableRemoteConfigServer: false,
+      includeVendorStateInLayouts: true,
+    }
+  }
+
+  render() {
+    return (
+      <div id="react-app">
+        <AgGridReactWrapper
+          AdaptableBlotterOptions={this.state.blotterOptions}
+          GridOptions={this.state.gridOptions}
+        />
+      </div>
+    );
   }
 }
 
-let gridcontainer = document.getElementById('grid');
-let grid : any = new Grid(gridcontainer, gridOptions);
-
-let adaptableBlotterOptionsAgGrid: IAdaptableBlotterOptionsAgGrid = {
-  primaryKey: "tradeId",
-  userName: "demo user",
-  blotterId: "Trades Blotter",
-  enableAuditLog: false,
-  enableRemoteConfigServer: false,
-  serverSearchOption: "None",
-  iPushPullConfig: {
-      api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-      api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-  },
-  agGridContainerName: "grid",
-  includeVendorStateInLayouts: true,
-  gridOptions: gridOptions
-}
-
-ReactDOM.render(<AdaptableBlotterAgGridReact BlotterOptions={adaptableBlotterOptionsAgGrid} />, document.getElementById('adaptableBlotter'));
+ReactDOM.render(<App />, document.getElementById('app'));

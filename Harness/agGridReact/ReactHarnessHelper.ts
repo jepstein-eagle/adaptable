@@ -1,5 +1,5 @@
 
-export class AdaptableBlotterAgGridReactHarness {
+export class ReactHarnessHelper {
 
   public currencyFormatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
