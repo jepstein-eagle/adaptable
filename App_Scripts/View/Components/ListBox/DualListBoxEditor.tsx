@@ -161,7 +161,6 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let listGroupSelectedStyle: any = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge
 
         return (<div className={cssClassName}>
-            <Row >
                 <Col xs={4}>
                     <Panel header={this.props.HeaderAvailable} className="ab_no-padding-anywhere-panel" bsStyle="info">
                         <div>
@@ -211,8 +210,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                             onClick={() => this.Bottom()} />
                     </ButtonGroup>
                 </Col>
-            </Row>
-        </div>
+         </div>
         );
     }
 
@@ -652,25 +650,25 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
 var listGroupStyleAvailableLarge: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '455px',
-    'marginBottom': '0'
+    'height': '430px',
+    'marginBottom': '0px'
 };
 
 var listGroupStyleSelectedLarge: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '490px',
-    'marginBottom': '0'
+    'height': '465px',
+    'marginBottom': '0px'
 };
 var listGroupStyleAvailableSmall: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '350px',
-    'marginBottom': '0'
+    'marginBottom': '0px'
 };
 
 var listGroupStyleSelectedSmall: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '385px',
-    'marginBottom': '0'
+    'marginBottom': '0px'
 };
 
 var listGroupItemStyle: React.CSSProperties = {

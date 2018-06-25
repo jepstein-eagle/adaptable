@@ -7,6 +7,8 @@ import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlo
 export interface AgGridReactWrapperProps extends React.ClassAttributes<AgGridReactWrapper> {
   AdaptableBlotterOptions: IAdaptableBlotterOptions
   GridOptions: GridOptions
+  agTheme? :'balham'|'balham-dark'|'material'| 'fresh'| 'dark'| 'blue'|'bootstrap'
+  agDivStyle?: any
 }
 
 export interface AgGridReactWrapperState extends React.ClassAttributes<AgGridReactWrapper> {
@@ -23,14 +25,13 @@ export class AgGridReactWrapper extends React.Component<AgGridReactWrapperProps,
   }
 
   render() {
+    let theme: string = this.props.agTheme? "ag-theme-" + this.props.agTheme: "ag-theme-balham"
+    let style : any = this.props.agDivStyle? this.props.agDivStyle: { width: '100%', height: '90%', position: 'absolute' , margin: '0px'}
     return (
       <div id="adaptableBlotter-react">
-        <div id="adaptableBlotter">
-          <AdaptableBlotterReact AdaptableBlotterOptions={this.state.AdaptableBlotterOptions} />
-        </div>
-        <div id="grid" className="ag-theme-balham" style={{ width: '100%', height: '90%', position: 'absolute' }} >
-          <AgGridReact gridOptions={this.state.GridOptions}
-          />
+        <AdaptableBlotterReact AdaptableBlotterOptions={this.state.AdaptableBlotterOptions} />
+        <div id="grid" className={theme} style={style} >
+          <AgGridReact gridOptions={this.state.GridOptions} />
         </div>
       </div>
     )

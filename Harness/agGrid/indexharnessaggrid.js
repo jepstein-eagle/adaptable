@@ -239,7 +239,7 @@ function ThemeChange(theme, container) {
     if (themeName != theme.CurrentTheme) {
         themeName = theme.CurrentTheme
         if (themeName == "Dark Theme") {
-            container.className = "ag-theme-dark";
+            container.className = "ag-theme-balham-dark";
         } else if (themeName == "Flat Theme") {
             container.className = "ag-theme-balham";
         }

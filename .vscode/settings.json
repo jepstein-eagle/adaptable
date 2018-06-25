@@ -1,5 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "todoIgnore":   ["**/node_modules/**","**/typings/**","**/dist/**"],
-    "files.associations": {"*.ejs": "html", "*.abjson" : "json"}
+    "files.associations": {"*.ejs": "html", "*.abjson" : "json"},
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false
 }

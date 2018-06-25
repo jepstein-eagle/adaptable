@@ -16,7 +16,7 @@ export interface AppState extends React.ClassAttributes<App> {
 // Just like with the non-React version you need to create 2 objects:
 // a. GridOptions - required by ag-Grid and contains all the data, column definitions and properties that ag-Grid needs
 // b. AdaptableBlotterOptions - required by the Adaptable Blotter and contains the set of properties that the Blotter needs
-// NOTE: One of the MANDATORY  properties in AdaptableBlotterOptions is the GridOptions object
+// NOTE: One of the MANDATORY properties in AdaptableBlotterOptions is the GridOptions object
 export default class App extends React.Component<{}, AppState> {
   constructor() {
     super();
@@ -54,14 +54,26 @@ export default class App extends React.Component<{}, AppState> {
   }
 
   // Render an AgGridReactWrapper passing in our state as props
-  // Note: this wrapper will take care of instantantiating the underlying objects and creating the necessary divs
+  // The wrapper will take care of instantantiating the underlying objects and creating the necessary divs
+  // However there are 2 optional props which let you specify:
+  // (a): the ag-grid class to use - if none is supplied then it will default to 'Balham'
+  // (b): the style for the div containing the ag-Grid - if none is supplied it will take full width
   render() {
+
+    let agDivStyle = {
+      'width': '90%',
+      'height': '80%',
+      'position': 'absolute',
+      'margin': '15px'
+    }
+
     return (
       <div id="adaptableblotter-aggrid-react-demo-app">
         <AgGridReactWrapper
           AdaptableBlotterOptions={this.state.blotterOptions}
           GridOptions={this.state.gridOptions}
-        />
+          agTheme={"blue"}
+          />
       </div>
     );
   }

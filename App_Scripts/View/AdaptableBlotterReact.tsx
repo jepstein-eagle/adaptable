@@ -25,7 +25,12 @@ export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReact
   }
 
   render() {
-    return <AdaptableBlotterApp AdaptableBlotter={this.state.AdaptableBlotter} />;
+    return (
+      <div id="adaptableBlotter">
+        <AdaptableBlotterApp AdaptableBlotter={this.state.AdaptableBlotter} />
+      </div>
+    );
+
   }
 
   getAdaptableBlotter(): IAdaptableBlotter {
