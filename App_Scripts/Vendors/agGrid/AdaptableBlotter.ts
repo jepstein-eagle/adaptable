@@ -176,13 +176,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.initInternalGridLogic()
                 }
             )
-
-
     }
 
-     public Render() {
-        if (this.abContainerElement == null) {  
-            this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
+    public Render() {
+        if (this.abContainerElement == null) {
+            this.abContainerElement = document.getElementById(this.BlotterOptions.adapableBlotterContainer);
         }
         if (this.abContainerElement != null) {
             this.abContainerElement.innerHTML = ""
@@ -954,14 +952,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private initInternalGridLogic() {
         if (this.abContainerElement == null) {
-             this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
-         }
-          if (this.abContainerElement == null) {
-            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
+            this.abContainerElement = document.getElementById(this.BlotterOptions.adapableBlotterContainer);
+        }
+        if (this.abContainerElement == null) {
+            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adapableBlotterContainer + " so cannot render the Adaptable Blotter")
             return
         }
 
-        let gridContainerElement = document.getElementById(this.BlotterOptions.containerName);
+        let gridContainerElement = document.getElementById(this.BlotterOptions.vendorContainer);
         if (gridContainerElement) {
             gridContainerElement.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
         }

@@ -6,15 +6,19 @@
 export interface IAdaptableBlotterOptions {
 
     /**
-     * Unique column in the grid (required for cell identification purposes); one of the two MANDATORY properties
+     * Unique column in the grid (required for cell identification purposes); one of the three MANDATORY properties
      */
-    primaryKey?: string,
-     /**
-     * The underlying vendor grid or grid object; the other MANDATORY property
-     */
-    vendorGrid?: any,
+    primaryKey: string,
     /**
-     * How to identifier this Blotter - useful if Audit Log is turned on
+    * The underlying vendor grid or grid object; one of the three MANDATORY properties
+    */
+    vendorGrid: any,
+    /**
+    * The underlying vendor grid or grid object; one of the three MANDATORY properties
+    */
+    vendorGridName:  'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid'
+    /**
+     * How to identifier this Blotter - useful if Audit Log is turned on or you are using multiple Blotters
      */
     blotterId?: string,
     /**
@@ -26,7 +30,7 @@ export interface IAdaptableBlotterOptions {
      */
     enableAuditLog?: boolean,
     /**
-     * If true, config is stored on a server location of your choice; otherwise it is stored locally
+     * If true, config is stored on a server location of your choice; otherwise it is stored in the local cache
      */
     enableRemoteConfigServer?: boolean,
     /**
@@ -34,7 +38,7 @@ export interface IAdaptableBlotterOptions {
      */
     predefinedConfig?: object,
     /**
-     * How many items to show in column value listboxes when building queries (useful when datasource is very large)
+     * How many items to dispay in column value listboxes when building queries (useful when datasource is very large)
      */
     maxColumnValueItemsDisplayed?: number,
     /**
@@ -42,7 +46,7 @@ export interface IAdaptableBlotterOptions {
      */
     modalContainer?: string,
     /**
-     * Which searching and filtering options, if any, should take place on the server; leave unset to perform everything on the client
+     * Which searching and filtering options, if any, should take place on the server; leave unset (default is 'None') to perform everything on the client
      */
     serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort'
     /**
@@ -50,9 +54,17 @@ export interface IAdaptableBlotterOptions {
      */
     columnValuesOnlyInQueries?: boolean
     /**
-     * The name of the container which contains the Adaptable Blotter - defaults to "adaptableBlotter"
+     * Name of the <div> which contains the Adaptable Blotter - defaults to "adaptableBlotter"
      */
-    abContainerName?: string
+    adapableBlotterContainer?: string
+    /**
+    * Name of the <div> which contains the underlying vendor grid - defaults to "grid"
+    */
+    vendorContainer?: string
+    /**
+     * Whether layouts should include vendor-related state - defaults to false (only currently available for ag-Grid) 
+     */
+    includeVendorStateInLayouts?: boolean;
 
     /**
     * Required if using iPushPull to display / send live report data
@@ -66,14 +78,6 @@ export interface IAdaptableBlotterOptions {
         storage_prefix?: string;
     }
 
-    /**
-     * Whether layouts should also include vendor related state - only currently available for ag-Grid and defaults to false
-     */
-    includeVendorStateInLayouts?: boolean;
-    
-    /**
-     * The name of the div which contains the vendor grid.  defaults to "grid"
-     */
-    containerName?: string
+   
 
 }

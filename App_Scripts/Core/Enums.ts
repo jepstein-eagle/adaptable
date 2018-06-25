@@ -1,5 +1,12 @@
 
 // General Enums
+export enum VendorGrid{
+    agGrid = 'agGrid',
+    Hypergrid = 'Hypergrid',
+    Kendo = 'Kendo',
+    AdaptableGrid = 'AdaptableGrid',
+}
+
 export enum DataType {
     String = 'String',
     Number = 'Number',

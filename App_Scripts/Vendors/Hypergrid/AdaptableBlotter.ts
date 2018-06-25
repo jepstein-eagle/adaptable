@@ -160,9 +160,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
 
-        this.abContainerElement = document.getElementById(this.BlotterOptions.abContainerName);
+        this.abContainerElement = document.getElementById(this.BlotterOptions.adapableBlotterContainer);
         if (this.abContainerElement == null) {
-            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.abContainerName + " so cannot render the Adaptable Blotter")
+            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adapableBlotterContainer + " so cannot render the Adaptable Blotter")
             return;
         }
         this.abContainerElement.innerHTML = ""

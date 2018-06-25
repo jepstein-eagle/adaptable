@@ -13,9 +13,14 @@ export interface AppState extends React.ClassAttributes<App> {
   blotterOptions: IAdaptableBlotterOptions
 }
 
+// Just like with the non-React version you need to create 2 objects:
+// a. GridOptions - required by ag-Grid and contains all the data, column definitions and properties that ag-Grid needs
+// b. AdaptableBlotterOptions - required by the Adaptable Blotter and contains the set of properties that the Blotter needs
+// NOTE: One of the MANDATORY  properties in AdaptableBlotterOptions is the GridOptions object
 export default class App extends React.Component<{}, AppState> {
   constructor() {
     super();
+    // Create the 2 objects and put them in state
     let gridOptions: GridOptions = this.createGridOptions();
     let adaptableBlotterOptions: IAdaptableBlotterOptions = this.createAdaptableBlotterOptions(gridOptions);
     this.state = {
@@ -24,6 +29,7 @@ export default class App extends React.Component<{}, AppState> {
     }
   }
 
+  // Create the GridOptions object that ag-Grid needs
   createGridOptions(): GridOptions {
     return {
       columnDefs: new ReactHarnessHelper().getTradeSchema(),
@@ -36,21 +42,22 @@ export default class App extends React.Component<{}, AppState> {
     }
   }
 
+  // Create the AdaptableBlotterOptions object that the Adaptable Blotter needs
   createAdaptableBlotterOptions(gridOptions: GridOptions): IAdaptableBlotterOptions {
     return {
       primaryKey: "tradeId",
       vendorGrid: gridOptions,
+      vendorGridName: "agGrid",
       userName: "demo user",
       blotterId: "Trades Blotter",
-      enableAuditLog: false,
-      enableRemoteConfigServer: false,
-      includeVendorStateInLayouts: true,
     }
   }
 
+  // Render an AgGridReactWrapper passing in our state as props
+  // Note: this wrapper will take care of instantantiating the underlying objects and creating the necessary divs
   render() {
     return (
-      <div id="react-app">
+      <div id="adaptableblotter-aggrid-react-demo-app">
         <AgGridReactWrapper
           AdaptableBlotterOptions={this.state.blotterOptions}
           GridOptions={this.state.gridOptions}
