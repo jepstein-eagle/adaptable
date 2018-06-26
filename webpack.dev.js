@@ -32,10 +32,16 @@ else if (process.env.arg == "aggrid") {
         harness: "./Harness/DataGenerator.ts"
     };
 }
-else if (process.env.arg == "aggrid-react") {
+else if (process.env.arg == "aggrid-react") { 
   conditionalEntry = {
       'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
       harness: ["./Harness/DataGenerator.ts", "./Harness/agGridReact/app.tsx"]
+  };
+}
+else if (process.env.arg == "react") {
+  conditionalEntry = {
+      'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+      harness: ["./Harness/DataGenerator.ts", "./Harness/React/app.tsx"]
   };
 }
 

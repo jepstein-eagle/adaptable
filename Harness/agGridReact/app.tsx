@@ -60,14 +60,7 @@ export default class App extends React.Component<{}, AppState> {
   // (b): the style for the div containing the ag-Grid - if none is supplied it will take full width
   render() {
 
-    let agDivStyle = {
-      'width': '90%',
-      'height': '80%',
-      'position': 'absolute',
-      'margin': '15px'
-    }
-
-    return (
+       return (
       <div id="adaptableblotter-aggrid-react-demo-app">
         <AgGridReactWrapper
           AdaptableBlotterOptions={this.state.blotterOptions}

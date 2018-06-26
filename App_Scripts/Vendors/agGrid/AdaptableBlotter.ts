@@ -180,7 +180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public Render() {
         if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.BlotterOptions.adapableBlotterContainer);
+            this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement != null) {
             this.abContainerElement.innerHTML = ""
@@ -952,10 +952,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private initInternalGridLogic() {
         if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.BlotterOptions.adapableBlotterContainer);
+            this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adapableBlotterContainer + " so cannot render the Adaptable Blotter")
+            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return
         }
 
