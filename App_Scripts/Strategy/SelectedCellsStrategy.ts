@@ -42,12 +42,15 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
                     allValues.push(value);
 
                     if (numericColumns.indexOf(i) != -1) {
-                        numericValues.push(value)
+                        // possible that its not a number despite it being a numeric column
+                        if (!isNaN(Number(value))) {
+                            numericValues.push(value)
+                        }
                     }
                 }
             })
 
-            let hasNumericColumns: boolean = numericColumns.length > 0;
+            let hasNumericColumns: boolean = numericValues.length > 0;
             let distinct = ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
                 Sum: (hasNumericColumns) ? math.round(math.sum(numericValues), 4) : "",
