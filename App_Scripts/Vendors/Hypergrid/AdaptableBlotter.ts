@@ -201,7 +201,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // get the api ready
         this.api = new BlotterApi(this);
     }
-   
+
     public Render() {
         if (this.abContainerElement != null) {
             ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
@@ -248,7 +248,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 DataType: this.getColumnDataType(x),
                 Visible: true,
                 Index: index,
-                ReadOnly: this.isColumnReadonly(x.name)
+                ReadOnly: this.isColumnReadonly(x.name),
+                Sortable: this.isColumnSortable(x.name)
             }
         });
         let hiddenColumns: IColumn[] = this.hyperGrid.behavior.getHiddenColumns().map((x: any) => {
@@ -258,7 +259,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 DataType: this.getColumnDataType(x),
                 Visible: false,
                 Index: -1,
-                ReadOnly: this.isColumnReadonly(x.name)
+                ReadOnly: this.isColumnReadonly(x.name),
+                Sortable: this.isColumnSortable(x.name)
+
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -613,6 +616,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    private isColumnSortable(columnId: string): boolean {
+        let column = this.getHypergridColumn(columnId);
+        if (column.properties.hasOwnProperty('unsortable')) {
+            return !column.properties.unsortable
+        }
+        return true;
+    }
+
     public setCustomSort(columnId: string): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
         let gridSort: IGridSort = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
@@ -649,7 +660,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //We bypass the whole DataSource stuff as we need to get ALL the data
             let data = this.hyperGrid.behavior.dataModel.getData()
             for (var index = 0; index < data.length; index++) {
-               var element = data[index]
+                var element = data[index]
                 let displayString = this.getDisplayValueFromRecord(element, columnId)
                 let rawValue = this.valOrFunc(element, column)
                 if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
@@ -658,8 +669,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
-                if(returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed){
-                    return Array.from(returnMap.values()) 
+                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                    return Array.from(returnMap.values())
                 }
             }
         }
@@ -1201,6 +1212,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
         this.hyperGrid.addEventListener('fin-column-sort', (e: any) => {
             this.onSortSaved(e.detail.column);
+            this.debouncedSetSelectedCells();
             //in case we want multi column
             //keys =  event.detail.keys;
             //    this.hyperGrid.behavior.reindex();

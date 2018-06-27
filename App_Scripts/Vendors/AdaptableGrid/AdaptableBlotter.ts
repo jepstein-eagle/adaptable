@@ -174,7 +174,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 DataType: this.getColumnDataType(x),
                 Visible: true,
                 Index: index,
-                ReadOnly: true
+                ReadOnly: true,
+                Sortable: true // TODO
             }
         });
         let hiddenColumns: IColumn[] = this.grid.getHiddenColumns().map((x: any) => {
@@ -185,7 +186,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 DataType: this.getColumnDataType(x.name),
                 Visible: false,
                 Index: -1,
-                ReadOnly: true
+                ReadOnly: true,
+                Sortable: true // TODO
         
             }
         });

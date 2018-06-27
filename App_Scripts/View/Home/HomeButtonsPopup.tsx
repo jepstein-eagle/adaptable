@@ -38,7 +38,7 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
                 <DualListBoxEditor AvailableValues={availableValues}
                     cssClassName={cssClassName}
                     SelectedValues={selectedValues}
-                    HeaderAvailable="Available Function Buttons"
+                    HeaderAvailable="Hidden Function Buttons"
                     HeaderSelected="Visible Function Buttons"
                     onChange={(SelectedValues) => this.ListChange(SelectedValues)}></DualListBoxEditor>
             </PanelWithButton>

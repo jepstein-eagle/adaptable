@@ -100,10 +100,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             headerText={blotterName} glyphicon={"home"} showGlyphIcon={false}
             onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
-            {this.props.DashboardState.ShowSystemStatusButton &&
-                statusButton
-            }
-
             <DropdownButton bsStyle={"default"}
                 className={cssDropdownClassName}
                 bsSize={"small"}
@@ -112,6 +108,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 id={"dropdown-functions"}>
                 {menuItems}
             </DropdownButton>
+            {this.props.DashboardState.ShowSystemStatusButton &&
+                statusButton
+            }
 
 
             {shortcuts}

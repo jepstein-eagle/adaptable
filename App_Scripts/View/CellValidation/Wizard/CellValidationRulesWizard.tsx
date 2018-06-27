@@ -69,7 +69,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     </Col>
 
                     { /* if  numeric then show a numeric control */}
-                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && this.getColumnDataTypeFromState() == DataType.Number &&
+                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.IsPositive) && !this.checkOperator(LeafExpressionOperator.IsNegative) && !this.checkOperator(LeafExpressionOperator.IsNotNumber) && this.getColumnDataTypeFromState() == DataType.Number &&
                         <Col xs={5}>
                             <FormControl value={this.state.Operand1} type="number" placeholder="Enter Number" onChange={(x) => this.onOperand1ValueChanged(x)} />
                             {this.isBetweenOperator() &&
@@ -144,7 +144,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             case DataType.Date:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case DataType.Number:
-                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween, LeafExpressionOperator.IsPositive, LeafExpressionOperator.IsNegative, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange];
+                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.LessThan, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween, LeafExpressionOperator.IsPositive, LeafExpressionOperator.IsNegative, LeafExpressionOperator.ValueChange, LeafExpressionOperator.PercentChange, LeafExpressionOperator.IsNotNumber];
         }
     }
 
@@ -178,7 +178,12 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
     }
 
     private operatorRequiresValue(operator: LeafExpressionOperator): boolean {
-        return operator != LeafExpressionOperator.None && operator != LeafExpressionOperator.IsPositive && operator != LeafExpressionOperator.IsNegative && operator != LeafExpressionOperator.IsTrue && operator != LeafExpressionOperator.IsFalse;
+        return operator != LeafExpressionOperator.None
+            && operator != LeafExpressionOperator.IsPositive
+            && operator != LeafExpressionOperator.IsNegative
+            && operator != LeafExpressionOperator.IsNotNumber
+            && operator != LeafExpressionOperator.IsTrue
+            && operator != LeafExpressionOperator.IsFalse;
     }
 
     public canNext(): boolean {

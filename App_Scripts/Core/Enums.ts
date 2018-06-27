@@ -45,6 +45,7 @@ export enum LeafExpressionOperator {
     NotBetween = 'NotBetween',
     IsPositive = 'IsPositive',
     IsNegative = 'IsNegative',
+    IsNotNumber = 'IsNotNumber',
     IsTrue = 'IsTrue',
     IsFalse = 'IsFalse'
 }

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { SelectionMode, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { SingleListBox } from "../Components/ListBox/SingleListBox";
 import { Panel } from "react-bootstrap";

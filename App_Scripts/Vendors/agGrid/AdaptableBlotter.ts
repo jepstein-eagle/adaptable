@@ -293,7 +293,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(vendorColumn, 'header'),
             DataType: this.getColumnDataType(vendorColumn),
             Visible: vendorColumn.isVisible(),
-            ReadOnly: this.isColumnReadonly(colId)
+            ReadOnly: this.isColumnReadonly(colId),
+            Sortable: this.isColumnSortable(colId)
         }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
@@ -639,6 +640,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    private isColumnSortable(columnId: string): boolean {
+        if (this.gridOptions.enableSorting != null) {
+            if (!this.gridOptions.enableSorting) {
+                return false;
+            }
+        }
+        let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
+        if (colDef.suppressSorting != null) {
+            return !colDef.suppressSorting;
+        }
+        return true;
+    }
+
     public setCustomSort(columnId: string, comparer: Function): void {
 
         let sortModel = this.gridOptions.api.getSortModel()
@@ -872,7 +886,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             FriendlyName: calculatedColumn.ColumnId,
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
-            ReadOnly: true
+            ReadOnly: true,
+            Sortable: this.gridOptions.enableSorting != null ? this.gridOptions.enableSorting : true
         }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(hiddenCol));
 
@@ -1068,6 +1083,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
+            this.debouncedSetSelectedCells();
         });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
         //  });

@@ -1,5 +1,6 @@
 var themeName = ""
 var adaptableblotter
+var quickSearchText
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
@@ -23,20 +24,20 @@ function InitTradeBlotter() {
             "abColDefObject": {},
         }
     };
-    
+
     // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
-    
-   // Create an Adaptable
+
+    // Create an Adaptable
     let adaptableBlotterOptions = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "Trades Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        //  predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -45,22 +46,23 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         vendorGridName: "agGrid"
-        
+
     }
 
-   // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
+    // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
     // tell the Adaptable Blotter to render - this will add the toolbar into the "adaptableBlotter"
     adaptableblotter.Render();
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState()); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 }
 
 function getTradeSchema() {
     var schema = []
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber" });
+    schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber", sortable: false });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber"], enableValue: true });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true});
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: true });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
@@ -89,6 +91,26 @@ function getTradeSchema() {
 }
 
 
+function apiTester(state) {
+    if (state.QuickSearch.QuickSearchText != quickSearchText) {
+        quickSearchText = state.QuickSearch.QuickSearchText
+        if (quickSearchText == "#send") {
+            adaptableblotter.api.exportSendReport('All Data', 'CSV')
+        } else if (quickSearchText == "#info") {
+            adaptableblotter.api.alertShow("Hello", "Your data is fine", "Info")
+        } else if (quickSearchText == "#warning") {
+            adaptableblotter.api.alertShow("End of Day", "Dont forget to send the report", "Warning")
+        } else if (quickSearchText == "#error") {
+            adaptableblotter.api.alertShow("Limits Breached", "Pleae adjust your PnL", "Error")
+        } else if (quickSearchText == "#green") {
+            adaptableblotter.api.systemStatusSetGreen("The server is fine")
+        } else if (quickSearchText == "#amber") {
+            adaptableblotter.api.systemStatusSetAmber("The server is running slowly")
+        } else if (quickSearchText == "#red") {
+            adaptableblotter.api.systemStatusSetRed("The server has stopped ")
+        }
+    }
+}
 
 function getTradesForSearch(searchArgs, dataGen) {
     //alert(searchArgs.SearchChangedTrigger)
@@ -250,6 +272,14 @@ function ThemeChange(theme, container) {
 let tradeJson = {
     "Layout": {
         "IncludeVendorState": true
+    },
+    "Dashboard": {
+        "VisibleToolbars": [
+            "AdvancedSearch",
+            "Layout",
+            "QuickSearch"
+        ],
+      "ShowSystemStatusButton": true
     }
 }
 

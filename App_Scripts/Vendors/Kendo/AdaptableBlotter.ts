@@ -247,7 +247,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 DataType: this.getColumnDataType(x),
                 Visible: isVisible,
                 Index: isVisible ? index : -1,
-                ReadOnly: this.isColumnReadonly(x.field)
+                ReadOnly: this.isColumnReadonly(x.field),
+                Sortable: true // TODO
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(columns));

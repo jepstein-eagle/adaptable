@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -40,7 +39,18 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
         let customSortRow: any;
 
-        if (noCustomSort) {
+        if (!this.props.SummarisedColumn.Sortable) {
+            customSortRow = <StrategyHeader
+                cssClassName={this.props.cssClassName}
+                key={StrategyNames.CustomSortStrategyName}
+                StrategyId={StrategyIds.CustomSortStrategyId}
+                StrategySummary={"Column is not sortable"}
+                NewButtonDisabled={true}
+                onNew={() => this.onNew()}
+                NewButtonTooltip={StrategyNames.CustomSortStrategyName}
+            />
+        }
+        else if (noCustomSort) {
             // title row
             customSortRow = <StrategyHeader
                 cssClassName={this.props.cssClassName}
@@ -75,7 +85,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
                     ConfigEntities={this.props.CustomSorts}
                     BlotterOptions={this.props.BlotterOptions}
-                        ModalContainer={this.props.ModalContainer}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
@@ -83,8 +93,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={()=>this.canFinishWizard()}
-                    />
+                    canFinishWizard={() => this.canFinishWizard()}
+                />
             }
         </div>
     }
@@ -117,7 +127,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     canFinishWizard() {
         let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort
-        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) && ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues) ;
+        return StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) && ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues);
     }
 }
 

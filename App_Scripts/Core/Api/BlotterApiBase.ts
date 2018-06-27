@@ -19,24 +19,28 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement, ISystemStatus } from "../Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour } from "../Enums";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour, ExportDestination } from "../Enums";
 import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 import { IUIInfo, IUIWarning, IUIError } from "../Interface/IMessage";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";
+import { ExportApplyAction } from "../../Redux/ActionsReducers/ExportRedux";
+import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
     constructor(protected blotter: IAdaptableBlotter) {
     }
 
-    public setGridData(dataSource: any): void {      // no implementation     
+    public setGridData(dataSource: any): void {
+        // no implementation as done in the base class
     }
 
     // Layout api methods
@@ -309,7 +313,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(CustomSortRedux.CustomSortDelete(customSort))
     }
 
-
     // Calculated Column State
     public calculatedColumnGetAll(): ICalculatedColumn[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;
@@ -345,7 +348,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(CellValidationRedux.CellValidationDelete(index))
     }
 
-    // Format Column State
+    // Format Column api methods
     public formatColumnGetAll(): IFormatColumn[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn.FormatColumns;
     }
@@ -364,25 +367,16 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(FormatColumnRedux.FormatColumnDelete(formatColumn))
     }
 
-
     // General Config
     public configClear(): void {
-        // let test = window.localStorage.getItem(this.blotter.BlotterOptions.blotterId);
-        // let more = JSON.parse(test);
-        //let state = this.blotter.AdaptableBlotterStore.TheStore.getState()
         this.dispatchAction(ResetUserData())
     }
 
     public configGet(): AdaptableBlotterState {
-
-        let test = window.localStorage.getItem(this.blotter.BlotterOptions.blotterId);
-        let more = JSON.parse(test);
-        let state = this.blotter.AdaptableBlotterStore.TheStore.getState()
-        return state;
+        return this.blotter.AdaptableBlotterStore.TheStore.getState()
     }
 
-
-    // System Status 
+    // System Status api Methods
     public systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
         let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
         this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus))
@@ -404,47 +398,66 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(GridRedux.GridClearSystemStatus())
     }
 
-    // Alerts
+    // Alerts api Methods
     public alertShow(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void {
         switch (alertType as AlertType) {
             case AlertType.Info:
-                let info: IUIInfo = {
-                    InfoHeader: alertHeader,
-                    InfoMsg: alertMessage
-                }
-                this.dispatchAction(PopupRedux.PopupShowInfo(info))
-                AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)
+                this.alertShowMessage(alertHeader, alertMessage);
                 return;
             case AlertType.Warning:
-                let warning: IUIWarning = {
-                    WarningHeader: alertHeader,
-                    WarningMsg: alertMessage
-                }
-                AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)
-                this.dispatchAction(PopupRedux.PopupShowWarning(warning))
+                this.alertShowWarning(alertHeader, alertMessage);
                 return;
             case AlertType.Error:
-                let error: IUIError = {
-                    ErrorHeader: alertHeader,
-                    ErrorMsg: alertMessage
-                }
-                AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)
-                this.dispatchAction(PopupRedux.PopupShowError(error))
+                this.alertShowError(alertHeader, alertMessage);
                 return;
         }
     }
 
     public alertShowMessage(alertHeader: string, alertMessage: string): void {
-        this.alertShow(alertHeader, alertMessage, "Info")
+        let info: IUIInfo = {
+            InfoHeader: alertHeader,
+            InfoMsg: alertMessage
+        }
+        this.dispatchAction(PopupRedux.PopupShowInfo(info))
+        AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)
     }
 
     public alertShowWarning(alertHeader: string, alertMessage: string): void {
-        this.alertShow(alertHeader, alertMessage, "Warning")
+        let warning: IUIWarning = {
+            WarningHeader: alertHeader,
+            WarningMsg: alertMessage
+        }
+        AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)
+        this.dispatchAction(PopupRedux.PopupShowWarning(warning))
     }
 
     public alertShowError(alertHeader: string, alertMessage: string): void {
-        this.alertShow(alertHeader, alertMessage, "Error")
+        let error: IUIError = {
+            ErrorHeader: alertHeader,
+            ErrorMsg: alertMessage
+        }
+        AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)
+        this.dispatchAction(PopupRedux.PopupShowError(error))
     }
+
+    // Export api Methods
+    public exportSendReport(reportName: string, destination: ExportDestination): void {
+        let report: IReport = this.exportReportsGetAll().find(r => r.Name == reportName);
+        if (this.checkItemExists(report, reportName, "Report")) {
+            this.dispatchAction(ExportRedux.ExportApply(reportName, destination))
+        }
+    }
+
+    public exportReportsGetAll(): IReport[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports;
+    }
+
+    public exportLiveReportsGetAll(): ILiveReport[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.CurrentLiveReports;
+
+    }
+
+
 
     // Events
     public onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs> {

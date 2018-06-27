@@ -6,6 +6,8 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICustomSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
@@ -26,15 +28,17 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     }
 
     protected addColumnMenuItem(columnId: string): void {
-        let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
-        let label = (customSort) ? "Edit " : "Create "
-        let popupParam = (customSort) ? "Edit|" : "New|"
-        this.createContextMenuItemShowPopup(
-            label + StrategyNames.CustomSortStrategyName,
-            ScreenPopups.CustomSortPopup,
-            StrategyGlyphs.CustomSortGlyph,
-            popupParam + columnId)
-
+        let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+        if (column.Sortable) {
+            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
+            let label = (customSort) ? "Edit " : "Create "
+            let popupParam = (customSort) ? "Edit|" : "New|"
+            this.createContextMenuItemShowPopup(
+                label + StrategyNames.CustomSortStrategyName,
+                ScreenPopups.CustomSortPopup,
+                StrategyGlyphs.CustomSortGlyph,
+                popupParam + columnId)
+        }
     }
 
     removeCustomSorts() {

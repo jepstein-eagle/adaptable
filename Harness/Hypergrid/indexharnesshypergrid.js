@@ -164,12 +164,18 @@ function InitBlotter() {
         return vendorGrid.cellEditors.create(editorName, options);
     }
 
+    // Make DeskID not sortable
+    behavior.setColumnProperties(2, {
+        unsortable: true
+    });
+
+   
     //Add Format for Notional column
     behavior.setColumnProperties(1, {
         format: 'USDCurrencyFormat'
     });
 
-    //Add Edit for Trade Date column
+     //Add Edit for Trade Date column
     behavior.setColumnProperties(16, {
         format: 'shortDateFormat'
     });

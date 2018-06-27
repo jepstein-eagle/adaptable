@@ -16,7 +16,6 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
-
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
     onDeleteFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction,

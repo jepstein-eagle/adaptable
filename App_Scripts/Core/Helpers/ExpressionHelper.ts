@@ -18,7 +18,7 @@ export interface IRangeEvaluation {
     newValue: any;
     operator: LeafExpressionOperator;
     initialValue: any
-  }
+}
 
 export module ExpressionHelper {
     export function CreateSingleColumnExpression(columnId: string,
@@ -26,7 +26,7 @@ export module ExpressionHelper {
         userFilters: Array<string>,
         ranges: Array<IRange>) {
         return new Expression(columnValues && columnValues.length > 0 ? [{ ColumnId: columnId, ColumnValues: columnValues }] : [],
-             userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
+            userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
     }
@@ -40,7 +40,7 @@ export module ExpressionHelper {
         let columnList = GetColumnListFromExpression(Expression)
         for (let columnId of columnList) {
             let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(columnId, columns)
-       
+
             let columnToString = ""
 
             // Column Display Values
@@ -49,7 +49,7 @@ export module ExpressionHelper {
                 columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
             }
 
-                // User Filters
+            // User Filters
             let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId)
             if (columnUserFilters) {
                 if (columnToString != "") {
@@ -102,11 +102,11 @@ export module ExpressionHelper {
                 let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
                 if (columnValues) {
                     let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId)
-                    isColumnSatisfied = ArrayExtensions.ContainsItem(columnValues.ColumnValues, columnDisplayValue) 
+                    isColumnSatisfied = ArrayExtensions.ContainsItem(columnValues.ColumnValues, columnDisplayValue)
                 }
             }
 
-           // Check for filter expressions if column fails
+            // Check for filter expressions if column fails
             if (!isColumnSatisfied) {
                 let columnFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId)
                 if (columnFilters) {
@@ -163,7 +163,7 @@ export module ExpressionHelper {
             + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
     }
 
-     function UserFiltersKeyPairToString(userFilters: string[], columnFriendlyName: string): string {
+    function UserFiltersKeyPairToString(userFilters: string[], columnFriendlyName: string): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {
@@ -251,6 +251,8 @@ export module ExpressionHelper {
                 return "Change In Value Greater Than "
             case LeafExpressionOperator.PercentChange:
                 return "% Change Is Greater Than "
+            case LeafExpressionOperator.IsNotNumber:
+                return "Is Not Number "
             case LeafExpressionOperator.IsTrue:
                 return "Is True "
             case LeafExpressionOperator.IsFalse:
@@ -319,8 +321,8 @@ export module ExpressionHelper {
         if (rangeOperandType == "Value") {
             return operand;
         } else {
-            return "[" + ColumnHelper.getFriendlyNameFromColumnId(operand, columns)+ "]";
-         }
+            return "[" + ColumnHelper.getFriendlyNameFromColumnId(operand, columns) + "]";
+        }
     }
 
     export function GetColumnListFromExpression(expression: Expression): Array<string> {
@@ -362,7 +364,7 @@ export module ExpressionHelper {
     }
 
     export function IsEmptyRange(range: IRange): boolean {
-        return StringExtensions.IsNullOrEmpty (range.Operand1) // more??
+        return StringExtensions.IsNullOrEmpty(range.Operand1) // more??
     }
 
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
@@ -392,11 +394,11 @@ export module ExpressionHelper {
     }
 
     export function CreateEmptyExpression(): Expression {
-        return new Expression([],  [], [])
+        return new Expression([], [], [])
     }
 
     export function CreateEmptyRangeExpression(): IRange {
-        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Value, Operand2Type:  RangeOperandType.Value }
+        return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value }
     }
 
     export function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any, ): IRangeEvaluation {
@@ -482,6 +484,8 @@ export module ExpressionHelper {
                 return (rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
             case LeafExpressionOperator.NotBetween:
                 return !(rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+            case LeafExpressionOperator.IsNotNumber:
+                return (isNaN(Number(rangeEvaluation.newValue)));
             case LeafExpressionOperator.IsPositive:
                 return (rangeEvaluation.newValue > 0);
             case LeafExpressionOperator.IsNegative:

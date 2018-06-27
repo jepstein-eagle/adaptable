@@ -1,20 +1,14 @@
 import * as React from "react";
-import { Radio, FormControl, Button, Glyphicon } from 'react-bootstrap';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
+import { FormControl } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";
-import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IColumn } from "../../Core/Interface/IColumn";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { SelectionMode, SortOrder } from "../../Core/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { IGridSort } from "../../Core/Api/Interface/AdaptableBlotterObjects";
-
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
     GridSort: IGridSort
@@ -25,8 +19,6 @@ export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRow
 
 export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, {}> {
 
-
-
     render(): any {
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
@@ -36,7 +28,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         })
 
         colItems[0].Content = <ColumnSelector cssClassName={this.props.cssClassName} SelectedColumnIds={[this.props.GridSort.Column]}
-            ColumnList={this.props.Columns}
+            ColumnList={this.props.Columns.filter(c=>c.Sortable)}
             onColumnChange={columns => this.onColumnSelectedChanged(columns)}
             SelectionMode={SelectionMode.Single} />
 
@@ -46,10 +38,6 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
             {sortOrders}
 
         </FormControl>
-
-
-
-
 
         let deleteButton = <ButtonDelete
             cssClassName={this.props.cssClassName}
@@ -63,7 +51,6 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
             ConfirmationTitle={""}
             onClickAction={() => this.props.onDeleteGridSort()}
             size="small" />
-
 
         colItems[2].Content = deleteButton;
 
@@ -81,14 +68,4 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         this.props.onGridSortOrderChanged(e.value as SortOrder);
     }
 
-    private onDeleteGridSort(): any {
-        this.props.onDeleteGridSort();
-    }
-}
-
-
-
-let divStyle: React.CSSProperties = {
-    'overflowY': 'auto',
-    'marginBottom': '0'
 }

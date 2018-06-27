@@ -67,15 +67,12 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
             </GridSortRow>
         })
 
-        let sortOrders = EnumExtensions.getNames(SortOrder).filter(s => s != SortOrder.Unknown).map((enumName) => {
-            return <option style={{ fontSize: "5px" }} key={enumName} value={enumName}>{enumName}</option>
-        })
         let cssClassName: string = this.props.cssClassName + "-gridsort"
 
-        return <PanelWithButton cssClassName={cssClassName} headerText="Sort Information" bsStyle="primary" style={divStyle}  button={addButton}>
+        return <PanelWithButton cssClassName={cssClassName} headerText="Sort Information" bsStyle="primary" style={divStyle} button={addButton}>
             <div>
-                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={gridSortRows} allowOverflow={true} />
-               </div>
+                <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={gridSortRows} allowOverflow={true} />
+            </div>
         </PanelWithButton>
     }
 
@@ -84,10 +81,6 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         let sorts: IGridSort[] = [].concat(this.state.GridSorts, ObjectFactory.CreateEmptyGridSort())
         this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
 
-    }
-    private onHasSortCheckedChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        //    this.setState({ HasSortOrder: e.checked } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onColumnSelectedChanged(index: number, column: IColumn) {
