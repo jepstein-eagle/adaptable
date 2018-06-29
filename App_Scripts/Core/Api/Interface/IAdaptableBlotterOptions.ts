@@ -33,7 +33,7 @@ export interface IAdaptableBlotterOptions {
      */
     enableAuditLog?: boolean;
     /**
-     * If true, config is stored on a server location of your choice
+     * If true, config is stored at server location of your choice
      * Otherwise it is stored in the local cache
      */
     enableRemoteConfigServer?: boolean;
@@ -58,7 +58,8 @@ export interface IAdaptableBlotterOptions {
      */
     serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort';
     /**
-     * Whether the query builder will include just ColumnValues (or also Filters and Ranges).  
+     * Whether the query builder will include just ColumnValues
+     * Or should also include Filters and Ranges (the default) 
      * Used primarily if running search on Server
      */
     columnValuesOnlyInQueries?: boolean;
@@ -74,7 +75,7 @@ export interface IAdaptableBlotterOptions {
     vendorContainer?: string;
     /**
      * Whether layouts should include vendor-related state
-     * Defaults to false (only currently available for ag-Grid)
+     * Defaults to false - only currently available in ag-Grid
      */
     includeVendorStateInLayouts?: boolean;
     /**

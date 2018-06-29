@@ -50,8 +50,8 @@ function InitTradeBlotter() {
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
-    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-    // tell the Adaptable Blotter to render - this will add the toolbar into the "adaptableBlotter"
+    let adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
+    // render the "adaptableBlotter"
     adaptableblotter.Render();
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState()); });

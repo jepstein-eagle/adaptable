@@ -60,7 +60,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
 
     public api: IBlotterApi
-    public GridName: string = "Adaptable Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 

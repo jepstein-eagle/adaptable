@@ -23,7 +23,6 @@ export interface IAdaptableBlotter {
     api: IBlotterApi
     BlotterOptions: IAdaptableBlotterOptions
 
-    GridName: string
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
 

@@ -6,9 +6,6 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { StringExtensions } from '../Core/Extensions/StringExtensions'
-import { basename } from 'path';
-import { Server } from 'https';
 import { SearchChangedTrigger } from '../Core/Enums';
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
@@ -28,20 +25,17 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
             // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
-                this.blotter.applyGridFiltering()
+            this.blotter.applyGridFiltering()
 
-                if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
-                     this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
-                }
-          
+            if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
+                this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
+            }
         }
     }
 
     private GetAdvancedSearchState(): AdvancedSearchState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
     }
-    private GetGridState(): GridState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
-    }
+
 
 }

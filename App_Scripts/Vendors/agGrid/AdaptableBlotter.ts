@@ -92,7 +92,6 @@ import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlott
 export class AdaptableBlotter implements IAdaptableBlotter {
 
     public api: IBlotterApi
-    public GridName: string = "ag-Grid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     public BlotterOptions: IAdaptableBlotterOptions

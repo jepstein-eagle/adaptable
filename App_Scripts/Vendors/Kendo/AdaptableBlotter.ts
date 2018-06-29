@@ -77,7 +77,6 @@ import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISele
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
-    public GridName: string = "Kendo Telerik"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 

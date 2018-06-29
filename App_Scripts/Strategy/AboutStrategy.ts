@@ -5,7 +5,6 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { StringExtensions } from '../Core/Extensions/StringExtensions'
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
 
 
@@ -21,10 +20,12 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
 
     private convertBlotterOptionsToString(): string {
         let options: IAdaptableBlotterOptions = this.blotter.BlotterOptions;
+      let calcColumns=  this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c=>c.ColumnId)
+       
         let output: string = ""
 
             output += "Vendor Grid:"
-            output += this.blotter.GridName
+            output += options.vendorGridName
             output += "|"
       
             if (options.blotterId != undefined) {
@@ -59,8 +60,13 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
              output += "Columns:"
             output += this.blotter.getColumnInfo()
             output += "|"
+
+        //     output += "Calculated Columns:"
+        //    output += calcColumns
+        //    output += "|"
        
 
+       
         return output.slice(0, -1);;
     }
 }

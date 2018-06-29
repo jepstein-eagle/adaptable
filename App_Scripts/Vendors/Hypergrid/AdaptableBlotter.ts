@@ -94,7 +94,6 @@ const getFilterIcon = (state: boolean) => {
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
-    public GridName: string = "Hypergrid"
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
