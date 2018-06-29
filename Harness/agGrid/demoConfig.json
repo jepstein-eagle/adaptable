@@ -21,14 +21,12 @@
 	},
 	"Dashboard": {
 		"VisibleToolbars": [
-			"AdvancedSearch",
-			"Layout",
-			"QuickSearch"
+			"Export"
 		],
 		"VisibleButtons": [
 			"About",
 			"Dashboard",
-			"QuickSearch",
+			"QuickSearch",	
 			"SmartEdit",
 			"ColumnChooser",
 			"BulkUpdate"

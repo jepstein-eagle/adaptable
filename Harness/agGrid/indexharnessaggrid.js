@@ -37,7 +37,7 @@ function InitTradeBlotter() {
         blotterId: "Trades Blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
         serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",

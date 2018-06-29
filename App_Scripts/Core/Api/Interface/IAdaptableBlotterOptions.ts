@@ -41,7 +41,7 @@ export interface IAdaptableBlotterOptions {
      * Configuration properties and objects set at design-time
      * Only used if enableRemoteConfigServer is false
      */
-    predefinedConfig?: object;
+    predefinedConfig?: any;
     /**
      * How many items to dispay in column value listboxes when building queries
      * Useful when datasource is very large

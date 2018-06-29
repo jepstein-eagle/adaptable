@@ -202,7 +202,7 @@ function InitBlotter() {
         blotterId: "my Blotter",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-       // predefinedConfig: json,
+        predefinedConfig: json,
         serverSearchOption: "None",
         vendorGrid: vendorGrid,
         vendorvendorGridName:  'Hypergrid',
