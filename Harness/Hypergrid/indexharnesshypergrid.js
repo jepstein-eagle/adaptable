@@ -205,16 +205,14 @@ function InitBlotter() {
         predefinedConfig: json,
         serverSearchOption: "None",
         vendorGrid: vendorGrid,
-        vendorvendorGridName:  'Hypergrid',
-        iPushPullConfig: {
+         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
-    adaptableblotter.Render();
-//    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
+  //    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
 
  //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     vendorGrid.addProperties(lightTheme);

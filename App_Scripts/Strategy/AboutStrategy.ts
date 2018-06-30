@@ -20,12 +20,13 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
 
     private convertBlotterOptionsToString(): string {
         let options: IAdaptableBlotterOptions = this.blotter.BlotterOptions;
-      let calcColumns=  this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c=>c.ColumnId)
+
+     // let calcColumns=  this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c=>c.ColumnId)
        
         let output: string = ""
 
             output += "Vendor Grid:"
-            output += options.vendorGridName
+            output += this.blotter.VendorGridName
             output += "|"
       
             if (options.blotterId != undefined) {
@@ -66,7 +67,6 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
         //    output += "|"
        
 
-       
         return output.slice(0, -1);;
     }
 }

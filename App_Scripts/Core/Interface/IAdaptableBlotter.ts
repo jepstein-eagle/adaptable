@@ -1,4 +1,4 @@
-import {  DistinctCriteriaPairValue } from '../Enums'
+import {  DistinctCriteriaPairValue, VendorGridName } from '../Enums'
 import { ICellInfo, IAdaptableStrategyCollection } from '../../Core/Interface/Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -26,8 +26,7 @@ export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
 
-    // Render
-    Render(): void
+    VendorGridName: VendorGridName
 
     // Services
     CalendarService: ICalendarService

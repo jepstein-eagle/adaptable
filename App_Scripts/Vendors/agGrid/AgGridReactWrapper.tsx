@@ -29,7 +29,7 @@ export class AgGridReactWrapper extends React.Component<AgGridReactWrapperProps,
     let style : any = this.props.agDivStyle? this.props.agDivStyle: { width: '100%', height: '90%', position: 'absolute' , margin: '0px'}
     return (
       <div id="adaptableBlotter-react">
-        <AdaptableBlotterReact AdaptableBlotterOptions={this.state.AdaptableBlotterOptions} />
+        <AdaptableBlotterReact AdaptableBlotterOptions={this.state.AdaptableBlotterOptions} VendorGridName="agGrid" />
         <div id="grid" className={theme} style={style} >
           <AgGridReact gridOptions={this.state.GridOptions} />
         </div>

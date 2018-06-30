@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder, VendorGridName } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -73,12 +73,15 @@ import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { runInThisContext } from 'vm';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
+
+    public VendorGridName: VendorGridName
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -92,14 +95,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private contextMenuContainer: HTMLDivElement
     private vendorGrid: kendo.ui.Grid
     private abContainerElement: HTMLElement;
-   
-    constructor(blotterOptions: IAdaptableBlotterOptions ) {
+
+    constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.vendorGrid = this.BlotterOptions.vendorGrid;
+        this.VendorGridName = VendorGridName.Kendo;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
-
         // create the services
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
@@ -159,7 +162,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
-        
+
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
@@ -179,13 +182,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // get the api ready
         this.api = new BlotterApi(this);
-    }
-  
-    public Render() {
-        if (this.abContainerElement != null) {
-            ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+
+        if (renderGrid) {
+            if (this.abContainerElement != null) {
+                ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+            }
         }
     }
+
 
     public InitAuditService() {
         //Probably Temporary but we init the Audit service with current data
@@ -342,7 +346,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
         var selected = this.vendorGrid.select().not("tr");
-        let cols: IColumn[]=[]
+        let cols: IColumn[] = []
         selected.each((i, element) => {
             var row = $(element).closest("tr");
             var item = this.vendorGrid.dataItem(row);
@@ -360,7 +364,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             valueArray.push({ columnId: col, value: value });
         });
 
-        let selectedCells: ISelectedCellInfo = {Columns: null, Selection: selectionMap }
+        let selectedCells: ISelectedCellInfo = { Columns: null, Selection: selectionMap }
         console.log("sending selected cells to redux")
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
     }
@@ -424,14 +428,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         model.set(cellInfo.ColumnId, cellInfo.Value);
 
         let dataChangedEvent: IDataChangedEvent =
-            {
-                OldValue: oldValue,
-                NewValue: cellInfo.Value,
-                ColumnId: cellInfo.ColumnId,
-                IdentifierValue: cellInfo.Id,
-                Timestamp: null,
-                Record: null
-            }
+        {
+            OldValue: oldValue,
+            NewValue: cellInfo.Value,
+            ColumnId: cellInfo.ColumnId,
+            IdentifierValue: cellInfo.Id,
+            Timestamp: null,
+            Record: null
+        }
         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
     }
 
@@ -444,14 +448,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             model[item.ColumnId] = item.Value;
 
             let dataChangedEvent: IDataChangedEvent =
-                {
-                    OldValue: oldValue,
-                    NewValue: item.Value,
-                    ColumnId: item.ColumnId,
-                    IdentifierValue: item.Id,
-                    Timestamp: null,
-                    Record: null
-                }
+            {
+                OldValue: oldValue,
+                NewValue: item.Value,
+                ColumnId: item.ColumnId,
+                IdentifierValue: item.Id,
+                Timestamp: null,
+                Record: null
+            }
             dataChangedEvents.push(dataChangedEvent);
 
         }
@@ -753,7 +757,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
-    public editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void{
+    public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
         // nothing to do
     }
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
@@ -763,10 +767,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
-    public isGroupRecord(record:any): boolean{
+    public isGroupRecord(record: any): boolean {
         return false;
     }
-    
+
     public getFirstRecord(): any {
         return null;
     }
@@ -880,14 +884,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             else {
 
                 let dataChangedEvent: IDataChangedEvent =
-                    {
-                        OldValue: (e.model as any)[dataChangingEvent.ColumnId],
-                        NewValue: dataChangingEvent.NewValue,
-                        ColumnId: dataChangingEvent.ColumnId,
-                        IdentifierValue: dataChangingEvent.IdentifierValue,
-                        Timestamp: null,
-                        Record: null
-                    }
+                {
+                    OldValue: (e.model as any)[dataChangingEvent.ColumnId],
+                    NewValue: dataChangingEvent.NewValue,
+                    ColumnId: dataChangingEvent.ColumnId,
+                    IdentifierValue: dataChangingEvent.IdentifierValue,
+                    Timestamp: null,
+                    Record: null
+                }
                 this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         });

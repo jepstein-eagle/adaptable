@@ -38,7 +38,7 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, VendorGridName } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
@@ -62,11 +62,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
+    public VendorGridName: VendorGridName
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-    
+
     public StyleService: StyleService
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -76,6 +77,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
+        this.VendorGridName = VendorGridName.AdaptableGrid;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -83,13 +85,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
-         this.StyleService = new StyleService(this);
+        this.StyleService = new StyleService(this);
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
 
-          // store the options in state - and also later anything else that we need...
-       //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
+        // store the options in state - and also later anything else that we need...
+        //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -133,10 +135,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public Render(){
+    public Render() {
         // todo
     }
-    
+
     public InitAuditService() {
         // todo?
     }
@@ -157,7 +159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    
+
 
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
@@ -166,10 +168,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setColumnIntoStore() {
         let activeColumns: IColumn[] = this.grid.getVisibleColumns().map((x: AdaptableGrid.Column, index: number) => {
-           let columnId = x.getId();
+            let columnId = x.getId();
             return {
-                ColumnId:columnId ? columnId : "Unknown Column",
-                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (columnId? columnId : "Unknown Column"),
+                ColumnId: columnId ? columnId : "Unknown Column",
+                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (columnId ? columnId : "Unknown Column"),
                 DataType: this.getColumnDataType(x),
                 Visible: true,
                 Index: index,
@@ -181,13 +183,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columnId = x.getId();
             return {
                 ColumnId: columnId ? columnId : "Unknown Column",
-                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (columnId ? columnId: "Unknown Column"),
+                FriendlyName: x.getFriendlyName() ? x.getFriendlyName() : (columnId ? columnId : "Unknown Column"),
                 DataType: this.getColumnDataType(x.name),
                 Visible: false,
                 Index: -1,
                 ReadOnly: true,
                 Sortable: true // TODO
-        
+
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -270,13 +272,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 valueArray = []
                 selectionMap.set(c.getRowId(), valueArray);
             }
-         });
+        });
     }
 
     private getColumnDataType(column: AdaptableGrid.Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-           AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type')
+            AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -490,7 +492,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         ReactDOM.unmountComponentAtNode(this.container);
     }
 
-    public editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void{
+    public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
         // nothing to do
     }
 
@@ -501,10 +503,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
-    public isGroupRecord(record:any): boolean{
+    public isGroupRecord(record: any): boolean {
         return false;
     }
-    
+
     public getFirstRecord(): any {
         return null;
     }

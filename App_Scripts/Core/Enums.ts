@@ -1,6 +1,6 @@
 
 // General Enums
-export enum VendorGrid{
+export enum VendorGridName{
     agGrid = 'agGrid',
     Hypergrid = 'Hypergrid',
     Kendo = 'Kendo',

@@ -3,8 +3,8 @@ import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlo
 
 export module BlotterFactoryHypergrid {
 
-    export function CreateAdaptableBlotter(blotterOptions: IAdaptableBlotterOptions): AdaptableBlotter {
-        return new AdaptableBlotter(blotterOptions)
+    export function CreateAdaptableBlotter(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean): AdaptableBlotter {
+        return new AdaptableBlotter(blotterOptions, renderGrid)
     }
 
 }

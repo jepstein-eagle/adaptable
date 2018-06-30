@@ -45,15 +45,12 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-        vendorGridName: "agGrid"
-
+      
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     let adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-    // render the "adaptableBlotter"
-    adaptableblotter.Render();
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
+     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState()); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 }

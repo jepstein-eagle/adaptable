@@ -15,7 +15,6 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     includeVendorStateInLayouts: false,
     vendorGrid: null,
     primaryKey: "",
-    vendorGridName: "agGrid"
-}
+   }
 
 

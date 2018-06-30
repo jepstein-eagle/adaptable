@@ -14,11 +14,6 @@ export interface IAdaptableBlotterOptions {
     */
     vendorGrid: any;
     /**
-    * The underlying vendor grid or grid object
-    * One of the three MANDATORY properties
-    */
-    vendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid';
-    /**
      * How to identifier this Blotter
      * Useful if Audit Log is turned on or you are using multiple Blotters
      */

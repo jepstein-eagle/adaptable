@@ -60,7 +60,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, VendorGridName } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
@@ -95,6 +95,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     public BlotterOptions: IAdaptableBlotterOptions
+    public VendorGridName: VendorGridName
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -107,10 +108,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
 
-    constructor(blotterOptions: IAdaptableBlotterOptions) {
+    constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.gridOptions = this.BlotterOptions.vendorGrid
+        this.VendorGridName = VendorGridName.agGrid;
+
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -123,8 +126,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
-
-        // this.AdaptableBlotterStore.Initialise();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -175,15 +176,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.initInternalGridLogic()
                 }
             )
-    }
 
-    public Render() {
-        if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
-        }
-        if (this.abContainerElement != null) {
-            this.abContainerElement.innerHTML = ""
-            ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+        if (renderGrid) {
+            if (this.abContainerElement == null) {
+                this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+            }
+            if (this.abContainerElement != null) {
+                this.abContainerElement.innerHTML = ""
+                ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
+            }
         }
     }
 
