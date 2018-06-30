@@ -546,4 +546,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setVendorGridState(vendorGridState: any): void {
         // todo
     }
+
+    public isSelectable(): boolean{
+        return true;
+    }
+    public isSortable(): boolean{
+        return true;
+    }
 }

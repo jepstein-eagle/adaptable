@@ -1300,7 +1300,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo - but we dont know how to ;(
     }
 
-
+    public isSelectable(): boolean{
+        return true;
+    }
+    public isSortable(): boolean{
+        return true;
+    }
 
 }
 

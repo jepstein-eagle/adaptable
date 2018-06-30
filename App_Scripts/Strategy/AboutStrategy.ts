@@ -62,6 +62,14 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
             output += this.blotter.getColumnInfo()
             output += "|"
 
+             output += "Can Sort:"
+            output += this.blotter.isSortable()
+            output += "|"
+
+             output += "Can Multi Select:"
+            output += this.blotter.isSelectable()
+            output += "|"
+
         //     output += "Calculated Columns:"
         //    output += calcColumns
         //    output += "|"

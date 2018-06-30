@@ -33,7 +33,8 @@ export default class App extends React.Component<{}, AppState> {
   // Create the GridOptions object that ag-Grid needs
   createGridOptions(): GridOptions {
     return {
-      enableFilter: true
+      enableFilter: true, 
+      enableRangeSelection: false,
     }
   }
 

@@ -100,4 +100,8 @@ export interface IAdaptableBlotter {
     // layout
     getVendorGridState(visibleCols: string[]): any
     setVendorGridState(vendorGridState: any): void
+
+    // vendor grid related
+    isSelectable(): boolean
+    isSortable(): boolean
 }

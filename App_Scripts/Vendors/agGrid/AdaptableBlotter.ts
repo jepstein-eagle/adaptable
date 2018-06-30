@@ -641,11 +641,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private isColumnSortable(columnId: string): boolean {
-        if (this.gridOptions.enableSorting != null) {
-            if (!this.gridOptions.enableSorting) {
-                return false;
-            }
-        }
+       if(!this.isSortable()){
+           return false;
+       }
+        
         let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
         if (colDef.suppressSorting != null) {
             return !colDef.suppressSorting;
@@ -887,7 +886,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
             ReadOnly: true,
-            Sortable: this.gridOptions.enableSorting != null ? this.gridOptions.enableSorting : true
+            Sortable: this.isSortable()
         }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(hiddenCol));
 
@@ -1324,6 +1323,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private tempSetColumnStateFixForBuild(columnApi: any, columnState: any, columnEventType: string) {
         columnApi.setColumnState(columnState, columnEventType)
+    }
+
+    public isSelectable(): boolean {
+        return this.gridOptions.enableRangeSelection;
+    }
+
+    public isSortable(): boolean {
+        if (this.gridOptions.enableSorting != null) {
+            return this.gridOptions.enableSorting;
+        }
+        return true;
     }
 
 }
