@@ -1,9 +1,10 @@
-import { BlotterFactoryAgGrid } from "./Vendors/agGrid/BlotterFactoryAgGrid";
-import { VendorGridName } from "./Core/Enums";
-import { BlotterFactoryHypergrid } from "./Vendors/Hypergrid/BlotterFactoryHypergrid";
-import { IAdaptableBlotter } from "./Core/Interface/IAdaptableBlotter";
-import { BlotterFactoryKendo } from "./Vendors/Kendo/BlotterFactoryKendo";
-import { IAdaptableBlotterOptions } from "./Core/Api/Interface/IAdaptableBlotterOptions";
+import { VendorGridName } from "./Enums";
+import { IAdaptableBlotterOptions } from "./Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotter } from "./Interface/IAdaptableBlotter";
+import { BlotterFactoryHypergrid } from "../Vendors/Hypergrid/BlotterFactoryHypergrid";
+import { BlotterFactoryAgGrid } from "../Vendors/agGrid/BlotterFactoryAgGrid";
+import { BlotterFactoryKendo } from "../Vendors/Kendo/BlotterFactoryKendo";
+import { BlotterFactoryAdaptableGrid } from "../Vendors/AdaptableGrid/BlotterFactoryAdaptableGrid";
 
 export module BlotterFactory {
 
@@ -16,7 +17,7 @@ export module BlotterFactory {
           case VendorGridName.Kendo:
             return BlotterFactoryKendo.CreateAdaptableBlotter(adaptableBlotterOptions, false);
           case VendorGridName.AdaptableGrid:
-            return BlotterFactoryHypergrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
+            return BlotterFactoryAdaptableGrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
         }
     }
 }

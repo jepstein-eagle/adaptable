@@ -3,7 +3,7 @@ import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlo
 
 export module BlotterFactoryAdaptableGrid {
 
-    export function CreateAdaptableBlotter(blotterOptions: IAdaptableBlotterOptions): AdaptableBlotter {
+    export function CreateAdaptableBlotter(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean): AdaptableBlotter {
         return new AdaptableBlotter(null, null, null)
     }
 

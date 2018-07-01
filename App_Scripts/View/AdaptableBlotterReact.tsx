@@ -2,7 +2,7 @@
 import { IAdaptableBlotter } from "../Core/Interface/IAdaptableBlotter";
 import { AdaptableBlotterApp } from "./AdaptableBlotterView";
 import { IAdaptableBlotterOptions } from "../Core/Api/Interface/IAdaptableBlotterOptions";
-  import { BlotterFactory } from "../BlotterFactory";
+import { BlotterFactory } from "../Core/BlotterFactory";
 import { VendorGridName } from "../Core/Enums";
 
 // This is the main React Wrapper
