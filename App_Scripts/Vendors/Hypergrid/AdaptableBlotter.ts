@@ -618,6 +618,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private isColumnSortable(columnId: string): boolean {
+        if (!this.isSortable()) {
+            return false;
+        }
         let column = this.getHypergridColumn(columnId);
         if (column.properties.hasOwnProperty('unsortable')) {
             return !column.properties.unsortable
@@ -726,7 +729,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     clearTimeout(cellFlashIntervalHypergrid)
                     cellIntervalColumns.set(columnId, null)
                 }
-                let timeoutInterval: number = setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnId, 'flash'), timeout);
+                let timeoutInterval: any = setTimeout(() => this.removeCellStyleHypergrid(rowIdentifierValue, columnId, 'flash'), timeout);
                 cellIntervalColumns.set(columnId, timeoutInterval)
             }
         }
@@ -1300,10 +1303,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo - but we dont know how to ;(
     }
 
-    public isSelectable(): boolean{
+    public isSelectable(): boolean {
         return true;
     }
-    public isSortable(): boolean{
+    public isSortable(): boolean {
+        if (this.hyperGrid.properties.hasOwnProperty('unsortable')) {
+            return this.hyperGrid.behavior.unsortable;
+        }
         return true;
     }
 

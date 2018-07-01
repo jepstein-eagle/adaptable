@@ -134,6 +134,10 @@ function InitBlotter() {
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
     //which causes an issue.....
     vendorGrid.addProperties({ editOnKeydown: false })
+
+    // make it unsortable 
+   // vendorGrid.addProperties({ unsortable: true })
+
     let behavior = vendorGrid.behavior;
 
     vendorGrid.localization.add('USDCurrencyFormat', new vendorGrid.localization.NumberFormatter('en-US', {
@@ -202,7 +206,7 @@ function InitBlotter() {
         blotterId: "my Blotter",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-        predefinedConfig: json,
+      //  predefinedConfig: json,
         serverSearchOption: "None",
         vendorGrid: vendorGrid,
          iPushPullConfig: {
