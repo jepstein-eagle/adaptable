@@ -5,7 +5,7 @@ import { ReportColumnTypeWizard } from './ReportColumnTypeWizard'
 import { ReportExpressionWizard } from './ReportExpressionWizard'
 import { ReportSettingsWizard } from './ReportSettingsWizard'
 import { ReportSummaryWizard } from './ReportSummaryWizard'
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IReport } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 

@@ -1,0 +1,42 @@
+{
+	"object": "fdc3-context",
+	"definition": "https://fdc3.org/context/1.0.0/",
+	"version": "1.0.0",
+	"data": [
+		{
+			"name": "Adaptable Blotter",
+			"type": "Search Args",
+			"id": {
+				"searchChangedTrigger": "QuickSearch",
+				"blotterSearchState": {
+					"dataSource": "",
+					"advancedSearch": {
+						"Name": "hard workd",
+						"Expression": {
+							"ColumnValueExpressions": [
+								{
+									"ColumnId": "counterparty",
+									"ColumnValues": [
+										"Deutsche Bank",
+										"Credit Suisse",
+										"BNP",
+										"Barcap"
+									]
+								}
+							],
+							"FilterExpressions": [],
+							"RangeExpressions": []
+						},
+						"IsReadOnly": false
+					},
+					"quickSearch": "ha",
+					"columnFilters": null
+				},
+				"blotterSortState": {
+					"gridSorts": null,
+					"customSorts": null
+				}
+			}
+		}
+	]
+}

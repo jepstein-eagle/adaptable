@@ -1,4 +1,4 @@
-import { ICellValidationStrategy } from '../Strategy/Interface/ICellValidationStrategy';
+import { ICellValidationStrategy } from './Interface/ICellValidationStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'

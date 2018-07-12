@@ -25,7 +25,7 @@ export default class App extends React.Component<{}, AppState> {
     this.state = {
       gridOptions: gridOptions,
       blotterOptions: this.createAdaptableBlotterOptions(gridOptions),
-      trades: new DataGenerator().getTrades(),
+      trades: new DataGenerator().getTrades(15000),
       columnDefs: new ReactHarnessHelper().getTradeSchema()
     }
   }

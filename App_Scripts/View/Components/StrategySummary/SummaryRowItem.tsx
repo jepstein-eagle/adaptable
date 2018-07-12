@@ -1,6 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
+import { AdaptableObjectRow } from '../AdaptableObjectRow';
 import { IColItem } from "../../UIInterfaces";
 
 // Very simple wrapper around a AdaptableObjectRow which knows that it will always receive items and will always want

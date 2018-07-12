@@ -4,20 +4,39 @@ import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./Adapta
  * EventArgs sent as part of the onSearchedChanged Event
  */
 export interface ISearchChangedEventArgs {
+  object: string
+  definition: string
+  version: string
+  data: ISearchChangedData[]
+}
+
+export interface ISearchChangedData {
+  name: string
+  type: string
+  id: ISearchChangedInfo
+}
+
+export interface ISearchChangedInfo {
   /**
    * Which action in the grid caused the Search state to chagne
    */
-  SearchChangedTrigger: 'DataSource' | 'AdvancedSearch' | 'QuickSearch' | 'ColumnFilter' | 'UserFilter' | 'DataChange' | 'Sort';
+  searchChangedTrigger: 'DataSource' | 'AdvancedSearch' | 'QuickSearch' | 'ColumnFilter' | 'UserFilter' | 'DataChange' | 'Sort';
 
   /**
    * All current active search and filters in the Grid
    */
-  BlotterSearchState: IBlotterSearchState;
+  blotterSearchState: IBlotterSearchState;
 
   /**
    * The current sort state in the Grid
    */
-  BlotterSortState: IBlotterSortState;
+  blotterSortState: IBlotterSortState;
+
+  /**
+   * Date the search should use - defaults to now
+   * Uuseful if getting historical data
+   */
+  searchAsAtDate: Date
 }
 
 
@@ -28,22 +47,22 @@ export interface IBlotterSearchState {
   /**
    * Current Static Search (if any selected)
    */
-  DataSource: string;
+  dataSource: string;
 
   /**
    * Current Advanced Search (if any selected)
    */
-  AdvancedSearch: IAdvancedSearch;
+  advancedSearch: IAdvancedSearch;
 
   /**
    * Current live Quick Search text. (Value can be null)
    */
-  QuickSearch: string;
+  quickSearch: string;
 
   /**
    * Details of any column filters currently applied
    */
-  ColumnFilters: IColumnFilter[];
+  columnFilters: IColumnFilter[];
 }
 
 
@@ -54,12 +73,12 @@ export interface IBlotterSortState {
   /**
    * Which columns (if any) have sorting applied and,if so, which direction
    */
-  GridSorts: IGridSort[];
+  gridSorts: IGridSort[];
 
   /**
    * Whether any columns have non-standard sorts applied to them.  Note: this data is always sent even if no custom sorts are currently applied.
    */
-  CustomSorts: ICustomSort[];
+  customSorts: ICustomSort[];
 }
 
 

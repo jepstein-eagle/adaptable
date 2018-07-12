@@ -1,5 +1,5 @@
 import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
-import { IPlusMinusStrategy } from '../Strategy/Interface/IPlusMinusStrategy';
+import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'

@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { ThemeState } from './Interface/IState'
-import { StaticThemes } from '../../../themes/index'
+import { StaticThemes } from '../../../themes'
 import { DEFAULT_THEME } from "../../Core/Constants/GeneralConstants";
 
 const THEME_SET_SYSTEM_THEMES = 'THEME_SET_SYSTEM_THEMES';

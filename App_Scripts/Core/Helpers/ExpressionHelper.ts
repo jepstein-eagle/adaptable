@@ -1,10 +1,10 @@
-import { FilterHelper } from '../Helpers/FilterHelper'
+import { FilterHelper } from './FilterHelper'
 import { LeafExpressionOperator, RangeOperandType } from '../Enums'
 import { DataType } from '../Enums'
-import { Helper } from '../../Core/Helpers/Helper';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { Helper } from './Helper';
+import { StringExtensions } from '../Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
 import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';

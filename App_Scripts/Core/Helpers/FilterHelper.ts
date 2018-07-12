@@ -1,4 +1,4 @@
-import { ExpressionHelper } from '../Helpers/ExpressionHelper'
+import { ExpressionHelper } from './ExpressionHelper'
 import { DataType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'

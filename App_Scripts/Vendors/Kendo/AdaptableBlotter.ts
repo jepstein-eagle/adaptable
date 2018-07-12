@@ -927,11 +927,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public getRowInfo(): any {
+    public getRowCount(): number {
         return this.vendorGrid.dataSource.data().length;
     }
-    public getColumnInfo(): any {
+    public getColumnCount(): number {
         return this.vendorGrid.columns.length;
+    }
+
+    public getVisibleRowCount(): number {
+        return 1
+    }
+    
+    public getVisibleColumnCount(): number {
+        return 1
     }
 
     public selectColumn(columnId: string) {

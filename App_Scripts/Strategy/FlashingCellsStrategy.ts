@@ -6,7 +6,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { ObjectFactory } from '../Core/ObjectFactory'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { IFlashingCellsStrategy } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { DataType } from '../Core/Enums';

@@ -35,46 +35,46 @@ export interface IFX {
 
 export class DataGenerator {
 
-    getTrades(): ITrade[] {
+    getTrades(count: number): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 15000; i++) {
+        for (let i = 1; i <= count; i++) {
             trades.push(this.createTrade(i));
         }
         return trades;
     }
-    getDollarTrades(): ITrade[] {
+    getDollarTrades(count: number): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 50; i++) {
+        for (let i = 1; i <= count; i++) {
             trades.push(this.createTrade(i, "USD"));
         }
         return trades;
     }
-    getGBPTrades(): ITrade[] {
+    getGBPTrades(count: number): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 20; i++) {
+        for (let i = 1; i <= count; i++) {
             trades.push(this.createTrade(i, "GBP"));
         }
         return trades;
     }
-    getEuroTrades(): ITrade[] {
+    getEuroTrades(count: number): ITrade[] {
         let trades: ITrade[] = [];
-        for (let i = 1; i < 20; i++) {
+        for (let i = 1; i <= count; i++) {
             trades.push(this.createTrade(i, "EUR"));
         }
         return trades;
     }
 
-    getBonds(): IBond[] {
+    getBonds(count: number): IBond[] {
         let bonds: IBond[] = [];
-        for (let i = 1; i < 35; i++) {
+        for (let i = 1; i <= count; i++) {
             bonds.push(this.createBond(i));
         }
         return bonds;
     }
 
-    getFX(): IFX[] {
+    getFX(count: number): IFX[] {
         let fxs: IFX[] = [];
-        for (let i = 1; i < 35; i++) {
+        for (let i = 1; i <= count; i++) {
             fxs.push(this.createFX(i));
         }
         return fxs;

@@ -1,6 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
+import { PanelWithRow } from './Panels/PanelWithRow';
 import { ListGroup } from 'react-bootstrap';
 import { IColItem } from "../UIInterfaces";
 import { SmartEditApply } from "../../Redux/ActionsReducers/SmartEditRedux";

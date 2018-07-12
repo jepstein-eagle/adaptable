@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Radio, Panel, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DataType, PopoverType, MathOperation } from '../../../Core/Enums';
 import { EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';

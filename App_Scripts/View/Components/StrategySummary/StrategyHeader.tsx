@@ -1,8 +1,8 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { ButtonNew } from './../Buttons/ButtonNew';
+import { ButtonNew } from '../Buttons/ButtonNew';
 import { SummaryRowItem } from './SummaryRowItem';
-import { StrategyProfile } from './../StrategyProfile'
+import { StrategyProfile } from '../StrategyProfile'
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
     key: string

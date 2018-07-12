@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PopoverType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
@@ -22,12 +22,12 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
             IsDefaultNudge: this.props.Data.IsDefaultNudge
         }
     }
-  
+
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-settings"
-       
+
         return <div className={cssClassName}>
-        <Panel header="Plus/Minus Settings" bsStyle="primary">
+            <Panel header="Plus/Minus Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="nudgeColumn">
                         <Col xs={3} componentClass={ControlLabel}>Nudge Value: </Col>
@@ -40,11 +40,11 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                         <Col xs={9}>
                             <Radio value="expression" checked={!this.state.IsDefaultNudge} onChange={(e) => this.onExpressionOptionChange(e)}>
                                 Custom Plus/Minus Rule {' '}
-                                <AdaptablePopover  cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
                             </Radio>
                             <Radio value="default" checked={this.state.IsDefaultNudge} onChange={(e) => this.onExpressionOptionChange(e)}>
                                 Default Nudge Value for Column {' '}
-                                <AdaptablePopover  cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} popoverType={PopoverType.Info} />
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} popoverType={PopoverType.Info} />
                             </Radio>
                         </Col>
                     </FormGroup>
@@ -76,11 +76,12 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
             this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
         }
     }
-    public Back(): void { }
-    public GetIndexStepIncrement(){
-        return  this.state.IsDefaultNudge? 2: 1;
+    public Back(): void { //todo
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepIncrement() {
+        return this.state.IsDefaultNudge ? 2 : 1;
+    }
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

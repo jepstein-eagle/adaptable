@@ -524,10 +524,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public getRowInfo(): any {
+    public getRowCount(): number {
         return 1
     }
-    public getColumnInfo(): any {
+    public getColumnCount(): number {
+        return 1
+    }
+
+    public getVisibleRowCount(): number {
+        return 1
+    }
+    
+    public getVisibleColumnCount(): number {
         return 1
     }
 

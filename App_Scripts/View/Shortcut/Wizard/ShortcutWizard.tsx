@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { ShortcutSummaryWizard } from './ShortcutSummaryWizard'
 import { ShortcutTypeWizard } from './ShortcutTypeWizard'

@@ -4,7 +4,7 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import { ISelectColumnStrategy } from "../Strategy/Interface/ISelectColumnStrategy";
+import { ISelectColumnStrategy } from "./Interface/ISelectColumnStrategy";
 
 export class SelectColumnStrategy extends AdaptableStrategyBase implements ISelectColumnStrategy {
 

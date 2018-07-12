@@ -1,4 +1,4 @@
-import { IUserFilterStrategy } from '../Strategy/Interface/IUserFilterStrategy';
+import { IUserFilterStrategy } from './Interface/IUserFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'

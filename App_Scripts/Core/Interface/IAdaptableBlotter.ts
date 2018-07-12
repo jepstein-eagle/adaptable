@@ -1,5 +1,5 @@
-import {  DistinctCriteriaPairValue, VendorGridName } from '../Enums'
-import { ICellInfo, IAdaptableStrategyCollection } from '../../Core/Interface/Interfaces'
+import { DistinctCriteriaPairValue, VendorGridName } from '../Enums'
+import { ICellInfo, IAdaptableStrategyCollection } from './Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
 import { ICalendarService } from '../Services/Interface/ICalendarService'
@@ -49,7 +49,7 @@ export interface IAdaptableBlotter {
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
     hideFilterForm(): void
-  
+
     // cell selection
     getActiveCell(): ICellInfo
     selectColumn(columnId: string): void
@@ -74,7 +74,7 @@ export interface IAdaptableBlotter {
     // Row Methods
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
-    isGroupRecord(record:any): boolean
+    isGroupRecord(record: any): boolean
 
     //  Sort
     setCustomSort(columnId: string, comparer: Function): void
@@ -84,7 +84,7 @@ export interface IAdaptableBlotter {
     //CalculatedColumn
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void
-    editCalculatedColumnInGrid(calculatedColumn:ICalculatedColumn): void
+    editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void
     getFirstRecord(): any
 
     // Filtering
@@ -94,8 +94,10 @@ export interface IAdaptableBlotter {
     getIPPStyle(): IPPStyle
 
     // info
-    getRowInfo(): any
-    getColumnInfo(): any
+    getRowCount(): number
+    getColumnCount(): number
+    getVisibleRowCount(): number
+    getVisibleColumnCount(): number
 
     // layout
     getVendorGridState(visibleCols: string[]): any

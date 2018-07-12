@@ -4,7 +4,7 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { IDashboardStrategy } from '../Strategy/Interface/IDashboardStrategy'
+import { IDashboardStrategy } from './Interface/IDashboardStrategy'
 import { GridState, DashboardState } from '../Redux/ActionsReducers/Interface/IState';
 import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';

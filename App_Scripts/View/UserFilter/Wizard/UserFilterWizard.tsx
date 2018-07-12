@@ -2,7 +2,7 @@ import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { ExpressionMode } from '../../../Core/Enums'
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'

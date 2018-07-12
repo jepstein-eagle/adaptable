@@ -23,7 +23,7 @@ function getSchema(data) {
 }
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getTrades();
+    var trades = dataGen.getTrades(15000);
 
     var grid = $("#grid").AdaptableGrid({
         columns: getColumns(),

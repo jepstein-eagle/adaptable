@@ -1235,12 +1235,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public getRowInfo(): any {
-        return this.hyperGrid.behavior.dataModel.dataSource.getRowCount()
+    public getRowCount(): number {
+        let data = this.hyperGrid.behavior.dataModel.getData()
+        return data.length
     }
 
-    public getColumnInfo(): any {
-        return this.hyperGrid.behavior.getActiveColumns().length + this.hyperGrid.behavior.getHiddenColumns().length
+    public getColumnCount(): number {
+        //       return this.hyperGrid.behavior.getActiveColumns().length + this.hyperGrid.behavior.getHiddenColumns().length
+        return this.hyperGrid.behavior.dataModel.dataSource.getColumnCount()
+    }
+
+    public getVisibleRowCount(): number {
+        let indexData = this.hyperGrid.behavior.dataModel.getIndexedData();
+        return indexData.length;
+    }
+
+    public getVisibleColumnCount(): number {
+        return this.hyperGrid.behavior.getActiveColumns().length
     }
 
     public selectColumn(columnId: string) {

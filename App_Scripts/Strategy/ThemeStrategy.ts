@@ -3,9 +3,9 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IThemeStrategy } from '../Strategy/Interface/IThemeStrategy'
+import { IThemeStrategy } from './Interface/IThemeStrategy'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { ThemesContent } from '../../themes/index'
+import { ThemesContent } from '../../themes'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Core/Helpers/Helper';
 

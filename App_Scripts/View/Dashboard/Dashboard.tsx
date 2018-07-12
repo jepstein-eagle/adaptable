@@ -1,23 +1,18 @@
 ﻿import * as React from "react";
 import { connect } from 'react-redux';
 import * as Redux from "redux";
-import { Navbar, Nav, Panel, Button, Glyphicon, OverlayTrigger, ButtonToolbar, Tooltip, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, Button, Glyphicon, OverlayTrigger, ButtonToolbar, Tooltip } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory, AdaptableDashboardPermanentToolbarFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { DefaultAdaptableBlotterOptions } from "../../Core/DefaultAdaptableBlotterOptions";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { HomeToolbarControl } from '../Home/HomeToolbarControl'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue, Visibility } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogger";
-
-
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
@@ -28,15 +23,13 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 }
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
-
-
     render() {
         let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
         let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
         let optionsBlotterName: string = this.props.AdaptableBlotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
-        let showBlotterName: string = "Show " + blotterName + " Toolbars"
+        let showBlotterName: string = "Show " + blotterName + " Dashboard"
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars//.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
@@ -90,12 +83,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                         </Navbar>
                     }
                 </div>
-
             }
         </div>
     }
-
-
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -115,7 +105,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
-
     };
 }
 

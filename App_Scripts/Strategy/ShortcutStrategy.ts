@@ -1,4 +1,4 @@
-import { IShortcutStrategy } from '../Strategy/Interface/IShortcutStrategy';
+import { IShortcutStrategy } from './Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
