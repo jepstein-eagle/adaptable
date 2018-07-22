@@ -1,5 +1,5 @@
 import { ResetUserData } from '../Redux/Store/AdaptableBlotterStore';
-import { IDataManagementStrategy } from '../Strategy/Interface/IDataManagementStrategy';
+import { IDataManagementStrategy } from './Interface/IDataManagementStrategy';
 import { MenuItemDoReduxAction } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'

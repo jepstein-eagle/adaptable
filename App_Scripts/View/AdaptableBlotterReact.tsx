@@ -29,6 +29,5 @@ export class AdaptableBlotterReact extends React.Component<AdaptableBlotterReact
         <AdaptableBlotterApp AdaptableBlotter={this.state.AdaptableBlotter} />
       </div>
     );
-
   }
 }

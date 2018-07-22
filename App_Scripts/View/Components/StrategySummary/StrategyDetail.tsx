@@ -1,7 +1,7 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
-import { EntityListActionButtons } from '../../Components/Buttons/EntityListActionButtons';
+import { EntityListActionButtons } from '../Buttons/EntityListActionButtons';
 import { SummaryRowItem } from './SummaryRowItem';
 import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
    

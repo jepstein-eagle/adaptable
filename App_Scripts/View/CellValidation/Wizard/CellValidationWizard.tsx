@@ -1,7 +1,7 @@
 import { ICellValidationRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CellValidationActionWizard } from './CellValidationActionWizard'
 import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard'
 import { CellValidationExpressionWizard } from './CellValidationExpressionWizard'

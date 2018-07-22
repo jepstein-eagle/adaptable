@@ -1,4 +1,4 @@
-import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'

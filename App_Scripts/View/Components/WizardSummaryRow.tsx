@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Radio } from 'react-bootstrap';
-import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps, BaseRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { EntityListActionButtons } from './Buttons/EntityListActionButtons';
+import { AdaptableObjectRow } from './AdaptableObjectRow';
+import { SharedEntityExpressionRowProps, BaseRowProps } from './SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { IColItem } from "../UIInterfaces";

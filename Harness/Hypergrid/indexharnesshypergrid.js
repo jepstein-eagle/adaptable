@@ -125,10 +125,10 @@ function getSchema(data) {
 }
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getTrades();
+    var trades = dataGen.getTrades(15000);
 
     var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-  //  dataGen.startTickingDataHypergrid(vendorGrid)
+    //  dataGen.startTickingDataHypergrid(vendorGrid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     vendorGrid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
@@ -136,7 +136,7 @@ function InitBlotter() {
     vendorGrid.addProperties({ editOnKeydown: false })
 
     // make it unsortable 
-   // vendorGrid.addProperties({ unsortable: true })
+    // vendorGrid.addProperties({ unsortable: true })
 
     let behavior = vendorGrid.behavior;
 
@@ -173,13 +173,13 @@ function InitBlotter() {
         unsortable: true
     });
 
-   
+
     //Add Format for Notional column
     behavior.setColumnProperties(1, {
         format: 'USDCurrencyFormat'
     });
 
-     //Add Edit for Trade Date column
+    //Add Edit for Trade Date column
     behavior.setColumnProperties(16, {
         format: 'shortDateFormat'
     });
@@ -206,39 +206,53 @@ function InitBlotter() {
         blotterId: "my Blotter",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-      //  predefinedConfig: json,
-        serverSearchOption: "None",
+        //  predefinedConfig: json,
+        serverSearchOption: "AdvancedSearch",
         vendorGrid: vendorGrid,
-         iPushPullConfig: {
+        iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         }
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
-  //    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
+ //   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
 
- //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+ //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     vendorGrid.addProperties(lightTheme);
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.SearchChangedTrigger == "DataSourcexxxx") {
-        if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
-            adaptableblotter.api.setGridData(dataGen.getDollarTrades());
-            adaptableblotter.api.layoutSet("Dollar View")
-        } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
-            adaptableblotter.api.setGridData(dataGen.getGBPTrades());
-            adaptableblotter.api.layoutSet("Sterling View")
-        } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
-            adaptableblotter.api.setGridData(dataGen.getEuroTrades());
-            adaptableblotter.api.layoutSet("Euro View")
-        } else {
-            adaptableblotter.api.setGridData(dataGen.getTrades());
-            adaptableblotter.api.layoutClear();
+    if (searchArgs.data != null && searchArgs.data.length > -1) {
+        let searchChangedInfo = searchArgs.data[0].id;
+        if (searchChangedInfo.searchChangedTrigger == "QuickSearch") {
+            alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
+
+            let jsonstring = JSON.stringify(searchArgs)
+            console.log(jsonstring)
         }
+
+
+        if (searchArgs.SearchChangedTrigger == "DataSourcexxxx") {
+            if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
+                adaptableblotter.api.setGridData(dataGen.getDollarTrades(50));
+                adaptableblotter.api.layoutSet("Dollar View")
+            } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
+                adaptableblotter.api.setGridData(dataGen.getGBPTrades(50));
+                adaptableblotter.api.layoutSet("Sterling View")
+            } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
+                adaptableblotter.api.setGridData(dataGen.getEuroTrades(50));
+                adaptableblotter.api.layoutSet("Euro View")
+            } else {
+                adaptableblotter.api.setGridData(dataGen.getTrades(15000));
+                adaptableblotter.api.layoutClear();
+            }
+        }
+
     }
 }
+
+
 
 let json = {
     "UserInterface": {

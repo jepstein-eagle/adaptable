@@ -1,6 +1,6 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import { IFlashingCellsStrategy } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { DataType } from '../Core/Enums'
 import * as StyleConstants from '../Core/Constants/StyleConstants'

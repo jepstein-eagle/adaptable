@@ -1,11 +1,7 @@
 {
 	"Entitlements": {
 		"FunctionEntitlements": [
-			{
-				"FunctionName": "AdvancedSearch",
-				"AccessLevel": "ReadOnly"
-			},
-			{
+				{
 				"FunctionName": "QuickSearch",
 				"AccessLevel": "ReadOnly"
 			},
@@ -21,7 +17,9 @@
 	},
 	"Dashboard": {
 		"VisibleToolbars": [
-			"Export"
+			"Export",
+			"QuickSearch",	
+			"SmartEdit"
 		],
 		"VisibleButtons": [
 			"About",

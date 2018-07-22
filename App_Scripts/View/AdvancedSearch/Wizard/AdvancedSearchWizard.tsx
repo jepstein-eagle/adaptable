@@ -1,9 +1,9 @@
 import * as React from "react";
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard'
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
 import { IAdvancedSearch } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 

@@ -9,6 +9,7 @@ import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFla
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
+import { KeyValuePair } from '../../../View/UIInterfaces';
 
 /*
 Created by the system  at run-time and not part of predefined or user config and not saved
@@ -34,6 +35,10 @@ export interface PopupState {
     InfoPopup: IInfoPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
+}
+
+export interface AboutState {
+    AboutInfo: KeyValuePair[]
 }
 
 export interface TeamSharingState {
@@ -94,6 +99,7 @@ export interface SmartEditState {
     PreviewInfo: IPreviewInfo
 
 }
+
 
 export interface SelectedCellsState {
     SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only'

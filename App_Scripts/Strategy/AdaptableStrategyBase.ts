@@ -1,22 +1,21 @@
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IStrategy, } from '../Strategy/Interface/IStrategy';
+import { IStrategy, } from './Interface/IStrategy';
 import { IMenuItem } from '../Core/Interface/IMenu';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Core/MenuItem';
-import { IEnterpriseCache } from 'ag-grid';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
-import { QuickSearchState, AdvancedSearchState, FilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs } from '../Core/Api/Interface/ServerSearch';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchChangedData } from '../Core/Api/Interface/ServerSearch';
 import { SearchChangedTrigger } from '../Core/Enums';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { IDatasource } from 'ag-grid';
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { IAdvancedSearch } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     private buildContextMenu: boolean
-    private buildPopupMenu: boolean
-    private Entitlements: IEntitlement[]
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
     }
 
@@ -78,7 +77,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     isVisibleStrategy(): boolean {
         let entitlement: IEntitlement = this.getStrategyEntitlement();
         if (entitlement) {
-             return entitlement.AccessLevel != "Hidden"
+            return entitlement.AccessLevel != "Hidden"
         }
         return true;
     }
@@ -151,7 +150,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
     addContextMenuItemToStore(menuItem: IMenuItem): void {
         // check for duplicates here
-        let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m=>m.StrategyId)
+        let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m => m.StrategyId)
         if (!ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 MenuRedux.AddItemColumnContextMenu(
@@ -162,19 +161,43 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
     publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
+
+        let dataSource: string = state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource)
+        let advancedSearch: IAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
+
         // lets get the searchstate
         let blotterSearchState: IBlotterSearchState = {
-            DataSource: state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource),
-            AdvancedSearch: state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch),
-            QuickSearch: state.QuickSearch.QuickSearchText,
-            ColumnFilters: state.Filter.ColumnFilters
+            dataSource: StringExtensions.IsNotNullOrEmpty(dataSource) ? dataSource : "",
+            advancedSearch: advancedSearch == null ? null : advancedSearch,
+            quickSearch: state.QuickSearch.QuickSearchText,
+            columnFilters: state.Filter.ColumnFilters
         }
 
         let blotterSortState: IBlotterSortState = {
-            GridSorts: state.Grid.GridSorts,
-            CustomSorts: state.CustomSort.CustomSorts
+            gridSorts: state.Grid.GridSorts,
+            customSorts: state.CustomSort.CustomSorts
         }
-        let searchChangedArgs: ISearchChangedEventArgs = { SearchChangedTrigger: searchChangedTrigger, BlotterSearchState: blotterSearchState, BlotterSortState: blotterSortState }
+
+        let searchChangedInfo: ISearchChangedInfo = {
+            searchChangedTrigger: searchChangedTrigger,
+            blotterSearchState: blotterSearchState,
+            blotterSortState: blotterSortState,
+            searchAsAtDate: new Date()
+        }
+
+        let searchChangedData: ISearchChangedData = {
+            name: "Adaptable Blotter",
+            type: "Search Args",
+            id: searchChangedInfo
+        }
+
+        let searchChangedArgs: ISearchChangedEventArgs = {
+            object: "fdc3-context",
+            definition: "https://fdc3.org/context/1.0.0/",
+            version: "1.0.0",
+            data: [searchChangedData]
+        }
+
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
 

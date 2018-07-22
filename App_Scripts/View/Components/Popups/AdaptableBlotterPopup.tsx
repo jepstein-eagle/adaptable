@@ -2,7 +2,7 @@ import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { AdaptableViewFactory } from './../../AdaptableViewFactory';
+import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 import { UIHelper } from '../../UIHelper';

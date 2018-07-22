@@ -1,4 +1,4 @@
-import { ILayoutStrategy } from '../Strategy/Interface/ILayoutStrategy';
+import { ILayoutStrategy } from './Interface/ILayoutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'

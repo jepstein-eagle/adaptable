@@ -4,9 +4,9 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { MathOperation, DataType } from '../Core/Enums'
-import { IStrategyActionReturn } from '../Strategy/Interface/IStrategyActionReturn';
+import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
-import { ISmartEditStrategy } from '../Strategy/Interface/ISmartEditStrategy'
+import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';

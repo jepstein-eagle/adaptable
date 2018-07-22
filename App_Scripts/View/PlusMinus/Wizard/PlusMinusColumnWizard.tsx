@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
@@ -38,7 +38,8 @@ export class PlusMinusColumnWizard extends React.Component<PlusMinusColumnWizard
     public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)); }
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
-    public Back(): void { }
+    public Back(): void {  //todo
+    }
     public GetIndexStepIncrement(){
         return 1;
     }

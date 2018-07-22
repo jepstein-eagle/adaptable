@@ -1,4 +1,4 @@
-import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy';
+import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { FormatColumnStrategy } from './FormatColumnStrategy';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import * as StyleConstants from '../Core/Constants/StyleConstants'

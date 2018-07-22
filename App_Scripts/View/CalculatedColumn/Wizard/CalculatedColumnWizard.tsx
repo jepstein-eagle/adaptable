@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
 import { CalculatedColumnSummaryWizard } from './CalculatedColumnSummaryWizard'

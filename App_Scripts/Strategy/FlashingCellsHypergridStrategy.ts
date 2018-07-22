@@ -1,6 +1,6 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
 import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
-import { IFlashingCellsStrategy } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { IFlashingCell } from '../Core/Api/Interface/AdaptableBlotterObjects';
 

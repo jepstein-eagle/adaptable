@@ -4,7 +4,7 @@ var quickSearchText
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
-    let trades = dataGen.getTrades();
+    let trades = dataGen.getTrades(15000);
 
     // Create a GridOptions object.  This is used to create the ag-Grid
     // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -16,6 +16,8 @@ function InitTradeBlotter() {
         enableFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
+        pagination: true,
+        paginationPageSize: 100,
         columnTypes: {                  // not required but helpful for column data type identification
             "abColDefNumber": {},
             "abColDefString": {},
@@ -35,24 +37,24 @@ function InitTradeBlotter() {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "Trades Blotter",              // id for blotter 
-        enableAuditLog: false,                  // not running audit log
+        enableAuditLog: true,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
-        serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
+      //  predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
+        serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-      
+
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
-    let adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState()); });
-    //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
+   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState()); });
+  //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 }
 
 function getTradeSchema() {
@@ -110,8 +112,16 @@ function apiTester(state) {
 }
 
 function getTradesForSearch(searchArgs, dataGen) {
+    let searchChangedInfo = searchArgs.data[0].id;
+    if (searchChangedInfo.searchChangedTrigger == "QuickSearch") {
+        alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
+    }
+
+    let jsonstring = JSON.stringify(searchArgs)
+    console.log(jsonstring)
+    
     //alert(searchArgs.SearchChangedTrigger)
-    if (searchArgs.SearchChangedTrigger == "DataSource") {
+    if (searchChangedInfo.searchChangedTrigger == "DataSource") {
         if (searchArgs.BlotterSearchState.DataSource == "Eurssso") {
             //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
             adaptableblotter.api.systemStatusSet("its all broken", "Red")
@@ -139,7 +149,7 @@ function getTradesForSearch(searchArgs, dataGen) {
             adaptableblotter.api.setGridData(dataGen.getEuroTrades());
             adaptableblotter.api.selectLayout("Euro View")
         } else {
-            adaptableblotter.api.setGridData(dataGen.getTrades());
+            adaptableblotter.api.setGridData(dataGen.getTrades(15000));
             adaptableblotter.api.clearLayout();
         }
         */
@@ -276,7 +286,7 @@ let tradeJson = {
             "Layout",
             "QuickSearch"
         ],
-      "ShowSystemStatusButton": true
+        "ShowSystemStatusButton": true
     }
 }
 

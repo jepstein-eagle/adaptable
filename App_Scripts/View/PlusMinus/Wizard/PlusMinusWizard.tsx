@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { AdaptableWizard } from './../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'

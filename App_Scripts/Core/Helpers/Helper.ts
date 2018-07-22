@@ -1,4 +1,4 @@
-import { SortOrder } from '../../Core/Enums'
+import { SortOrder } from '../Enums'
 import { StringExtensions } from '../Extensions/StringExtensions'
 import * as fs from 'fs'
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';

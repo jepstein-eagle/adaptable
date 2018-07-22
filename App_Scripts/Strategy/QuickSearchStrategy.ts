@@ -1,4 +1,4 @@
-import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
+import { IQuickSearchStrategy } from './Interface/IQuickSearchStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'

@@ -1,4 +1,4 @@
-import { IColumnFilterStrategy } from '../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterStrategy } from './Interface/IColumnFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'

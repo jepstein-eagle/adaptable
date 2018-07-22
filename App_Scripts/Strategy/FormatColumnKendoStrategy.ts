@@ -1,5 +1,5 @@
 import { FormatColumnStrategy } from './FormatColumnStrategy';
-import { IFormatColumnStrategy } from '../Strategy/Interface/IFormatColumnStrategy';
+import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';

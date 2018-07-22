@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Panel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICalculatedColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -47,7 +47,8 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
     }
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnExpression = this.state.ColumnExpression }
-    public Back(): void { }
+    public Back(): void {  //todo
+    }
     public GetIndexStepIncrement() {
         return 1;
     }

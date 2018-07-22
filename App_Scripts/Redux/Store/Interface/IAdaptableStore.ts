@@ -4,6 +4,7 @@ import * as Redux from 'redux';
 export interface AdaptableBlotterState {
     Popup: AdaptableBlotterStates.PopupState;
     Menu: AdaptableBlotterStates.MenuState;
+    About: AdaptableBlotterStates.AboutState;
     SmartEdit: AdaptableBlotterStates.SmartEditState;
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
     CustomSort: AdaptableBlotterStates.CustomSortState;

@@ -1,6 +1,6 @@
-import { IEvent } from './../Interface/IEvent';
-import { EventDispatcher } from './../EventDispatcher';
-import { ExcelWorkbook } from './../Interface/OpenfinLiveExcel/ExcelWorkbook';
+import { IEvent } from '../Interface/IEvent';
+import { EventDispatcher } from '../EventDispatcher';
+import { ExcelWorkbook } from '../Interface/OpenfinLiveExcel/ExcelWorkbook';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 export module OpenfinHelper {
     declare var fin: any;

@@ -1,5 +1,5 @@
 import { FlashingCellsStrategy } from './FlashingCellsStrategy'
-import { IFlashingCellsStrategy } from '../Strategy/Interface/IFlashingCellsStrategy'
+import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'

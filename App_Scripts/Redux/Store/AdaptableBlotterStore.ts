@@ -11,6 +11,7 @@ import filter from 'redux-storage-decorator-filter'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
+import * as AboutRedux from '../ActionsReducers/AboutRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as BulkUpdateRedux from '../ActionsReducers/BulkUpdateRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
@@ -62,11 +63,14 @@ import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogge
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { unstable_renderSubtreeIntoContainer } from 'react-dom';
+import { IAboutStrategy } from '../../Strategy/Interface/IAboutStrategy';
+import { KeyValuePair } from '../../View/UIInterfaces';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
+    About: AboutRedux.AboutReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
@@ -153,7 +157,7 @@ const configServerTeamSharingUrl = "/adaptableblotter-teamsharing"
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     public TheStore: Redux.Store<AdaptableBlotterState>
     public Load: PromiseLike<any>
-    constructor( blotter: IAdaptableBlotter) {
+    constructor(blotter: IAdaptableBlotter) {
         let middlewareReduxStorage: Redux.Middleware
         let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
         let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
@@ -184,6 +188,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             "Entitlements",
             "Menu",
             "Grid",
+            "About",
             "BulkUpdate",
             ["Calendar", "AvailableCalendars"],
             ["Theme", "AvailableThemes"],
@@ -542,6 +547,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
                     let returnAction = next(action);
                     middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())
+                    return returnAction;
+                }
+                case AboutRedux.ABOUT_INFO_CREATE: {
+                    let aboutStrategy = <IAboutStrategy>(blotter.Strategies.get(StrategyIds.AboutStrategyId));
+                    let returnAction = next(action);
+                    let aboutInfo: KeyValuePair[] = aboutStrategy.CreateAboutInfo();
+                    middlewareAPI.dispatch(AboutRedux.AboutInfoSet(aboutInfo));
                     return returnAction;
                 }
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {

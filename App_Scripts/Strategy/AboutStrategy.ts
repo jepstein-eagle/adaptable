@@ -6,6 +6,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
+import { KeyValuePair } from '../View/UIInterfaces';
 
 
 export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrategy {
@@ -15,66 +16,35 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.AboutStrategyName, ScreenPopups.AboutPopup, StrategyGlyphs.AboutGlyph, this.convertBlotterOptionsToString());
+        this.createMenuItemShowPopup(StrategyNames.AboutStrategyName, ScreenPopups.AboutPopup, StrategyGlyphs.AboutGlyph);
     }
 
-    private convertBlotterOptionsToString(): string {
+    public CreateAboutInfo(): KeyValuePair[] {
         let options: IAdaptableBlotterOptions = this.blotter.BlotterOptions;
-
-     // let calcColumns=  this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c=>c.ColumnId)
-       
-        let output: string = ""
-
-            output += "Vendor Grid:"
-            output += this.blotter.VendorGridName
-            output += "|"
-      
-            if (options.blotterId != undefined) {
-            output += "Blotter Id:"
-            output += options.blotterId
-            output += "|"
+        let output: KeyValuePair[] = []
+        output.push({ Key: "Vendor Grid", Value: this.blotter.VendorGridName })
+        if (options.blotterId != undefined) {
+            output.push({ Key: "Blotter Id", Value: options.blotterId })
         }
         if (options.userName != undefined) {
-            output += "User:"
-            output += options.userName
-            output += "|"
+            output.push({ Key: "User", Value: options.userName })
         }
         if (options.enableAuditLog != undefined) {
-            output += "Audit Log:"
-            output += (options.enableAuditLog) ? "On" : "Off"
-            output += "|"
+            output.push({ Key: "Audit Log", Value: (options.enableAuditLog) ? "On" : "Off" })
         }
         if (options.enableRemoteConfigServer != undefined) {
-            output += "Remote Configuration:"
-            output += (options.enableRemoteConfigServer) ? "On" : "Off"
-            output += "|"
+            output.push({ Key: "Remote Configuration", Value: (options.enableRemoteConfigServer) ? "On" : "Off" })
         }
         if (options.serverSearchOption != undefined) {
-            output += "Server Search Option:"
-            output += (options.serverSearchOption) 
-            output += "|"
+            output.push({ Key: "Server Search Option", Value: options.serverSearchOption })
         }
-             output += "Rows:"
-            output += this.blotter.getRowInfo()
-            output += "|"
-
-             output += "Columns:"
-            output += this.blotter.getColumnInfo()
-            output += "|"
-
-             output += "Can Sort:"
-            output += this.blotter.isSortable()
-            output += "|"
-
-             output += "Can Multi Select:"
-            output += this.blotter.isSelectable()
-            output += "|"
-
-        //     output += "Calculated Columns:"
-        //    output += calcColumns
-        //    output += "|"
-       
-
-        return output.slice(0, -1);;
+        output.push({ Key: "All Rows", Value: this.blotter.getRowCount() })
+        output.push({ Key: "Visible Rows", Value: this.blotter.getVisibleRowCount() })
+        output.push({ Key: "All Columns", Value: this.blotter.getColumnCount() })
+        output.push({ Key: "Visible Columns", Value: this.blotter.getVisibleColumnCount() })
+        output.push({ Key: "Can Sort", Value: this.blotter.isSortable() ? "True" : "False" })
+        output.push({ Key: "Can Multi Select", Value: this.blotter.isSelectable() ? "True" : "False" })
+        output.push({ Key: "Calculated Columns", Value: this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c => c.ColumnId) })
+        return output;
     }
 }

@@ -33,7 +33,7 @@ export default class App extends React.Component<{}, AppState> {
   createGridOptions(): GridOptions {
     return {
       columnDefs: new ReactHarnessHelper().getTradeSchema(),
-      rowData: new DataGenerator().getTrades(),
+      rowData: new DataGenerator().getTrades(15000),
       enableSorting: true,
       enableRangeSelection: true,
       enableFilter: true,

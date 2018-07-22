@@ -1,4 +1,4 @@
-import { IQuickSearchStrategy } from '../Strategy/Interface/IQuickSearchStrategy';
+import { IQuickSearchStrategy } from './Interface/IQuickSearchStrategy';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter';
 import { QuickSearchStrategy } from './QuickSearchStrategy';
 

@@ -11,12 +11,14 @@ import { IColItem, KeyValuePair } from "../UIInterfaces";
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Core/Helpers/Helper";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as AboutRedux from '../../Redux/ActionsReducers/AboutRedux'
+import { AdaptableObjectCollection } from "../Components/AdaptableObjectCollection";
 
 
 interface AboutPopupComponentProps extends StrategyViewPopupProps<AboutPopupComponent> {
+    AboutInfo: KeyValuePair[],
+    onAboutInfoCreate: () => AboutRedux.AboutInfoCreateAction;
 }
-
-
 
 interface AboutState {
     KeyValuePairs: KeyValuePair[]
@@ -30,14 +32,7 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
     }
 
     componentDidMount() {
-        let keyValuePairs: KeyValuePair[] = []
-        let paramItems: string[] = this.props.PopupParams.split("|");
-        paramItems.forEach(y => {
-            let paramItem: string[] = y.split(":")
-            let keyValuePair: KeyValuePair = { Key: paramItem[0], Value: paramItem[1] }
-            keyValuePairs.push(keyValuePair);
-        })
-        this.setState({ KeyValuePairs: keyValuePairs })
+        this.props.onAboutInfoCreate();
     }
 
     render() {
@@ -48,23 +43,17 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
             { Content: "Value", Size: 6 },
         ]
 
-        let count = this.state.KeyValuePairs.length
-
-        let aboutItems = this.state.KeyValuePairs.map((x, index) => {
+        let aboutItems = this.props.AboutInfo.map((x, index) => {
             let rowColItems: IColItem[] = Helper.cloneObject(colItems)
             rowColItems[0].Content = x.Key
             rowColItems[1].Content = x.Value
             return <AdaptableObjectRow cssClassName={cssClassName} key={index} colItems={rowColItems} />
         })
 
+
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyNames.AboutStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.AboutGlyph}>
-                <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
-                    <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
-                    <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>
-                        {aboutItems}
-                    </div>
-                </div>
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={aboutItems} />
             </PanelWithImage>
         </div>
     }
@@ -73,11 +62,13 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
+        AboutInfo: state.About.AboutInfo,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
+        onAboutInfoCreate: () => dispatch(AboutRedux.AboutInfoCreate()),
     };
 }
 

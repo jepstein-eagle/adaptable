@@ -1,4 +1,4 @@
-import { IMenuItem } from '../Core/Interface/IMenu';
+import { IMenuItem } from './Interface/IMenu';
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 

@@ -1,5 +1,5 @@
 import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
-import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
+import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';

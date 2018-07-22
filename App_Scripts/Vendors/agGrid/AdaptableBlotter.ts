@@ -1239,12 +1239,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
     }
 
-    public getRowInfo(): any {
-        return this.gridOptions.api.getModel().getRowCount()
+    public getRowCount(): number {
+        return this.gridOptions.rowData? this.gridOptions.rowData.length: this.gridOptions.api.getDisplayedRowCount();
     }
 
-    public getColumnInfo(): any {
+    public getColumnCount(): number {
         return this.gridOptions.columnApi.getAllColumns().length;
+    }
+
+    public getVisibleRowCount(): number {
+        return this.gridOptions.api.getDisplayedRowCount();
+    }
+    
+    public getVisibleColumnCount(): number {
+        return this.gridOptions.columnApi.getAllColumns().filter(c=>c.isVisible()).length;
     }
 
     public selectColumn(columnId: string) {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from './../../Wizard/Interface/IAdaptableWizard'
+import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
@@ -49,7 +49,8 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
         this.props.Data.ColumnId = this.state.ColumnId;
     }
 
-    public Back(): void { }
+    public Back(): void {  //todo
+    }
     public GetIndexStepIncrement(){
         return 1;
     }

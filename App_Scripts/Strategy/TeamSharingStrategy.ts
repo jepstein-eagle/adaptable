@@ -1,4 +1,4 @@
-import { ITeamSharingStrategy } from '../Strategy/Interface/ITeamSharingStrategy';
+import { ITeamSharingStrategy } from './Interface/ITeamSharingStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
