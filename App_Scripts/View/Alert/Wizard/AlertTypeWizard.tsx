@@ -66,7 +66,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
         return this.state.AlertType != null
     }
 
-    public canBack(): boolean { return false; }
+    public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.AlertType = this.state.AlertType;
     }

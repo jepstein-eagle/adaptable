@@ -53,8 +53,8 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         let cssClassName: string = this.props.cssClassName + "__Alert";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Alert";
 
-        let infoBody: any[] = ["Alerts 1", <br />, <br />,
-            "Alerts 2."]
+        let infoBody: any[] = ["Alert Definitions define which changes to the source data will trigger an Alert.", <br />, <br />,
+            "The Alert will appear either as a popup or in the alerts container."]
 
         let colItems: IColItem[] = [
             { Content: "Alert", Size: 4 },
@@ -100,8 +100,8 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
                 {AlertItems.length == 0 &&
                     <Well bsSize="small">
-                        <HelpBlock>Click 'New' to start creating alerts.</HelpBlock>
-                        <HelpBlock>The alert will appear whenever an edit - or external data change - triggers the alert.</HelpBlock>
+                        <HelpBlock>Click 'New' to start creating alert definitions.</HelpBlock>
+                        <HelpBlock>The alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition.</HelpBlock>
                     </Well>
                 }
 

@@ -28,7 +28,7 @@ export class ValidationService implements IValidationService {
                     ColumnId: dataChangedEvent.ColumnId,
                     Range: null,
                     ActionMode: ActionMode.StopEdit,
-                    Description: "Primary Key Column cannot have duplicate values",
+                    Description: "Primary Key column cannot contain duplicate values",
                     Expression: ExpressionHelper.CreateEmptyExpression(),
                     IsReadOnly: true
                 }

@@ -39,7 +39,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
 
         let alertHeader: string = "Alert for Column: " + columnFriendlyName;
 
-        let helpText: string = "Choose whether to show alerts for all changes to this column, or whether only when the change matches a rule (to be set by you).";
+        let helpText: string = "Choose whether to show alerts for all changes to this column, or only when the change matches a rule (to be set by you).";
         let cssClassName: string = this.props.cssClassName + "-rules"
 
         return <div className={cssClassName}>
