@@ -66,7 +66,7 @@ export enum MathOperation {
 
 // Enums used in Strategies
 
-export enum CellValidationMode {
+export enum ActionMode {
     WarnUser = 'Warn User',
     StopEdit = 'Stop Edit'
 }

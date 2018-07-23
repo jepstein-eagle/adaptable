@@ -29,7 +29,7 @@ import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/Int
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
     CellValidations: ICellValidationRule[];
     onAddEditCellValidation: (Index: number, CellValidation: ICellValidationRule) => CellValidationRedux.CellValidationAddUpdateAction
-    onChangeCellValidationMode: (index: number, CellValidationMode: any) => CellValidationRedux.CellValidationChangeModeAction
+    onChangeActionMode: (index: number, ActionMode: any) => CellValidationRedux.CellValidationChangeModeAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -79,7 +79,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={CellValidationRedux.CellValidationDelete(index)}
-                onChangeCellValidationMode={(index, x) => this.onCellValidationModeChanged(index, x)}
+                onChangeActionMode={(index, x) => this.onActionModeChanged(index, x)}
             />
 
 
@@ -134,8 +134,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation), EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
     }
 
-    onCellValidationModeChanged(index: number, cellValidationMode: any) {
-        this.props.onChangeCellValidationMode(index, cellValidationMode);
+    onActionModeChanged(index: number, ActionMode: any) {
+        this.props.onChangeActionMode(index, ActionMode);
     }
 
     onCloseWizard() {
@@ -152,7 +152,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     canFinishWizard() {
         let cellValidationRule = this.state.EditedAdaptableBlotterObject as ICellValidationRule
         return StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
-        (!cellValidationRule.HasExpression || ExpressionHelper.IsNotEmptyOrInvalidExpression( cellValidationRule.OtherExpression)) &&
+        ( ExpressionHelper.IsEmptyOrValidExpression( cellValidationRule.Expression)) &&
         StringExtensions.IsNotNullOrEmpty(cellValidationRule.Description)
     }
 }
@@ -166,7 +166,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onChangeCellValidationMode: (index: number, CellValidationMode: any) => dispatch(CellValidationRedux.CellValidationChangeMode(index, CellValidationMode)),
+        onChangeActionMode: (index: number, ActionMode: any) => dispatch(CellValidationRedux.CellValidationChangeMode(index, ActionMode)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
     };
 }

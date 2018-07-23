@@ -1,8 +1,6 @@
 import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
-import { Helper } from '../../Core/Helpers/Helper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { Visibility } from '../../Core/Enums';
 
@@ -86,6 +84,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SmartEditStrategyId,
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
+        StrategyIds.AlertStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -93,6 +92,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
+        StrategyIds.AlertStrategyId,
        // StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
     ],
@@ -112,8 +112,7 @@ const initialDashboardState: DashboardState = {
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
     let index: number;
     let dashboardControls: string[]
-    let dashboardControl: string
-
+   
     switch (action.type) {
         case DASHBOARD_SET_AVAILABLE_TOOLBARS:
             return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyIds })

@@ -345,6 +345,13 @@ export module ExpressionHelper {
         return IsNotEmptyExpression(expression) && IsExpressionValid(expression)
     }
 
+    export function IsEmptyOrValidExpression(expression: Expression): boolean {
+        if(IsEmptyExpression(expression)) {
+            return true;
+        }
+        return  IsExpressionValid(expression)
+    }
+
     export function IsExpressionValid(expression: Expression): boolean {
         //nothing to check for ColumnValues. 
         //we check that all ranges are properly populated

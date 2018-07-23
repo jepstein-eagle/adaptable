@@ -8,7 +8,7 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
 import { Helper } from '../Core/Helpers/Helper';
-import { DataType, CellValidationMode } from '../Core/Enums'
+import { DataType, ActionMode } from '../Core/Enums'
 import { MathOperation } from '../Core/Enums'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -88,8 +88,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
-                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.StopEdit;
-                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].CellValidationMode == CellValidationMode.WarnUser;
+                let hasErrorPrevent: boolean = validationRules.length > 0 && validationRules[0].ActionMode == ActionMode.StopEdit;
+                let hasErrorWarning: boolean = validationRules.length > 0 && validationRules[0].ActionMode == ActionMode.WarnUser;
 
                 //   this.AuditFunctionAction("HandleKeyDown",                     "Key Pressed: " + keyEventString,                     { Shortcut: activeShortcut, PrimaryKey: activeCell.Id, ColumnId: activeCell.ColumnId })
 

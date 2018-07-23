@@ -41,6 +41,8 @@ import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
 import { SelectedCellsPopup } from './SelectedCells/SelectedCellsPopup';
 import { SelectedCellsToolbarControl } from './SelectedCells/SelectedCellsToolbarControl';
+import { AlertPopup } from './Alert/AlertPopup';
+import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   CustomSortPopup: CustomSortPopup,
@@ -70,6 +72,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   TeamSharingPopup: TeamSharingPopup,
   ColumnFilterPopup: ColumnFilterPopup,
   AboutPopup: AboutPopup,
+  AlertPopup: AlertPopup,
   ApplicationPopup: ApplicationPopup,
   BulkUpdatePopup: BulkUpdatePopup,
   SelectedCellsPopup: SelectedCellsPopup,
@@ -87,6 +90,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyIds.SmartEditStrategyId, SmartEditToolbarControl],
   [StrategyIds.SelectedCellsStrategyId, SelectedCellsToolbarControl],
+  [StrategyIds.AlertStrategyId, AlertToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([

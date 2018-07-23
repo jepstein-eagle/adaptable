@@ -5,6 +5,7 @@ export interface AdaptableBlotterState {
     Popup: AdaptableBlotterStates.PopupState;
     Menu: AdaptableBlotterStates.MenuState;
     About: AdaptableBlotterStates.AboutState;
+    Alert: AdaptableBlotterStates.AlertState;
     SmartEdit: AdaptableBlotterStates.SmartEditState;
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
     CustomSort: AdaptableBlotterStates.CustomSortState;

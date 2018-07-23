@@ -1,13 +1,11 @@
-import { MathOperation, LeafExpressionOperator, DisplayAction, Visibility } from '../../../Core/Enums'
 import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus } from '../../../Core/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
-import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 import { KeyValuePair } from '../../../View/UIInterfaces';
 
@@ -40,6 +38,7 @@ export interface PopupState {
 export interface AboutState {
     AboutInfo: KeyValuePair[]
 }
+
 
 export interface TeamSharingState {
     Activated: boolean
@@ -122,6 +121,10 @@ export interface ThemeState {
 predefined and user config and editable by users - includes Adaptable Blotter objects 
 */
 
+
+export interface AlertState {
+    AlertDefinitions: IAlertDefinition[]
+}
 
 export interface AdvancedSearchState {
     AdvancedSearches: IAdvancedSearch[];

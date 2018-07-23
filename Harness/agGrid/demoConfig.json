@@ -1,7 +1,7 @@
 {
 	"Entitlements": {
 		"FunctionEntitlements": [
-				{
+			{
 				"FunctionName": "QuickSearch",
 				"AccessLevel": "ReadOnly"
 			},
@@ -15,16 +15,36 @@
 			}
 		]
 	},
+	"UserInterface": {
+		"PermittedColumnValues": [
+			{
+				"ColumnId": "country",
+				"PermittedValues": [
+					"France",
+					"Russia",
+					"Israel"
+				]
+			},
+			{
+				"ColumnId": "currency",
+				"PermittedValues": [
+					"EUR",
+					"USD",
+					"NIS"
+				]
+			}
+		]
+	},
 	"Dashboard": {
 		"VisibleToolbars": [
 			"Export",
-			"QuickSearch",	
+			"QuickSearch",
 			"SmartEdit"
 		],
 		"VisibleButtons": [
 			"About",
 			"Dashboard",
-			"QuickSearch",	
+			"QuickSearch",
 			"SmartEdit",
 			"ColumnChooser",
 			"BulkUpdate"

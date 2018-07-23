@@ -6,7 +6,8 @@ import { IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 export const COLOR_PALETTE_SET = 'COLOR_PALETTE_SET';
 export const COLOR_PALETTE_ADD = 'COLOR_PALETTE_ADD';
 export const STYLE_CLASSNAMES_ADD = 'STYLE_CLASSNAMES_ADD';
-export const PERMITTED_COLUMNVALUES_ADD = 'PERMITTED_COLUMNVALUES_ADD';
+//export const PERMITTED_COLUMNVALUES_ADD = 'PERMITTED_COLUMNVALUES_ADD';
+export const PERMITTED_COLUMNVALUES_SET = 'PERMITTED_COLUMNVALUES_SET';
 
 export interface ColorPaletteSetAction extends Redux.Action {
     ColorPalette: string[]
@@ -20,8 +21,12 @@ export interface StyleClassNameAddAction extends Redux.Action {
     StyleClassNames: string[]
 }
 
-export interface PermittedColumnValuesAddAction extends Redux.Action {
+export interface PermittedColumnValuesSetAction extends Redux.Action {
     PermittedColumnValues: IPermittedColumnValues
+}
+
+export interface PermittedColumnValuesAddAction extends Redux.Action {
+    ColumnValues: string[]
 }
 
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
@@ -39,10 +44,15 @@ export const StyleClassNamesAdd = (StyleClassNames: string[]): StyleClassNameAdd
     StyleClassNames
 })
 
-export const PermittedColumnValuesAdd = (PermittedColumnValues: IPermittedColumnValues): PermittedColumnValuesAddAction => ({
-    type: PERMITTED_COLUMNVALUES_ADD,
+export const PermittedColumnValuesSet = (PermittedColumnValues: IPermittedColumnValues): PermittedColumnValuesSetAction => ({
+    type: PERMITTED_COLUMNVALUES_SET,
     PermittedColumnValues
 })
+
+//export const PermittedColumnValuesAdd = (ColumnValues: string[]): PermittedColumnValuesAddAction => ({
+//    type: PERMITTED_COLUMNVALUES_ADD,
+//    ColumnValues
+//})
 
 const initialUserInterfaceState: UserInterfaceState = {
     ColorPalette: [
@@ -76,6 +86,7 @@ const initialUserInterfaceState: UserInterfaceState = {
 }
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (state: UserInterfaceState = initialUserInterfaceState, action: Redux.Action): UserInterfaceState => {
+    let permittedColumnValues: IPermittedColumnValues[]
     switch (action.type) {
         case COLOR_PALETTE_SET:
             return Object.assign({}, state, { ColorPalette: (<ColorPaletteSetAction>action).ColorPalette })
@@ -93,10 +104,15 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (sta
                 existingStyleNames.push(sc)
             })
             return Object.assign({}, state, { StyleClassNames: existingStyleNames })
-        case PERMITTED_COLUMNVALUES_ADD:
-            let actionTypedAddColumnValues = (<PermittedColumnValuesAddAction>action)
-            let permittedColumnValues = [].concat(state.PermittedColumnValues)
-            permittedColumnValues.push(actionTypedAddColumnValues.PermittedColumnValues);
+        case PERMITTED_COLUMNVALUES_SET:
+            let actionTypedAddColumnValues = (<PermittedColumnValuesSetAction>action)
+            permittedColumnValues = [].concat(state.PermittedColumnValues)
+            let existingPermittedColumnValues: IPermittedColumnValues = permittedColumnValues.find(pcv => pcv.ColumnId == actionTypedAddColumnValues.PermittedColumnValues.ColumnId)
+            if (existingPermittedColumnValues) {
+                existingPermittedColumnValues.PermittedValues = actionTypedAddColumnValues.PermittedColumnValues.PermittedValues
+            } else {
+                permittedColumnValues.push(actionTypedAddColumnValues.PermittedColumnValues);
+            }
             return Object.assign({}, state, {
                 PermittedColumnValues: permittedColumnValues
             });

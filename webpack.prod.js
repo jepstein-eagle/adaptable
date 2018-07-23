@@ -1,5 +1,6 @@
 ﻿var webpack = require('webpack');
 var failPlugin = require('webpack-fail-plugin');
+var Promise = require('es6-promise').Promise;
 
 module.exports = {
     entry: {
@@ -30,6 +31,9 @@ module.exports = {
         failPlugin,
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new webpack.ProvidePlugin({ 
+            Promise: 'es6-promise-promise', // works as expected 
         }),
     ],
     module: {

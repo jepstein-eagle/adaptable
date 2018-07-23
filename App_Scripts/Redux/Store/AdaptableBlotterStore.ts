@@ -12,6 +12,7 @@ import filter from 'redux-storage-decorator-filter'
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as AboutRedux from '../ActionsReducers/AboutRedux'
+import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as BulkUpdateRedux from '../ActionsReducers/BulkUpdateRedux'
 import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
@@ -71,6 +72,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
     About: AboutRedux.AboutReducer,
+    Alert: AlertRedux.AlertReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,

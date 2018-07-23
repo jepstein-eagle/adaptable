@@ -29,11 +29,11 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
 
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Mode", Value: this.props.Data.CellValidationMode },
+            { Key: "Mode", Value: this.props.Data.ActionMode },
             { Key: "Rule", Value: this.props.Data.Description },
             {
-                Key: "Query", Value: this.props.Data.HasExpression ?
-                    ExpressionHelper.ConvertExpressionToString(this.props.Data.OtherExpression, this.props.Columns, this.props.UserFilters) :
+                Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression( this.props.Data.Expression) ?
+                    ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) :
                     "None"
             }
         ]
@@ -58,7 +58,7 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
         return 1;
     }
     public GetIndexStepDecrement() {
-        return this.props.Data.HasExpression ? 1 : 2;
+        return ExpressionHelper.IsEmptyExpression( this.props.Data.Expression )? 2 : 1;
     }
     public StepName = this.props.StepName
 }

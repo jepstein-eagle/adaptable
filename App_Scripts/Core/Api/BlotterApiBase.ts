@@ -24,7 +24,7 @@ import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedu
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
-import { IEntitlement, ISystemStatus } from "../Interface/Interfaces";
+import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour, ExportDestination } from "../Enums";
 import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
@@ -194,6 +194,11 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public uiAddStyleClassNames(styleClassNames: string[]): void {
         this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames))
+    }
+
+    public uiSetColumnPermittedValues(column:string, permittedValues: string[]): void{
+        let permittedColumnValues: IPermittedColumnValues={ColumnId: column, PermittedValues: permittedValues}
+        this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues))
     }
 
 

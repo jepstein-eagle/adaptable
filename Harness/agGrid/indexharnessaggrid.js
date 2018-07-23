@@ -4,7 +4,7 @@ var quickSearchText
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
-    let trades = dataGen.getTrades(15000);
+    let trades = dataGen.getTrades(100);
 
     // Create a GridOptions object.  This is used to create the ag-Grid
     // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -16,8 +16,8 @@ function InitTradeBlotter() {
         enableFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
-        pagination: true,
-        paginationPageSize: 100,
+        //    pagination: true,
+        //    paginationPageSize: 100,
         columnTypes: {                  // not required but helpful for column data type identification
             "abColDefNumber": {},
             "abColDefString": {},
@@ -36,11 +36,11 @@ function InitTradeBlotter() {
     let adaptableBlotterOptions = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
-        blotterId: "Trades Blotter",              // id for blotter 
+        blotterId: "demo blotter",              // id for blotter 
         enableAuditLog: true,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
       //  predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
-        serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
+        //  serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -52,14 +52,14 @@ function InitTradeBlotter() {
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer); });
-   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState()); });
-  //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
+    //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 }
 
 function getTradeSchema() {
     var schema = []
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: false, filter: 'text', type: "abColDefNumber", sortable: false });
+    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber", sortable: false });
     schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber"], enableValue: true });
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: true });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
@@ -90,10 +90,14 @@ function getTradeSchema() {
 }
 
 
-function apiTester(state) {
+function apiTester(state, gridOptions) {
     if (state.QuickSearch.QuickSearchText != quickSearchText) {
         quickSearchText = state.QuickSearch.QuickSearchText
-        if (quickSearchText == "#send") {
+        if (quickSearchText == "#permies") {
+            adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
+         }else if (quickSearchText == "#permiex") {
+            adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth'])
+        } else if (quickSearchText == "#send") {
             adaptableblotter.api.exportSendReport('All Data', 'CSV')
         } else if (quickSearchText == "#info") {
             adaptableblotter.api.alertShow("Hello", "Your data is fine", "Info")
@@ -107,6 +111,16 @@ function apiTester(state) {
             adaptableblotter.api.systemStatusSetAmber("The server is running slowly")
         } else if (quickSearchText == "#red") {
             adaptableblotter.api.systemStatusSetRed("The server has stopped ")
+        } else if (quickSearchText == "#notional") {
+            gridOptions.api.forEachNode((rowNode, index) => {
+                if (rowNode.group) {
+                    return;
+                }
+                let rowTradeId = gridOptions.api.getValue("tradeId", rowNode);
+                if (rowTradeId != 4) { return; }
+                let trade = rowNode;
+                trade.setDataValue("notional", 1234)
+            });
         }
     }
 }
@@ -119,7 +133,7 @@ function getTradesForSearch(searchArgs, dataGen) {
 
     let jsonstring = JSON.stringify(searchArgs)
     console.log(jsonstring)
-    
+
     //alert(searchArgs.SearchChangedTrigger)
     if (searchChangedInfo.searchChangedTrigger == "DataSource") {
         if (searchArgs.BlotterSearchState.DataSource == "Eurssso") {
@@ -262,7 +276,9 @@ function currencyRendereragGrid(params) {
 }
 
 
-function ThemeChange(theme, container) {
+function ThemeChange(theme, container, gridOptions) {
+  
+
     if (themeName != theme.CurrentTheme) {
         themeName = theme.CurrentTheme
         if (themeName == "Dark Theme") {

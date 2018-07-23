@@ -19,7 +19,7 @@ export interface CellValidationWizardProps extends IAdaptableBlotterObjectExpres
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Column", "Choose Action", "Create Rules", "Add Query", "Summary"]
+        let stepNames: string[] = ["Select Column", "Choose Action", "Create Rule", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyNames.CellValidationStrategyName}

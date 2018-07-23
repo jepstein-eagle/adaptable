@@ -54,7 +54,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                     <StrategyDetail
                         cssClassName={this.props.cssClassName}
                         key={"CV" + index}
-                        Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.CellValidationMode)}
+                        Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
                         Item2={item.Description}
                         ConfigEnity={item}
                         EntityName={StrategyNames.CellValidationStrategyName}

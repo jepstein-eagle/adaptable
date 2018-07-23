@@ -1,31 +1,28 @@
 import * as React from "react";
-import { Helper } from '../../Core/Helpers/Helper';
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
-import { CellValidationMode } from "../../Core/Enums";
+import { ActionMode } from "../../Core/Enums";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
     Column: IColumn
-    onChangeCellValidationMode: (index: number, CellValidationMode: CellValidationMode) => void
+    onChangeActionMode: (index: number, ActionMode: ActionMode) => void
 }
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
     render(): any {
         let cellValidation: ICellValidationRule = this.props.AdaptableBlotterObject as ICellValidationRule;
 
-        let CellValidationModeTypes = EnumExtensions.getNames(CellValidationMode).map((validationMode) => {
+        let ActionModeTypes = EnumExtensions.getNames(ActionMode).map((validationMode) => {
             return <option style={{ fontSize: "5px" }} key={validationMode} value={validationMode}>{validationMode}</option>
         })
 
@@ -34,8 +31,8 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         colItems[0].Content = this.getColumnandRule(cellValidation)
         colItems[1].Content = this.setExpressionDescription(cellValidation)
         colItems[2].Content =
-            <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={cellValidation.CellValidationMode} onChange={(x) => this.onCellValidationModeChanged(this.props.Index, x)} >
-                {CellValidationModeTypes}
+            <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={cellValidation.ActionMode} onChange={(x) => this.onActionModeChanged(this.props.Index, x)} >
+                {ActionModeTypes}
             </FormControl>
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
@@ -54,8 +51,8 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
 
     setExpressionDescription(CellValidation: ICellValidationRule): string {
-        return (CellValidation.HasExpression) ?
-            ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
+        return (ExpressionHelper.IsNotEmptyExpression( CellValidation.Expression )) ?
+            ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns, this.props.UserFilters) :
             "No Expression";
     }
 
@@ -65,10 +62,10 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         return columnInfo
     }
 
-    onCellValidationModeChanged(index: number, event: React.FormEvent<any>) {
+    onActionModeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let returnValue: any = (e.value == 'Stop Edit') ? 'Stop Edit' : 'Warn User';
-        this.props.onChangeCellValidationMode(index, returnValue);
+        this.props.onChangeActionMode(index, returnValue);
     }
 }
 

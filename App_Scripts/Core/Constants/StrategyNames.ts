@@ -1,6 +1,7 @@
 import * as StrategyIds from './StrategyIds';
 
 export const AboutStrategyName: string = "About"
+export const AlertStrategyName: string = "Alert"
 export const ApplicationStrategyName: string = "Application"
 export const AdvancedSearchStrategyName: string = "Advanced Search"
 export const BulkUpdateStrategyName: string = "Bulk Update"

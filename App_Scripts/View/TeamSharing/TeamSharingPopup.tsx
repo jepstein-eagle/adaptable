@@ -115,8 +115,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         {cellVal.Description}
                     </Col>
                     <Col xs={4}>
-                        {(cellVal.HasExpression) ?
-                            ExpressionHelper.ConvertExpressionToString(cellVal.OtherExpression, this.props.Columns, this.props.UserFilters) :
+                        {(ExpressionHelper.IsNotEmptyExpression (cellVal.Expression) )?
+                            ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns, this.props.UserFilters) :
                             "No Expression"}
                     </Col>
                 </Row>

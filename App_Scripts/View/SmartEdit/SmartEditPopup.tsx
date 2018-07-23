@@ -114,8 +114,8 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
         let returnString: string[] = []
         for (let CellValidation of CellValidations) {
-            let expressionDescription: string = (CellValidation.HasExpression) ?
-                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, this.props.Columns, this.props.UserFilters) :
+            let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression( CellValidation.Expression)) ?
+                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns, this.props.UserFilters) :
                 "";
             returnString.push(CellValidation.Description + expressionDescription)
         }

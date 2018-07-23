@@ -6,6 +6,7 @@ import { ICellValidationRule } from "../../../Core/Api/Interface/AdaptableBlotte
 import { PopoverType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
+import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 
 export interface CellValidationSelectQueryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>
@@ -18,7 +19,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
     constructor(props: CellValidationSelectQueryWizardProps) {
         super(props)
         this.state = {
-            HasExpression: this.props.Data.HasExpression,
+            HasExpression: ExpressionHelper.IsNotEmptyExpression( this.props.Data.Expression),
         }
     }
 
@@ -58,7 +59,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
 
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.HasExpression = this.state.HasExpression;
+       // this.props.Data.HasExpression = this.state.HasExpression;
     }
 
     public Back(): void { /* no implementation */     }

@@ -1,7 +1,7 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle } from './Api/Interface/AdaptableBlotterObjects';
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType } from './Enums';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition } from './Api/Interface/AdaptableBlotterObjects';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, AlertType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { KeyValuePair } from '../View/UIInterfaces';
@@ -24,6 +24,23 @@ export module ObjectFactory {
             IsDefaultNudge: false,
             NudgeValue: 1,
             Expression: ExpressionHelper.CreateEmptyExpression(),
+            IsReadOnly: false
+        }
+    }
+
+    export function CreateEmptyAlertDefinition(): IAlertDefinition {
+        return {
+            ColumnId: "",
+            Range: {
+                Operator: LeafExpressionOperator.None,
+                Operand1: "",
+                Operand2: "",
+                Operand1Type: RangeOperandType.Column,
+                Operand2Type: RangeOperandType.Column,
+            },
+            Expression: ExpressionHelper.CreateEmptyExpression(),
+            Description: "",
+            AlertType: AlertType.Error,
             IsReadOnly: false
         }
     }
@@ -55,17 +72,16 @@ export module ObjectFactory {
 
     export function CreateEmptyCellValidation(): ICellValidationRule {
         return {
-            CellValidationMode: 'Stop Edit',
+            ActionMode: 'Stop Edit',
             ColumnId: "",
             Range: {
                 Operator: LeafExpressionOperator.None,
                 Operand1: "",
                 Operand2: "",
                 Operand1Type: RangeOperandType.Column,
-                Operand2Type:  RangeOperandType.Column,
+                Operand2Type: RangeOperandType.Column,
             },
-            HasExpression: false,
-            OtherExpression: ExpressionHelper.CreateEmptyExpression(),
+            Expression: ExpressionHelper.CreateEmptyExpression(),
             Description: "",
             IsReadOnly: false
         }
@@ -116,9 +132,9 @@ export module ObjectFactory {
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
-        let columnFriendlyName: string =  ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns) 
-        let expressionDescription: string = (CellValidation.HasExpression) ?
-            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.OtherExpression, columns, userFilters) :
+        let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
+        let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
+            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns, userFilters) :
             "";
         return (columnFriendlyName + ": " + CellValidation.Description + expressionDescription);
     }
@@ -143,7 +159,7 @@ export module ObjectFactory {
 
     export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], vendorGridInfo: KeyValuePair[], name: string): ILayout {
         return {
-            Columns: (columns)? columns.map(x => x.ColumnId): [],
+            Columns: (columns) ? columns.map(x => x.ColumnId) : [],
             GridSorts: gridSorts,
             Name: name,
             VendorGridInfo: vendorGridInfo,
@@ -153,11 +169,11 @@ export module ObjectFactory {
 
     export function CreateEmptyStyle(): IStyle {
         return {
-            BackColor: null, 
-            ForeColor: null, 
-            FontWeight: FontWeight.Normal, 
-            FontStyle: FontStyle.Normal, 
-            FontSize: null, 
+            BackColor: null,
+            ForeColor: null,
+            FontWeight: FontWeight.Normal,
+            FontStyle: FontStyle.Normal,
+            FontSize: null,
             ClassName: ""
         }
     }
@@ -165,11 +181,11 @@ export module ObjectFactory {
     export function CreateEmptySelectedCellSummmary(): ISelectedCellSummmary {
         return {
             Sum: null,
-            Average:  null,
-            Mode:  null,
-            Median:  null,
-            Distinct:  null,
-            Max:  null,
+            Average: null,
+            Mode: null,
+            Median: null,
+            Distinct: null,
+            Max: null,
             Min: null,
             Count: null,
             Only: null,

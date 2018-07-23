@@ -88,6 +88,8 @@ import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
+import { Alert } from 'react-bootstrap';
+import { AlertStrategy } from '../../Strategy/AlertStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -131,6 +133,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
+       // this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
@@ -1015,7 +1018,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
                 if (failedRules.length > 0) {
                     // first see if its an error = should only be one item in array if so
-                    if (failedRules[0].CellValidationMode == "Stop Edit") {
+                    if (failedRules[0].ActionMode == "Stop Edit") {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                         let error: IUIError = {
                             ErrorHeader: "Validation Error",
@@ -1098,7 +1101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
-            //https://github.com/jonathannaim/adaptableblotter/issues/118
+            //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
             let columnList = this.calculatedColumnPathMap.get(params.colDef.field);
             if (columnList) {
                 columnList.forEach(x => {

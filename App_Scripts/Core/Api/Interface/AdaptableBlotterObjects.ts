@@ -1,4 +1,4 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope } from '../../Enums';
+import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, AlertType } from '../../Enums';
 import { Expression } from '../Expression';
 
 
@@ -62,8 +62,15 @@ export interface IRange {
 
 
 
-
 // Core objects for Strategies
+export interface IAlertDefinition extends IAdaptableBlotterObject {
+    ColumnId: string;
+    Range: IRange,
+    Description: string;
+    Expression: Expression;
+    AlertType: AlertType
+  }
+
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
   Name: string,
   Expression: Expression,
@@ -89,10 +96,9 @@ export interface ICalendarEntry {
 export interface ICellValidationRule extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange,
-  CellValidationMode: 'Warn User' | 'Stop Edit';
+  ActionMode: 'Warn User' | 'Stop Edit';
   Description: string;
-  HasExpression: boolean;
-  OtherExpression: Expression;
+  Expression: Expression;
 }
 
 export interface IColumnFilter extends IAdaptableBlotterObject {
@@ -102,7 +108,7 @@ export interface IColumnFilter extends IAdaptableBlotterObject {
 
 export interface IConditionalStyle extends IAdaptableBlotterObject {
   ColumnId: string
-  ConditionalStyleScope: 'Column'| 'Row'
+  ConditionalStyleScope: 'Column' | 'Row'
   Expression: Expression
   Style: IStyle
 }
