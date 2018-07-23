@@ -1,3 +1,4 @@
+// constants used in dates and calendars
 export const TODAY = "Today"
 export const YESTERDAY = "Yesterday"
 export const TOMORROW = "Tomorrow"
