@@ -1,7 +1,7 @@
 import * as StrategyIds from './StrategyIds';
 
 export const AboutGlyph: string = "info-sign"
-export const AlertGlyph: string = "info-sign"
+export const AlertGlyph: string = "bullhorn"
 export const AdvancedSearchGlyph: string = "search"
 export const ApplicationGlyph: string = "font"
 export const BulkUpdateGlyph: string = "hand-up"

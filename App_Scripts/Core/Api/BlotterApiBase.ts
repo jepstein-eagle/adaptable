@@ -201,6 +201,10 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues))
     }
 
+    public uiClearColumnPermittedValues(column:string): void{
+        this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column))
+    }
+
 
     // filter api methods
     public filterSetColumnFilters(columnFilters: IColumnFilter[]): void {

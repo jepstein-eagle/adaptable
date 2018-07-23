@@ -8,6 +8,7 @@ export const COLOR_PALETTE_ADD = 'COLOR_PALETTE_ADD';
 export const STYLE_CLASSNAMES_ADD = 'STYLE_CLASSNAMES_ADD';
 //export const PERMITTED_COLUMNVALUES_ADD = 'PERMITTED_COLUMNVALUES_ADD';
 export const PERMITTED_COLUMNVALUES_SET = 'PERMITTED_COLUMNVALUES_SET';
+export const PERMITTED_COLUMNVALUES_DELETE = 'PERMITTED_COLUMNVALUES_DELETE';
 
 export interface ColorPaletteSetAction extends Redux.Action {
     ColorPalette: string[]
@@ -25,9 +26,11 @@ export interface PermittedColumnValuesSetAction extends Redux.Action {
     PermittedColumnValues: IPermittedColumnValues
 }
 
-export interface PermittedColumnValuesAddAction extends Redux.Action {
-    ColumnValues: string[]
+export interface PermittedColumnValuesDeleteAction extends Redux.Action {
+   Column: string
 }
+
+
 
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
     type: COLOR_PALETTE_SET,
@@ -47,6 +50,11 @@ export const StyleClassNamesAdd = (StyleClassNames: string[]): StyleClassNameAdd
 export const PermittedColumnValuesSet = (PermittedColumnValues: IPermittedColumnValues): PermittedColumnValuesSetAction => ({
     type: PERMITTED_COLUMNVALUES_SET,
     PermittedColumnValues
+})
+
+export const PermittedColumnValuesDelete = (Column: string): PermittedColumnValuesDeleteAction => ({
+    type: PERMITTED_COLUMNVALUES_DELETE,
+    Column
 })
 
 //export const PermittedColumnValuesAdd = (ColumnValues: string[]): PermittedColumnValuesAddAction => ({
@@ -105,14 +113,22 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (sta
             })
             return Object.assign({}, state, { StyleClassNames: existingStyleNames })
         case PERMITTED_COLUMNVALUES_SET:
-            let actionTypedAddColumnValues = (<PermittedColumnValuesSetAction>action)
+            let actionTypedSetColumnValues = (<PermittedColumnValuesSetAction>action)
             permittedColumnValues = [].concat(state.PermittedColumnValues)
-            let existingPermittedColumnValues: IPermittedColumnValues = permittedColumnValues.find(pcv => pcv.ColumnId == actionTypedAddColumnValues.PermittedColumnValues.ColumnId)
+            let existingPermittedColumnValues: IPermittedColumnValues = permittedColumnValues.find(pcv => pcv.ColumnId == actionTypedSetColumnValues.PermittedColumnValues.ColumnId)
             if (existingPermittedColumnValues) {
-                existingPermittedColumnValues.PermittedValues = actionTypedAddColumnValues.PermittedColumnValues.PermittedValues
+                existingPermittedColumnValues.PermittedValues = actionTypedSetColumnValues.PermittedColumnValues.PermittedValues
             } else {
-                permittedColumnValues.push(actionTypedAddColumnValues.PermittedColumnValues);
+                permittedColumnValues.push(actionTypedSetColumnValues.PermittedColumnValues);
             }
+            return Object.assign({}, state, {
+                PermittedColumnValues: permittedColumnValues
+            });
+        case PERMITTED_COLUMNVALUES_DELETE:
+            let actionTypedDeleteColumnValues = (<PermittedColumnValuesDeleteAction>action)
+            permittedColumnValues = [].concat(state.PermittedColumnValues)
+            let index: number = permittedColumnValues.findIndex(pcv => pcv.ColumnId == actionTypedDeleteColumnValues.Column)
+            permittedColumnValues.splice(index, 1);
             return Object.assign({}, state, {
                 PermittedColumnValues: permittedColumnValues
             });

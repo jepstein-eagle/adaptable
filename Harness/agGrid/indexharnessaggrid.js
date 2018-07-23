@@ -4,7 +4,7 @@ var quickSearchText
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
-    let trades = dataGen.getTrades(100);
+    let trades = dataGen.getTrades(12000);
 
     // Create a GridOptions object.  This is used to create the ag-Grid
     // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -37,9 +37,9 @@ function InitTradeBlotter() {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "demo blotter",              // id for blotter 
-        enableAuditLog: true,                  // not running audit log
+        enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-      //  predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
         //  serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -97,6 +97,8 @@ function apiTester(state, gridOptions) {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
          }else if (quickSearchText == "#permiex") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth'])
+         }else if (quickSearchText == "#clear") {
+            adaptableblotter.api.uiClearColumnPermittedValues('counterparty')
         } else if (quickSearchText == "#send") {
             adaptableblotter.api.exportSendReport('All Data', 'CSV')
         } else if (quickSearchText == "#info") {

@@ -112,6 +112,7 @@ export interface IBlotterApi {
     uiAddColorsToPalette(colorPalette: string[]): void
     uiAddStyleClassNames(styleClassNames: string[]): void
     uiSetColumnPermittedValues(column:string, permittedValues: string[]): void
+    uiClearColumnPermittedValues(column:string): void
 
     // filter api methods
     filterSetColumnFilters(columnFilters: IColumnFilter[]): void
