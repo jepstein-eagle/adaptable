@@ -1098,7 +1098,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
-            //https://github.com/jonathannaim/adaptableblotter/issues/118
+            //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
             let columnList = this.calculatedColumnPathMap.get(params.colDef.field);
             if (columnList) {
                 columnList.forEach(x => {

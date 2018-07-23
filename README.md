@@ -13,4 +13,4 @@ The Adaptable Blotter is free for development and evaluation use.  A free Commun
 
 Further information about AdaptableBlotter.JS, and full Help, is available at www.adaptabletools.com.  A list of features can be found at: https://tinyurl.com/ychndpef.  For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 
-[![Build Status](https://travis-ci.org/jonathannaim/adaptableblotter.svg?branch=master)](https://travis-ci.org/jonathannaim/adaptableblotter)
+[![Build Status](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter.svg?branch=master)](https://travis-ci.org/JonnyAdaptableTools/adaptableblotter)

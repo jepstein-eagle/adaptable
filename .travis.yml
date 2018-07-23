@@ -24,7 +24,7 @@ deploy:
    all_branches: true
 deploy:
     - provider: npm
-      email: jonathan.naim@gmail.com
+      email: jonny.wolfson@adaptabletools.com
       api_key: $NPM_TOKEN
       tag: beta
       skip_cleanup: true
