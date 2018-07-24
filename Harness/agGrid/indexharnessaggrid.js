@@ -47,7 +47,7 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-     //   getColumnValues: getValuesForColumn
+        getColumnValues: getValuesForColumn
 
     }
 
@@ -62,12 +62,20 @@ function InitTradeBlotter() {
 function getValuesForColumn(columnName) {
     let columnValues = []
     if (columnName == 'currency') {
-        columnValues.push("NIS")
-        columnValues.push("UKS")
+        columnValues.push("Currency1")
+        columnValues.push("Currency2")
+        columnValues.push("Currency3")
+        columnValues.push("Currency4")
+        columnValues.push("Currency5")
+        columnValues.push("Currency6")
     } else {
-        columnValues.push("America")
-        columnValues.push("China")
-        columnValues.push("India")
+        columnValues.push("Value1")
+        columnValues.push("Value2")
+        columnValues.push("Value3")
+        columnValues.push("Value4")
+        columnValues.push("Value5")
+        columnValues.push("Value6")
+        columnValues.push("Value7")
     }
     return columnValues
 }

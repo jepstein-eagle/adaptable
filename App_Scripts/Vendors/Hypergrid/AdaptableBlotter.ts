@@ -310,7 +310,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-   
+
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -652,29 +652,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
-
-        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
-        if (permittedValuesForColumn) {
-            permittedValuesForColumn.PermittedValues.forEach(pv => {
-                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+        if (this.BlotterOptions.getColumnValues != null) {
+            let columnValues: string[] = this.BlotterOptions.getColumnValues(columnId);
+            columnValues.forEach(cv => {
+                returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
             })
-        } else {
-            let column = this.getHypergridColumn(columnId);
-            //We bypass the whole DataSource stuff as we need to get ALL the data
-            let data = this.hyperGrid.behavior.dataModel.getData()
-            for (var index = 0; index < data.length; index++) {
-                var element = data[index]
-                let displayString = this.getDisplayValueFromRecord(element, columnId)
-                let rawValue = this.valOrFunc(element, column)
-                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
+        } else {  // check if there are permitted column values for that column
+            let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
+            let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+            if (permittedValuesForColumn) {
+                permittedValuesForColumn.PermittedValues.forEach(pv => {
+                    returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+                })
+            } else {
+                let column = this.getHypergridColumn(columnId);
+                //We bypass the whole DataSource stuff as we need to get ALL the data
+                let data = this.hyperGrid.behavior.dataModel.getData()
+                for (var index = 0; index < data.length; index++) {
+                    var element = data[index]
+                    let displayString = this.getDisplayValueFromRecord(element, columnId)
+                    let rawValue = this.valOrFunc(element, column)
+                    if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                    }
+                    else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                        returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                    }
+                    if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                        return Array.from(returnMap.values())
+                    }
                 }
             }
         }
