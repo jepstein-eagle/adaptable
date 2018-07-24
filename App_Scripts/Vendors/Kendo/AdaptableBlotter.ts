@@ -295,7 +295,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-
+   
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {

@@ -47,6 +47,7 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
+     //   getColumnValues: getValuesForColumn
 
     }
 
@@ -55,7 +56,23 @@ function InitTradeBlotter() {
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+   }
+
+// A function that takes two parameters, the last one a callback function
+function getValuesForColumn(columnName) {
+    let columnValues = []
+    if (columnName == 'currency') {
+        columnValues.push("NIS")
+        columnValues.push("UKS")
+    } else {
+        columnValues.push("America")
+        columnValues.push("China")
+        columnValues.push("India")
+    }
+    return columnValues
 }
+
+
 
 function getTradeSchema() {
     var schema = []
@@ -64,8 +81,8 @@ function getTradeSchema() {
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: true });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true, suppressFilter: true });
-    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text' });
+    schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text', suppressFilter: true });
 
     schema.push({ headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
     schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true });
@@ -95,9 +112,9 @@ function apiTester(state, gridOptions) {
         quickSearchText = state.QuickSearch.QuickSearchText
         if (quickSearchText == "#permies") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
-         }else if (quickSearchText == "#permiex") {
+        } else if (quickSearchText == "#permiex") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth'])
-         }else if (quickSearchText == "#clear") {
+        } else if (quickSearchText == "#clear") {
             adaptableblotter.api.uiClearColumnPermittedValues('counterparty')
         } else if (quickSearchText == "#send") {
             adaptableblotter.api.exportSendReport('All Data', 'CSV')
@@ -279,7 +296,7 @@ function currencyRendereragGrid(params) {
 
 
 function ThemeChange(theme, container, gridOptions) {
-  
+
 
     if (themeName != theme.CurrentTheme) {
         themeName = theme.CurrentTheme

@@ -160,7 +160,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
 
-
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onRefresh;

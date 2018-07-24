@@ -196,12 +196,12 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames))
     }
 
-    public uiSetColumnPermittedValues(column:string, permittedValues: string[]): void{
-        let permittedColumnValues: IPermittedColumnValues={ColumnId: column, PermittedValues: permittedValues}
+    public uiSetColumnPermittedValues(column: string, permittedValues: string[]): void {
+        let permittedColumnValues: IPermittedColumnValues = { ColumnId: column, PermittedValues: permittedValues }
         this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues))
     }
 
-    public uiClearColumnPermittedValues(column:string): void{
+    public uiClearColumnPermittedValues(column: string): void {
         this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column))
     }
 
@@ -486,5 +486,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
         }
         return true;
     }
+
 }
 
