@@ -84,9 +84,9 @@ export interface IAdaptableBlotterOptions {
         transport?: string;
         storage_prefix?: string;
     };
-   /**
-    * Callback function providing list of distinct column values
-    * Will be called each time a query is built or filter is opened
-    */
-    getDistinctColumnValues?: (column: string)=>string[];
+    /**
+     * Callback function providing list of distinct column values
+     * Will be called each time a query is built or filter is opened
+     */
+    getDistinctColumnValues?: (column: string) => string[];
 }
