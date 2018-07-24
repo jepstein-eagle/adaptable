@@ -84,5 +84,5 @@ export interface IAdaptableBlotterOptions {
         transport?: string;
         storage_prefix?: string;
     };
-    getColumnValues: (column: string)=>string[];
+    getDistinctColumnValues?: (column: string)=>string[];
 }

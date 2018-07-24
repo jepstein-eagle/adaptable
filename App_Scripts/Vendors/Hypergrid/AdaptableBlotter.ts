@@ -652,8 +652,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
-        if (this.BlotterOptions.getColumnValues != null) {
-            let columnValues: string[] = this.BlotterOptions.getColumnValues(columnId);
+        if (this.BlotterOptions.getDistinctColumnValues != null) {
+            let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
             columnValues.forEach(cv => {
                 returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
             })

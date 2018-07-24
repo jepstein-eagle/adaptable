@@ -679,8 +679,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
         // first see if the user is returning columnvalues themselves..
-        if (this.BlotterOptions.getColumnValues != null) {
-            let columnValues: string[] = this.BlotterOptions.getColumnValues(columnId);
+        if (this.BlotterOptions.getDistinctColumnValues != null) {
+            let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
             columnValues.forEach(cv => {
                 returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
             })
