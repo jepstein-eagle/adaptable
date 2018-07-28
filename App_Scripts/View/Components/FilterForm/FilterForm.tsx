@@ -3,7 +3,6 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
-import { FilterState } from '../../../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
@@ -14,26 +13,64 @@ import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { Expression } from "../../../Core/Api/Expression";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
+import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
-    Columns: IColumn[],
-    UserFilters: IUserFilter[],
-    SystemFilters: string[],
-    ColumnFilters: IColumnFilter[],
+    Columns: IColumn[];
+    UserFilters: IUserFilter[];
+    SystemFilters: string[];
+    ColumnFilters: IColumnFilter[];
+    BlotterOptions: IAdaptableBlotterOptions
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
-
 }
 
-class FilterFormComponent extends React.Component<FilterFormProps, {}> {
+export interface FilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
+    ColumnValuePairs: Array<IRawValueDisplayValuePair>
+    ShowWaitingMessage: boolean
+}
+
+class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
+    constructor(props: FilterFormProps) {
+        super(props);
+
+        this.state = {
+            ColumnValuePairs: [],
+            ShowWaitingMessage: false
+        };
+    }
+    componentWillMount() {
+        if (this.props.CurrentColumn.DataType != DataType.Boolean) {
+            let columnValuePairs: IRawValueDisplayValuePair[];
+            if (this.props.BlotterOptions.getDistinctColumnValues != null) {
+                this.setState({ ShowWaitingMessage: true });
+                this.props.BlotterOptions.getDistinctColumnValues(this.props.CurrentColumn.ColumnId).
+                    then(result => {
+                        let returnMap: Map<string, IRawValueDisplayValuePair> = new Map<string, IRawValueDisplayValuePair>();
+                        result.forEach(pv => {
+                            returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+                        })
+
+                        columnValuePairs = Array.from(returnMap.values()).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                        this.setState({ ColumnValuePairs: sortColumnValuePairs(columnValuePairs), ShowWaitingMessage: false });
+                    }, function (error) {
+                        //    this.setState({ name: error });
+                    });
+            }
+            else {
+                columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                sortColumnValuePairs(columnValuePairs);
+                this.setState({ ColumnValuePairs: sortColumnValuePairs(columnValuePairs) });
+            }
+        }
+    }
 
     render(): any {
         let cssClassName: string = StyleConstants.FILTER_FORM
@@ -42,16 +79,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf))
             ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
         let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf } })
-
-        let columnValuePairs: Array<IRawValueDisplayValuePair>
-        // get the values for the column and then sort by raw value
-        columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue);
-        columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-
-        // for boolean columns dont show any column values as we already have true/false from user filters
-        if (this.props.CurrentColumn.DataType == DataType.Boolean) {
-            columnValuePairs = [];
-        }
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues: string[] = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
@@ -86,22 +113,28 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
         />
 
 
-        return <PanelWithTwoButtons cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" buttonOne={clearButton} buttonTwo={closeButton}>
-            <ListBoxFilterForm cssClassName={cssClassName}
-                CurrentColumn={this.props.CurrentColumn}
-                Columns={this.props.Columns}
-                ColumnValues={columnValuePairs}
-                DataType={this.props.CurrentColumn.DataType}
-                UiSelectedColumnValues={uiSelectedColumnValues}
-                UiSelectedUserFilters={uiSelectedUserFilters}
-                UiSelectedRange={uiSelectedRangeExpression}
-                UserFilters={appropriateFilterItems}
-                onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
-                onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
-                Operators={leafExpressionOperators}
-                onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
-            </ListBoxFilterForm>
-        </PanelWithTwoButtons>
+        return <div>
+            <PanelWithTwoButtons cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" buttonOne={clearButton} buttonTwo={closeButton}>
+             {this.state.ShowWaitingMessage ?
+                <div>Getting Column Values...</div>
+                :
+                <ListBoxFilterForm cssClassName={cssClassName}
+                    CurrentColumn={this.props.CurrentColumn}
+                    Columns={this.props.Columns}
+                    ColumnValues={this.state.ColumnValuePairs}
+                    DataType={this.props.CurrentColumn.DataType}
+                    UiSelectedColumnValues={uiSelectedColumnValues}
+                    UiSelectedUserFilters={uiSelectedUserFilters}
+                    UiSelectedRange={uiSelectedRangeExpression}
+                    UserFilters={appropriateFilterItems}
+                    onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
+                    onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
+                    Operators={leafExpressionOperators}
+                    onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
+                </ListBoxFilterForm>
+             }
+            </PanelWithTwoButtons>
+        </div>
     }
 
     getLeafExpressionOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
@@ -168,13 +201,18 @@ class FilterFormComponent extends React.Component<FilterFormProps, {}> {
 
 }
 
+function sortColumnValuePairs(columnValuePairs: IRawValueDisplayValuePair[]): IRawValueDisplayValuePair[] {
+    return Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+}
+
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
         ColumnFilters: state.Filter.ColumnFilters,
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters
+        SystemFilters: state.Filter.SystemFilters,
+        BlotterOptions: ownProps.Blotter.BlotterOptions
     };
 }
 

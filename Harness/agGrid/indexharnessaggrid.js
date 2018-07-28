@@ -63,24 +63,17 @@ function InitTradeBlotter() {
 
 function retrieveValues(columnName) {
 
-    return new Promise ((resolve, reject)=> {
-       
-        setTimeout(() => resolve(getValuesForColumn(columnName)), 5000);
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(getValuesForColumn(columnName)), 1500);
     });
 }
 
 function getValuesForColumn(columnName) {
     let columnValues = []
-    if (columnName == 'currency') {
-        columnValues.push("Currency1")
-        columnValues.push("Currency2")
-        columnValues.push("Currency3")
-    } else { // returning nonsense
-        columnValues.push("Value1")
-        columnValues.push("Value2")
-        columnValues.push("Value3")
+    var i;
+    for (i = 1; i < 10; i++) {
+        columnValues.push(columnName + " item " + i)
     }
-    alert(columnValues)
     return columnValues
 }
 

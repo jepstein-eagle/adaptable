@@ -229,7 +229,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    
+
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
@@ -678,36 +678,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
-        // first see if the user is returning columnvalues themselves..
-        if (this.BlotterOptions.getDistinctColumnValues != null) {
-       //     let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
-       //     columnValues.forEach(cv => {
-      //          returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
-     //       })
-        } else {  // check if there are permitted column values for that column
-            let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-            let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
-            if (permittedValuesForColumn) {
-                permittedValuesForColumn.PermittedValues.forEach(pv => {
-                    returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-                })
-            } else { // get the distinct values for the column from the grid
-                //we use forEachNode as we want to get all data even the one filtered out...
-                let data = this.gridOptions.api.forEachNode(rowNode => {
-                    //we do not return the values of the aggregates when in grouping mode
-                    //otherwise they wxould appear in the filter dropdown etc....
-                    if (!rowNode.group) {
-                        let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
-                        let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-                        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                            returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-                        }
-                        else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                            returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                        }
+        // check if there are permitted column values for that column
+        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+            })
+        } else { // get the distinct values for the column from the grid
+            //we use forEachNode as we want to get all data even the one filtered out...
+            let data = this.gridOptions.api.forEachNode(rowNode => {
+                //we do not return the values of the aggregates when in grouping mode
+                //otherwise they wxould appear in the filter dropdown etc....
+                if (!rowNode.group) {
+                    let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
+                    let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+                    if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
                     }
-                })
-            }
+                    else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                        returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                    }
+                }
+            })
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
     }
