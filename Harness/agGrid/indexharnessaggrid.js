@@ -39,7 +39,7 @@ function InitTradeBlotter() {
         blotterId: "demo blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        predefinedConfig: "demoConfig.json",  // "demoConfig.json",    // passing in predefined config with a file    
+        // predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         //  serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -47,8 +47,7 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-        getDistinctColumnValues: getValuesForColumn
-
+        getDistinctColumnValues: retrieveValues
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
@@ -56,27 +55,32 @@ function InitTradeBlotter() {
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-   }
+}
 
-// A function that takes two parameters, the last one a callback function
+
+
+
+
+function retrieveValues(columnName) {
+
+    return new Promise ((resolve, reject)=> {
+       
+        setTimeout(() => resolve(getValuesForColumn(columnName)), 5000);
+    });
+}
+
 function getValuesForColumn(columnName) {
     let columnValues = []
     if (columnName == 'currency') {
         columnValues.push("Currency1")
         columnValues.push("Currency2")
         columnValues.push("Currency3")
-        columnValues.push("Currency4")
-        columnValues.push("Currency5")
-        columnValues.push("Currency6")
-    } else {
+    } else { // returning nonsense
         columnValues.push("Value1")
         columnValues.push("Value2")
         columnValues.push("Value3")
-        columnValues.push("Value4")
-        columnValues.push("Value5")
-        columnValues.push("Value6")
-        columnValues.push("Value7")
     }
+    alert(columnValues)
     return columnValues
 }
 
@@ -120,6 +124,12 @@ function apiTester(state, gridOptions) {
         quickSearchText = state.QuickSearch.QuickSearchText
         if (quickSearchText == "#permies") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
+        } else if (quickSearchText == "#systemfilters") {
+            adaptableblotter.api.filterClearSystemFilters()
+        } else if (quickSearchText == "#miguel") {
+            setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues("deskId", ["5555555", "8888888"]), 20000);
+        } else if (quickSearchText == "#allsf") {
+            let thisxx = adaptableblotter.api.filterGetAllSystemFilters()
         } else if (quickSearchText == "#permiex") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth'])
         } else if (quickSearchText == "#clear") {
@@ -320,16 +330,8 @@ function ThemeChange(theme, container, gridOptions) {
 }
 
 let tradeJson = {
-    "Layout": {
-        "IncludeVendorState": true
-    },
-    "Dashboard": {
-        "VisibleToolbars": [
-            "AdvancedSearch",
-            "Layout",
-            "QuickSearch"
-        ],
-        "ShowSystemStatusButton": true
+    "Filter": {
+        "SystemFilters": ["Zero", "Positive", "Negative"]
     }
 }
 

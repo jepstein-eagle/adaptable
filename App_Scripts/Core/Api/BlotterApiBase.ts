@@ -33,6 +33,7 @@ import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableSto
 import { Action } from "redux";
 import { ExportApplyAction } from "../../Redux/ActionsReducers/ExportRedux";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
+import { FilterHelper } from "../Helpers/FilterHelper";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -90,6 +91,19 @@ export abstract class BlotterApiBase implements IBlotterApi {
     public dashboardSetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
         this.dispatchAction(DashboardRedux.DashboardSetVisibility(dashboardVisibility as Visibility))
     }
+
+    public dashboardShow(): void {
+        this.dashboardSetVisibility(Visibility.Visible);
+    }
+
+    public dashboardHide(): void {
+        this.dashboardSetVisibility(Visibility.Hidden);
+    }
+
+    public dashboardMinimise(): void {
+        this.dashboardSetVisibility(Visibility.Minimised);
+    }
+
 
     // Quick Search api methods
     public quickSearchRun(quickSearchText: string): void {
@@ -164,6 +178,12 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(ShortcutRedux.ShortcutDelete(shortcut))
     }
 
+    public shortcutDeleteAll(): void {
+        this.shortcutGetAll().forEach(s => {
+            this.shortcutDelete(s);
+        })
+    }
+
 
     // SmartEdit api methods
     public smartEditSetMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
@@ -223,6 +243,18 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(FilterRedux.SystemFilterSet(systemFilters));
     }
 
+    public filterClearSystemFilters(): void {
+        this.dispatchAction(FilterRedux.SystemFilterSet([]));
+    }
+
+    public filterGetCurrentSystemFilters(): string[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters;
+    }
+
+    public filterGetAllSystemFilters(): string[] {
+        return FilterHelper.GetAllSystemFilters();
+    }
+
 
     // Data Source api methods
     public dataSourceSet(dataSourceName: string): void {
@@ -263,7 +295,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete))
     }
 
-    public advancedSearchSelectCurrent(): IAdvancedSearch {
+    public advancedSearchGetCurrent(): IAdvancedSearch {
         let currentAdvancedSearchName: string = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
         return this.advancedSearchGetByName(currentAdvancedSearchName)
     }
@@ -374,6 +406,12 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public formatColumnDelete(formatColumn: IFormatColumn): void {
         this.dispatchAction(FormatColumnRedux.FormatColumnDelete(formatColumn))
+    }
+
+    public formatColumnDeleteAll(): void {
+        this.formatColumnGetAll().forEach(fc => {
+            this.formatColumnDelete(fc);
+        })
     }
 
     // General Config

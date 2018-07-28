@@ -15,6 +15,9 @@
 			}
 		]
 	},
+	"Filter": {
+		"SystemFilters": ["Zero"]
+	},
 	"UserInterface": {
 		"PermittedColumnValues": [
 			{
@@ -22,7 +25,8 @@
 				"PermittedValues": [
 					"France",
 					"Russia",
-					"Israel"
+					"Israel",
+					"Test"
 				]
 			},
 			{

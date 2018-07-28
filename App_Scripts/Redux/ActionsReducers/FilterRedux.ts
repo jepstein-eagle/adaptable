@@ -80,23 +80,7 @@ const initialFilterState:
     FilterState = {
         ColumnFilters: [],
         UserFilters: [],
-        SystemFilters: [
-            FilterHelper.BLANKS_SYSTEM_FILTER,
-            FilterHelper.NON_BLANKS_SYSTEM_FILTER,
-            FilterHelper.TODAY_SYSTEM_FILTER,
-            FilterHelper.IN_PAST_SYSTEM_FILTER,
-            FilterHelper.IN_FUTURE_SYSTEM_FILTER,
-            FilterHelper.YESTERDAY_SYSTEM_FILTER,
-            FilterHelper.TOMORROW_SYSTEM_FILTER,
-            FilterHelper.NEXT_WORKING_DAY_SYSTEM_FILTER,
-            FilterHelper.PREVIOUS_WORKING_DAY_SYSTEM_FILTER,
-            FilterHelper.THIS_YEAR_SYSTEM_FILTER,
-            FilterHelper.POSITIVE_SYSTEM_FILTER,
-            FilterHelper.NEGATIVE_SYSTEM_FILTER,
-            FilterHelper.ZERO_SYSTEM_FILTER,
-            FilterHelper.TRUE_SYSTEM_FILTER,
-            FilterHelper.FALSE_SYSTEM_FILTER
-        ]
+        SystemFilters: FilterHelper.GetAllSystemFilters()
     }
 
 export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = initialFilterState, action: Redux.Action): FilterState => {

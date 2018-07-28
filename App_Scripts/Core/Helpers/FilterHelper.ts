@@ -31,6 +31,25 @@ export module FilterHelper {
     export const TRUE_SYSTEM_FILTER = 'True'
     export const FALSE_SYSTEM_FILTER = 'False'
 
+export function GetAllSystemFilters():string[]{
+    return  [
+        BLANKS_SYSTEM_FILTER,
+        NON_BLANKS_SYSTEM_FILTER,
+        TODAY_SYSTEM_FILTER,
+        IN_PAST_SYSTEM_FILTER,
+        IN_FUTURE_SYSTEM_FILTER,
+        YESTERDAY_SYSTEM_FILTER,
+        TOMORROW_SYSTEM_FILTER,
+        NEXT_WORKING_DAY_SYSTEM_FILTER,
+        PREVIOUS_WORKING_DAY_SYSTEM_FILTER,
+        THIS_YEAR_SYSTEM_FILTER,
+        POSITIVE_SYSTEM_FILTER,
+        NEGATIVE_SYSTEM_FILTER,
+        ZERO_SYSTEM_FILTER,
+        TRUE_SYSTEM_FILTER,
+        FALSE_SYSTEM_FILTER
+    ]
+}
 
     export function GetUserFilters(userFilters: IUserFilter[], userFilterNames: string[]): IUserFilter[] {
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null)
