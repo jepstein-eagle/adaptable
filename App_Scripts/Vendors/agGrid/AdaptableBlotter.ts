@@ -680,10 +680,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // first see if the user is returning columnvalues themselves..
         if (this.BlotterOptions.getDistinctColumnValues != null) {
-            let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
-            columnValues.forEach(cv => {
-                returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
-            })
+       //     let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
+       //     columnValues.forEach(cv => {
+      //          returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
+     //       })
         } else {  // check if there are permitted column values for that column
             let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
             let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);

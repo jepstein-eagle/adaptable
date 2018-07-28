@@ -653,10 +653,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         if (this.BlotterOptions.getDistinctColumnValues != null) {
-            let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
-            columnValues.forEach(cv => {
-                returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
-            })
+     //       let columnValues: string[] = this.BlotterOptions.getDistinctColumnValues(columnId);
+     //       columnValues.forEach(cv => {
+     //           returnMap.set(cv, { RawValue: cv, DisplayValue: cv });
+     //       })
         } else {  // check if there are permitted column values for that column
             let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
             let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
