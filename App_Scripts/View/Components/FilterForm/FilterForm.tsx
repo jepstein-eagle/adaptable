@@ -19,6 +19,8 @@ import { Expression } from "../../../Core/Api/Expression";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { Glyphicon } from 'react-bootstrap';
+import { Waiting } from "./Waiting";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -115,24 +117,24 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         return <div>
             <PanelWithTwoButtons cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" buttonOne={clearButton} buttonTwo={closeButton}>
-             {this.state.ShowWaitingMessage ?
-                <div>Getting Column Values...</div>
-                :
-                <ListBoxFilterForm cssClassName={cssClassName}
-                    CurrentColumn={this.props.CurrentColumn}
-                    Columns={this.props.Columns}
-                    ColumnValues={this.state.ColumnValuePairs}
-                    DataType={this.props.CurrentColumn.DataType}
-                    UiSelectedColumnValues={uiSelectedColumnValues}
-                    UiSelectedUserFilters={uiSelectedUserFilters}
-                    UiSelectedRange={uiSelectedRangeExpression}
-                    UserFilters={appropriateFilterItems}
-                    onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
-                    onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
-                    Operators={leafExpressionOperators}
-                    onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
-                </ListBoxFilterForm>
-             }
+                {this.state.ShowWaitingMessage ?
+                    <Waiting WaitingMessage="Retrieving Column Values..." />
+                    :
+                    <ListBoxFilterForm cssClassName={cssClassName}
+                        CurrentColumn={this.props.CurrentColumn}
+                        Columns={this.props.Columns}
+                        ColumnValues={this.state.ColumnValuePairs}
+                        DataType={this.props.CurrentColumn.DataType}
+                        UiSelectedColumnValues={uiSelectedColumnValues}
+                        UiSelectedUserFilters={uiSelectedUserFilters}
+                        UiSelectedRange={uiSelectedRangeExpression}
+                        UserFilters={appropriateFilterItems}
+                        onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
+                        onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
+                        Operators={leafExpressionOperators}
+                        onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
+                    </ListBoxFilterForm>
+                }
             </PanelWithTwoButtons>
         </div>
     }

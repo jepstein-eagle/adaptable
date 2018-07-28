@@ -57,12 +57,7 @@ function InitTradeBlotter() {
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
 }
 
-
-
-
-
 function retrieveValues(columnName) {
-
     return new Promise((resolve, reject) => {
         setTimeout(() => resolve(getValuesForColumn(columnName)), 1500);
     });
@@ -76,8 +71,6 @@ function getValuesForColumn(columnName) {
     }
     return columnValues
 }
-
-
 
 function getTradeSchema() {
     var schema = []
