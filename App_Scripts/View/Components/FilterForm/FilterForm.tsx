@@ -53,9 +53,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
             let columnValuePairs: IRawValueDisplayValuePair[] = [];
-            if (this.props.BlotterOptions.getDistinctColumnValues != null) {
+            if (this.props.BlotterOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.BlotterOptions.getDistinctColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)

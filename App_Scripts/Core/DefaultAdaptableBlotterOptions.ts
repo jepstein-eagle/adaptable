@@ -15,5 +15,5 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     adaptableBlotterContainer: "adaptableBlotter",
     vendorContainer: "grid",
     includeVendorStateInLayouts: false,
-    getDistinctColumnValues: null
+    getColumnValues: null
 }
