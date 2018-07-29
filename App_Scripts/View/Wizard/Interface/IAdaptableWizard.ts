@@ -3,6 +3,8 @@ import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
+import { BlotterApi } from '../../../Vendors/agGrid/BlotterApi';
+import { IBlotterApi } from '../../../Core/Api/Interface/IBlotterApi';
 
 export interface AdaptableWizardStep {
     StepName: string
@@ -28,6 +30,7 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
     SystemFilters: string[],
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     BlotterOptions: IAdaptableBlotterOptions
+    BlotterApi: IBlotterApi
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
@@ -37,6 +40,7 @@ export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> ext
     SystemFilters: string[]
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     BlotterOptions: IAdaptableBlotterOptions
+    BlotterApi: IBlotterApi
 }
 
 // props for a basic wizard

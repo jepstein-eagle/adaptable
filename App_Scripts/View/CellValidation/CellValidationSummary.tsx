@@ -76,6 +76,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                     ConfigEntities={null}
                     BlotterOptions={this.props.BlotterOptions}
+                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}

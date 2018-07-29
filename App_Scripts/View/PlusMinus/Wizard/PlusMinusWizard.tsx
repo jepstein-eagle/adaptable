@@ -33,7 +33,8 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
                         SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         BlotterOptions={this.props.BlotterOptions}
-                    />,
+                        BlotterApi={this.props.BlotterApi}
+                        />,
                     < PlusMinusSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
 
                     ]}

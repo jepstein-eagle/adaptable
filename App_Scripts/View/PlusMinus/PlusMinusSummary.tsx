@@ -78,6 +78,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                     ConfigEntities={null}
                     BlotterOptions={this.props.BlotterOptions}
+                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     SelectedColumnId={this.props.SummarisedColumn.ColumnId}

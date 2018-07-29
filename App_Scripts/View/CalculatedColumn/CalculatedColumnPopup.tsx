@@ -109,6 +109,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                         Columns={this.props.Columns}
                         ModalContainer={this.props.ModalContainer}
                         BlotterOptions={this.props.BlotterOptions}
+                        BlotterApi={this.props.BlotterApi}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}

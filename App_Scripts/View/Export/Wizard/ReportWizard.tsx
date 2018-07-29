@@ -27,7 +27,8 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
                         SystemFilters={this.props.SystemFilters}
                         getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                         BlotterOptions={this.props.BlotterOptions}
-                    />,
+                        BlotterApi={this.props.BlotterApi}
+                        />,
                     <ReportSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Reports={this.props.ConfigEntities as IReport[]} />,
                     < ReportSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
                 ]}

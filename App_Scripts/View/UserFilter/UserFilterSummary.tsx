@@ -79,6 +79,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                 EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                     ConfigEntities={null}
                     BlotterOptions={this.props.BlotterOptions}
+                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}

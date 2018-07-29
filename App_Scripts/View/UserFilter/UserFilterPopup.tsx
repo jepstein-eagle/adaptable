@@ -121,6 +121,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                         Columns={this.props.Columns}
                         ConfigEntities={null}
                         BlotterOptions={this.props.BlotterOptions}
+                        BlotterApi={this.props.BlotterApi}
                         ModalContainer={this.props.ModalContainer}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}

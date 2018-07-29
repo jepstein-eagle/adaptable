@@ -76,6 +76,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IAlertDefinition}
                     ConfigEntities={null}
                     BlotterOptions={this.props.BlotterOptions}
+                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}

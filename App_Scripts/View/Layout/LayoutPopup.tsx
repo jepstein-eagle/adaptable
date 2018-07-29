@@ -115,6 +115,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
                         ConfigEntities={this.props.Layouts}
                         BlotterOptions={this.props.BlotterOptions}
+                        BlotterApi={this.props.BlotterApi}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}

@@ -110,6 +110,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
                         ConfigEntities={null}
                         BlotterOptions={this.props.BlotterOptions}
+                        BlotterApi={this.props.BlotterApi}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}

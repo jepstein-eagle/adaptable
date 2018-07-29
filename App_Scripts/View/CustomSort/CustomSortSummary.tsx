@@ -85,6 +85,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
                     ConfigEntities={this.props.CustomSorts}
                     BlotterOptions={this.props.BlotterOptions}
+                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}

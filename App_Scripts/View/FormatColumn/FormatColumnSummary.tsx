@@ -80,6 +80,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                     cssClassName={cssWizardClassName}
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
                     BlotterOptions={this.props.BlotterOptions}
+                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     ConfigEntities={this.props.FormatColumns}

@@ -14,6 +14,7 @@ import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { IBlotterApi } from "../../Core/Api/Interface/IBlotterApi";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
@@ -26,6 +27,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     StepName?: string
     cssClassName: string
     BlotterOptions: IAdaptableBlotterOptions
+    BlotterApi: IBlotterApi
 
 }
 
@@ -68,6 +70,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                             SelectedTab={this.state.SelectedTab}
                             getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                             BlotterOptions={this.props.BlotterOptions}
+                            BlotterApi ={this.props.BlotterApi}
                         >
                         </ExpressionBuilderConditionSelector>
                     </Col>
