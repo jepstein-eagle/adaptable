@@ -214,7 +214,7 @@ function InitBlotter() {
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
         getDistinctColumnValues: retrieveValues,
-        maxColumnValueItemsDisplayed: 100
+        maxColumnValueItemsDisplayed: 1000
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
@@ -231,9 +231,14 @@ function retrieveValues(columnName) {
 }
 
 function getValuesForColumn(columnName) {
+    var random_boolean = Math.random() >= 0.5;
+    if(random_boolean){
+        return null
+    }
     let columnValues = []
     var i;
-    for (i = 1; i < 200; i++) {
+    columnValues.push(new Date().toTimeString())
+    for (i = 1; i < 2000; i++) {
         columnValues.push(columnName + " item " + i)
     }
     return columnValues

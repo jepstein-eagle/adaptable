@@ -64,9 +64,14 @@ function retrieveValues(columnName) {
 }
 
 function getValuesForColumn(columnName) {
+    var random_boolean = Math.random() >= 0.5;
+    if(random_boolean){
+        return null
+    }
     let columnValues = []
     var i;
-    for (i = 1; i < 10; i++) {
+    columnValues.push(new Date().toTimeString())
+    for (i = 1; i < 2000; i++) {
         columnValues.push(columnName + " item " + i)
     }
     return columnValues

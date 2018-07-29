@@ -19,9 +19,9 @@ import { Expression } from "../../../Core/Api/Expression";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { Glyphicon } from 'react-bootstrap';
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -30,6 +30,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     SystemFilters: string[];
     ColumnFilters: IColumnFilter[];
     BlotterOptions: IAdaptableBlotterOptions
+    BlotterApi:IBlotterApi
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
@@ -51,18 +52,25 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-            let columnValuePairs: IRawValueDisplayValuePair[]=[];
+            let columnValuePairs: IRawValueDisplayValuePair[] = [];
             if (this.props.BlotterOptions.getDistinctColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
                 this.props.BlotterOptions.getDistinctColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
-                        // get the distnct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions.RetrieveDistinct(result)
-                        distinctItems = Array.from(distinctItems.values()).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
-                        distinctItems.forEach(di => {
-                            columnValuePairs.push({ RawValue: di, DisplayValue: di });
-                        })
-                        this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
+                        if (result == null) { // if nothing returned then default to normal
+                            columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                            columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
+                        } else { // get the distinct items and make sure within max items that can be displayed
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result)
+                            distinctItems = Array.from(distinctItems.values()).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                            distinctItems.forEach(di => {
+                                columnValuePairs.push({ RawValue: di, DisplayValue: di });
+                            })
+                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
+                            // set the UIPermittedValues for this column to what has been sent
+                            this.props.BlotterApi.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
+                        }
                     }, function (error) {
                         //    this.setState({ name: error });
                     });
@@ -70,7 +78,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             else {
                 columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                 columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                this.setState({ ColumnValuePairs: columnValuePairs });
+                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
             }
         }
     }
@@ -211,7 +219,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
-        BlotterOptions: ownProps.Blotter.BlotterOptions
+        BlotterOptions: ownProps.Blotter.BlotterOptions,
+        BlotterApi: ownProps.Blotter.api,
     };
 }
 
