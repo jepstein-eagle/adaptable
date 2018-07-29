@@ -213,7 +213,8 @@ function InitBlotter() {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-        getDistinctColumnValues: getValuesForColumn
+        getDistinctColumnValues: retrieveValues,
+        maxColumnValueItemsDisplayed: 100
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
@@ -223,24 +224,17 @@ function InitBlotter() {
     vendorGrid.addProperties(lightTheme);
 }
 
-// A function that takes two parameters, the last one a callback function
+function retrieveValues(columnName) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve(getValuesForColumn(columnName)), 1500);
+    });
+}
+
 function getValuesForColumn(columnName) {
     let columnValues = []
-    if (columnName == 'currency') {
-        columnValues.push("Currency1")
-        columnValues.push("Currency2")
-        columnValues.push("Currency3")
-        columnValues.push("Currency4")
-        columnValues.push("Currency5")
-        columnValues.push("Currency6")
-    } else {
-        columnValues.push("Value1")
-        columnValues.push("Value2")
-        columnValues.push("Value3")
-        columnValues.push("Value4")
-        columnValues.push("Value5")
-        columnValues.push("Value6")
-        columnValues.push("Value7")
+    var i;
+    for (i = 1; i < 200; i++) {
+        columnValues.push(columnName + " item " + i)
     }
     return columnValues
 }

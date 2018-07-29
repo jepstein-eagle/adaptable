@@ -21,6 +21,7 @@ import { ButtonClear } from "../Buttons/ButtonClear";
 import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { Glyphicon } from 'react-bootstrap';
 import { Waiting } from "./Waiting";
+import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -50,26 +51,26 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-            let columnValuePairs: IRawValueDisplayValuePair[];
+            let columnValuePairs: IRawValueDisplayValuePair[]=[];
             if (this.props.BlotterOptions.getDistinctColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
                 this.props.BlotterOptions.getDistinctColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
-                        let returnMap: Map<string, IRawValueDisplayValuePair> = new Map<string, IRawValueDisplayValuePair>();
-                        result.forEach(pv => {
-                            returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+                        // get the distnct items and make sure within max items that can be displayed
+                        let distinctItems = ArrayExtensions.RetrieveDistinct(result)
+                        distinctItems = Array.from(distinctItems.values()).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                        distinctItems.forEach(di => {
+                            columnValuePairs.push({ RawValue: di, DisplayValue: di });
                         })
-
-                        columnValuePairs = Array.from(returnMap.values()).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
-                        this.setState({ ColumnValuePairs: sortColumnValuePairs(columnValuePairs), ShowWaitingMessage: false });
+                        this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                     }, function (error) {
                         //    this.setState({ name: error });
                     });
             }
             else {
                 columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
-                sortColumnValuePairs(columnValuePairs);
-                this.setState({ ColumnValuePairs: sortColumnValuePairs(columnValuePairs) });
+                columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+                this.setState({ ColumnValuePairs: columnValuePairs });
             }
         }
     }
@@ -201,10 +202,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         this.props.onHideFilterForm()
     }
 
-}
-
-function sortColumnValuePairs(columnValuePairs: IRawValueDisplayValuePair[]): IRawValueDisplayValuePair[] {
-    return Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

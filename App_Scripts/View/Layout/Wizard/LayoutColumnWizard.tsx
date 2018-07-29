@@ -3,7 +3,6 @@ import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";

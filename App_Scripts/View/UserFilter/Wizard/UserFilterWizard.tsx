@@ -1,6 +1,4 @@
-import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
 import { ExpressionMode } from '../../../Core/Enums'
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
@@ -8,7 +6,6 @@ import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 

@@ -658,6 +658,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (permittedValuesForColumn) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                    return Array.from(returnMap.values())
+                }
             })
         } else {
             let column = this.getHypergridColumn(columnId);
@@ -678,7 +681,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
         }
-        return Array.from(returnMap.values())//.slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values())
     }
 
     public getDisplayValue(id: any, columnId: string): string {

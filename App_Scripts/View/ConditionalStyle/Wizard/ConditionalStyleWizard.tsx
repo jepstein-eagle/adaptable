@@ -6,7 +6,6 @@ import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
 import * as StrategyNames from '../../../Core/Constants/StrategyNames'
-import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
