@@ -16,7 +16,7 @@ interface HomeButtonsPopupComponentProps extends StrategyViewPopupProps<HomeButt
     IsReadOnly: boolean,
     DashboardState: DashboardState,
     MenuState: MenuState,
-    onDashboardControlConfigChange: (strategyIds: string[]) => DashboardRedux.DashboardSetFunctionButtonsAction
+    onDashboardSetFunctionButtons: (strategyIds: string[]) => DashboardRedux.DashboardSetFunctionButtonsAction
 }
 
 class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponentProps, {}> {
@@ -47,7 +47,7 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
 
     ListChange(selectedValues: string[]) {
         let buttonNames = selectedValues.map(sv => StrategyIds.getIdForStrategyName(sv))
-        this.props.onDashboardControlConfigChange(buttonNames)
+        this.props.onDashboardSetFunctionButtons(buttonNames)
     }
 
 }
@@ -61,7 +61,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDashboardControlConfigChange: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetFunctionButtons(strategyIds))
+        onDashboardSetFunctionButtons: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetFunctionButtons(strategyIds))
     };
 }
 

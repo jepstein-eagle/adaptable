@@ -39,6 +39,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public canNext(): boolean { return (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)); }
     public canBack(): boolean { return true; }
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
+    // tslint:disable-next-line:no-empty
     public Back(): void { }
     public GetIndexStepIncrement(){
         return 1;

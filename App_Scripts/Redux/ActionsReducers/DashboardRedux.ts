@@ -5,7 +5,9 @@ import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { Visibility } from '../../Core/Enums';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
-const DASHBOARD_SET_TOOLBAR_VISIBILITY = 'DASHBOARD_SET_TOOLBAR_VISIBILITY';
+const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';
+const DASHBOARD_SHOW_TOOLBAR = 'DASHBOARD_SHOW_TOOLBAR';
+const DASHBOARD_HIDE_TOOLBAR = 'DASHBOARD_HIDE_TOOLBAR';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
 const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
@@ -15,7 +17,15 @@ export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
     StrategyIds: string[];
 }
 
-export interface DashboardSetToolbarVisibilityAction extends Redux.Action {
+export interface DashboardSetToolbarsAction extends Redux.Action {
+    StrategyIds: string[];
+}
+
+export interface DashboardShowToolbarAction extends Redux.Action {
+    StrategyId: string;
+}
+
+export interface DashboardHideToolbarAction extends Redux.Action {
     StrategyId: string;
 }
 
@@ -45,8 +55,18 @@ export const DashboardSetAvailableToolbars = (StrategyIds: string[]): DashboardS
     StrategyIds
 })
 
-export const DashboardSetToolbarVisibility = (StrategyId: string): DashboardSetToolbarVisibilityAction => ({
-    type: DASHBOARD_SET_TOOLBAR_VISIBILITY,
+export const DashboardSetToolbars = (StrategyIds: string[]): DashboardSetToolbarsAction => ({
+    type: DASHBOARD_SET_TOOLBARS,
+    StrategyIds
+})
+
+export const DashboardShowToolbar = (StrategyId: string): DashboardShowToolbarAction => ({
+    type: DASHBOARD_SHOW_TOOLBAR,
+    StrategyId
+})
+
+export const DashboardHideToolbar = (StrategyId: string): DashboardHideToolbarAction => ({
+    type: DASHBOARD_HIDE_TOOLBAR,
     StrategyId
 })
 
@@ -84,7 +104,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SmartEditStrategyId,
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
-    //    StrategyIds.AlertStrategyId,
+        //    StrategyIds.AlertStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -92,8 +112,8 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-      //  StrategyIds.AlertStrategyId,
-       // StrategyIds.SelectedCellsStrategyId,
+        //  StrategyIds.AlertStrategyId,
+        // StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
     ],
     VisibleButtons: [
@@ -112,21 +132,14 @@ const initialDashboardState: DashboardState = {
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
     let index: number;
     let dashboardControls: string[]
-   
+
     switch (action.type) {
         case DASHBOARD_SET_AVAILABLE_TOOLBARS:
             return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyIds })
-        case DASHBOARD_SET_TOOLBAR_VISIBILITY: {
-            let actionTypedVisibility = <DashboardSetToolbarVisibilityAction>action;
-            dashboardControls = [].concat(state.VisibleToolbars);
-            index = dashboardControls.findIndex(a => a == actionTypedVisibility.StrategyId)
-
-            if (index < 0) {  // doesnt exist so add it
-                dashboardControls.push(actionTypedVisibility.StrategyId)
-            } else {  // exists so delete it
-                dashboardControls.splice(index, 1)
-            }
-            return Object.assign({}, state, { VisibleToolbars: dashboardControls });
+        case DASHBOARD_SET_TOOLBARS: {
+            let actionTyped = <DashboardSetToolbarsAction>action;
+            let dashboardToolbars = actionTyped.StrategyIds
+            return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
         }
         case DASHBOARD_MOVE_ITEM: {
             let actionTyped = <DashboardMoveItemAction>action;
@@ -134,6 +147,19 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             index = dashboardControls.findIndex(a => a == actionTyped.StrategyId)
             ArrayExtensions.moveArray(dashboardControls, index, actionTyped.NewIndex)
             return Object.assign({}, state, { VisibleToolbars: dashboardControls });
+        }
+        case DASHBOARD_SHOW_TOOLBAR: {
+            let actionTyped = <DashboardShowToolbarAction>action;
+            let dashboardToolbars = [].concat(state.VisibleToolbars)
+            dashboardToolbars.push(actionTyped.StrategyId)
+            return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
+        }
+        case DASHBOARD_HIDE_TOOLBAR: {
+            let actionTyped = <DashboardHideToolbarAction>action;
+            let dashboardToolbars = [].concat(state.VisibleToolbars)
+            index = dashboardToolbars.findIndex(a => a == actionTyped.StrategyId)
+            dashboardToolbars.splice(index, 1);
+            return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
         }
         case DASHBOARD_SET_FUNCTION_BUTTONS: {
             let actionTyped = <DashboardSetFunctionButtonsAction>action;

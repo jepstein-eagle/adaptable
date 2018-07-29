@@ -51,7 +51,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onNewAlert: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AlertPopup, false, "New")),
         onEditAlert: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AlertPopup, false, "Edit")),
-        onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardSetToolbarVisibility(dashboardControl)),
+        onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.AlertPopup, isReadOnly))
     };
 }

@@ -73,11 +73,11 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public dashboardShowToolbar(visibleToolbar: string): void {
-        this.dispatchAction(DashboardRedux.DashboardSetToolbarVisibility(visibleToolbar))
+        this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar))
     }
 
     public dashboardHideToolbar(visibleToolbar: string): void {
-        this.dispatchAction(DashboardRedux.DashboardSetToolbarVisibility(visibleToolbar))
+        this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar))
     }
 
     public dashboardSetVisibleButtons(functionButtons: string[]): void {

@@ -14,6 +14,7 @@ export const ColumnInfoStrategyName: string = "Column Information"
 export const ConditionalStyleStrategyName: string = "Conditional Style"
 export const CustomSortStrategyName: string = "Custom Sort"
 export const DashboardStrategyName: string = "Dashboard"
+export const DataManagementStrategyName: string = "Manage State"
 export const DataSourceStrategyName: string = "Data Source"
 export const ExportStrategyName: string = "Export"
 export const FlashingCellsStrategyName: string = "Flashing Cells"
@@ -27,7 +28,6 @@ export const SelectedCellsStrategyName: string = "Selected Cells"
 export const SmartEditStrategyName: string = "Smart Edit"
 export const TeamSharingStrategyName: string = "Team Sharing"
 export const ThemeStrategyName: string = "Theme"
-export const DataManagementStrategyName: string = "Manage State"
 export const UserFilterStrategyName: string = "User Filter"
 
 
@@ -35,6 +35,8 @@ export function getNameForStrategy(strategyID: string) {
     switch (strategyID) {
         case StrategyIds.AboutStrategyId:
             return AboutStrategyName
+        case StrategyIds.AlertStrategyId:
+            return AlertStrategyName
         case StrategyIds.ApplicationStrategyId:
             return ApplicationStrategyName
         case StrategyIds.AdvancedSearchStrategyId:
@@ -51,18 +53,20 @@ export function getNameForStrategy(strategyID: string) {
             return ColumnChooserStrategyName
         case StrategyIds.ColumnInfoStrategyId:
             return ColumnInfoStrategyName
+        case StrategyIds.ColumnFilterStrategyId:
+            return ColumnFilterStrategyName
         case StrategyIds.ConditionalStyleStrategyId:
             return ConditionalStyleStrategyName
         case StrategyIds.CustomSortStrategyId:
             return CustomSortStrategyName
         case StrategyIds.DashboardStrategyId:
             return DashboardStrategyName
+        case StrategyIds.DataManagementStrategyId:
+            return DataManagementStrategyName
+        case StrategyIds.DataSourceStrategyId:
+            return DataSourceStrategyName
         case StrategyIds.ExportStrategyId:
             return ExportStrategyName
-        case StrategyIds.UserFilterStrategyId:
-            return UserFilterStrategyName
-        case StrategyIds.ColumnFilterStrategyId:
-            return ColumnFilterStrategyName
         case StrategyIds.FlashingCellsStrategyId:
             return FlashingCellsStrategyName
         case StrategyIds.FormatColumnStrategyId:
@@ -85,5 +89,8 @@ export function getNameForStrategy(strategyID: string) {
             return TeamSharingStrategyName
         case StrategyIds.ThemeStrategyId:
             return ThemeStrategyName
+        case StrategyIds.UserFilterStrategyId:
+            return UserFilterStrategyName
+
     }
 }
