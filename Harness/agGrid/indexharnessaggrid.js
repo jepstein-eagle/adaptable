@@ -48,7 +48,7 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
           getColumnValues: retrieveValues,
-        maxColumnValueItemsDisplayed: 2000
+        maxColumnValueItemsDisplayed: 5
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
@@ -65,7 +65,7 @@ function retrieveValues(columnName) {
 }
 
 function getValuesForColumn(columnName) {
-   return ['val a', 'val b', 'val c', 'val 3', 'val e', 'val f', 'val g', 'val h', 'val i'];
+   return ['val a', 'val b', 'val c', 'val 3', 'val a', 'val f', 'val a', 'val h', 'val i'];
   /*
    var random_boolean = Math.random() >= 0.5;
     if (random_boolean) {

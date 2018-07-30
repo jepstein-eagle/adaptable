@@ -62,8 +62,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                         } else { // get the distinct items and make sure within max items that can be displayed
-                            let distinctItems = ArrayExtensions.RetrieveDistinct(result)
-                            distinctItems = Array.from(distinctItems).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(di => {
                                 columnValuePairs.push({ RawValue: di, DisplayValue: di });
                             })
