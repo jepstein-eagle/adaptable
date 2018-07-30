@@ -8,6 +8,7 @@ export const BulkUpdateGlyph: string = "hand-up"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"
 export const CellValidationGlyph: string = "flag"
+export const ChartsGlyph: string = "signal"
 export const ColumnChooserGlyph: string = "list-alt"
 export const ColumnFilterGlyph: string = "filter"
 export const ColumnInfoGlyph: string = "stats"
@@ -47,6 +48,8 @@ export function getGhyphiconForStrategy(strategyID: string) {
             return CalendarGlyph
         case StrategyIds.CellValidationStrategyId:
             return CellValidationGlyph
+        case StrategyIds.ChartsStrategyId:
+            return ChartsGlyph
         case StrategyIds.ColumnChooserStrategyId:
             return ColumnChooserGlyph
         case StrategyIds.ColumnFilterStrategyId:

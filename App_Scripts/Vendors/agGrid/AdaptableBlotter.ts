@@ -134,8 +134,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
         this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
@@ -146,6 +146,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
         this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
@@ -157,11 +158,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
-
+        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+      
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load

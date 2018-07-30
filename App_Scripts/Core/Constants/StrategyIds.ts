@@ -8,6 +8,7 @@ export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
 export const CalendarStrategyId: string = "Calendar"
 export const CellValidationStrategyId: string = "CellValidation"
+export const ChartsStrategyId: string = "Charts"
 export const ColumnChooserStrategyId: string = "ColumnChooser"
 export const ColumnFilterStrategyId: string = "ColumnFilter"
 export const ColumnInfoStrategyId: string = "ColumnInfo"
@@ -48,6 +49,8 @@ export function getIdForStrategyName(strategyName: string) {
             return CalendarStrategyId
         case StrategyNames.CellValidationStrategyName:
             return CellValidationStrategyId
+        case StrategyNames.ChartsStrategyName:
+            return ChartsStrategyId
         case StrategyNames.ColumnChooserStrategyName:
             return ColumnChooserStrategyId
         case StrategyNames.ColumnInfoStrategyName:
