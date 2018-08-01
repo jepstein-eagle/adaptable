@@ -4,32 +4,34 @@ import * as Redux from 'redux';
 export interface AdaptableBlotterState {
     Popup: AdaptableBlotterStates.PopupState;
     Menu: AdaptableBlotterStates.MenuState;
-    About: AdaptableBlotterStates.AboutState;
-    Alert: AdaptableBlotterStates.AlertState;
-    SmartEdit: AdaptableBlotterStates.SmartEditState;
-    BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
-    CustomSort: AdaptableBlotterStates.CustomSortState;
-    Shortcut: AdaptableBlotterStates.ShortcutState;
     Grid: AdaptableBlotterStates.GridState;
-    PlusMinus: AdaptableBlotterStates.PlusMinusState;
-    ConditionalStyle: AdaptableBlotterStates.ConditionalStyleState;
-    Export: AdaptableBlotterStates.ExportState;
-    FlashingCell: AdaptableBlotterStates.FlashingCellState;
-    Calendar: AdaptableBlotterStates.CalendarState;
-    QuickSearch: AdaptableBlotterStates.QuickSearchState;
-    AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
-    DataSource: AdaptableBlotterStates.DataSourceState;
-    Filter: AdaptableBlotterStates.FilterState;
-     Theme: AdaptableBlotterStates.ThemeState;
-    CellValidation: AdaptableBlotterStates.CellValidationState;
-    Layout: AdaptableBlotterStates.LayoutState;
-    Dashboard: AdaptableBlotterStates.DashboardState;
     Entitlements: AdaptableBlotterStates.EntitlementsState;
-    CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
     UserInterface: AdaptableBlotterStates.UserInterfaceState;
-    TeamSharing: AdaptableBlotterStates.TeamSharingState;
+
+    About: AdaptableBlotterStates.AboutState;
+    AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
+    Alert: AdaptableBlotterStates.AlertState;
+    BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
+    CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
+    Calendar: AdaptableBlotterStates.CalendarState;
+    CellValidation: AdaptableBlotterStates.CellValidationState;
+    Charts: AdaptableBlotterStates.ChartsState;
+    ConditionalStyle: AdaptableBlotterStates.ConditionalStyleState;
+    CustomSort: AdaptableBlotterStates.CustomSortState;
+    Dashboard: AdaptableBlotterStates.DashboardState;
+    DataSource: AdaptableBlotterStates.DataSourceState;
+    Export: AdaptableBlotterStates.ExportState;
+    Filter: AdaptableBlotterStates.FilterState;
+    FlashingCell: AdaptableBlotterStates.FlashingCellState;
     FormatColumn: AdaptableBlotterStates.FormatColumnState;
+    Layout: AdaptableBlotterStates.LayoutState;
+    PlusMinus: AdaptableBlotterStates.PlusMinusState;
+    QuickSearch: AdaptableBlotterStates.QuickSearchState;
     SelectedCells: AdaptableBlotterStates.SelectedCellsState;
+    Shortcut: AdaptableBlotterStates.ShortcutState;
+    SmartEdit: AdaptableBlotterStates.SmartEditState;
+    TeamSharing: AdaptableBlotterStates.TeamSharingState;
+    Theme: AdaptableBlotterStates.ThemeState;
 }
 
 export interface IAdaptableBlotterStore {

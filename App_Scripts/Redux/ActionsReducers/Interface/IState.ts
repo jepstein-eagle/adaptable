@@ -189,3 +189,8 @@ export interface CalculatedColumnState {
 export interface FormatColumnState {
     FormatColumns: IFormatColumn[]
 }
+
+// need to think this through...
+export interface ChartsState {
+    Charts: string[]
+}
