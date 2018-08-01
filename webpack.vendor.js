@@ -5,8 +5,49 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        'abvendors': ['create-react-class', 'deep-diff', 'fin-hypergrid-data-source-base', 'isomorphic-fetch', 'lodash', 'mathjs', 'prop-types', 'react', 'react-bootstrap', 'react-bootstrap-sweetalert', 'react-bootstrap-typeahead', 'react-data-menu', 'react-dom', 'react-redux', 'redux', 'redux-devtools-extension', 'redux-storage', 'redux-storage-decorator-filter', 'redux-storage-decorator-migrate']
+        'abvendors':
+            [
+              //  'tslib',
+                'create-react-class',
+                'deep-diff',
+                'fin-hypergrid-data-source-base',
+                /*
+                'igniteui-react-charts/ES2015/igr-horizontal-anchored-category-series-proxy-module',
+                'igniteui-react-charts/ES2015/igr-line-series-module',
+                'igniteui-react-charts/ES2015/igr-line-series',
+                'igniteui-react-charts/ES2015/./igr-horizontal-anchored-category-series',
+                'igniteui-react-charts/ES2015/HorizontalAnchoredCategorySeriesProxy',
+                'igniteui-react-charts/ES2015/LineSeries',
+              'igniteui-react-core/ES2015/type',
+                'igniteui-react-core/ES2015/componentUtil',
+                  'igniteui-react-core/ES2015/Brush',
+                'igniteui-react-core/ES2015/Size',
+                'igniteui-react-core/ES2015/Rect',
+                'igniteui-react-core/ES2015/BrushCollection',
+                'igniteui-react-core/ES2015/string',
+                'igniteui-react-core/ES2015/componentUtil',
+                 //  'iferr',
+            */
+
+                'isomorphic-fetch',
+                'lodash',
+                'mathjs',
+                'prop-types',
+                'react',
+                'react-bootstrap',
+                'react-bootstrap-sweetalert',
+                'react-bootstrap-typeahead',
+                'react-data-menu',
+                'react-dom',
+                'react-redux',
+                'redux',
+                'redux-devtools-extension',
+                'redux-storage',
+                'redux-storage-decorator-filter',
+                'redux-storage-decorator-migrate'
+            ]
     },
+
     output: {
         filename: '[name].bundle.js',
         path: 'ExtLibs/ABVendorsDist/',
