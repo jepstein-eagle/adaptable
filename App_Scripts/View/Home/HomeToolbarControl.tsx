@@ -20,9 +20,9 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { Visibility, StatusColour } from "../../Core/Enums";
+import { Visibility, StatusColour, AlertType } from "../../Core/Enums";
 import { ISystemStatus } from "../../Core/Interface/Interfaces";
-import { IUIInfo, IUIError, IUIWarning } from "../../Core/Interface/IMessage";
+import { IAlert,  } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 
@@ -34,9 +34,8 @@ interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeTo
     HeaderText: string,
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
-    onShowStatusMessageGreen: (info: IUIInfo) => PopupRedux.PopupShowInfoAction
-    onShowStatusMessageAmber: (warning: IUIWarning) => PopupRedux.PopupHideWarningAction
-    onShowStatusMessageRed: (error: IUIError) => PopupRedux.PopupShowErrorAction
+    onShowStatusMessage: (alert: IAlert) => PopupRedux.PopupShowAlertAction
+  
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -133,27 +132,30 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
         switch (statusColor) {
             case StatusColour.Green:
-                let info: IUIInfo = {
-                    InfoHeader: "System Status",
-                    InfoMsg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
+                let info: IAlert = {
+                    Header: "System Status",
+                   Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
-                        "No issues"
+                        "No issues",
+                        AlertType: AlertType.Info
                 }
-                this.props.onShowStatusMessageGreen(info)
+                this.props.onShowStatusMessage(info)
                 return;
             case StatusColour.Amber:
-                let warning: IUIWarning = {
-                    WarningHeader: "System Status",
-                    WarningMsg: this.props.SystemStatus.StatusMessage
+                let warning: IAlert = {
+                    Header: "System Status",
+                    Msg: this.props.SystemStatus.StatusMessage,
+                    AlertType: AlertType.Info
                 }
-                this.props.onShowStatusMessageAmber(warning)
+                this.props.onShowStatusMessage(warning)
                 return;
             case StatusColour.Red:
-                let error: IUIError = {
-                    ErrorHeader: "System Status",
-                    ErrorMsg: this.props.SystemStatus.StatusMessage
+                let error: IAlert = {
+                    Header: "System Status",
+                    Msg: this.props.SystemStatus.StatusMessage,
+                    AlertType: AlertType.Info
                 }
-                this.props.onShowStatusMessageRed(error)
+                this.props.onShowStatusMessage(error)
                 return;
         }
 
@@ -213,10 +215,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.HomeButtonsPopup, isReadOnly)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
-        onShowStatusMessageGreen: (info: IUIInfo) => dispatch(PopupRedux.PopupShowInfo(info)),
-        onShowStatusMessageAmber: (warning: IUIWarning) => dispatch(PopupRedux.PopupShowWarning(warning)),
-        onShowStatusMessageRed: (error: IUIError) => dispatch(PopupRedux.PopupShowError(error)),
-    };
+        onShowStatusMessage: (alert: IAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
+     };
 }
 
 export const HomeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);

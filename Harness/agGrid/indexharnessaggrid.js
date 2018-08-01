@@ -4,7 +4,7 @@ var quickSearchText
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
-    let trades = dataGen.getTrades(12000);
+    let trades = dataGen.getTrades(1000);
 
     // Create a GridOptions object.  This is used to create the ag-Grid
     // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -47,8 +47,8 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-          getColumnValues: retrieveValues,
-        maxColumnValueItemsDisplayed: 5
+      //    getColumnValues: retrieveValues,
+      //  maxColumnValueItemsDisplayed: 5
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions

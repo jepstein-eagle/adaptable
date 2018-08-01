@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, DataType } from '../../Core/Enums';
+import { ExportDestination, MathOperation, DataType, AlertType } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -205,9 +205,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter,
             [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
             PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION,
-            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_CONFIRMATION, PopupRedux.POPUP_HIDE, PopupRedux.POPUP_HIDE_ERROR,
-            PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_HIDE_WARNING, PopupRedux.POPUP_SHOW, PopupRedux.POPUP_SHOW_ERROR,
-            PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_SHOW_WARNING]);
+            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_CONFIRMATION, PopupRedux.POPUP_HIDE, PopupRedux.POPUP_HIDE_ALERT,
+            PopupRedux.POPUP_HIDE_PROMPT,  PopupRedux.POPUP_SHOW, PopupRedux.POPUP_SHOW_ALERT,
+            PopupRedux.POPUP_SHOW_PROMPT]);
 
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
@@ -245,7 +245,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                         //for now i'm still initializing the AB even if loading state has failed.... 
                         //we may revisit that later
                         this.TheStore.dispatch(InitState())
-                        this.TheStore.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Configurtion", ErrorMsg: "Error loading your configuration:" + e }))
+                        this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configurtion", Msg: "Error loading your configuration:" + e, AlertType: AlertType.Error }))
                     })
     }
 }
@@ -379,10 +379,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Team Sharing Error", ErrorMsg: "Couldn't share item: " + xhr.statusText }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText,  AlertType: AlertType.Error }))
                             }
                             else {
-                                middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoHeader: "Team Sharing", InfoMsg: "Item Shared Successfully" }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", AlertType: AlertType.Info }))
                             }
                         }
                     }
@@ -538,11 +538,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     else if (importAction) {
                         middlewareAPI.dispatch(importAction)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowInfo({ InfoHeader: "Team Sharing", InfoMsg: "Item Successfully Imported" }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", AlertType: AlertType.Info }))
                     }
                     else {
                         AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowError({ ErrorHeader: "Team Sharing Error:", ErrorMsg: "Item not recognized. Cannot import" }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import" , AlertType: AlertType.Error}))
                     }
                     return returnAction;
                 }
@@ -729,13 +729,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
 
-                    if (apiReturn.Error) {
+                    if (apiReturn.Alert) {
                         // check if Smared is showing as popup and then close and show error (dont want to do that if from toolbar)
                         let popup = state.Popup.ScreenPopup;
                         if (popup.ComponentName == ScreenPopups.SmartEditPopup) {  //We close the SmartEditPopup
                             middlewareAPI.dispatch(PopupRedux.PopupHide());
-                            //We show the Error Popup
-                            middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                            //We show the alert Popup 
+                            middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
                         middlewareAPI.dispatch(SmartEditRedux.SmartEditSetValidSelection(false));
                     } else {
@@ -782,14 +782,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
 
-                    if (apiReturn.Error) {
+                    if (apiReturn.Alert) {
                         // check if BulkUpdate is showing as popup
                         let popup = state.Popup.ScreenPopup;
                         if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
                             //We close the BulkUpdatePopup
                             middlewareAPI.dispatch(PopupRedux.PopupHide());
-                            //We show the Error Popup
-                            middlewareAPI.dispatch(PopupRedux.PopupShowError(apiReturn.Error));
+                            //We show the Error Popup // assume that will alwasy be an Error
+                            middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
                         middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(false));
                     } else {

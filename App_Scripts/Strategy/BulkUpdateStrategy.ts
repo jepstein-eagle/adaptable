@@ -3,7 +3,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { MathOperation, DataType } from '../Core/Enums'
+import { MathOperation, DataType, AlertType } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
@@ -36,9 +36,10 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
-                Error: {
-                    ErrorHeader: "Bulk Update Error",
-                    ErrorMsg: "No cells are selected.\nPlease select some cells."
+                Alert: {
+                    Header: "Bulk Update Error",
+                   Msg: "No cells are selected.\nPlease select some cells.",
+                   AlertType: AlertType.Error
                 }
             }
         }
@@ -46,18 +47,20 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
         if (selectedCellInfo.Columns.length != 1) {
             return {
-                Error: {
-                    ErrorHeader: "Bulk Update Error",
-                    ErrorMsg: "Bulk Update only supports single column edit.\nPlease adjust cell selection."
+                Alert: {
+                    Header: "Bulk Update Error",
+                    Msg: "Bulk Update only supports single column edit.\nPlease adjust cell selection.",
+                    AlertType: AlertType.Error
                 }
             }
         }
 
         if (selectedCellInfo.Columns[0].ReadOnly) {
             return {
-                Error: {
-                    ErrorHeader: "Bulk Update Error",
-                    ErrorMsg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection."
+                Alert: {
+                    Header: "Bulk Update Error",
+                    Msg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    AlertType: AlertType.Error
                 }
             }
 

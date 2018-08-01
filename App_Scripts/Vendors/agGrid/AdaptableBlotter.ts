@@ -57,10 +57,10 @@ import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 // import other items
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { IEvent } from '../../Core/Interface/IEvent';
-import { IUIError, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { IAlert, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, VendorGridName } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, VendorGridName, AlertType } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
@@ -1020,11 +1020,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                        let error: IUIError = {
-                            ErrorHeader: "Validation Error",
-                            ErrorMsg: errorMessage
+                        let error: IAlert = {
+                            Header: "Validation Error",
+                            Msg: errorMessage,
+                            AlertType: AlertType.Error
                         };
-                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
                         return true;
                     }
                     else {

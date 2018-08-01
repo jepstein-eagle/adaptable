@@ -1,5 +1,5 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { ReportColumnScope, ReportRowScope } from '../Enums'
+import { ReportColumnScope, ReportRowScope, AlertType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
 import { IReport, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
@@ -60,7 +60,7 @@ export module ReportHelper {
 
                 if (selectedCells.Selection.size == 0) {
                     // some way of saying we cannot export anything
-                    return { ActionReturn: dataToExport, Error: {ErrorHeader:"Export Error", ErrorMsg: "No cells are selected" } };
+                    return { ActionReturn: dataToExport, Alert: {Header:"Export Error", Msg: "No cells are selected" , AlertType: AlertType.Error} };
                 }
 
                 // first get column names - just look at first entry as colnames will be same for each
@@ -111,11 +111,11 @@ export module ReportHelper {
                 for (var keyValuePair of selectedCells.Selection) {
                     let values: any[] = []
                     if (keyValuePair[1].length != colNames.length) {
-                        return { ActionReturn: [], Error: {ErrorHeader: "Report Error", ErrorMsg: "Selected cells report should have the same set of columns" } };
+                        return { ActionReturn: [], Alert: {Header: "Report Error", Msg: "Selected cells report should have the same set of columns" , AlertType: AlertType.Error} };
                     }
                     for (var cvPair of keyValuePair[1]) {
                         if (!colNames.find(x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName)) {
-                            return { ActionReturn: [], Error: { ErrorHeader: "Report Error", ErrorMsg: "Selected cells report should have the same set of columns" } };
+                            return { ActionReturn: [], Alert: { Header: "Report Error", Msg: "Selected cells report should have the same set of columns" , AlertType: AlertType.Error} };
                         }
                         //we want the displayValue now
                         values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));

@@ -16,7 +16,7 @@ export const DataSourceSelect = (SelectedDataSource: string): DataSourceSelectAc
 })
 
 const initialDataSourceState: DataSourceState = {
-    DataSources: [],
+    DataSources: ["Book 1", "Book 2", "Book 3", "Book 4"],
      CurrentDataSource: ""
 }
 

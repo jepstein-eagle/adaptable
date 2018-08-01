@@ -1,8 +1,8 @@
-import {  IUIError } from '../../Core/Interface/IMessage'
+import {  ErrorAlert, IAlert } from '../../Core/Interface/IMessage'
 
 
 export interface IStrategyActionReturn<T> {
     ActionReturn?: T,
-    Error?: IUIError
+    Alert?: IAlert
 }
 

@@ -21,7 +21,7 @@ import { IAdaptableBlotterObject, IAlertDefinition } from "../../Core/Api/Interf
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
     Alerts: IAlertDefinition[]
-    onAddUpdateAlert: (index: number, Alert: IAlertDefinition) => AlertRedux.AlertAddUpdateAction
+    onAddUpdateAlert: (index: number, Alert: IAlertDefinition) => AlertRedux.AlertDefinitionAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -61,7 +61,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
-                        onDelete={AlertRedux.AlertDelete(index)}
+                        onDelete={AlertRedux.AlertDefinitionDelete(index)}
                     />
                 strategySummaries.push(detailRow);
             }
@@ -114,6 +114,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
         return true;
     }
 }
+
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
@@ -125,7 +126,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertAddUpdate(index, Alert)),
+        onAddUpdateAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
     };
 }

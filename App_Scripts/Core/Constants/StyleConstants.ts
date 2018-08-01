@@ -78,7 +78,5 @@ export const TEXT_ENTRY_FORM: string = "__textentryform"
 
 // popups
 export const POPUP_CONFIRMATION: string = AB_STYLE + "__popup-confirmation"
-export const POPUP_ERROR: string = AB_STYLE + "__popup-error"
-export const POPUP_INFO: string = AB_STYLE + "__popup-info"
+export const POPUP_ALERT: string = AB_STYLE + "__popup-alert"
 export const POPUP_PROMPT: string = AB_STYLE + "__popup-prompt"
-export const POPUP_WARNING: string = AB_STYLE + "__popup-warning"

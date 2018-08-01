@@ -6,13 +6,11 @@ import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup
 import { PopupState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { AdaptableBlotterPopupError } from './Components/Popups/AdaptableBlotterPopupError'
-import { AdaptableBlotterPopupWarning } from './Components/Popups/AdaptableBlotterPopupWarning'
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
-import { AdaptableBlotterPopupInfo } from './Components/Popups/AdaptableBlotterPopupInfo';
 import * as StyleConstants from '../Core/Constants/StyleConstants';
+import { AdaptableBlotterPopupAlert } from "./Components/Popups/AdaptableBlotterPopupAlert";
 
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
@@ -20,9 +18,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     AdaptableBlotter: IAdaptableBlotter;
     showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
     onClosePopup: () => PopupRedux.PopupHideAction;
-    onCloseErrorPopup: () => PopupRedux.PopupHideErrorAction;
-    onCloseWarningPopup: () => PopupRedux.PopupHideWarningAction;
-    onCloseInfoPopup: () => PopupRedux.PopupHideInfoAction;
+    onCloseAlertPopup: () => PopupRedux.PopupHideAlertAction;
     onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
     onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
     onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
@@ -37,23 +33,13 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
 
-                <AdaptableBlotterPopupError
-                    Header={this.props.PopupState.ErrorPopup.ErrorHeader}
-                    Msg={this.props.PopupState.ErrorPopup.ErrorMsg}
-                    onClose={this.props.onCloseErrorPopup}
-                    ShowPopup={this.props.PopupState.ErrorPopup.ShowErrorPopup} />
+                <AdaptableBlotterPopupAlert
+                    Header={this.props.PopupState.AlertPopup.Header}
+                    Msg={this.props.PopupState.AlertPopup.Msg}
+                    onClose={this.props.onCloseAlertPopup}
+                    ShowPopup={this.props.PopupState.AlertPopup.ShowAlertPopup}
+                    AlertType={this.props.PopupState.AlertPopup.AlertType} />
 
-                <AdaptableBlotterPopupWarning
-                   Header={this.props.PopupState.WarningPopup.WarningHeader}
-                   Msg={this.props.PopupState.WarningPopup.WarningMsg}
-                    onClose={this.props.onCloseWarningPopup}
-                    ShowPopup={this.props.PopupState.WarningPopup.ShowWarningPopup} />
-
-                <AdaptableBlotterPopupInfo
-                     Header={this.props.PopupState.InfoPopup.InfoHeader}
-                     Msg={this.props.PopupState.InfoPopup.InfoMsg}
-                    onClose={this.props.onCloseInfoPopup}
-                    ShowPopup={this.props.PopupState.InfoPopup.ShowInfoPopup} />
 
                 <AdaptableBlotterPopupPrompt
                     Msg={this.props.PopupState.PromptPopup.PromptMsg}
@@ -96,9 +82,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClosePopup: () => dispatch(PopupRedux.PopupHide()),
-        onCloseErrorPopup: () => dispatch(PopupRedux.PopupHideError()),
-        onCloseWarningPopup: () => dispatch(PopupRedux.PopupHideWarning()),
-        onCloseInfoPopup: () => dispatch(PopupRedux.PopupHideInfo()),
+        onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
+        //   onCloseWarningPopup: () => dispatch(PopupRedux.PopupHideWarning()),
+        //   onCloseInfoPopup: () => dispatch(PopupRedux.PopupHideInfo()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
@@ -110,6 +96,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 let AdaptableBlotterWrapper: React.ComponentClass<any> = connect(mapStateToProps, mapDispatchToProps)(AdaptableBlotterView);
 
-export const AdaptableBlotterApp = ({ AdaptableBlotter   } : {AdaptableBlotter: IAdaptableBlotter}) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
+export const AdaptableBlotterApp = ({ AdaptableBlotter }: { AdaptableBlotter: IAdaptableBlotter }) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
     <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
 </Provider>;

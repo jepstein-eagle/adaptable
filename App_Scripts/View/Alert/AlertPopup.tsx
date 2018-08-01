@@ -28,8 +28,8 @@ import { AlertType } from "../../Core/Enums";
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
     AlertDefinitions: IAlertDefinition[];
-    onAddEditAlert: (Index: number, Alert: IAlertDefinition) => AlertRedux.AlertAddUpdateAction
-    onChangeAlertType: (index: number, ActionMode: any) => AlertRedux.AlertChangeAlertTypeAction
+    onAddEditAlert: (Index: number, Alert: IAlertDefinition) => AlertRedux.AlertDefinitionAddUpdateAction
+    onChangeAlertType: (index: number, ActionMode: any) => AlertRedux.AlertDefinitionChangeAlertTypeAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -54,10 +54,10 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Alert";
 
         let infoBody: any[] = ["Alert Definitions define which changes to the source data will trigger an Alert.", <br />, <br />,
-            "The Alert will appear either as a popup or in the alerts container."]
+            "An Alert will appear either as a popup or in the alerts container."]
 
         let colItems: IColItem[] = [
-            { Content: "Alert", Size: 4 },
+            { Content: "Alert Definition", Size: 4 },
             { Content: "Type", Size: 2 },
             { Content: "Expression", Size: 4 },
             { Content: "", Size: 2 },
@@ -77,7 +77,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
                 onEdit={(index, x) => this.onEdit(index, x as IAlertDefinition)}
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                onDeleteConfirm={AlertRedux.AlertDelete(index)}
+                onDeleteConfirm={AlertRedux.AlertDefinitionDelete(index)}
                 onChangeAlertType={(index, x) => this.onAlertTypeChanged(index, x)}
 
             />
@@ -101,7 +101,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
                 {AlertItems.length == 0 &&
                     <Well bsSize="small">
                         <HelpBlock>Click 'New' to start creating alert definitions.</HelpBlock>
-                        <HelpBlock>The alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition.</HelpBlock>
+                        <HelpBlock>An alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition.</HelpBlock>
                     </Well>
                 }
 
@@ -166,12 +166,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertAddUpdate(index, Alert)),
-        onChangeAlertType: (index: number, AlertType: AlertType) => dispatch(AlertRedux.AlertChangeAlertType(index, AlertType)),
+        onAddEditAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
+        onChangeAlertType: (index: number, AlertType: AlertType) => dispatch(AlertRedux.AlertDefinitionChangeAlertType(index, AlertType)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
     };
 }
 
 export let AlertPopup = connect(mapStateToProps, mapDispatchToProps)(AlertPopupComponent);
-
-

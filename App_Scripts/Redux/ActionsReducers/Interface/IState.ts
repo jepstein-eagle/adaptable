@@ -1,4 +1,4 @@
-import { IScreenPopup, IWarningPopup, IConfirmationPopup, IErrorPopup, IPromptPopup, IInfoPopup } from '../../../Core/Interface/IMessage'
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -28,9 +28,7 @@ export interface MenuState {
 
 export interface PopupState {
     ScreenPopup: IScreenPopup
-    ErrorPopup: IErrorPopup
-    WarningPopup: IWarningPopup
-    InfoPopup: IInfoPopup
+    AlertPopup: IAlertPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
 }
@@ -124,6 +122,8 @@ predefined and user config and editable by users - includes Adaptable Blotter ob
 
 export interface AlertState {
     AlertDefinitions: IAlertDefinition[]
+    MaxAlertsInStore: number
+    Alerts: any[]
 }
 
 export interface AdvancedSearchState {

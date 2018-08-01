@@ -7,8 +7,8 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IUIError, IUIConfirmation } from '../Core/Interface/IMessage';
-import { DataType } from '../Core/Enums'
+import { IAlert, IUIConfirmation, ErrorAlert } from '../Core/Interface/IMessage';
+import { DataType, AlertType } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
@@ -146,11 +146,12 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     failedMessages.push(failedMessage)
                 }
             })
-            let error: IUIError = {
-                ErrorHeader: failedRules.length + "Nudge(s) failed rule",
-                ErrorMsg: failedMessages.toString()
+            let error: IAlert = {
+                Header: failedRules.length + "Nudge(s) failed rule",
+                Msg: failedMessages.toString(),
+                AlertType : AlertType.Error
             }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowErrorAction>(PopupRedux.PopupShowError(error));
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
         }
     }
 

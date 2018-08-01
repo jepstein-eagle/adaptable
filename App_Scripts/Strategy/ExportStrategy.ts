@@ -6,7 +6,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
 import { IExportStrategy } from './Interface/IExportStrategy'
-import {  ExportDestination } from '../Core/Enums';
+import { ExportDestination, AlertType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { ReportHelper } from '../Core/Helpers/ReportHelper';
@@ -26,8 +26,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ExportStrategyId, blotter)
-       
-        
+
+
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             AdaptableBlotterLogger.LogMessage("Excel closed stopping all Live Excel");
             this.ExportState.CurrentLiveReports.forEach(cle => {
@@ -58,7 +58,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
         this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
-            if (this.ExportState  && this.ExportState.CurrentLiveReports.length > 0) {
+            if (this.ExportState && this.ExportState.CurrentLiveReports.length > 0) {
                 let liveReport = this.ExportState.CurrentLiveReports.find(x => x.Report == ReportHelper.SELECTED_CELLS_REPORT)
                 if (liveReport) {
                     this.throttledRecomputeAndSendLiveExcelEvent()
@@ -129,9 +129,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     ExportRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                                    PopupRedux.PopupShowError({ 
-                                        ErrorHeader: "Live Excel Error",
-                                        ErrorMsg: "Failed to send data for [" + cle.Report + "]. This live export has been stopped" 
+                                    PopupRedux.PopupShowAlert({
+                                        Header: "Live Excel Error",
+                                        Msg: "Failed to send data for [" + cle.Report + "]. This live export has been stopped",
+                                        AlertType: AlertType.Error
                                     })
                                 )
                             })
@@ -160,9 +161,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     ExportRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull));
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                                    PopupRedux.PopupShowError({ 
-                                        ErrorHeader: "Live Excel Error",
-                                        ErrorMsg: "Failed to send data for [" + cle.Report + "]. This live export has been stopped" 
+                                    PopupRedux.PopupShowAlert({
+                                        Header: "Live Excel Error",
+                                        Msg: "Failed to send data for [" + cle.Report + "]. This live export has been stopped",
+                                        AlertType: AlertType.Error
                                     })
                                 )
                             })
@@ -241,13 +243,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     private ConvertReporttoArray(ReportName: string): any[] {
         let ReportToConvert: IReport = this.getReport(ReportName);
         let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, ReportToConvert);
-        if (actionReturnObj.Error) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowError(actionReturnObj.Error))
+        if (actionReturnObj.Alert) { // assume that the alerttype is error - if not then refactor
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowAlert(actionReturnObj.Alert))
             return null
         }
         return actionReturnObj.ActionReturn
     }
-    
+
     /*
     private getColsForReport(Report: IReport): IColumn[] {
         let allCols: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;

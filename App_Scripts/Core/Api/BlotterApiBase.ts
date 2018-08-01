@@ -28,12 +28,13 @@ import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interfac
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour, ExportDestination } from "../Enums";
 import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
-import { IUIInfo, IUIWarning, IUIError } from "../Interface/IMessage";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";
 import { ExportApplyAction } from "../../Redux/ActionsReducers/ExportRedux";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { FilterHelper } from "../Helpers/FilterHelper";
+import { IAlert } from "../Interface/IMessage";
+import { Alert } from "react-bootstrap";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -461,30 +462,33 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public alertShowMessage(alertHeader: string, alertMessage: string): void {
-        let info: IUIInfo = {
-            InfoHeader: alertHeader,
-            InfoMsg: alertMessage
+        let info: IAlert = {
+            Header: alertHeader,
+            Msg: alertMessage,
+            AlertType: AlertType.Info
         }
-        this.dispatchAction(PopupRedux.PopupShowInfo(info))
+        this.dispatchAction(PopupRedux.PopupShowAlert(info))
         AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)
     }
 
     public alertShowWarning(alertHeader: string, alertMessage: string): void {
-        let warning: IUIWarning = {
-            WarningHeader: alertHeader,
-            WarningMsg: alertMessage
+        let warning: IAlert = {
+            Header: alertHeader,
+            Msg: alertMessage,
+            AlertType: AlertType.Warning
         }
         AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)
-        this.dispatchAction(PopupRedux.PopupShowWarning(warning))
+        this.dispatchAction(PopupRedux.PopupShowAlert(warning))
     }
 
     public alertShowError(alertHeader: string, alertMessage: string): void {
-        let error: IUIError = {
-            ErrorHeader: alertHeader,
-            ErrorMsg: alertMessage
+        let error: IAlert = {
+            Header: alertHeader,
+            Msg: alertMessage,
+            AlertType: AlertType.Error
         }
         AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)
-        this.dispatchAction(PopupRedux.PopupShowError(error))
+        this.dispatchAction(PopupRedux.PopupShowAlert(error))
     }
 
     // Export api Methods
