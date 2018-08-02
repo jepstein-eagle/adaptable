@@ -7,10 +7,13 @@ module.exports = {
     entry: {
         'abvendors':
             [
-              //  'tslib',
+                //  'tslib',
                 'create-react-class',
                 'deep-diff',
                 'fin-hypergrid-data-source-base',
+
+                'igniteui-react-charts/ES2015/igr-category-chart-module',
+                'igniteui-react-charts/ES2015/igr-category-chart-core-module',
                 /*
                 'igniteui-react-charts/ES2015/igr-horizontal-anchored-category-series-proxy-module',
                 'igniteui-react-charts/ES2015/igr-line-series-module',
@@ -73,5 +76,17 @@ module.exports = {
             // output.library option above
             name: '[name]_lib'
         })
-    ]
+    ],
+  module: {
+        loaders: [
+            {
+                test: /\.js(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
+                include: [
+                    path.resolve(__dirname, "node_modules/igniteui-react-core"),
+                    path.resolve(__dirname, "node_modules/igniteui-react-charts")
+                ],
+            }
+        ]
+    }
+
 };

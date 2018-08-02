@@ -36,7 +36,7 @@
     "lodash": "^4.17.10",
     "mathjs": "^3.20.2",
     "prop-types": "^15.6.2",
-    "react": "^15.5.4",
+    "react": "^15.6.2",
     "react-bootstrap": "^0.31.5",
     "react-bootstrap-sweetalert": "^3.0.0",
     "react-bootstrap-typeahead": "^1.4.2",

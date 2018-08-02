@@ -25,7 +25,7 @@ class ChartsPopupComponent extends React.Component<ChartsPopupComponentProps, Ch
         super();
 
         // this line is commented out as we cannot run it otherwise...
-        //      IgrCategoryChartModule.register();
+              IgrCategoryChartModule.register();
         this.state = {
             name: 'React',
             data: [
@@ -48,7 +48,12 @@ class ChartsPopupComponent extends React.Component<ChartsPopupComponentProps, Ch
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ChartsStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ChartsGlyph}>
 
-                <span>This functionality is coming soon...</span>
+              <IgrCategoryChart
+                    yAxisMinimumValue={0}
+                    chartTitle="test"
+                    width="500px"
+                    height="500px"
+                    dataSource={this.state.data} />
 
             </PanelWithImage>
         </div>
