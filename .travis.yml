@@ -4,7 +4,6 @@ language: node_js
 #   - osx
 node_js:
   - "4"
-install: travis_wait 30 mvn install
 cache:
   directories:
     - node_modules
@@ -15,7 +14,8 @@ notifications:
 #   - slack: '$SLACK'
 #       on_success: never
 #       on_failure: always
-bundler_args: --retry 5
+#  bundler_args: --retry 5
+install: travis_wait 30 mvn install
 deploy:
  provider: npm
  skip_cleanup: true
