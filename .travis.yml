@@ -14,6 +14,7 @@ notifications:
 #   - slack: '$SLACK'
 #       on_success: never
 #       on_failure: always
+bundler_args: --retry 5
 deploy:
  provider: npm
  skip_cleanup: true
