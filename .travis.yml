@@ -15,7 +15,7 @@ notifications:
 #       on_success: never
 #       on_failure: always
 #  bundler_args: --retry 5
-install: travis_wait 30 npm install
+#install: travis_wait 30 npm install
 deploy:
  provider: npm
  skip_cleanup: true
