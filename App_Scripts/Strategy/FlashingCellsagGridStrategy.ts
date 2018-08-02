@@ -44,7 +44,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                             if (currentFlashTimer) {
                                 clearTimeout(currentFlashTimer)
                             }
-                            let timer = setTimeout(() => {
+                            let timer = window.setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
@@ -61,7 +61,7 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                             if (currentFlashTimer) {
                                 clearTimeout(currentFlashTimer)
                             }
-                            let timer = setTimeout(() => {
+                            let timer = window.setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)

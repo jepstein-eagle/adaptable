@@ -375,7 +375,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) => AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
+                    xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
                     xhr.ontimeout = (ev: ProgressEvent) => AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity)
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {
@@ -404,7 +404,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 case TeamSharingRedux.TEAMSHARING_GET: {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev: ErrorEvent) => AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message)
+                    xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message)
                     xhr.ontimeout = (ev: ProgressEvent) => AdaptableBlotterLogger.LogWarning("TeamSharing get timeout")
                     xhr.onload = (ev: ProgressEvent) => {
                         if (xhr.readyState == 4) {

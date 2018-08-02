@@ -1,13 +1,15 @@
 ﻿var webpack = require('webpack');
 var failPlugin = require('webpack-fail-plugin');
 var Promise = require('es6-promise').Promise;
+var path = require('path');
+
 
 module.exports = {
     entry: {
         'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
-     },
+    },
     output: {
         path: __dirname + '/dist',
         filename: "[name]-bundle.min.js",
@@ -32,7 +34,7 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        new webpack.ProvidePlugin({ 
+        new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise', // works as expected 
         }),
     ],
@@ -41,7 +43,14 @@ module.exports = {
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
             // note that babel-loader is configured to run after ts-loader
             {
-                test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime!ts-loader'
+                test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime!ts-loader',
+            },
+            {
+                test: /\.js(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
+                include: [
+                    path.resolve(__dirname, "node_modules/igniteui-react-core"),
+                    path.resolve(__dirname, "node_modules/igniteui-react-charts")
+                ],
             },
             // handle main stylesheets required 
             { test: /\.css$/, exclude: /themes/, loader: 'style-loader!css-loader' },
