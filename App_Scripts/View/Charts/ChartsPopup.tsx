@@ -25,7 +25,7 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
         super(props);
 
         // this line is commented out as we cannot run it otherwise...
-      //        IgrCategoryChartModule.register();
+             IgrCategoryChartModule.register();
         this.state = {
             name: 'React',
             data: [
