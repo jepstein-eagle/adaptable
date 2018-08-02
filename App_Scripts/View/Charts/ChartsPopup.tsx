@@ -45,7 +45,12 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ChartsStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ChartsGlyph}>
-
+            <IgrCategoryChart
+                    yAxisMinimumValue={0}
+                    chartTitle="test"
+                    width="500px"
+                    height="500px"
+                    dataSource={this.state.data} />
              
             </PanelWithImage>
         </div>
