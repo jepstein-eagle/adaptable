@@ -38,7 +38,6 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
                 { Label: "G", Value: 3, Value2: 4 }
             ]
         };
-
     }
 
     render() {
