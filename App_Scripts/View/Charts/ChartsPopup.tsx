@@ -10,7 +10,7 @@ import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-char
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
 
 
-interface ChartsPopupComponentProps extends StrategyViewPopupProps<ChartsPopupComponent> {
+interface ChartsPopupProps extends StrategyViewPopupProps<ChartsPopupComponent> {
     Charts: string[]
 }
 
@@ -19,10 +19,10 @@ interface ChartsState {
     data: any[]
 }
 
-class ChartsPopupComponent extends React.Component<ChartsPopupComponentProps, ChartsState> {
+class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState> {
 
-    constructor() {
-        super();
+    constructor(props: ChartsPopupProps) {
+        super(props);
 
         // this line is commented out as we cannot run it otherwise...
               IgrCategoryChartModule.register();

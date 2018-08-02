@@ -36,8 +36,8 @@ interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupCom
 }
 
 class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, EditableConfigEntityState> {
-    constructor() {
-        super();
+    constructor(props: CustomSortPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

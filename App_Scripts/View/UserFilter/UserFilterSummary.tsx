@@ -29,8 +29,8 @@ export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterS
 export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, EditableConfigEntityState> {
 
     
-    constructor() {
-        super();
+    constructor(props: UserFilterSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

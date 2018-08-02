@@ -60,7 +60,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
                 return null;
             }
             else {
-                return <ListGroupItem key={value} style={{listGroupItemStyle}}
+                return <ListGroupItem key={value} style={listGroupItemStyle}
                     onClick={() => this.onClickItem(x)}
                     active={isActive}
                     value={value} >{display}
@@ -133,7 +133,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     }
 }
 
-var listGroupItemStyle: React.CSSProperties = {
+var listGroupItemStyle = {
     'fontSize': 'small',
     'padding': '1px',
  };

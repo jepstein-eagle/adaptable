@@ -34,8 +34,8 @@ export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatCol
 
 export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: FormatColumnSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

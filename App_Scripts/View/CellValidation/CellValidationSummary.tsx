@@ -27,8 +27,8 @@ export interface CellValidationSummaryProps extends StrategySummaryProps<CellVal
 
 export class CellValidationSummaryComponent extends React.Component<CellValidationSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: CellValidationSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

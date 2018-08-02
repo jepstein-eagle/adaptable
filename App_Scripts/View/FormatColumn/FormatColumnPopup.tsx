@@ -35,8 +35,8 @@ interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopu
 
 class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: FormatColumnPopupProps) {
+        super(props);
         this.state = { EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 }
     }
 

@@ -24,8 +24,8 @@ interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopu
 
 class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps, {}> {
 
-    constructor() {
-        super();
+    constructor(props: ColumnFilterPopupProps) {
+        super(props);
         this.state = { EditedUserFilter: null, WizardStartIndex: 0 }
     }
 

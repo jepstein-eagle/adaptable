@@ -37,8 +37,8 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
 }
 
 class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, EditableConfigEntityState> {
-    constructor() {
-        super();
+    constructor(props: PlusMinusPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

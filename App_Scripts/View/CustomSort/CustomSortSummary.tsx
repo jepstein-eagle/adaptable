@@ -28,8 +28,8 @@ export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortS
 
 export class CustomSortSummaryComponent extends React.Component<CustomSortSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: CustomSortSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
     render(): any {

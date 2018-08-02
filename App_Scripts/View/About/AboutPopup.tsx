@@ -26,8 +26,8 @@ interface AboutState {
 
 class AboutPopupComponent extends React.Component<AboutPopupComponentProps, AboutState> {
 
-    constructor() {
-        super();
+    constructor(props: AboutPopupComponentProps) {
+        super(props);
         this.state = { KeyValuePairs: [] }
     }
 

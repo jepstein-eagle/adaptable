@@ -33,8 +33,8 @@ export interface ConditionalStyleSummaryProps extends StrategySummaryProps<Condi
 
 export class ConditionalStyleSummaryComponent extends React.Component<ConditionalStyleSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: ConditionalStyleSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
 
     }

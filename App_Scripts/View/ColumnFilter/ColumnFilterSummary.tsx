@@ -24,8 +24,8 @@ export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFil
 
 export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props:ColumnFilterSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

@@ -25,8 +25,8 @@ export interface CalculatedColumnSummaryProps extends StrategySummaryProps<Calcu
 
 export class CalculatedColumnSummaryComponent extends React.Component<CalculatedColumnSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: CalculatedColumnSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

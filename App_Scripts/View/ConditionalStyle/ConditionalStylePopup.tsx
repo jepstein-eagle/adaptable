@@ -27,7 +27,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
-interface ConditionalStyleConfigProps extends StrategyViewPopupProps<ConditionalStyleConfigComponent> {
+interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
     StyleClassNames: string[]
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
@@ -35,10 +35,10 @@ interface ConditionalStyleConfigProps extends StrategyViewPopupProps<Conditional
 }
 
 
-class ConditionalStyleConfigComponent extends React.Component<ConditionalStyleConfigProps, EditableConfigEntityState> {
+class ConditionalStylePopupComponent extends React.Component<ConditionalStylePopupProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: ConditionalStylePopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 
@@ -164,6 +164,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     };
 }
 
-export let ConditionalStylePopup = connect(mapStateToProps, mapDispatchToProps)(ConditionalStyleConfigComponent);
+export let ConditionalStylePopup = connect(mapStateToProps, mapDispatchToProps)(ConditionalStylePopupComponent);
 
 

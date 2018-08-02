@@ -38,8 +38,8 @@ interface QuickSearchPopupState {
 
 class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, QuickSearchPopupState> {
 
-    constructor() {
-        super();
+    constructor(props: QuickSearchPopupProps) {
+        super(props);
         this.state = { EditedQuickSearchText: "", EditedStyle: null }
     }
 

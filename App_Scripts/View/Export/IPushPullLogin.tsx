@@ -23,8 +23,8 @@ interface IPushPullLoginInternalState {
 }
 
 class IPushPullLoginComponent extends React.Component<IPushPullLoginProps, IPushPullLoginInternalState> {
-    constructor() {
-        super();
+    constructor(props: IPushPullLoginProps) {
+        super(props);
         this.state = { Login: null, Password: null }
     }
     render() {

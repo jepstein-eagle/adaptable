@@ -35,8 +35,8 @@ interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupCompone
 }
 
 class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, EditableConfigEntityState> {
-    constructor() {
-        super();
+    constructor(props: ShortcutPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

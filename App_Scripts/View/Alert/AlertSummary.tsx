@@ -27,8 +27,8 @@ export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComp
 
 export class AlertSummaryComponent extends React.Component<AlertSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: AlertSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

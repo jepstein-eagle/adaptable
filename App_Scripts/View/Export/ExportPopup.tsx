@@ -41,8 +41,8 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
 
 class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: ExportPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

@@ -27,8 +27,8 @@ interface IPushPullDomainPageSelectorInternalState {
 }
 
 class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDomainPageSelectorProps, IPushPullDomainPageSelectorInternalState> {
-    constructor() {
-        super();
+    constructor(props: IPushPullDomainPageSelectorProps) {
+        super(props);
         this.state = { SelectedFolder: null, SelectedPage: null }
     }
     render() {

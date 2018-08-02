@@ -42,8 +42,8 @@ export interface BulkUpdatePopupState {
 class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, BulkUpdatePopupState> {
 
 
-    constructor() {
-        super();
+    constructor(props: BulkUpdatePopupProps) {
+        super(props);
         this.state = { isShowingError: false, errorText: "", useSelector: false }
     }
 

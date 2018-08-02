@@ -36,8 +36,8 @@ interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedCo
 
 
 class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPopupProps, EditableConfigEntityState> {
-    constructor() {
-        super();
+    constructor(props: CalculatedColumnPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

@@ -360,6 +360,6 @@ let separatorStyle = {
     'marginBottom': '0px',
     'marginLeft': '15px',
     'width': '222px',
-    'textAlign': 'center'
+   
 }
 

@@ -40,8 +40,8 @@ export interface ColumnInfoState {
 }
 
 class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, ColumnInfoState> {
-    constructor() {
-        super();
+    constructor(props: ColumnInfoPopupProps) {
+        super(props);
         this.state = { SelectedColumn: null, ShowSelector: true }
 
     }

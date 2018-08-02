@@ -28,8 +28,8 @@ export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSum
 
 export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryProps, EditableConfigEntityState> {
 
-    constructor() {
-        super();
+    constructor(props: PlusMinusSummaryProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
 
     }

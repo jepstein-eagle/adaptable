@@ -35,8 +35,8 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     
 
-    constructor() {
-        super();
+    constructor(props: UserFilterPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
     componentDidMount() {

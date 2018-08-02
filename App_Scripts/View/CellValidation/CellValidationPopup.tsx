@@ -35,8 +35,8 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
 
 
 class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityState> {
-    constructor() {
-        super();
+    constructor(props:CellValidationPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
     componentDidMount() {

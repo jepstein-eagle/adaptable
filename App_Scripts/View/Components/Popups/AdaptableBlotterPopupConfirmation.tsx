@@ -2,7 +2,7 @@ import * as React from "react";
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 import SweetAlert from 'react-bootstrap-sweetalert'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
-
+//import PropTypes from 'prop-types';
 
 export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttributes<AdaptableBlotterPopupConfirmation> {
     ShowPopup: boolean
@@ -16,6 +16,11 @@ export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttri
 }
 
 export class AdaptableBlotterPopupConfirmation extends React.Component<AdaptableBlotterPopupConfirmationProps, {}> {
+  
+    constructor(props:AdaptableBlotterPopupConfirmationProps) {
+        super(props);
+     }
+  
     render() {
         let title = this.props.ShowCommentBox ? <span>
             <SweetAlert.WarningIcon  />
@@ -30,7 +35,8 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                 confirmBtnBsStyle="primary"
                 confirmBtnBsSize="sm"
 
-                confirmBtnText={this.props.ConfirmText}
+               // confirmBtnText={this.props.ConfirmText}
+                confirmBtnText={"hello"}
                 cancelBtnBsStyle="default"
                 cancelBtnText={this.props.CancelText}
                 title={title}

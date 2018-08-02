@@ -35,8 +35,8 @@ interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupCompo
 
 class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
-    constructor() {
-        super();
+    constructor(props:SmartEditPopupProps) {
+        super(props);
         this.state = { isShowingError: false, errorText: "" }
     }
 

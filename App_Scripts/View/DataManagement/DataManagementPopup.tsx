@@ -16,8 +16,8 @@ interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagement
 
 class DataManagementPopupComponent extends React.Component<DataManagementPopupProps, {}> {
 
-    constructor() {
-        super();
+    constructor(props: DataManagementPopupProps) {
+        super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 

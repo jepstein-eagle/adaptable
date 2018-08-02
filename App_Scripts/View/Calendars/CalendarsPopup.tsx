@@ -31,8 +31,8 @@ interface CalendarsPopupInternalState {
 
 class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, CalendarsPopupInternalState> {
 
-    constructor() {
-        super();
+    constructor(props: CalendarsPopupProps) {
+        super(props);
         this.state = { DisplayedCalendar: null, DisplayedYear: 2017 }
     }
 
