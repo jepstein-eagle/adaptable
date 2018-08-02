@@ -45,6 +45,7 @@ module.exports = {
             {
                 test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime!ts-loader',
             },
+            // JW: added this section on 2/8/18 to mimic what we do in webpack.vendor.js. but not sure if that is right.
             {
                 test: /\.js(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
                 include: [
