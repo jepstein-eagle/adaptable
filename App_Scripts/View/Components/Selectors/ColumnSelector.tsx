@@ -49,8 +49,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
                 labelKey={"FriendlyName"}
                 filterBy={["FriendlyName", "ColumnId"]}
                 multiple={this.props.SelectionMode == SelectionMode.Multi}
-                clearButton={true}
-                selected={selectedColums}
+               selected={selectedColums}
                 onChange={(selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds) }}
                 options={sortedColumns}
                 disabled={this.props.disabled}

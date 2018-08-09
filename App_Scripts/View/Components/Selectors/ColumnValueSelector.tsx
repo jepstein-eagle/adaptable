@@ -54,7 +54,6 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
             placeholder={placeholderText}
             labelKey={"DisplayValue"}
             multiple={false}
-            clearButton={true}
             selected={[selectedValue]}
             onChange={(selected) => { this.onColumnChange(selected) }}
             options={sortedColumnValues}
