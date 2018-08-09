@@ -4,9 +4,10 @@ import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { SelectionMode, SortOrder } from "../../../Core/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { Helper } from "../../../Core/Helpers/Helper";
-import { Sizes } from "react-bootstrap";
+import { Sizes, InputGroup } from "react-bootstrap";
 import { CSSProperties } from "react";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { ButtonClear } from "../Buttons/ButtonClear";
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[]
@@ -19,6 +20,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
+   // _typeahead: any;
 
     componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
         //if there was a selected column and parent unset the column we then clear the component 
@@ -43,18 +45,39 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         let isEmptySelectedColumnIds: boolean = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
         return <div className={cssClassName}>
-            <Typeahead ref="typeahead"
-                emptyLabel={"No Column"}
-                placeholder={placeHolder}
-                labelKey={"FriendlyName"}
-                filterBy={["FriendlyName", "ColumnId"]}
-                multiple={this.props.SelectionMode == SelectionMode.Multi}
-               selected={selectedColums}
-                onChange={(selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds) }}
-                options={sortedColumns}
-                disabled={this.props.disabled}
-            />
+            <InputGroup>
+                <Typeahead ref={"typeahead"}
+                    emptyLabel={"No Column"}
+                    placeholder={placeHolder}
+                    labelKey={"FriendlyName"}
+                    filterBy={["FriendlyName", "ColumnId"]}
+                    multiple={this.props.SelectionMode == SelectionMode.Multi}
+                    selected={selectedColums}
+                    onChange={(selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds) }}
+                    options={sortedColumns}
+                    disabled={this.props.disabled}
+                />
+                <InputGroup.Button>
+                    <ButtonClear
+                        bsStyle={"default"}
+                        cssClassName={cssClassName}
+                        onClick={() => this.onClearButton()}
+                        overrideTooltip="Clear Column"
+                        overrideDisableButton={isEmptySelectedColumnIds}
+                        ConfigEntity={null}
+                        DisplayMode="Glyph" />
+                </InputGroup.Button>
+            </InputGroup>
+
+
         </div>
+    }
+
+    onClearButton() {
+        this.props.onColumnChange([]);
+       // if (this._typeahead != null) {
+            (this.refs.typeahead as any).getInstance().clear()
+      //  }
     }
 
     onColumnChange(selected: IColumn[], isEmptySelection: boolean) {
