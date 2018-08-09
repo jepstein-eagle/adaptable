@@ -6,17 +6,17 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
     colItems: IColItem[]
-     cssClassName: string
-     fontSize?: string
+    cssClassName: string
+    fontSize?: string
 }
 
 export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps, {}> {
     render(): any {
         let cssClassName = this.props.cssClassName + StyleConstants.LIST_GROUP_ITEM
-        let fontSize = this.props.fontSize? this.props.fontSize : "small"
+        let fontSize = this.props.fontSize ? this.props.fontSize : "small"
         let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
             return <Col key={index} xs={colItem.Size}>
-                <span style={{fontSize: fontSize}}>
+                <span style={{ fontSize: fontSize }}>
                     {colItem.Content}
                 </span>
             </Col>
@@ -29,7 +29,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
                     // no implementation: not sure if this is actually needed...
                 }}
             >
-                <Row style={{ display: "flex", alignItems: "center" , overflowY: 'visible'}}>
+                <Row style={{ display: "flex", alignItems: "center", overflowY: 'visible' }}>
                     {colItems}
                 </Row>
             </li>

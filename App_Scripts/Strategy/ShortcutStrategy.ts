@@ -8,7 +8,7 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAlert, IUIConfirmation } from '../Core/Interface/IMessage';
 import { Helper } from '../Core/Helpers/Helper';
-import { DataType, ActionMode, AlertType } from '../Core/Enums'
+import { DataType, ActionMode, MessageType } from '../Core/Enums'
 import { MathOperation } from '../Core/Enums'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -134,12 +134,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {
-        let error: IAlert = {
-            Header: "Shortcut Failed",
-            Msg: ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter),
-            AlertType: AlertType.Error
-        }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
+        this.blotter.api.alertShowError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
     }
 
     private ShowWarningMessages(failedRules: ICellValidationRule[], shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any, oldValue: any): void {

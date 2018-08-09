@@ -3,7 +3,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { MathOperation, DataType, AlertType } from '../Core/Enums'
+import { MathOperation, DataType, MessageType } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
@@ -39,7 +39,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                 Alert: {
                     Header: "Bulk Update Error",
                    Msg: "No cells are selected.\nPlease select some cells.",
-                   AlertType: AlertType.Error
+                   MessageType: MessageType.Error
                 }
             }
         }
@@ -50,7 +50,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                 Alert: {
                     Header: "Bulk Update Error",
                     Msg: "Bulk Update only supports single column edit.\nPlease adjust cell selection.",
-                    AlertType: AlertType.Error
+                    MessageType: MessageType.Error
                 }
             }
         }
@@ -60,7 +60,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                 Alert: {
                     Header: "Bulk Update Error",
                     Msg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection.",
-                    AlertType: AlertType.Error
+                    MessageType: MessageType.Error
                 }
             }
 

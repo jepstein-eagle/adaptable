@@ -2,14 +2,14 @@ import * as React from "react";
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 import SweetAlert from 'react-bootstrap-sweetalert'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
-import { AlertType } from "../../../Core/Enums";
+import { MessageType } from "../../../Core/Enums";
 
 export interface AdaptableBlotterPopupAlertProps extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
     ShowPopup: boolean
     onClose: Function
     Msg: string
     Header: string
-    AlertType: AlertType
+    MessageType: MessageType
 }
 
 export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotterPopupAlertProps, {}> {
@@ -21,16 +21,16 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
         let isInfo: boolean = false
         let isWarning: boolean = false
         let isError: boolean = false
-        switch (this.props.AlertType) {
-            case AlertType.Info:
+        switch (this.props.MessageType) {
+            case MessageType.Info:
                 style = "success"
                 isInfo=true
                 break;
-            case AlertType.Warning:
+            case MessageType.Warning:
                 style = "warning"
                 isWarning=true;
                 break;
-            case AlertType.Error:
+            case MessageType.Error:
                 style = "danger"
                 isError= true;
                 break;

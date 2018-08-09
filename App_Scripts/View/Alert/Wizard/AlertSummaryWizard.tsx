@@ -26,7 +26,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Rule", Value: this.props.Data.Description },
-            { Key: "Alert Type", Value: this.props.Data.AlertType },
+            { Key: "Alert Type", Value: this.props.Data.MessageType },
             {
                 Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression) ?
                     ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) :

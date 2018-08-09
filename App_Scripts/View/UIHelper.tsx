@@ -1,5 +1,5 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
-import { DataType, FontWeight, FontStyle } from '../Core/Enums';
+import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
@@ -66,5 +66,53 @@ export module UIHelper {
         return style.BackColor != null || style.ForeColor != null || style.FontWeight != FontWeight.Normal || style.FontStyle != FontStyle.Normal || style.FontSize != null || StringExtensions.IsNotNullOrEmpty(style.ClassName)
 
     }
+
+
+    export function getMessageTypeByStatusColour(statusColour: StatusColour): MessageType {
+        switch (statusColour) {
+            case StatusColour.Red:
+                return MessageType.Error;
+            case StatusColour.Amber:
+                return MessageType.Warning;
+            case StatusColour.Green:
+                return MessageType.Info;
+        }
+    }
+
+    export function getStyleNameByStatusColour(statusColour: StatusColour): string {
+        switch (statusColour) {
+            case StatusColour.Red:
+                return "danger"
+            case StatusColour.Amber:
+                return "warning";
+            case StatusColour.Green:
+                return "success";
+        }
+    }
+
+    export function getGlyphByMessageType(messageType: MessageType): string {
+        switch (messageType) {
+            case MessageType.Info:
+                return "info-sign"
+            case MessageType.Warning:
+                return "warning-sign";
+            case MessageType.Error:
+                return "exclamation-sign";
+        }
+    }
+
+    export function getStyleNameByMessageType(messageType: MessageType): string {
+        switch (messageType) {
+            case MessageType.Error:
+                return "danger"
+            case MessageType.Warning:
+                return "warning";
+            case MessageType.Info:
+                return "info";
+        }
+    }
+
+
+ 
 
 }

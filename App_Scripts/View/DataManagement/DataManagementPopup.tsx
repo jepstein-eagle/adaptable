@@ -31,7 +31,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
             overrideText={"Clear User Data"}
             overrideTooltip="Clear User Data"
             DisplayMode="Text"
-            size={"medium"} />
+            size={"large"} />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyNames.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyGlyphs.DataManagementGlyph} infoBody={infoBody}>

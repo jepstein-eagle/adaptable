@@ -182,13 +182,13 @@ export interface IBlotterApi {
    * Shows an alert as a popup
    * @param alertHeader Title to appear in the popup
    * @param alertMessage Main message of the alert
-   * @param alertType Type (Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
+   * @param MessageType Type (Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
    */
-  alertShow(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void
+  alertShow(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void
 
-  alertShowMessage(alertHeader: string, alertMessage: string): void
-  alertShowWarning(alertHeader: string, alertMessage: string): void
-  alertShowError(alertHeader: string, alertMessage: string): void
+  alertShowMessage(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
+  alertShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
+  alertShowError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
 
 
   // General Config

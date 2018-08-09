@@ -14,7 +14,7 @@ import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
-import { PopoverType } from '../../Core/Enums';
+import { MessageType } from '../../Core/Enums';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -55,7 +55,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 {' '}
                 {infoBody.length > 0 &&
                     <span>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} popoverType={PopoverType.Info} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} MessageType={MessageType.Info} useButton={true} triggerAction={"click"} />
 
                         {' '}
                         <ButtonClear onClick={() => this.props.onClearFilters()}

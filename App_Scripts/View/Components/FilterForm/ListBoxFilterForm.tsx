@@ -151,7 +151,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             {rangeForm}
 
             {textClear}
-            <ListGroup fill style={divStyle} >
+            <ListGroup  style={divStyle} >
                 {userFiltersItemsElements}
                 {columnValuesItemsElements}
             </ListGroup>

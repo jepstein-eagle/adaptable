@@ -6,7 +6,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
 import { IExportStrategy } from './Interface/IExportStrategy'
-import { ExportDestination, AlertType } from '../Core/Enums';
+import { ExportDestination, MessageType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { ReportHelper } from '../Core/Helpers/ReportHelper';
@@ -128,13 +128,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 AdaptableBlotterLogger.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     ExportRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
-                                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                                    PopupRedux.PopupShowAlert({
-                                        Header: "Live Excel Error",
-                                        Msg: "Failed to send data for [" + cle.Report + "]. This live export has been stopped",
-                                        AlertType: AlertType.Error
-                                    })
-                                )
+                                this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
                             })
                     )
                 }
@@ -160,13 +154,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 AdaptableBlotterLogger.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     ExportRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull));
-                                this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                                    PopupRedux.PopupShowAlert({
-                                        Header: "Live Excel Error",
-                                        Msg: "Failed to send data for [" + cle.Report + "]. This live export has been stopped",
-                                        AlertType: AlertType.Error
-                                    })
-                                )
+                                 this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
+                   
                             })
                     )
                 }
@@ -243,7 +232,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     private ConvertReporttoArray(ReportName: string): any[] {
         let ReportToConvert: IReport = this.getReport(ReportName);
         let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, ReportToConvert);
-        if (actionReturnObj.Alert) { // assume that the alerttype is error - if not then refactor
+        if (actionReturnObj.Alert) { // assume that the MessageType is error - if not then refactor
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowAlert(actionReturnObj.Alert))
             return null
         }

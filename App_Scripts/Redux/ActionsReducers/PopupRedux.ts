@@ -1,9 +1,7 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
 import { IAlertPopup, IConfirmationPopup, IScreenPopup, IPromptPopup, IUIConfirmation, IUIPrompt, InputAction, IAlert } from '../../Core/Interface/IMessage';
-import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
-import { AlertType } from '../../Core/Enums';
-import { Alert } from 'react-bootstrap';
+import { MessageType } from '../../Core/Enums';
 
 export const POPUP_SHOW = 'POPUP_SHOW';
 export const POPUP_HIDE = 'POPUP_HIDE';
@@ -110,7 +108,7 @@ const initialPopupState: PopupState = {
         ShowAlertPopup: false,
         Header: "",
         Msg: "",
-        AlertType: AlertType.Info
+        MessageType: MessageType.Info
     },
     ConfirmationPopup: {
         ShowConfirmationPopup: false,
@@ -186,11 +184,11 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
         }
         case POPUP_SHOW_ALERT: {
             let showAlertAction = <PopupShowAlertAction>action;
-            let newAlertPopup: IAlertPopup = { ShowAlertPopup: true, Header: showAlertAction.Alert.Header, Msg: showAlertAction.Alert.Msg, AlertType: showAlertAction.Alert.AlertType }
+            let newAlertPopup: IAlertPopup = { ShowAlertPopup: true, Header: showAlertAction.Alert.Header, Msg: showAlertAction.Alert.Msg, MessageType: showAlertAction.Alert.MessageType }
             return Object.assign({}, state, { AlertPopup: newAlertPopup });
         }
         case POPUP_HIDE_ALERT: {
-            let newAlertPopup: IAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", AlertType: AlertType.Info }
+            let newAlertPopup: IAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", MessageType: MessageType.Info }
             return Object.assign({}, state, { AlertPopup: newAlertPopup })
         }
         case POPUP_SHOW_PROMPT: {

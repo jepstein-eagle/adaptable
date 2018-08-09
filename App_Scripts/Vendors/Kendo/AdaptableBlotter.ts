@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder, VendorGridName, AlertType } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder, VendorGridName, MessageType } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -850,13 +850,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    let error: IAlert = {
-                        Header: "Validation Error",
-                        Msg: errorMessage,
-                        AlertType: AlertType.Error
-                    };
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
-                    e.preventDefault();
+                     this.api.alertShowError("Validation Error", errorMessage, true)
+                     e.preventDefault();
                 }
                 else {
                     let warningMessage: string = "";

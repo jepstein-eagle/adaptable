@@ -38,7 +38,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     Msg={this.props.PopupState.AlertPopup.Msg}
                     onClose={this.props.onCloseAlertPopup}
                     ShowPopup={this.props.PopupState.AlertPopup.ShowAlertPopup}
-                    AlertType={this.props.PopupState.AlertPopup.AlertType} />
+                    MessageType={this.props.PopupState.AlertPopup.MessageType} />
 
 
                 <AdaptableBlotterPopupPrompt

@@ -45,7 +45,7 @@ import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStra
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, DistinctCriteriaPairValue, SortOrder, VendorGridName, AlertType } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, SortOrder, VendorGridName, MessageType } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -1050,13 +1050,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    let error: IAlert = {
-                        Header: "Validation Error",
-                        Msg: errorMessage,
-                        AlertType: AlertType.Error
-                    };
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
-                    event.preventDefault();
+                    this.api.alertShowError("Validation Error", errorMessage, true)
+                     event.preventDefault();
                 }
                 else {
                     let warningMessage: string = "";
@@ -1088,12 +1083,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.hyperGrid.behavior.reindex();
         });
         this.hyperGrid.addEventListener('fin-selection-changed', () => {
-            //  let test = this.hyperGrid.selectionModel.getSelectedColumns()
             this.debouncedSetSelectedCells()
         });
         this.hyperGrid.addEventListener('fin-column-selection-changed', () => {
-            //   let test = this.hyperGrid.selectionModel.getSelectedColumns()
-            //    this.debouncedSetSelectedCells()
+             //    this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....

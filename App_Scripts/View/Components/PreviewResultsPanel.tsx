@@ -1,13 +1,10 @@
 import * as React from "react";
-/// <reference path="../../typings/.d.ts" />
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { FontWeight, FontStyle, PopoverType } from '../../Core/Enums';
+import { MessageType } from '../../Core/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IUserFilter, ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
@@ -37,10 +34,10 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                 {previewResult.ValidationRules.length > 0 ?
                     <td>
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true &&
-                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Error} />
+                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} MessageType={MessageType.Error} />
                         }
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning == true &&
-                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} popoverType={PopoverType.Warning} />
+                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} MessageType={MessageType.Warning} />
                         }
                     </td>
                     :

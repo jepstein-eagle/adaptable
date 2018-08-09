@@ -8,7 +8,7 @@ import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAlert, IUIConfirmation, ErrorAlert } from '../Core/Interface/IMessage';
-import { DataType, AlertType } from '../Core/Enums'
+import { DataType, MessageType } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
@@ -146,12 +146,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     failedMessages.push(failedMessage)
                 }
             })
-            let error: IAlert = {
-                Header: failedRules.length + "Nudge(s) failed rule",
-                Msg: failedMessages.toString(),
-                AlertType : AlertType.Error
-            }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
+            this.blotter.api.alertShowError("Nudge(s) failed rule", failedMessages.toString(), true)
         }
     }
 
@@ -184,7 +179,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
         if (successfulValues.length > 0) {
-             this.blotter.setValueBatch(successfulValues);
+            this.blotter.setValueBatch(successfulValues);
 
         }
     }

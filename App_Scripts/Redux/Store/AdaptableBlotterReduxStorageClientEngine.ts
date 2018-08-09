@@ -2,7 +2,7 @@ import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
-import { AlertType } from '../../Core/Enums';
+import { MessageType } from '../../Core/Enums';
 
 interface IAdaptableBlotterReduxStorageClientEngine extends ReduxStorage.StorageEngine { }
 
@@ -48,7 +48,7 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
     };
 
     return fetch(this.url, saveOptions).then(checkStatus).catch(error => {
-      this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Cannot Save Config",Msg: error.message  , AlertType: AlertType.Error}))
+      this.blotter.api.alertShowError("Cannot Save Config", error.message, true)
       return Promise.reject("Cannot save config:" + error.message)
     });;
   }

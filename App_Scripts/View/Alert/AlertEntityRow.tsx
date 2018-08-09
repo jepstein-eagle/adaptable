@@ -8,21 +8,21 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from "../UIInterfaces";
 import { IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { AlertType } from "../../Core/Enums";
+import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
     Column: IColumn
-    onChangeAlertType: (index: number, Type: AlertType) => void
+    onChangeMessageType: (index: number, Type: MessageType) => void
 }
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     render(): any {
         let alert: IAlertDefinition = this.props.AdaptableBlotterObject as IAlertDefinition;
 
-        let alertTypes = EnumExtensions.getNames(AlertType).map((type) => {
+        let MessageTypes = EnumExtensions.getNames(MessageType).map((type) => {
             return <option style={{ fontSize: "5px" }} key={type} value={type}>{type}</option>
         })
 
@@ -30,8 +30,8 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
         colItems[0].Content = this.getColumnandRule(alert)
         colItems[1].Content =
-           <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={alert.AlertType} onChange={(x) => this.onAlertTypeChanged(this.props.Index, x)} >
-                {alertTypes}
+           <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={alert.MessageType} onChange={(x) => this.onMessageTypeChanged(this.props.Index, x)} >
+                {MessageTypes}
             </FormControl> 
         colItems[2].Content = this.setExpressionDescription(alert)
         colItems[3].Content = <EntityListActionButtons
@@ -62,17 +62,17 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
         return columnInfo
     }
 
-    onAlertTypeChanged(index: number, event: React.FormEvent<any>) {
+    onMessageTypeChanged(index: number, event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let alertType: AlertType;
+        let messageType: MessageType;
         if (e.value == 'Info') {
-            alertType = AlertType.Info
+            messageType = MessageType.Info
         } else if (e.value == 'Warning') {
-            alertType = AlertType.Warning
+            messageType = MessageType.Warning
         } else if (e.value == 'Error') {
-            alertType = AlertType.Error
+            messageType = MessageType.Error
         }
-        this.props.onChangeAlertType(index, alertType);
+        this.props.onChangeMessageType(index, messageType);
     }
 }
 

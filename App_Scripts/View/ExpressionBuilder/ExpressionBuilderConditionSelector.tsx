@@ -56,11 +56,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         this.state = this.buildState(this.props)
     }
 
-    componentWillMount() {
-        let s: string = "hello world"
-    }
-
-
     componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
         this.setState(this.buildState(nextProps))
         this.buildColumnValuesState();
@@ -152,8 +147,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         } else { // get the distinct items and make sure within max items that can be displayed
-                            let distinctItems = ArrayExtensions.RetrieveDistinct(result)
-                            distinctItems = Array.from(distinctItems.values()).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(di => {
                                 columnValuePairs.push({ RawValue: di, DisplayValue: di });
                             })

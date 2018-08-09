@@ -36,7 +36,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         let failedRules: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
 
         failedRules.forEach(fr => { // might be better to do a single alert with all the messages?
-            this.blotter.api.alertShow("Alert for: " + ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns), fr.Description, fr.AlertType)
+            this.blotter.api.alertShow(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns), fr.Description, fr.MessageType, fr.ShowAsPopup)
         })
     }
 

@@ -3,7 +3,7 @@ import { Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ICellValidationRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
-import { PopoverType } from '../../../Core/Enums';
+import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
@@ -35,7 +35,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
                     </Col>
                     <Col xs={12}>
                         <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Query</Checkbox>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} MessageType={MessageType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 

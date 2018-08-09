@@ -29,10 +29,11 @@ import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { PopoverType, StatusColour } from "../../Core/Enums";
+import { MessageType, StatusColour } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { fail } from "assert";
+import { UIHelper } from "../UIHelper";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -126,7 +127,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         onClick={() => this.onApplyClick()}
                         size={"small"}
                         glyph={"ok"}
-                        bsStyle={this.getStyleForApplyButton(statusColour)}
+                        bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Bulk Update"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
                         DisplayMode="Glyph" />
@@ -134,7 +135,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
                 {this.props.IsValidSelection && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} popoverType={this.getPopoverType(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 
@@ -170,28 +171,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             }
         }
         return StatusColour.Green;
-    }
-
-    private getStyleForApplyButton(statusColour: StatusColour): string {
-        switch (statusColour) {
-            case StatusColour.Red:
-                return "danger"
-            case StatusColour.Amber:
-                return "warning";
-            case StatusColour.Green:
-                return "success";
-        }
-    }
-
-    private getPopoverType(statusColour: StatusColour): PopoverType {
-        switch (statusColour) {
-            case StatusColour.Red:
-                return PopoverType.Error;
-            case StatusColour.Amber:
-                return PopoverType.Warning;
-            case StatusColour.Green:
-                return PopoverType.Info;
-        }
     }
 
     onDisabledChanged() {

@@ -20,7 +20,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { Visibility, StatusColour, AlertType } from "../../Core/Enums";
+import { Visibility, StatusColour, MessageType } from "../../Core/Enums";
 import { ISystemStatus } from "../../Core/Interface/Interfaces";
 import { IAlert,  } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
@@ -137,7 +137,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                    Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
-                        AlertType: AlertType.Info
+                        MessageType: MessageType.Info
                 }
                 this.props.onShowStatusMessage(info)
                 return;
@@ -145,7 +145,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let warning: IAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    AlertType: AlertType.Info
+                    MessageType: MessageType.Info
                 }
                 this.props.onShowStatusMessage(warning)
                 return;
@@ -153,7 +153,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let error: IAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    AlertType: AlertType.Info
+                    MessageType: MessageType.Info
                 }
                 this.props.onShowStatusMessage(error)
                 return;

@@ -35,8 +35,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                 confirmBtnBsStyle="primary"
                 confirmBtnBsSize="sm"
 
-               // confirmBtnText={this.props.ConfirmText}
-                confirmBtnText={"hello"}
+                confirmBtnText={this.props.ConfirmText}
                 cancelBtnBsStyle="default"
                 cancelBtnText={this.props.CancelText}
                 title={title}

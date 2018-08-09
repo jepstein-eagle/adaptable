@@ -23,13 +23,13 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IAlertDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
-import { AlertType } from "../../Core/Enums";
+import { MessageType } from "../../Core/Enums";
 
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
     AlertDefinitions: IAlertDefinition[];
     onAddEditAlert: (Index: number, Alert: IAlertDefinition) => AlertRedux.AlertDefinitionAddUpdateAction
-    onChangeAlertType: (index: number, ActionMode: any) => AlertRedux.AlertDefinitionChangeAlertTypeAction
+    onChangeMessageType: (index: number, ActionMode: any) => AlertRedux.AlertDefinitionChangeMessageTypeAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -78,7 +78,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={AlertRedux.AlertDefinitionDelete(index)}
-                onChangeAlertType={(index, x) => this.onAlertTypeChanged(index, x)}
+                onChangeMessageType={(index, x) => this.onMessageTypeChanged(index, x)}
 
             />
 
@@ -131,8 +131,8 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAlertDefinition(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
 
-    onAlertTypeChanged(index: number, ActionMode: any) {
-        this.props.onChangeAlertType(index, ActionMode);
+    onMessageTypeChanged(index: number, ActionMode: any) {
+        this.props.onChangeMessageType(index, ActionMode);
     }
 
     onEdit(index: number, Alert: IAlertDefinition) {
@@ -167,7 +167,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
-        onChangeAlertType: (index: number, AlertType: AlertType) => dispatch(AlertRedux.AlertDefinitionChangeAlertType(index, AlertType)),
+        onChangeMessageType: (index: number, MessageType: MessageType) => dispatch(AlertRedux.AlertDefinitionChangeMessageType(index, MessageType)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
     };
 }

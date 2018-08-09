@@ -28,9 +28,9 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
         this.state = {
             name: 'React',
             data: [
-                { Label: "A", Value: 5, Value2: 4 },
+                { Label: "A", Value: 15, Value2: 4 },
                 { Label: "B", Value: 8, Value2: 2 },
-                { Label: "C", Value: 2, Value2: 3 },
+                { Label: "C", Value: 12, Value2: 3 },
                 { Label: "D", Value: 4, Value2: 4 },
                 { Label: "E", Value: 5, Value2: 5 },
                 { Label: "F", Value: 6, Value2: 4 },
@@ -56,14 +56,7 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
         </div>
     }
 
-    /*
-    <IgrCategoryChart
-                    yAxisMinimumValue={0}
-                    chartTitle="test"
-                    width="500px"
-                    height="500px"
-                    dataSource={this.state.data} />
-                    */
+ 
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

@@ -60,7 +60,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { IAlert, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, VendorGridName, AlertType } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, VendorGridName, MessageType } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
@@ -163,7 +163,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
-      
+
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load
@@ -1022,12 +1022,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
                         let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                        let error: IAlert = {
-                            Header: "Validation Error",
-                            Msg: errorMessage,
-                            AlertType: AlertType.Error
-                        };
-                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowAlertAction>(PopupRedux.PopupShowAlert(error));
+                        this.api.alertShowError("Validation Error", errorMessage, true)
                         return true;
                     }
                     else {

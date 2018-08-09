@@ -29,10 +29,11 @@ import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { PopoverType, StatusColour, MathOperation } from "../../Core/Enums";
+import { MessageType, StatusColour, MathOperation } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { UIHelper } from "../UIHelper";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;
@@ -114,7 +115,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                         onClick={() => this.onApplyClick()}
                         size={"small"}
                         glyph={"ok"}
-                        bsStyle={this.getStyleForApplyButton(statusColour)}
+                        bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Smart Edit"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
                         DisplayMode="Glyph" />
@@ -122,7 +123,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
                 {this.props.IsValidSelection &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} popoverType={this.getPopoverType(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 
@@ -168,31 +169,6 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                 return "/";
         }
     }
-
-    private getPopoverType(statusColour: StatusColour): PopoverType {
-        switch (statusColour) {
-            case StatusColour.Red:
-                return PopoverType.Error;
-            case StatusColour.Amber:
-                return PopoverType.Warning;
-            case StatusColour.Green:
-                return PopoverType.Info;
-        }
-    }
-
-    private getStyleForApplyButton(statusColour: StatusColour): string {
-        switch (statusColour) {
-            case StatusColour.Red:
-                return "danger"
-            case StatusColour.Amber:
-                return "warning";
-            case StatusColour.Green:
-                return "success";
-        }
-    }
-
-
-
 
     private onApplyClick(): void {
         this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ?

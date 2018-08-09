@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, Well } from 'react-bootstrap';
-import { FontWeight, FontStyle, FontSize, PopoverType } from '../../Core/Enums';
+import { FontWeight, FontStyle, FontSize, MessageType } from '../../Core/Enums';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
@@ -130,7 +130,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                                                         </FormControl>
                                                         {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Conditional Style: Font Size"}
                                                             bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
-                                                            popoverType={PopoverType.Info} />
+                                                            MessageType={MessageType.Info} />
                                                     </AdaptableBlotterForm  >
                                                 }
                                             </Col>

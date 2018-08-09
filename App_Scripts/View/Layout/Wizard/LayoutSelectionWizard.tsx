@@ -2,7 +2,7 @@ import * as React from "react";
 import { Panel, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { SelectionMode, LayoutSource, PopoverType } from '../../../Core/Enums';
+import { SelectionMode, LayoutSource, MessageType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
@@ -42,11 +42,11 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="Existing" checked={this.state.LayoutSource == LayoutSource.Existing} onChange={(e) => this.onScopeSelectChanged(e)}>Copy current Grid setup</Radio>
-                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} popoverType={PopoverType.Info} />
+                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} MessageType={MessageType.Info} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="New" checked={this.state.LayoutSource == LayoutSource.New} onChange={(e) => this.onScopeSelectChanged(e)}>Create a new Layout</Radio>
-                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} popoverType={PopoverType.Info} />
+                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} MessageType={MessageType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>

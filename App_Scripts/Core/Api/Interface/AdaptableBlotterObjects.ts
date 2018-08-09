@@ -1,4 +1,4 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, AlertType } from '../../Enums';
+import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Enums';
 import { Expression } from '../Expression';
 
 
@@ -65,10 +65,11 @@ export interface IRange {
 // Core objects for Strategies
 export interface IAlertDefinition extends IAdaptableBlotterObject {
     ColumnId: string;
-    Range: IRange,
+    Range: IRange;
     Description: string;
     Expression: Expression;
-    AlertType: AlertType
+    MessageType: MessageType;
+    ShowAsPopup: boolean
   }
 
 export interface IAdvancedSearch extends IAdaptableBlotterObject {

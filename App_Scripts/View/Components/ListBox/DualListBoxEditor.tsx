@@ -165,7 +165,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                     <Panel header={this.props.HeaderAvailable} className="ab_no-padding-anywhere-panel" bsStyle="info">
                         <div>
                             {headerFirstListBox}
-                            <ListGroup fill className="AvailableDropZone" style={listGroupAvailableStyle}
+                            <ListGroup  className="AvailableDropZone" style={listGroupAvailableStyle}
                                 onDragEnter={(event) => this.DragEnterAvailable(event)}
                                 onDragOver={(event) => this.DragOverAvailable(event)}
                                 onDragLeave={(event) => this.DragLeaveAvailable(event)}>
@@ -189,7 +189,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 <Col xs={4} >
                     <Panel header={this.props.HeaderSelected} className="ab_no-padding-anywhere-panel" bsStyle="info">
                         <div>
-                            <ListGroup fill style={listGroupSelectedStyle} className="SelectedDropZone"
+                            <ListGroup  style={listGroupSelectedStyle} className="SelectedDropZone"
                                 onDragEnter={(event) => this.DragEnterSelected(event)}
                                 onDragOver={(event) => this.DragOverSelected(event)}
                                 onDragLeave={(event) => this.DragLeaveSelected(event)}>

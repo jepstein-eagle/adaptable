@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import * as _ from 'lodash'
 import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { LeafExpressionOperator, DisplayAction, PopoverType } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
@@ -145,7 +145,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                             </Col>
                             <Col xs={1}>
                                 <AdaptablePopover cssClassName={cssClassName} headerText={"Quick Search: Operator"}
-                                    bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} popoverType={PopoverType.Info} />
+                                    bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} MessageType={MessageType.Info} />
 
                             </Col>
                         </FormGroup>
@@ -162,7 +162,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                             <Col xs={1}>
                                 <AdaptablePopover cssClassName={cssClassName} headerText={"Quick Search: Behaviour"}
                                     bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
-                                    popoverType={PopoverType.Info} />
+                                    MessageType={MessageType.Info} />
                             </Col>
                         </FormGroup>
 

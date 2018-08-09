@@ -7,7 +7,7 @@ import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { MathOperation, PopoverType, DataType } from '../../Core/Enums'
+import { MathOperation, MessageType, DataType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
@@ -150,15 +150,15 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                     onClick={() => { this.onApplyClick() }} >Apply to Grid</Button>
                                                 {' '}
                                                 {(hasDataTypeError) &&
-                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Update Error"} bodyText={[dataTypeErrorMessage]} popoverType={PopoverType.Error} />}
+                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Update Error"} bodyText={[dataTypeErrorMessage]} MessageType={MessageType.Error} />}
                                                 {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning) &&
-                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Warning} />}
+                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} MessageType={MessageType.Warning} />}
                                                 {(StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) && !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) &&
-                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} popoverType={PopoverType.Error} />}
+                                                    <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[globalValidationMessage]} MessageType={MessageType.Error} />}
                                             </Col>
                                         </Row>
                                     </div>
-                                }
+                                }MessageType
                             </FormGroup>
                         </AdaptableBlotterForm>
                     </PanelWithImage>

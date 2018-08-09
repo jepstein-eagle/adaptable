@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, DataType, AlertType } from '../../Core/Enums';
+import { ExportDestination, MathOperation, DataType, MessageType } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -194,6 +194,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             "Grid",
             "About",
             "BulkUpdate",
+            ["Alert", "Alerts"],
             ["Calendar", "AvailableCalendars"],
             ["Theme", "AvailableThemes"],
             ["Export", "CurrentLiveReports"],
@@ -247,7 +248,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
                         //for now i'm still initializing the AB even if loading state has failed.... 
                         //we may revisit that later
                         this.TheStore.dispatch(InitState())
-                        this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configurtion", Msg: "Error loading your configuration:" + e, AlertType: AlertType.Error }))
+                        this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configurtion", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error }))
                     })
     }
 }
@@ -381,10 +382,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText,  AlertType: AlertType.Error }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText,  MessageType: MessageType.Error }))
                             }
                             else {
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", AlertType: AlertType.Info }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info }))
                             }
                         }
                     }
@@ -540,11 +541,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     else if (importAction) {
                         middlewareAPI.dispatch(importAction)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", AlertType: AlertType.Info }))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info }))
                     }
                     else {
                         AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import" , AlertType: AlertType.Error}))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import" , MessageType: MessageType.Error}))
                     }
                     return returnAction;
                 }
@@ -732,7 +733,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
 
                     if (apiReturn.Alert) {
-                        // check if Smared is showing as popup and then close and show error (dont want to do that if from toolbar)
+                        // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
                         let popup = state.Popup.ScreenPopup;
                         if (popup.ComponentName == ScreenPopups.SmartEditPopup) {  //We close the SmartEditPopup
                             middlewareAPI.dispatch(PopupRedux.PopupHide());
@@ -790,7 +791,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
                             //We close the BulkUpdatePopup
                             middlewareAPI.dispatch(PopupRedux.PopupHide());
-                            //We show the Error Popup // assume that will alwasy be an Error
+                            //We show the Error Popup -- assume that will alwasy be an Error
                             middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
                         middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(false));

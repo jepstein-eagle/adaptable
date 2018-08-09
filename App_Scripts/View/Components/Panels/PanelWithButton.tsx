@@ -1,7 +1,7 @@
 import * as React from "react";
 import { PanelProps, Panel, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { PopoverType } from '../../../Core/Enums';
+import { MessageType } from '../../../Core/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 
@@ -48,7 +48,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                     {this.props.infoBody != null &&
                         <span>
                             <label>{' '}</label>
-                            <span>  {' '} <AdaptablePopover cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} popoverType={PopoverType.Info} /></span>
+                            <span>  {' '} <AdaptablePopover cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} /></span>
                         </span>
                     }
 

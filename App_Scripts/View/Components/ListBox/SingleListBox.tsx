@@ -73,7 +73,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
 
         return <div className={cssClassName}>
             {header}
-            <ListGroup fill style={this.props.style}>
+            <ListGroup  style={this.props.style}>
                 {itemsElements}
             </ListGroup>
         </div>;
@@ -135,5 +135,5 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
 
 var listGroupItemStyle = {
     'fontSize': 'small',
-    'padding': '1px',
+    'padding': '5px',
  };

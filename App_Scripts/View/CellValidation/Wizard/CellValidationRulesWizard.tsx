@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, LeafExpressionOperator, PopoverType, RangeOperandType } from '../../../Core/Enums';
+import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
@@ -51,11 +51,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} MessageType={MessageType.Info} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow edits where the new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} popoverType={PopoverType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} MessageType={MessageType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 

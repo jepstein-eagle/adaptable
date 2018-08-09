@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { PopoverType } from '../../../Core/Enums';
+import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
@@ -40,11 +40,11 @@ export class PlusMinusSettingsWizard extends React.Component<PlusMinusSettingsWi
                         <Col xs={9}>
                             <Radio value="expression" checked={!this.state.IsDefaultNudge} onChange={(e) => this.onExpressionOptionChange(e)}>
                                 Custom Plus/Minus Rule {' '}
-                                <AdaptablePopover cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} popoverType={PopoverType.Info} />
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"]} MessageType={MessageType.Info} />
                             </Radio>
                             <Radio value="default" checked={this.state.IsDefaultNudge} onChange={(e) => this.onExpressionOptionChange(e)}>
                                 Default Nudge Value for Column {' '}
-                                <AdaptablePopover cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} popoverType={PopoverType.Info} />
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Plus Minus Settings: Apply As"} bodyText={["Set default nudge value for the column"]} MessageType={MessageType.Info} />
                             </Radio>
                         </Col>
                     </FormGroup>

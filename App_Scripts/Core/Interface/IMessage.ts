@@ -1,17 +1,17 @@
 import * as Redux from 'redux';
-import { AlertType } from '../Enums';
+import { MessageType } from '../Enums';
 
 
 export interface IAlert {
     Header: string,
     Msg: string;
-    AlertType: AlertType
+    MessageType: MessageType
 }
 
 export abstract class AlertBase implements IAlert {
     Header: string;    
     Msg: string;
-    AlertType: AlertType;
+    MessageType: MessageType;
 
    
 }
@@ -19,21 +19,21 @@ export abstract class AlertBase implements IAlert {
 export class ErrorAlert extends AlertBase implements IAlert {
     constructor() {
         super()
-        this.AlertType = AlertType.Error
+        this.MessageType = MessageType.Error
     }
 }
 
 export class WarningAlert extends AlertBase implements IAlert {
     constructor() {
         super()
-        this.AlertType = AlertType.Warning
+        this.MessageType = MessageType.Warning
     }
 }
 
 export class InfoAlert extends AlertBase implements IAlert {
     constructor() {
         super()
-        this.AlertType = AlertType.Info
+        this.MessageType = MessageType.Info
     }
 }
 //export interface IUIError {
@@ -83,7 +83,7 @@ export interface IAlertPopup {
     ShowAlertPopup: boolean;
     Header: string,
     Msg: string;
-    AlertType: AlertType
+    MessageType: MessageType
 }
 
 //export interface IWarningPopup {

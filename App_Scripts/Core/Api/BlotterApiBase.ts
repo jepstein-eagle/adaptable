@@ -18,6 +18,7 @@ import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
@@ -25,7 +26,7 @@ import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilt
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, AlertType, StatusColour, ExportDestination } from "../Enums";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination } from "../Enums";
 import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
@@ -447,48 +448,30 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     // Alerts api Methods
-    public alertShow(alertHeader: string, alertMessage: string, alertType: "Info" | "Warning" | "Error"): void {
-        switch (alertType as AlertType) {
-            case AlertType.Info:
-                this.alertShowMessage(alertHeader, alertMessage);
-                return;
-            case AlertType.Warning:
-                this.alertShowWarning(alertHeader, alertMessage);
-                return;
-            case AlertType.Error:
-                this.alertShowError(alertHeader, alertMessage);
-                return;
-        }
-    }
-
-    public alertShowMessage(alertHeader: string, alertMessage: string): void {
-        let info: IAlert = {
+    public alertShow(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean ): void {
+        let MessageTypeEnum = MessageType as MessageType;
+        let alert: IAlert = {
             Header: alertHeader,
             Msg: alertMessage,
-            AlertType: AlertType.Info
+            MessageType: MessageTypeEnum
         }
-        this.dispatchAction(PopupRedux.PopupShowAlert(info))
-        AdaptableBlotterLogger.LogMessage(alertHeader + ": " + alertMessage)
+        this.dispatchAction(AlertRedux.AlertAdd(alert))
+        if (showAsPopup) {
+            this.dispatchAction(PopupRedux.PopupShowAlert(alert))
+        }
+        AdaptableBlotterLogger.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
     }
 
-    public alertShowWarning(alertHeader: string, alertMessage: string): void {
-        let warning: IAlert = {
-            Header: alertHeader,
-            Msg: alertMessage,
-            AlertType: AlertType.Warning
-        }
-        AdaptableBlotterLogger.LogWarning(alertHeader + ": " + alertMessage)
-        this.dispatchAction(PopupRedux.PopupShowAlert(warning))
+    public alertShowMessage(alertHeader: string, alertMessage: string, showAsPopup: boolean ): void {
+        this.alertShow(alertHeader, alertMessage, MessageType.Info, showAsPopup)
     }
 
-    public alertShowError(alertHeader: string, alertMessage: string): void {
-        let error: IAlert = {
-            Header: alertHeader,
-            Msg: alertMessage,
-            AlertType: AlertType.Error
-        }
-        AdaptableBlotterLogger.LogError(alertHeader + ": " + alertMessage)
-        this.dispatchAction(PopupRedux.PopupShowAlert(error))
+    public alertShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean ): void {
+        this.alertShow(alertHeader, alertMessage, MessageType.Warning, showAsPopup)
+    }
+
+    public alertShowError(alertHeader: string, alertMessage: string, showAsPopup: boolean ): void {
+        this.alertShow(alertHeader, alertMessage, MessageType.Error, showAsPopup)
     }
 
     // Export api Methods

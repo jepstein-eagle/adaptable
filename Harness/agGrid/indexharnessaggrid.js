@@ -47,7 +47,7 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-      //    getColumnValues: retrieveValues,
+          getColumnValues: retrieveValues,
       //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -60,7 +60,7 @@ function InitTradeBlotter() {
 
 function retrieveValues(columnName) {
     return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(getValuesForColumn(columnName)), 1500);
+        setTimeout(() => resolve(getValuesForColumn(columnName)), 2500);
     });
 }
 
@@ -132,7 +132,7 @@ function apiTester(state, gridOptions) {
         } else if (quickSearchText == "#send") {
             adaptableblotter.api.exportSendReport('All Data', 'CSV')
         } else if (quickSearchText == "#info") {
-            adaptableblotter.api.alertShow("Hello", "Your data is fine", "Info")
+            adaptableblotter.api.alertShow("Hello", "Your data is fine actually its very good and I want to check that this wraps", "Info")
         } else if (quickSearchText == "#warning") {
             adaptableblotter.api.alertShow("End of Day", "Dont forget to send the report", "Warning")
         } else if (quickSearchText == "#error") {

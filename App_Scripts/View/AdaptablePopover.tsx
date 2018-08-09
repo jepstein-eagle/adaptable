@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { PopoverType } from '../Core/Enums';
+import {  MessageType } from '../Core/Enums';
 import * as StyleConstants from '../Core/Constants/StyleConstants';
 import { ButtonApply } from "./Components/Buttons/ButtonApply";
 import { ButtonInfo } from "./Components/Buttons/ButtonInfo";
+import { UIHelper } from "./UIHelper";
 
 
 /*
@@ -12,18 +13,19 @@ Very basic - for now! - info box that allows us to show Error where required.
 3 params:
 1. HeaderText - if not supplied then no header appears
 2. BodyText - the main message (sent not as a string but as an array so it can include html elements)
-3. PopoverType - Info, Warning or Error (matching the bootstrap types)
+3. MessageType - Info, Warning or Error (matching the bootstrap types)
 4. Trigger - defaults to hover but can be click...
 */
 
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
     headerText: string
     bodyText: any[],
-    popoverType: PopoverType
+    MessageType: MessageType
     cssClassName: string,
     triggerAction?: string
     useButton?: boolean
     tooltipText?: string
+
 }
 
 
@@ -46,14 +48,14 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
                     <ButtonInfo cssClassName={cssClassName}
                         onClick={() => null}
                         size={"small"}
-                        glyph={this.getGlyphName()}
-                        bsStyle={this.getStyle()}
+                        glyph={UIHelper.getGlyphByMessageType(this.props.MessageType)}
+                        bsStyle={UIHelper.getStyleNameByMessageType(this.props.MessageType)}
                         DisplayMode="Glyph"
                         tooltipText={this.props.tooltipText}
                     />
                     :
-                    <Label bsSize="large" bsStyle={this.getStyle()} className="ab_medium_padding">
-                        <Glyphicon glyph={this.getGlyphName()} />
+                    <Label bsSize="large" bsStyle={UIHelper.getStyleNameByMessageType(this.props.MessageType)} className="ab_medium_padding">
+                        <Glyphicon glyph={UIHelper.getGlyphByMessageType(this.props.MessageType)} />
                     </Label>
                 }
             </OverlayTrigger>
@@ -61,26 +63,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     }
 
 
-    private getStyle(): string {
-        switch (this.props.popoverType) {
-            case PopoverType.Error:
-                return "danger";
-            case PopoverType.Warning:
-                return "warning";
-            case PopoverType.Info:
-                return "info";
-        }
-    }
-
-    private getGlyphName(): string {
-        switch (this.props.popoverType) {
-            case PopoverType.Error:
-                return "exclamation-sign";
-            case PopoverType.Warning:
-                return "warning-sign";
-            case PopoverType.Info:
-                return "info-sign";
-        }
-    }
+    
 }
 

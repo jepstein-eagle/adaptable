@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { ConditionalStyleScope, SelectionMode, PopoverType } from '../../../Core/Enums';
+import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
@@ -37,12 +37,12 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
                     <Col xs={12} className="ab_large_margin">
                         <Radio className={cssClassName + "__radiobutton"} inline value="Row" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Row} onChange={(e) => this.onScopeSelectChanged(e)}>Whole Row</Radio>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName}  headerText={"Conditional Style: Whole Row"} bodyText={["The conditional style will be applied to alls cells in each matching row."]} popoverType={PopoverType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName}  headerText={"Conditional Style: Whole Row"} bodyText={["The conditional style will be applied to alls cells in each matching row."]} MessageType={MessageType.Info} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio className={cssClassName + "__radiobutton"} inline value="Column" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.Column} onChange={(e) => this.onScopeSelectChanged(e)}>Column</Radio>
                         {' '} {' '}
-                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} popoverType={PopoverType.Info} />
+                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Conditional Style: Single Column"} bodyText={["Pick the column from the list below which will have conditional style applied."]} MessageType={MessageType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
                 <Col xs={12} className="ab_large_margin">
