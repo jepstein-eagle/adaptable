@@ -6,8 +6,8 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
-import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
+//import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
+//import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
 
 interface ChartsPopupProps extends StrategyViewPopupProps<ChartsPopupComponent> {
     Charts: string[]
@@ -24,7 +24,7 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
         super(props);
 
         // this line is commented out as we cannot run it otherwise...
-             IgrCategoryChartModule.register();
+        //     IgrCategoryChartModule.register();
         this.state = {
             name: 'React',
             data: [
@@ -45,12 +45,7 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ChartsStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ChartsGlyph}>
-            <IgrCategoryChart
-                    yAxisMinimumValue={0}
-                    chartTitle="test"
-                    width="500px"
-                    height="500px"
-                    dataSource={this.state.data} />
+          
              
             </PanelWithImage>
         </div>
@@ -58,6 +53,15 @@ class ChartsPopupComponent extends React.Component<ChartsPopupProps, ChartsState
 
  
 }
+
+/*
+  <IgrCategoryChart
+                    yAxisMinimumValue={0}
+                    chartTitle="test"
+                    width="500px"
+                    height="500px"
+                    dataSource={this.state.data} />
+*/
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
