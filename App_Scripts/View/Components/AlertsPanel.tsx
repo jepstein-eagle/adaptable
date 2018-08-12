@@ -1,15 +1,10 @@
 import * as React from "react";
-import { Glyphicon, Panel, Table, Label, ListGroupItem, ListGroup, Row, Col, InputGroup } from "react-bootstrap";
+import { Glyphicon, Label, ListGroupItem, ListGroup, InputGroup } from "react-bootstrap";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAlert } from "../../Core/Interface/IMessage";
 import { UIHelper } from "../UIHelper";
 import { ButtonClear } from "./Buttons/ButtonClear";
-import { AdaptableObjectRow } from "./AdaptableObjectRow";
-import { IColItem } from "../UIInterfaces";
-import { Helper } from "../../Core/Helpers/Helper";
 import { ButtonPreviewDelete } from "./Buttons/ButtonPreviewDelete";
-import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
-import { PanelWithTwoButtons } from "./Panels/PanelWithTwoButtons";
 import { PanelWithButton } from "./Panels/PanelWithButton";
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {

@@ -27,7 +27,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
         if (column.Sortable) {
             let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);

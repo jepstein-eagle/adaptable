@@ -47,7 +47,7 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-          getColumnValues: retrieveValues,
+       //   getColumnValues: retrieveValues,
       //  maxColumnValueItemsDisplayed: 5
     }
 

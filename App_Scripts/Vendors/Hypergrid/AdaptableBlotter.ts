@@ -60,7 +60,7 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
-import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
+//import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
@@ -104,19 +104,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
     public VendorGridName: VendorGridName
+    public EmbedColumnMenu: boolean;
 
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
     private cellFlashIntervalHypergridMap: Map<any, Map<string, number>> = new Map()
     private abContainerElement: HTMLElement;
     private hyperGrid: any
     private filterContainer: HTMLDivElement
-    private contextMenuContainer: HTMLDivElement
+    //private contextMenuContainer: HTMLDivElement
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.hyperGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = VendorGridName.Hypergrid;
+        this.EmbedColumnMenu = false;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -174,11 +176,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        this.contextMenuContainer = this.abContainerElement.ownerDocument.createElement("div")
-        this.contextMenuContainer.id = "contextMenuContainer"
-        this.contextMenuContainer.style.position = 'absolute'
-        this.abContainerElement.ownerDocument.body.appendChild(this.contextMenuContainer)
-        ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
+        //   this.contextMenuContainer = this.abContainerElement.ownerDocument.createElement("div")
+        //   this.contextMenuContainer.id = "contextMenuContainer"
+        //   this.contextMenuContainer.style.position = 'absolute'
+        //    this.abContainerElement.ownerDocument.body.appendChild(this.contextMenuContainer)
+        //    ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
@@ -934,7 +936,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     destroy() {
         ReactDOM.unmountComponentAtNode(this.abContainerElement);
         ReactDOM.unmountComponentAtNode(this.filterContainer);
-        ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
+        //   ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
     }
 
     private valOrFunc(dataRow: any, column: any) {
@@ -1030,16 +1032,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.filterContainer.style.visibility = 'visible';
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
                     this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
+                    // we know get the context menu here as well as they both go in there
+                    // this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name));
+
+                    let colId: string = e.detail.primitiveEvent.column.name
+                    //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
+                    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
+                    this.Strategies.forEach(s => {
+                        s.addContextMenuItem(colId)
+                    })
+
+
                     ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
                 }
                 e.preventDefault();
             }
         });
-        this.hyperGrid.addEventListener("fin-context-menu", (e: any) => {
-            if (e.detail.primitiveEvent.isHeaderCell) {
-                this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
-            }
-        });
+        //   this.hyperGrid.addEventListener("fin-context-menu", (e: any) => {
+        //        if (e.detail.primitiveEvent.isHeaderCell) {
+        //             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
+        //         }
+        //     });
         this.hyperGrid.addEventListener("fin-before-cell-edit", (event: any) => {
             let dataChangingEvent: IDataChangingEvent;
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
@@ -1051,7 +1064,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
                     this.api.alertShowError("Validation Error", errorMessage, true)
-                     event.preventDefault();
+                    event.preventDefault();
                 }
                 else {
                     let warningMessage: string = "";
@@ -1086,7 +1099,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.debouncedSetSelectedCells()
         });
         this.hyperGrid.addEventListener('fin-column-selection-changed', () => {
-             //    this.debouncedSetSelectedCells()
+            //    this.debouncedSetSelectedCells()
         });
 
         //this is used so the grid displays sort icon when sorting....
@@ -1114,7 +1127,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 //we run the original one as we don't want it to override our styles. i.e. for ex background color for our flash
                 let originalGetCellReturn: any
                 if (originGetCell) {
-                    //we need to maintain the context of the call
+                    //we need to maintain the context tof the call
                     originalGetCellReturn = originGetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName)
                 }
                 if (config.isHeaderRow && !config.isHandleColumn) {

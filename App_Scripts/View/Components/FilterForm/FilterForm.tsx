@@ -7,7 +7,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
-import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator } from '../../../Core/Enums';
+import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab } from '../../../Core/Enums';
 import { IUserFilter, IColumnFilter, IRange } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
@@ -22,6 +22,10 @@ import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptable
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
+import { ListBoxMenu } from "./ListBoxMenu";
+import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem } from 'react-bootstrap';
+import { IMenuItem } from "../../../Core/Interface/IMenu";
+
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
@@ -30,24 +34,30 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     SystemFilters: string[];
     ColumnFilters: IColumnFilter[];
     BlotterOptions: IAdaptableBlotterOptions
-    BlotterApi:IBlotterApi
+    BlotterApi: IBlotterApi
+    ContextMenuItems: IMenuItem[]
+    EmbedColumnMenu: boolean;
     onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
+    onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
 }
 
-export interface FilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
+export interface FilterFormState {
     ColumnValuePairs: Array<IRawValueDisplayValuePair>
     ShowWaitingMessage: boolean
+    SelectedTab: ContextMenuTab
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
+
     constructor(props: FilterFormProps) {
         super(props);
 
         this.state = {
             ColumnValuePairs: [],
-            ShowWaitingMessage: false
+            ShowWaitingMessage: false,
+            SelectedTab: ContextMenuTab.Filter
         };
     }
     componentWillMount() {
@@ -112,39 +122,57 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             hideToolTip={true}
         />
 
-        let clearButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onClearFilter()}
+        let clearFilterButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onClearFilter()}
             bsStyle={"default"}
             style={{ margin: "5px" }}
             size={"xsmall"}
             overrideDisableButton={isEmptyFilter}
-            overrideText={"Clear Filter"}
+            overrideText={"Clear"}
             DisplayMode="Text"
             hideToolTip={true}
         />
 
 
         return <div>
-            <PanelWithTwoButtons cssClassName={cssClassName} headerText={"Filter"} style={panelStyle} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" buttonOne={clearButton} buttonTwo={closeButton}>
-                {this.state.ShowWaitingMessage ?
-                    <Waiting WaitingMessage="Retrieving Column Values..." />
+            <PanelWithTwoButtons cssClassName={cssClassName} style={panelStyle}
+                className="ab_no-padding-except-top-panel ab_small-padding-panel"
+                ContextMenuTab={this.state.SelectedTab}
+                ContextMenuChanged={(e) => this.onSelectTab(e)}
+                IsAlwaysFilter ={this.props.EmbedColumnMenu}
+                bsStyle="default" clearFilterButton={clearFilterButton} closeButton={closeButton}>
+
+                {this.state.SelectedTab == ContextMenuTab.Menu ?
+                    <ListBoxMenu ContextMenuItems={this.props.ContextMenuItems} onContextMenuItemClick={(action) => this.onContextMenuItemClick(action)}
+                    />
                     :
-                    <ListBoxFilterForm cssClassName={cssClassName}
-                        CurrentColumn={this.props.CurrentColumn}
-                        Columns={this.props.Columns}
-                        ColumnValues={this.state.ColumnValuePairs}
-                        DataType={this.props.CurrentColumn.DataType}
-                        UiSelectedColumnValues={uiSelectedColumnValues}
-                        UiSelectedUserFilters={uiSelectedUserFilters}
-                        UiSelectedRange={uiSelectedRangeExpression}
-                        UserFilters={appropriateFilterItems}
-                        onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
-                        onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
-                        Operators={leafExpressionOperators}
-                        onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
-                    </ListBoxFilterForm>
+                    <div>
+                        {this.state.ShowWaitingMessage ?
+                            <Waiting WaitingMessage="Retrieving Column Values..." />
+                            :
+                            <ListBoxFilterForm cssClassName={cssClassName}
+                                CurrentColumn={this.props.CurrentColumn}
+                                Columns={this.props.Columns}
+                                ColumnValues={this.state.ColumnValuePairs}
+                                DataType={this.props.CurrentColumn.DataType}
+                                UiSelectedColumnValues={uiSelectedColumnValues}
+                                UiSelectedUserFilters={uiSelectedUserFilters}
+                                UiSelectedRange={uiSelectedRangeExpression}
+                                UserFilters={appropriateFilterItems}
+                                onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
+                                onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
+                                Operators={leafExpressionOperators}
+                                onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
+                            </ListBoxFilterForm>
+                        }
+                    </div>
                 }
             </PanelWithTwoButtons>
+
         </div>
+    }
+
+    onSelectTab(tab: any): any {
+        this.setState({ SelectedTab: tab } as FilterFormState)
     }
 
     getLeafExpressionOperatorsForDataType(dataType: DataType): LeafExpressionOperator[] {
@@ -209,6 +237,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         this.props.onHideFilterForm()
     }
 
+    onContextMenuItemClick(action: Redux.Action): any {
+        this.props.onContextMenuItemClick(action)
+        this.props.onHideFilterForm()
+    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -220,11 +253,13 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SystemFilters: state.Filter.SystemFilters,
         BlotterOptions: ownProps.Blotter.BlotterOptions,
         BlotterApi: ownProps.Blotter.api,
+        ContextMenuItems: state.Menu.ContextMenu.Items
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
+        onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
         onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
@@ -237,7 +272,8 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
     <FilterForm
         getColumnValueDisplayValuePairDistinctList={(columnId: string, distinctCriteria: DistinctCriteriaPairValue) => FilterContext.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria)}
         Blotter={FilterContext.Blotter} CurrentColumn={FilterContext.Column}
-        TeamSharingActivated={false} />
+        TeamSharingActivated={false}
+        EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu} />
 </Provider>;
 
 let panelStyle = {

@@ -29,7 +29,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
         }
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         this.createContextMenuItemShowPopup(
             "Create " + StrategyNames.ConditionalStyleStrategyName,
             ScreenPopups.ConditionalStylePopup,

@@ -10,10 +10,6 @@ export interface IMenuItem {
 }
 
 export interface IContextMenu {
-    BuildContextMenu: boolean
-    IsVisible: boolean
-    PositionX: number
-    PositionY: number
     ColumnId: string
     Items: IMenuItem[]
 }

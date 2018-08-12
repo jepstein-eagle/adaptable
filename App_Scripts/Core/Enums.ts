@@ -187,6 +187,11 @@ export enum QueryTab  {
     Range = "Range",
 }
 
+export enum ContextMenuTab  {
+    Menu = "Menu",
+    Filter = "Filter",
+}
+
 
 export enum StatusColour {
     Red = 'Red',

@@ -63,7 +63,7 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
-import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
+//import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
@@ -82,7 +82,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
     public VendorGridName: VendorGridName
-
+    public EmbedColumnMenu: boolean;
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
@@ -101,6 +101,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.vendorGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = VendorGridName.Kendo;
+        this.EmbedColumnMenu= false;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
         // create the services
@@ -154,13 +155,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.abContainerElement.innerHTML = ""
 
-        this.contextMenuContainer = this.abContainerElement.ownerDocument.createElement("div")
-        this.contextMenuContainer.id = "contextMenuContainer"
-        this.contextMenuContainer.style.position = 'absolute'
-        this.abContainerElement.ownerDocument.body.appendChild(this.contextMenuContainer)
-        ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
-
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+            iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
 
         this.AdaptableBlotterStore.Load
@@ -915,7 +910,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         $("th[role='columnheader']").on('contextmenu', (e: JQueryMouseEventObject) => {
             e.preventDefault();
-            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field"), e.clientX, e.clientY));
+            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.currentTarget.getAttribute("data-field")));
         });
         this.vendorGrid.bind("filterMenuInit", (e: kendo.ui.GridFilterMenuInitEvent) => {
             this.createFilterForm(e);

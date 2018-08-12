@@ -549,11 +549,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     return returnAction;
                 }
-                case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
-                    let returnAction = next(action);
-                    middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())
-                    return returnAction;
-                }
+          //      case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
+          //          let returnAction = next(action);
+             //       middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())
+             //       return returnAction;
+             //  }
                 case AboutRedux.ABOUT_INFO_CREATE: {
                     let aboutStrategy = <IAboutStrategy>(blotter.Strategies.get(StrategyIds.AboutStrategyId));
                     let returnAction = next(action);

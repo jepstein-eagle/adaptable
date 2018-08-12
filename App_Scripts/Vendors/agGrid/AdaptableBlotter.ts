@@ -110,12 +110,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
+    public EmbedColumnMenu: boolean;
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.gridOptions = this.BlotterOptions.vendorGrid
         this.VendorGridName = VendorGridName.agGrid;
+        this.EmbedColumnMenu = true
 
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -134,14 +136,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
-       // this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
+        // this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-       // this.Strategies.set(StrategyIds.ChartsStrategyId, new ChartsStrategy(this))
+        // this.Strategies.set(StrategyIds.ChartsStrategyId, new ChartsStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -1192,8 +1194,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 
             //but you can also clsoe the menu from filter and clicking outside the menu....
-            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
-            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId(), 0, 0));
+            //    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
+            let colId: string = params.column.getColId()
+            //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
+            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
+            this.Strategies.forEach(s => {
+                s.addContextMenuItem(colId)
+            })
+
             let colMenuItems: (string | MenuItemDef)[];
             //if there was an initial implementation we init the list of menu items with this one, otherwise we take
             //the default items

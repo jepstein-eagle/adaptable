@@ -12,7 +12,7 @@ export class SelectColumnStrategy extends AdaptableStrategyBase implements ISele
         super(StrategyIds.SelectColumnStrategyId, blotter)
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         if (this.blotter.isSelectable()) {
 
             this.createContextMenuItemReduxAction(

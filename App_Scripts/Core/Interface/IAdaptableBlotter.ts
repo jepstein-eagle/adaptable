@@ -27,6 +27,7 @@ export interface IAdaptableBlotter {
     Strategies: IAdaptableStrategyCollection
 
     VendorGridName: VendorGridName
+    EmbedColumnMenu: boolean
 
     // Services
     CalendarService: ICalendarService

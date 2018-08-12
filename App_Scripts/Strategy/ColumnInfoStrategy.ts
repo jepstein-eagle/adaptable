@@ -16,7 +16,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
         this.createMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph);
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         this.createContextMenuItemShowPopup(
             StrategyNames.ColumnInfoStrategyName,
             ScreenPopups.ColumnInfoPopup,

@@ -25,7 +25,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
         this.createMenuItemShowPopup(StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyGlyphs.CalculatedColumnGlyph);
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         let column = this.CalculatedColumns.find(c => c.ColumnId == columnId);
         if (column) {
             this.createContextMenuItemShowPopup(

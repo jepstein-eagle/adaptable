@@ -17,7 +17,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         this.createMenuItemShowPopup(StrategyNames.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyGlyphs.CellValidationGlyph);
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
             this.createContextMenuItemShowPopup(
                 "Create Cell Validation Rule",
                 ScreenPopups.CellValidationPopup,

@@ -40,7 +40,7 @@ export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFil
 }
 
 export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, ListBoxFilterFormState> {
-    constructor(props: ListBoxFilterFormProps) {
+        constructor(props: ListBoxFilterFormProps) {
         super(props);
 
         this.state = {
@@ -147,11 +147,11 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             </AdaptableBlotterForm>
 
   
-        return <div>
+        return <div style={divStyle}>
             {rangeForm}
 
             {textClear}
-            <ListGroup  style={divStyle} >
+            <ListGroup  style={listGroupStyle} >
                 {userFiltersItemsElements}
                 {columnValuesItemsElements}
             </ListGroup>
@@ -296,6 +296,13 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 }
 
 let divStyle: React.CSSProperties = {
+    'overflowY': 'auto',
+    'overflowX': 'hidden',
+    'height': '450px',
+    'marginBottom': '0'
+}
+
+let listGroupStyle: React.CSSProperties = {
     'overflowY': 'auto',
     'overflowX': 'hidden',
     'height': '335px',

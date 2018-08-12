@@ -63,6 +63,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     public VendorGridName: VendorGridName
+    public EmbedColumnMenu: boolean;
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -78,6 +79,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
         this.VendorGridName = VendorGridName.AdaptableGrid;
+        this.EmbedColumnMenu = false;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -533,7 +535,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getVisibleRowCount(): number {
         return 1
     }
-    
+
     public getVisibleColumnCount(): number {
         return 1
     }
@@ -554,10 +556,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
-    public isSelectable(): boolean{
+    public isSelectable(): boolean {
         return true;
     }
-    public isSortable(): boolean{
+    public isSortable(): boolean {
         return true;
     }
 }

@@ -28,23 +28,26 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
 
     private InitBaseState() {
-        if (this.buildContextMenu != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu) {
-            this.buildContextMenu = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu;
-            if (this.buildContextMenu) {
-                let columnId = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId;
-                if (!ColumnHelper.isSpecialColumn(columnId)) {
-                    this.addColumnMenuItem(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
-                }
-            }
-        }
+    //    if (this.buildContextMenu != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu) {
+    //        this.buildContextMenu = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu;
+    //        if (this.buildContextMenu) {
+   //             let columnId = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId;
+    //            if (!ColumnHelper.isSpecialColumn(columnId)) {
+    //                this.addColumnMenuItem(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
+    //            }
+    //        }
+     //   }
     }
 
+    public popupMenuItem: IMenuItem;
+   
     protected InitState(): void {
         // stff - check this works
     }
 
+  
 
-    public popupMenuItem: IMenuItem;
+ 
 
     public getPopupMenuItem(): IMenuItem {
         if (!this.hasPopupMenu()) {
@@ -61,13 +64,20 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         return true;
     }
 
+    protected hasContextMenu(): boolean {
+        return false;
+    }
+
     protected addPopupMenuItem(): void {
         // base class implementation which is empty
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+public addContextMenuItem(columnId: string): void {
         // base class implementation which is empty
     }
+
+    
+
 
     getStrategyEntitlement(): IEntitlement {
         let state = this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
@@ -134,7 +144,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         ComponentName: string,
         GlyphIcon: string,
         PopupParams?: string) {
-        if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
+       
+            if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
             let menuItemShowPopup: MenuItemShowPopup = new MenuItemShowPopup(
                 Label,
                 this.Id,
@@ -144,7 +155,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                 true,
                 PopupParams)
             this.addContextMenuItemToStore(menuItemShowPopup);
-
         }
     }
 

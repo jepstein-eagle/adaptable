@@ -6,5 +6,5 @@ export interface IStrategy {
     getPopupMenuItem(): IMenuItem
     getStrategyEntitlement(): IEntitlement
     InitializeWithRedux(): void
-    
+    addContextMenuItem(columnId: string): void
 }

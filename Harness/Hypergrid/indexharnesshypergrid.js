@@ -218,7 +218,7 @@ function InitBlotter() {
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
- //   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
 
  //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     vendorGrid.addProperties(lightTheme);

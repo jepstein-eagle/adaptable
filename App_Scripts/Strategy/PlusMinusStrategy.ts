@@ -36,10 +36,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         this.createMenuItemShowPopup(StrategyNames.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph)
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
             this.createContextMenuItemShowPopup(
-                "Create Plus/Minus Nudge Rule",
+                "Create Plus/Minus Rule",
                 ScreenPopups.PlusMinusPopup,
                 StrategyGlyphs.PlusMinusGlyph,
                 "New|" + columnId)

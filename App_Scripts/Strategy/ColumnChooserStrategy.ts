@@ -18,7 +18,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
         this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
     }
 
-    protected addColumnMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         if (!this.isReadOnlyStrategy()) {
             this.createContextMenuItemReduxAction(
                 "Hide Column",
