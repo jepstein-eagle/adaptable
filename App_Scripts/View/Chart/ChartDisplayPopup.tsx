@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
@@ -54,13 +53,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             </PanelWithImage>
         </div>
     }
-
-   
 }
-
-/*
-  
-*/
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {

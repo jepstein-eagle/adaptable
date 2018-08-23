@@ -8,7 +8,8 @@ import { Expression } from '../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import * as GeneralConstants from '../Constants/GeneralConstants';
 
 export class ChartService implements IChartService {
 
@@ -16,30 +17,30 @@ export class ChartService implements IChartService {
     }
 
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
-     //   chartDefinition.AdditionalColumnValues = ["Pending", "Completed", "Rejected"]
-     //   chartDefinition.AdditionalColumn = "status"
 
         let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumn, columns)
         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumn, columns)
 
-        let colValues: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumn, DistinctCriteriaPairValue.DisplayValue)
+        let xAxisColValues: string[] = chartDefinition.XAxisColumnValues.length > 0 && chartDefinition.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
+            chartDefinition.XAxisColumnValues :
+            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumn, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
 
-        let chartData: any = colValues.map(cv => {
+        let additionalColValues: string[] = this.getAdditionalColumnValues(chartDefinition);
+
+        let chartData: any = xAxisColValues.map(cv => {
             let chartDataRow: any = new Object()
-            chartDataRow[xAxisColumnName] = cv.DisplayValue
+            chartDataRow[xAxisColumnName] = cv
 
-            let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumn, Value: cv.DisplayValue }
-            //  let groupedTotals: number[] = []
-            if (chartDefinition.AdditionalColumnValues) {
-                chartDefinition.AdditionalColumnValues.forEach((columnValue: string) => {
+            let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumn, Value: cv }
+
+            if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
+                additionalColValues.forEach((columnValue: string) => {
                     let columnValueKVP: KeyValuePair = { Key: chartDefinition.AdditionalColumn, Value: columnValue }
                     let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumn, [xAxisKVP, columnValueKVP], columns)
-                    //  groupedTotals.push(groupedTotal)
                     chartDataRow[columnValue] = groupedTotal
                 })
             } else { // just do the first one
                 let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumn, [xAxisKVP], columns)
-                //   groupedTotals.push(groupedTotal)
                 chartDataRow[yAxisColumnName] = groupedTotal
             }
             return chartDataRow
@@ -69,5 +70,15 @@ export class ChartService implements IChartService {
             }
         })
         return groupedTotal;
+    }
+
+    private getAdditionalColumnValues(chartDefinition: IChartDefinition): string[] {
+        if (ArrayExtensions.IsNullOrEmpty(chartDefinition.AdditionalColumnValues)) {
+            return []
+        }
+        return chartDefinition.AdditionalColumnValues.length > 0 && chartDefinition.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
+            chartDefinition.AdditionalColumnValues :
+            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumn, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+
     }
 }

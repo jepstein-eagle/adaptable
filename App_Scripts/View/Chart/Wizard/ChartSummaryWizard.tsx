@@ -24,6 +24,7 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             { Key: "Type", Value: this.props.Data.Type },
             { Key: "Y Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumn, this.props.Columns) },
             { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumn, this.props.Columns) },
+            { Key: "X Axis Values", Value: this.props.Data.XAxisColumnValues.join(', ')},
             {
                 Key: "Additional Column", Value: (this.props.Data.AdditionalColumn) ?
                     ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumn, this.props.Columns) :
@@ -50,7 +51,7 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
         return 1;
     }
     public GetIndexStepDecrement() {
-        return StringExtensions.IsNotNullOrEmpty(this.props.Data.AdditionalColumn) ? 1 : 2;
+        return 1;
     }
     public StepName = this.props.StepName
 }

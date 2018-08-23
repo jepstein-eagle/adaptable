@@ -36,8 +36,8 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
             XAxisColumn: props.Data.XAxisColumn,
             XAxisColumnValues: props.Data.XAxisColumnValues,
             UseAllXAsisColumnValues: (hasDistinctColumnValues) ? false : true,
-            AvailableXAxisColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumn) && hasDistinctColumnValues) ?
-                props.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumn, DistinctCriteriaPairValue.DisplayValue) :
+            AvailableXAxisColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumn)) ?
+                props.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, DistinctCriteriaPairValue.DisplayValue) :
                 null
         }
     }
@@ -67,38 +67,38 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={4}>
-                                <ControlLabel>X Axis Column Values:</ControlLabel>
-                            </Col>
+                            <Col xs={4} componentClass={ControlLabel}>X Axis Column Values:</Col>
                             <Col xs={6} >
                                 <Radio inline value="All" checked={this.state.UseAllXAsisColumnValues == true} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>All</Radio>
                                 <Radio inline value="Bespoke" checked={this.state.UseAllXAsisColumnValues == false} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>Bespoke</Radio>
                             </Col>
                         </Row>
 
-                        {StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumn) && this.state.UseAllXAsisColumnValues == false &&
-                            <Row>
-                                <Col xs={3}></Col>
-                                <Col xs={6}>
-                                    <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
-                                        <SingleListBox
-                                            Values={this.state.AvailableXAxisColumnValues}
-                                            cssClassName={cssClassName}
-                                            UiSelectedValues={this.state.XAxisColumnValues}
-                                            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                                            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                                            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-                                            onSelectedChange={(list) => this.onColumnValuesChange(list)}
-                                            SelectionMode={SelectionMode.Multi}>
-                                        </SingleListBox>
-                                    </Panel>
-                                </Col>
-                                <Col xs={3}></Col>
-                            </Row>
-                        }
                     </FormGroup>
 
                 </AdaptableBlotterForm>
+
+                {StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumn) && this.state.UseAllXAsisColumnValues == false &&
+                    <Row>
+                        <Col xs={3}></Col>
+                        <Col xs={6}>
+                            <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+                                <SingleListBox
+                                    Values={this.state.AvailableXAxisColumnValues}
+                                    cssClassName={cssClassName}
+                                    UiSelectedValues={this.state.XAxisColumnValues}
+                                    DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                                    ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                                    SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+                                    onSelectedChange={(list) => this.onColumnValuesChange(list)}
+                                    SelectionMode={SelectionMode.Multi}>
+                                </SingleListBox>
+                            </Panel>
+                        </Col>
+                        <Col xs={3}></Col>
+                    </Row>
+                }
+
             </Panel>
 
         </div>
@@ -106,8 +106,9 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
 
     private onUseAllColumnValuesChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let colValues: string[] = (e.checked) ? [GeneralConstants.ALL_COLUMN_VALUES] : []
-        this.setState({ UseAllXAsisColumnValues: e.value == "All", XAxisColumnValues: colValues } as ChartXAxisWizardState, () => this.props.UpdateGoBackState())
+        let showAll: boolean = e.value == "All"
+        let colValues: string[] = (showAll) ? [GeneralConstants.ALL_COLUMN_VALUES] : []
+        this.setState({ UseAllXAsisColumnValues: showAll, XAxisColumnValues: colValues } as ChartXAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onXAxisColumnChanged(columns: IColumn[]) {
@@ -134,7 +135,9 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
 
     public Next(): void {
         this.props.Data.XAxisColumn = this.state.XAxisColumn
+        this.props.Data.XAxisColumnValues = this.state.XAxisColumnValues
     }
+    
     public Back(): void {
         // todo
     }
@@ -151,6 +154,6 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
 
 let divStyle: React.CSSProperties = {
     'overflowY': 'auto',
-    'height': '300px',
-    'marginTop': '10px'
+    'height': '200px',
+    'marginTop': '2px'
 }
