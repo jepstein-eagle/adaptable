@@ -1,63 +1,55 @@
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { DataGenerator } from '../DataGenerator';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
 import { IAdaptableBlotterOptions } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
 import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import { ReactHarnessHelper } from '../agGridReact/ReactHarnessHelper';
-
+import { AgGridReact } from 'ag-grid-react';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
   blotterOptions: IAdaptableBlotterOptions,
-  trades: ITrade[],
+  rowData: any,
   columnDefs: any
 }
 
 export default class App extends React.Component<{}, AppState> {
   constructor(props: any) {
     super(props);
-    let gridOptions: GridOptions = this.createGridOptions();
+    let gridOptions: GridOptions = {
+      enableSorting: true
+    }
     this.state = {
       gridOptions: gridOptions,
-      blotterOptions: this.createAdaptableBlotterOptions(gridOptions),
-      trades: new DataGenerator().getTrades(15000),
-      columnDefs: new ReactHarnessHelper().getTradeSchema()
+      blotterOptions: {
+        primaryKey: "make",
+        vendorGrid: gridOptions,
+        userName: 'UtibeAbasi',
+        blotterId: "demo blotter",
+      },
+      rowData: [
+        { make: "Toyota", model: "Celica", price: 35000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxter", price: 72000 }
+      ],
+      columnDefs: [
+        { headerName: "Make", field: "make" },
+        { headerName: "Model", field: "model" },
+        { headerName: "Price", field: "price" }
+      ],
     }
   }
 
-  // Create the GridOptions object that ag-Grid needs
-  createGridOptions(): GridOptions {
-    return {
-      enableFilter: true, 
-      enableRangeSelection: false,
-    }
-  }
-
-  createAdaptableBlotterOptions(gridOptions: GridOptions): IAdaptableBlotterOptions {
-    return {
-      primaryKey: "tradeId",
-      vendorGrid: gridOptions,
-      userName: "demo user",
-      blotterId: "Trades Blotter",
-    }
-  }
-
-    render() {
+  render() {
     return (
-      <div id="adaptableBlotter-react">
+      <div>
         <AdaptableBlotterReact AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={"agGrid"} />
-        {/* div for the underlying grid
-        Tthe id of this <div> must be the same value as the 'vendorContainer' property in IAdaptableBlotterOptions - the default is 'grid' */}
-        <div id="grid" className={"ag-theme-blue"} style={{ width: '90%', height: '90%', position: 'absolute', margin: '20px' }} >
+        <div className='ag-theme-balham' style={{ height: '97vh', width: '100%' }}>
           <AgGridReact
             columnDefs={this.state.columnDefs}
-            rowData={this.state.trades}
+            rowData={this.state.rowData}
             gridOptions={this.state.gridOptions} />
-          </div>
+        </div>
       </div>
     );
   }
