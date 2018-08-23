@@ -1,4 +1,3 @@
-import { VendorGridName } from "./Enums";
 import { IAdaptableBlotterOptions } from "./Api/Interface/IAdaptableBlotterOptions";
 import { IAdaptableBlotter } from "./Interface/IAdaptableBlotter";
 import { BlotterFactoryHypergrid } from "../Vendors/Hypergrid/BlotterFactoryHypergrid";
@@ -8,15 +7,15 @@ import { BlotterFactoryAdaptableGrid } from "../Vendors/AdaptableGrid/BlotterFac
 
 export module BlotterFactory {
 
-  export function CreateAdaptableBlotter(adaptableBlotterOptions: IAdaptableBlotterOptions, vendorGrid: VendorGridName): IAdaptableBlotter {
-          switch (vendorGrid) {
-          case VendorGridName.agGrid:
+  export function CreateAdaptableBlotter(adaptableBlotterOptions: IAdaptableBlotterOptions,  vendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid'): IAdaptableBlotter {
+          switch (vendorGridName) {
+          case 'agGrid':
             return BlotterFactoryAgGrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
-          case VendorGridName.Hypergrid:
+          case 'Hypergrid':
             return BlotterFactoryHypergrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
-          case VendorGridName.Kendo:
+          case  'Kendo':
             return BlotterFactoryKendo.CreateAdaptableBlotter(adaptableBlotterOptions, false);
-          case VendorGridName.AdaptableGrid:
+          case  'AdaptableGrid':
             return BlotterFactoryAdaptableGrid.CreateAdaptableBlotter(adaptableBlotterOptions, false);
         }
     }

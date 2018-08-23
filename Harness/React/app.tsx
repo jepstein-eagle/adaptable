@@ -8,7 +8,6 @@ import { IAdaptableBlotterOptions } from '../../App_Scripts/Core/Api/Interface/I
 import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import { ReactHarnessHelper } from '../agGridReact/ReactHarnessHelper';
-import { VendorGridName } from '../../App_Scripts/Core/Enums';
 
 
 export interface AppState extends React.ClassAttributes<App> {
@@ -19,8 +18,8 @@ export interface AppState extends React.ClassAttributes<App> {
 }
 
 export default class App extends React.Component<{}, AppState> {
-  constructor() {
-    super();
+  constructor(props: any) {
+    super(props);
     let gridOptions: GridOptions = this.createGridOptions();
     this.state = {
       gridOptions: gridOptions,
@@ -57,10 +56,10 @@ export default class App extends React.Component<{}, AppState> {
   render() {
     return (
       <div id="adaptableBlotter-react">
-        <AdaptableBlotterReact AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={VendorGridName.agGrid} />
+        <AdaptableBlotterReact AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={"agGrid"} />
         {/* div for the underlying grid
         Tthe id of this <div> must be the same value as the 'vendorContainer' property in IAdaptableBlotterOptions - the default is 'grid' */}
-        <div id="grid" className={"ag-theme-fresh"} style={{ width: '90%', height: '90%', position: 'absolute', margin: '20px' }} >
+        <div id="grid" className={"ag-theme-blue"} style={{ width: '90%', height: '90%', position: 'absolute', margin: '20px' }} >
           <AgGridReact
             columnDefs={this.state.columnDefs}
             rowData={this.state.trades}

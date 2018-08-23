@@ -1,4 +1,4 @@
-import { DistinctCriteriaPairValue, VendorGridName } from '../Enums'
+import { DistinctCriteriaPairValue } from '../Enums'
 import { ICellInfo, IAdaptableStrategyCollection } from './Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -26,7 +26,7 @@ export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
 
-    VendorGridName: VendorGridName
+    VendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid';
     EmbedColumnMenu: boolean
 
     // Services

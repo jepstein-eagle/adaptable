@@ -44,7 +44,7 @@ import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder, VendorGridName, MessageType } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, DisplayAction, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
@@ -81,7 +81,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
-    public VendorGridName: VendorGridName
+    public VendorGridName: any
     public EmbedColumnMenu: boolean;
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -100,7 +100,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.vendorGrid = this.BlotterOptions.vendorGrid;
-        this.VendorGridName = VendorGridName.Kendo;
+        this.VendorGridName = 'Kendo';
         this.EmbedColumnMenu= false;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);

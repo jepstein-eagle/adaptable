@@ -45,7 +45,7 @@ import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStra
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { DataType, DistinctCriteriaPairValue, SortOrder, VendorGridName, MessageType } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue, SortOrder } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -103,7 +103,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
-    public VendorGridName: VendorGridName
+    public VendorGridName: any
     public EmbedColumnMenu: boolean;
 
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
@@ -117,7 +117,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.hyperGrid = this.BlotterOptions.vendorGrid;
-        this.VendorGridName = VendorGridName.Hypergrid;
+        this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);

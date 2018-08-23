@@ -60,7 +60,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { IAlert, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, VendorGridName, MessageType } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
@@ -98,7 +98,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
     public BlotterOptions: IAdaptableBlotterOptions
-    public VendorGridName: VendorGridName
+    public VendorGridName: any
 
     public CalendarService: ICalendarService
     public AuditService: IAuditService
@@ -116,7 +116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.gridOptions = this.BlotterOptions.vendorGrid
-        this.VendorGridName = VendorGridName.agGrid;
+        this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
 
         // create the store

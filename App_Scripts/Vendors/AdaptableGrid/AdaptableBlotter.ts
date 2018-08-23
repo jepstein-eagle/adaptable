@@ -38,7 +38,7 @@ import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue, VendorGridName } from '../../Core/Enums'
+import { DataType, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
@@ -62,7 +62,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
     public Strategies: IAdaptableStrategyCollection
     public AdaptableBlotterStore: IAdaptableBlotterStore
-    public VendorGridName: VendorGridName
+    public VendorGridName: any
     public EmbedColumnMenu: boolean;
 
     public CalendarService: ICalendarService
@@ -78,7 +78,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
-        this.VendorGridName = VendorGridName.AdaptableGrid;
+        this.VendorGridName = 'AdaptableGrid';
         this.EmbedColumnMenu = false;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);

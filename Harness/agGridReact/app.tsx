@@ -18,9 +18,9 @@ export interface AppState extends React.ClassAttributes<App> {
 // b. AdaptableBlotterOptions - required by the Adaptable Blotter and contains the set of properties that the Blotter needs
 // NOTE: One of the MANDATORY properties in AdaptableBlotterOptions is the GridOptions object
 export default class App extends React.Component<{}, AppState> {
-  constructor() {
-    super();
-    // Create the 2 objects and put them in state
+  constructor(props: any) {
+    super(props);
+     // Create the 2 objects and put them in state
     let gridOptions: GridOptions = this.createGridOptions();
     let adaptableBlotterOptions: IAdaptableBlotterOptions = this.createAdaptableBlotterOptions(gridOptions);
     this.state = {
