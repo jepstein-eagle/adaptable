@@ -38,14 +38,14 @@ export interface IAdaptableBlotter {
     InitAuditService(): void
 
     // Grid Events
-    onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     // not sure if this is right but putting the event here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
-    
+
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any

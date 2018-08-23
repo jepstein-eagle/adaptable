@@ -47,8 +47,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-    //we know for Kendo we receive a JQueryKeyEventObject
-    private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
+    private handleKeyDown(keyEvent: KeyboardEvent | any) {
         //it's a speacial key so we handle the string representation of the key '
         let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
         if (keyEventString == "-" || keyEventString == "+") {

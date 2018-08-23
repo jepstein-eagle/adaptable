@@ -145,8 +145,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo?
     }
 
-    private _onKeyDown: EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> = new EventDispatcher<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>();
-    public onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent> {
+    private _onKeyDown: EventDispatcher<IAdaptableBlotter, KeyboardEvent | any> = new EventDispatcher<IAdaptableBlotter, KeyboardEvent | any>();
+    public onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any> {
         return this._onKeyDown;
     }
 
