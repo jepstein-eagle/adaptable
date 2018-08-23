@@ -18,8 +18,8 @@ module.exports.adaptableBlotteragGrid = adaptableBlotteragGrid;
 //module.exports.IAdaptableBlotterOptions = IAdaptableBlotterOptions;
 //module.exports.IBlotterApi = IBlotterApi;
 
-var blotterFactory = require('./dist/App_Scripts/Core/BlotterFactory.d.ts');
+var blotterFactory = require('./App_Scripts/Core/BlotterFactory.ts');
 module.exports.blotterFactory = blotterFactory;
 
-var adaptableBlotterReact = require('./dist/App_Scripts/View/AdaptableBlotterReact.d.ts');
+var adaptableBlotterReact = require('./App_Scripts/View/AdaptableBlotterReact.tsx');
 module.exports.adaptableBlotterReact = adaptableBlotterReact;

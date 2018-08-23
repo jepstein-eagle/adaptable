@@ -8,7 +8,8 @@ var conditionalEntry = {
     'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
     'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
     'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
-    harness: "./Harness/DataGenerator.ts"
+    harness: "./Harness/DataGenerator.ts",
+    'AdaptableBlotterReact': ["./App_Scripts/View/AdaptableBlotterReact.tsx"],
 };
 if (process.env.arg == "kendo") {
     conditionalEntry = {
@@ -54,7 +55,7 @@ module.exports = {
         library: "[name]",
         libraryTarget: 'umd'
     },
-    // Turn on sourcemaps
+     // Turn on sourcemaps
     devtool: 'source-map',
 
     resolve: {
