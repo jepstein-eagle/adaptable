@@ -17,3 +17,6 @@ module.exports.adaptableBlotteragGrid = adaptableBlotteragGrid;
 //module.exports.IAdaptableBlotter = IAdaptableBlotter;
 //module.exports.IAdaptableBlotterOptions = IAdaptableBlotterOptions;
 //module.exports.IBlotterApi = IBlotterApi;
+
+var blotterFactory = require('./dist/App_Scripts/Core/BlotterFactory.d.ts');
+module.exports.blotterFactory = blotterFactory;
