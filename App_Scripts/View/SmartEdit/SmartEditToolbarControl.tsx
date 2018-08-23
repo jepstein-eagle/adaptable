@@ -1,35 +1,25 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import { ButtonToolbar, Col, InputGroup, Button, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
-import { Typeahead } from 'react-bootstrap-typeahead'
+import {  InputGroup, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { Helper } from '../../Core/Helpers/Helper';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
-import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
-import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
-import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
-import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType, StatusColour, MathOperation } from "../../Core/Enums";
+import { StatusColour, MathOperation } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
@@ -212,7 +202,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.SmartEditPopup, isReadOnly))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SmartEditPopup, isReadOnly))
     };
 }
 

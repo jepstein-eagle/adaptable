@@ -7,6 +7,9 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
 import { KeyValuePair } from '../View/UIInterfaces';
+import { ICalculatedColumn } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 
 export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrategy {
@@ -45,7 +48,8 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
         output.push({ Key: "Visible Columns", Value: this.blotter.getVisibleColumnCount() })
         output.push({ Key: "Can Sort", Value: this.blotter.isSortable() ? "True" : "False" })
         output.push({ Key: "Can Multi Select", Value: this.blotter.isSelectable() ? "True" : "False" })
-        output.push({ Key: "Calculated Columns", Value: this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c => c.ColumnId) })
+        let calcColumns: string[] = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c => c.ColumnId)
+        output.push({ Key: "Calculated Columns", Value: ArrayExtensions.IsNotNullOrEmpty(calcColumns) ? calcColumns : "None" })
         return output;
     }
 }

@@ -11,19 +11,21 @@ import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
 import * as StyleConstants from '../Core/Constants/StyleConstants';
 import { AdaptableBlotterPopupAlert } from "./Components/Popups/AdaptableBlotterPopupAlert";
+import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart";
 
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
     AdaptableBlotter: IAdaptableBlotter;
-    showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowAction;
-    onClosePopup: () => PopupRedux.PopupHideAction;
+    showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowScreenAction;
+    onCloseScreenPopup: () => PopupRedux.PopupHideScreenAction;
     onCloseAlertPopup: () => PopupRedux.PopupHideAlertAction;
     onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
     onClosePromptPopup: () => PopupRedux.PopupHidePromptAction;
     onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
     onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
+    onCloseChartPopup: () => PopupRedux.PopupHideChartAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -33,20 +35,27 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
 
+                <AdaptableBlotterChart
+                    AdaptableBlotter={this.props.AdaptableBlotter}
+                    onClose={this.props.onCloseChartPopup}
+                    showChart={this.props.PopupState.ChartPopup.ShowChartPopup}
+                />
+
                 <AdaptableBlotterPopupAlert
                     Header={this.props.PopupState.AlertPopup.Header}
                     Msg={this.props.PopupState.AlertPopup.Msg}
                     onClose={this.props.onCloseAlertPopup}
                     ShowPopup={this.props.PopupState.AlertPopup.ShowAlertPopup}
-                    MessageType={this.props.PopupState.AlertPopup.MessageType} />
-
+                    MessageType={this.props.PopupState.AlertPopup.MessageType}
+                />
 
                 <AdaptableBlotterPopupPrompt
                     Msg={this.props.PopupState.PromptPopup.PromptMsg}
                     Title={this.props.PopupState.PromptPopup.PromptTitle}
                     onClose={this.props.onClosePromptPopup}
                     onConfirm={this.props.onConfirmPromptPopup}
-                    ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup} />
+                    ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup}
+                />
 
                 <AdaptableBlotterPopupConfirmation
                     Title={this.props.PopupState.ConfirmationPopup.ConfirmationTitle}
@@ -56,16 +65,19 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     ConfirmText={this.props.PopupState.ConfirmationPopup.ConfirmationText}
                     onCancel={this.props.onCancelConfirmationPopup}
                     onConfirm={this.props.onConfirmConfirmationPopup}
-                    ShowCommentBox={this.props.PopupState.ConfirmationPopup.ShowCommentBox} />
+                    ShowCommentBox={this.props.PopupState.ConfirmationPopup.ShowCommentBox}
+                />
 
                 {/*  The main model window where function screens are 'hosted' */}
-                <AdaptableBlotterPopup showModal={this.props.PopupState.ScreenPopup.ShowPopup}
+                <AdaptableBlotterPopup
+                    showModal={this.props.PopupState.ScreenPopup.ShowScreenPopup}
                     ComponentName={this.props.PopupState.ScreenPopup.ComponentName}
-                    onHide={this.props.onClosePopup}
+                    onHide={this.props.onCloseScreenPopup}
                     IsReadOnly={this.props.PopupState.ScreenPopup.IsReadOnly}
                     AdaptableBlotter={this.props.AdaptableBlotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
-                    PopupParams={this.props.PopupState.ScreenPopup.Params} />
+                    PopupParams={this.props.PopupState.ScreenPopup.Params}
+                />
             </div>
 
         );
@@ -81,15 +93,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClosePopup: () => dispatch(PopupRedux.PopupHide()),
+        onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
         onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
-        //   onCloseWarningPopup: () => dispatch(PopupRedux.PopupHideWarning()),
-        //   onCloseInfoPopup: () => dispatch(PopupRedux.PopupHideInfo()),
+        onCloseChartPopup: () => dispatch(PopupRedux.PopupHideChart()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
-        showPopup: (componentName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShow(componentName, isReadOnly, params)),
+        showPopup: (componentName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShowScreen(componentName, isReadOnly, params)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
     };
 }

@@ -209,7 +209,6 @@ export enum MessageType {
 export enum SelectedCellOperation{
     Sum='Sum',
     Average='Average',
-    Mode ='Mode',
     Median ='Median',
     Distinct='Distinct',
     Max='Max',
@@ -219,4 +218,8 @@ export enum SelectedCellOperation{
     VWAP = 'VWAP'
 }
 
-
+export enum ChartType {
+    BarChart = 'Bar Chart',
+    LineChart = 'Line Chart',
+   
+}

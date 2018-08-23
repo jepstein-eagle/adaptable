@@ -43,7 +43,9 @@ import { SelectedCellsPopup } from './SelectedCells/SelectedCellsPopup';
 import { SelectedCellsToolbarControl } from './SelectedCells/SelectedCellsToolbarControl';
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
-import { ChartsPopup } from './Charts/ChartsPopup';
+import { ChartPopup } from './Chart/ChartPopup';
+import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
+import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AboutPopup: AboutPopup,
@@ -54,7 +56,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CalculatedColumnPopup: CalculatedColumnPopup,
   CalendarsPopup: CalendarsPopup,
   CellValidationPopup: CellValidationPopup,
-  ChartsPopup: ChartsPopup,
+  ChartPopup: ChartPopup,
   ColumnChooserPopup: ColumnChooserPopup,
   ColumnFilterPopup: ColumnFilterPopup,
   ColumnInfoPopup: ColumnInfoPopup,
@@ -78,6 +80,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ThemePopup: ThemePopup,
   TeamSharingPopup: TeamSharingPopup,
   UserFilterPopup: UserFilterPopup,
+  ChartDisplayPopup: ChartDisplayPopup
 }
 
 //here we put the dashboard control for each strategy
@@ -93,6 +96,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyIds.SmartEditStrategyId, SmartEditToolbarControl],
   [StrategyIds.SelectedCellsStrategyId, SelectedCellsToolbarControl],
   [StrategyIds.AlertStrategyId, AlertToolbarControl],
+  [StrategyIds.ChartStrategyId, ChartToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([

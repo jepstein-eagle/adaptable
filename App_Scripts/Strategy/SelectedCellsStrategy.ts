@@ -9,7 +9,6 @@ import { DataType } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import * as math from 'mathjs'
 
-
 export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISelectedCellsStrategy {
 
     constructor(blotter: IAdaptableBlotter) {
@@ -55,7 +54,6 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
             selectedCellSummary = {
                 Sum: (hasNumericColumns) ? math.round(math.sum(numericValues), 4) : "",
                 Average: (hasNumericColumns) ? math.round(math.mean(numericValues), 4) : "",
-                Mode: (allValues.length > 0) ? math.mode(allValues).join(",") : "",
                 Median: (hasNumericColumns) ? math.round(math.median(numericValues), 4) : "",
                 Distinct: distinct,
                 Max: (hasNumericColumns) ? math.round(math.max(numericValues), 4) : "",

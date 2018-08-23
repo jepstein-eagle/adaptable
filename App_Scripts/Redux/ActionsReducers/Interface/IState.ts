@@ -1,10 +1,10 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup } from '../../../Core/Interface/IMessage'
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus } from '../../../Core/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 import { KeyValuePair } from '../../../View/UIInterfaces';
@@ -28,6 +28,7 @@ export interface MenuState {
 
 export interface PopupState {
     ScreenPopup: IScreenPopup
+    ChartPopup: IChartPopup
     AlertPopup: IAlertPopup
     ConfirmationPopup: IConfirmationPopup
     PromptPopup: IPromptPopup
@@ -136,10 +137,11 @@ export interface DataSourceState {
     CurrentDataSource: string;
 }
 
+
 export interface LayoutState {
     CurrentLayout: string;
     Layouts: ILayout[]
- }
+}
 
 export interface CustomSortState {
     CustomSorts: ICustomSort[];
@@ -191,6 +193,8 @@ export interface FormatColumnState {
 }
 
 // need to think this through...
-export interface ChartsState {
-    Charts: string[]
+export interface ChartState {
+    ChartDefinitions: IChartDefinition[]
+    CurrentChartName: string;
+    ChartData: any;
 }

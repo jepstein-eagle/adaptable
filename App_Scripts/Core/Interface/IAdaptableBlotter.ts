@@ -15,6 +15,7 @@ import { ICalculatedColumn, IGridSort, ILayout } from '../Api/Interface/Adaptabl
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs } from '../Api/Interface/ServerSearch';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { IChartService } from '../Services/Interface/IChartService';
 
 export interface IAdaptableBlotter {
     /**
@@ -34,7 +35,8 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     ValidationService: IValidationService
     AuditLogService: AuditLogService
-    CalculatedColumnExpressionService: ICalculatedColumnExpressionService
+     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
+     ChartService: IChartService
     InitAuditService(): void
 
     // Grid Events
@@ -45,7 +47,7 @@ export interface IAdaptableBlotter {
 
     // not sure if this is right but putting the event here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
-    
+
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
@@ -61,6 +63,7 @@ export interface IAdaptableBlotter {
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
+     getRawValueFromRecord(row: any, columnId: string) : any
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void

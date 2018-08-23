@@ -29,7 +29,7 @@ import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
     onPreSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutPreSaveAction;
-    onNewLayout: () => PopupRedux.PopupShowAction;
+    onNewLayout: () => PopupRedux.PopupShowScreenAction;
     Layouts: ILayout[];
     CurrentLayout: string;
 }
@@ -169,9 +169,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onPreSaveLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
-        onNewLayout: () => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, false, "New")),
+        onNewLayout: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.LayoutPopup, false, "New")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadonly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.LayoutPopup, isReadonly))
+        onConfigure: (isReadonly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.LayoutPopup, isReadonly))
     };
 }
 

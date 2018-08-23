@@ -7,14 +7,13 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as StrategyNames from '../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAlert, IUIConfirmation, ErrorAlert } from '../Core/Interface/IMessage';
-import { DataType, MessageType } from '../Core/Enums'
+import { IUIConfirmation } from '../Core/Interface/IMessage';
+import { DataType } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';

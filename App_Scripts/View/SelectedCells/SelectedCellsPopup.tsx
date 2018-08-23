@@ -32,8 +32,8 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
     render() {
         let cssClassName: string = this.props.cssClassName + "__SelectedCells";
         let colItems: IColItem[] = [
-            { Content: "Operation", Size: 6 },
-            { Content: "Value", Size: 6 },
+            { Content: "Operation", Size: 3 },
+            { Content: "Value", Size: 9},
         ]
         let infoBody: any[] = ["Selected cells info."]
 
@@ -41,7 +41,6 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
         if (this.props.SelectedCellSummary != null) {
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Sum, this.props.SelectedCellSummary.Sum, cssClassName));
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Average, this.props.SelectedCellSummary.Average, cssClassName));
-            rowElements.push(this.createRow(colItems, SelectedCellOperation.Mode, this.props.SelectedCellSummary.Mode, cssClassName));
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Median, this.props.SelectedCellSummary.Median, cssClassName));
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Distinct, this.props.SelectedCellSummary.Distinct, cssClassName));
             rowElements.push(this.createRow(colItems, SelectedCellOperation.Max, this.props.SelectedCellSummary.Max, cssClassName));

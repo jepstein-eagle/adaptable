@@ -71,6 +71,9 @@ import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogge
 import * as _ from 'lodash'
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { IChartService } from '../../Core/Services/Interface/IChartService';
+import { ChartService } from '../../Core/Services/ChartService';
+
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2' // aka '▲'
@@ -101,6 +104,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditService: IAuditService
     public ValidationService: IValidationService
     public AuditLogService: AuditLogService
+    public ChartService: IChartService
+
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
     public VendorGridName: VendorGridName
@@ -127,6 +132,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
+        this.ChartService = new ChartService(this);
+
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column)
@@ -698,6 +705,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return formatter(this.valOrFunc(row, column))
         }
         return "";
+    }
+
+    public getRawValueFromRecord(row: any, columnId: string): any {
+        let column = this.getHypergridColumn(columnId);
+        return this.valOrFunc(row, column)
     }
 
     public getColumnFormatter(columnId: string) {

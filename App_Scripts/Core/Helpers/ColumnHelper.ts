@@ -1,6 +1,7 @@
 import { IColumn } from '../Interface/IColumn';
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
+import { DataType } from '../Enums';
 
 export module ColumnHelper {
 
@@ -61,6 +62,10 @@ export module ColumnHelper {
     export function getColumnFromId(columnId: string, columns: IColumn[]): IColumn {
        // TODO check for missing column
        return columns.find(c=>c.ColumnId==columnId)
+    }
+
+    export function getNumericColumns(columns: IColumn[]): IColumn[] {
+       return columns.filter(c=>c.DataType==DataType.Number)
     }
 }
 

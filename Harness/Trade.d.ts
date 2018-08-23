@@ -12,6 +12,7 @@
         bid: number;
         ask: number;
         bidOfferSpread: number;
+        status: string;
         isLive: boolean;
         fitchRating: string;
         moodysRating: string;

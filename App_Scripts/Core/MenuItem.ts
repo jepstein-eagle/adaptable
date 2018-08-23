@@ -24,7 +24,7 @@ export class MenuItemShowPopup implements IMenuItem {
         public IsVisible: boolean,
         private PopupParams?: string,
       ) {
-        this.Action = PopupRedux.PopupShow(
+        this.Action = PopupRedux.PopupShowScreen(
             ComponentName,
             this.IsReadOnly,
             this.PopupParams)

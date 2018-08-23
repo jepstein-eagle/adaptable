@@ -27,8 +27,8 @@ interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyView
     CurrentAdvancedSearchName: string;
     AdvancedSearches: IAdvancedSearch[];
     onSelectAdvancedSearch: (advancedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
-    onNewAdvancedSearch: () => PopupRedux.PopupShowAction;
-    onEditAdvancedSearch: () => PopupRedux.PopupShowAction;
+    onNewAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
+    onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
@@ -123,10 +123,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, false, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.AdvancedSearchPopup, isReadOnly))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, isReadOnly))
     };
 }
 

@@ -31,8 +31,9 @@ function InitTradeBlotter() {
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
+    setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
 
-    // Create an Adaptable
+    // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
@@ -47,8 +48,8 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-       //   getColumnValues: retrieveValues,
-      //  maxColumnValueItemsDisplayed: 5
+        //   getColumnValues: retrieveValues,
+        //  maxColumnValueItemsDisplayed: 5
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
@@ -65,20 +66,7 @@ function retrieveValues(columnName) {
 }
 
 function getValuesForColumn(columnName) {
-   return ['val a', 'val b', 'val c', 'val 3', 'val a', 'val f', 'val a', 'val h', 'val i'];
-  /*
-   var random_boolean = Math.random() >= 0.5;
-    if (random_boolean) {
-        return null
-    }
-    let columnValues = []
-    var i;
-    columnValues.push(new Date().toTimeString())
-    for (i = 1; i < 2000; i++) {
-        columnValues.push(columnName + " item " + i)
-    }
-    return columnValues
-    */
+    return ['val a', 'val b', 'val c', 'val 3', 'val a', 'val f', 'val a', 'val h', 'val i'];
 }
 
 function getTradeSchema() {
@@ -91,23 +79,24 @@ function getTradeSchema() {
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text', suppressFilter: true });
 
-    schema.push({ headerName: "Bid Offer Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
+    schema.push({ headerName: "B/O Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
+    schema.push({ headerName: "Status", field: "status", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true });
     schema.push({ headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' });
-    schema.push({ headerName: "Bloomberg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' });
-    schema.push({ headerName: "Bloomberg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' });
-    schema.push({
-        headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
-            return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
-        }
-    });
-    schema.push({ headerName: "Fitch Rating", field: "fitchRating", editable: true, filter: 'text', });
-    schema.push({ headerName: "Moodys Rating", field: "moodysRating", editable: true, filter: 'text' });
-    schema.push({ headerName: "SandP Rating", field: "sandpRating", editable: true, filter: 'text' });
+    schema.push({ headerName: "Bbg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' });
+    schema.push({ headerName: "Bbg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' });
+   // schema.push({
+   //     headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
+   //         return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
+   //     }
+   // });
+    schema.push({ headerName: "Fitch", field: "fitchRating", editable: true, filter: 'text', });
+    schema.push({ headerName: "Moodys", field: "moodysRating", editable: true, filter: 'text' });
+    schema.push({ headerName: "SandP", field: "sandpRating", editable: true, filter: 'text' });
     schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
-    schema.push({ headerName: "Percent Change", field: "percentChange", filter: 'text' });
+    schema.push({ headerName: "Pct Change", field: "percentChange", filter: 'text' });
     schema.push({ headerName: "Last Updated By", field: "lastUpdatedBy", filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Last Updated", field: "lastUpdated", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     return schema;
@@ -117,7 +106,7 @@ function getTradeSchema() {
 function apiTester(state, gridOptions) {
     if (state.QuickSearch.QuickSearchText != quickSearchText) {
         quickSearchText = state.QuickSearch.QuickSearchText
-        if (quickSearchText == "#permies") {
+         if (quickSearchText == "#permies") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
         } else if (quickSearchText == "#systemfilters") {
             adaptableblotter.api.filterClearSystemFilters()
@@ -132,11 +121,11 @@ function apiTester(state, gridOptions) {
         } else if (quickSearchText == "#send") {
             adaptableblotter.api.exportSendReport('All Data', 'CSV')
         } else if (quickSearchText == "#info") {
-            adaptableblotter.api.alertShow("Hello", "Your data is fine actually its very good and I want to check that this wraps", "Info")
+            adaptableblotter.api.alertShow("Hello", "Your data is fine actually its very good and I want to check that this wraps", "Info", true)
         } else if (quickSearchText == "#warning") {
-            adaptableblotter.api.alertShow("End of Day", "Dont forget to send the report", "Warning")
+            adaptableblotter.api.alertShow("End of Day", "Dont forget to send the report", "Warning", true)
         } else if (quickSearchText == "#error") {
-            adaptableblotter.api.alertShow("Limits Breached", "Pleae adjust your PnL", "Error")
+            adaptableblotter.api.alertShow("Limits Breached", "Pleae adjust your PnL", "Error", true)
         } else if (quickSearchText == "#green") {
             adaptableblotter.api.systemStatusSetGreen("The server is fine")
         } else if (quickSearchText == "#amber") {

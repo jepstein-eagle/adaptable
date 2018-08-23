@@ -54,6 +54,8 @@ import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlo
 import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { IChartService } from '../../Core/Services/Interface/IChartService';
+import { ChartService } from '../../Core/Services/ChartService';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -68,8 +70,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-
-    public StyleService: StyleService
+     public StyleService: StyleService
+     public ChartService: IChartService
+   
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
@@ -88,6 +91,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.ValidationService = new ValidationService(this);
         this.StyleService = new StyleService(this);
+        this.ChartService = new ChartService(this);
+        
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
@@ -328,7 +333,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
         // this is very very wrong!
         if (type == "getColumnValue") {
-            return (columnId: string) => { return this.getRawValue(id, columnId); }
+            return (columnId: string) => { return this.getRawValueFromRecord(id, columnId); }
         }
         else {
             return (columnId: string) => { return this.getDisplayValue(id, columnId); }
@@ -386,8 +391,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell.getFormattedValue(this.grid);
     }
 
-    private getRawValue(id: any, columnId: string): string {
-        let row: AdaptableGrid.Row = this.grid.getRowFromId(id);
+  public  getRawValueFromRecord(row: any, columnId: string) : any{
+        let gridRow: AdaptableGrid.Row = this.grid.getRowFromId(columnId);
         let cell: AdaptableGrid.Cell = this.getCellFromRowAndColumnId(row, columnId);
         return cell.getRawValue();
     }

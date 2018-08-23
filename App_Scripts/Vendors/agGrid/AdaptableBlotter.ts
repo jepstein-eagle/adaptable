@@ -90,7 +90,9 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
 import { Alert } from 'react-bootstrap';
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
-import { ChartsStrategy } from '../../Strategy/ChartsStrategy';
+import { ChartStrategy } from '../../Strategy/ChartStrategy';
+import { ChartService } from '../../Core/Services/ChartService';
+import { IChartService } from '../../Core/Services/Interface/IChartService';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -105,6 +107,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ValidationService: IValidationService
     public AuditLogService: AuditLogService
     public StyleService: StyleService
+    public ChartService: IChartService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
 
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
@@ -128,6 +131,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService(this);
+        this.ChartService = new ChartService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
@@ -136,14 +140,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
-        // this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
+        this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-        // this.Strategies.set(StrategyIds.ChartsStrategyId, new ChartsStrategy(this))
+        this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -750,6 +754,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public getRawValueFromRecord(row: RowNode, columnId: string): any {
+        return this.gridOptions.api.getValue(columnId, row);
+    }
 
     public setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn") {
         let localCellClassRules = this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules
@@ -1000,7 +1007,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
                 let popupState = this.getState().Popup.ScreenPopup;
-                if (popupState.ShowPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
+                if (popupState.ShowScreenPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
                     // ignore
                 } else {
                     this.setColumnIntoStore();

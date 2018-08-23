@@ -73,7 +73,8 @@ import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { runInThisContext } from 'vm';
+import { IChartService } from '../../Core/Services/Interface/IChartService';
+import { ChartService } from '../../Core/Services/ChartService';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -86,7 +87,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-
+    public ChartService: IChartService
+   
     public StyleService: StyleService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -109,8 +111,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditService = new AuditService(this);
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
-
-
+        this.ChartService = new ChartService(this);
+        
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
@@ -599,6 +601,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         else {
             return String(rawValue)
         }
+    }
+
+    public getRawValueFromRecord(row: any, columnId: string): any {
+        return row[columnId]
     }
 
     //Jo: we know that this function is wrong as it's not cumulative

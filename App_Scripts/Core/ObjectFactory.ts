@@ -1,17 +1,29 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition } from './Api/Interface/AdaptableBlotterObjects';
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType } from './Enums';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition } from './Api/Interface/AdaptableBlotterObjects';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { KeyValuePair } from '../View/UIInterfaces';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
+import * as GeneralConstants from './Constants/GeneralConstants';
 
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: "", SortedValues: [], IsReadOnly: false }
+    }
+
+    export function CreateEmptyChartDefinition(): IChartDefinition {
+        return {
+            Name: "",
+            Type: ChartType.BarChart,
+            YAxisColumn: "",
+            XAxisColumn: "",
+            XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
+            IsReadOnly: false
+        }
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
@@ -183,7 +195,6 @@ export module ObjectFactory {
         return {
             Sum: null,
             Average: null,
-            Mode: null,
             Median: null,
             Distinct: null,
             Max: null,

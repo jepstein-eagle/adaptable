@@ -114,7 +114,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onDeleteAlert: (index: number) => dispatch(AlertRedux.AlertDelete(index)),
         onDeleteAllAlert: () => dispatch(AlertRedux.AlertDeleteAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.AlertPopup, isReadOnly))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AlertPopup, isReadOnly))
     };
 }
 

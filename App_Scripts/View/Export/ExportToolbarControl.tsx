@@ -32,8 +32,8 @@ import { IReport } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
     onApplyExport: (Report: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
-    onNewReport: () => PopupRedux.PopupShowAction;
-    onEditReport: () => PopupRedux.PopupShowAction;
+    onNewReport: () => PopupRedux.PopupShowScreenAction;
+    onEditReport: () => PopupRedux.PopupShowScreenAction;
     onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
     Columns: IColumn[],
     Reports: IReport[];
@@ -181,10 +181,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (Report: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(Report, exportDestination)),
         onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
         onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
-        onNewReport: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "New")),
-        onEditReport: () => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, false, "Edit")),
+        onNewReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "New")),
+        onEditReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.ExportPopup, isReadOnly))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, isReadOnly))
     };
 }
 

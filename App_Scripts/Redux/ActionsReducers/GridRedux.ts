@@ -3,7 +3,6 @@ import { GridState } from './Interface/IState'
 import { ICellInfo, ISystemStatus } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';

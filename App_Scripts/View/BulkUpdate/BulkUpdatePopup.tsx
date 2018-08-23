@@ -158,7 +158,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                             </Col>
                                         </Row>
                                     </div>
-                                }MessageType
+                                }
                             </FormGroup>
                         </AdaptableBlotterForm>
                     </PanelWithImage>

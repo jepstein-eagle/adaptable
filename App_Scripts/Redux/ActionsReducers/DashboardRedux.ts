@@ -104,7 +104,8 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SmartEditStrategyId,
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
-       //     StrategyIds.AlertStrategyId,
+        StrategyIds.AlertStrategyId,
+        StrategyIds.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -112,7 +113,8 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-       //   StrategyIds.AlertStrategyId,
+        StrategyIds.ChartStrategyId,
+        //   StrategyIds.AlertStrategyId,
         // StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
     ],
@@ -126,7 +128,7 @@ const initialDashboardState: DashboardState = {
     ],
     Zoom: 1,
     DashboardVisibility: Visibility.Visible,
-    ShowSystemStatusButton: false
+    ShowSystemStatusButton: true
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {

@@ -14,7 +14,7 @@ export interface IBond {
     effectiveDate: Date;
     maturityDate: Date;
     lastUpdated: Date;
- }
+}
 
 export interface IFX {
     tradeId: number;
@@ -30,7 +30,7 @@ export interface IFX {
     tradeDate: Date;
     effectiveDate: Date;
     lastUpdated: Date;
-   
+
 }
 
 export class DataGenerator {
@@ -162,48 +162,48 @@ export class DataGenerator {
         let coupon = this.roundTo4Dp(this.getMeaningfulDouble() * this.getRandomItem(this.getBidOfferSpreads()));
         let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         let bond =
-            {
-                "tradeId": i,
-                "notional": this.getRandomItem(this.getNotionals()),
-                "buySell": this.getRandomItem(this.getBuySell()),
-                "currency": this.getRandomItem(this.getCurrencies()),
-                "tradedAt": tradedAt,
-                "isin": this.getIsin(i),
-                "counterparty": this.getRandomItem(this.getCounterparties()),
-                "ticker": this.getTicker(i),
-                "coupon": coupon,
-                "trader": this.getRandomItem(this.getNames()),
-                "tradeDate": tradeDate,
-                "effectiveDate": this.addDays(tradeDate, 3),
-                "maturityDate": this.addDays(tradeDate, 245),
-                "lastUpdated": this.generateRandomDateAndTime(-7, 0),
-            };
+        {
+            "tradeId": i,
+            "notional": this.getRandomItem(this.getNotionals()),
+            "buySell": this.getRandomItem(this.getBuySell()),
+            "currency": this.getRandomItem(this.getCurrencies()),
+            "tradedAt": tradedAt,
+            "isin": this.getIsin(i),
+            "counterparty": this.getRandomItem(this.getCounterparties()),
+            "ticker": this.getTicker(i),
+            "coupon": coupon,
+            "trader": this.getRandomItem(this.getNames()),
+            "tradeDate": tradeDate,
+            "effectiveDate": this.addDays(tradeDate, 3),
+            "maturityDate": this.addDays(tradeDate, 245),
+            "lastUpdated": this.generateRandomDateAndTime(-7, 0),
+        };
         return bond;
     }
 
     createFX(i: number): IFX {
         let baseAmount = this.getRandomItem(this.getNotionals())
         let rate = this.getMeaningfulDoubleInRange(0, 2);
-        let secondaryAmount = this.removeDecimalPoints( baseAmount * rate);
+        let secondaryAmount = this.removeDecimalPoints(baseAmount * rate);
         let tradeDate = this.generateRandomDateAndTime(-1000, 1000);
         let baseCurrency = this.getRandomItem(this.getCurrencies());
         let fx =
-            {
-                "tradeId": i,
-                "notional": this.getRandomItem(this.getNotionals()),
-                "dealType": this.getRandomItem(this.getDealType()),
-                "baseCcy": baseCurrency,
-                "baseAmount": baseAmount,
-                "secondCcy": this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
-                "secondAmount": secondaryAmount,
-                "rate": rate,
-                "pnL": this.getMeaningfulDoubleInRange(3, 40),
-                "counterparty": this.getRandomItem(this.getCounterparties()),
-                "trader": this.getRandomItem(this.getNames()),
-                "tradeDate": tradeDate,
-                "effectiveDate": this.addDays(tradeDate, 3),
-                "lastUpdated": this.generateRandomDateAndTime(-7, 0),
-            };
+        {
+            "tradeId": i,
+            "notional": this.getRandomItem(this.getNotionals()),
+            "dealType": this.getRandomItem(this.getDealType()),
+            "baseCcy": baseCurrency,
+            "baseAmount": baseAmount,
+            "secondCcy": this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
+            "secondAmount": secondaryAmount,
+            "rate": rate,
+            "pnL": this.getMeaningfulDoubleInRange(3, 40),
+            "counterparty": this.getRandomItem(this.getCounterparties()),
+            "trader": this.getRandomItem(this.getNames()),
+            "tradeDate": tradeDate,
+            "effectiveDate": this.addDays(tradeDate, 3),
+            "lastUpdated": this.generateRandomDateAndTime(-7, 0),
+        };
         return fx;
     }
 
@@ -217,68 +217,69 @@ export class DataGenerator {
         let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         let tradeDate = this.generateRandomDate(-1000, 1000);
         let moodyRating = this.getRandomItem(this.getMoodysRatings())
-        let tradeCurrency = currency? currency:  this.getRandomItem(this.getCurrencies())
+        let tradeCurrency = currency ? currency : this.getRandomItem(this.getCurrencies())
         let trade =
-            {
-                "tradeId": i,
-                "notional": this.getRandomItem(this.getNotionals()),
-                "deskId": this.generateRandomInt(0, 250),
-                "counterparty": this.getRandomItem(this.getCounterparties()),
-                "currency": tradeCurrency,
-                "country": this.getRandomItem(this.getCountries()),
-                "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
-                "amount": this.getRandomItem(this.getAmounts()),
-                "price": price,
-                "bid": bid,
-                "ask": ask,
-                "bidOfferSpread": bidOfferSpread,
-                "isLive": this.generateRandomBool(),
-                "moodysRating": moodyRating,
-                "fitchRating": this.getRatingFromMoodyRating(moodyRating),
-                "sandpRating": this.getRatingFromMoodyRating(moodyRating),
-                "tradeDate": tradeDate,
-                "settlementDate": this.addDays(tradeDate, 3),
-                "bloombergAsk": this.getSimilarNumber(ask),
-                "bloombergBid": this.getSimilarNumber(bid),
-                "percentChange": this.generateRandomNullableDouble(),
-                "lastUpdated": this.generateRandomDateAndTime(-7, 0),
-                "lastUpdatedBy": this.getRandomItem(this.getNames()),
-               /*
-                "extraCol1": "1",
-                "extraCol2": "2",
-                "extraCol3": "3",
-                "extraCol4": "4",
-                "extraCol5": "5",
-                "extraCol6": "6",
-                "extraCol7": "7",
-                "extraCol8": "8",
-                "extraCol9": "9",
-                "extraCol10": "10",
-                "extraCol11": "11",
-                "extraCol12": "12",
-                "extraCol13": "13",
-                "extraCol14": "14",
-                "extraCol15": "15",
-                "extraCol16": "16",
-                "extraCol17": "17",
-                "extraCol18": "18"
-                
-                  "bid2": bid,
-                  "ask2": ask,
-                  "bidOfferSpread2": bidOfferSpread,
-                  "isLive2": this.generateRandomBool(),
-                  "moodysRating2": moodyRating,
-                  "fitchRating2": this.getRatingFromMoodyRating(moodyRating),
-                  "sandpRating2": this.getRatingFromMoodyRating(moodyRating),
-                  "tradeDate2": tradeDate,
-                  "settlementDate2": this.addDays(tradeDate, 3),
-                  "bloombergAsk2": this.roundTo4Dp(ask + 0.01),
-                  "bloombergBid2": this.roundTo4Dp(bid - 0.01),
-                  "percentChange2": this.generateRandomNullableDouble(),
-                  "lastUpdated2": this.generateRandomDateAndTime(-7, 0),
-                  "lastUpdatedBy2": this.getRandomItem(this.getNames())
-                  */
-            };
+        {
+            "tradeId": i,
+            "notional": this.getRandomItem(this.getNotionals()),
+            "deskId": this.generateRandomInt(0, 250),
+            "counterparty": this.getRandomItem(this.getCounterparties()),
+            "currency": tradeCurrency,
+            "country": this.getRandomItem(this.getCountries()),
+            "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
+            "amount": this.getRandomItem(this.getAmounts()),
+            "price": price,
+            "bid": bid,
+            "ask": ask,
+            "bidOfferSpread": bidOfferSpread,
+            "status": this.getStatus(),
+            "isLive": this.generateRandomBool(),
+            "moodysRating": moodyRating,
+            "fitchRating": this.getRatingFromMoodyRating(moodyRating),
+            "sandpRating": this.getRatingFromMoodyRating(moodyRating),
+            "tradeDate": tradeDate,
+            "settlementDate": this.addDays(tradeDate, 3),
+            "bloombergAsk": this.getSimilarNumber(ask),
+            "bloombergBid": this.getSimilarNumber(bid),
+            "percentChange": this.generateRandomNullableDouble(),
+            "lastUpdated": this.generateRandomDateAndTime(-7, 0),
+            "lastUpdatedBy": this.getRandomItem(this.getNames()),
+            /*
+             "extraCol1": "1",
+             "extraCol2": "2",
+             "extraCol3": "3",
+             "extraCol4": "4",
+             "extraCol5": "5",
+             "extraCol6": "6",
+             "extraCol7": "7",
+             "extraCol8": "8",
+             "extraCol9": "9",
+             "extraCol10": "10",
+             "extraCol11": "11",
+             "extraCol12": "12",
+             "extraCol13": "13",
+             "extraCol14": "14",
+             "extraCol15": "15",
+             "extraCol16": "16",
+             "extraCol17": "17",
+             "extraCol18": "18"
+             
+               "bid2": bid,
+               "ask2": ask,
+               "bidOfferSpread2": bidOfferSpread,
+               "isLive2": this.generateRandomBool(),
+               "moodysRating2": moodyRating,
+               "fitchRating2": this.getRatingFromMoodyRating(moodyRating),
+               "sandpRating2": this.getRatingFromMoodyRating(moodyRating),
+               "tradeDate2": tradeDate,
+               "settlementDate2": this.addDays(tradeDate, 3),
+               "bloombergAsk2": this.roundTo4Dp(ask + 0.01),
+               "bloombergBid2": this.roundTo4Dp(bid - 0.01),
+               "percentChange2": this.generateRandomNullableDouble(),
+               "lastUpdated2": this.generateRandomDateAndTime(-7, 0),
+               "lastUpdatedBy2": this.getRandomItem(this.getNames())
+               */
+        };
         return trade;
     }
 
@@ -315,6 +316,16 @@ export class DataGenerator {
         return Math.random();
     }
 
+    protected getStatus(): string {
+      let randomNumber =  this.generateRandomInt(1, 3);
+        if (randomNumber==1){
+            return "Completed"
+        }else  if (randomNumber==2){
+            return "Pending"
+        }else  if (randomNumber==3){
+            return "Rejected"
+        }
+    }
 
     protected generateRandomNullableDouble(): number {
         let myValue = this.generateRandomDouble();
@@ -467,21 +478,21 @@ export class DataGenerator {
     protected getCounterparties(): string[] {
         let counterparties = [
             "Goldman Sachs",
-            "Societe Generale",
-            "Bank of America",
-            "Nat West Markets",
+            "Soc Gen",
+            "BAML",
+            "Nat West",
             "Barcap",
             "Citi",
             "JP Morgan",
             "Morgan Stanley",
             "BNP",
-            "Lloyds TSB",
-            "MUFJ",
-            "Rabobank",
-            "RBC",
-            "Deutsche Bank",
-            "Credit Suisse",
-            "Nomura"
+         //   "Lloyds TSB",
+         //   "MUFJ",
+         //   "Rabobank",
+         //   "RBC",
+         //   "Deutsche Bank",
+         //   "Credit Suisse",
+         //   "Nomura"
         ];
         return counterparties;
     }
@@ -588,8 +599,8 @@ export class DataGenerator {
 
     protected getSimilarNumber(originalNumber: number): number {
         let direction = this.generateRandomInt(1, 2);
-      //  let randomDouble = this.generateRandomDouble();
-        let returnValue = (direction==1)? this.roundTo4Dp(originalNumber+ 0.01): this.roundTo4Dp(originalNumber - 0.01);
+        //  let randomDouble = this.generateRandomDouble();
+        let returnValue = (direction == 1) ? this.roundTo4Dp(originalNumber + 0.01) : this.roundTo4Dp(originalNumber - 0.01);
         return returnValue
     }
 

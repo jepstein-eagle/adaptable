@@ -8,46 +8,25 @@ import { IEntitlement } from '../Core/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchChangedData } from '../Core/Api/Interface/ServerSearch';
 import { SearchChangedTrigger } from '../Core/Enums';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { IDatasource } from 'ag-grid';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdvancedSearch } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
-    private buildContextMenu: boolean
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
     }
 
     public InitializeWithRedux() {
-        this.InitBaseState()
-        this.blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitBaseState())
         this.InitState();
         this.blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
-
-    private InitBaseState() {
-    //    if (this.buildContextMenu != this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu) {
-    //        this.buildContextMenu = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.BuildContextMenu;
-    //        if (this.buildContextMenu) {
-   //             let columnId = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId;
-    //            if (!ColumnHelper.isSpecialColumn(columnId)) {
-    //                this.addColumnMenuItem(this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.ColumnId)
-    //            }
-    //        }
-     //   }
-    }
-
     public popupMenuItem: IMenuItem;
-   
+
     protected InitState(): void {
         // stff - check this works
     }
 
-  
-
- 
 
     public getPopupMenuItem(): IMenuItem {
         if (!this.hasPopupMenu()) {
@@ -64,20 +43,13 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         return true;
     }
 
-    protected hasContextMenu(): boolean {
-        return false;
-    }
-
     protected addPopupMenuItem(): void {
         // base class implementation which is empty
     }
 
-public addContextMenuItem(columnId: string): void {
+    public addContextMenuItem(columnId: string): void {
         // base class implementation which is empty
     }
-
-    
-
 
     getStrategyEntitlement(): IEntitlement {
         let state = this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
@@ -144,8 +116,8 @@ public addContextMenuItem(columnId: string): void {
         ComponentName: string,
         GlyphIcon: string,
         PopupParams?: string) {
-       
-            if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
+
+        if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
             let menuItemShowPopup: MenuItemShowPopup = new MenuItemShowPopup(
                 Label,
                 this.Id,

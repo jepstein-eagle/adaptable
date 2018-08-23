@@ -98,6 +98,11 @@ button.placeholder:before {
   height: 590px;
 }
 
+.ab_main_chart{
+  width: 700px;
+  height: 590px;
+}
+
 .ab_main_wizard{
   width: 700px;
   height: 520px;

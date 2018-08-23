@@ -16,7 +16,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 interface IPushPullDomainPageSelectorProps extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
     IPPDomainsPages: IPPDomain[]
     onApplyExport: (value: string, folder: string, page: string) => ExportRedux.ExportApplyAction;
-    onCancel: () => PopupRedux.PopupHideAction
+    onCancel: () => PopupRedux.PopupHideScreenAction
     ErrorMsg: string
     LiveReports: ILiveReport[];
 }
@@ -91,7 +91,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onApplyExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.ExportApply(value, ExportDestination.iPushPull, folder, page)),
-        onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
+        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
     };
 }
 

@@ -13,7 +13,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
     onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;
-    onCancel: () => PopupRedux.PopupHideAction
+    onCancel: () => PopupRedux.PopupHideScreenAction
     ErrorMsg: string
 }
 
@@ -67,7 +67,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLogin: (login: string, password: string) => dispatch(ExportRedux.IPPLogin(login, password)),
-        onCancel: () => { dispatch(PopupRedux.PopupHide()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
+        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
     };
 }
 

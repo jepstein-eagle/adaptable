@@ -96,9 +96,7 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
                 return this.props.SelectedCellSummary.Sum;
             case SelectedCellOperation.Average:
                 return this.props.SelectedCellSummary.Average;
-            case SelectedCellOperation.Mode:
-                return this.props.SelectedCellSummary.Mode;
-            case SelectedCellOperation.Median:
+             case SelectedCellOperation.Median:
                 return this.props.SelectedCellSummary.Median;
             case SelectedCellOperation.Max:
                 return this.props.SelectedCellSummary.Max;
@@ -129,7 +127,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectedCellsOperationChange: (SelectedCellOperation: SelectedCellOperation) => dispatch(SelectedCellsRedux.SelectedCellsChangeOperation(SelectedCellOperation)),
         onSelectedCellsCreateSummary: () => dispatch(SelectedCellsRedux.SelectedCellCreateSummary()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.SelectedCellsPopup, isReadOnly))
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SelectedCellsPopup, isReadOnly))
     };
 }
 

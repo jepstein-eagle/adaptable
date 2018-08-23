@@ -19,7 +19,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 
 interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
-    onShowQuickSearchPopup: () => PopupRedux.PopupShowAction;
+    onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
     QuickSearchText: string
 }
 
@@ -82,9 +82,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
-        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShow(ScreenPopups.QuickSearchPopup)),
+        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.QuickSearchPopup)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShow(ScreenPopups.QuickSearchPopup, isReadOnly)),
+        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.QuickSearchPopup, isReadOnly)),
     };
 }
 

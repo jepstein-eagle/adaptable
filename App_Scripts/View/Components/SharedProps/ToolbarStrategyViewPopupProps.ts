@@ -10,5 +10,5 @@ export interface ToolbarStrategyViewPopupProps<View> extends StrategyViewPopupPr
     AdaptableBlotter: IAdaptableBlotter
     onClick: (action: Redux.Action) => Redux.Action,
     onClose: (dashboardControl: string) => DashboardRedux.DashboardHideToolbarAction
-    onConfigure: (isReadonly: boolean) => PopupRedux.PopupShowAction;
+    onConfigure: (isReadonly: boolean) => PopupRedux.PopupShowScreenAction;
   }

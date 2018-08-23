@@ -9,7 +9,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-    Columns: Array<IColumn>
+    Columns: IColumn[]
 }
 
 export interface CustomSortColumnWizardState {

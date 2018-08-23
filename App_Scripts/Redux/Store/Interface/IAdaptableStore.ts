@@ -15,7 +15,7 @@ export interface AdaptableBlotterState {
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
     Calendar: AdaptableBlotterStates.CalendarState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
-    Charts: AdaptableBlotterStates.ChartsState;
+    Chart: AdaptableBlotterStates.ChartState;
     ConditionalStyle: AdaptableBlotterStates.ConditionalStyleState;
     CustomSort: AdaptableBlotterStates.CustomSortState;
     Dashboard: AdaptableBlotterStates.DashboardState;

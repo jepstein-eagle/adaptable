@@ -12,7 +12,7 @@ import filter from 'redux-storage-decorator-filter'
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as AboutRedux from '../ActionsReducers/AboutRedux'
-import * as ChartsRedux from '../ActionsReducers/ChartsRedux'
+import * as ChartRedux from '../ActionsReducers/ChartRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as BulkUpdateRedux from '../ActionsReducers/BulkUpdateRedux'
@@ -49,22 +49,17 @@ import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
-import { AdaptableDashboardViewFactory } from '../../View/AdaptableViewFactory';
 import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
-import { format } from 'util';
-import { GridState, AdvancedSearchState, LayoutState } from '../ActionsReducers/Interface/IState';
+import { GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
-import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 import { IAboutStrategy } from '../../Strategy/Interface/IAboutStrategy';
 import { KeyValuePair } from '../../View/UIInterfaces';
 
@@ -74,7 +69,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     Menu: MenuRedux.MenuReducer,
     About: AboutRedux.AboutReducer,
     Alert: AlertRedux.AlertReducer,
-    Charts: ChartsRedux.ChartsReducer,
+    Chart: ChartRedux.ChartReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
@@ -116,12 +111,15 @@ export const InitState = (): ResetUserDataAction => ({
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
         //This trigger the persist of the state with nothing
+        state.About = undefined
         state.AdvancedSearch = undefined
+        state.Alert = undefined
         state.BulkUpdate = undefined
         state.CalculatedColumn = undefined
         state.Calendar = undefined
         state.CellValidation = undefined
         state.ConditionalStyle = undefined
+        state.Chart = undefined
         state.CustomSort = undefined
         state.Dashboard.AvailableToolbars = []
         state.Dashboard.VisibleButtons = []
@@ -130,7 +128,6 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.DataSource = undefined
         state.Entitlements = undefined
         state.Export = undefined
-        state.AdvancedSearch = undefined
         state.FlashingCell = undefined
         state.FormatColumn = undefined
         state.Filter.ColumnFilters = []
@@ -208,8 +205,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter,
             [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
             PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION,
-            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_CONFIRMATION, PopupRedux.POPUP_HIDE, PopupRedux.POPUP_HIDE_ALERT,
-            PopupRedux.POPUP_HIDE_PROMPT,  PopupRedux.POPUP_SHOW, PopupRedux.POPUP_SHOW_ALERT,
+            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_SHOW_CONFIRMATION, PopupRedux.POPUP_HIDE_SCREEN, PopupRedux.POPUP_HIDE_ALERT,
+            PopupRedux.POPUP_HIDE_PROMPT,  PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_SHOW_ALERT,
+            PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
             PopupRedux.POPUP_SHOW_PROMPT]);
 
         //here we use our own merger function which is derived from redux simple merger
@@ -549,11 +547,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     return returnAction;
                 }
-          //      case MenuRedux.BUILD_COLUMN_CONTEXT_MENU: {
-          //          let returnAction = next(action);
-             //       middlewareAPI.dispatch(MenuRedux.ShowColumnContextMenu())
-             //       return returnAction;
-             //  }
                 case AboutRedux.ABOUT_INFO_CREATE: {
                     let aboutStrategy = <IAboutStrategy>(blotter.Strategies.get(StrategyIds.AboutStrategyId));
                     let returnAction = next(action);
@@ -736,7 +729,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
                         let popup = state.Popup.ScreenPopup;
                         if (popup.ComponentName == ScreenPopups.SmartEditPopup) {  //We close the SmartEditPopup
-                            middlewareAPI.dispatch(PopupRedux.PopupHide());
+                            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                             //We show the alert Popup 
                             middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
@@ -771,7 +764,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let thePreview = middlewareAPI.getState().SmartEdit.PreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     SmartEditStrategy.ApplySmartEdit(newValues);
-                    middlewareAPI.dispatch(PopupRedux.PopupHide());
+                    middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                     return next(action);
                 }
 
@@ -790,7 +783,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         let popup = state.Popup.ScreenPopup;
                         if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
                             //We close the BulkUpdatePopup
-                            middlewareAPI.dispatch(PopupRedux.PopupHide());
+                            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                             //We show the Error Popup -- assume that will alwasy be an Error
                             middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
@@ -823,7 +816,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let thePreview = middlewareAPI.getState().BulkUpdate.PreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     BulkUpdateStrategy.ApplyBulkUpdate(newValues);
-                    middlewareAPI.dispatch(PopupRedux.PopupHide());
+                    middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                     return next(action);
                 }
 
@@ -831,7 +824,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let plusMinusStrategy = <IPlusMinusStrategy>(blotter.Strategies.get(StrategyIds.PlusMinusStrategyId));
                     let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
                     plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
-                    middlewareAPI.dispatch(PopupRedux.PopupHide());
+                    middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                     return next(action);
                 }
                 case ShortcutRedux.SHORTCUT_APPLY: {
@@ -845,7 +838,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let exportStrategy = <IExportStrategy>(blotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = <ExportRedux.ExportApplyAction>action;
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullLogin", false, actionTyped.Report))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullLogin", false, actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
                         iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
@@ -854,15 +847,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         }).catch((err: any) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err))
                         })
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, actionTyped.Report))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullDomainPageSelector", false, actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
                         exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
-                        middlewareAPI.dispatch(PopupRedux.PopupHide());
+                        middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                     }
                     else {
                         exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination);
-                        middlewareAPI.dispatch(PopupRedux.PopupHide());
+                        middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                     }
                     return next(action);
                 }
@@ -871,7 +864,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let actionTyped = <ExportRedux.IPPLoginAction>action;
                     iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
                         let report = middlewareAPI.getState().Popup.ScreenPopup.Params
-                        middlewareAPI.dispatch(PopupRedux.PopupHide())
+                        middlewareAPI.dispatch(PopupRedux.PopupHideScreen())
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
                         iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
                             middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
@@ -879,7 +872,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         }).catch((error: any) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
                         })
-                        middlewareAPI.dispatch(PopupRedux.PopupShow("IPushPullDomainPageSelector", false, report))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullDomainPageSelector", false, report))
                     }).catch((error: string) => {
                         AdaptableBlotterLogger.LogError("Login failed", error);
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
