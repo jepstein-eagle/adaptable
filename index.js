@@ -20,3 +20,6 @@ module.exports.adaptableBlotteragGrid = adaptableBlotteragGrid;
 
 var blotterFactory = require('./dist/App_Scripts/Core/BlotterFactory.d.ts');
 module.exports.blotterFactory = blotterFactory;
+
+var adaptableBlotterReact = require('./dist/App_Scripts/View/AdaptableBlotterReact.d.ts');
+module.exports.adaptableBlotterReact = adaptableBlotterReact;
