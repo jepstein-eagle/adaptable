@@ -46,14 +46,7 @@ export default class App extends React.Component<{}, AppState> {
     }
   }
 
-  /* Alternate way of adding columns...
-       <AgGridColumn field="tradeId" width={150} children={null} />
-            <AgGridColumn field="notional" width={150} children={null} />
-            <AgGridColumn field="country" width={150} children={null} />
-
-          */
-
-  render() {
+    render() {
     return (
       <div id="adaptableBlotter-react">
         <AdaptableBlotterReact AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={"agGrid"} />
@@ -63,12 +56,8 @@ export default class App extends React.Component<{}, AppState> {
           <AgGridReact
             columnDefs={this.state.columnDefs}
             rowData={this.state.trades}
-            gridOptions={this.state.gridOptions
-            }>
-
-          </AgGridReact>
-        </div>
-
+            gridOptions={this.state.gridOptions} />
+          </div>
       </div>
     );
   }
