@@ -10,7 +10,7 @@ import * as CalendarConstants from '../Constants/CalendarConstants';
 // b. CalendarConfig:  Enables the user to see what the various calendars on offer are (and their contents) and to choose a Current Calendar
 // c. Calendar State:  Stores just the name of the Current Calendar.  We dont persist the contents of the Current Calendar (similar to WPF)
 // d. Calendar Service:  This class which gets the details of teh calendars and makes calendar based calculations
-// N.B.  At the moment we DONT allow users to import (or edit) calendars;  to do that we need a way of reading from .csv files in Typescript (presumably jquery type libraries for this exist...)
+// N.B.  At the moment we DONT allow users to import (or edit) calendars;  to do that we need a way of reading from .csv files in Typescript 
 // Hence why we store the details of the shipped calendars the way we do, rather than reading from a file like we do with WPF version.
 
 export class CalendarService implements ICalendarService {

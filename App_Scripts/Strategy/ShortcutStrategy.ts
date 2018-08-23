@@ -37,7 +37,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         }
     }
 
-    private handleKeyDown(keyEvent: JQueryKeyEventObject | KeyboardEvent) {
+    private handleKeyDown(keyEvent: KeyboardEvent | any) {
         if (this.Shortcuts && this.Shortcuts.length==0) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }

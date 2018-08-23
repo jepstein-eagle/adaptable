@@ -1,11 +1,6 @@
 
 // General Enums
-export enum VendorGridName{
-    agGrid = 'agGrid',
-    Hypergrid = 'Hypergrid',
-    Kendo = 'Kendo',
-    AdaptableGrid = 'AdaptableGrid',
-}
+
 
 export enum DataType {
     String = 'String',

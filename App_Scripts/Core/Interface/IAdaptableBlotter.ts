@@ -1,4 +1,4 @@
-import { DistinctCriteriaPairValue, VendorGridName } from '../Enums'
+import { DistinctCriteriaPairValue } from '../Enums'
 import { ICellInfo, IAdaptableStrategyCollection } from './Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
@@ -27,7 +27,7 @@ export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
 
-    VendorGridName: VendorGridName
+    VendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid';
     EmbedColumnMenu: boolean
 
     // Services
@@ -40,7 +40,7 @@ export interface IAdaptableBlotter {
     InitAuditService(): void
 
     // Grid Events
-    onKeyDown(): IEvent<IAdaptableBlotter, JQueryKeyEventObject | KeyboardEvent>;
+    onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
