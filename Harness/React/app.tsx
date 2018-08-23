@@ -5,6 +5,9 @@ import "ag-grid-enterprise";
 import { IAdaptableBlotterOptions } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
 import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
 import { AgGridReact } from 'ag-grid-react';
+//import 'ag-grid/dist/styles/ag-grid.css';
+//import 'ag-grid/dist/styles/ag-theme-balham.css';
+
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
