@@ -1,25 +1,7 @@
 var adaptableBlotterHypergrid = require('./dist/adaptableblotterhypergrid-bundle.min');
 var adaptableBlotterKendo = require('./dist/adaptableblotterkendo-bundle.min');
 var adaptableBlotteragGrid = require('./dist/adaptableblotteraggrid-bundle.min');
-//var adaptableBlotterReactWrapper = require('./dist/adaptableBlotterReactWrapper-bundle.min');
-
-// interfaces
-//var IAdaptableBlotter = require('./dist/App_Scripts/Core/Interface/IAdaptableBlotter.d.ts');
-//var IAdaptableBlotterOptions = require('./dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions.d.ts');
-//var IBlotterApi = require('./dist/App_Scripts/Core/Api/Interface/IBlotterApi.d.ts');
 
 module.exports.adaptableBlotterHypergrid = adaptableBlotterHypergrid;
 module.exports.adaptableBlotterKendo = adaptableBlotterKendo;
 module.exports.adaptableBlotteragGrid = adaptableBlotteragGrid;
-//module.exports.adaptableBlotterReactWrapper = adaptableBlotterReactWrapper;
-
-// interfaces
-//module.exports.IAdaptableBlotter = IAdaptableBlotter;
-//module.exports.IAdaptableBlotterOptions = IAdaptableBlotterOptions;
-//module.exports.IBlotterApi = IBlotterApi;
-
-var blotterFactory = require('./App_Scripts/Core/BlotterFactory.ts');
-module.exports.blotterFactory = blotterFactory;
-
-var adaptableBlotterReact = require('./App_Scripts/View/AdaptableBlotterReact.tsx');
-module.exports.adaptableBlotterReact = adaptableBlotterReact;
