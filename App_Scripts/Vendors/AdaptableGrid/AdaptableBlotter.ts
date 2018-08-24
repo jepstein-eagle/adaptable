@@ -1,6 +1,6 @@
 ﻿/// <reference path="AdaptableBlotter.d.ts" />
-import '../../../stylesheets/adaptableblotter-style.css'
 
+import '../../stylesheets/adaptableblotter-style.css'
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
