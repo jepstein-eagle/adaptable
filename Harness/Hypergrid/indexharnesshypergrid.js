@@ -180,12 +180,12 @@ function InitBlotter() {
     });
 
     //Add Edit for Trade Date column
-    behavior.setColumnProperties(16, {
+    behavior.setColumnProperties(17, {
         format: 'shortDateFormat'
     });
 
     //Add Edit for Settlement Date column
-    behavior.setColumnProperties(17, {
+    behavior.setColumnProperties(18, {
         format: 'shortDateFormat'
     });
 

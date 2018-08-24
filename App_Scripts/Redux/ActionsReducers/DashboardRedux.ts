@@ -105,7 +105,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
         StrategyIds.AlertStrategyId,
-        StrategyIds.ChartStrategyId,
+       // StrategyIds.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -113,7 +113,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-        StrategyIds.ChartStrategyId,
+      //  StrategyIds.ChartStrategyId,
         //   StrategyIds.AlertStrategyId,
         // StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
