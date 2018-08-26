@@ -8,7 +8,7 @@ cache:
   directories:
     - node_modules
 script:
-    - travis_wait 30 npm run build-prod
+    - travis_wait 40 npm run build-prod
 notifications:
   - email: false
 #   - slack: '$SLACK'
