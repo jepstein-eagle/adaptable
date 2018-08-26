@@ -1,0 +1,9 @@
+{
+  "npmClientArgs": [
+    "--pure-lockfile"
+  ],
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent"
+}
