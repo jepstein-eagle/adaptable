@@ -22,7 +22,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { Visibility, StatusColour, MessageType } from "../../Core/Enums";
 import { ISystemStatus } from "../../Core/Interface/Interfaces";
-import { IAlert,  } from "../../Core/Interface/IMessage";
+import { IAlert, } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 
@@ -35,7 +35,7 @@ interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeTo
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
     onShowStatusMessage: (alert: IAlert) => PopupRedux.PopupShowAlertAction
-  
+
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -85,8 +85,13 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             })
         }
 
-        let optionsBlotterName: string = this.props.AdaptableBlotter.BlotterOptions.blotterId;
-        let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
+        let toolbarTitle = this.props.DashboardState.HomeToolbarTitle
+        if (StringExtensions.IsNullOrEmpty(toolbarTitle)) {
+            toolbarTitle = this.props.AdaptableBlotter.BlotterOptions.blotterId;
+            if (toolbarTitle == GeneralConstants.USER_NAME) {
+                toolbarTitle = "Blotter "
+            }
+        }
 
         const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
             <Glyphicon glyph={"home"} />
@@ -96,31 +101,36 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         </OverlayTrigger>
 
         return <PanelDashboard cssClassName={cssClassName} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
-            headerText={blotterName} glyphicon={"home"} showGlyphIcon={false}
+            headerText={toolbarTitle} glyphicon={"home"} showGlyphIcon={false}
             onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
 
-            <DropdownButton bsStyle={"default"}
-                className={cssDropdownClassName}
-                bsSize={"small"}
-                title={functionsGlyph}
-                key={"dropdown-functions"}
-                id={"dropdown-functions"}>
-                {menuItems}
-            </DropdownButton>
+            {this.props.DashboardState.ShowFunctionsDropdown &&
+                <DropdownButton bsStyle={"default"}
+                    className={cssDropdownClassName}
+                    bsSize={"small"}
+                    title={functionsGlyph}
+                    key={"dropdown-functions"}
+                    id={"dropdown-functions"}>
+                    {menuItems}
+                </DropdownButton>
+            }
             {this.props.DashboardState.ShowSystemStatusButton &&
                 statusButton
             }
 
-
             {shortcuts}
-            <DropdownButton bsStyle={"default"}
-                className={cssDropdownClassName}
-                bsSize={"small"}
-                title={colsGlyph}
-                key={"dropdown-cols"}
-                id={"dropdown-cols"}>
-                {colItems}
-            </DropdownButton>
+
+            {this.props.DashboardState.ShowColumnsDropdown &&
+                <DropdownButton bsStyle={"default"}
+                    className={cssDropdownClassName}
+                    bsSize={"small"}
+                    title={colsGlyph}
+                    key={"dropdown-cols"}
+                    id={"dropdown-cols"}>
+                    {colItems}
+                </DropdownButton>
+            }
+
         </PanelDashboard>
     }
 
@@ -134,10 +144,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             case StatusColour.Green:
                 let info: IAlert = {
                     Header: "System Status",
-                   Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
+                    Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
-                        MessageType: MessageType.Info
+                    MessageType: MessageType.Info
                 }
                 this.props.onShowStatusMessage(info)
                 return;
@@ -216,7 +226,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onShowStatusMessage: (alert: IAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
-     };
+    };
 }
 
 export const HomeToolbarControl = connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);

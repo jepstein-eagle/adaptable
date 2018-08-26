@@ -128,7 +128,10 @@ const initialDashboardState: DashboardState = {
     ],
     Zoom: 1,
     DashboardVisibility: Visibility.Visible,
-    ShowSystemStatusButton: true
+    ShowSystemStatusButton: true,
+    ShowFunctionsDropdown: true,
+    ShowColumnsDropdown: true,
+    HomeToolbarTitle: ""
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {

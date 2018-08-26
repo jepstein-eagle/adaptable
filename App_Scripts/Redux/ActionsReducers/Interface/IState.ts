@@ -87,6 +87,9 @@ export interface DashboardState {
     Zoom: number,
     DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'
     ShowSystemStatusButton: boolean
+    ShowFunctionsDropdown: boolean
+    ShowColumnsDropdown: boolean
+    HomeToolbarTitle: string
 }
 
 
