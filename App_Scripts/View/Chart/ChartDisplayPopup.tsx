@@ -6,8 +6,8 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
-import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
+//import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
+//import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
 import { IChartDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { IChartService } from "../../Core/Services/Interface/IChartService";
 
@@ -18,7 +18,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
  }
 
 interface ChartDisplayState {
-    chartData: any
+  //  chartData: any
 }
 
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayState> {
@@ -27,10 +27,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         super(props);
 
         // this line is commented out as we cannot run it otherwise...
-        IgrCategoryChartModule.register();
+      //  IgrCategoryChartModule.register();
        let currentChartDefinition: IChartDefinition = this.props.ChartDefinitions.find(cd => cd.Name == this.props.CurrentChartName);
         this.state = {
-            chartData: this.props.ChartService.BuildChartData(currentChartDefinition, this.props.Columns)
+      //      chartData: this.props.ChartService.BuildChartData(currentChartDefinition, this.props.Columns)
         };
     }
 
@@ -40,15 +40,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ChartStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ChartGlyph}>
-                {this.state.chartData != null &&
-                    <IgrCategoryChart
-                        yAxisMinimumValue={0}
-                        chartTitle={this.props.CurrentChartName}
-                        yAxisTitle="Notional"
-                        xAxisTitle="Counterparty"
-                        width="700px"
-                        height="500px"
-                        dataSource={this.state.chartData} />
+               
                 }
             </PanelWithImage>
         </div>
@@ -71,3 +63,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let ChartDisplayPopup = connect(mapStateToProps, mapDispatchToProps)(ChartDisplayPopupComponent);
 
+/*
+ {this.state.chartData != null &&
+                    <IgrCategoryChart
+                        yAxisMinimumValue={0}
+                        chartTitle={this.props.CurrentChartName}
+                        yAxisTitle="Notional"
+                        xAxisTitle="Counterparty"
+                        width="700px"
+                        height="500px"
+                        dataSource={this.state.chartData} />
+*/
