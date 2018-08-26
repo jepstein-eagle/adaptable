@@ -37,6 +37,8 @@ module.exports = {
         new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise', // works as expected 
         }),
+        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles', to: 'App_Scripts/Styles' }]),
+     
       ],
     module: {
         loaders: [
@@ -60,9 +62,4 @@ module.exports = {
             { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ]
     },
-    plugins: [
-        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles', to: 'App_Scripts/Styles' }]),
-       // new CopyWebpackPlugin([{ from: 'App_Scripts/Styles/themes', to: 'Styles/themes' }]),
-
-    ],
 };
