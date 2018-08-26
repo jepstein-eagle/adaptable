@@ -2,7 +2,7 @@
 var failPlugin = require('webpack-fail-plugin');
 var Promise = require('es6-promise').Promise;
 var path = require('path');
-
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -37,7 +37,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise', // works as expected 
         }),
-    ],
+      ],
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
@@ -59,5 +59,10 @@ module.exports = {
             { test: /\.css$/, exclude: /stylesheets/, loader: 'css-to-string-loader!css-loader' },
             { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ]
-    }
+    },
+    plugins: [
+        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles/stylesheets', to: 'Styles/stylesheets' }]),
+        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles/themes', to: 'Styles/themes' }]),
+
+    ],
 };

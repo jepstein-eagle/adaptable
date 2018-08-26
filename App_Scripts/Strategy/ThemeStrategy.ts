@@ -5,7 +5,7 @@ import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IThemeStrategy } from './Interface/IThemeStrategy'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { ThemesContent } from '../themes'
+import { ThemesContent } from '../Styles/themes'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Core/Helpers/Helper';
 

@@ -1,6 +1,6 @@
 ﻿/// <reference path="AdaptableBlotter.d.ts" />
 
-import '../../stylesheets/adaptableblotter-style.css'
+import '../../Styles/stylesheets/adaptableblotter-style.css'
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
@@ -56,7 +56,6 @@ import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogge
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
 import { ChartService } from '../../Core/Services/ChartService';
-
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement

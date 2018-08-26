@@ -1,4 +1,4 @@
-﻿import '../../stylesheets/adaptableblotter-style.css'
+﻿import '../../Styles/stylesheets/adaptableblotter-style.css'
 
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
