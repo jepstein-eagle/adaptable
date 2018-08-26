@@ -61,8 +61,8 @@ module.exports = {
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles/stylesheets', to: 'Styles/stylesheets' }]),
-        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles/themes', to: 'Styles/themes' }]),
+        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles', to: 'App_Scripts/Styles' }]),
+       // new CopyWebpackPlugin([{ from: 'App_Scripts/Styles/themes', to: 'Styles/themes' }]),
 
     ],
 };
