@@ -37,7 +37,6 @@
     "lodash": "^4.17.10",
     "mathjs": "^3.20.2",
     "prop-types": "^15.6.2",
-    "react": "^16.4.2",
     "react-bootstrap": "^0.31.5",
     "react-bootstrap-sweetalert": "^4.4.1",
     "react-bootstrap-typeahead": "^3.2.0",
@@ -45,7 +44,7 @@
     "react-redux": "^5.0.7",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.5",
-    "redux-storage": "git+https://git@github.com/smddzcy/redux-storage.git",
+    "redux-storage": "^4.1.2",
     "redux-storage-decorator-filter": "^1.1.8",
     "redux-storage-decorator-migrate": "^1.1.0"
   },
@@ -84,6 +83,9 @@
     "webpack": "^1.15.0",
     "webpack-dev-server": "^1.16.5",
     "webpack-fail-plugin": "^1.0.6"
+  },
+  "peerDependencies": {
+    "react": "^16.4.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

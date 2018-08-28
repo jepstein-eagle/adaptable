@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
-import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
+import "adaptableblotter";
+import { IAdaptableBlotterOptions } from 'adaptableblotter';
 import { AdaptableBlotter } from 'adaptableblotter-react';
 import { AgGridReact } from 'ag-grid-react';
 //import 'ag-grid/dist/styles/ag-grid.css';
@@ -56,5 +56,3 @@ export default class App extends React.Component<{}, AppState> {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('app'));

@@ -1,13 +1,13 @@
 ﻿{
-    "compilerOptions": {
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "declaration": true,
-        "module": "commonjs",
-        "target": "es6",
-        "jsx": "react",
-        "noUnusedLocals": false,
-        "downlevelIteration": true
-    },
-  "include": ["App_Scripts/**/*"]
+	"compilerOptions": {
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"declaration": true,
+		"module": "commonjs",
+		"target": "es6",
+		"jsx": "react",
+		"noUnusedLocals": false,
+		"downlevelIteration": true,
+	},
+	"include": ["App_Scripts/**/*"]
 }

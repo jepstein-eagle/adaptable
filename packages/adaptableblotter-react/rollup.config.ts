@@ -6,19 +6,19 @@ import typescript from 'rollup-plugin-typescript2'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
 import builtins from 'rollup-plugin-node-builtins'
-import replace from 'rollup-plugin-replace'
+import replace from 'rollup-plugin-re'
 
 const pkg = require('./package.json')
 
 // const libraryName = 'adaptableblotter-react'
 
 export default {
-  input: `src/index.ts`,
+  external: ['react'],
+  input: 'src/index.ts',
   output: [
-    { file: pkg.main, name: 'index', format: 'umd', sourcemap: true },
+    { file: pkg.main, name: 'index', format: 'umd', sourcemap: false },
+    { file: pkg.module, format: 'es', sourcemap: false },
   ],
-  // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: [],
   watch: {
     include: 'src/**',
   },
@@ -32,6 +32,14 @@ export default {
     json(),
     // Compile TypeScript files
     typescript({ useTsconfigDeclarationDir: true }),
+    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+    commonjs({
+      namedExports: {
+        '../adaptableblotter/node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement', 'cloneElement'],
+        '../adaptableblotter/node_modules/react-dom/index.js': ['render']
+      },
+      sourceMap: false,
+    }),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
@@ -41,26 +49,16 @@ export default {
       browser: true
     }),
     replace({
-      values: {
-        "require('./createLoader').default": 'createLoader',
-        "require('./createLoader')[default]": 'createLoader',
-        "require('./createMiddleware').default": 'createMiddleware',
-        "require('./createMiddleware')[default]": 'createMiddleware',
-        "require('./reducer').default": 'reducer',
-        "require('./reducer')[default]": 'reducer',
-        "...require('./constants')": 'LOAD, SAVE',
-        "require('./constants')": '{LOAD, SAVE}',
-      }
-    }),
-    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs({
-      namedExports: {
-        '../adaptableblotter/node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement', 'cloneElement'],
-        '../adaptableblotter/node_modules/react-dom/index.js': ['render']
-      }
+      patterns: [
+        {match: "require('./createLoader')[default]", replace: 'createLoader'},
+        {match:"require('./createLoader')[default]", replace:  'createLoader'},
+        {match:"require('./createMiddleware')[default]", replace:  'createMiddleware'},
+        {match:"require('./reducer')[default]", replace:  'reducer'},
+        {match:"require('./constants')", replace:  '{LOAD, SAVE}'},
+      ]
     }),
 
     // Resolve source maps to the original source
-    sourceMaps(),
+    // sourceMaps(),
   ],
 }

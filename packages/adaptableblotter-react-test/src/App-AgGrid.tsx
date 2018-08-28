@@ -1,11 +1,10 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { AdaptableBlotterAgGrid } from 'adaptableblotter-react'
 import { ReactHarnessHelper } from './ReactHarnessHelper';
 import { DataGenerator } from './DataGenerator';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
-import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
+import { IAdaptableBlotterOptions } from 'adaptableblotter';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
@@ -69,5 +68,3 @@ export default class App extends React.Component<{}, AppState> {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('app'));
