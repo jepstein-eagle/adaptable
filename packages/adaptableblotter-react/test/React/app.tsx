@@ -2,12 +2,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
-import { IAdaptableBlotterOptions } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
-import { AdaptableBlotterReact } from '../../App_Scripts/View/AdaptableBlotterReact';
+import { IAdaptableBlotterOptions } from 'adaptableblotter';
+import { AdaptableBlotter } from '../../src';
 import { AgGridReact } from 'ag-grid-react';
 //import 'ag-grid/dist/styles/ag-grid.css';
 //import 'ag-grid/dist/styles/ag-theme-balham.css';
 
+import './agGridHarnessStyleSheet.css';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
@@ -46,7 +47,7 @@ export default class App extends React.Component<{}, AppState> {
   render() {
     return (
       <div>
-        <AdaptableBlotterReact AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={"agGrid"} />
+        <AdaptableBlotter AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={"agGrid"} />
         <div className='ag-theme-balham' style={{ height: '97vh', width: '100%' }}>
           <AgGridReact
             columnDefs={this.state.columnDefs}

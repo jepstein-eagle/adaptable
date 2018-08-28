@@ -1,10 +1,22 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
-    ]
-  }
+	"rules": {
+		"no-unused-expression": true,
+		"no-duplicate-variable": true,
+		"curly": true,
+		"class-name": true,
+		"semicolon": [
+			false,
+			"always"
+		],
+		"triple-equals": false,
+		"switch-final-break": [
+			true,
+			"always"
+		],
+		"adjacent-overload-signatures": true ,
+		"no-var-requires": true,
+		"no-conditional-assignment": true,
+		"no-empty": [true, "allow-empty-catch"],
+		"no-switch-case-fall-through": true
+	}
 }

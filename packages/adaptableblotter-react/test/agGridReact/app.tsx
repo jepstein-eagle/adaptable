@@ -1,12 +1,13 @@
-
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AgGridReactWrapper } from '../../App_Scripts/Vendors/agGrid/AgGridReactWrapper';
+import { AdaptableBlotterAgGrid } from '../../src'
 import { ReactHarnessHelper } from './ReactHarnessHelper';
 import { DataGenerator } from '../DataGenerator';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
-import { IAdaptableBlotterOptions } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from 'adaptableblotter';
+
+import './agGridHarnessStyleSheet.css';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
@@ -61,7 +62,7 @@ export default class App extends React.Component<{}, AppState> {
 
        return (
       <div id="adaptableblotter-aggrid-react-demo-app">
-        <AgGridReactWrapper
+        <AdaptableBlotterAgGrid
           AdaptableBlotterOptions={this.state.blotterOptions}
           GridOptions={this.state.gridOptions}
           agTheme={"blue"}
