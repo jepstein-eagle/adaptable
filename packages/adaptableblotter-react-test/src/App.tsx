@@ -8,8 +8,6 @@ import { AgGridReact } from 'ag-grid-react';
 //import 'ag-grid/dist/styles/ag-grid.css';
 //import 'ag-grid/dist/styles/ag-theme-balham.css';
 
-import './agGridHarnessStyleSheet.css';
-
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
   blotterOptions: IAdaptableBlotterOptions,

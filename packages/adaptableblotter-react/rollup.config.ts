@@ -31,13 +31,6 @@ export default {
     json(),
     // Compile TypeScript files
     typescript({ useTsconfigDeclarationDir: true }),
-    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs({
-      namedExports: {
-        '../adaptableblotter/node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement', 'cloneElement'],
-        '../adaptableblotter/node_modules/react-dom/index.js': ['render']
-      }
-    }),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
@@ -45,6 +38,13 @@ export default {
       jsnext: true,
       main: true,
       browser: true
+    }),
+    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+    commonjs({
+      namedExports: {
+        '../adaptableblotter/node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement', 'cloneElement'],
+        '../adaptableblotter/node_modules/react-dom/index.js': ['render']
+      }
     }),
 
     // Resolve source maps to the original source

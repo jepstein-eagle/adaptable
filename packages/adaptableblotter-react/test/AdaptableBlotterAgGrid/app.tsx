@@ -7,8 +7,6 @@ import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
 import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
 
-import './agGridHarnessStyleSheet.css';
-
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,
   blotterOptions: IAdaptableBlotterOptions
