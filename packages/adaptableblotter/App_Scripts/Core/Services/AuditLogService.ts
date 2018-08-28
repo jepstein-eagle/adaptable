@@ -111,7 +111,7 @@ export class AuditLogService {
         }
     }
 
-    public AddStateChangeAuditLog(stateChanges: deepDiff.IDiff[], actionType: string) {
+    public AddStateChangeAuditLog(stateChanges: any, actionType: string) {
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger.StateChange,
             adaptableblotter_client_timestamp: new Date(),

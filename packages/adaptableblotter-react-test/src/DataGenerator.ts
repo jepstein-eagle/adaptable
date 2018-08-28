@@ -335,10 +335,10 @@ export class DataGenerator {
   }
 
   protected generateRandomNullableDouble(): number {
-    let myValue: Number = this.generateRandomDouble();
+    let myValue: number = this.generateRandomDouble();
     let randomInt = this.generateRandomInt(1, 10);
     if (randomInt > 7) {
-      myValue = null;
+      return null;
     }
 
     if (randomInt % 2 === 0 && myValue != null) {

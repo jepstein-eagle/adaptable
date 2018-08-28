@@ -6,6 +6,7 @@ import typescript from 'rollup-plugin-typescript2'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
 import builtins from 'rollup-plugin-node-builtins'
+import replace from 'rollup-plugin-replace'
 
 const pkg = require('./package.json')
 
@@ -38,6 +39,18 @@ export default {
       jsnext: true,
       main: true,
       browser: true
+    }),
+    replace({
+      values: {
+        "require('./createLoader').default": 'createLoader',
+        "require('./createLoader')[default]": 'createLoader',
+        "require('./createMiddleware').default": 'createMiddleware',
+        "require('./createMiddleware')[default]": 'createMiddleware',
+        "require('./reducer').default": 'reducer',
+        "require('./reducer')[default]": 'reducer',
+        "...require('./constants')": 'LOAD, SAVE',
+        "require('./constants')": '{LOAD, SAVE}',
+      }
     }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs({

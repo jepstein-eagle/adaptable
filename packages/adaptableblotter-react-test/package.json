@@ -48,17 +48,19 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
+  "dependencies": {
+    "adaptableblotter": "^2.3.8",
+    "adaptableblotter-react": "0.1.0",
+    "ag-grid": "^18.1.2",
+    "ag-grid-enterprise": "^18.1.1",
+    "ag-grid-react": "^18.1.0"
+  },
   "devDependencies": {
     "@types/jest": "^23.3.1",
     "@types/node": "^10.9.2",
     "@types/react": "^16.4.12",
     "@types/react-dom": "^16.0.7",
-    "adaptableblotter": "^2.3.8",
-    "adaptableblotter-react": "0.1.0",
-    "ag-grid": "^18.1.2",
-    "ag-grid-enterprise": "^18.1.1",
-    "typescript": "^3.0.1",
-    "ag-grid-react": "^18.1.0"
+    "typescript": "^3.0.1"
   },
   "jest": {
     "collectCoverageFrom": [

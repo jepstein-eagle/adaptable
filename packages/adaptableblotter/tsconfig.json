@@ -6,7 +6,8 @@
         "module": "commonjs",
         "target": "es6",
         "jsx": "react",
-        "noUnusedLocals": false
+        "noUnusedLocals": false,
+        "downlevelIteration": true
     },
   "include": ["App_Scripts/**/*"]
 }
