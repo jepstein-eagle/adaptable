@@ -5,6 +5,7 @@ import sourceMaps from 'rollup-plugin-sourcemaps'
 import typescript from 'rollup-plugin-typescript2'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
+import builtins from 'rollup-plugin-node-builtins'
 
 const pkg = require('./package.json')
 
@@ -21,6 +22,8 @@ export default {
     include: 'src/**',
   },
   plugins: [
+    // Node built-in fns support
+    builtins(),
     postcss({
       extensions: [ '.css' ],
     }),
@@ -29,12 +32,19 @@ export default {
     // Compile TypeScript files
     typescript({ useTsconfigDeclarationDir: true }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs(),
+    commonjs({
+      namedExports: {
+        '../adaptableblotter/node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement', 'cloneElement'],
+        '../adaptableblotter/node_modules/react-dom/index.js': ['render']
+      }
+    }),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve({
-      jsnext: true
+      jsnext: true,
+      main: true,
+      browser: true
     }),
 
     // Resolve source maps to the original source
