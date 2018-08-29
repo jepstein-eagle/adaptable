@@ -37,8 +37,12 @@ module.exports = {
         new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise', // works as expected 
         }),
-        new CopyWebpackPlugin([{ from: 'App_Scripts/Styles', to: 'App_Scripts/Styles' }]),
-     
+        new CopyWebpackPlugin([{
+            from: 'App_Scripts/Styles',
+            to: 'App_Scripts/Styles',
+            ignore: [ '*.ts' ],
+        }]),
+        
       ],
     module: {
         loaders: [

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
-import "adaptableblotter";
-import { IAdaptableBlotterOptions } from 'adaptableblotter';
-import { AdaptableBlotter } from 'adaptableblotter-react';
+import { AdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter-react';
 import { AgGridReact } from 'ag-grid-react';
 //import 'ag-grid/dist/styles/ag-grid.css';
 //import 'ag-grid/dist/styles/ag-theme-balham.css';

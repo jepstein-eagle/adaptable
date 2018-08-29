@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { AdaptableBlotterAgGrid } from 'adaptableblotter-react'
+import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from 'adaptableblotter-react'
 import { ReactHarnessHelper } from './ReactHarnessHelper';
 import { DataGenerator } from './DataGenerator';
 import { GridOptions } from "ag-grid";
 import "ag-grid-enterprise";
-import { IAdaptableBlotterOptions } from 'adaptableblotter';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,

@@ -2,17 +2,17 @@
 import { AgGridReact } from 'ag-grid-react';
 import { GridOptions } from "ag-grid";
 import AdaptableBlotter from "./AdaptableBlotter";
-import * as adaptableblotter from "adaptableblotter";
+import { IAdaptableBlotterOptions } from "adaptableblotter/types";
 
 export interface AdaptableBlotterAgGridProps extends React.ClassAttributes<AdaptableBlotterAgGrid> {
-  AdaptableBlotterOptions: adaptableblotter.IAdaptableBlotterOptions
+  AdaptableBlotterOptions: IAdaptableBlotterOptions
   GridOptions: GridOptions
   agTheme? :'balham'|'balham-dark'|'material'| 'fresh'| 'dark'| 'blue'|'bootstrap'
   agDivStyle?: any
 }
 
 export interface AdaptableBlotterAgGridState extends React.ClassAttributes<AdaptableBlotterAgGrid> {
-  AdaptableBlotterOptions: adaptableblotter.IAdaptableBlotterOptions
+  AdaptableBlotterOptions: IAdaptableBlotterOptions
   GridOptions: GridOptions
 }
 

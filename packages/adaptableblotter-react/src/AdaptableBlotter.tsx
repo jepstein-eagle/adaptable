@@ -1,10 +1,6 @@
 ﻿import * as React from 'react'
-import {
-  BlotterFactory,
-  AdaptableBlotterApp,
-  IAdaptableBlotter,
-  IAdaptableBlotterOptions,
-} from 'adaptableblotter';
+import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory';
+import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
 
 // This is the main React Wrapper
 // It simply takes an IAdaptableBlotterOptions object and instantiates the appropriate instance of the Adaptable Blotter

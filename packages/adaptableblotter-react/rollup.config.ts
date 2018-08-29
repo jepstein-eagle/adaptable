@@ -6,18 +6,21 @@ import typescript from 'rollup-plugin-typescript2'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
 import builtins from 'rollup-plugin-node-builtins'
-import replace from 'rollup-plugin-re'
 
 const pkg = require('./package.json')
 
 // const libraryName = 'adaptableblotter-react'
 
 export default {
-  external: ['react'],
+  external: ['react', 'react-dom'],
   input: 'src/index.ts',
   output: [
-    { file: pkg.main, name: 'index', format: 'umd', sourcemap: false },
-    { file: pkg.module, format: 'es', sourcemap: false },
+    {
+      file: pkg.main, name: 'index', format: 'umd', sourcemap: false,
+    },
+    {
+      file: pkg.module, format: 'es', sourcemap: false,
+    },
   ],
   watch: {
     include: 'src/**',
@@ -31,7 +34,11 @@ export default {
     // Allow json resolution
     json(),
     // Compile TypeScript files
-    typescript({ useTsconfigDeclarationDir: true }),
+    typescript({
+      useTsconfigDeclarationDir: true,
+      abortOnError: false,
+      check: false,
+    }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs({
       namedExports: {
@@ -46,16 +53,7 @@ export default {
     resolve({
       jsnext: true,
       main: true,
-      browser: true
-    }),
-    replace({
-      patterns: [
-        {match: "require('./createLoader')[default]", replace: 'createLoader'},
-        {match:"require('./createLoader')[default]", replace:  'createLoader'},
-        {match:"require('./createMiddleware')[default]", replace:  'createMiddleware'},
-        {match:"require('./reducer')[default]", replace:  'reducer'},
-        {match:"require('./constants')", replace:  '{LOAD, SAVE}'},
-      ]
+      browser: true,
     }),
 
     // Resolve source maps to the original source
