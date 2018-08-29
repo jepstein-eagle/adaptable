@@ -3,7 +3,6 @@ import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from 'adaptableblott
 import { ReactHarnessHelper } from './ReactHarnessHelper';
 import { DataGenerator } from './DataGenerator';
 import { GridOptions } from "ag-grid";
-import "ag-grid-enterprise";
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions,

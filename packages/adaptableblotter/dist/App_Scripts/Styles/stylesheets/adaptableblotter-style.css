@@ -1,0 +1,504 @@
+﻿/*Default Style for the main popup*/
+.modal-dialog{
+    /*position: relative;*/
+    display: table;
+    overflow-y: auto;    
+    overflow-x: auto;
+    /*width: auto;*/
+    min-width: 300px;  
+}
+
+/* for ensuring that modals stay in their containers */
+.modal-container {
+  position: relative;
+}
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute;
+}
+
+#filterContainer{
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
+}
+
+.ab_filterFormColumnSelector{
+ width: 150px;
+}
+
+/*Style to similate transparent background*/
+.ab_white_grey_stripes{
+  background: -moz-repeating-linear-gradient(
+    -45deg,
+    #96979b,
+    #96979b 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  ); 
+  background: -webkit-repeating-linear-gradient(
+    -45deg,
+    #96979b,
+    #96979b 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  ); 
+  background: repeating-repeating-linear-gradient(
+    -45deg,
+    #96979b,
+    #96979b 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  ); }
+
+/*Default style for the duallistbox placeholder*/
+button.placeholder {background: #87D0FA;}
+button.placeholder:before {
+  content: "Drop here";
+  color: White;
+}
+
+.ab_no-padding-except-top-panel > [class*='panel-body'] {
+    padding-right:0;
+	padding-left: 0;
+	padding-bottom: 0;
+	padding-top: 5px;
+}
+
+.ab_no-padding-anywhere-panel > [class*='panel-body'] {
+    padding-right:0px;
+	padding-left: 0px;
+	padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+
+.ab_small-padding-panel > [class*='panel-body'] {
+    padding: 5px;
+}
+
+.ab_small-padding-panel {
+    margin-bottom: 0px!important; 
+}
+
+.ab-panel-header-dashboard > [class*='panel-heading'] {
+	padding: 1px 15px;
+}
+
+.ab_panel-with-button-reduce-header-padding > [class*='panel-heading'] {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.ab_panel-with-button > [class*='panel-heading']  > [class*='panel-title'] {
+	font-size: 14px;
+}
+
+
+/*Styling for our main modal windows*/
+.ab_main_popup{
+  width: 700px;
+  height: 590px;
+}
+
+.ab_main_chart{
+  width: 700px;
+  height: 590px;
+}
+
+.ab_main_wizard{
+  width: 700px;
+  height: 520px;
+}
+
+.ab_object_list_item{
+  overflow-y: auto;
+  min-height: 80px;
+  max-height: 430px;
+}
+
+.ab_object_list_item_medium{
+  overflow-y: auto;
+  min-height: 80px;
+  max-height: 390px;
+}
+
+.ab_object_list_item_small{
+  overflow-y: auto;
+  min-height: 80px;
+  max-height: 350px;
+}
+
+.ab_left_modal_button {
+  float: left;
+  margin-right: 5px
+}
+
+.ab_right_modal_button {
+  float: right;
+  margin-left: 5px
+}
+
+/*How we manage readonly controls*/
+.ab_readonly button,
+.ab_readonly .ab_div_like_button,
+.ab_readonly select,
+.ab_readonly input,
+.ab_readonly .radio{
+    opacity: 0.65; 
+    pointer-events: none;
+}
+
+/*Used to make stuff bigger if needed. Can be useful for some Glyphicons*/
+.scale-lg{font-size: 1.4em;}
+.scale-2x{font-size: 2em;}
+.scale-3x{font-size: 3em;}
+.scale-4x{font-size: 4em;}
+.scale-5x{font-size: 5em;}
+
+/*******************************************
+Home Toolbar Column Dropdown
+********************************************/
+
+
+.ab_home_toolbar_column_list{
+  margin-left: 5px;
+  padding: 2px;
+}
+
+/*******************************************
+Context Menu Styles
+********************************************/
+.drop-down {
+  display: inline-block;
+}
+.ab_menu-button {
+  color: white;
+  background-color: #2ead6d;
+  border: 0;
+  padding: 20px 25px;
+  font-size: 30px;
+  transition: background-color 150ms ease-in;
+}
+.ab_menu-button-selected:not(.ab_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
+  transition: background-color 150ms ease-in;
+}
+.ab_menu-button:hover:not(.ab_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
+  transition: background-color 150ms ease-in;
+}
+.ab_menu-popup {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: #d9ecf5;
+  /*border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;*/
+  /*padding: 10px 0 10px 0;*/
+  opacity: 0;
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.35);
+  border-style: solid;
+  border-width: thin;
+}
+.ab_menu-popup.showing {
+  opacity: 1;
+  transition: opacity 150ms ease-in;
+}
+.ab_menu-item {
+  display: block;
+  width: 100%;
+  color: #00435e;
+  background-color: #d9ecf5;
+  padding: 5px 10px 5px 10px;
+  font-size: 15px;
+  border: 0;
+}
+.ab_menu-item-button {
+  line-height: 15px;
+  text-align: left;
+  transition: background-color 150ms ease-in;
+}
+
+.ab_menu-item-button:hover:not(.ab_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
+  transition: background-color 150ms ease-in;
+}
+.ab_menu-item-button span {
+  line-height: inherit;
+}
+.ab_menu-item-selected:not(.ab_menu-item-label) {
+  background-color: rgb(13, 106, 146);
+  color: white;
+  transition: background-color 150ms ease-in;
+}
+.ab_menu-item-label {
+  text-align: left;
+  font-weight: normal;
+  font-style: italic;
+  padding: 5px 10px 5px 10px;
+  line-height: 15px
+}
+.ab_menu-item-separator {
+  border: 0;
+  height: 0;
+  width: auto;
+  /*border-bottom: 4px dotted rgba(255, 255, 255, 0.35);*/
+  border-bottom: 2px black solid;
+  padding: 0;
+  margin: 5px 0;
+}
+.ab_menu-item:focus {
+  outline: 0;
+}
+.ab_menu-item span {
+  float: left;
+}
+.ab_menu-item-expandable {
+  padding-right: 0;
+}
+.ab_menu-item-link a {
+  color: #ffcc00;
+}
+.fa.fa-chevron-right {
+  float: right;
+  line-height: inherit;
+  margin-left: 15px;
+  padding-right: 5px;
+  font-size: 1em;
+}
+
+/*Dont want to use FontAwesome lib so replace icon by char*/
+.fa-chevron-right:before {
+    content: ">";
+}
+
+/*******************************************
+End Context Menu Styles
+********************************************/
+
+/*******************************************
+Searchable DropDown Styles
+********************************************/
+.ab_typeahead_inline{
+  display: inline-block
+}
+
+.ab_clear_button{
+  position: absolute;
+  right: 5px;
+  top: 0;
+  bottom: 0;
+  height: 14px;
+  margin: auto;
+  font-size: 14px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.bootstrap-typeahead-clear-button {
+  outline: none;
+  margin-top: -12px;
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  z-index: 1;
+}
+
+.close-lg {
+  font-size: 24px;
+  margin-top: -15px;
+  right: 15px;
+}
+
+.bootstrap-typeahead-loader {
+  -webkit-animation: loader-animation 600ms infinite linear;
+  -o-animation: loader-animation 600ms infinite linear;
+  animation: loader-animation 600ms infinite linear;
+  border: 1px solid #d5d5d5;
+  border-radius: 50%;
+  border-top-color: #1f8dd6;
+  display: block;
+  height: 16px;
+  right: 12px;
+  margin-top: -8px;
+  position: absolute;
+  top: 50%;
+  width: 16px;
+}
+
+.loader-lg {
+  height: 20px;
+  margin-top: -10px;
+  right: 16px;
+  width: 20px;
+}
+
+.loader-sm {
+  right: 10px;
+}
+
+@keyframes loader-animation {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@-webkit-keyframes loader-animation {
+  to {
+    -webkit-transform: rotate(1turn);
+  }
+}
+
+/* Token */
+.bootstrap-tokenizer .token {
+  background-color: #e7f4ff;
+  border: 0;
+  border-radius: 2px;
+  color: #1f8dd6;
+  display: inline-block;
+  line-height: 1em;
+  margin: 0 3px 3px 0;
+  padding: 4px 7px;
+  position: relative;
+}
+.bootstrap-tokenizer .token-disabled {
+  background-color: #ddd;
+  color: #888;
+  pointer-events: none;
+}
+.bootstrap-tokenizer .token-removeable {
+  cursor: pointer;
+  padding-right: 21px;
+}
+.bootstrap-tokenizer .token-selected {
+  background-color: #1f8dd6;
+  color: #fff;
+  outline: none;
+  text-decoration: none;
+}
+
+.bootstrap-tokenizer .token .close-button {
+  bottom: 0;
+  padding: 3px 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.bootstrap-typeahead .dropdown-menu > li a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bootstrap-typeahead .dropdown-menu > li a:focus {
+  outline: none;
+}
+
+.bootstrap-typeahead .dropdown-menu-justify {
+  right: 0;
+}
+
+/* Hide IE's native "clear" button */
+.bootstrap-typeahead input[type=text]::-ms-clear {
+  display: none;
+}
+
+.bootstrap-typeahead-menu-paginator {
+  text-align: center;
+}
+
+/* Input sizes */
+.bootstrap-tokenizer {
+  padding-bottom: 2px;
+  padding-top: 5px;
+}
+
+.input-sm.bootstrap-tokenizer {
+  padding-bottom: 1px;
+  padding-top: 4px;
+}
+
+.input-lg.bootstrap-tokenizer {
+  padding-bottom: 6px;
+  padding-top: 9px;
+}
+
+.bootstrap-tokenizer-input {
+  margin: 1px 0 4px;
+}
+
+.has-aux {
+  padding-right: 32px;
+}
+
+.has-aux.input-lg {
+  padding-right: 42px;
+}
+
+/* Fix styles when used with input-group */
+.input-group .bootstrap-typeahead:first-child .form-control {
+  border-radius: 4px 0 0 4px;
+}
+.input-group .bootstrap-typeahead:last-child .form-control {
+  border-radius: 0 4px 4px 0;
+}
+
+/*******************************************
+End Searchable DropDown Styles
+********************************************/
+
+.ab_preview_panel{
+  overflow-y: auto;
+  max-height: 460px;
+}
+.ab_no_padding {
+  padding: 0px;
+}
+.ab_small_padding {
+  padding: 2px;
+}
+.ab_medium_padding {
+  padding: 5px;
+}
+.ab_large_padding {
+  padding: 10px;
+}
+
+.ab_no_margin {
+  margin: 0px;
+}
+
+.ab_small_margin {
+  margin: 2px;
+}
+
+.ab_medium_margin {
+  margin: 5px;
+}
+
+.ab_large_margin {
+  margin: 10px;
+}
+
+.ab_no_padding_no_margin {
+  margin: 0px;
+  padding: 0px;
+}
+
+.ab_no_padding_small_margin {
+  margin: 2px;
+  padding: 0px;
+}
+
+.ab_no_padding_medium_margin {
+  margin: 5px;
+  padding: 0px;
+}
+
+.ab_no_padding_large_margin {
+  margin: 10px;
+  padding: 0px;
+}
+
+.ab_large_right_margin_style {
+  margin-right: 10px;
+}

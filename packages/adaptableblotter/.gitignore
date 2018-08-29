@@ -251,6 +251,5 @@ ModelManifest.xml
 #/Harness/**/*.js.map
 /typings/globals/**/*.*
 /typings/modules/**/*.*
-/dist/**/*.*
 /npm-debug.log.*
 /tmp/TeamSharing/**/*.*
