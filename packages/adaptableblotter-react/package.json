@@ -20,7 +20,7 @@
   },
   "scripts": {
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && rimraf node_modules/adaptableblotter/dist/App_Scripts/*.ts",
     "build": "tsc --module commonjs && npm run rollup && typedoc --out docs --target es6 --theme minimal --mode file src",
     "postbuild": "node scripts/postbuild.js",
     "rollup": "node --max-old-space-size=8192 node_modules/rollup/bin/rollup -c rollup.config.ts",
