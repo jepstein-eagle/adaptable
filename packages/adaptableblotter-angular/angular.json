@@ -162,5 +162,10 @@
       }
     }
   },
-  "defaultProject": "adaptableblotter-angular"
+  "defaultProject": "adaptableblotter-angular",
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
+    }
+  }
 }

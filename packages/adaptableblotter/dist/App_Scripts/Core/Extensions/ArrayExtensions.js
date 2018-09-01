@@ -11,7 +11,7 @@ var ArrayExtensions;
     }
     ArrayExtensions.NotContainsItem = NotContainsItem;
     function RetrieveDistinct(array) {
-        return [...new Set(array.map(item => item))];
+        return Array.from(new Set(array.map(item => item)));
     }
     ArrayExtensions.RetrieveDistinct = RetrieveDistinct;
     function IsNull(arrayToCheck) {

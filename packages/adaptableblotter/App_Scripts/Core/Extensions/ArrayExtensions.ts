@@ -10,7 +10,7 @@ export module ArrayExtensions {
     }
 
     export function RetrieveDistinct(array: any[]): any[] {
-        return  [...new Set(array.map(item => item))];
+        return  Array.from(new Set(array.map(item => item)));
     }
 
     export function IsNull(arrayToCheck: any[]) : boolean {

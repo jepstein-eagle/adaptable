@@ -11,6 +11,7 @@
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"emitDecoratorMetadata": false,
+		"experimentalDecorators": false,
 		"downlevelIteration": true,
 		"outDir": "dist/lib",
 		"typeRoots": [
