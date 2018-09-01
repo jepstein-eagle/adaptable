@@ -10,7 +10,7 @@
 		"noUnusedLocals": false,
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
-		"experimentalDecorators": true,
+		"emitDecoratorMetadata": false,
 		"downlevelIteration": true,
 		"outDir": "dist/lib",
 		"typeRoots": [
