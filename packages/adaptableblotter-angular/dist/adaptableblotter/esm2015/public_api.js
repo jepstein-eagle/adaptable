@@ -1,0 +1,15 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+ */
+/*
+ * Public API Surface of adaptableblotter
+ */
+// Export the module
+export { AdaptableBlotterModule } from './lib/adaptableblotter.module';
+// Export components
+export { AdaptableBlotterComponent } from './lib/adaptableblotter.component';
+export { AdaptableblotterAgGridComponent } from './lib/adaptableblotter-aggrid.component';
+// Export the parameter types
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL2FkYXB0YWJsZWJsb3R0ZXItYW5ndWxhci8iLCJzb3VyY2VzIjpbInB1YmxpY19hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFLQSx1Q0FBYywrQkFBK0IsQ0FBQzs7QUFHOUMsMENBQWMsa0NBQWtDLENBQUM7QUFDakQsZ0RBQWMseUNBQXlDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKlxuICogUHVibGljIEFQSSBTdXJmYWNlIG9mIGFkYXB0YWJsZWJsb3R0ZXJcbiAqL1xuXG4vLyBFeHBvcnQgdGhlIG1vZHVsZVxuZXhwb3J0ICogZnJvbSAnLi9saWIvYWRhcHRhYmxlYmxvdHRlci5tb2R1bGUnO1xuXG4vLyBFeHBvcnQgY29tcG9uZW50c1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYWRhcHRhYmxlYmxvdHRlci5jb21wb25lbnQnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYWRhcHRhYmxlYmxvdHRlci1hZ2dyaWQuY29tcG9uZW50JztcblxuLy8gRXhwb3J0IHRoZSBwYXJhbWV0ZXIgdHlwZXNcbmV4cG9ydCAqIGZyb20gJ2FkYXB0YWJsZWJsb3R0ZXIvdHlwZXMnO1xuIl19

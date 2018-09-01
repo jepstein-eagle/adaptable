@@ -1,0 +1,22 @@
+{
+  "name": "adaptableblotter-angular",
+  "version": "0.1.0",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "adaptableblotter": "^2.4.0"
+  },
+  "main": "bundles/adaptableblotter-angular.umd.js",
+  "module": "fesm5/adaptableblotter-angular.js",
+  "es2015": "fesm2015/adaptableblotter-angular.js",
+  "esm5": "esm5/adaptableblotter-angular.js",
+  "esm2015": "esm2015/adaptableblotter-angular.js",
+  "fesm5": "fesm5/adaptableblotter-angular.js",
+  "fesm2015": "fesm2015/adaptableblotter-angular.js",
+  "typings": "adaptableblotter-angular.d.ts",
+  "metadata": "adaptableblotter-angular.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
