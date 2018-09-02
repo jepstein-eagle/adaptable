@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const FilterRedux = require("../../../Redux/ActionsReducers/FilterRedux");
+const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const FilterHelper_1 = require("../../../Core/Helpers/FilterHelper");
 const Enums_1 = require("../../../Core/Enums");
@@ -10,11 +11,12 @@ const Helper_1 = require("../../../Core/Helpers/Helper");
 const ListBoxFilterForm_1 = require("./ListBoxFilterForm");
 const ButtonClose_1 = require("../Buttons/ButtonClose");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const PanelWithTwoButtons_1 = require("../Panels/PanelWithTwoButtons");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
 const Waiting_1 = require("./Waiting");
 const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
 const ListBoxMenu_1 = require("./ListBoxMenu");
+const FilterFormPanel_1 = require("../Panels/FilterFormPanel");
+const ButtonSave_1 = require("../Buttons/ButtonSave");
 class FilterFormComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -27,30 +29,31 @@ class FilterFormComponent extends React.Component {
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean) {
             let columnValuePairs = [];
-            if (this.props.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
-                        columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
                         columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(di => {
-                            columnValuePairs.push({ RawValue: di, DisplayValue: di });
+                            let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, di);
+                            columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
                         });
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.BlotterApi.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
+                        this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
                     }
                 }, function (error) {
                     //    this.setState({ name: error });
                 });
             }
             else {
-                columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
                 columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                 this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
             }
@@ -70,11 +73,12 @@ class FilterFormComponent extends React.Component {
             existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper_1.ExpressionHelper.CreateEmptyRangeExpression();
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
         let isEmptyFilter = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ExpressionHelper_1.ExpressionHelper.IsEmptyRange(uiSelectedRangeExpression);
-        // let isEmptyFilter: boolean = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ;
+        let hasUserFilter = uiSelectedUserFilters.length > 0;
         let closeButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onCloseForm(), bsStyle: "default", size: "xsmall", DisplayMode: "Glyph", hideToolTip: true });
         let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onClearFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter, overrideText: "Clear", DisplayMode: "Text", hideToolTip: true });
+        let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true });
         return React.createElement("div", null,
-            React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, closeButton: closeButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
+            React.createElement(FilterFormPanel_1.FilterFormPanel, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, saveButton: saveButton, closeButton: closeButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
                 React.createElement(ListBoxMenu_1.ListBoxMenu, { ContextMenuItems: this.props.ContextMenuItems, onContextMenuItemClick: (action) => this.onContextMenuItemClick(action) })
                 :
                     React.createElement("div", null, this.state.ShowWaitingMessage ?
@@ -118,11 +122,20 @@ class FilterFormComponent extends React.Component {
         let columnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
         //delete if empty
         if (columnValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
-            this.props.onDeleteColumnFilter(columnFilter);
+            this.props.onClearColumnFilter(columnFilter);
         }
         else {
             this.props.onAddEditColumnFilter(columnFilter);
         }
+    }
+    onSaveFilter() {
+        let existingColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+        let prompt = {
+            PromptTitle: "Enter name for User Filter",
+            PromptMsg: "Please enter a user filter name",
+            ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
+        };
+        this.props.onShowPrompt(prompt);
     }
     onClearFilter() {
         this.persistFilter([], [], []);
@@ -142,22 +155,22 @@ function mapStateToProps(state, ownProps) {
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
-        BlotterOptions: ownProps.Blotter.BlotterOptions,
-        BlotterApi: ownProps.Blotter.api,
-        ContextMenuItems: state.Menu.ContextMenu.Items
+        ContextMenuItems: state.Menu.ContextMenu.Items,
+        Blotter: ownProps.Blotter
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onContextMenuItemClick: (action) => dispatch(action),
-        onDeleteColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
+        onClearColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
         onAddEditColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
     };
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 exports.FilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.AdaptableBlotterStore.TheStore },
-    React.createElement(exports.FilterForm, { getColumnValueDisplayValuePairDistinctList: (columnId, distinctCriteria) => FilterContext.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria), Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu }));
+    React.createElement(exports.FilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu }));
 let panelStyle = {
     width: '235px'
 };

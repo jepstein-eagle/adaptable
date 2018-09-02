@@ -26,6 +26,7 @@ const Enums_1 = require("../Enums");
 const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore");
 const AdaptableBlotterLogger_1 = require("../Helpers/AdaptableBlotterLogger");
 const FilterHelper_1 = require("../Helpers/FilterHelper");
+const ObjectFactory_1 = require("../ObjectFactory");
 class BlotterApiBase {
     constructor(blotter) {
         this.blotter = blotter;
@@ -46,6 +47,23 @@ class BlotterApiBase {
     layoutGetCurrent() {
         let layoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
+    }
+    layoutgetAll() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts;
+    }
+    layoutSave() {
+        let currentLayoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
+        if (currentLayoutName != GeneralConstants_1.DEFAULT_LAYOUT) {
+            let currentLayoutObject = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == currentLayoutName);
+            let currentLayoutIndex = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName);
+            if (currentLayoutIndex != -1) {
+                let gridState = (currentLayoutObject) ? currentLayoutObject.VendorGridInfo : null;
+                let visibleColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
+                let gridSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+                let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName);
+                this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave));
+            }
+        }
     }
     // Dashboard api methods
     dashboardSetAvailableToolbars(availableToolbars) {
@@ -79,6 +97,27 @@ class BlotterApiBase {
     }
     dashboardMinimise() {
         this.dashboardSetVisibility(Enums_1.Visibility.Minimised);
+    }
+    dashboardShowSystemStatusButton() {
+        this.dispatchAction(DashboardRedux.DashboardShowSystemStatusButton());
+    }
+    dashboardHideSystemStatusButton() {
+        this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton());
+    }
+    dashboardShowFunctionsDropdown() {
+        this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdownButton());
+    }
+    dashboardHideFunctionsDropdown() {
+        this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdownButton());
+    }
+    dashboardShowColumnsDropdown() {
+        this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdownButton());
+    }
+    dashboardHideColumnsDropdown() {
+        this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdownButton());
+    }
+    dashboardSetHomeToolbarTitle(title) {
+        this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));
     }
     // Quick Search api methods
     quickSearchRun(quickSearchText) {
@@ -171,26 +210,54 @@ class BlotterApiBase {
         this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column));
     }
     // filter api methods
-    filterSetColumnFilters(columnFilters) {
+    columnFilterSet(columnFilters) {
         columnFilters.forEach(cf => {
             this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(cf));
         });
     }
-    filterSetUserFilters(userFilters) {
+    columnFilterSetUserFilter(userFilter) {
+        let existingUserFilter = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters.find(uf => uf.Name == userFilter);
+        if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
+            let columnFilter = FilterHelper_1.FilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter);
+            this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(columnFilter));
+        }
+    }
+    columnFilterClear(columnFilter) {
+        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter));
+    }
+    columnFilterClearByColumns(columns) {
+        columns.forEach(c => {
+            this.columnFilterClearByColumn(c);
+        });
+    }
+    columnFilterClearByColumn(column) {
+        let currentColumnFilters = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+        let currentColumnFilter = currentColumnFilters.find(c => c.ColumnId == column);
+        if (currentColumnFilter) {
+            this.dispatchAction(FilterRedux.ColumnFilterClear(currentColumnFilter));
+        }
+    }
+    columnFilterClearAll() {
+        this.dispatchAction(FilterRedux.ColumnFilterClearAll());
+    }
+    columnFiltersGetCurrent() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+    }
+    userFilterSet(userFilters) {
         userFilters.forEach(uf => {
             this.dispatchAction(FilterRedux.UserFilterAddUpdate(-1, uf));
         });
     }
-    filterSetSystemFilters(systemFilters) {
+    systemFilterSet(systemFilters) {
         this.dispatchAction(FilterRedux.SystemFilterSet(systemFilters));
     }
-    filterClearSystemFilters() {
+    systemFilterClear() {
         this.dispatchAction(FilterRedux.SystemFilterSet([]));
     }
-    filterGetCurrentSystemFilters() {
+    systemFilterGetCurrent() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters;
     }
-    filterGetAllSystemFilters() {
+    systemFilterGetAll() {
         return FilterHelper_1.FilterHelper.GetAllSystemFilters();
     }
     // Data Source api methods
@@ -384,6 +451,9 @@ class BlotterApiBase {
     // Events
     onSearchedChanged() {
         return this.blotter.SearchedChanged;
+    }
+    onColumnStateChanged() {
+        return this.blotter.ColumnStateChanged;
     }
     // Helper Methods
     dispatchAction(action) {

@@ -1,10 +1,11 @@
 var themeName = ""
 var adaptableblotter
 var quickSearchText
+var trades
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
-    let trades = dataGen.getTrades(1000);
+    trades = dataGen.getTrades(1000);
 
     // Create a GridOptions object.  This is used to create the ag-Grid
     // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -48,7 +49,7 @@ function InitTradeBlotter() {
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-        //   getColumnValues: retrieveValues,
+            getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -57,23 +58,41 @@ function InitTradeBlotter() {
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
 }
 
 function retrieveValues(columnName) {
     return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(getValuesForColumn(columnName)), 2500);
+        setTimeout(() => resolve(getValuesForColumn(columnName)), 500);
     });
 }
 
+function listenToColumnStateChange(columnChangedArgs) {
+    console.log("event received")
+}
+
 function getValuesForColumn(columnName) {
-    return ['val a', 'val b', 'val c', 'val 3', 'val a', 'val f', 'val a', 'val h', 'val i'];
+    if (columnName == "notional") {
+        return [1000000, 5000000, 10000000];
+    }
+    if (columnName == "settlementDate") {
+        return [
+            trades[0]["settlementDate"],
+            trades[1]["settlementDate"],
+            trades[2]["settlementDate"],
+            trades[3]["settlementDate"],
+            trades[4]["settlementDate"],
+        ];
+    }
+    return ["val1", "val2", "val3"];
 }
 
 function getTradeSchema() {
     var schema = []
+    schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber", sortable: false });
-    schema.push({ headerName: "Notional", field: "notional", editable: true, filter: 'text', cellRenderer: notionalCellRenderer, enableRowGroup: true, type: ["abColDefNumber"], enableValue: true });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: true });
+    schema.push({ headerName: "Notional", field: "notional", editable: true, valueFormatter: notionalFormatter, cellClass: 'number-cell' });
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: false });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true });
@@ -86,16 +105,15 @@ function getTradeSchema() {
     schema.push({ headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bbg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bbg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' });
-   // schema.push({
-   //     headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
-   //         return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
-   //     }
-   // });
+    // schema.push({
+    //     headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
+    //         return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
+    //     }
+    // });
     schema.push({ headerName: "Fitch", field: "fitchRating", editable: true, filter: 'text', });
     schema.push({ headerName: "Moodys", field: "moodysRating", editable: true, filter: 'text' });
     schema.push({ headerName: "SandP", field: "sandpRating", editable: true, filter: 'text' });
     schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
-    schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Pct Change", field: "percentChange", filter: 'text' });
     schema.push({ headerName: "Last Updated By", field: "lastUpdatedBy", filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Last Updated", field: "lastUpdated", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
@@ -106,7 +124,7 @@ function getTradeSchema() {
 function apiTester(state, gridOptions) {
     if (state.QuickSearch.QuickSearchText != quickSearchText) {
         quickSearchText = state.QuickSearch.QuickSearchText
-         if (quickSearchText == "#permies") {
+        if (quickSearchText == "#permies") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
         } else if (quickSearchText == "#systemfilters") {
             adaptableblotter.api.filterClearSystemFilters()
@@ -132,6 +150,26 @@ function apiTester(state, gridOptions) {
             adaptableblotter.api.systemStatusSetAmber("The server is running slowly")
         } else if (quickSearchText == "#red") {
             adaptableblotter.api.systemStatusSetRed("The server has stopped ")
+        } else if (quickSearchText == "#sbutton") {
+            adaptableblotter.api.dashboardShowSystemStatusButton()
+        } else if (quickSearchText == "#hbutton") {
+            adaptableblotter.api.dashboardHideSystemStatusButton()
+        } else if (quickSearchText == "#sfunc") {
+            adaptableblotter.api.dashboardShowFunctionsDropdown()
+        } else if (quickSearchText == "#hfunc") {
+            adaptableblotter.api.dashboardHideFunctionsDropdown()
+        } else if (quickSearchText == "#scols") {
+            adaptableblotter.api.dashboardShowColumnsDropdown()
+        } else if (quickSearchText == "#hcols") {
+            adaptableblotter.api.dashboardHideColumnsDropdown()
+        } else if (quickSearchText == "#title") {
+            adaptableblotter.api.dashboardSetHomeToolbarTitle("hello world")
+        } else if (quickSearchText == "#filterclear") {
+            adaptableblotter.api.filterClearColumnFilters()
+        } else if (quickSearchText == "#userfilter") {
+            adaptableblotter.api.columnFilterSetUserFilter("Big Desk Id")
+        } else if (quickSearchText == "#savelayout") {
+            adaptableblotter.api.layoutSave()
         } else if (quickSearchText == "#notional") {
             gridOptions.api.forEachNode((rowNode, index) => {
                 if (rowNode.group) {
@@ -149,7 +187,7 @@ function apiTester(state, gridOptions) {
 function getTradesForSearch(searchArgs, dataGen) {
     let searchChangedInfo = searchArgs.data[0].id;
     if (searchChangedInfo.searchChangedTrigger == "QuickSearch") {
-        alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
+        //  alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
     }
 
     let jsonstring = JSON.stringify(searchArgs)
@@ -189,6 +227,16 @@ function getTradesForSearch(searchArgs, dataGen) {
         }
         */
     }
+}
+
+function notionalFormatter(params) {
+    return '£' + formatNumber(params.value);
+}
+
+function formatNumber(number) {
+    // this puts commas into the number eg 1000 goes to 1,000,
+    // i pulled this from stack overflow, i have no idea how it works
+    return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
 var currencyFormatter = new Intl.NumberFormat('en-US', {

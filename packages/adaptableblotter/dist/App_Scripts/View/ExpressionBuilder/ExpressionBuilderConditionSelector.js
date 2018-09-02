@@ -91,30 +91,31 @@ class ExpressionBuilderConditionSelector extends React.Component {
         }
         if (shouldGetColumnValues) {
             let columnValuePairs = [];
-            if (this.props.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.BlotterOptions.getColumnValues(this.props.SelectedColumnId).
+                this.props.Blotter.BlotterOptions.getColumnValues(this.props.SelectedColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
-                        columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
                         columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                         this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(di => {
+                            //    let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, di) 
                             columnValuePairs.push({ RawValue: di, DisplayValue: di });
                         });
                         this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.BlotterApi.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
+                        this.props.Blotter.api.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
                     }
                 }, function (error) {
                     //    this.setState({ name: error });
                 });
             }
             else {
-                columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
                 columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                 this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
             }
@@ -157,7 +158,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.props.SelectedColumnId], ColumnList: this.props.ColumnsList, onColumnChange: columns => this.onColumnSelectChange(columns), SelectionMode: Enums_1.SelectionMode.Single }))
             :
                 React.createElement("div", null, selectedColumn &&
-                    React.createElement("div", null, this.props.BlotterOptions.columnValuesOnlyInQueries ?
+                    React.createElement("div", null, this.props.Blotter.BlotterOptions.columnValuesOnlyInQueries ?
                         React.createElement("div", null, this.state.ShowWaitingMessage ?
                             React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                             :

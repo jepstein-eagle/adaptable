@@ -18,7 +18,7 @@ class AlertWizard extends React.Component {
                     React.createElement(AlertRulesWizard_1.AlertRulesWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns }),
                     React.createElement(AlertTypeWizard_1.AlertTypeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2] }),
                     React.createElement(AlertSelectQueryWizard_1.AlertSelectQueryWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[3], Columns: this.props.Columns }),
-                    React.createElement(AlertExpressionWizard_1.AlertExpressionWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[4], Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList, BlotterOptions: this.props.BlotterOptions, BlotterApi: this.props.BlotterApi }),
+                    React.createElement(AlertExpressionWizard_1.AlertExpressionWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[4], Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter }),
                     React.createElement(AlertSummaryWizard_1.AlertSummaryWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[4], Columns: this.props.Columns, UserFilters: this.props.UserFilters })
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }

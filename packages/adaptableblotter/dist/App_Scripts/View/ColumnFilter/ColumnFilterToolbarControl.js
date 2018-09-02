@@ -45,7 +45,7 @@ class ColumnFilterToolbarControlComponent extends React.Component {
                     React.createElement("span", null,
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Active Filters", bodyText: infoBody, tooltipText: "Show Filter Details", MessageType: Enums_1.MessageType.Info, useButton: true, triggerAction: "click" }),
                         ' ',
-                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0 }))));
+                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0 }))));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.ColumnFilterStrategyName, glyphicon: StrategyGlyphs.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyIds.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
 }
@@ -56,7 +56,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
+        onClearAllFilters: () => dispatch(FilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ColumnFilterPopup, isReadOnly))
     };

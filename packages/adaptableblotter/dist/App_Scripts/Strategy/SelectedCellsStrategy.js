@@ -7,7 +7,6 @@ const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
-const math = require("mathjs");
 class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.SelectedCellsStrategyId, blotter);
@@ -43,18 +42,42 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
             let hasNumericColumns = numericValues.length > 0;
             let distinct = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
-                Sum: (hasNumericColumns) ? math.round(math.sum(numericValues), 4) : "",
-                Average: (hasNumericColumns) ? math.round(math.mean(numericValues), 4) : "",
-                Median: (hasNumericColumns) ? math.round(math.median(numericValues), 4) : "",
+                Sum: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.sumNumberArray(numericValues)) : "",
+                Average: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.meanNumberArray(numericValues)) : "",
+                Median: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.medianNumberArray(numericValues)) : "",
                 Distinct: distinct,
-                Max: (hasNumericColumns) ? math.round(math.max(numericValues), 4) : "",
-                Min: (hasNumericColumns) ? math.round(math.min(numericValues), 4) : "",
+                Max: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.max(...numericValues)) : "",
+                Min: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.min(...numericValues)) : "",
                 Count: allValues.length,
                 Only: (distinct == 1) ? allValues[0] : "",
                 VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
             };
         }
         return selectedCellSummary;
+    }
+    sumNumberArray(numericValues) {
+        return numericValues.reduce(function (a, b) { return a + b; }, 0);
+    }
+    meanNumberArray(numericValues) {
+        return this.sumNumberArray(numericValues) / numericValues.length;
+    }
+    medianNumberArray(numericValues) {
+        // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
+        var median = 0, numsLen = numericValues.length;
+        numericValues.sort();
+        if (numsLen % 2 === 0 // is even
+        ) {
+            // average of two middle numbers
+            median = (numericValues[numsLen / 2 - 1] + numericValues[numsLen / 2]) / 2;
+        }
+        else { // is odd
+            // middle number only
+            median = numericValues[(numsLen - 1) / 2];
+        }
+        return median;
+    }
+    roundNumberToFourPlaces(numberToRound) {
+        return Math.round(numberToRound * 10000) / 10000;
     }
     calculateVwap(numericValues) {
         let firstColValues = [];
@@ -64,13 +87,13 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
                 firstColValues.push(numericValues[i]);
             }
             else {
-                let newValue = math.multiply(numericValues[i], numericValues[i - 1]);
+                let newValue = (numericValues[i] * numericValues[i - 1]);
                 secondColComputedValues.push(newValue);
             }
         }
-        let firstColTotal = math.sum(firstColValues);
-        let secondColTotal = math.sum(secondColComputedValues);
-        let result = math.round(math.divide(secondColTotal, firstColTotal), 4);
+        let firstColTotal = this.sumNumberArray(firstColValues);
+        let secondColTotal = this.sumNumberArray(secondColComputedValues);
+        let result = this.roundNumberToFourPlaces((secondColTotal / firstColTotal));
         return result;
     }
 }

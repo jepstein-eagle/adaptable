@@ -59,6 +59,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
+        this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
         this.vendorGrid = this.BlotterOptions.vendorGrid;
@@ -486,6 +487,9 @@ class AdaptableBlotter {
         else {
             return String(rawValue);
         }
+    }
+    getDisplayValueFromRawValue(colId, rawValue) {
+        return null;
     }
     getRawValueFromRecord(row, columnId) {
         return row[columnId];

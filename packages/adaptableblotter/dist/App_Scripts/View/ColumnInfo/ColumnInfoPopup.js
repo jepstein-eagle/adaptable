@@ -45,32 +45,32 @@ class ColumnInfoPopupComponent extends React.Component {
         let summaries = [];
         if (this.isStrategyVisible(StrategyIds.CustomSortStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.CustomSortStrategyId, className: this.isStrategyReadOnly(StrategyIds.CustomSortStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(CustomSortSummary_1.CustomSortSummary, { key: StrategyIds.CustomSortStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                React.createElement(CustomSortSummary_1.CustomSortSummary, { key: StrategyIds.CustomSortStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
         }
         if (this.isStrategyVisible(StrategyIds.ConditionalStyleStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.ConditionalStyleStrategyId, className: this.isStrategyReadOnly(StrategyIds.ConditionalStyleStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ConditionalStyleSummary_1.ConditionalStyleSummary, { key: StrategyIds.ConditionalStyleStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                React.createElement(ConditionalStyleSummary_1.ConditionalStyleSummary, { key: StrategyIds.ConditionalStyleStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
         }
         if (this.isStrategyVisible(StrategyIds.CellValidationStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.CellValidationStrategyId, className: this.isStrategyReadOnly(StrategyIds.CellValidationStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(CellValidationSummary_1.CellValidationSummary, { key: StrategyIds.CellValidationStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                React.createElement(CellValidationSummary_1.CellValidationSummary, { key: StrategyIds.CellValidationStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
         }
         if (this.isStrategyVisible(StrategyIds.UserFilterStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.UserFilterStrategyId, className: this.isStrategyReadOnly(StrategyIds.UserFilterStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(UserFilterSummary_1.UserFilterSummary, { key: StrategyIds.UserFilterStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                React.createElement(UserFilterSummary_1.UserFilterSummary, { key: StrategyIds.UserFilterStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
         }
         if (this.isStrategyVisible(StrategyIds.ColumnFilterStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.ColumnFilterStrategyId, className: this.isStrategyReadOnly(StrategyIds.ColumnFilterStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ColumnFilterSummary_1.ColumnFilterSummary, { key: StrategyIds.ColumnFilterStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                React.createElement(ColumnFilterSummary_1.ColumnFilterSummary, { key: StrategyIds.ColumnFilterStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
         }
         if (this.isStrategyVisible(StrategyIds.FormatColumnStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.FormatColumnStrategyId, className: this.isStrategyReadOnly(StrategyIds.FormatColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(FormatColumnSummary_1.FormatColumnSummary, { key: StrategyIds.FormatColumnStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                React.createElement(FormatColumnSummary_1.FormatColumnSummary, { key: StrategyIds.FormatColumnStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
         }
         if (this.state.SelectedColumn) {
             if (this.isStrategyVisible(StrategyIds.PlusMinusStrategyId) && this.state.SelectedColumn.DataType == Enums_1.DataType.Number) {
                 summaries.push(React.createElement("div", { key: StrategyIds.PlusMinusStrategyId, className: this.isStrategyReadOnly(StrategyIds.PlusMinusStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                    React.createElement(PlusMinusSummary_1.PlusMinusSummary, { key: StrategyIds.PlusMinusStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList })));
+                    React.createElement(PlusMinusSummary_1.PlusMinusSummary, { key: StrategyIds.PlusMinusStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
             }
             if (this.isStrategyVisible(StrategyIds.FlashingCellsStrategyId) && this.state.SelectedColumn.DataType == Enums_1.DataType.Number) {
                 summaries.push(React.createElement("div", { key: StrategyIds.FlashingCellsStrategyId, className: this.isStrategyReadOnly(StrategyIds.FlashingCellsStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },

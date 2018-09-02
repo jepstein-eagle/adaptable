@@ -71,6 +71,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
+        this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
@@ -146,6 +147,14 @@ class AdaptableBlotter {
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();
+    }
+    setVendorGridState(vendorGridState) {
+        if (vendorGridState) {
+            let columnState = JSON.parse(vendorGridState);
+            if (columnState) {
+                this.tempSetColumnStateFixForBuild(this.gridOptions.columnApi, columnState, "api");
+            }
+        }
     }
     createFilterWrapper(col) {
         this.gridOptions.api.destroyFilter(col);
@@ -630,6 +639,28 @@ class AdaptableBlotter {
             return String(rawValue) || "";
         }
     }
+    getDisplayValueFromRawValue(colId, rawValue) {
+        let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == colId);
+        let coldef = column.getColDef();
+        if (coldef != null) {
+            let valueFormatter = coldef.valueFormatter;
+            if (valueFormatter) {
+                let params = {
+                    value: rawValue,
+                    node: null,
+                    data: null,
+                    colDef: coldef,
+                    column: column,
+                    api: this.gridOptions.api,
+                    columnApi: this.gridOptions.columnApi,
+                    context: null
+                };
+                let test = valueFormatter(params);
+                return test;
+            }
+        }
+        return rawValue;
+    }
     getRawValueFromRecord(row, columnId) {
         return this.gridOptions.api.getValue(columnId, row);
     }
@@ -854,6 +885,7 @@ class AdaptableBlotter {
             eventKeys_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED,
             eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
             eventKeys_1.Events.EVENT_COLUMN_VISIBLE,
+            eventKeys_1.Events.EVENT_COLUMN_PINNED,
             eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED];
         this.gridOptions.api.addGlobalListener((type, event) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
@@ -866,6 +898,12 @@ class AdaptableBlotter {
                     this.setColumnIntoStore();
                 }
             }
+        });
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_COLUMN_PINNED, (params) => {
+            //  console.log(params)
+            //   let column: string = (params.pinned==null)? "": params.columns[0].getColId();
+            //   console.log("column: " + column);
+            //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column));   
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_EDITING_STARTED, (params) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
@@ -1162,14 +1200,6 @@ class AdaptableBlotter {
             mystring = JSON.stringify(columnState);
         }
         return mystring;
-    }
-    setVendorGridState(vendorGridState) {
-        if (vendorGridState) {
-            let columnState = JSON.parse(vendorGridState);
-            if (columnState) {
-                this.tempSetColumnStateFixForBuild(this.gridOptions.columnApi, columnState, "api");
-            }
-        }
     }
     tempSetColumnVisibleFixForBuild(columnApi, col, isVisible, columnEventType) {
         columnApi.setColumnVisible(col, isVisible, columnEventType);

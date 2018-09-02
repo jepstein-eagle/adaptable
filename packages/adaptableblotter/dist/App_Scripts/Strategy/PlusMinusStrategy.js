@@ -11,6 +11,7 @@ const Enums_1 = require("../Core/Enums");
 const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const Helper_1 = require("../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../Core/ObjectFactory");
+const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.PlusMinusStrategyId, blotter);
@@ -25,8 +26,11 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyNames.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == Enums_1.DataType.Number) {
-            this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph, "New|" + columnId);
+        if (this.canCreateContextMenuItem(columnId)) {
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            if (column && column.DataType == Enums_1.DataType.Number) {
+                this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph, "New|" + columnId);
+            }
         }
     }
     handleKeyDown(keyEvent) {

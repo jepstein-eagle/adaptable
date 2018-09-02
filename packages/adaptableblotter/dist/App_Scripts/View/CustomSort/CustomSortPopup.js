@@ -62,7 +62,7 @@ class CustomSortPopupComponent extends React.Component {
                 customSorts.length == 0 &&
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a bespoke sort order for a selected column."),
                 this.state.EditedAdaptableBlotterObject &&
-                    React.createElement(CustomSortWizard_1.CustomSortWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.CustomSorts, BlotterOptions: this.props.BlotterOptions, BlotterApi: this.props.BlotterApi, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, getColumnValueDisplayValuePairDistinctList: this.props.getColumnValueDisplayValuePairDistinctList, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
+                    React.createElement(CustomSortWizard_1.CustomSortWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.CustomSorts, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onEdit(customSort) {
         //so we dont mutate original object

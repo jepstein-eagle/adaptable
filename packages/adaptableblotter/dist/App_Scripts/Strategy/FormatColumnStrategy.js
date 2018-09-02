@@ -14,10 +14,12 @@ class FormatColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph);
     }
     addContextMenuItem(columnId) {
-        let formatExists = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f => f.ColumnId), columnId);
-        let label = formatExists ? "Edit " : "Create ";
-        let popupParam = formatExists ? "Edit|" : "New|";
-        this.createContextMenuItemShowPopup(label + StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph, popupParam + columnId);
+        if (this.canCreateContextMenuItem(columnId)) {
+            let formatExists = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f => f.ColumnId), columnId);
+            let label = formatExists ? "Edit " : "Create ";
+            let popupParam = formatExists ? "Edit|" : "New|";
+            this.createContextMenuItemShowPopup(label + StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph, popupParam + columnId);
+        }
     }
     InitState() {
         if (this.FormatColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn) {

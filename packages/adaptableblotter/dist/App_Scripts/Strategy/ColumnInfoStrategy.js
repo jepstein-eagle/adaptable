@@ -13,7 +13,9 @@ class ColumnInfoStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph);
     }
     addContextMenuItem(columnId) {
-        this.createContextMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph, columnId);
+        if (this.canCreateContextMenuItem(columnId)) {
+            this.createContextMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph, columnId);
+        }
     }
 }
 exports.ColumnInfoStrategy = ColumnInfoStrategy;

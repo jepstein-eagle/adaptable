@@ -48,6 +48,8 @@ const PreviewHelper_1 = require("../../Core/Helpers/PreviewHelper");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
+const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
+const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
@@ -271,6 +273,16 @@ var functionLogMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                     let actionTyped = action;
                     let userFilter = actionTyped.UserFilter;
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId, "user filters changed", "filters applied", state.Filter.UserFilters);
+                    return next(action);
+                }
+                case FilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+                    let actionTyped = action;
+                    // first create a new user filter based on the column filter and input name
+                    let userFilter = FilterHelper_1.FilterHelper.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText);
+                    middlewareAPI.dispatch(FilterRedux.UserFilterAddUpdate(-1, userFilter));
+                    // then create a new column filter from the user filter - so that it will display the user filter name
+                    let newColumnFilter = FilterHelper_1.FilterHelper.CreateColumnFilterFromUserFilter(userFilter);
+                    middlewareAPI.dispatch(FilterRedux.ColumnFilterAddUpdate(newColumnFilter));
                     return next(action);
                 }
                 default:
@@ -588,9 +600,36 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     blotter.setNewColumnListOrder(columnList);
                     return next(action);
                 }
+                case GridRedux.GRID_SET_COLUMNS: {
+                    let actionTyped = action;
+                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns);
+                    if (middlewareAPI.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT) {
+                        if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrder(actionTyped.Columns, columnList)) {
+                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
+                        }
+                    }
+                    return next(action);
+                }
+                case GridRedux.GRID_SET_SORT: {
+                    let actionTyped = action;
+                    let gridSortList = [].concat(middlewareAPI.getState().Grid.GridSorts);
+                    if (middlewareAPI.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT) {
+                        if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrder(actionTyped.GridSorts, gridSortList)) {
+                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
+                        }
+                    }
+                    return next(action);
+                }
                 case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = action;
                     blotter.selectColumn(actionTyped.ColumnId);
+                    return next(action);
+                }
+                case GridRedux.GRID_SET_PINNED_COLUMN: {
+                    if (middlewareAPI.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT) {
+                        //    console.log("in store")
+                        //    blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
+                    }
                     return next(action);
                 }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {

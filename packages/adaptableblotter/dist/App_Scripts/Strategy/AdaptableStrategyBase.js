@@ -4,6 +4,7 @@ const MenuItem_1 = require("../Core/MenuItem");
 const MenuRedux = require("../Redux/ActionsReducers/MenuRedux");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
+const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 class AdaptableStrategyBase {
     constructor(Id, blotter) {
         this.Id = Id;
@@ -82,6 +83,13 @@ class AdaptableStrategyBase {
         if (!ArrayExtensions_1.ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.AddItemColumnContextMenu(menuItem));
         }
+    }
+    canCreateContextMenuItem(columnId) {
+        if (!this.isReadOnlyStrategy()) {
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            return (column != null);
+        }
+        return false;
     }
     publishServerSearch(searchChangedTrigger) {
         let state = this.blotter.AdaptableBlotterStore.TheStore.getState();

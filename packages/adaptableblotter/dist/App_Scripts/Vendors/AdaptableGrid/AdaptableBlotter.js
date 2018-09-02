@@ -47,6 +47,7 @@ class AdaptableBlotter {
         this._onGridDataBound = new EventDispatcher_1.EventDispatcher();
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
+        this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, options);
@@ -304,6 +305,9 @@ class AdaptableBlotter {
     getDisplayValueFromRecord(row, columnId) {
         let cell = this.getCellFromRowAndColumnId(row, columnId);
         return cell.getFormattedValue(this.grid);
+    }
+    getDisplayValueFromRawValue(colId, rawValue) {
+        // todo
     }
     getRawValueFromRecord(row, columnId) {
         let gridRow = this.grid.getRowFromId(columnId);

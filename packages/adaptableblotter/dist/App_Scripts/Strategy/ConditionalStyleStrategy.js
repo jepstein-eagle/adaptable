@@ -21,7 +21,9 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         }
     }
     addContextMenuItem(columnId) {
-        this.createContextMenuItemShowPopup("Create " + StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph, "New|" + columnId);
+        if (this.canCreateContextMenuItem(columnId)) {
+            this.createContextMenuItemShowPopup("Create " + StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph, "New|" + columnId);
+        }
     }
     // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(
     handleGridDataBound(blotter) {

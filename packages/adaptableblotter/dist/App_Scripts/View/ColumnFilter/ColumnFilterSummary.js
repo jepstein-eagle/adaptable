@@ -38,7 +38,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onDeleteFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
+        onDeleteFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
     };

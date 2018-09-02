@@ -8,6 +8,7 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ObjectFactory_1 = require("../Core/ObjectFactory");
 const Enums_1 = require("../Core/Enums");
 const FlashingCellsRedux = require("../Redux/ActionsReducers/FlashingCellsRedux");
+const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.FlashingCellsStrategyId, blotter);
@@ -17,18 +18,21 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         this.createMenuItemShowPopup(StrategyNames.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyGlyphs.FlashingCellGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == Enums_1.DataType.Number) {
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
-                let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId);
-                if (flashingCell && flashingCell.IsLive) {
-                    this.createContextMenuItemReduxAction("Turn Flashing Cell Off", StrategyGlyphs.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
-                }
-                else {
-                    if (!flashingCell) {
-                        let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
-                        flashingCell = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(column);
+        if (this.canCreateContextMenuItem(columnId)) {
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            if (column.DataType == Enums_1.DataType.Number) {
+                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
+                    let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId);
+                    if (flashingCell && flashingCell.IsLive) {
+                        this.createContextMenuItemReduxAction("Turn Flashing Cell Off", StrategyGlyphs.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
                     }
-                    this.createContextMenuItemReduxAction("Turn Flashing Cell On", StrategyGlyphs.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
+                    else {
+                        if (!flashingCell) {
+                            let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
+                            flashingCell = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(column);
+                        }
+                        this.createContextMenuItemReduxAction("Turn Flashing Cell On", StrategyGlyphs.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
+                    }
                 }
             }
         }

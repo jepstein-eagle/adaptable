@@ -11,7 +11,9 @@ class SelectColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
     }
     addContextMenuItem(columnId) {
         if (this.blotter.isSelectable()) {
-            this.createContextMenuItemReduxAction(StrategyNames.SelectColumnStrategyName, StrategyGlyphs.SelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
+            if (this.canCreateContextMenuItem(columnId)) {
+                this.createContextMenuItemReduxAction(StrategyNames.SelectColumnStrategyName, StrategyGlyphs.SelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
+            }
         }
     }
 }

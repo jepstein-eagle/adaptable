@@ -81,6 +81,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
+        this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
@@ -592,6 +593,9 @@ class AdaptableBlotter {
             return formatter(this.valOrFunc(row, column));
         }
         return "";
+    }
+    getDisplayValueFromRawValue(colId, rawValue) {
+        return null;
     }
     getRawValueFromRecord(row, columnId) {
         let column = this.getHypergridColumn(columnId);

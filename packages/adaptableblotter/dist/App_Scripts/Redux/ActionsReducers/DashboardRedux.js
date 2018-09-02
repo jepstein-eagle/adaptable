@@ -11,6 +11,13 @@ const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
 const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
 const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
+const DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON = 'DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
+const DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON = 'DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON';
+const DASHBOARD_SHOW_FUNCTIONS_DROPDOWN = 'DASHBOARD_SHOW_FUNCTIONS_DROPDOWN';
+const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
+const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
+const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
+const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 exports.DashboardSetAvailableToolbars = (StrategyIds) => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
     StrategyIds
@@ -43,6 +50,28 @@ exports.DashboardSetZoom = (Zoom) => ({
 exports.DashboardSetVisibility = (Visibility) => ({
     type: DASHBOARD_SET_VISIBILITY,
     Visibility
+});
+exports.DashboardShowSystemStatusButton = () => ({
+    type: DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON,
+});
+exports.DashboardHideSystemStatusButton = () => ({
+    type: DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON,
+});
+exports.DashboardShowFunctionsDropdownButton = () => ({
+    type: DASHBOARD_SHOW_FUNCTIONS_DROPDOWN,
+});
+exports.DashboardHideFunctionsDropdownButton = () => ({
+    type: DASHBOARD_HIDE_FUNCTIONS_DROPDOWN,
+});
+exports.DashboardShowColumnsDropdownButton = () => ({
+    type: DASHBOARD_SHOW_COLUMNS_DROPDOWN,
+});
+exports.DashboardHideColumnsDropdownButton = () => ({
+    type: DASHBOARD_HIDE_COLUMNS_DROPDOWN,
+});
+exports.DashboardSetHomeToolbarTitle = (Title) => ({
+    type: DASHBOARD_SET_HOME_TOOLBAR_TITLE,
+    Title
 });
 const initialDashboardState = {
     AvailableToolbars: [
@@ -123,6 +152,28 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
         case DASHBOARD_SET_VISIBILITY: {
             let actionTyped = action;
             return Object.assign({}, state, { DashboardVisibility: actionTyped.Visibility });
+        }
+        case DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON: {
+            return Object.assign({}, state, { ShowSystemStatusButton: true });
+        }
+        case DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON: {
+            return Object.assign({}, state, { ShowSystemStatusButton: false });
+        }
+        case DASHBOARD_SHOW_FUNCTIONS_DROPDOWN: {
+            return Object.assign({}, state, { ShowFunctionsDropdown: true });
+        }
+        case DASHBOARD_HIDE_FUNCTIONS_DROPDOWN: {
+            return Object.assign({}, state, { ShowFunctionsDropdown: false });
+        }
+        case DASHBOARD_SHOW_COLUMNS_DROPDOWN: {
+            return Object.assign({}, state, { ShowColumnsDropdown: true });
+        }
+        case DASHBOARD_HIDE_COLUMNS_DROPDOWN: {
+            return Object.assign({}, state, { ShowColumnsDropdown: false });
+        }
+        case DASHBOARD_SET_HOME_TOOLBAR_TITLE: {
+            let actionTyped = action;
+            return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
         }
         default:
             return state;

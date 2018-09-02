@@ -19,8 +19,7 @@ class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         this.createMenuItemShowPopup(StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyGlyphs.CalculatedColumnGlyph);
     }
     addContextMenuItem(columnId) {
-        let column = this.CalculatedColumns.find(c => c.ColumnId == columnId);
-        if (column) {
+        if (this.canCreateContextMenuItem(columnId)) {
             this.createContextMenuItemShowPopup("Edit " + StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyGlyphs.CalculatedColumnGlyph, "Edit|" + columnId);
         }
     }

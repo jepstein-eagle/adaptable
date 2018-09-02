@@ -21,12 +21,14 @@ class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph);
     }
     addContextMenuItem(columnId) {
-        let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-        if (column.Sortable) {
-            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
-            let label = (customSort) ? "Edit " : "Create ";
-            let popupParam = (customSort) ? "Edit|" : "New|";
-            this.createContextMenuItemShowPopup(label + StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph, popupParam + columnId);
+        if (this.canCreateContextMenuItem(columnId)) {
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            if (column && column.Sortable) {
+                let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
+                let label = (customSort) ? "Edit " : "Create ";
+                let popupParam = (customSort) ? "Edit|" : "New|";
+                this.createContextMenuItemShowPopup(label + StrategyNames.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyGlyphs.CustomSortGlyph, popupParam + columnId);
+            }
         }
     }
     removeCustomSorts() {

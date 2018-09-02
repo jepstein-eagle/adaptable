@@ -10,6 +10,7 @@ exports.GRID_SET_BLOTTER_RESTRICTIONS = 'GRID_SET_BLOTTER_RESTRICTIONS';
 exports.GRID_SET_SYSTEM_STATUS = 'GRID_SET_SYSTEM_STATUS';
 exports.GRID_CLEAR_SYSTEM_STATUS = 'GRID_CLEAR_SYSTEM_STATUS';
 exports.GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
+exports.GRID_SET_PINNED_COLUMN = 'GRID_SET_PINNED_COLUMN';
 exports.GridSetColumns = (Columns) => ({
     type: exports.GRID_SET_COLUMNS,
     Columns
@@ -50,12 +51,17 @@ exports.GridSetSelectedCells = (SelectedCellInfo) => ({
     type: exports.GRID_SET_SELECTED_CELLS,
     SelectedCellInfo
 });
+exports.GridSetPinnedColumn = (ColumnId) => ({
+    type: exports.GRID_SET_PINNED_COLUMN,
+    ColumnId
+});
 const initialGridState = {
     Columns: [],
     GridSorts: [],
     BlotterRestrictions: [],
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
-    SelectedCellInfo: null
+    SelectedCellInfo: null,
+    PinnedColumn: ""
 };
 exports.GridReducer = (state = initialGridState, action) => {
     switch (action.type) {
@@ -78,6 +84,8 @@ exports.GridReducer = (state = initialGridState, action) => {
             return Object.assign({}, state, { SystemStatus: { StatusMessage: "", StatusColour: "Green" } });
         case exports.GRID_SET_SELECTED_CELLS:
             return Object.assign({}, state, { SelectedCellInfo: action.SelectedCellInfo });
+        case exports.GRID_SET_PINNED_COLUMN:
+            return Object.assign({}, state, { PinnedColumn: action.ColumnId });
         default:
             return state;
     }

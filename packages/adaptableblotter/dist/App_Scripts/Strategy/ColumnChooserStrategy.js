@@ -14,7 +14,7 @@ class ColumnChooserStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
     }
     addContextMenuItem(columnId) {
-        if (!this.isReadOnlyStrategy()) {
+        if (this.canCreateContextMenuItem(columnId)) {
             this.createContextMenuItemReduxAction("Hide Column", StrategyGlyphs.ColumnChooserGlyph, GridRedux.GridHideColumn(columnId));
         }
     }

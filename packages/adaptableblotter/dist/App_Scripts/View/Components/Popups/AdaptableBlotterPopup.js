@@ -14,7 +14,6 @@ class AdaptableBlotterPopup extends React.Component {
             let bodyElement = AdaptableViewFactory_1.AdaptableViewFactory[this.props.ComponentName];
             //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
             let commonProps = {
-                getColumnValueDisplayValuePairDistinctList: (columnId, distinctCriteria) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
                 PopupParams: this.props.PopupParams,
                 onClearPopupParams: () => this.props.onClearPopupParams(),
                 TeamSharingActivated: this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer,
@@ -25,12 +24,11 @@ class AdaptableBlotterPopup extends React.Component {
                 ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
                 GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
                 cssClassName: cssClassName + StyleConstants.MODAL_BODY,
-                BlotterOptions: this.props.AdaptableBlotter.BlotterOptions,
-                BlotterApi: this.props.AdaptableBlotter.api
+                Blotter: this.props.AdaptableBlotter
             };
             var body = React.createElement(bodyElement, commonProps);
         }
-        return (React.createElement(react_bootstrap_1.Modal, { show: this.props.showModal, onHide: this.props.onHide, className: cssClassName + StyleConstants.BASE, container: modalContainer },
+        return (React.createElement(react_bootstrap_1.Modal, { show: this.props.showModal, onHide: this.props.onHide, className: cssClassName + StyleConstants.BASE, container: modalContainer, enforceFocus: null },
             React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
                 React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.MODAL_BODY },
                     React.createElement("div", { className: "ab_main_popup" },

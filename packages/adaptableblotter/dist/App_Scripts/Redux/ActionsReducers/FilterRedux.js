@@ -4,10 +4,11 @@ const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
 exports.USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 exports.USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 exports.COLUMN_FILTER_ADD_UPDATE = 'COLUMN_FILTER_ADD_UPDATE';
+exports.COLUMN_FILTER_CLEAR_ALL = 'COLUMN_FILTER_CLEAR_ALL';
 exports.COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
-exports.COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
 exports.HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
 exports.SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';
+exports.CREATE_USER_FILTER_FROM_COLUMN_FILTER = 'CREATE_USER_FILTER_FROM_COLUMN_FILTER';
 exports.UserFilterAddUpdate = (Index, UserFilter) => ({
     type: exports.USER_FILTER_ADD_UPDATE,
     Index,
@@ -24,21 +25,27 @@ exports.ColumnFilterAddUpdate = (columnFilter) => ({
     type: exports.COLUMN_FILTER_ADD_UPDATE,
     columnFilter
 });
-exports.ColumnFilterClear = () => ({
-    type: exports.COLUMN_FILTER_CLEAR
+exports.ColumnFilterClearAll = () => ({
+    type: exports.COLUMN_FILTER_CLEAR_ALL
 });
-exports.ColumnFilterDelete = (columnFilter) => ({
-    type: exports.COLUMN_FILTER_DELETE,
+exports.ColumnFilterClear = (columnFilter) => ({
+    type: exports.COLUMN_FILTER_CLEAR,
     columnFilter
 });
 exports.SystemFilterSet = (SystemFilters) => ({
     type: exports.SYSTEM_FILTER_SET,
     SystemFilters
 });
+exports.CreateUserFilterFromColumnFilter = (ColumnFilter, InputText) => ({
+    type: exports.CREATE_USER_FILTER_FROM_COLUMN_FILTER,
+    ColumnFilter,
+    InputText
+});
 const initialFilterState = {
     ColumnFilters: [],
     UserFilters: [],
-    SystemFilters: FilterHelper_1.FilterHelper.GetAllSystemFilters()
+    SystemFilters: FilterHelper_1.FilterHelper.GetAllSystemFilters(),
+    SavedColumnFilters: []
 };
 exports.FilterReducer = (state = initialFilterState, action) => {
     let index;
@@ -75,10 +82,10 @@ exports.FilterReducer = (state = initialFilterState, action) => {
             }
             return Object.assign({}, state, { ColumnFilters: columnFilters });
         }
-        case exports.COLUMN_FILTER_CLEAR: {
+        case exports.COLUMN_FILTER_CLEAR_ALL: {
             return Object.assign({}, state, { ColumnFilters: [] });
         }
-        case exports.COLUMN_FILTER_DELETE: {
+        case exports.COLUMN_FILTER_CLEAR: {
             let actionTypedDelete = action;
             columnFilters = [].concat(state.ColumnFilters);
             index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnFilter.ColumnId);
