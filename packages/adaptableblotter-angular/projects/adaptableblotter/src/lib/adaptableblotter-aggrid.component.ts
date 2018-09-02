@@ -1,19 +1,21 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
 import { GridOptions } from 'ag-grid';
+import 'ag-grid-enterprise';
 
 @Component({
   selector: 'adaptable-blotter-aggrid',
   template: `
   <div id="adaptableBlotter">
-    <adaptable-blotter [adaptableBlotterOptions]="adaptableBlotterOptions" vendorGridName="agGrid">
+    <adaptable-blotter
+      [adaptableBlotterOptions]="adaptableBlotterOptions"
+      vendorGridName="agGrid">
     </adaptable-blotter>
-    <div id="grid" [class]="agGridClass" [style]="agDivStyle">
-      <ag-grid-angular
-        [class]="agGridClass"
-        [gridOptions]="gridOptions">
-      </ag-grid-angular>
-    </div>
+    <ag-grid-angular
+      [gridOptions]="gridOptions"
+      [className]="agGridClass"
+      [ngStyle]="agDivStyle">
+    </ag-grid-angular>
   </div>`,
 })
 export class AdaptableblotterAgGridComponent implements OnInit {

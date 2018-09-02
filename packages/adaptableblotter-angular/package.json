@@ -6,6 +6,7 @@
     "start": "ng serve",
     "prebuild": "rimraf dist",
     "build": "ng build adaptableblotter && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css dist/styles && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* dist/fonts",
+    "publish": "ng build adaptableblotter --prod && cd dist/adaptableblotter && npm publish",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -23,6 +24,7 @@
     "@angular/router": "^6.1.0",
     "adaptableblotter": "^2.4.0",
     "ag-grid": "^18.1.2",
+    "ag-grid-enterprise": "^18.1.1",
     "ag-grid-angular": "^18.1.0",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",

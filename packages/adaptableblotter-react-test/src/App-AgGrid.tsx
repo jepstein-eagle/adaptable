@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from 'adaptableblotter-react'
-import { ReactHarnessHelper } from './ReactHarnessHelper';
-import { DataGenerator } from './DataGenerator';
+import * as React from "react";
+import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from "adaptableblotter-react";
+import { ReactHarnessHelper } from "./ReactHarnessHelper";
+import { DataGenerator } from "./DataGenerator";
 import { GridOptions } from "ag-grid";
 
 export interface AppState extends React.ClassAttributes<App> {
-  gridOptions: GridOptions,
-  blotterOptions: IAdaptableBlotterOptions
+  gridOptions: GridOptions;
+  blotterOptions: IAdaptableBlotterOptions;
 }
 
 // Just like with the non-React version you need to create 2 objects:
@@ -16,13 +16,15 @@ export interface AppState extends React.ClassAttributes<App> {
 export default class App extends React.Component<{}, AppState> {
   constructor(props: any) {
     super(props);
-     // Create the 2 objects and put them in state
+    // Create the 2 objects and put them in state
     let gridOptions: GridOptions = this.createGridOptions();
-    let adaptableBlotterOptions: IAdaptableBlotterOptions = this.createAdaptableBlotterOptions(gridOptions);
+    let adaptableBlotterOptions: IAdaptableBlotterOptions = this.createAdaptableBlotterOptions(
+      gridOptions
+    );
     this.state = {
       gridOptions: gridOptions,
       blotterOptions: adaptableBlotterOptions
-    }
+    };
   }
 
   // Create the GridOptions object that ag-Grid needs
@@ -34,8 +36,8 @@ export default class App extends React.Component<{}, AppState> {
       enableRangeSelection: true,
       enableFilter: true,
       enableColResize: true,
-      suppressColumnVirtualisation: false,
-    }
+      suppressColumnVirtualisation: false
+    };
   }
 
   // Create the AdaptableBlotterOptions object that the Adaptable Blotter needs
@@ -44,8 +46,8 @@ export default class App extends React.Component<{}, AppState> {
       primaryKey: "tradeId",
       vendorGrid: gridOptions,
       userName: "demo user",
-      blotterId: "Trades Blotter",
-    }
+      blotterId: "Trades Blotter"
+    };
   }
 
   // Render an AgGridReactWrapper passing in our state as props
@@ -54,14 +56,13 @@ export default class App extends React.Component<{}, AppState> {
   // (a): the ag-grid class to use - if none is supplied then it will default to 'Balham'
   // (b): the style for the div containing the ag-Grid - if none is supplied it will take full width
   render() {
-
-       return (
+    return (
       <div id="adaptableblotter-aggrid-react-demo-app">
         <AdaptableBlotterAgGrid
           AdaptableBlotterOptions={this.state.blotterOptions}
           GridOptions={this.state.gridOptions}
           agTheme={"blue"}
-          />
+        />
       </div>
     );
   }

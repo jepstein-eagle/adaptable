@@ -2,45 +2,35 @@ import { Component } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
 import { GridOptions } from 'ag-grid';
 
+import HarnessHelper from './harness-helper';
+import DataGenerator from './data-generator';
+
 @Component({
   selector: 'adaptableblotter-aggrid-root',
   template: `
-  <div>
-    <adaptable-blotter
+  <div id="adaptableblotter-aggrid-react-demo-app">
+    <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
-      vendorGridName="agGrid">
-    </adaptable-blotter>
-    <ag-grid-angular
-      style="width: 100%; height: 97vh;"
-      class="ag-theme-balham"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      [gridOptions]="gridOptions">
-    </ag-grid-angular>
+      [gridOptions]="gridOptions"
+      agTheme="blue">
+    </adaptable-blotter-aggrid>
   </div>
   `
 })
 export class AppAgGridComponent {
-  rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 }
-  ];
-
-  columnDefs = [
-    { headerName: 'Make', field: 'make' },
-    { headerName: 'Model', field: 'model' },
-    { headerName: 'Price', field: 'price' }
-  ];
-
   gridOptions: GridOptions = {
-    enableSorting: true
+    columnDefs: new HarnessHelper().getTradeSchema(),
+    rowData: new DataGenerator().getTrades(15000),
+    enableSorting: true,
+    enableRangeSelection: true,
+    enableFilter: true,
+    enableColResize: true,
+    suppressColumnVirtualisation: false,
   };
-
   blotterOptions: IAdaptableBlotterOptions = {
-    primaryKey: 'make',
+    primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
-    userName: 'UtibeAbasi',
-    blotterId: 'demo blotter',
+    userName: 'demo user',
+    blotterId: 'Trades Blotter',
   };
 }

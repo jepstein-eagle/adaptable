@@ -1,15 +1,15 @@
-import * as React from 'react';
+import * as React from "react";
 import { GridOptions } from "ag-grid";
-import { AdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter-react';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid/dist/styles/ag-grid.css';
-import 'ag-grid/dist/styles/ag-theme-balham.css';
+import { AdaptableBlotter, IAdaptableBlotterOptions } from "adaptableblotter-react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid/dist/styles/ag-grid.css";
+import "ag-grid/dist/styles/ag-theme-balham.css";
 
 export interface AppState extends React.ClassAttributes<App> {
-  gridOptions: GridOptions,
-  blotterOptions: IAdaptableBlotterOptions,
-  rowData: any,
-  columnDefs: any
+  gridOptions: GridOptions;
+  blotterOptions: IAdaptableBlotterOptions;
+  rowData: any;
+  columnDefs: any;
 }
 
 export default class App extends React.Component<{}, AppState> {
@@ -17,14 +17,14 @@ export default class App extends React.Component<{}, AppState> {
     super(props);
     let gridOptions: GridOptions = {
       enableSorting: true
-    }
+    };
     this.state = {
       gridOptions: gridOptions,
       blotterOptions: {
         primaryKey: "make",
         vendorGrid: gridOptions,
-        userName: 'UtibeAbasi',
-        blotterId: "demo blotter",
+        userName: "UtibeAbasi",
+        blotterId: "demo blotter"
       },
       rowData: [
         { make: "Toyota", model: "Celica", price: 35000 },
@@ -35,19 +35,23 @@ export default class App extends React.Component<{}, AppState> {
         { headerName: "Make", field: "make" },
         { headerName: "Model", field: "model" },
         { headerName: "Price", field: "price" }
-      ],
-    }
+      ]
+    };
   }
 
   render() {
     return (
       <div>
-        <AdaptableBlotter AdaptableBlotterOptions={this.state.blotterOptions} VendorGridName={"agGrid"} />
-        <div className='ag-theme-balham' style={{ height: '97vh', width: '100%' }}>
+        <AdaptableBlotter
+          AdaptableBlotterOptions={this.state.blotterOptions}
+          VendorGridName={"agGrid"}
+        />
+        <div className="ag-theme-balham" style={{ height: "97vh", width: "100%" }}>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             rowData={this.state.rowData}
-            gridOptions={this.state.gridOptions} />
+            gridOptions={this.state.gridOptions}
+          />
         </div>
       </div>
     );

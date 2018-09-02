@@ -6,6 +6,7 @@
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
     "adaptableblotter": "^2.4.0",
     "ag-grid": "^18.1.2",
+    "ag-grid-enterprise": "^18.1.1",
     "ag-grid-angular": "^18.1.0"
   }
 }

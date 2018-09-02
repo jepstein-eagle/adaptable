@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
-import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory';
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
+import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory'
+import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types'
 
 // This is the main React Wrapper
 // It simply takes an IAdaptableBlotterOptions object and instantiates the appropriate instance of the Adaptable Blotter
@@ -13,7 +13,10 @@ export interface AdaptableBlotterState extends React.ClassAttributes<AdaptableBl
   AdaptableBlotter: IAdaptableBlotter
 }
 
-export default class AdaptableBlotter extends React.Component<AdaptableBlotterProps, AdaptableBlotterState> {
+export default class AdaptableBlotter extends React.Component<
+  AdaptableBlotterProps,
+  AdaptableBlotterState
+> {
   componentWillMount() {
     this.setState({
       AdaptableBlotter: BlotterFactory.CreateAdaptableBlotter(

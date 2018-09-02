@@ -1,4 +1,6 @@
-export class HarnessHelper {
+export default class HarnessHelper {
+  constructor() {}
+
   public currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
