@@ -149,6 +149,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                         } else { // get the distinct items and make sure within max items that can be displayed
                             let distinctItems = ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(di => {
+                            //    let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, di) 
                                 columnValuePairs.push({ RawValue: di, DisplayValue: di });
                             })
                             this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });

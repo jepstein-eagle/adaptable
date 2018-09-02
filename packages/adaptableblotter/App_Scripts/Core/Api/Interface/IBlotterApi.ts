@@ -1,6 +1,6 @@
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
-import { ISearchChangedEventArgs } from "./ServerSearch";
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from "./ServerSearch";
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
@@ -22,15 +22,26 @@ export interface IBlotterApi {
    */
   layoutSet(layoutName: string): void
 
-  /**
+/**
    * Clears the currently selected layout
    */
   layoutClear(): void
 
   /**
-   * Retrieves all Layouts in State
+   * Retrieves current Layout
    */
   layoutGetCurrent(): ILayout
+
+  /**
+   * Retrieves all Layouts in State
+   */
+  layoutgetAll(): ILayout[]
+
+  /**
+   * Saves the current layout - using the column order and grid sort info currently in the grid
+   */
+  layoutSave(): void
+
   /**
 * Runs QuickSearch on the supplied text
 * @param quickSearchText text to run QuickSearch on
@@ -83,9 +94,16 @@ export interface IBlotterApi {
   dashboardSetVisibleButtons(functionButtons: string[]): void
   dashboardSetZoom(zoom: Number): void
   dashboardSetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void
-  dashboardShow():void
-  dashboardHide():void
-  dashboardMinimise():void
+  dashboardShow(): void
+  dashboardHide(): void
+  dashboardShowSystemStatusButton(): void
+  dashboardHideSystemStatusButton(): void
+  dashboardShowFunctionsDropdown(): void
+  dashboardHideFunctionsDropdown(): void
+  dashboardShowColumnsDropdown(): void
+  dashboardHideColumnsDropdown(): void
+  dashboardSetHomeToolbarTitle(title: string): void
+  dashboardMinimise(): void
 
   // Calendar State
   calendarSetCurrent(calendar: string): void
@@ -119,13 +137,19 @@ export interface IBlotterApi {
   uiClearColumnPermittedValues(column: string): void
 
 
-  // filter api methods
-  filterSetColumnFilters(columnFilters: IColumnFilter[]): void
-  filterSetUserFilters(userFilters: IUserFilter[]): void
-  filterSetSystemFilters(systemFilters: string[]): void
-  filterClearSystemFilters(): void
-  filterGetCurrentSystemFilters(): string[]
-  filterGetAllSystemFilters(): string[]
+  // column filter api methods
+  columnFilterSet(columnFilters: IColumnFilter[]): void
+  columnFilterSetUserFilter(userFilter: string): void
+  columnFilterClear(columnFilter: IColumnFilter): void
+  columnFilterClearByColumn(column: string): void
+  columnFilterClearByColumns(columns: string[]): void
+  columnFilterClearAll(): void
+  columnFiltersGetCurrent(): IColumnFilter[]
+  userFilterSet(userFilters: IUserFilter[]): void
+  systemFilterSet(systemFilters: string[]): void
+  systemFilterClear(): void
+  systemFilterGetCurrent(): string[]
+  systemFilterGetAll(): string[]
 
   // Entitlement Methods
   entitlementGetAll(): IEntitlement[]
@@ -206,6 +230,13 @@ export interface IBlotterApi {
   * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
   */
   onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
+ 
+   /**
+  * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.
+  * Only fires when in a user layout and currently just passes the name of the layout.
+  * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
+  */
+  onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
 }
 
 

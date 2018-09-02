@@ -12,6 +12,15 @@ const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
 const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
 const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
+const DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON = 'DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
+const DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON = 'DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON';
+const DASHBOARD_SHOW_FUNCTIONS_DROPDOWN = 'DASHBOARD_SHOW_FUNCTIONS_DROPDOWN';
+const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
+const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
+const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
+const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
+
+
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
     StrategyIds: string[];
@@ -48,6 +57,32 @@ export interface DashboardSetZoomAction extends Redux.Action {
 
 export interface DashboardSetVisibilityAction extends Redux.Action {
     Visibility: Visibility
+}
+
+export interface DashboardShowSystemStatusButtonAction extends Redux.Action {
+
+}
+
+export interface DashboardHideSystemStatusButtonAction extends Redux.Action {
+
+}
+export interface DashboardShowFunctionsDropdownAction extends Redux.Action {
+
+}
+
+export interface DashboardHideFunctionsDropdownAction extends Redux.Action {
+
+}
+export interface DashboardShowColumnsDropdownAction extends Redux.Action {
+
+}
+
+export interface DashboardHideColumnsDropdownAction extends Redux.Action {
+
+}
+
+export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
+    Title: string
 }
 
 export const DashboardSetAvailableToolbars = (StrategyIds: string[]): DashboardSetAvailableToolbarsAction => ({
@@ -92,6 +127,35 @@ export const DashboardSetVisibility = (Visibility: Visibility): DashboardSetVisi
     Visibility
 })
 
+export const DashboardShowSystemStatusButton = (): DashboardShowSystemStatusButtonAction => ({
+    type: DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON,
+})
+
+export const DashboardHideSystemStatusButton = (): DashboardHideSystemStatusButtonAction => ({
+    type: DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON,
+})
+
+export const DashboardShowFunctionsDropdownButton = (): DashboardShowFunctionsDropdownAction => ({
+    type: DASHBOARD_SHOW_FUNCTIONS_DROPDOWN,
+})
+
+export const DashboardHideFunctionsDropdownButton = (): DashboardHideFunctionsDropdownAction => ({
+    type: DASHBOARD_HIDE_FUNCTIONS_DROPDOWN,
+})
+
+export const DashboardShowColumnsDropdownButton = (): DashboardShowColumnsDropdownAction => ({
+    type: DASHBOARD_SHOW_COLUMNS_DROPDOWN,
+})
+
+export const DashboardHideColumnsDropdownButton = (): DashboardHideColumnsDropdownAction => ({
+    type: DASHBOARD_HIDE_COLUMNS_DROPDOWN,
+})
+
+export const DashboardSetHomeToolbarTitle = (Title: string): DashboardSetHomeToolbarTitleAction => ({
+    type: DASHBOARD_SET_HOME_TOOLBAR_TITLE,
+    Title
+})
+
 const initialDashboardState: DashboardState = {
     AvailableToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -105,7 +169,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
         StrategyIds.AlertStrategyId,
-       // StrategyIds.ChartStrategyId,
+        // StrategyIds.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -113,7 +177,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-      //  StrategyIds.ChartStrategyId,
+        //  StrategyIds.ChartStrategyId,
         //   StrategyIds.AlertStrategyId,
         // StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
@@ -179,6 +243,33 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             let actionTyped = <DashboardSetVisibilityAction>action;
             return Object.assign({}, state, { DashboardVisibility: actionTyped.Visibility });
         }
+        case DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON: {
+            return Object.assign({}, state, { ShowSystemStatusButton: true });
+        }
+
+        case DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON: {
+            return Object.assign({}, state, { ShowSystemStatusButton: false });
+        }
+
+        case DASHBOARD_SHOW_FUNCTIONS_DROPDOWN: {
+            return Object.assign({}, state, { ShowFunctionsDropdown: true });
+        }
+        case DASHBOARD_HIDE_FUNCTIONS_DROPDOWN: {
+            return Object.assign({}, state, { ShowFunctionsDropdown: false });
+        }
+
+        case DASHBOARD_SHOW_COLUMNS_DROPDOWN: {
+            return Object.assign({}, state, { ShowColumnsDropdown: true });
+        }
+        case DASHBOARD_HIDE_COLUMNS_DROPDOWN: {
+            return Object.assign({}, state, { ShowColumnsDropdown: false });
+        }
+
+        case DASHBOARD_SET_HOME_TOOLBAR_TITLE: {
+            let actionTyped = <DashboardSetHomeToolbarTitleAction>action;
+            return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
+        }
+
         default:
             return state
     }

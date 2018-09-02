@@ -17,6 +17,7 @@ import { ObjectFactory } from '../Core/ObjectFactory';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
@@ -36,13 +37,16 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
+        if (this.canCreateContextMenuItem(columnId)) {
+            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+      
+        if (column && column.DataType == DataType.Number) {
             this.createContextMenuItemShowPopup(
                 "Create Plus/Minus Rule",
                 ScreenPopups.PlusMinusPopup,
                 StrategyGlyphs.PlusMinusGlyph,
                 "New|" + columnId)
-
+            }
         }
     }
 

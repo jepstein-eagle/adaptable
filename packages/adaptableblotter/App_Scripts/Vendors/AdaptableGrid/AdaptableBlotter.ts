@@ -51,7 +51,7 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
@@ -69,9 +69,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalendarService: ICalendarService
     public AuditService: IAuditService
     public ValidationService: IValidationService
-     public StyleService: StyleService
-     public ChartService: IChartService
-   
+    public StyleService: StyleService
+    public ChartService: IChartService
+
     //  public ThemeService: ThemeService
     public AuditLogService: AuditLogService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
@@ -91,7 +91,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
-        
+
         //   this.ThemeService = new ThemeService(this)
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null);
@@ -165,6 +165,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
+    
+    public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
 
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
     public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
@@ -390,7 +392,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return cell.getFormattedValue(this.grid);
     }
 
-  public  getRawValueFromRecord(row: any, columnId: string) : any{
+    public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
+       // todo
+    }
+
+
+    public getRawValueFromRecord(row: any, columnId: string): any {
         let gridRow: AdaptableGrid.Row = this.grid.getRowFromId(columnId);
         let cell: AdaptableGrid.Cell = this.getCellFromRowAndColumnId(row, columnId);
         return cell.getRawValue();

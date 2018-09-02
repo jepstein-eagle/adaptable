@@ -22,6 +22,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
     UserFilters: Array<IUserFilter>
     SystemFilters: Array<string>
     getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    //getDisplayValueFromRawValue(colId: string, rawValue: any): any
     ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string

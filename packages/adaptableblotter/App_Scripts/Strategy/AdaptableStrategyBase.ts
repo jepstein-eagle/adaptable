@@ -11,6 +11,8 @@ import { SearchChangedTrigger } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdvancedSearch } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
@@ -139,6 +141,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                     menuItem
                 ))
         }
+    }
+
+    canCreateContextMenuItem(columnId: string): boolean {
+        if (!this.isReadOnlyStrategy()) {
+            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            return (column != null)
+        }
+        return false;
     }
 
     publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {

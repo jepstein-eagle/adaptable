@@ -5,6 +5,7 @@ import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
@@ -14,11 +15,14 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { FilterHelper } from "../../Core/Helpers/FilterHelper";
+import { IUIPrompt } from "../../Core/Interface/IMessage";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]
-    onDeleteFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction,
+    onClearColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterClearAction,
+    onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -52,17 +56,18 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
                 Index={index}
                 onEdit={null}
                 onDeleteConfirm={null}
-                onClear={() => this.props.onDeleteFilter(columnFilter)}
+                onClear={() => this.props.onClearColumnFilter(columnFilter)}
+                onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
             />
 
         })
 
         return <div className={cssClassName}>
-        <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
-                 glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
+                glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
 
                 {columnFilterItems.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={columnFilterItems} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={columnFilterItems} />
                 }
 
                 {columnFilterItems.length == 0 &&
@@ -72,6 +77,15 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             </PanelWithImage>
         </div>
     }
+
+    private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {
+        let prompt: IUIPrompt = {
+            PromptTitle: "Enter name for User Filter",
+            PromptMsg: "Please enter a user filter name",
+            ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
+        }
+        this.props.onShowPrompt(prompt)
+      }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -82,7 +96,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
+        onClearColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

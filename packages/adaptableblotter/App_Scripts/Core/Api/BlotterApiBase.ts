@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { IEvent } from "../Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
-import { ISearchChangedEventArgs } from "./Interface/ServerSearch";
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from "./Interface/ServerSearch";
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux'
@@ -22,7 +22,7 @@ import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyNames from '../Constants/StrategyNames'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
@@ -36,6 +36,9 @@ import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { FilterHelper } from "../Helpers/FilterHelper";
 import { IAlert } from "../Interface/IMessage";
 import { Alert } from "react-bootstrap";
+import { ExpressionHelper } from "../Helpers/ExpressionHelper";
+import { ObjectFactory } from "../ObjectFactory";
+import { IColumn } from "../Interface/IColumn";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -61,6 +64,25 @@ export abstract class BlotterApiBase implements IBlotterApi {
     public layoutGetCurrent(): ILayout {
         let layoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
+    }
+
+    public layoutgetAll(): ILayout[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts;
+    }
+
+    public layoutSave(): void {
+        let currentLayoutName: string = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+        if (currentLayoutName != DEFAULT_LAYOUT) {
+            let currentLayoutObject: ILayout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == currentLayoutName)
+            let currentLayoutIndex: number = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName)
+            if (currentLayoutIndex != -1) {
+                let gridState: any = (currentLayoutObject) ? currentLayoutObject.VendorGridInfo : null
+                let visibleColumns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
+                let gridSorts: IGridSort[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+                let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName)
+                this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave))
+            }
+        }
     }
 
     // Dashboard api methods
@@ -104,6 +126,32 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public dashboardMinimise(): void {
         this.dashboardSetVisibility(Visibility.Minimised);
+    }
+
+    public dashboardShowSystemStatusButton(): void {
+        this.dispatchAction(DashboardRedux.DashboardShowSystemStatusButton())
+    }
+
+    public dashboardHideSystemStatusButton(): void {
+        this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton())
+    }
+    public dashboardShowFunctionsDropdown(): void {
+        this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdownButton())
+    }
+
+    public dashboardHideFunctionsDropdown(): void {
+        this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdownButton())
+    }
+    public dashboardShowColumnsDropdown(): void {
+        this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdownButton())
+    }
+
+    public dashboardHideColumnsDropdown(): void {
+        this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdownButton())
+    }
+
+    public dashboardSetHomeToolbarTitle(title: string): void {
+        this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title))
     }
 
 
@@ -229,31 +277,65 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
 
     // filter api methods
-    public filterSetColumnFilters(columnFilters: IColumnFilter[]): void {
+    public columnFilterSet(columnFilters: IColumnFilter[]): void {
         columnFilters.forEach(cf => {
             this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(cf))
         })
     }
 
-    public filterSetUserFilters(userFilters: IUserFilter[]): void {
+    public columnFilterSetUserFilter(userFilter: string): void {
+        let existingUserFilter: IUserFilter = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters.find(uf => uf.Name == userFilter);
+        if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
+            let columnFilter: IColumnFilter = FilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter)
+            this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(columnFilter));
+        }
+    }
+
+    public columnFilterClear(columnFilter: IColumnFilter): void {
+        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter));
+    }
+
+    public columnFilterClearByColumns(columns: string[]): void {
+        columns.forEach(c => {
+            this.columnFilterClearByColumn(c);
+        })
+    }
+
+    public columnFilterClearByColumn(column: string): void {
+        let currentColumnFilters = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+        let currentColumnFilter = currentColumnFilters.find(c => c.ColumnId == column);
+        if (currentColumnFilter) {
+            this.dispatchAction(FilterRedux.ColumnFilterClear(currentColumnFilter));
+        }
+    }
+
+    public columnFilterClearAll(): void {
+        this.dispatchAction(FilterRedux.ColumnFilterClearAll());
+    }
+
+    public columnFiltersGetCurrent(): IColumnFilter[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+    }
+
+    public userFilterSet(userFilters: IUserFilter[]): void {
         userFilters.forEach(uf => {
             this.dispatchAction(FilterRedux.UserFilterAddUpdate(-1, uf))
         })
     }
 
-    public filterSetSystemFilters(systemFilters: string[]): void {
+    public systemFilterSet(systemFilters: string[]): void {
         this.dispatchAction(FilterRedux.SystemFilterSet(systemFilters));
     }
 
-    public filterClearSystemFilters(): void {
+    public systemFilterClear(): void {
         this.dispatchAction(FilterRedux.SystemFilterSet([]));
     }
 
-    public filterGetCurrentSystemFilters(): string[] {
+    public systemFilterGetCurrent(): string[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters;
     }
 
-    public filterGetAllSystemFilters(): string[] {
+    public systemFilterGetAll(): string[] {
         return FilterHelper.GetAllSystemFilters();
     }
 
@@ -448,7 +530,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     // Alerts api Methods
-    public alertShow(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean ): void {
+    public alertShow(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void {
         let MessageTypeEnum = MessageType as MessageType;
         let alert: IAlert = {
             Header: alertHeader,
@@ -462,15 +544,15 @@ export abstract class BlotterApiBase implements IBlotterApi {
         AdaptableBlotterLogger.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
     }
 
-    public alertShowMessage(alertHeader: string, alertMessage: string, showAsPopup: boolean ): void {
+    public alertShowMessage(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
         this.alertShow(alertHeader, alertMessage, MessageType.Info, showAsPopup)
     }
 
-    public alertShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean ): void {
+    public alertShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
         this.alertShow(alertHeader, alertMessage, MessageType.Warning, showAsPopup)
     }
 
-    public alertShowError(alertHeader: string, alertMessage: string, showAsPopup: boolean ): void {
+    public alertShowError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
         this.alertShow(alertHeader, alertMessage, MessageType.Error, showAsPopup)
     }
 
@@ -496,6 +578,10 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // Events
     public onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs> {
         return this.blotter.SearchedChanged;
+    }
+
+    public onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs> {
+        return this.blotter.ColumnStateChanged;
     }
 
     // Helper Methods

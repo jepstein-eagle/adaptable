@@ -26,8 +26,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
     }
 
     public addContextMenuItem(columnId: string): void {
-        let column = this.CalculatedColumns.find(c => c.ColumnId == columnId);
-        if (column) {
+        if (this.canCreateContextMenuItem(columnId)) {
             this.createContextMenuItemShowPopup(
                 "Edit " + StrategyNames.CalculatedColumnStrategyName,
                 ScreenPopups.CalculatedColumnPopup,

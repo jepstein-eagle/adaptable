@@ -15,6 +15,7 @@ export const GRID_SET_BLOTTER_RESTRICTIONS = 'GRID_SET_BLOTTER_RESTRICTIONS';
 export const GRID_SET_SYSTEM_STATUS = 'GRID_SET_SYSTEM_STATUS';
 export const GRID_CLEAR_SYSTEM_STATUS = 'GRID_CLEAR_SYSTEM_STATUS';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
+export const GRID_SET_PINNED_COLUMN = 'GRID_SET_PINNED_COLUMN';
 
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -54,6 +55,10 @@ export interface GridClearSystemStatusAction extends Redux.Action {
 
 export interface GridSetSelectedCellsAction extends Redux.Action {
     SelectedCellInfo: ISelectedCellInfo;
+}
+
+export interface GridSetPinnedColumnAction extends Redux.Action {
+    ColumnId: string;
 }
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
@@ -106,13 +111,18 @@ export const GridSetSelectedCells = (SelectedCellInfo: ISelectedCellInfo): GridS
     SelectedCellInfo
 })
 
+export const GridSetPinnedColumn = (ColumnId: string): GridSetPinnedColumnAction => ({
+    type: GRID_SET_PINNED_COLUMN,
+    ColumnId
+})
+
 const initialGridState: GridState = {
     Columns: [],
     GridSorts: [],
     BlotterRestrictions: [],
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
-    SelectedCellInfo: null
-
+    SelectedCellInfo: null,
+    PinnedColumn: ""
 }
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
@@ -136,6 +146,8 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             return Object.assign({}, state, { SystemStatus: { StatusMessage: "", StatusColour: "Green" } })
         case GRID_SET_SELECTED_CELLS:
             return Object.assign({}, state, { SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo })
+        case GRID_SET_PINNED_COLUMN:
+            return Object.assign({}, state, { PinnedColumn: (<GridSetPinnedColumnAction>action).ColumnId })
         default:
             return state
     }

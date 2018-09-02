@@ -13,6 +13,8 @@ import { DataType } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IFlashingCell } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
@@ -29,27 +31,31 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId).DataType == DataType.Number) {
-            if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
+        if (this.canCreateContextMenuItem(columnId)) {
+            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
 
-                let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
-                if (flashingCell && flashingCell.IsLive) {
-                    this.createContextMenuItemReduxAction(
-                        "Turn Flashing Cell Off",
-                        StrategyGlyphs.FlashingCellGlyph,
-                        FlashingCellsRedux.FlashingCellSelect(flashingCell)
-                    )
-                }
-                else {
-                    if (!flashingCell) {
-                        let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
-                        flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
+            if (column.DataType == DataType.Number) {
+                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
+
+                    let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
+                    if (flashingCell && flashingCell.IsLive) {
+                        this.createContextMenuItemReduxAction(
+                            "Turn Flashing Cell Off",
+                            StrategyGlyphs.FlashingCellGlyph,
+                            FlashingCellsRedux.FlashingCellSelect(flashingCell)
+                        )
                     }
-                    this.createContextMenuItemReduxAction(
-                        "Turn Flashing Cell On",
-                        StrategyGlyphs.FlashingCellGlyph,
-                        FlashingCellsRedux.FlashingCellSelect(flashingCell)
-                    )
+                    else {
+                        if (!flashingCell) {
+                            let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
+                            flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
+                        }
+                        this.createContextMenuItemReduxAction(
+                            "Turn Flashing Cell On",
+                            StrategyGlyphs.FlashingCellGlyph,
+                            FlashingCellsRedux.FlashingCellSelect(flashingCell)
+                        )
+                    }
                 }
             }
         }

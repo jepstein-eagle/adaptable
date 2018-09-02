@@ -65,7 +65,7 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as _ from 'lodash'
@@ -320,6 +320,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
 
+    public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
+
+    
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -705,6 +708,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return formatter(this.valOrFunc(row, column))
         }
         return "";
+    }
+
+
+    public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
+        return null
     }
 
     public getRawValueFromRecord(row: any, columnId: string): any {

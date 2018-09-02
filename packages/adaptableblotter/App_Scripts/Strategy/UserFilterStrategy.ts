@@ -21,11 +21,13 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     public addContextMenuItem(columnId: string): void {
-        this.createContextMenuItemShowPopup(
-            "Create User Filter",
-            ScreenPopups.UserFilterPopupPopup,
-            StrategyGlyphs.UserFilterGlyph,
-            "New|" + columnId)
+        if (this.canCreateContextMenuItem(columnId)) {
+            this.createContextMenuItemShowPopup(
+                "Create User Filter",
+                ScreenPopups.UserFilterPopupPopup,
+                StrategyGlyphs.UserFilterGlyph,
+                "New|" + columnId)
+        }
     }
 
     protected InitState() {

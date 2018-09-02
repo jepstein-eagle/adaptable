@@ -51,7 +51,9 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     return (
 
       <Modal show={this.props.showModal} onHide={this.props.onHide} className={cssClassName + StyleConstants.BASE}
-        container={modalContainer} >
+        container={modalContainer}
+        enforceFocus={null}
+         >
         <div className={cssClassName + StyleConstants.MODAL_BASE}>
           <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
             <div className="ab_main_popup">

@@ -8,18 +8,20 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ColumnChooserStrategyId, blotter)
-        }
+    }
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (!this.isReadOnlyStrategy()) {
+        if (this.canCreateContextMenuItem(columnId)) {
             this.createContextMenuItemReduxAction(
                 "Hide Column",
                 StrategyGlyphs.ColumnChooserGlyph,

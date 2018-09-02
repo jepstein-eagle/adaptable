@@ -21,6 +21,7 @@ export interface IRangeEvaluation {
 }
 
 export module ExpressionHelper {
+  
     export function CreateSingleColumnExpression(columnId: string,
         columnValues: Array<string>,
         userFilters: Array<string>,
@@ -30,6 +31,7 @@ export module ExpressionHelper {
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
     }
+
 
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, filters: any): string {
         let returnValue = ""

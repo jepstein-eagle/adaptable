@@ -14,12 +14,14 @@ export class SelectColumnStrategy extends AdaptableStrategyBase implements ISele
 
     public addContextMenuItem(columnId: string): void {
         if (this.blotter.isSelectable()) {
+            if (this.canCreateContextMenuItem(columnId)) {
 
-            this.createContextMenuItemReduxAction(
-                StrategyNames.SelectColumnStrategyName,
-                StrategyGlyphs.SelectColumnGlyph,
-                GridRedux.GridSelectColumn(columnId)
-            )
+                this.createContextMenuItemReduxAction(
+                    StrategyNames.SelectColumnStrategyName,
+                    StrategyGlyphs.SelectColumnGlyph,
+                    GridRedux.GridSelectColumn(columnId)
+                )
+            }
         }
     }
 }

@@ -6,6 +6,8 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -17,10 +19,12 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     }
 
     public addContextMenuItem(columnId: string): void {
-        this.createContextMenuItemShowPopup(
+        if (this.canCreateContextMenuItem(columnId)) {
+            this.createContextMenuItemShowPopup(
             StrategyNames.ColumnInfoStrategyName,
             ScreenPopups.ColumnInfoPopup,
             StrategyGlyphs.ColumnInfoGlyph,
             columnId)
     }
+}
 }

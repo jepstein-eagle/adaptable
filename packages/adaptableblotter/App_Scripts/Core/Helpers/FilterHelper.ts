@@ -4,7 +4,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter } from '../Api/Interface/AdaptableBlotterObjects';
 
 
 export module FilterHelper {
@@ -31,34 +31,51 @@ export module FilterHelper {
     export const TRUE_SYSTEM_FILTER = 'True'
     export const FALSE_SYSTEM_FILTER = 'False'
 
-export function GetAllSystemFilters():string[]{
-    return  [
-        BLANKS_SYSTEM_FILTER,
-        NON_BLANKS_SYSTEM_FILTER,
-        TODAY_SYSTEM_FILTER,
-        IN_PAST_SYSTEM_FILTER,
-        IN_FUTURE_SYSTEM_FILTER,
-        YESTERDAY_SYSTEM_FILTER,
-        TOMORROW_SYSTEM_FILTER,
-        NEXT_WORKING_DAY_SYSTEM_FILTER,
-        PREVIOUS_WORKING_DAY_SYSTEM_FILTER,
-        THIS_YEAR_SYSTEM_FILTER,
-        POSITIVE_SYSTEM_FILTER,
-        NEGATIVE_SYSTEM_FILTER,
-        ZERO_SYSTEM_FILTER,
-        TRUE_SYSTEM_FILTER,
-        FALSE_SYSTEM_FILTER
-    ]
-}
+    export function GetAllSystemFilters(): string[] {
+        return [
+            BLANKS_SYSTEM_FILTER,
+            NON_BLANKS_SYSTEM_FILTER,
+            TODAY_SYSTEM_FILTER,
+            IN_PAST_SYSTEM_FILTER,
+            IN_FUTURE_SYSTEM_FILTER,
+            YESTERDAY_SYSTEM_FILTER,
+            TOMORROW_SYSTEM_FILTER,
+            NEXT_WORKING_DAY_SYSTEM_FILTER,
+            PREVIOUS_WORKING_DAY_SYSTEM_FILTER,
+            THIS_YEAR_SYSTEM_FILTER,
+            POSITIVE_SYSTEM_FILTER,
+            NEGATIVE_SYSTEM_FILTER,
+            ZERO_SYSTEM_FILTER,
+            TRUE_SYSTEM_FILTER,
+            FALSE_SYSTEM_FILTER
+        ]
+    }
 
     export function GetUserFilters(userFilters: IUserFilter[], userFilterNames: string[]): IUserFilter[] {
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null)
     }
 
-   //  export function GetSystemFilters(allSystemFilters: string[], columnSystemFilters: string[]): string[] {
-     //    return allSystemFilters.filter(f => columnSystemFilters.find(u => u == f) != null)
+    //  export function GetSystemFilters(allSystemFilters: string[], columnSystemFilters: string[]): string[] {
+    //    return allSystemFilters.filter(f => columnSystemFilters.find(u => u == f) != null)
     // }
 
+
+    export function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter {
+        return {
+            ColumnId: userFilter.ColumnId,
+            Filter: ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [userFilter.Name], []),
+            IsReadOnly: false
+        }
+    }
+
+    export function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter {
+        return {
+            Name: name,
+            ColumnId: columnFilter.ColumnId,
+            Expression: columnFilter.Filter,
+            IsReadOnly: false
+        }
+    }
 
     export function GetSystemFiltersForColumn(column: IColumn, systemFilters: string[]): string[] {
         let appropriateSystemFilters: string[] = []

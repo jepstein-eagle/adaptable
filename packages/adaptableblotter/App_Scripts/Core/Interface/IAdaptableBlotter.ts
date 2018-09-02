@@ -13,7 +13,7 @@ import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { ICalculatedColumn, IGridSort, ILayout } from '../Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs } from '../Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../Api/Interface/ServerSearch';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { IChartService } from '../Services/Interface/IChartService';
 
@@ -47,6 +47,7 @@ export interface IAdaptableBlotter {
 
     // not sure if this is right but putting the event here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
+    ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>
 
     // General
     createMenu(): void
@@ -67,6 +68,7 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
+    getDisplayValueFromRawValue(colId: string, rawValue: any): any
 
     // editing related
     setValue(cellInfo: ICellInfo): void
@@ -111,3 +113,4 @@ export interface IAdaptableBlotter {
     isSelectable(): boolean
     isSortable(): boolean
 }
+

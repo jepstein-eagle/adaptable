@@ -7,7 +7,6 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary, ISelectedCell } from "./Interface/ISelectedCellsStrategy";
 import { DataType } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import * as math from 'mathjs'
 
 export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISelectedCellsStrategy {
 
@@ -52,12 +51,12 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
             let hasNumericColumns: boolean = numericValues.length > 0;
             let distinct = ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
-                Sum: (hasNumericColumns) ? math.round(math.sum(numericValues), 4) : "",
-                Average: (hasNumericColumns) ? math.round(math.mean(numericValues), 4) : "",
-                Median: (hasNumericColumns) ? math.round(math.median(numericValues), 4) : "",
+                Sum: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.sumNumberArray(numericValues)) : "",
+                Average: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.meanNumberArray(numericValues)) : "",
+                Median: (hasNumericColumns) ?this.roundNumberToFourPlaces(this.medianNumberArray(numericValues)) : "",
                 Distinct: distinct,
-                Max: (hasNumericColumns) ? math.round(math.max(numericValues), 4) : "",
-                Min: (hasNumericColumns) ? math.round(math.min(numericValues), 4) : "",
+                Max: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.max(...numericValues)) : "",
+                Min: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.min(...numericValues)) : "",
                 Count: allValues.length,
                 Only: (distinct == 1) ? allValues[0] : "",
                 VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
@@ -66,6 +65,37 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
         return selectedCellSummary;
     }
 
+    private sumNumberArray(numericValues: number[]): number {
+        return numericValues.reduce(function (a, b) { return a + b; }, 0);
+    }
+
+    private meanNumberArray(numericValues: number[]): number {
+        return this.sumNumberArray(numericValues) / numericValues.length;
+    }
+    
+    private  medianNumberArray(numericValues: number[]): number {
+        // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
+        var median = 0, numsLen = numericValues.length;
+        numericValues.sort();
+     
+        if (
+            numsLen % 2 === 0 // is even
+        ) {
+            // average of two middle numbers
+            median = (numericValues[numsLen / 2 - 1] + numericValues[numsLen / 2]) / 2;
+        } else { // is odd
+            // middle number only
+            median = numericValues[(numsLen - 1) / 2];
+        }
+     
+        return median;
+    }
+    
+    private roundNumberToFourPlaces(numberToRound: any,):number{
+        return Math.round(numberToRound * 10000) / 10000;
+    }
+
+    
     private calculateVwap(numericValues: number[]): any {
         let firstColValues: number[] = []
         let secondColComputedValues: number[] = []
@@ -73,13 +103,13 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
             if (i % 2 === 0) { // index is odd
                 firstColValues.push(numericValues[i]);
             } else {
-                let newValue: any = math.multiply(numericValues[i], numericValues[i - 1]);
+                let newValue: any = (numericValues[i] * numericValues[i - 1]);
                 secondColComputedValues.push(newValue)
             }
         }
-        let firstColTotal: number = math.sum(firstColValues)
-        let secondColTotal: number = math.sum(secondColComputedValues)
-        let result: any = math.round(math.divide(secondColTotal, firstColTotal), 4)
+        let firstColTotal: number = this.sumNumberArray(firstColValues)
+        let secondColTotal: number = this.sumNumberArray(secondColComputedValues)
+        let result: any = this.roundNumberToFourPlaces((secondColTotal/firstColTotal))
         return result;
     }
 }

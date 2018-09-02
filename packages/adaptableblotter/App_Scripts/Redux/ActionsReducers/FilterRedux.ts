@@ -2,17 +2,21 @@ import { FilterState } from './Interface/IState';
 import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import * as Redux from 'redux'
 import { IUserFilter, IColumnFilter } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { InputAction } from '../../Core/Interface/IMessage';
 
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 
 export const COLUMN_FILTER_ADD_UPDATE = 'COLUMN_FILTER_ADD_UPDATE';
+export const COLUMN_FILTER_CLEAR_ALL = 'COLUMN_FILTER_CLEAR_ALL';
 export const COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
-export const COLUMN_FILTER_DELETE = 'COLUMN_FILTER_DELETE';
+
 export const HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
 
 export const SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';
+
+export const CREATE_USER_FILTER_FROM_COLUMN_FILTER = 'CREATE_USER_FILTER_FROM_COLUMN_FILTER';
 
 
 export interface UserFilterAddUpdateAction extends Redux.Action {
@@ -31,15 +35,20 @@ export interface ColumnFilterAddUpdateAction extends Redux.Action {
     columnFilter: IColumnFilter
 }
 
-export interface ColumnFilterClearAction extends Redux.Action {
+
+export interface ColumnFilterClearAllAction extends Redux.Action {
 }
 
-export interface ColumnFilterDeleteAction extends Redux.Action {
+export interface ColumnFilterClearAction extends Redux.Action {
     columnFilter: IColumnFilter
 }
 
 export interface SystemFilterSetAction extends Redux.Action {
     SystemFilters: string[]
+}
+
+export interface CreateUserFilterFromColumnFilterAction extends InputAction {
+   ColumnFilter: IColumnFilter
 }
 
 export const UserFilterAddUpdate = (Index: number,UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
@@ -62,12 +71,12 @@ export const ColumnFilterAddUpdate = (columnFilter: IColumnFilter): ColumnFilter
     columnFilter
 })
 
-export const ColumnFilterClear = (): ColumnFilterClearAction => ({
-    type: COLUMN_FILTER_CLEAR
+export const ColumnFilterClearAll = (): ColumnFilterClearAllAction => ({
+    type: COLUMN_FILTER_CLEAR_ALL
 })
 
-export const ColumnFilterDelete = (columnFilter: IColumnFilter): ColumnFilterDeleteAction => ({
-    type: COLUMN_FILTER_DELETE,
+export const ColumnFilterClear = (columnFilter: IColumnFilter): ColumnFilterClearAction => ({
+    type: COLUMN_FILTER_CLEAR,
     columnFilter
 })
 
@@ -76,11 +85,18 @@ export const SystemFilterSet = (SystemFilters: string[]): SystemFilterSetAction 
     SystemFilters
 })
 
+export const CreateUserFilterFromColumnFilter = (ColumnFilter: IColumnFilter,  InputText: string): CreateUserFilterFromColumnFilterAction => ({
+    type: CREATE_USER_FILTER_FROM_COLUMN_FILTER,
+    ColumnFilter,
+    InputText
+})
+
 const initialFilterState:
     FilterState = {
         ColumnFilters: [],
         UserFilters: [],
-        SystemFilters: FilterHelper.GetAllSystemFilters()
+        SystemFilters: FilterHelper.GetAllSystemFilters(),
+        SavedColumnFilters: []
     }
 
 export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = initialFilterState, action: Redux.Action): FilterState => {
@@ -120,12 +136,12 @@ export const FilterReducer: Redux.Reducer<FilterState> = (state: FilterState = i
             return Object.assign({}, state, { ColumnFilters: columnFilters })
         }
 
-        case COLUMN_FILTER_CLEAR: {
+        case COLUMN_FILTER_CLEAR_ALL: {
             return Object.assign({}, state, { ColumnFilters: [] })
         }
 
-        case COLUMN_FILTER_DELETE: {
-            let actionTypedDelete = (<ColumnFilterDeleteAction>action)
+        case COLUMN_FILTER_CLEAR: {
+            let actionTypedDelete = (<ColumnFilterClearAction>action)
             columnFilters = [].concat(state.ColumnFilters)
             index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnFilter.ColumnId)
             columnFilters.splice(index, 1);

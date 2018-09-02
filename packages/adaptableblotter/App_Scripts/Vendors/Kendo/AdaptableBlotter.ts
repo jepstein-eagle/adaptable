@@ -69,7 +69,7 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
@@ -293,6 +293,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
    
+    public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
+
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -601,6 +603,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         else {
             return String(rawValue)
         }
+    }
+
+
+    public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
+        return null
     }
 
     public getRawValueFromRecord(row: any, columnId: string): any {

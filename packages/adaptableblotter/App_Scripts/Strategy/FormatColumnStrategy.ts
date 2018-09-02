@@ -7,6 +7,8 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy'
 import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase implements IFormatColumnStrategy {
@@ -20,16 +22,17 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
     }
 
     public addContextMenuItem(columnId: string): void {
-        let formatExists: boolean = ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f=>f.ColumnId), columnId)
-        let label = formatExists ? "Edit " : "Create "
-        let popupParam = formatExists ? "Edit|" : "New|"
+        if (this.canCreateContextMenuItem(columnId)) {
+            let formatExists: boolean = ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f => f.ColumnId), columnId)
+            let label = formatExists ? "Edit " : "Create "
+            let popupParam = formatExists ? "Edit|" : "New|"
 
-        this.createContextMenuItemShowPopup(
-            label + StrategyNames.FormatColumnStrategyName,
-            ScreenPopups.FormatColumnPopup,
-            StrategyGlyphs.FormatColumnGlyph,
-            popupParam + columnId)
-
+            this.createContextMenuItemShowPopup(
+                label + StrategyNames.FormatColumnStrategyName,
+                ScreenPopups.FormatColumnPopup,
+                StrategyGlyphs.FormatColumnGlyph,
+                popupParam + columnId)
+        }
     }
 
     protected InitState() {

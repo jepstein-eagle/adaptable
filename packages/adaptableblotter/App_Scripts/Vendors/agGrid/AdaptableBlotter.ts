@@ -72,7 +72,7 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
@@ -85,7 +85,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
 import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
-import { NewValueParams, ValueGetterParams, ColDef } from "ag-grid/dist/lib/entities/colDef"
+import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
 import { Alert } from 'react-bootstrap';
@@ -147,7 +147,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-       // this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
+        // this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -203,6 +203,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
 
+    public setVendorGridState(vendorGridState: any): void {
+        if (vendorGridState) {
+            let columnState: any = JSON.parse(vendorGridState);
+            if (columnState) {
+                this.tempSetColumnStateFixForBuild(this.gridOptions.columnApi, columnState, "api");
+            }
+        }
+    }
+
     private createFilterWrapper(col: Column) {
         this.gridOptions.api.destroyFilter(col)
         this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
@@ -238,6 +247,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
 
+    public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
+
+    
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
@@ -754,6 +766,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+
+    public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
+        let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == colId)
+        let coldef = column.getColDef();
+        if (coldef != null) {
+            let valueFormatter = coldef.valueFormatter;
+            if (valueFormatter) {
+                let params: ValueFormatterParams = {
+                    value: rawValue,
+                    node: null,
+                    data: null,
+                    colDef: coldef,
+                    column: column,
+                    api: this.gridOptions.api,
+                    columnApi: this.gridOptions.columnApi,
+                    context: null
+                }
+                let test = valueFormatter(params)
+                return test
+            }
+        }
+        return rawValue;
+    }
+
     public getRawValueFromRecord(row: RowNode, columnId: string): any {
         return this.gridOptions.api.getValue(columnId, row);
     }
@@ -1002,6 +1038,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         Events.EVENT_COLUMN_EVERYTHING_CHANGED,
         Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
         Events.EVENT_COLUMN_VISIBLE,
+        Events.EVENT_COLUMN_PINNED,
         Events.EVENT_NEW_COLUMNS_LOADED];
         this.gridOptions.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
@@ -1013,6 +1050,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.setColumnIntoStore();
                 }
             }
+        });
+        this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_PINNED, (params: any) => {
+          //  console.log(params)
+         //   let column: string = (params.pinned==null)? "": params.columns[0].getColId();
+         //   console.log("column: " + column);
+         //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column));   
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
@@ -1328,14 +1371,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return mystring;
     }
 
-    public setVendorGridState(vendorGridState: any): void {
-        if (vendorGridState) {
-            let columnState: any = JSON.parse(vendorGridState);
-            if (columnState) {
-                this.tempSetColumnStateFixForBuild(this.gridOptions.columnApi, columnState, "api");
-            }
-        }
-    }
+
 
     private tempSetColumnVisibleFixForBuild(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
         columnApi.setColumnVisible(col, isVisible, columnEventType)

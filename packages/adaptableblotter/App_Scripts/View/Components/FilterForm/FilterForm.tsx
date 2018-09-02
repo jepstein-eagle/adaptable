@@ -3,6 +3,7 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
+import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
@@ -25,6 +26,10 @@ import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
 import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem } from 'react-bootstrap';
 import { IMenuItem } from "../../../Core/Interface/IMenu";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { FilterFormPanel } from "../Panels/FilterFormPanel";
+import { ButtonSave } from "../Buttons/ButtonSave";
+import { IUIPrompt } from "../../../Core/Interface/IMessage";
 
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
@@ -33,14 +38,15 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     UserFilters: IUserFilter[];
     SystemFilters: string[];
     ColumnFilters: IColumnFilter[];
-    BlotterOptions: IAdaptableBlotterOptions
-    BlotterApi: IBlotterApi
+    Blotter: IAdaptableBlotter;
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
-    onDeleteColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterDeleteAction
+    onClearColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
+    onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
+  
 }
 
 export interface FilterFormState {
@@ -63,22 +69,23 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
             let columnValuePairs: IRawValueDisplayValuePair[] = [];
-            if (this.props.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                         } else { // get the distinct items and make sure within max items that can be displayed
-                            let distinctItems = ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.BlotterOptions.maxColumnValueItemsDisplayed);
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(di => {
-                                columnValuePairs.push({ RawValue: di, DisplayValue: di });
+                                let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, di)
+                                columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
                             })
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                             // set the UIPermittedValues for this column to what has been sent
-                            this.props.BlotterApi.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
+                            this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
                         }
                     }, function (error) {
                         //    this.setState({ name: error });
@@ -113,16 +120,21 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
 
         let isEmptyFilter: boolean = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ExpressionHelper.IsEmptyRange(uiSelectedRangeExpression);
-        // let isEmptyFilter: boolean = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ;
 
-        let closeButton = <ButtonClose cssClassName={cssClassName} onClick={() => this.onCloseForm()}
+        let hasUserFilter: boolean = uiSelectedUserFilters.length > 0
+
+        let closeButton = <ButtonClose
+            cssClassName={cssClassName}
+            onClick={() => this.onCloseForm()}
             bsStyle={"default"}
             size={"xsmall"}
             DisplayMode="Glyph"
             hideToolTip={true}
         />
 
-        let clearFilterButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.onClearFilter()}
+        let clearFilterButton = <ButtonClear
+            cssClassName={this.props.cssClassName + " pull-right "}
+            onClick={() => this.onClearFilter()}
             bsStyle={"default"}
             style={{ margin: "5px" }}
             size={"xsmall"}
@@ -132,14 +144,29 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             hideToolTip={true}
         />
 
+        let saveButton = <ButtonSave
+            cssClassName={this.props.cssClassName + " pull-right "}
+            onClick={() => this.onSaveFilter()}
+            bsStyle={"default"}
+            style={{ margin: "5px" }}
+            size={"xsmall"}
+            overrideDisableButton={isEmptyFilter || hasUserFilter}
+            overrideText={"Save as User Filter"}
+            DisplayMode="Glyph"
+            hideToolTip={true}
+        />
+
 
         return <div>
-            <PanelWithTwoButtons cssClassName={cssClassName} style={panelStyle}
+            <FilterFormPanel cssClassName={cssClassName} style={panelStyle}
                 className="ab_no-padding-except-top-panel ab_small-padding-panel"
                 ContextMenuTab={this.state.SelectedTab}
                 ContextMenuChanged={(e) => this.onSelectTab(e)}
-                IsAlwaysFilter ={this.props.EmbedColumnMenu}
-                bsStyle="default" clearFilterButton={clearFilterButton} closeButton={closeButton}>
+                IsAlwaysFilter={this.props.EmbedColumnMenu}
+                bsStyle="default"
+                clearFilterButton={clearFilterButton}
+                saveButton={saveButton}
+                closeButton={closeButton}>
 
                 {this.state.SelectedTab == ContextMenuTab.Menu ?
                     <ListBoxMenu ContextMenuItems={this.props.ContextMenuItems} onContextMenuItemClick={(action) => this.onContextMenuItemClick(action)}
@@ -166,7 +193,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                         }
                     </div>
                 }
-            </PanelWithTwoButtons>
+            </FilterFormPanel>
 
         </div>
     }
@@ -223,10 +250,21 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         //delete if empty
         if (columnValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
-            this.props.onDeleteColumnFilter(columnFilter);
+            this.props.onClearColumnFilter(columnFilter);
         } else {
             this.props.onAddEditColumnFilter(columnFilter);
         }
+    }
+
+    onSaveFilter() {
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
+
+        let prompt: IUIPrompt = {
+            PromptTitle: "Enter name for User Filter",
+            PromptMsg: "Please enter a user filter name",
+            ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
+        }
+        this.props.onShowPrompt(prompt)
     }
 
     onClearFilter() {
@@ -251,17 +289,17 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
-        BlotterOptions: ownProps.Blotter.BlotterOptions,
-        BlotterApi: ownProps.Blotter.api,
-        ContextMenuItems: state.Menu.ContextMenu.Items
+        ContextMenuItems: state.Menu.ContextMenu.Items,
+        Blotter: ownProps.Blotter
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
-        onDeleteColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterDelete(columnFilter)),
+        onClearColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
     };
 }

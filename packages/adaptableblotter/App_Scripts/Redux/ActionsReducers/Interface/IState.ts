@@ -19,6 +19,7 @@ export interface GridState {
     BlotterRestrictions: string[];
     SystemStatus: ISystemStatus
     SelectedCellInfo: ISelectedCellInfo
+    PinnedColumn: string
 }
 
 export interface MenuState {
@@ -151,7 +152,8 @@ export interface CustomSortState {
 }
 
 export interface FilterState {
-    ColumnFilters: IColumnFilter[];
+    ColumnFilters: IColumnFilter[]; 
+    SavedColumnFilters: IColumnFilter[];
     UserFilters: IUserFilter[];
     SystemFilters: string[];
 }

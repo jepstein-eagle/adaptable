@@ -18,12 +18,13 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
     }
 
     public addContextMenuItem(columnId: string): void {
+        if (this.canCreateContextMenuItem(columnId)) {
             this.createContextMenuItemShowPopup(
                 "Create Cell Validation Rule",
                 ScreenPopups.CellValidationPopup,
                 StrategyGlyphs.CellValidationGlyph,
                 "New|" + columnId)
-      
+            }
     }
 }
 

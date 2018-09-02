@@ -54,7 +54,7 @@ import { GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
@@ -62,6 +62,8 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IAboutStrategy } from '../../Strategy/Interface/IAboutStrategy';
 import { KeyValuePair } from '../../View/UIInterfaces';
+import { FilterHelper } from '../../Core/Helpers/FilterHelper';
+import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -206,7 +208,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
             PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION,
             PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_SHOW_CONFIRMATION, PopupRedux.POPUP_HIDE_SCREEN, PopupRedux.POPUP_HIDE_ALERT,
-            PopupRedux.POPUP_HIDE_PROMPT,  PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_SHOW_ALERT,
+            PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_SHOW_ALERT,
             PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
             PopupRedux.POPUP_SHOW_PROMPT]);
 
@@ -356,6 +358,19 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
 
                     return next(action);
                 }
+                case FilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+                    let actionTyped = <FilterRedux.CreateUserFilterFromColumnFilterAction>action
+                    // first create a new user filter based on the column filter and input name
+                    let userFilter: IUserFilter = FilterHelper.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
+                    middlewareAPI.dispatch(FilterRedux.UserFilterAddUpdate(-1, userFilter));
+
+                    // then create a new column filter from the user filter - so that it will display the user filter name
+                    let newColumnFilter: IColumnFilter = FilterHelper.CreateColumnFilterFromUserFilter(userFilter);
+                    middlewareAPI.dispatch(FilterRedux.ColumnFilterAddUpdate(newColumnFilter));
+
+                    return next(action);
+                }
+
 
                 default:
                     return next(action);
@@ -380,7 +395,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText,  MessageType: MessageType.Error }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error }))
                             }
                             else {
                                 middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info }))
@@ -543,7 +558,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     else {
                         AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
-                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import" , MessageType: MessageType.Error}))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error }))
                     }
                     return returnAction;
                 }
@@ -674,9 +689,36 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     blotter.setNewColumnListOrder(columnList)
                     return next(action);
                 }
+                case GridRedux.GRID_SET_COLUMNS: {
+                    let actionTyped = <GridRedux.GridSetColumnsAction>action
+                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
+                    if (middlewareAPI.getState().Layout.CurrentLayout != DEFAULT_LAYOUT) {
+                        if (!ArrayExtensions.areArraysEqualWithOrder(actionTyped.Columns, columnList)) {
+                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
+                        }
+                    }
+                    return next(action);
+                }
+                case GridRedux.GRID_SET_SORT: {
+                    let actionTyped = <GridRedux.GridSetSortAction>action
+                    let gridSortList = [].concat(middlewareAPI.getState().Grid.GridSorts)
+                    if (middlewareAPI.getState().Layout.CurrentLayout != DEFAULT_LAYOUT) {
+                        if (!ArrayExtensions.areArraysEqualWithOrder(actionTyped.GridSorts, gridSortList)) {
+                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
+                        }
+                    }
+                    return next(action);
+                }
                 case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = <GridRedux.GridSelectColumnAction>action
                     blotter.selectColumn(actionTyped.ColumnId)
+                    return next(action);
+                }
+                case GridRedux.GRID_SET_PINNED_COLUMN: {
+                    if (middlewareAPI.getState().Layout.CurrentLayout != DEFAULT_LAYOUT) {
+                    //    console.log("in store")
+                    //    blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
+                    }
                     return next(action);
                 }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {

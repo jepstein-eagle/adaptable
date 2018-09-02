@@ -22,7 +22,7 @@ import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { Label, ControlLabel, FormControl } from "react-bootstrap";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
-    onClearFilters: () => FilterRedux.ColumnFilterClearAction,
+    onClearAllFilters: () => FilterRedux.ColumnFilterClearAllAction,
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
     Columns: IColumn[],
@@ -58,7 +58,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} MessageType={MessageType.Info} useButton={true} triggerAction={"click"} />
 
                         {' '}
-                        <ButtonClear onClick={() => this.props.onClearFilters()}
+                        <ButtonClear onClick={() => this.props.onClearAllFilters()}
                             bsStyle={"primary"}
                             cssClassName={cssClassName}
                             size={"small"}
@@ -85,7 +85,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClearFilters: () => dispatch(FilterRedux.ColumnFilterClear()),
+        onClearAllFilters: () => dispatch(FilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ColumnFilterPopup, isReadOnly))
     };

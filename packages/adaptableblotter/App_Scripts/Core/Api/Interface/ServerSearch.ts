@@ -1,5 +1,11 @@
 import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./AdaptableBlotterObjects";
 
+
+
+export interface IColumnStateChangedEventArgs {
+  currentLayout: string
+ }
+
 /**
  * EventArgs sent as part of the onSearchedChanged Event
  */

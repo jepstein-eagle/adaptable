@@ -30,11 +30,13 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     public addContextMenuItem(columnId: string): void {
-        this.createContextMenuItemShowPopup(
-            "Create " + StrategyNames.ConditionalStyleStrategyName,
-            ScreenPopups.ConditionalStylePopup,
-            StrategyGlyphs.ConditionalStyleGlyph,
-            "New|" + columnId)
+        if (this.canCreateContextMenuItem(columnId)) {
+            this.createContextMenuItemShowPopup(
+                "Create " + StrategyNames.ConditionalStyleStrategyName,
+                ScreenPopups.ConditionalStylePopup,
+                StrategyGlyphs.ConditionalStyleGlyph,
+                "New|" + columnId)
+        }
     }
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
