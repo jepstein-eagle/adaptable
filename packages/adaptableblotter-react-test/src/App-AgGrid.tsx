@@ -3,6 +3,7 @@ import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from "adaptableblott
 import { ReactHarnessHelper } from "./ReactHarnessHelper";
 import { DataGenerator } from "./DataGenerator";
 import { GridOptions } from "ag-grid";
+import "ag-grid/dist/styles/ag-theme-blue.css";
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;

@@ -5,8 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "prebuild": "rimraf dist",
-    "build": "ng build adaptableblotter && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css dist/styles && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* dist/fonts",
-    "publish": "ng build adaptableblotter --prod && cd dist/adaptableblotter && npm publish",
+    "copy-styles": "copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css dist/styles && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* dist/fonts",
+    "build": "ng build adaptableblotter && npm run copy-styles",
+    "publish": "ng build adaptableblotter --prod && npm run copy-styles && cd dist/adaptableblotter && npm publish",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

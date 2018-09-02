@@ -33,9 +33,9 @@ export default {
   },
   plugins: [
     copy({
+      'node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts': 'dist/fonts',
       'node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css':
         'dist/styles/adaptableblotter-style.css',
-      'node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts': 'dist/fonts',
       verbose: true
     }),
     // Node built-in fns support

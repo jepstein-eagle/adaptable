@@ -11,8 +11,10 @@ class AdaptableBlotterAgGrid extends React.Component {
         };
     }
     render() {
-        let theme = this.props.agTheme ? "ag-theme-" + this.props.agTheme : "ag-theme-balham";
-        let style = this.props.agDivStyle ? this.props.agDivStyle : { width: '100%', height: '90%', position: 'absolute', margin: '0px' };
+        let theme = this.props.agTheme ? 'ag-theme-' + this.props.agTheme : 'ag-theme-balham';
+        let style = this.props.agDivStyle
+            ? this.props.agDivStyle
+            : { width: '100%', height: '90%', position: 'absolute', margin: '0px' };
         return (React.createElement("div", { id: "adaptableBlotter-react" },
             React.createElement(AdaptableBlotter_1.default, { AdaptableBlotterOptions: this.state.AdaptableBlotterOptions, VendorGridName: "agGrid" }),
             React.createElement("div", { id: "grid", className: theme, style: style },
