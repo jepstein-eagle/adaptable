@@ -1,7 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import sourceMaps from 'rollup-plugin-sourcemaps'
-import copy from 'rollup-plugin-copy'
 import typescript from 'rollup-plugin-typescript2'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
@@ -32,12 +31,6 @@ export default {
     include: 'src/**'
   },
   plugins: [
-    copy({
-      'node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts': 'dist/fonts',
-      'node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css':
-        'dist/styles/adaptableblotter-style.css',
-      verbose: true
-    }),
     // Node built-in fns support
     builtins(),
     postcss({
@@ -53,6 +46,13 @@ export default {
       abortOnError: false,
       check: false
     }),
+    // Allow node_modules resolution, so you can use 'external' to control
+    // which external modules to include in the bundle
+    // https://github.com/rollup/rollup-plugin-node-resolve#usage
+    resolve({
+      jsnext: true,
+      main: true
+    }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs({
       namedExports: {
@@ -67,14 +67,6 @@ export default {
       },
       sourceMap: false
     }),
-    // Allow node_modules resolution, so you can use 'external' to control
-    // which external modules to include in the bundle
-    // https://github.com/rollup/rollup-plugin-node-resolve#usage
-    resolve({
-      jsnext: true,
-      main: true,
-      browser: true
-    })
 
     // Resolve source maps to the original source
     // sourceMaps(),

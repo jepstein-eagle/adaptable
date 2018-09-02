@@ -8,6 +8,7 @@
 		"jsx": "react",
 		"noUnusedLocals": false,
 		"downlevelIteration": true,
+		"emitDecoratorMetadata": false,
 		"allowSyntheticDefaultImports": true
 	},
 	"include": ["App_Scripts/**/*"]

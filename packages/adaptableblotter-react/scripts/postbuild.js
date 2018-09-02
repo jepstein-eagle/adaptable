@@ -2,9 +2,6 @@ const fs = require('fs');
 const pkg = require('../package.json');
 
 const matchReplaceMap = [{
-  match: /math\['import'\]\(lib/ig,
-  replace: "typeof math['import'] === 'function' && math['import'](lib",
-}, {
   match: /__metadata\([\s\S\n]*?\),?\n?/ig,
   replace: '',
 }, {
@@ -21,5 +18,7 @@ const matchReplaceMap = [{
 [pkg.main, pkg.module].forEach(filePath => {
   let content = fs.readFileSync(filePath, 'utf8');
   content = matchReplaceMap.reduce((content, {match, replace}) => content.replace(match, replace), content);
-  fs.writeFileSync(filePath, content);
+  // HACK: ugly fix for mathjs, we can't bundle it with Rollup
+  // const mathjsContent = fs.readFileSync('externals/math.min.js', 'utf8');
+  fs.writeFileSync(filePath, `${mathjsContent}\n${content}`);
 })
