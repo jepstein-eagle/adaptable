@@ -12,7 +12,7 @@ const pkg = require('./package.json')
 // const libraryName = 'adaptableblotter-react'
 
 export default {
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'mathjs'],
   input: 'src/index.ts',
   output: [
     {

@@ -119,14 +119,15 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "adaptableblotter": "^2.4.2",
+    "adaptableblotter": "^2.4.3",
     "ag-grid": "^18.1.2",
     "ag-grid-enterprise": "^18.1.1",
     "ag-grid-react": "^18.1.0"
   },
   "peerDependencies": {
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "mathjs": "^5.1.1"
   },
   "gitHead": "3fd46ddb625006a2e3d8507e8c6b14db4df7dd8e"
 }
