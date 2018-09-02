@@ -3,8 +3,7 @@
     "--pure-lockfile"
   ],
   "packages": [
-    "packages/*",
-    "packages/adaptableblotter-angular/projects/*"
+    "packages/*"
   ],
   "version": "independent"
 }
