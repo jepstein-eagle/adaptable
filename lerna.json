@@ -1,0 +1,10 @@
+{
+  "npmClientArgs": [
+    "--pure-lockfile"
+  ],
+  "packages": [
+    "packages/*",
+    "packages/adaptableblotter-angular/projects/*"
+  ],
+  "version": "independent"
+}

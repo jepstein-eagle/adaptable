@@ -1,5 +1,5 @@
 # adaptableblotter
-Repository for the Adaptable Blotter HTML5 version - AdaptableBlotter.JS - developed by Adaptable Tools.
+Repository for the multiple Adaptable Blotter packages developed by Adaptable Tools, including HTML5 version (AdaptableBlotter.JS), React version (adaptableblotter-react), and (soon to come) Angular version (adaptableblotter-angular).
 
 AdaptableBlotter.JS is a powerful DataGrid add-on that integrates with the leading datagrid components and provides all the additional, rich functionality that financial and other advanced users expect from their grids and blotters.
 
