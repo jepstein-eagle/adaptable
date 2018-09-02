@@ -1,14 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
+import { GridOptions } from 'ag-grid';
 
 @Component({
   selector: 'adaptable-blotter-aggrid',
-  template: ``,
+  template: `
+  <div id="adaptableBlotter">
+    <adaptable-blotter [adaptableBlotterOptions]="adaptableBlotterOptions" vendorGridName="agGrid">
+    </adaptable-blotter>
+    <div id="grid" [class]="agGridClass" [style]="agDivStyle">
+      <ag-grid-angular
+        [class]="agGridClass"
+        [gridOptions]="gridOptions">
+      </ag-grid-angular>
+    </div>
+  </div>`,
 })
 export class AdaptableblotterAgGridComponent implements OnInit {
+  @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
+  @Input() gridOptions: GridOptions;
+  @Input() agTheme?: 'balham'|'balham-dark'|'material'| 'fresh'| 'dark'| 'blue'|'bootstrap' = 'balham';
+  @Input() agDivStyle?: any = { width: '100%', height: '90%', position: 'absolute' , margin: '0px'};
+
+  agGridClass: string;
 
   constructor() { }
 
   ngOnInit() {
+    this.agGridClass = `ag-theme-${this.agTheme}`;
   }
 
 }
