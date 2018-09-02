@@ -1,8 +1,11 @@
 {
   "name": "adaptableblotter-react-test",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
+    "adaptableblotter-react": "^0.2.0",
+    "ag-grid": "^18.1.2",
+    "ag-grid-react": "^18.1.0",
     "autoprefixer": "7.1.6",
     "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
@@ -41,10 +44,7 @@
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
     "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3",
-    "adaptableblotter-react": "0.1.0",
-    "ag-grid": "^18.1.2",
-    "ag-grid-react": "^18.1.0"
+    "whatwg-fetch": "2.0.3"
   },
   "scripts": {
     "start": "node scripts/start.js",

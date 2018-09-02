@@ -1,12 +1,12 @@
 {
   "name": "adaptableblotter-angular",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
     "adaptableblotter": "^2.4.0",
     "ag-grid": "^18.1.2",
-    "ag-grid-enterprise": "^18.1.1",
-    "ag-grid-angular": "^18.1.0"
+    "ag-grid-angular": "^18.1.0",
+    "ag-grid-enterprise": "^18.1.1"
   }
 }
