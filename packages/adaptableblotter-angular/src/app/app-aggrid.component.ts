@@ -3,7 +3,7 @@ import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
 import { GridOptions } from 'ag-grid';
 
 @Component({
-  selector: 'adaptableblotter-root',
+  selector: 'adaptableblotter-aggrid-root',
   template: `
   <div>
     <adaptable-blotter
@@ -20,7 +20,7 @@ import { GridOptions } from 'ag-grid';
   </div>
   `
 })
-export class AppComponent {
+export class AppAgGridComponent {
   rowData = [
     { make: 'Toyota', model: 'Celica', price: 35000 },
     { make: 'Ford', model: 'Mondeo', price: 32000 },

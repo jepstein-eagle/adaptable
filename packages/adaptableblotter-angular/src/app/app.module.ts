@@ -2,12 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AppAgGridComponent } from './app-aggrid.component';
 import { AdaptableBlotterModule } from 'adaptableblotter-angular';
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppAgGridComponent
   ],
   imports: [
     BrowserModule,
@@ -15,6 +17,9 @@ import { AgGridModule } from 'ag-grid-angular';
     AgGridModule.withComponents([]),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    AppAgGridComponent,
+  ]
 })
 export class AppModule { }
