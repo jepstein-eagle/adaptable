@@ -15,21 +15,18 @@ import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../Core/Api/Interface/IBlotterApi";
+import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
     Columns: Array<IColumn>
     UserFilters: Array<IUserFilter>
     SystemFilters: Array<string>
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    //getDisplayValueFromRawValue(colId: string, rawValue: any): any
     ExpressionMode?: ExpressionMode
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
     cssClassName: string
-    BlotterOptions: IAdaptableBlotterOptions
-    BlotterApi: IBlotterApi
-
+    Blotter:IAdaptableBlotter
 }
 
 export interface ExpressionBuilderPageState {
@@ -69,10 +66,8 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
                             SelectedColumnId={this.state.SelectedColumnId}
                             SelectedTab={this.state.SelectedTab}
-                            getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                            BlotterOptions={this.props.BlotterOptions}
-                            BlotterApi ={this.props.BlotterApi}
-                        >
+                            Blotter={this.props.Blotter}
+                           >
                         </ExpressionBuilderConditionSelector>
                     </Col>
                     <Col xs={6}>

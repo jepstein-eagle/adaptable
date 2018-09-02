@@ -105,13 +105,11 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
-                        BlotterOptions={this.props.BlotterOptions}
-                        BlotterApi={this.props.BlotterApi}
-                        StyleClassNames={this.props.StyleClassNames}
+                         StyleClassNames={this.props.StyleClassNames}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         Columns={this.props.Columns}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        Blotter={this.props.Blotter}
                         ConfigEntities={this.props.FormatColumns}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}

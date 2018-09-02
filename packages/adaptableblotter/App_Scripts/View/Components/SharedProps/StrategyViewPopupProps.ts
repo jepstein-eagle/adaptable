@@ -7,10 +7,10 @@ import { IUserFilter, IGridSort } from "../../../Core/Api/Interface/AdaptableBlo
 import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { BlotterApi } from "../../../Vendors/agGrid/BlotterApi";
 import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
 export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View> {
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
     PopupParams: string,
     onClearPopupParams: () => PopupRedux.PopupClearParamAction,
     TeamSharingActivated: boolean
@@ -23,6 +23,5 @@ export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View
     ModalContainer: HTMLElement,
     ColorPalette: string[],
     GridSorts: IGridSort[],
-    BlotterOptions: IAdaptableBlotterOptions
-    BlotterApi: IBlotterApi
+    Blotter: IAdaptableBlotter
 }

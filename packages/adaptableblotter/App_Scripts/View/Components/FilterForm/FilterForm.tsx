@@ -74,7 +74,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
-                            columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
                         } else { // get the distinct items and make sure within max items that can be displayed
@@ -92,7 +92,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     });
             }
             else {
-                columnValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                 columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                 this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
             }
@@ -308,8 +308,8 @@ export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormC
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
     <FilterForm
-        getColumnValueDisplayValuePairDistinctList={(columnId: string, distinctCriteria: DistinctCriteriaPairValue) => FilterContext.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria)}
-        Blotter={FilterContext.Blotter} CurrentColumn={FilterContext.Column}
+        Blotter={FilterContext.Blotter} 
+        CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
         EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu} />
 </Provider>;

@@ -115,7 +115,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         bsSize={"small"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
                         SelectedColumn={selectedColumn}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                     />
 

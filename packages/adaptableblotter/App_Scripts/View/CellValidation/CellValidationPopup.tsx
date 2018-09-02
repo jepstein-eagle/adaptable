@@ -110,14 +110,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                         ConfigEntities={null}
-                        BlotterOptions={this.props.BlotterOptions}
-                        BlotterApi={this.props.BlotterApi}
+                       Blotter={this.props.Blotter}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                        WizardStartIndex={this.state.WizardStartIndex}
+                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                         canFinishWizard={() => this.canFinishWizard()} />

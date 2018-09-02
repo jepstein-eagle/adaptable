@@ -107,13 +107,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IChartDefinition}
                         ConfigEntities={this.props.ChartDefinitions}
-                        BlotterOptions={this.props.BlotterOptions}
-                        BlotterApi={this.props.BlotterApi}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        Blotter={this.props.Blotter}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}

@@ -45,7 +45,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     }
 
     onClear() {
-        this.props.BlotterApi.configClear();
+        this.props.Blotter.api.configClear();
     }
 
 

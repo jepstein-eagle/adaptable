@@ -120,15 +120,13 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                         Columns={this.props.Columns}
                         ConfigEntities={null}
-                        BlotterOptions={this.props.BlotterOptions}
-                        BlotterApi={this.props.BlotterApi}
                         ModalContainer={this.props.ModalContainer}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         WizardStartIndex={this.state.WizardStartIndex}
                         SelectedColumnId={selectedColumnId}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                        onCloseWizard={() => this.onCloseWizard()}
+                        Blotter={this.props.Blotter}
+                       onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                         canFinishWizard={()=>this.canFinishWizard()}
                     />

@@ -5,6 +5,7 @@ import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interfac
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { BlotterApi } from '../../../Vendors/agGrid/BlotterApi';
 import { IBlotterApi } from '../../../Core/Api/Interface/IBlotterApi';
+import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
 
 export interface AdaptableWizardStep {
     StepName: string
@@ -28,9 +29,7 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
     Columns: Array<IColumn>
     UserFilters: IUserFilter[],
     SystemFilters: string[],
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    BlotterOptions: IAdaptableBlotterOptions
-    BlotterApi: IBlotterApi
+    Blotter: IAdaptableBlotter
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
@@ -38,9 +37,7 @@ export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> ext
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]
     SystemFilters: string[]
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-    BlotterOptions: IAdaptableBlotterOptions
-    BlotterApi: IBlotterApi
+   Blotter: IAdaptableBlotter
 }
 
 // props for a basic wizard

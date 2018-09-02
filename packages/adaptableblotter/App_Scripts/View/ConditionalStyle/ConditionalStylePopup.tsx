@@ -103,15 +103,13 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                         ConfigEntities={null}
-                        BlotterOptions={this.props.BlotterOptions}
-                        BlotterApi={this.props.BlotterApi}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
                         StyleClassNames={this.props.StyleClassNames}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                        Blotter={this.props.Blotter}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}

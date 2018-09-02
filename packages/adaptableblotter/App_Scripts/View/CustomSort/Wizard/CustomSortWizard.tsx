@@ -25,7 +25,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
                 Steps={[
                     <CustomSortColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))} />,
                     <CustomSortValuesWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList} />,
+                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList} />,
                     < CustomSortSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}/>
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

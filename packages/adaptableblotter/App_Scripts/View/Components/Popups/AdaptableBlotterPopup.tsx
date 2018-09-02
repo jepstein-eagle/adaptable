@@ -29,7 +29,6 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
-        getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
         TeamSharingActivated: this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer,
@@ -40,8 +39,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
         cssClassName: cssClassName + StyleConstants.MODAL_BODY,
-        BlotterOptions: this.props.AdaptableBlotter.BlotterOptions,
-        BlotterApi: this.props.AdaptableBlotter.api
+        Blotter: this.props.AdaptableBlotter
       }
 
       var body: any = React.createElement(bodyElement, commonProps);
@@ -53,7 +51,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       <Modal show={this.props.showModal} onHide={this.props.onHide} className={cssClassName + StyleConstants.BASE}
         container={modalContainer}
         enforceFocus={null}
-         >
+      >
         <div className={cssClassName + StyleConstants.MODAL_BASE}>
           <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
             <div className="ab_main_popup">

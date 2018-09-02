@@ -79,8 +79,6 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                 <FormatColumnWizard
                     cssClassName={cssWizardClassName}
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
-                    BlotterOptions={this.props.BlotterOptions}
-                    BlotterApi={this.props.BlotterApi}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     ConfigEntities={this.props.FormatColumns}
@@ -88,11 +86,12 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                     SystemFilters={this.props.SystemFilters}
                     ColorPalette={this.props.ColorPalette}
                     StyleClassNames={this.props.StyleClassNames}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
                     canFinishWizard={() => this.canFinishWizard()}
+                    Blotter={this.props.Blotter}
+                
                 />
             }
         </div>

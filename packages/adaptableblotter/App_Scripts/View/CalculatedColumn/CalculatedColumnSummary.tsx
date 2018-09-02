@@ -64,14 +64,12 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICalculatedColumn}
                     ConfigEntities={this.props.CalculatedColumns}
                     Columns={this.props.Columns}
-                    BlotterOptions={this.props.BlotterOptions}
-                    BlotterApi={this.props.BlotterApi}
-                    ModalContainer={this.props.ModalContainer}
+                     ModalContainer={this.props.ModalContainer}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
                     IsExpressionValid={(expression) => this.props.IsExpressionValid(expression)}
-                    getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
+                     Blotter={this.props.Blotter}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}

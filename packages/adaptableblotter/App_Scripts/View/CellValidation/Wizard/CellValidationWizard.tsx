@@ -33,9 +33,8 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
                     <CellValidationExpressionWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        getColumnValueDisplayValuePairDistinctList={this.props.getColumnValueDisplayValuePairDistinctList}
-                        BlotterOptions={this.props.BlotterOptions}
-                        BlotterApi={this.props.BlotterApi}
+                        Blotter={this.props.Blotter}
+                      
                         />,
                     < CellValidationSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[4]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
 
