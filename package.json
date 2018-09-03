@@ -6,5 +6,9 @@
   },
   "scripts": {
     "cleanup": "lerna clean --yes"
-  }
+  },
+  "workspaces": [
+    "packages/*",
+    "packages/adaptableblotter-angular/projects/*"
+  ]
 }
