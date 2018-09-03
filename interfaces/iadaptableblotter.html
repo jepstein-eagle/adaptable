@@ -934,6 +934,9 @@ img { max-width: 100%; }
 					<a href="iadaptableblotter.html#chartservice" class="tsd-kind-icon">Chart<wbr>Service</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+					<a href="iadaptableblotter.html#columnstatechanged" class="tsd-kind-icon">Column<wbr>State<wbr>Changed</a>
+				</li>
+				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 					<a href="iadaptableblotter.html#embedcolumnmenu" class="tsd-kind-icon">Embed<wbr>Column<wbr>Menu</a>
 				</li>
 				<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
@@ -992,6 +995,9 @@ img { max-width: 100%; }
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
 					<a href="iadaptableblotter.html#getdisplayvalue" class="tsd-kind-icon">get<wbr>Display<wbr>Value</a>
+				</li>
+				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
+					<a href="iadaptableblotter.html#getdisplayvaluefromrawvalue" class="tsd-kind-icon">get<wbr>Display<wbr>Value<wbr>From<wbr>Raw<wbr>Value</a>
 				</li>
 				<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-external">
 					<a href="iadaptableblotter.html#getdisplayvaluefromrecord" class="tsd-kind-icon">get<wbr>Display<wbr>Value<wbr>From<wbr>Record</a>
@@ -1111,6 +1117,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#calculatedcolumnexpressionservice" class="tsd-kind-icon">Calculated<wbr>Column<wbr>Expression<wbr>Service</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#calendarservice" class="tsd-kind-icon">Calendar<wbr>Service</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#chartservice" class="tsd-kind-icon">Chart<wbr>Service</a></li>
+							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#columnstatechanged" class="tsd-kind-icon">Column<wbr>State<wbr>Changed</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#embedcolumnmenu" class="tsd-kind-icon">Embed<wbr>Column<wbr>Menu</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#searchedchanged" class="tsd-kind-icon">Searched<wbr>Changed</a></li>
 							<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#strategies" class="tsd-kind-icon">Strategies</a></li>
@@ -1136,6 +1143,7 @@ img { max-width: 100%; }
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getcolumnvaluedisplayvaluepairdistinctlist" class="tsd-kind-icon">get<wbr>Column<wbr>Value<wbr>Display<wbr>Value<wbr>Pair<wbr>Distinct<wbr>List</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getcurrentcelleditvalue" class="tsd-kind-icon">get<wbr>Current<wbr>Cell<wbr>Edit<wbr>Value</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getdisplayvalue" class="tsd-kind-icon">get<wbr>Display<wbr>Value</a></li>
+							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getdisplayvaluefromrawvalue" class="tsd-kind-icon">get<wbr>Display<wbr>Value<wbr>From<wbr>Raw<wbr>Value</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getdisplayvaluefromrecord" class="tsd-kind-icon">get<wbr>Display<wbr>Value<wbr>From<wbr>Record</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getfirstrecord" class="tsd-kind-icon">get<wbr>First<wbr>Record</a></li>
 							<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-external"><a href="iadaptableblotter.html#getippstyle" class="tsd-kind-icon">getIPPStyle</a></li>
@@ -1244,6 +1252,16 @@ img { max-width: 100%; }
 				</aside>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
+				<a name="columnstatechanged" class="tsd-anchor"></a>
+				<h3>Column<wbr>State<wbr>Changed</h3>
+				<div class="tsd-signature tsd-kind-icon">Column<wbr>State<wbr>Changed<span class="tsd-signature-symbol">:</span> <a href="../classes/eventdispatcher.html" class="tsd-signature-type">EventDispatcher</a><span class="tsd-signature-symbol">&lt;</span><a href="iadaptableblotter.html" class="tsd-signature-type">IAdaptableBlotter</a><span class="tsd-signature-symbol">, </span><a href="icolumnstatechangedeventargs.html" class="tsd-signature-type">IColumnStateChangedEventArgs</a><span class="tsd-signature-symbol">&gt;</span></div>
+				<aside class="tsd-sources">
+					<ul>
+						<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:50</li>
+					</ul>
+				</aside>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
 				<a name="embedcolumnmenu" class="tsd-anchor"></a>
 				<h3>Embed<wbr>Column<wbr>Menu</h3>
 				<div class="tsd-signature tsd-kind-icon">Embed<wbr>Column<wbr>Menu<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
@@ -1338,7 +1356,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:89</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:91</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1361,7 +1379,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:95</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:97</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1378,7 +1396,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:74</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:76</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -1395,7 +1413,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:52</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:53</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1412,7 +1430,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:91</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:93</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1435,7 +1453,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:79</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:81</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1476,7 +1494,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:80</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:82</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1517,7 +1535,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:57</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:58</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <a href="icellinfo.html" class="tsd-signature-type">ICellInfo</a></h4>
@@ -1534,7 +1552,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:102</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:104</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1551,7 +1569,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:61</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:62</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1574,7 +1592,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:63</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:64</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1600,7 +1618,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:76</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:78</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -1617,7 +1635,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:64</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:65</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1634,6 +1652,32 @@ img { max-width: 100%; }
 				</ul>
 			</section>
 			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-external">
+				<a name="getdisplayvaluefromrawvalue" class="tsd-anchor"></a>
+				<h3>get<wbr>Display<wbr>Value<wbr>From<wbr>Raw<wbr>Value</h3>
+				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
+					<li class="tsd-signature tsd-kind-icon">get<wbr>Display<wbr>Value<wbr>From<wbr>Raw<wbr>Value<span class="tsd-signature-symbol">(</span>colId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, rawValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				</ul>
+				<ul class="tsd-descriptions">
+					<li class="tsd-description">
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:71</li>
+							</ul>
+						</aside>
+						<h4 class="tsd-parameters-title">Parameters</h4>
+						<ul class="tsd-parameters">
+							<li>
+								<h5>colId: <span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li>
+								<h5>rawValue: <span class="tsd-signature-type">any</span></h5>
+							</li>
+						</ul>
+						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-external">
 				<a name="getdisplayvaluefromrecord" class="tsd-anchor"></a>
 				<h3>get<wbr>Display<wbr>Value<wbr>From<wbr>Record</h3>
 				<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-external">
@@ -1643,7 +1687,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:65</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:66</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1669,7 +1713,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:92</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:94</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -1686,7 +1730,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:98</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:100</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <a href="ippstyle.html" class="tsd-signature-type">IPPStyle</a></h4>
@@ -1703,7 +1747,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:53</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:54</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1726,7 +1770,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:66</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:67</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1752,7 +1796,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:67</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:68</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1796,7 +1840,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:68</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:69</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1840,7 +1884,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:101</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:103</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1857,7 +1901,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:107</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:109</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1880,7 +1924,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:104</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:106</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1897,7 +1941,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:103</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:105</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1914,7 +1958,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:75</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:77</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1931,7 +1975,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:54</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:55</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1948,7 +1992,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:81</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:83</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1971,7 +2015,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:111</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:113</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1988,7 +2032,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:112</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:114</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -2073,7 +2117,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:90</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:92</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2096,7 +2140,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:85</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:87</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2119,7 +2163,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:58</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:59</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2142,7 +2186,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:62</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:63</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -2159,7 +2203,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:84</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:86</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2185,7 +2229,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:86</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:88</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2208,7 +2252,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:69</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:70</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2231,7 +2275,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:72</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:74</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2254,7 +2298,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:73</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:75</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2277,7 +2321,7 @@ img { max-width: 100%; }
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:108</li>
+								<li>Defined in node_modules/adaptableblotter/App_Scripts/Core/Interface/IAdaptableBlotter.ts:110</li>
 							</ul>
 						</aside>
 						<h4 class="tsd-parameters-title">Parameters</h4>
