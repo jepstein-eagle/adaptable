@@ -6,5 +6,18 @@
     "packages/*",
     "packages/adaptableblotter-angular/projects/*"
   ],
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "**/*.md",
+        "**/docs/**",
+        "**/test/**",
+        "**/*.spec.js",
+        "**/*.test.js",
+        "**/*ignore",
+        "**/*rc"
+      ]
+    }
+  },
   "version": "independent"
 }
