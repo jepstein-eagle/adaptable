@@ -23,7 +23,7 @@ export default class App extends React.Component<{}, AppState> {
       blotterOptions: {
         primaryKey: "make",
         vendorGrid: gridOptions,
-        userName: "UtibeAbasi",
+        userName: "demo user",
         blotterId: "demo blotter"
       },
       rowData: [
