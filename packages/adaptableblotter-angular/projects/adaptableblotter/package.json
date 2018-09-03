@@ -16,7 +16,7 @@
     "build": "ng build adaptableblotter && npm run copy-styles",
     "build-prod": "ng build adaptableblotter --prod && npm run copy-styles",
     "copy-styles": "copyfiles -f ../../node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css ../../dist/styles && copyfiles -f ../../node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* ../../dist/fonts",
-    "prepublish": "npm run build-prod && copyfiles -f ../../.npmrc ../../dist",
+    "prepublish": "npm run build-prod",
     "publish": "cd ../../dist/adaptableblotter && npm publish"
   },
   "gitHead": "4e326ef1b082804696e8eefae13bd058de71181f"
