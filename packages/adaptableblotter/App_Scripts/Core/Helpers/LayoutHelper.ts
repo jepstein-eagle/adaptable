@@ -4,6 +4,11 @@ import { IGridSort, ILayout } from '../Api/Interface/AdaptableBlotterObjects';
 import { SortOrder } from '../Enums';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { LayoutState, GridState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
+import { ObjectFactory } from '../ObjectFactory';
 
 
 
@@ -30,12 +35,27 @@ export module LayoutHelper {
         return returnString;
     }
 
-    export function getSortOrder(sortOrder: 'Unknown' |'Ascending'|'Descending'): string {
+    export function getSortOrder(sortOrder: 'Unknown' | 'Ascending' | 'Descending'): string {
         return (sortOrder == SortOrder.Ascending) ? " [asc] " : " [desc] "
     }
 
-   
+    export function autoSaveLayout(blotter: IAdaptableBlotter): void {
+        let layoutState: LayoutState = blotter.AdaptableBlotterStore.TheStore.getState().Layout;
+        if (layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
+            if (blotter.BlotterOptions.autoSaveLayouts) {
+                let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout)
+                let gridState: GridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid
+                let gridVendorState: any =  layout.VendorGridInfo 
+                let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout)
+                let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
+                console.log("saving layout")
+                let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout)
+                blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave))
+            }
+            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: layoutState.CurrentLayout });
+        }
+    }
 
 
-    
+
 }

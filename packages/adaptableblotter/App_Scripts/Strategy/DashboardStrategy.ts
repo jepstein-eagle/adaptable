@@ -10,11 +10,11 @@ import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { SearchChangedTrigger, Visibility } from '../Core/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
-
-
+import { LayoutHelper } from '../Core/Helpers/LayoutHelper';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
     private GridSorts: IGridSort[]
+    private GridState: GridState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.DashboardStrategyId, blotter)
@@ -41,6 +41,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
 
     protected InitState() {
+        // none of this should be here - should be in a GridStrategy that cannot be hidden
         if (!ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts
 
@@ -48,11 +49,20 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
                 this.publishServerSearch(SearchChangedTrigger.Sort)
             }
         }
+
+        if (this.GridState != this.GetGridState()) {
+            this.GridState = this.GetGridState();
+
+            console.log("saving layout in strategy")
+            LayoutHelper.autoSaveLayout(this.blotter);
+        }
     }
+    
 
     private GetGridState(): GridState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
     }
+
 
     private GetDashboardState(): DashboardState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard;

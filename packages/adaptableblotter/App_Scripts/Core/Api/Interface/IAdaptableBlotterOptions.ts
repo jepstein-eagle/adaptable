@@ -74,6 +74,11 @@ export interface IAdaptableBlotterOptions {
      */
     includeVendorStateInLayouts?: boolean;
     /**
+     * Whether layouts should save as soon as column order or sorts change
+     * Defaults to false - user needs to click save to persist changes
+     */
+    autoSaveLayouts?: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

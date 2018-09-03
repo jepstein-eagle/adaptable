@@ -64,6 +64,7 @@ import { IAboutStrategy } from '../../Strategy/Interface/IAboutStrategy';
 import { KeyValuePair } from '../../View/UIInterfaces';
 import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
+import { LayoutHelper } from '../../Core/Helpers/LayoutHelper';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -674,11 +675,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 }
                 case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
                     let actionTyped = <GridRedux.GridSetValueLikeEditAction>action
-                    //We set the value in the grid
                     blotter.setValue(actionTyped.CellInfo)
-                    //We AuditLog the Edit
-                    //13/02: we now do the AuditLog in the SeValue function
-                    // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
                 case GridRedux.GRID_HIDE_COLUMN: {
@@ -689,39 +686,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     blotter.setNewColumnListOrder(columnList)
                     return next(action);
                 }
-                case GridRedux.GRID_SET_COLUMNS: {
-                    let actionTyped = <GridRedux.GridSetColumnsAction>action
-                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
-                    if (middlewareAPI.getState().Layout.CurrentLayout != DEFAULT_LAYOUT) {
-                        if (!ArrayExtensions.areArraysEqualWithOrder(actionTyped.Columns, columnList)) {
-                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
-                        }
-                    }
-                    return next(action);
-                }
-                case GridRedux.GRID_SET_SORT: {
-                    let actionTyped = <GridRedux.GridSetSortAction>action
-                    let gridSortList = [].concat(middlewareAPI.getState().Grid.GridSorts)
-                    if (middlewareAPI.getState().Layout.CurrentLayout != DEFAULT_LAYOUT) {
-                        if (!ArrayExtensions.areArraysEqualWithOrder(actionTyped.GridSorts, gridSortList)) {
-                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
-                        }
-                    }
-                    return next(action);
-                }
-                case GridRedux.GRID_SELECT_COLUMN: {
+                 case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = <GridRedux.GridSelectColumnAction>action
                     blotter.selectColumn(actionTyped.ColumnId)
                     return next(action);
                 }
-                case GridRedux.GRID_SET_PINNED_COLUMN: {
-                    if (middlewareAPI.getState().Layout.CurrentLayout != DEFAULT_LAYOUT) {
-                    //    console.log("in store")
-                    //    blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
-                    }
-                    return next(action);
-                }
-                case PopupRedux.POPUP_CONFIRM_PROMPT: {
+                    case PopupRedux.POPUP_CONFIRM_PROMPT: {
                     let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
                     if (promptConfirmationAction) {
                         let inputText: string = (<InputAction>action).InputText;

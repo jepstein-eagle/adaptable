@@ -7,16 +7,14 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
 import { KeyValuePair } from '../View/UIInterfaces';
-import { ICalculatedColumn } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
-
 export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrategy {
-
+   
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.AboutStrategyId, blotter)
     }
+
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyNames.AboutStrategyName, ScreenPopups.AboutPopup, StrategyGlyphs.AboutGlyph);
