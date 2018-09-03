@@ -24,6 +24,7 @@
     "copy-styles": "copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css dist/styles && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* dist/fonts",
     "build": "tsc --module commonjs && npm run rollup && npm run copy-styles && typedoc --out docs --target es6 --theme minimal --mode file src",
     "gh-pages": "node scripts/publish-gh-pages.js",
+    "prepublish": "npm run build",
     "postpublish": "npm run gh-pages",
     "postbuild": "node scripts/postbuild.js",
     "rollup": "node --max-old-space-size=8192 node_modules/rollup/bin/rollup -c rollup.config.ts",

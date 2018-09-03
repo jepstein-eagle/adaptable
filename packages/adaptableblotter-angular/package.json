@@ -7,7 +7,9 @@
     "prebuild": "rimraf dist",
     "copy-styles": "copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css dist/styles && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* dist/fonts",
     "build": "ng build adaptableblotter && npm run copy-styles",
-    "publish": "ng build adaptableblotter --prod && npm run copy-styles && cd dist/adaptableblotter && npm publish",
+    "build-prod": "ng build adaptableblotter --prod && npm run copy-styles",
+    "prepublish": "npm run build-prod",
+    "publish": "cd dist/adaptableblotter && npm publish",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

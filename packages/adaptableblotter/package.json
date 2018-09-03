@@ -91,6 +91,7 @@
     "build-themes": "node postcss-scopify.config.js",
     "build-dev": "webpack --config webpack.dev.js",
     "build-prod": "webpack --config webpack.prod.js -p && npm run build-ts",
+    "prepublish": "npm run build-prod",
     "build-ts": "tsc --outDir ./dist/App_Scripts",
     "dev-kendo": "cross-env arg=kendo webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
     "dev-hypergrid": "cross-env arg=hypergrid webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
