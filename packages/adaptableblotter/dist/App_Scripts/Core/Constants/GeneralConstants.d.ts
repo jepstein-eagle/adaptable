@@ -1,0 +1,10 @@
+export declare const MISSING_COLUMN = " [MISSING]";
+export declare const DEFAULT_LAYOUT = "Ab_Default_Layout";
+export declare const DEFAULT_THEME = "Default";
+export declare const USER_NAME: string;
+export declare const BLOTTER_ID: string;
+export declare const MENU_PREFIX: string;
+export declare const READ_ONLY_STYLE: string;
+export declare const QUICK_SEARCH_DEFAULT_BACK_COLOR = "#FFFFCC";
+export declare const QUICK_SEARCH_DEFAULT_FORE_COLOR = "#000000";
+export declare const ALL_COLUMN_VALUES = "ALL_COLUMN_VALUES";
