@@ -49,7 +49,6 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
@@ -585,11 +584,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 }
                 case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
                     let actionTyped = action;
-                    //We set the value in the grid
                     blotter.setValue(actionTyped.CellInfo);
-                    //We AuditLog the Edit
-                    //13/02: we now do the AuditLog in the SeValue function
-                    // adaptableBlotter.AuditLogService.AddEditCellAuditLog(actionTyped.CellInfo.Id, actionTyped.CellInfo.ColumnId, actionTyped.OldValue, actionTyped.CellInfo.Value)
                     return next(action);
                 }
                 case GridRedux.GRID_HIDE_COLUMN: {
@@ -600,36 +595,9 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     blotter.setNewColumnListOrder(columnList);
                     return next(action);
                 }
-                case GridRedux.GRID_SET_COLUMNS: {
-                    let actionTyped = action;
-                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns);
-                    if (middlewareAPI.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT) {
-                        if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrder(actionTyped.Columns, columnList)) {
-                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
-                        }
-                    }
-                    return next(action);
-                }
-                case GridRedux.GRID_SET_SORT: {
-                    let actionTyped = action;
-                    let gridSortList = [].concat(middlewareAPI.getState().Grid.GridSorts);
-                    if (middlewareAPI.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT) {
-                        if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrder(actionTyped.GridSorts, gridSortList)) {
-                            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
-                        }
-                    }
-                    return next(action);
-                }
                 case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = action;
                     blotter.selectColumn(actionTyped.ColumnId);
-                    return next(action);
-                }
-                case GridRedux.GRID_SET_PINNED_COLUMN: {
-                    if (middlewareAPI.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT) {
-                        //    console.log("in store")
-                        //    blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: middlewareAPI.getState().Layout.CurrentLayout });
-                    }
                     return next(action);
                 }
                 case PopupRedux.POPUP_CONFIRM_PROMPT: {

@@ -614,11 +614,26 @@ class AdaptableBlotter {
     getDisplayValueFromRecord(row, columnId) {
         //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
-        let colDef = this.gridOptions.api.getColumnDef(columnId);
         let rawValue = this.gridOptions.api.getValue(columnId, row);
+        return this.getDisplayValueFromRawValue(columnId, rawValue);
+    }
+    getDisplayValueFromRawValue(columnId, rawValue) {
+        let colDef = this.gridOptions.api.getColumnDef(columnId);
+        let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == columnId);
         if (colDef.valueFormatter) {
             let formatter = colDef.valueFormatter;
-            let formattedValue = formatter({ value: rawValue });
+            // let formattedValue = formatter({ value: rawValue })
+            let params = {
+                value: rawValue,
+                node: null,
+                data: null,
+                colDef: colDef,
+                column: column,
+                api: this.gridOptions.api,
+                columnApi: this.gridOptions.columnApi,
+                context: null
+            };
+            let formattedValue = formatter(params);
             if (colDef.cellRenderer) {
                 let render = colDef.cellRenderer;
                 if (typeof render == "string") {
@@ -638,28 +653,6 @@ class AdaptableBlotter {
         else {
             return String(rawValue) || "";
         }
-    }
-    getDisplayValueFromRawValue(colId, rawValue) {
-        let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == colId);
-        let coldef = column.getColDef();
-        if (coldef != null) {
-            let valueFormatter = coldef.valueFormatter;
-            if (valueFormatter) {
-                let params = {
-                    value: rawValue,
-                    node: null,
-                    data: null,
-                    colDef: coldef,
-                    column: column,
-                    api: this.gridOptions.api,
-                    columnApi: this.gridOptions.columnApi,
-                    context: null
-                };
-                let test = valueFormatter(params);
-                return test;
-            }
-        }
-        return rawValue;
     }
     getRawValueFromRecord(row, columnId) {
         return this.gridOptions.api.getValue(columnId, row);

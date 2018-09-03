@@ -103,8 +103,8 @@ class ExpressionBuilderConditionSelector extends React.Component {
                     else { // get the distinct items and make sure within max items that can be displayed
                         let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(di => {
-                            //    let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, di) 
-                            columnValuePairs.push({ RawValue: di, DisplayValue: di });
+                            let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.SelectedColumnId, di);
+                            columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
                         });
                         this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         // set the UIPermittedValues for this column to what has been sent

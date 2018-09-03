@@ -73,6 +73,7 @@ exports.GridReducer = (state = initialGridState, action) => {
             columns.push(actionTypedAddUpdate.Column);
             return Object.assign({}, state, { Columns: columns });
         case exports.GRID_SET_SORT:
+            console.log("sort in redux");
             return Object.assign({}, state, { GridSorts: action.GridSorts });
         case exports.GRID_SET_BLOTTER_RESTRICTIONS:
             let actionTypedRestrictions = action;

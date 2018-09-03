@@ -8,6 +8,7 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 const Enums_1 = require("../Core/Enums");
 const DashboardRedux = require("../Redux/ActionsReducers/DashboardRedux");
+const LayoutHelper_1 = require("../Core/Helpers/LayoutHelper");
 class DashboardStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.DashboardStrategyId, blotter);
@@ -25,11 +26,16 @@ class DashboardStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     InitState() {
+        // none of this should be here - should be in a GridStrategy that cannot be hidden
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts;
             if (this.blotter.BlotterOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishServerSearch(Enums_1.SearchChangedTrigger.Sort);
             }
+        }
+        if (this.GridState != this.GetGridState()) {
+            this.GridState = this.GetGridState();
+            LayoutHelper_1.LayoutHelper.autoSaveLayout(this.blotter);
         }
     }
     GetGridState() {

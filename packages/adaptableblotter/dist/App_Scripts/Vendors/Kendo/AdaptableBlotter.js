@@ -279,7 +279,6 @@ class AdaptableBlotter {
             valueArray.push({ columnId: col, value: value });
         });
         let selectedCells = { Columns: null, Selection: selectionMap };
-        console.log("sending selected cells to redux");
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSelectedCells(selectedCells));
     }
     getColumnDataType(column) {
