@@ -5,10 +5,7 @@
     "lerna": "^3.1.4"
   },
   "scripts": {
-    "cleanup": "lerna clean --yes"
-  },
-  "workspaces": [
-    "packages/*",
-    "packages/adaptableblotter-angular/projects/*"
-  ]
+    "cleanup": "lerna clean --yes",
+    "publish": "lerna publish"
+  }
 }
