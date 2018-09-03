@@ -9,12 +9,15 @@
     "ag-grid-angular": "^18.1.0",
     "ag-grid-enterprise": "^18.1.1"
   },
+  "devDependencies": {
+    "copyfiles": "^2.0.0"
+  },
   "scripts": {
     "build": "ng build adaptableblotter && npm run copy-styles",
     "build-prod": "ng build adaptableblotter --prod && npm run copy-styles",
-    "copy-styles": "copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css dist/styles && copyfiles -f node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* dist/fonts",
+    "copy-styles": "copyfiles -f ../../node_modules/adaptableblotter/dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css ../../dist/styles && copyfiles -f ../../node_modules/adaptableblotter/dist/App_Scripts/Styles/fonts/* ../../dist/fonts",
     "prepublish": "npm run build-prod",
-    "publish": "cd dist/adaptableblotter && npm publish"
+    "publish": "cd ../../dist/adaptableblotter && npm publish"
   },
   "gitHead": "6cb3b499ca7052103eb99b678bb9b778693b4a55"
 }
