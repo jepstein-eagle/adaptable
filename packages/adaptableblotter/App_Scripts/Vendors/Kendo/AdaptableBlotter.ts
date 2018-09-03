@@ -364,7 +364,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
 
         let selectedCells: ISelectedCellInfo = { Columns: null, Selection: selectionMap }
-        console.log("sending selected cells to redux")
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
     }
 

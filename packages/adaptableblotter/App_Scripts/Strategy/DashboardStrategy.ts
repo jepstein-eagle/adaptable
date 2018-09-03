@@ -53,8 +53,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         if (this.GridState != this.GetGridState()) {
             this.GridState = this.GetGridState();
 
-            console.log("saving layout in strategy")
-            LayoutHelper.autoSaveLayout(this.blotter);
+             LayoutHelper.autoSaveLayout(this.blotter);
         }
     }
     

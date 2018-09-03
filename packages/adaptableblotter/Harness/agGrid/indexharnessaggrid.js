@@ -48,7 +48,7 @@ function InitTradeBlotter() {
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
-        autoSaveLayouts: false,                  // layous will save automatically
+        autoSaveLayouts: true,                  // layous will save automatically
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
             getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
@@ -69,7 +69,7 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-    console.log("event received")
+    //console.log("event received")
 }
 
 function getValuesForColumn(columnName) {

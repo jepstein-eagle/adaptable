@@ -48,7 +48,6 @@ export module LayoutHelper {
                 let gridVendorState: any =  layout.VendorGridInfo 
                 let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout)
                 let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
-                console.log("saving layout")
                 let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout)
                 blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave))
             }
