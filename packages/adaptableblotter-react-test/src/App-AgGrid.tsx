@@ -46,8 +46,8 @@ export default class App extends React.Component<{}, AppState> {
     return {
       primaryKey: "tradeId",
       vendorGrid: gridOptions,
-      userName: "demo user",
-      blotterId: "Trades Blotter"
+      userName: "AgGrid Wrapper user",
+      blotterId: "AgGrid Wrapper"
     };
   }
 

@@ -14,7 +14,8 @@ export interface GridState {
     BlotterRestrictions: string[];
     SystemStatus: ISystemStatus;
     SelectedCellInfo: ISelectedCellInfo;
-    PinnedColumn: string;
+    LeftPinnedColumns: string[];
+    RightPinnedColumns: string[];
 }
 export interface MenuState {
     MenuItems: IMenuItem[];

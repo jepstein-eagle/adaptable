@@ -1,9 +1,11 @@
 import * as React from "react";
 import { GridOptions } from "ag-grid";
+import { DataGenerator } from "./DataGenerator";
 import { AdaptableBlotter, IAdaptableBlotterOptions } from "adaptableblotter-react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid/dist/styles/ag-grid.css";
 import "ag-grid/dist/styles/ag-theme-balham.css";
+import { ReactHarnessHelper } from "./ReactHarnessHelper";
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;
@@ -21,21 +23,13 @@ export default class App extends React.Component<{}, AppState> {
     this.state = {
       gridOptions: gridOptions,
       blotterOptions: {
-        primaryKey: "make",
+        primaryKey: "tradeId",
         vendorGrid: gridOptions,
-        userName: "demo user",
-        blotterId: "demo blotter"
+        userName: "Blotter Wrapper user",
+        blotterId: "Adaptable Blotter Wrapper"
       },
-      rowData: [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxter", price: 72000 }
-      ],
-      columnDefs: [
-        { headerName: "Make", field: "make" },
-        { headerName: "Model", field: "model" },
-        { headerName: "Price", field: "price" }
-      ]
+      rowData:  new DataGenerator().getTrades(15000),
+      columnDefs: new ReactHarnessHelper().getTradeSchema()
     };
   }
 

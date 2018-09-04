@@ -51,12 +51,13 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         }
 
         if (this.GridState != this.GetGridState()) {
+            if (this.GridState.Columns != this.GetGridState().Columns || this.GridState.GridSorts != this.GetGridState().GridSorts) {
+                LayoutHelper.autoSaveLayout(this.blotter);
+            }
             this.GridState = this.GetGridState();
-
-             LayoutHelper.autoSaveLayout(this.blotter);
         }
     }
-    
+
 
     private GetGridState(): GridState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;

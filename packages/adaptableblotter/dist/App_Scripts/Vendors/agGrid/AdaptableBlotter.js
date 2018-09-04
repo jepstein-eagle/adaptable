@@ -135,6 +135,7 @@ class AdaptableBlotter {
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
             this.initInternalGridLogic();
         });
+        alert("here in const");
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -144,6 +145,7 @@ class AdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterView_1.AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
+        alert("and now here");
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();
@@ -893,10 +895,17 @@ class AdaptableBlotter {
             }
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_COLUMN_PINNED, (params) => {
-            //  console.log(params)
-            //   let column: string = (params.pinned==null)? "": params.columns[0].getColId();
-            //   console.log("column: " + column);
-            //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column));   
+            console.log(params);
+            let column = params.columns[0].getColId();
+            let pinned = params.pinned;
+            console.log("column: " + column);
+            if (params.pinned != null) { // pinned column added
+                let pinnedColumnDirection = (pinned == "left") ? Enums_1.PinnedColumnDirection.Left : Enums_1.PinnedColumnDirection.Right;
+                this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));
+            }
+            else {
+                this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridDeletePinnedColumn(column));
+            }
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_EDITING_STARTED, (params) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.

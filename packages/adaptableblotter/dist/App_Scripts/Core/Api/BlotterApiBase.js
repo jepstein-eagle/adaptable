@@ -61,6 +61,7 @@ class BlotterApiBase {
                 let visibleColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
                 let gridSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
                 let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName);
+                alert("in api");
                 this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave));
             }
         }

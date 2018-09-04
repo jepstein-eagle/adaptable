@@ -631,7 +631,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 }
                 case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
-
+alert("in layout select")
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                     if (currentLayout) {
@@ -666,9 +666,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     return returnAction;
                 }
                 case LayoutRedux.LAYOUT_PRESAVE: {
-                    let returnAction = next(action);
+                     let returnAction = next(action);
                     let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
                     let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
+                    alert("in layout preseave for: " + layout.Name)
                     layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
                     return returnAction;
@@ -686,12 +687,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     blotter.setNewColumnListOrder(columnList)
                     return next(action);
                 }
-                 case GridRedux.GRID_SELECT_COLUMN: {
+                case GridRedux.GRID_SELECT_COLUMN: {
                     let actionTyped = <GridRedux.GridSelectColumnAction>action
                     blotter.selectColumn(actionTyped.ColumnId)
                     return next(action);
                 }
-                    case PopupRedux.POPUP_CONFIRM_PROMPT: {
+                case PopupRedux.POPUP_CONFIRM_PROMPT: {
                     let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
                     if (promptConfirmationAction) {
                         let inputText: string = (<InputAction>action).InputText;
@@ -912,39 +913,23 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let currentLayout = DEFAULT_LAYOUT
                     let gridState: GridState = middlewareAPI.getState().Grid
                     let layoutState: LayoutState = middlewareAPI.getState().Layout
-                    if (layoutState.Layouts.length == 0) {
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
-                        middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
-                    }
-                    else {
-                        //update default layout with latest columns and sort
-                        let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, null, DEFAULT_LAYOUT)
-                        middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout)) // think this is right that has to be 0
+                    let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
+                    middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
+                    if (layoutState.Layouts.length > 0) {
                         currentLayout = layoutState.CurrentLayout
                     }
+
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
                         blotter.addCalculatedColumnToGrid(x)
                     })
-                    if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
-                        //     blotter.setColumnIntoStore();
-                        //12/09/17 : fortunately it's not needed anymore as I changed the init process... That was dirty
-                        // //We force clone of the state so strategies get reinitialized with the new column.
-                        // //it's not ideal and will probably need optimization
-                        // middlewareAPI.dispatch(CloneState())
-                    }
+
                     //load either saved layout or default one
-                    middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
-
+                    alert("current layout: " + currentLayout)
+                    if (currentLayout == DEFAULT_LAYOUT) {
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                    }
                     blotter.createMenu();
-
-                    //we create default configuration for new Dashboard Items that are
-                    //not existing in the user config
-                    //    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
-                    //        if (!middlewareAPI.getState().Dashboard.DashboardFunctionToolbars.find(x => x == strategyId)) {
-                    //      middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
-                    //        }
-                    //    })
 
                     blotter.InitAuditService()
                     return returnAction;

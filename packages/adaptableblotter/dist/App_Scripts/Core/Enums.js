@@ -212,3 +212,8 @@ var ChartType;
     ChartType["BarChart"] = "Bar Chart";
     ChartType["LineChart"] = "Line Chart";
 })(ChartType = exports.ChartType || (exports.ChartType = {}));
+var PinnedColumnDirection;
+(function (PinnedColumnDirection) {
+    PinnedColumnDirection["Left"] = "Leftt";
+    PinnedColumnDirection["Right"] = "Right";
+})(PinnedColumnDirection = exports.PinnedColumnDirection || (exports.PinnedColumnDirection = {}));

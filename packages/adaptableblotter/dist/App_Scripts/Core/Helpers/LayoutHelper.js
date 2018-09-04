@@ -36,12 +36,16 @@ var LayoutHelper;
         if (layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
             if (blotter.BlotterOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
-                let gridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid;
-                let gridVendorState = layout.VendorGridInfo;
-                let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);
-                let visibleColumns = gridState.Columns.filter(c => c.Visible);
-                let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout);
-                blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave));
+                if (layout != null) {
+                    let gridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid;
+                    let visibleColumns = gridState.Columns.filter(c => c.Visible);
+                    let gridVendorState = blotter.getVendorGridState(visibleColumns.map(vc => vc.ColumnId));
+                    console.log(gridVendorState);
+                    let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);
+                    let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout);
+                    console.log("saving layout");
+                    blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave));
+                }
             }
             blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: layoutState.CurrentLayout });
         }

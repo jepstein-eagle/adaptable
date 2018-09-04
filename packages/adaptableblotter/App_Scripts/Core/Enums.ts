@@ -216,5 +216,9 @@ export enum SelectedCellOperation{
 export enum ChartType {
     BarChart = 'Bar Chart',
     LineChart = 'Line Chart',
-   
+}
+
+export enum PinnedColumnDirection {
+    Left = 'Leftt',
+    Right = 'Right',
 }

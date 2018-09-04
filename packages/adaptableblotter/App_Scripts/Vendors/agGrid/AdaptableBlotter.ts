@@ -60,7 +60,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { IAlert, IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, PinnedColumnDirection } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
@@ -188,6 +188,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             )
 
+            alert("here in const")
+
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -197,6 +199,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
+
+        alert("and now here")
     }
 
     private getState(): AdaptableBlotterState {
@@ -1045,10 +1049,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_PINNED, (params: any) => {
-          //  console.log(params)
-         //   let column: string = (params.pinned==null)? "": params.columns[0].getColId();
-         //   console.log("column: " + column);
-         //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column));   
+            console.log(params)
+            let column: string =  params.columns[0].getColId();
+            let pinned : string = params.pinned
+            console.log("column: " + column);
+            if(params.pinned!=null){ // pinned column added
+                let pinnedColumnDirection: PinnedColumnDirection   = (pinned=="left")?  PinnedColumnDirection.Left: PinnedColumnDirection.Right
+                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));   
+            }else{
+                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridDeletePinnedColumnAction>(GridRedux.GridDeletePinnedColumn(column));   
+            }
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.

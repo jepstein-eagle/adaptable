@@ -80,6 +80,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
                 let visibleColumns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
                 let gridSorts: IGridSort[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
                 let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName)
+                alert("in api")
                 this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave))
             }
         }

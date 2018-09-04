@@ -175,3 +175,7 @@ export declare enum ChartType {
     BarChart = "Bar Chart",
     LineChart = "Line Chart"
 }
+export declare enum PinnedColumnDirection {
+    Left = "Leftt",
+    Right = "Right"
+}

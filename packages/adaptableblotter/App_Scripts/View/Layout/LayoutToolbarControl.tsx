@@ -133,6 +133,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
     }
 
     private onLayoutChanged(layoutName: string): any {
+        alert("in toolbar")
         this.props.onSelectLayout(layoutName)
     }
 

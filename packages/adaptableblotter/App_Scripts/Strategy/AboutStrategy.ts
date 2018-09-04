@@ -24,7 +24,7 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
         let options: IAdaptableBlotterOptions = this.blotter.BlotterOptions;
         let output: KeyValuePair[] = []
         output.push({ Key: "Vendor Grid", Value: this.blotter.VendorGridName })
-        output.push({ Key: "Adaptable Blotter Version", Value: "2.3.0" })
+        output.push({ Key: "Adaptable Blotter Version", Value: "2.4" })
         if (options.blotterId != undefined) {
             output.push({ Key: "Blotter Id", Value: options.blotterId })
         }

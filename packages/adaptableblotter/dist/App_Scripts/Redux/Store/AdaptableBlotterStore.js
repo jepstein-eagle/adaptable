@@ -541,6 +541,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 }
                 case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
+                    alert("in layout select");
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                     if (currentLayout) {
@@ -578,6 +579,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     let actionTyped = action;
                     let layout = Helper_1.Helper.cloneObject(actionTyped.Layout);
+                    alert("in layout preseave for: " + layout.Name);
                     layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout));
                     return returnAction;
@@ -805,37 +807,21 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let currentLayout = GeneralConstants_1.DEFAULT_LAYOUT;
                     let gridState = middlewareAPI.getState().Grid;
                     let layoutState = middlewareAPI.getState().Layout;
-                    if (layoutState.Layouts.length == 0) {
-                        let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], null, GeneralConstants_1.DEFAULT_LAYOUT);
-                        middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
-                    }
-                    else {
-                        //update default layout with latest columns and sort
-                        let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, gridState.GridSorts, null, GeneralConstants_1.DEFAULT_LAYOUT);
-                        middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout)); // think this is right that has to be 0
+                    let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], null, GeneralConstants_1.DEFAULT_LAYOUT);
+                    middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
+                    if (layoutState.Layouts.length > 0) {
                         currentLayout = layoutState.CurrentLayout;
                     }
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
                         blotter.addCalculatedColumnToGrid(x);
                     });
-                    if (middlewareAPI.getState().CalculatedColumn.CalculatedColumns.length > 0) {
-                        //     blotter.setColumnIntoStore();
-                        //12/09/17 : fortunately it's not needed anymore as I changed the init process... That was dirty
-                        // //We force clone of the state so strategies get reinitialized with the new column.
-                        // //it's not ideal and will probably need optimization
-                        // middlewareAPI.dispatch(CloneState())
-                    }
                     //load either saved layout or default one
-                    middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                    alert("current layout: " + currentLayout);
+                    if (currentLayout == GeneralConstants_1.DEFAULT_LAYOUT) {
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                    }
                     blotter.createMenu();
-                    //we create default configuration for new Dashboard Items that are
-                    //not existing in the user config
-                    //    AdaptableDashboardViewFactory.forEach((control, strategyId) => {
-                    //        if (!middlewareAPI.getState().Dashboard.DashboardFunctionToolbars.find(x => x == strategyId)) {
-                    //      middlewareAPI.dispatch(DashboardRedux.DashboardCreateDefaultConfigurationItem(strategyId));
-                    //        }
-                    //    })
                     blotter.InitAuditService();
                     return returnAction;
                 }

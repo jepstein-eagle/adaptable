@@ -4,6 +4,7 @@ import { ICellInfo, ISystemStatus } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { PinnedColumnDirection } from '../../Core/Enums';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
@@ -16,6 +17,7 @@ export const GRID_SET_SYSTEM_STATUS = 'GRID_SET_SYSTEM_STATUS';
 export const GRID_CLEAR_SYSTEM_STATUS = 'GRID_CLEAR_SYSTEM_STATUS';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 export const GRID_SET_PINNED_COLUMN = 'GRID_SET_PINNED_COLUMN';
+export const GRID_DELETE_PINNED_COLUMN = 'GRID_DELETE_PINNED_COLUMN';
 
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -58,6 +60,11 @@ export interface GridSetSelectedCellsAction extends Redux.Action {
 }
 
 export interface GridSetPinnedColumnAction extends Redux.Action {
+    ColumnId: string;
+    PinnedColumnDirection: PinnedColumnDirection;
+}
+
+export interface GridDeletePinnedColumnAction extends Redux.Action {
     ColumnId: string;
 }
 
@@ -111,8 +118,14 @@ export const GridSetSelectedCells = (SelectedCellInfo: ISelectedCellInfo): GridS
     SelectedCellInfo
 })
 
-export const GridSetPinnedColumn = (ColumnId: string): GridSetPinnedColumnAction => ({
+export const GridSetPinnedColumn = (ColumnId: string, PinnedColumnDirection: PinnedColumnDirection): GridSetPinnedColumnAction => ({
     type: GRID_SET_PINNED_COLUMN,
+    ColumnId,
+    PinnedColumnDirection
+})
+
+export const GridDeletePinnedColumn = (ColumnId: string): GridDeletePinnedColumnAction => ({
+    type: GRID_DELETE_PINNED_COLUMN,
     ColumnId
 })
 
@@ -122,7 +135,8 @@ const initialGridState: GridState = {
     BlotterRestrictions: [],
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
     SelectedCellInfo: null,
-    PinnedColumn: ""
+    LeftPinnedColumns: [],
+    RightPinnedColumns: []
 }
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
@@ -135,7 +149,6 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             columns.push(actionTypedAddUpdate.Column)
             return Object.assign({}, state, { Columns: columns })
         case GRID_SET_SORT:
-        console.log ("sort in redux")
             return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
         case GRID_SET_BLOTTER_RESTRICTIONS:
             let actionTypedRestrictions = <GridSetBlotterRestrictionsAction>action;
@@ -148,7 +161,47 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
         case GRID_SET_SELECTED_CELLS:
             return Object.assign({}, state, { SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo })
         case GRID_SET_PINNED_COLUMN:
-            return Object.assign({}, state, { PinnedColumn: (<GridSetPinnedColumnAction>action).ColumnId })
+            let actionTypedSetColumn = <GridSetPinnedColumnAction>action;
+            let columnToAdd = actionTypedSetColumn.ColumnId;
+            let pinnedColumnDirection: PinnedColumnDirection = actionTypedSetColumn.PinnedColumnDirection;
+            let leftPinnedColumns = [].concat(state.LeftPinnedColumns)
+            let rightPinnedColumns = [].concat(state.RightPinnedColumns)
+            if (pinnedColumnDirection == PinnedColumnDirection.Left) {
+                leftPinnedColumns.push(columnToAdd)
+                let existingindex = rightPinnedColumns.findIndex(a => a == columnToAdd)
+                if (existingindex > -1) {
+                    rightPinnedColumns.splice(existingindex, 1);
+                }
+            } else {
+                rightPinnedColumns.push(columnToAdd)
+                let existingindex = leftPinnedColumns.findIndex(a => a == columnToAdd)
+                if (existingindex > -1) {
+                    leftPinnedColumns.splice(existingindex, 1);
+                }
+            }
+            console.log("after add")
+            console.log("left cols: " + leftPinnedColumns)
+            console.log("right cols: " + rightPinnedColumns)
+            return Object.assign({}, state, { LeftPinnedColumns: leftPinnedColumns, RightPinnedColumns: rightPinnedColumns })
+        case GRID_DELETE_PINNED_COLUMN:
+            let actionTypedDeleteColumn = <GridDeletePinnedColumnAction>action;
+            let columnToDelete = actionTypedDeleteColumn.ColumnId;
+            let leftPinnedColumnsDelete = [].concat(state.LeftPinnedColumns)
+            let rightPinnedColumnsDelete = [].concat(state.RightPinnedColumns)
+
+            let existingindex = leftPinnedColumnsDelete.findIndex(a => a == columnToDelete)
+            if (existingindex > -1) {
+                leftPinnedColumnsDelete.splice(existingindex, 1);
+            } else {
+                existingindex = rightPinnedColumns.findIndex(a => a == columnToDelete)
+                if (existingindex > -1) {
+                    rightPinnedColumns.splice(existingindex, 1);
+                }
+            }
+            console.log("after delete")
+            console.log("left cols: " + leftPinnedColumnsDelete)
+            console.log("right cols: " + rightPinnedColumnsDelete)
+            return Object.assign({}, state, { LeftPinnedColumns: leftPinnedColumnsDelete, RightPinnedColumns: rightPinnedColumnsDelete })
         default:
             return state
     }

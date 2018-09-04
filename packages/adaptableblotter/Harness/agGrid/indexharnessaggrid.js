@@ -32,7 +32,7 @@ function InitTradeBlotter() {
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
-    setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
+  // setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
 
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
