@@ -5,6 +5,7 @@
     "lerna": "^3.1.4"
   },
   "scripts": {
-    "cleanup": "lerna clean --yes"
+    "cleanup": "lerna clean --yes",
+    "publish": "lerna publish"
   }
 }

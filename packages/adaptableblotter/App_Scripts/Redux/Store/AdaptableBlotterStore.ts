@@ -631,7 +631,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 }
                 case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
-alert("in layout select")
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                     if (currentLayout) {
@@ -666,10 +665,9 @@ alert("in layout select")
                     return returnAction;
                 }
                 case LayoutRedux.LAYOUT_PRESAVE: {
-                     let returnAction = next(action);
+                    let returnAction = next(action);
                     let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
                     let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
-                    alert("in layout preseave for: " + layout.Name)
                     layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
                     return returnAction;
@@ -916,7 +914,7 @@ alert("in layout select")
                     let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], null, DEFAULT_LAYOUT)
                     middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     if (layoutState.Layouts.length > 0) {
-                        currentLayout = layoutState.CurrentLayout
+                        //   currentLayout = layoutState.CurrentLayout
                     }
 
                     //Create all calculated columns before we load the layout
@@ -925,7 +923,6 @@ alert("in layout select")
                     })
 
                     //load either saved layout or default one
-                    alert("current layout: " + currentLayout)
                     if (currentLayout == DEFAULT_LAYOUT) {
                         middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     }

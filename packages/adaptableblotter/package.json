@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "2.4.8",
+  "version": "2.4.14",
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -74,6 +74,7 @@
     "process-nextick-args": "^1.0.7",
     "react-dom-factories": "^1.0.2",
     "request": "^2.87.0",
+    "rimraf": "^2.6.2",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.2.1",
     "ts-node": "^4.1.0",
@@ -86,11 +87,13 @@
     "webpack-fail-plugin": "^1.0.6"
   },
   "scripts": {
+    "prebuild": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-abvendor": "webpack --config webpack.vendor.js",
     "build-themes": "node postcss-scopify.config.js",
     "build-dev": "webpack --config webpack.dev.js",
-    "build-prod": "webpack --config webpack.prod.js -p && npm run build-ts",
+    "build-prod": "npm run prebuild && webpack --config webpack.prod.js -p && npm run build-ts",
+    "prepublish": "npm run build-prod",
     "build-ts": "tsc --outDir ./dist/App_Scripts",
     "dev-kendo": "cross-env arg=kendo webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
     "dev-hypergrid": "cross-env arg=hypergrid webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
@@ -135,5 +138,5 @@
     "url": "git+https://github.com/JonnyAdaptableTools/adaptableblotter.git"
   },
   "license": "SEE LICENSE IN LICENSE.md",
-  "gitHead": "3fd46ddb625006a2e3d8507e8c6b14db4df7dd8e"
+  "gitHead": "8e8dd12f45c64d488011ce3768c012fd0b2735d7"
 }

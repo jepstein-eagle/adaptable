@@ -188,8 +188,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             )
 
-            alert("here in const")
-
+           
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -199,8 +198,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
-
-        alert("and now here")
     }
 
     private getState(): AdaptableBlotterState {

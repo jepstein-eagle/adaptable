@@ -253,3 +253,6 @@ ModelManifest.xml
 /typings/modules/**/*.*
 /npm-debug.log.*
 /tmp/TeamSharing/**/*.*
+
+.npmrc
+*.tgz
