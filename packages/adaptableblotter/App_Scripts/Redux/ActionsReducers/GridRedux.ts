@@ -179,9 +179,6 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
                     leftPinnedColumns.splice(existingindex, 1);
                 }
             }
-            console.log("after add")
-            console.log("left cols: " + leftPinnedColumns)
-            console.log("right cols: " + rightPinnedColumns)
             return Object.assign({}, state, { LeftPinnedColumns: leftPinnedColumns, RightPinnedColumns: rightPinnedColumns })
         case GRID_DELETE_PINNED_COLUMN:
             let actionTypedDeleteColumn = <GridDeletePinnedColumnAction>action;
@@ -198,9 +195,6 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
                     rightPinnedColumns.splice(existingindex, 1);
                 }
             }
-            console.log("after delete")
-            console.log("left cols: " + leftPinnedColumnsDelete)
-            console.log("right cols: " + rightPinnedColumnsDelete)
             return Object.assign({}, state, { LeftPinnedColumns: leftPinnedColumnsDelete, RightPinnedColumns: rightPinnedColumnsDelete })
         default:
             return state

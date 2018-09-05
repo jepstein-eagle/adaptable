@@ -32,7 +32,7 @@ function InitTradeBlotter() {
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
-  // setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
+     setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
 
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
@@ -171,6 +171,8 @@ function apiTester(state, gridOptions) {
             adaptableblotter.api.columnFilterSetUserFilter("Big Desk Id")
         } else if (quickSearchText == "#savelayout") {
             adaptableblotter.api.layoutSave()
+        } else if (quickSearchText == "#setlayout") {
+            adaptableblotter.api.layoutSet("copy")
         } else if (quickSearchText == "#notional") {
             gridOptions.api.forEachNode((rowNode, index) => {
                 if (rowNode.group) {
