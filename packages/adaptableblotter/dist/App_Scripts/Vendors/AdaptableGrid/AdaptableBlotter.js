@@ -434,7 +434,7 @@ class AdaptableBlotter {
     setGridSort(gridSorts) {
         //todo
     }
-    getVendorGridState(visibleCols) {
+    getVendorGridState(visibleCols, forceFetch) {
         return null;
     }
     setVendorGridState(vendorGridState) {

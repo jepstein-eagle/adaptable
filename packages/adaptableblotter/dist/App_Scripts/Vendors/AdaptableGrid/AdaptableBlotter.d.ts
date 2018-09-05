@@ -99,7 +99,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getVisibleColumnCount(): number;
     selectColumn(columnId: string): void;
     setGridSort(gridSorts: IGridSort[]): void;
-    getVendorGridState(visibleCols: string[]): any;
+    getVendorGridState(visibleCols: string[], forceFetch: boolean): any;
     setVendorGridState(vendorGridState: any): void;
     isSelectable(): boolean;
     isSortable(): boolean;

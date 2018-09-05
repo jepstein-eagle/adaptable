@@ -841,7 +841,7 @@ class AdaptableBlotter {
             this.vendorGrid.dataSource.sort({});
         }
     }
-    getVendorGridState(visibleCols) {
+    getVendorGridState(visibleCols, forceFetch) {
         return null;
     }
     setVendorGridState(vendorGridState) {

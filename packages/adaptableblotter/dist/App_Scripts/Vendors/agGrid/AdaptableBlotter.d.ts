@@ -108,7 +108,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setGridSort(gridSorts: IGridSort[]): void;
     setData(dataSource: any): void;
     private checkColumnsDataTypeSet;
-    getVendorGridState(visibleCols: string[]): any;
+    getVendorGridState(visibleCols: string[], forceFetch: boolean): any;
     private tempSetColumnVisibleFixForBuild;
     private tempMoveColumnFixForBuild;
     private tempSetColumnStateFixForBuild;

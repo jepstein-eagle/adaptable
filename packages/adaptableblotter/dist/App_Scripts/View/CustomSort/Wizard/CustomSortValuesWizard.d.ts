@@ -1,12 +1,11 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { DistinctCriteriaPairValue } from '../../../Core/Enums';
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>;
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>;
+    Blotter: IAdaptableBlotter;
 }
 export interface CustomSortValuesWizardState {
     ColumnValues: any[];

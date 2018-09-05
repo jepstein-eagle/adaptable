@@ -578,7 +578,8 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     let actionTyped = action;
                     let layout = Helper_1.Helper.cloneObject(actionTyped.Layout);
-                    layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
+                    let forceFetch = layout.Name == GeneralConstants_1.DEFAULT_LAYOUT;
+                    layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout));
                     return returnAction;
                 }
@@ -805,7 +806,8 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let currentLayout = GeneralConstants_1.DEFAULT_LAYOUT;
                     let gridState = middlewareAPI.getState().Grid;
                     let layoutState = middlewareAPI.getState().Layout;
-                    let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], null, GeneralConstants_1.DEFAULT_LAYOUT);
+                    let visibleColumnNames = gridState.Columns.filter(c => c.Visible).map(c => c.ColumnId);
+                    let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], blotter.getVendorGridState(visibleColumnNames, true), GeneralConstants_1.DEFAULT_LAYOUT);
                     middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     if (layoutState.Layouts.length > 0) {
                         //   currentLayout = layoutState.CurrentLayout

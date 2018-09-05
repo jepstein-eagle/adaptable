@@ -75,7 +75,7 @@ export interface IAdaptableBlotter {
     getColumnCount(): number;
     getVisibleRowCount(): number;
     getVisibleColumnCount(): number;
-    getVendorGridState(visibleCols: string[]): any;
+    getVendorGridState(visibleCols: string[], forceFetch: boolean): any;
     setVendorGridState(vendorGridState: any): void;
     isSelectable(): boolean;
     isSortable(): boolean;

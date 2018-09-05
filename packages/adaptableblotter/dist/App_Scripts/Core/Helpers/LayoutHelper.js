@@ -39,7 +39,7 @@ var LayoutHelper;
                 if (layout != null) {
                     let gridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid;
                     let visibleColumns = gridState.Columns.filter(c => c.Visible);
-                    let gridVendorState = blotter.getVendorGridState(visibleColumns.map(vc => vc.ColumnId));
+                    let gridVendorState = blotter.getVendorGridState(visibleColumns.map(vc => vc.ColumnId), false);
                     //    console.log(gridVendorState)
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);
                     let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout);

@@ -13,7 +13,7 @@ class CustomSortWizard extends React.Component {
         return React.createElement("div", { className: this.props.cssClassName },
             React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyNames.CustomSortStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(CustomSortColumnWizard_1.CustomSortColumnWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId)) }),
-                    React.createElement(CustomSortValuesWizard_1.CustomSortValuesWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList }),
+                    React.createElement(CustomSortValuesWizard_1.CustomSortValuesWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns, Blotter: this.props.Blotter }),
                     React.createElement(CustomSortSummaryWizard_1.CustomSortSummaryWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2], Columns: this.props.Columns })
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }

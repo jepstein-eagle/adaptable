@@ -1181,8 +1181,12 @@ class AdaptableBlotter {
             this.setColumnIntoStore();
         }
     }
-    getVendorGridState(visibleCols) {
+    getVendorGridState(visibleCols, forceFetch) {
         let mystring = null;
+        // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
+        if (forceFetch) {
+            return JSON.stringify(this.gridOptions.columnApi.getColumnState());
+        }
         if (this.BlotterOptions.includeVendorStateInLayouts) {
             let columnState = this.gridOptions.columnApi.getColumnState();
             // Dont like this but not sure we have a choice to avoid other issues...
