@@ -92,6 +92,7 @@ export interface DashboardState {
     ShowFunctionsDropdown: boolean
     ShowColumnsDropdown: boolean
     HomeToolbarTitle: string
+    ApplicationToolbarTitle: string
 }
 
 

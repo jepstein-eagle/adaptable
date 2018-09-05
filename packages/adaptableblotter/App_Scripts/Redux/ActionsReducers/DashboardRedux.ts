@@ -19,6 +19,7 @@ const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
 const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
 const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
+const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
 
 
 
@@ -82,6 +83,10 @@ export interface DashboardHideColumnsDropdownAction extends Redux.Action {
 }
 
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
+    Title: string
+}
+
+export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
     Title: string
 }
 
@@ -156,6 +161,11 @@ export const DashboardSetHomeToolbarTitle = (Title: string): DashboardSetHomeToo
     Title
 })
 
+export const DashboardSetApplicationToolbarTitle = (Title: string): DashboardSetHomeToolbarTitleAction => ({
+    type: DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE,
+    Title
+})
+
 const initialDashboardState: DashboardState = {
     AvailableToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -195,7 +205,8 @@ const initialDashboardState: DashboardState = {
     ShowSystemStatusButton: true,
     ShowFunctionsDropdown: true,
     ShowColumnsDropdown: true,
-    HomeToolbarTitle: ""
+    HomeToolbarTitle: "",
+    ApplicationToolbarTitle: ""
 }
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (state: DashboardState = initialDashboardState, action: Redux.Action): DashboardState => {
@@ -268,6 +279,11 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
         case DASHBOARD_SET_HOME_TOOLBAR_TITLE: {
             let actionTyped = <DashboardSetHomeToolbarTitleAction>action;
             return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
+        }
+        
+        case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
+            let actionTyped = <DashboardSetApplicationToolbarTitleAction>action;
+            return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
         }
 
         default:
