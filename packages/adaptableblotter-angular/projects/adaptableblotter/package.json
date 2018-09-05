@@ -19,5 +19,5 @@
     "prepublish": "npm run build-prod",
     "publish": "cd ../../dist/adaptableblotter && npm publish"
   },
-  "gitHead": "8e8dd12f45c64d488011ce3768c012fd0b2735d7"
+  "gitHead": "6ebe7f21515d3fea1fabafa18995436e2ba4da87"
 }
