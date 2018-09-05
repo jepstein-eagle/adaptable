@@ -40,10 +40,10 @@ var LayoutHelper;
                     let gridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid;
                     let visibleColumns = gridState.Columns.filter(c => c.Visible);
                     let gridVendorState = blotter.getVendorGridState(visibleColumns.map(vc => vc.ColumnId));
-                    console.log(gridVendorState);
+                    //    console.log(gridVendorState)
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);
                     let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout);
-                    console.log("saving layout");
+                    //    console.log("saving layout")
                     blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave));
                 }
             }

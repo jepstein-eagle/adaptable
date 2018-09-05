@@ -17,7 +17,7 @@ class AboutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let options = this.blotter.BlotterOptions;
         let output = [];
         output.push({ Key: "Vendor Grid", Value: this.blotter.VendorGridName });
-        output.push({ Key: "Adaptable Blotter Version", Value: "2.3.0" });
+        output.push({ Key: "Adaptable Blotter Version", Value: "2.4" });
         if (options.blotterId != undefined) {
             output.push({ Key: "Blotter Id", Value: options.blotterId });
         }

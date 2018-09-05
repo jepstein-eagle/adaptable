@@ -541,7 +541,6 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 }
                 case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
-                    alert("in layout select");
                     let layoutState = middlewareAPI.getState().Layout;
                     let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                     if (currentLayout) {
@@ -579,7 +578,6 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     let actionTyped = action;
                     let layout = Helper_1.Helper.cloneObject(actionTyped.Layout);
-                    alert("in layout preseave for: " + layout.Name);
                     layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout));
                     return returnAction;
@@ -810,14 +808,13 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], null, GeneralConstants_1.DEFAULT_LAYOUT);
                     middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     if (layoutState.Layouts.length > 0) {
-                        currentLayout = layoutState.CurrentLayout;
+                        //   currentLayout = layoutState.CurrentLayout
                     }
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
                         blotter.addCalculatedColumnToGrid(x);
                     });
                     //load either saved layout or default one
-                    alert("current layout: " + currentLayout);
                     if (currentLayout == GeneralConstants_1.DEFAULT_LAYOUT) {
                         middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     }

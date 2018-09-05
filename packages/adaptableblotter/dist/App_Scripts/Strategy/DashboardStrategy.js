@@ -34,8 +34,11 @@ class DashboardStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             }
         }
         if (this.GridState != this.GetGridState()) {
-            if (this.GridState.Columns != this.GetGridState().Columns || this.GridState.GridSorts != this.GetGridState().GridSorts) {
-                LayoutHelper_1.LayoutHelper.autoSaveLayout(this.blotter);
+            if (this.GridState != null && this.GridState.Columns != null && this.GridState.GridSorts != null) {
+                if (this.GridState.Columns != this.GetGridState().Columns || this.GridState.GridSorts != this.GetGridState().GridSorts) {
+                    this.GridState = this.GetGridState();
+                    LayoutHelper_1.LayoutHelper.autoSaveLayout(this.blotter);
+                }
             }
             this.GridState = this.GetGridState();
         }

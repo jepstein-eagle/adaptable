@@ -135,7 +135,6 @@ class AdaptableBlotter {
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
             this.initInternalGridLogic();
         });
-        alert("here in const");
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -145,7 +144,6 @@ class AdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterView_1.AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
-        alert("and now here");
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();
