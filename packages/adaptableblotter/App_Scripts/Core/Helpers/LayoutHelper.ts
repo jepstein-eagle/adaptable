@@ -47,7 +47,7 @@ export module LayoutHelper {
                 if (layout != null) {
                     let gridState: GridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid
                     let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
-                    let gridVendorState: any = blotter.getVendorGridState(visibleColumns.map(vc=>vc.ColumnId))
+                    let gridVendorState: any = blotter.getVendorGridState(visibleColumns.map(vc=>vc.ColumnId), false)
                 //    console.log(gridVendorState)
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout)
                     let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout)

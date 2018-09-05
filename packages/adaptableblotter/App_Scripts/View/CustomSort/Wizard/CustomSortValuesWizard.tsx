@@ -1,17 +1,15 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DistinctCriteriaPairValue, SortOrder } from '../../../Core/Enums';
+import { DistinctCriteriaPairValue } from '../../../Core/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
-import { Helper } from "../../../Core/Helpers/Helper";
-import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
 import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+   Blotter: IAdaptableBlotter
 }
 export interface CustomSortValuesWizardState {
     ColumnValues: any[],
@@ -23,7 +21,7 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     constructor(props: CustomSortValuesWizardProps) {
         super(props)
         this.state = {
-            ColumnValues: this.props.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue),
+            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, DistinctCriteriaPairValue.DisplayValue),
             SelectedValues: this.props.Data.SortedValues,
             IsEdit: this.props.Data.SortedValues.length > 0
         }

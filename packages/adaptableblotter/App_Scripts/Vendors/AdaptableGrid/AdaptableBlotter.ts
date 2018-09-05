@@ -559,7 +559,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //todo
     }
 
-    public getVendorGridState(visibleCols: string[]): any {
+    public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
         return null;
     }
 

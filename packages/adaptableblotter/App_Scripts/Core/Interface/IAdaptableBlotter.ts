@@ -35,8 +35,8 @@ export interface IAdaptableBlotter {
     AuditService: IAuditService
     ValidationService: IValidationService
     AuditLogService: AuditLogService
-     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
-     ChartService: IChartService
+    CalculatedColumnExpressionService: ICalculatedColumnExpressionService
+    ChartService: IChartService
     InitAuditService(): void
 
     // Grid Events
@@ -64,7 +64,7 @@ export interface IAdaptableBlotter {
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
-     getRawValueFromRecord(row: any, columnId: string) : any
+    getRawValueFromRecord(row: any, columnId: string): any
     getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
@@ -106,7 +106,7 @@ export interface IAdaptableBlotter {
     getVisibleColumnCount(): number
 
     // layout
-    getVendorGridState(visibleCols: string[]): any
+    getVendorGridState(visibleCols: string[], forceFetch: boolean): any
     setVendorGridState(vendorGridState: any): void
 
     // vendor grid related

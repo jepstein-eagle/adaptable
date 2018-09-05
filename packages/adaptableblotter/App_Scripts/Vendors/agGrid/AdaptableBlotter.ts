@@ -188,7 +188,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             )
 
-           
+
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -250,7 +250,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
 
-    
+
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
@@ -750,7 +750,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == columnId)
         if (colDef.valueFormatter) {
             let formatter = colDef.valueFormatter
-           // let formattedValue = formatter({ value: rawValue })
+            // let formattedValue = formatter({ value: rawValue })
             let params: ValueFormatterParams = {
                 value: rawValue,
                 node: null,
@@ -1047,14 +1047,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_PINNED, (params: any) => {
             console.log(params)
-            let column: string =  params.columns[0].getColId();
-            let pinned : string = params.pinned
+            let column: string = params.columns[0].getColId();
+            let pinned: string = params.pinned
             console.log("column: " + column);
-            if(params.pinned!=null){ // pinned column added
-                let pinnedColumnDirection: PinnedColumnDirection   = (pinned=="left")?  PinnedColumnDirection.Left: PinnedColumnDirection.Right
-                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));   
-            }else{
-                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridDeletePinnedColumnAction>(GridRedux.GridDeletePinnedColumn(column));   
+            if (params.pinned != null) { // pinned column added
+                let pinnedColumnDirection: PinnedColumnDirection = (pinned == "left") ? PinnedColumnDirection.Left : PinnedColumnDirection.Right
+                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));
+            } else {
+                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridDeletePinnedColumnAction>(GridRedux.GridDeletePinnedColumn(column));
             }
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
@@ -1350,8 +1350,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public getVendorGridState(visibleCols: string[]): any {
+    public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
         let mystring: any = null;
+        // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
+        if (forceFetch) {
+            return JSON.stringify(this.gridOptions.columnApi.getColumnState())
+        }
+
         if (this.BlotterOptions.includeVendorStateInLayouts) {
             let columnState = this.gridOptions.columnApi.getColumnState();
             // Dont like this but not sure we have a choice to avoid other issues...

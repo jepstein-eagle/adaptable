@@ -1,5 +1,4 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
@@ -24,8 +23,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
                 cssClassName={this.props.cssClassName}
                 Steps={[
                     <CustomSortColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))} />,
-                    <CustomSortValuesWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns}
-                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList} />,
+                    <CustomSortValuesWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} Blotter ={this.props.Blotter} />,
                     < CustomSortSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}/>
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

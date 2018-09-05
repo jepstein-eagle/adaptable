@@ -39,9 +39,9 @@ function InitTradeBlotter() {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "demo blotter",              // id for blotter 
-        enableAuditLog: false,                  // not running audit log
+        enableAuditLog: true,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        // predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
+         predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         //  serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -50,7 +50,7 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         autoSaveLayouts: true,                  // layous will save automatically
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-            getColumnValues: retrieveValues,
+         //   getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -172,7 +172,7 @@ function apiTester(state, gridOptions) {
         } else if (quickSearchText == "#savelayout") {
             adaptableblotter.api.layoutSave()
         } else if (quickSearchText == "#setlayout") {
-            adaptableblotter.api.layoutSet("copy")
+            adaptableblotter.api.layoutSet("miguel")
         } else if (quickSearchText == "#notional") {
             gridOptions.api.forEachNode((rowNode, index) => {
                 if (rowNode.group) {
