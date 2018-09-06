@@ -18,6 +18,7 @@ const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
 const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
 const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
+const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
 exports.DashboardSetAvailableToolbars = (StrategyIds) => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
     StrategyIds
@@ -73,6 +74,10 @@ exports.DashboardSetHomeToolbarTitle = (Title) => ({
     type: DASHBOARD_SET_HOME_TOOLBAR_TITLE,
     Title
 });
+exports.DashboardSetApplicationToolbarTitle = (Title) => ({
+    type: DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE,
+    Title
+});
 const initialDashboardState = {
     AvailableToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -107,7 +112,8 @@ const initialDashboardState = {
     ShowSystemStatusButton: true,
     ShowFunctionsDropdown: true,
     ShowColumnsDropdown: true,
-    HomeToolbarTitle: ""
+    HomeToolbarTitle: "",
+    ApplicationToolbarTitle: ""
 };
 exports.DashboardReducer = (state = initialDashboardState, action) => {
     let index;
@@ -174,6 +180,10 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
         case DASHBOARD_SET_HOME_TOOLBAR_TITLE: {
             let actionTyped = action;
             return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
+        }
+        case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
+            let actionTyped = action;
+            return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
         }
         default:
             return state;

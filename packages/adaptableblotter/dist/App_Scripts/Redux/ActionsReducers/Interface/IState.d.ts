@@ -66,6 +66,7 @@ export interface DashboardState {
     ShowFunctionsDropdown: boolean;
     ShowColumnsDropdown: boolean;
     HomeToolbarTitle: string;
+    ApplicationToolbarTitle: string;
 }
 export interface SmartEditState {
     SmartEditValue: number;

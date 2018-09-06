@@ -44,6 +44,9 @@ export interface DashboardHideColumnsDropdownAction extends Redux.Action {
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
     Title: string;
 }
+export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
+    Title: string;
+}
 export declare const DashboardSetAvailableToolbars: (StrategyIds: string[]) => DashboardSetAvailableToolbarsAction;
 export declare const DashboardSetToolbars: (StrategyIds: string[]) => DashboardSetToolbarsAction;
 export declare const DashboardShowToolbar: (StrategyId: string) => DashboardShowToolbarAction;
@@ -59,4 +62,5 @@ export declare const DashboardHideFunctionsDropdownButton: () => DashboardHideFu
 export declare const DashboardShowColumnsDropdownButton: () => DashboardShowColumnsDropdownAction;
 export declare const DashboardHideColumnsDropdownButton: () => DashboardHideColumnsDropdownAction;
 export declare const DashboardSetHomeToolbarTitle: (Title: string) => DashboardSetHomeToolbarTitleAction;
+export declare const DashboardSetApplicationToolbarTitle: (Title: string) => DashboardSetHomeToolbarTitleAction;
 export declare const DashboardReducer: Redux.Reducer<DashboardState>;

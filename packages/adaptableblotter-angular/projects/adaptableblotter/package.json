@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-angular",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
@@ -19,5 +19,5 @@
     "prepublish": "npm run build-prod",
     "publish": "cd ../../dist/adaptableblotter && npm publish"
   },
-  "gitHead": "6ebe7f21515d3fea1fabafa18995436e2ba4da87"
+  "gitHead": "8570abd9ef3ab90c7a037f774e55588e7b35b621"
 }
