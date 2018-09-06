@@ -12,8 +12,6 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
@@ -71,8 +69,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.TeamSharingStrategyName} infoBody={infoBody}
-                bsStyle="primary" glyphicon={StrategyGlyphs.TeamSharingGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.TeamSharingStrategyName} infoBody={infoBody}
+                bsStyle="primary" glyphicon={StrategyIds.TeamSharingGlyph}>
                 {this.props.Entities.length == 0 ?
                     <Well bsSize="small">Shared Items will appear here when available.</Well>
                     : <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />

@@ -5,7 +5,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { FormControl, ControlLabel } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
@@ -34,7 +34,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         let cssClassName: string = this.props.cssClassName + "__dashboard";
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText="Dashboard Toolbars" bsStyle="primary" glyphicon={StrategyGlyphs.FunctionsGlyph} className="ab_main_popup">
+            <PanelWithButton cssClassName={cssClassName} headerText="Dashboard Toolbars" bsStyle="primary" glyphicon={StrategyIds.FunctionsGlyph} className="ab_main_popup">
 
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>

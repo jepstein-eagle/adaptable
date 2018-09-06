@@ -1,5 +1,5 @@
-import * as StrategyNames from './StrategyNames';
 
+// Strategy Ids
 export const AboutStrategyId: string = "About"
 export const AlertStrategyId: string = "Alert"
 export const ApplicationStrategyId: string = "Application"
@@ -32,66 +32,257 @@ export const ThemeStrategyId: string = "Theme"
 export const DataManagementStrategyId: string = "UserDataManagement"
 export const UserFilterStrategyId: string = "UserFilter"
 
+// Strategy Names
+export const AboutStrategyName: string = "About"
+export const AlertStrategyName: string = "Alert"
+export const ApplicationStrategyName: string = "Application"
+export const AdvancedSearchStrategyName: string = "Advanced Search"
+export const BulkUpdateStrategyName: string = "Bulk Update"
+export const CalculatedColumnStrategyName: string = "Calculated Column"
+export const CalendarStrategyName: string = "Calendar"
+export const CellValidationStrategyName: string = "Cell Validation"
+export const ChartStrategyName: string = "Chart"
+export const ColumnChooserStrategyName: string = "Column Chooser"
+export const ColumnFilterStrategyName: string = "Column Filter"
+export const ColumnInfoStrategyName: string = "Column Information"
+export const ConditionalStyleStrategyName: string = "Conditional Style"
+export const CustomSortStrategyName: string = "Custom Sort"
+export const DashboardStrategyName: string = "Dashboard"
+export const DataManagementStrategyName: string = "Manage State"
+export const DataSourceStrategyName: string = "Data Source"
+export const ExportStrategyName: string = "Export"
+export const FlashingCellsStrategyName: string = "Flashing Cells"
+export const FormatColumnStrategyName: string = "Format Column"
+export const LayoutStrategyName: string = "Layout"
+export const PlusMinusStrategyName: string = "Plus Minus"
+export const QuickSearchStrategyName: string = "Quick Search"
+export const ShortcutStrategyName: string = "Shortcut"
+export const SelectColumnStrategyName: string = "Select Column"
+export const SelectedCellsStrategyName: string = "Selected Cells"
+export const SmartEditStrategyName: string = "Smart Edit"
+export const TeamSharingStrategyName: string = "Team Sharing"
+export const ThemeStrategyName: string = "Theme"
+export const UserFilterStrategyName: string = "User Filter"
+
+//
+export const AboutGlyph: string = "info-sign"
+export const AlertGlyph: string = "bullhorn"
+export const AdvancedSearchGlyph: string = "search"
+export const ApplicationGlyph: string = "font"
+export const BulkUpdateGlyph: string = "hand-up"
+export const CalculatedColumnGlyph: string = "th-list"
+export const CalendarGlyph: string = "calendar"
+export const CellValidationGlyph: string = "flag"
+export const ChartGlyph: string = "signal"
+export const ColumnChooserGlyph: string = "list-alt"
+export const ColumnFilterGlyph: string = "filter"
+export const ColumnInfoGlyph: string = "italic"
+export const ConditionalStyleGlyph: string = "tint"
+export const CustomSortGlyph: string = "sort-by-attributes"
+export const DashboardGlyph: string = "dashboard"
+export const DataSourceGlyph: string = "book"
+export const DataManagementGlyph: string = "folder-close"
+export const ExportGlyph: string = "export"
+export const FlashingCellGlyph: string = "flash"
+export const FormatColumnGlyph: string = "picture"
+export const FunctionsGlyph: string = "home"
+export const LayoutGlyph: string = "th"
+export const PlusMinusGlyph: string = "plus-sign"
+export const QuickSearchGlyph: string = "eye-open"
+export const ShortcutGlyph: string = "road"
+export const SelectColumnGlyph: string = "compressed"
+export const SelectedCellsGlyph: string = "th-large"
+export const SmartEditGlyph: string = "pencil"
+export const TeamSharingGlyph: string = "share"
+export const ThemeGlyph: string = "leaf"
+export const UserFilterGlyph: string = "user"
 
 export function getIdForStrategyName(strategyName: string) {
     switch (strategyName) {
-        case StrategyNames.AboutStrategyName:
+        case AboutStrategyName:
             return AboutStrategyId
-        case StrategyNames.ApplicationStrategyName:
+        case ApplicationStrategyName:
             return ApplicationStrategyId
-        case StrategyNames.AdvancedSearchStrategyName:
+        case AdvancedSearchStrategyName:
             return AdvancedSearchStrategyId
-        case StrategyNames.BulkUpdateStrategyName:
+        case BulkUpdateStrategyName:
             return BulkUpdateStrategyId
-        case StrategyNames.CalculatedColumnStrategyName:
+        case CalculatedColumnStrategyName:
             return CalculatedColumnStrategyId
-        case StrategyNames.CalendarStrategyName:
+        case CalendarStrategyName:
             return CalendarStrategyId
-        case StrategyNames.CellValidationStrategyName:
+        case CellValidationStrategyName:
             return CellValidationStrategyId
-        case StrategyNames.ChartStrategyName:
+        case ChartStrategyName:
             return ChartStrategyId
-        case StrategyNames.ColumnChooserStrategyName:
+        case ColumnChooserStrategyName:
             return ColumnChooserStrategyId
-        case StrategyNames.ColumnInfoStrategyName:
+        case ColumnInfoStrategyName:
             return ColumnInfoStrategyId
-        case StrategyNames.ConditionalStyleStrategyName:
+        case ConditionalStyleStrategyName:
             return ConditionalStyleStrategyId
-        case StrategyNames.CustomSortStrategyName:
+        case CustomSortStrategyName:
             return CustomSortStrategyId
-        case StrategyNames.DashboardStrategyName:
+        case DashboardStrategyName:
             return DashboardStrategyId
-        case StrategyNames.DataSourceStrategyName:
+        case DataSourceStrategyName:
             return DataSourceStrategyId
-        case StrategyNames.ExportStrategyName:
+        case ExportStrategyName:
             return ExportStrategyId
-        case StrategyNames.UserFilterStrategyName:
+        case UserFilterStrategyName:
             return UserFilterStrategyId
-        case StrategyNames.ColumnFilterStrategyName:
+        case ColumnFilterStrategyName:
             return ColumnFilterStrategyId
-        case StrategyNames.FlashingCellsStrategyName:
+        case FlashingCellsStrategyName:
             return FlashingCellsStrategyId
-        case StrategyNames.FormatColumnStrategyName:
+        case FormatColumnStrategyName:
             return FormatColumnStrategyId
-        case StrategyNames.LayoutStrategyName:
+        case LayoutStrategyName:
             return LayoutStrategyId
-        case StrategyNames.PlusMinusStrategyName:
+        case PlusMinusStrategyName:
             return PlusMinusStrategyId
-        case StrategyNames.QuickSearchStrategyName:
+        case QuickSearchStrategyName:
             return QuickSearchStrategyId
-        case StrategyNames.ShortcutStrategyName:
+        case ShortcutStrategyName:
             return ShortcutStrategyId
-        case StrategyNames.SelectColumnStrategyName:
+        case SelectColumnStrategyName:
             return SelectColumnStrategyId;
-        case StrategyNames.SelectedCellsStrategyName:
+        case SelectedCellsStrategyName:
             return SelectedCellsStrategyId;
-        case StrategyNames.SmartEditStrategyName:
+        case SmartEditStrategyName:
             return SmartEditStrategyId
-        case StrategyNames.TeamSharingStrategyName:
+        case TeamSharingStrategyName:
             return TeamSharingStrategyId
-        case StrategyNames.ThemeStrategyName:
+        case ThemeStrategyName:
             return ThemeStrategyId
-        case StrategyNames.DataManagementStrategyName:
+        case DataManagementStrategyName:
             return DataManagementStrategyId
     }
+}
+
+export function getNameForStrategy(strategyID: string) {
+    switch (strategyID) {
+        case AboutStrategyId:
+            return AboutStrategyName
+        case AlertStrategyId:
+            return AlertStrategyName
+        case ApplicationStrategyId:
+            return ApplicationStrategyName
+        case AdvancedSearchStrategyId:
+            return AdvancedSearchStrategyName
+        case BulkUpdateStrategyId:
+            return BulkUpdateStrategyName
+        case CalculatedColumnStrategyId:
+            return CalculatedColumnStrategyName
+        case CalendarStrategyId:
+            return CalendarStrategyName
+        case CellValidationStrategyId:
+            return CellValidationStrategyName
+        case ChartStrategyId:
+            return ChartStrategyName
+        case ColumnChooserStrategyId:
+            return ColumnChooserStrategyName
+        case ColumnInfoStrategyId:
+            return ColumnInfoStrategyName
+        case ColumnFilterStrategyId:
+            return ColumnFilterStrategyName
+        case ConditionalStyleStrategyId:
+            return ConditionalStyleStrategyName
+        case CustomSortStrategyId:
+            return CustomSortStrategyName
+        case DashboardStrategyId:
+            return DashboardStrategyName
+        case DataManagementStrategyId:
+            return DataManagementStrategyName
+        case DataSourceStrategyId:
+            return DataSourceStrategyName
+        case ExportStrategyId:
+            return ExportStrategyName
+        case FlashingCellsStrategyId:
+            return FlashingCellsStrategyName
+        case FormatColumnStrategyId:
+            return FormatColumnStrategyName
+        case LayoutStrategyId:
+            return LayoutStrategyName
+        case PlusMinusStrategyId:
+            return PlusMinusStrategyName
+        case QuickSearchStrategyId:
+            return QuickSearchStrategyName
+        case ShortcutStrategyId:
+            return ShortcutStrategyName
+        case SelectColumnStrategyId:
+            return SelectColumnStrategyName;
+        case SelectedCellsStrategyId:
+            return SelectedCellsStrategyName;
+        case SmartEditStrategyId:
+            return SmartEditStrategyName
+        case TeamSharingStrategyId:
+            return TeamSharingStrategyName
+        case ThemeStrategyId:
+            return ThemeStrategyName
+        case UserFilterStrategyId:
+            return UserFilterStrategyName
+    }
+}
+
+export function getGhyphiconForStrategy(strategyID: string) {
+    switch (strategyID) {
+        case AboutStrategyId:
+            return AboutGlyph
+        case AdvancedSearchStrategyId:
+            return AdvancedSearchGlyph
+        case ApplicationStrategyId:
+            return ApplicationGlyph
+        case BulkUpdateStrategyId:
+            return BulkUpdateGlyph
+        case CalculatedColumnStrategyId:
+            return CalculatedColumnGlyph
+        case CalendarStrategyId:
+            return CalendarGlyph
+        case CellValidationStrategyId:
+            return CellValidationGlyph
+        case ChartStrategyId:
+            return ChartGlyph
+        case ColumnChooserStrategyId:
+            return ColumnChooserGlyph
+        case ColumnFilterStrategyId:
+            return ColumnFilterGlyph
+        case ColumnInfoStrategyId:
+            return ColumnInfoGlyph
+        case ConditionalStyleStrategyId:
+            return ConditionalStyleGlyph
+        case CustomSortStrategyId:
+            return CustomSortGlyph
+        case DataManagementStrategyId:
+            return DataManagementGlyph;
+        case ExportStrategyId:
+            return ExportGlyph
+        case FlashingCellsStrategyId:
+            return FlashingCellGlyph
+        case FormatColumnStrategyId:
+            return FormatColumnGlyph
+        case LayoutStrategyId:
+            return LayoutGlyph
+        case PlusMinusStrategyId:
+            return PlusMinusGlyph
+        case QuickSearchStrategyId:
+            return QuickSearchGlyph
+        case ShortcutStrategyId:
+            return ShortcutGlyph
+        case SelectColumnStrategyId:
+            return SelectColumnGlyph
+        case SelectedCellsStrategyId:
+            return SelectedCellsGlyph
+        case SmartEditStrategyId:
+            return SmartEditGlyph
+        case TeamSharingStrategyId:
+            return TeamSharingGlyph;
+        case ThemeStrategyId:
+            return ThemeGlyph;
+        case UserFilterStrategyId:
+            return UserFilterGlyph;
+
+    }
+
+
 }

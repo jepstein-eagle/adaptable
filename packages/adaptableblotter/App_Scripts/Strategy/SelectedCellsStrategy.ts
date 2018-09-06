@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary, ISelectedCell } from "./Interface/ISelectedCellsStrategy";
@@ -15,7 +13,7 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyGlyphs.SelectedCellsGlyph);
+        this.createMenuItemShowPopup(StrategyIds.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyIds.SelectedCellsGlyph);
     }
 
     public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {

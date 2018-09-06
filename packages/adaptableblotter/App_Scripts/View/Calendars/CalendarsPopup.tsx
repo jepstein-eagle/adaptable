@@ -14,8 +14,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { Helper } from '../../Core/Helpers/Helper';
 import { SortOrder } from '../../Core/Enums';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { ICalendar, ICalendarEntry } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
@@ -76,7 +75,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
 
 
-        return <PanelWithImage cssClassName={cssClassName}  header={StrategyNames.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.CalendarGlyph} infoBody={infoBody}>
+        return <PanelWithImage cssClassName={cssClassName}  header={StrategyIds.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyIds.CalendarGlyph} infoBody={infoBody}>
 
             <PanelWithRow cssClassName={cssClassName} colItems ={allCalenderColItems} bsStyle="info" className="ab_preview_panel" />
             <ListGroup >

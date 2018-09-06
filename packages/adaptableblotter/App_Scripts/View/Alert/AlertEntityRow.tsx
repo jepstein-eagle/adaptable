@@ -3,7 +3,6 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -11,6 +10,7 @@ import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
@@ -42,7 +42,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={!this.props.Column}
             ConfigEntity={alert}
-            EntityName={StrategyNames.AlertStrategyName} />
+            EntityName={StrategyIds.AlertStrategyName} />
 
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

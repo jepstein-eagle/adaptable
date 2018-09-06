@@ -7,8 +7,6 @@ import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -91,8 +89,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.PlusMinusStrategyName} bsStyle="primary" cssClassName={cssClassName}
-                button={newButton} glyphicon={StrategyGlyphs.PlusMinusGlyph}
+            <PanelWithButton headerText={StrategyIds.PlusMinusStrategyName} bsStyle="primary" cssClassName={cssClassName}
+                button={newButton} glyphicon={StrategyIds.PlusMinusGlyph}
                 infoBody={infoBody}>
 
                 {PlusMinusRules.length > 0 &&

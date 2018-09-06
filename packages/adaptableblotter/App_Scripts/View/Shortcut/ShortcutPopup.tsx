@@ -6,8 +6,6 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { DataType } from '../../Core/Enums'
 import { MathOperation } from '../../Core/Enums'
@@ -84,9 +82,9 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ShortcutStrategyName} className="ab_main_popup"
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ShortcutStrategyName} className="ab_main_popup"
                 button={newButton}
-                bsStyle="primary" glyphicon={StrategyGlyphs.ShortcutGlyph}
+                bsStyle="primary" glyphicon={StrategyIds.ShortcutGlyph}
                 infoBody={infoBody}>
 
                 {shortcuts.length > 0 &&

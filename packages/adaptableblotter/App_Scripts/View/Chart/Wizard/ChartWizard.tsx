@@ -2,7 +2,7 @@ import * as React from "react";
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IChartDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";
@@ -19,7 +19,7 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
         let Charts: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.ChartStrategyName}
+                FriendlyName={StrategyIds.ChartStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

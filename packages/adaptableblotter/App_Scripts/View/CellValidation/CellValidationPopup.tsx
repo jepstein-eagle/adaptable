@@ -6,8 +6,6 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -90,9 +88,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}
+            <PanelWithButton headerText={StrategyIds.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
-                glyphicon={StrategyGlyphs.CellValidationGlyph}
+                glyphicon={StrategyIds.CellValidationGlyph}
                 infoBody={infoBody}>
                 {CellValidationItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={CellValidationItems} />

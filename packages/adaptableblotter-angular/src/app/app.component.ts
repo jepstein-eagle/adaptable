@@ -13,7 +13,7 @@ import { GridOptions } from 'ag-grid';
     </adaptable-blotter>
     <ag-grid-angular
       style="width: 100%; height: 97vh;"
-      class="ag-theme-blue"
+      class="ag-theme-balham"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [gridOptions]="gridOptions">

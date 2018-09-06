@@ -8,7 +8,6 @@ import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -49,22 +48,22 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
         if (noFormatColumn) {
             formatColumnRow = <StrategyHeader
-                key={StrategyNames.FormatColumnStrategyName}
+                key={StrategyIds.FormatColumnStrategyName}
                 cssClassName={this.props.cssClassName}
                 StrategyId={StrategyIds.FormatColumnStrategyId}
                 StrategySummary={"No Format Column Set"}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyNames.FormatColumnStrategyName}
+                NewButtonTooltip={StrategyIds.FormatColumnStrategyName}
             />
         } else {
             formatColumnRow = <StrategyDetail
-                key={StrategyNames.FormatColumnStrategyName}
+                key={StrategyIds.FormatColumnStrategyName}
                 cssClassName={this.props.cssClassName}
                 Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.FormatColumnStrategyId} />}
                 Item2={<StyleVisualItem Style={formatColumn.Style} />}
                 ConfigEnity={formatColumn}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyNames.FormatColumnStrategyName}
+                EntityName={StrategyIds.FormatColumnStrategyName}
                 onEdit={() => this.onEdit(formatColumn)}
                 onShare={() => this.props.onShare(formatColumn)}
                 onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}

@@ -9,7 +9,6 @@ import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
@@ -38,12 +37,12 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyNames.AlertStrategyName}
+            key={StrategyIds.AlertStrategyName}
             cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.AlertStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.AlertStrategyName)}
+            StrategySummary={Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.AlertStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyNames.AlertStrategyName}
+            NewButtonTooltip={StrategyIds.AlertStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -57,7 +56,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
                         Item1={"something here?"}
                         Item2={item.Description}
                         ConfigEnity={item}
-                        EntityName={StrategyNames.AlertStrategyName}
+                        EntityName={StrategyIds.AlertStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}

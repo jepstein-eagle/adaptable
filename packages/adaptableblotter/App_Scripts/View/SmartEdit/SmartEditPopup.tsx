@@ -5,8 +5,7 @@ import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem,
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { MathOperation, MessageType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -80,7 +79,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         })
 
         return (<div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.SmartEditGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyIds.SmartEditGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm inline onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                     <FormGroup controlId="formInlineName">
                         <InputGroup>

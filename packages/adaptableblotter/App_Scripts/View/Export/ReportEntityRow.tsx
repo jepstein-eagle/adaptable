@@ -9,8 +9,8 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { IReport } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean
@@ -33,7 +33,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
             : <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
 
 
-        let exportGlyph: any = <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
+        let exportGlyph: any = <Glyphicon glyph={StrategyIds.ExportGlyph} />
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
         let colItems: IColItem[] = [].concat(this.props.colItems);

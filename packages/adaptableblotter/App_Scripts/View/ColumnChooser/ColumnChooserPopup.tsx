@@ -6,8 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
@@ -25,7 +24,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
             "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnChooserGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyIds.ColumnChooserGlyph} infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))}
                     cssClassName={cssClassName}
                     SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))}

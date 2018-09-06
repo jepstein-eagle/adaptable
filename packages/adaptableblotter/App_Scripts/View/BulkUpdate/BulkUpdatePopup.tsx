@@ -5,8 +5,7 @@ import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem,
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { MathOperation, MessageType, DataType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -98,7 +97,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         return (<div className={cssClassName}>
             {col &&
                 <div>
-                    <PanelWithImage cssClassName={cssClassName} header={StrategyNames.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.BulkUpdateGlyph} infoBody={infoBody}>
+                    <PanelWithImage cssClassName={cssClassName} header={StrategyIds.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyIds.BulkUpdateGlyph} infoBody={infoBody}>
                         <AdaptableBlotterForm onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
                             <FormGroup controlId="formInlineKey">
                                 {col.DataType == DataType.Date ?

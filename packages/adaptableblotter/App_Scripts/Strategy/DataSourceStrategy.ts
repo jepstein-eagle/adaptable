@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { DataSourceState, GridState } from '../Redux/ActionsReducers/Interface/IState'
@@ -19,7 +17,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.DataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyGlyphs.DataSourceGlyph);
+        this.createMenuItemShowPopup(StrategyIds.DataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyIds.DataSourceGlyph);
     }
 
     protected InitState() {

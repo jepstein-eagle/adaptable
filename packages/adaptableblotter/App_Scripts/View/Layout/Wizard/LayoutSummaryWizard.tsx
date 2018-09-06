@@ -5,7 +5,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
 import { ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -28,7 +28,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
             { Key: "Grid Sorts", Value: LayoutHelper.getGridSort(this.props.Data.GridSorts, this.props.Columns) },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.LayoutStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.LayoutStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

@@ -3,8 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
@@ -39,7 +38,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let cssClassName: string = this.props.cssClassName + "__Charts";
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ChartStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ChartGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.ChartStrategyName} bsStyle="primary" glyphicon={StrategyIds.ChartGlyph}>
             {this.state.chartData != null &&
                     <IgrCategoryChart
                         yAxisMinimumValue={0}

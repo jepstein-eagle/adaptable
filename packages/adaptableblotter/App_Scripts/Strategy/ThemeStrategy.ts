@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IThemeStrategy } from './Interface/IThemeStrategy'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
@@ -30,7 +28,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyGlyphs.ThemeGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyIds.ThemeGlyph);
     }
 
     protected InitState() {

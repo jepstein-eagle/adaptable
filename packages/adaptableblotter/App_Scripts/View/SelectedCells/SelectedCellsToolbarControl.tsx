@@ -5,8 +5,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/SelectedCellsRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/ToolbarStrategyViewPopupProps";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
@@ -75,7 +73,7 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.SelectedCellsStrategyName} glyphicon={StrategyGlyphs.SelectedCellsGlyph} onClose={() => this.props.onClose(StrategyIds.SelectedCellsStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SelectedCellsStrategyName} glyphicon={StrategyIds.SelectedCellsGlyph} onClose={() => this.props.onClose(StrategyIds.SelectedCellsStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
 
         </PanelDashboard>

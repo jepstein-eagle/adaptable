@@ -6,8 +6,6 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -88,8 +86,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CalculatedColumnGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyIds.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={calculatedColumns} />

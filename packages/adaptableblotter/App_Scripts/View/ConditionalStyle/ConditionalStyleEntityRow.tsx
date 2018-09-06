@@ -4,7 +4,7 @@ import { ConditionalStyleScope } from '../../Core/Enums';
 import { Helper } from '../../Core/Helpers/Helper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
@@ -37,7 +37,7 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
             ConfigEntity={conditionalStyle}
             overrideDisableEdit={(!column && conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column)}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyNames.ConditionalStyleStrategyName} />
+            EntityName={StrategyIds.ConditionalStyleStrategyName} />
         colItems[3].Content = buttons;
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

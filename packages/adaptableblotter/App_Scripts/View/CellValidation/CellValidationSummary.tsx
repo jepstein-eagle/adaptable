@@ -9,7 +9,6 @@ import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidation
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
@@ -38,12 +37,12 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyNames.CellValidationStrategyName}
+            key={StrategyIds.CellValidationStrategyName}
             cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.CellValidationStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName)}
+            StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyNames.CellValidationStrategyName}
+            NewButtonTooltip={StrategyIds.CellValidationStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -57,7 +56,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
                         Item2={item.Description}
                         ConfigEnity={item}
-                        EntityName={StrategyNames.CellValidationStrategyName}
+                        EntityName={StrategyIds.CellValidationStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}

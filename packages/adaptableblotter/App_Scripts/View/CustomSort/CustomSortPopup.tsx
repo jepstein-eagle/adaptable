@@ -7,8 +7,6 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -91,8 +89,8 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.CustomSortStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.CustomSortGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.CustomSortStrategyName} className="ab_main_popup" infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyIds.CustomSortGlyph}>
 
                 {customSorts.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={customSorts} />

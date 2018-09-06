@@ -6,8 +6,6 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -102,8 +100,8 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}
-                button={newButton} glyphicon={StrategyGlyphs.UserFilterGlyph}>
+            <PanelWithButton headerText={StrategyIds.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}
+                button={newButton} glyphicon={StrategyIds.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={UserFilterItems} />

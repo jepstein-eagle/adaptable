@@ -7,8 +7,6 @@ import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Core/Helpers/Helper';
@@ -91,8 +89,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyGlyphs.ChartGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyIds.ChartGlyph}>
 
                 {Charts.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Charts} />

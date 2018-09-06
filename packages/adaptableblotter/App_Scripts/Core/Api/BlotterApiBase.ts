@@ -24,7 +24,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/AdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
-import * as StrategyNames from '../Constants/StrategyNames'
+import * as StrategyIds from '../Constants/StrategyIds'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination } from "../Enums";
 import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
@@ -39,6 +39,7 @@ import { Alert } from "react-bootstrap";
 import { ExpressionHelper } from "../Helpers/ExpressionHelper";
 import { ObjectFactory } from "../ObjectFactory";
 import { IColumn } from "../Interface/IColumn";
+import { ColumnFilterHelper } from "../Helpers/ColumnFilterHelper";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -52,7 +53,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // Layout api methods
     public layoutSet(layoutName: string): void {
         let layout: ILayout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
-        if (this.checkItemExists(layout, layoutName, StrategyNames.LayoutStrategyName)) {
+        if (this.checkItemExists(layout, layoutName, StrategyIds.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName))
         }
     }
@@ -286,7 +287,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     public columnFilterSetUserFilter(userFilter: string): void {
         let existingUserFilter: IUserFilter = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
-            let columnFilter: IColumnFilter = FilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter)
+            let columnFilter: IColumnFilter = ColumnFilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter)
             this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(columnFilter));
         }
     }
@@ -343,7 +344,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // Data Source api methods
     public dataSourceSet(dataSourceName: string): void {
         let dataSource: string = this.blotter.AdaptableBlotterStore.TheStore.getState().DataSource.DataSources.find(a => a == dataSourceName);
-        if (this.checkItemExists(dataSource, dataSourceName, StrategyNames.DataSourceStrategyName)) {
+        if (this.checkItemExists(dataSource, dataSourceName, StrategyIds.DataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource))
         }
     }
@@ -356,7 +357,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // Advanced Search api methods
     public advancedSearchSet(advancedSearchName: string): void {
         let advancedSearch: IAdvancedSearch = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
-        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyNames.AdvancedSearchStrategyName)) {
+        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyIds.AdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName))
         }
     }

@@ -5,7 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -42,7 +42,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={!this.props.Column}
             ConfigEntity={cellValidation}
-            EntityName={StrategyNames.CellValidationStrategyName} />
+            EntityName={StrategyIds.CellValidationStrategyName} />
 
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

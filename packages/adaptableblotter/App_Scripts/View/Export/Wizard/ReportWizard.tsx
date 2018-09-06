@@ -6,7 +6,7 @@ import { ReportExpressionWizard } from './ReportExpressionWizard'
 import { ReportSettingsWizard } from './ReportSettingsWizard'
 import { ReportSummaryWizard } from './ReportSummaryWizard'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IReport } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {
@@ -15,7 +15,7 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
         let stepNames: string[] = ["Select Columns", "Build Query", "Choose Name", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.ExportStrategyName}
+                FriendlyName={StrategyIds.ExportStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

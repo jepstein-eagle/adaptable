@@ -10,8 +10,6 @@ import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType } from '../../Core/Enums';
@@ -30,7 +28,7 @@ class ApplicationToolbarControlComponent extends React.Component<ApplicationTool
 
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.ApplicationStrategyName} glyphicon={StrategyGlyphs.ApplicationGlyph} onClose={() => this.props.onClose(StrategyIds.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ApplicationStrategyName} glyphicon={StrategyIds.ApplicationGlyph} onClose={() => this.props.onClose(StrategyIds.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             <div className="ApplicationToolBarContents" style={{minHeight:30}}>
 
             </div>

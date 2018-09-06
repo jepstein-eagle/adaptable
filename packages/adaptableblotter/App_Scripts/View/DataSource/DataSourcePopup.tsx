@@ -8,8 +8,6 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { Helper } from '../../Core/Helpers/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -71,7 +69,7 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
 
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.DataSourceStrategyName} bsStyle="primary" infoBody={infoBody} glyphicon={StrategyGlyphs.DataSourceGlyph} >
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.DataSourceStrategyName} bsStyle="primary" infoBody={infoBody} glyphicon={StrategyIds.DataSourceGlyph} >
                 {content}
             </PanelWithImage>
         </div>

@@ -5,7 +5,7 @@ import { AlertExpressionWizard } from './AlertExpressionWizard'
 import { AlertRulesWizard } from './AlertRulesWizard'
 import { AlertSummaryWizard } from './AlertSummaryWizard'
 import { AlertSelectQueryWizard } from './AlertSelectQueryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from "./AlertTypeWizard";
 
@@ -18,7 +18,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
         let stepNames: string[] = ["Select Column", "Alert Rules",  "Type","Add Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.AlertStrategyName}
+                FriendlyName={StrategyIds.AlertStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

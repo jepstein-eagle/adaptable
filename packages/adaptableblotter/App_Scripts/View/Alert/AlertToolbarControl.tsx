@@ -9,8 +9,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { IAlert } from "../../Core/Interface/IMessage";
@@ -83,7 +81,7 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.AlertStrategyName} glyphicon={StrategyGlyphs.AlertGlyph} onClose={() => this.props.onClose(StrategyIds.AlertStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AlertStrategyName} glyphicon={StrategyIds.AlertGlyph} onClose={() => this.props.onClose(StrategyIds.AlertStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }

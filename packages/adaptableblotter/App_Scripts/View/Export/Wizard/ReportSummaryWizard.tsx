@@ -6,7 +6,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ReportColumnScope, ReportRowScope } from '../../../Core/Enums';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
@@ -30,7 +30,7 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
             { Key: "Rows", Value: ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns, this.props.UserFilters) }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.ExportStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.ExportStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

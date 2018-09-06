@@ -9,7 +9,6 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { ConditionalStyleScope } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
@@ -44,12 +43,12 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyNames.ConditionalStyleStrategyName}
+            key={StrategyIds.ConditionalStyleStrategyName}
             cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.ConditionalStyleStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName)}
+            StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyIds.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyNames.ConditionalStyleStrategyName}
+            NewButtonTooltip={StrategyIds.ConditionalStyleStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -63,7 +62,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
-                        EntityName={StrategyNames.ConditionalStyleStrategyName}
+                        EntityName={StrategyIds.ConditionalStyleStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}

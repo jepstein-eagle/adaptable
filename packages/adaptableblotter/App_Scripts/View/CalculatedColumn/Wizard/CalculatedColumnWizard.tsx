@@ -4,7 +4,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
 import { CalculatedColumnSummaryWizard } from './CalculatedColumnSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CalculatedColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CalculatedColumnWizard> {
@@ -19,7 +19,7 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
         
         return <div className={this.props.cssClassName}>
         <AdaptableWizard
-                FriendlyName={StrategyNames.CalculatedColumnStrategyName}
+                FriendlyName={StrategyIds.CalculatedColumnStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

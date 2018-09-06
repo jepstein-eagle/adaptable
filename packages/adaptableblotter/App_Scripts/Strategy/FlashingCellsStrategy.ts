@@ -1,8 +1,6 @@
 import { MenuItemDoReduxAction } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { ObjectFactory } from '../Core/ObjectFactory'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
@@ -27,7 +25,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyGlyphs.FlashingCellGlyph);
+        this.createMenuItemShowPopup(StrategyIds.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyIds.FlashingCellGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -41,7 +39,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                     if (flashingCell && flashingCell.IsLive) {
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell Off",
-                            StrategyGlyphs.FlashingCellGlyph,
+                            StrategyIds.FlashingCellGlyph,
                             FlashingCellsRedux.FlashingCellSelect(flashingCell)
                         )
                     }
@@ -52,7 +50,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                         }
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell On",
-                            StrategyGlyphs.FlashingCellGlyph,
+                            StrategyIds.FlashingCellGlyph,
                             FlashingCellsRedux.FlashingCellSelect(flashingCell)
                         )
                     }

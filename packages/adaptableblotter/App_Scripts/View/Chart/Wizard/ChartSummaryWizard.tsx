@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IChartDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
@@ -33,7 +33,7 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.props.Data.AdditionalColumnValues.join(', ') : "n/a" },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.ChartStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.ChartStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

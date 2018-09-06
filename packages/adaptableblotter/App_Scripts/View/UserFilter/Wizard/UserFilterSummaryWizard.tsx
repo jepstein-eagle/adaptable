@@ -8,7 +8,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<IUserFilter> {
@@ -32,7 +32,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.UserFilterStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.UserFilterStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

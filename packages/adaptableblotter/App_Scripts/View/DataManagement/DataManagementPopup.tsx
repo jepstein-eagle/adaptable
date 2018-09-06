@@ -3,8 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -34,7 +33,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
             size={"large"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyGlyphs.DataManagementGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyIds.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyIds.DataManagementGlyph} infoBody={infoBody}>
                 <Well bsSize="small">Click below to clear all current state.<br /><br />
                     When you restart / refresh the Blotter any predefined config will be re-added.</Well>
 

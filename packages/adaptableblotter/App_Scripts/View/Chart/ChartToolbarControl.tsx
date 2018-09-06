@@ -12,8 +12,6 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { SortOrder } from '../../Core/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
@@ -103,7 +101,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.ChartStrategyName} glyphicon={StrategyGlyphs.ChartGlyph} onClose={() => this.props.onClose(StrategyIds.ChartStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} glyphicon={StrategyIds.ChartGlyph} onClose={() => this.props.onClose(StrategyIds.ChartStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }

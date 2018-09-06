@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
@@ -27,7 +27,7 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
             ConfigEntity={userFilter}
             overrideDisableEdit={false}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyNames.UserFilterStrategyName} />
+            EntityName={StrategyIds.UserFilterStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }

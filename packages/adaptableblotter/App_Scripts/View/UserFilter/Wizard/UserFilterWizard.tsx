@@ -5,7 +5,7 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 
@@ -20,7 +20,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
 
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.UserFilterStrategyName}
+                FriendlyName={StrategyIds.UserFilterStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

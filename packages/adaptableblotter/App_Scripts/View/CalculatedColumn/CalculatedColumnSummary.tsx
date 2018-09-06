@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
@@ -42,11 +42,11 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                     <StrategyDetail
                         cssClassName={this.props.cssClassName}
                         key={"UF" + index}
-                        Item1={StrategyNames.CalculatedColumnStrategyName}
+                        Item1={StrategyIds.CalculatedColumnStrategyName}
                         Item2={item.ColumnExpression}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyNames.CalculatedColumnStrategyName}
+                        EntityName={StrategyIds.CalculatedColumnStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}

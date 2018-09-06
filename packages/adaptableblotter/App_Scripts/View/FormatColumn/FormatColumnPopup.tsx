@@ -14,8 +14,6 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -87,9 +85,9 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             size={"small"} />
 
             return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyNames.FormatColumnStrategyName}
+            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyIds.FormatColumnStrategyName}
                 button={newButton}
-                bsStyle="primary" className="ab_main_popup" glyphicon={StrategyGlyphs.FormatColumnGlyph} infoBody={infoBody}>
+                bsStyle="primary" className="ab_main_popup" glyphicon={StrategyIds.FormatColumnGlyph} infoBody={infoBody}>
 
                 {this.props.FormatColumns.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new column format.</Well>

@@ -17,14 +17,11 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ExportDestination, SortOrder } from '../../Core/Enums';
 import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import { SelectCellEditor } from "ag-grid";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IReport } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
@@ -76,7 +73,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         }
 
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
-            <Glyphicon glyph={StrategyGlyphs.ExportGlyph} />
+            <Glyphicon glyph={StrategyIds.ExportGlyph} />
         </OverlayTrigger>
 
         let content = <span>
@@ -158,7 +155,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </span>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.ExportStrategyName} glyphicon={StrategyGlyphs.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ExportStrategyName} glyphicon={StrategyIds.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }

@@ -11,8 +11,6 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
@@ -60,7 +58,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     DisplayMode="Glyph" />
             </span>
         </span>
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.QuickSearchStrategyName} glyphicon={StrategyGlyphs.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyIds.QuickSearchStrategyId)}
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.QuickSearchStrategyName} glyphicon={StrategyIds.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyIds.QuickSearchStrategyId)}
             onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>

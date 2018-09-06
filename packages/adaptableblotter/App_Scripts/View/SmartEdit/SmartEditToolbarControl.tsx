@@ -11,8 +11,6 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
@@ -120,7 +118,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.SmartEditStrategyName} glyphicon={StrategyGlyphs.SmartEditGlyph} onClose={() => this.props.onClose(StrategyIds.SmartEditStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SmartEditStrategyName} glyphicon={StrategyIds.SmartEditGlyph} onClose={() => this.props.onClose(StrategyIds.SmartEditStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }

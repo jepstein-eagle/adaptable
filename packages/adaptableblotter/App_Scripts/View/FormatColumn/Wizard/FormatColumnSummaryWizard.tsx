@@ -6,7 +6,7 @@ import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IFormatColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
@@ -31,7 +31,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
             { Key: "Style", Value: <StyleVisualItem Style={this.props.Data.Style} /> },
          ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.FormatColumnStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.FormatColumnStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

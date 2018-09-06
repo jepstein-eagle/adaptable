@@ -15,8 +15,6 @@ import { ReportWizard } from './Wizard/ReportWizard'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { encode } from "punycode";
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
@@ -97,7 +95,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ExportStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ExportGlyph} infoBody={infoBody} button={newButton} >
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ExportStrategyName} bsStyle="primary" glyphicon={StrategyIds.ExportGlyph} infoBody={infoBody} button={newButton} >
 
                 {Reports.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={false} />

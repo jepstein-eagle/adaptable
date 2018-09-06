@@ -6,7 +6,7 @@ import { LayoutColumnWizard } from './LayoutColumnWizard'
 import { LayoutSettingsWizard } from './LayoutSettingsWizard'
 import { LayoutGridSortWizard } from './LayoutGridSortWizard'
 import { LayoutSummaryWizard } from './LayoutSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
 import { IGridSort, ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
@@ -22,7 +22,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
         let layouts: ILayout[] = this.props.ConfigEntities as ILayout[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.LayoutStrategyName}
+                FriendlyName={StrategyIds.LayoutStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

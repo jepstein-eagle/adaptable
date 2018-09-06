@@ -3,7 +3,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
@@ -24,7 +24,7 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             ConfigEntity={calculatedColumn}
-            EntityName={StrategyNames.CalculatedColumnStrategyName}>
+            EntityName={StrategyIds.CalculatedColumnStrategyName}>
         </EntityListActionButtons>
          colItems[2].Content = buttons
       

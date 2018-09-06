@@ -4,7 +4,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IColItem } from "../UIInterfaces";
 import { IAdvancedSearch } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
@@ -32,7 +32,7 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={null}
             ConfigEntity={advancedSearch}
-            EntityName={StrategyNames.AdvancedSearchStrategyName} />
+            EntityName={StrategyIds.AdvancedSearchStrategyName} />
 
         colItems[3].Content = buttons;
 

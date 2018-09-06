@@ -5,8 +5,6 @@ import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -90,9 +88,9 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.AlertStrategyName} bsStyle="primary" cssClassName={cssClassName}
+            <PanelWithButton headerText={StrategyIds.AlertStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
-                glyphicon={StrategyGlyphs.AlertGlyph}
+                glyphicon={StrategyIds.AlertGlyph}
                 infoBody={infoBody}>
                 {AlertItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={AlertItems} />

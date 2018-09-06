@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy'
@@ -18,7 +16,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph);
+        this.createMenuItemShowPopup(StrategyIds.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyIds.FormatColumnGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -28,9 +26,9 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
             let popupParam = formatExists ? "Edit|" : "New|"
 
             this.createContextMenuItemShowPopup(
-                label + StrategyNames.FormatColumnStrategyName,
+                label + StrategyIds.FormatColumnStrategyName,
                 ScreenPopups.FormatColumnPopup,
-                StrategyGlyphs.FormatColumnGlyph,
+                StrategyIds.FormatColumnGlyph,
                 popupParam + columnId)
         }
     }

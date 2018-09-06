@@ -3,7 +3,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { CustomSortSummaryWizard } from './CustomSortSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
@@ -17,7 +17,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
         let customSorts: ICustomSort[] = this.props.ConfigEntities as ICustomSort[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.CustomSortStrategyName}
+                FriendlyName={StrategyIds.CustomSortStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

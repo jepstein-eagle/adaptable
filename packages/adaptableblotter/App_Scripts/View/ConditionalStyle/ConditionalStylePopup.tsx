@@ -7,8 +7,6 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { Well } from 'react-bootstrap';
 import { ConditionalStyleScope } from '../../Core/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
@@ -22,7 +20,6 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { ConditionalStyleGlyph } from '../../Core/Constants/StrategyGlyphs';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -88,7 +85,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
             size={"small"} />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyNames.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyGlyphs.ConditionalStyleGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyIds.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyIds.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>

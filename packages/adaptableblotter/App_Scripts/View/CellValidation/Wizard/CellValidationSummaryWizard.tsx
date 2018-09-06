@@ -7,7 +7,7 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ICellValidationRule, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
@@ -38,7 +38,7 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
             }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.CellValidationStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.CellValidationStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

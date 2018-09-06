@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy'
@@ -15,15 +13,15 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
       }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyGlyphs.ColumnInfoGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyIds.ColumnInfoGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId)) {
             this.createContextMenuItemShowPopup(
-            StrategyNames.ColumnInfoStrategyName,
+            StrategyIds.ColumnInfoStrategyName,
             ScreenPopups.ColumnInfoPopup,
-            StrategyGlyphs.ColumnInfoGlyph,
+            StrategyIds.ColumnInfoGlyph,
             columnId)
     }
 }

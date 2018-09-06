@@ -1,7 +1,7 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
@@ -25,7 +25,7 @@ export class FormatColumnEntityRow extends React.Component<SharedEntityExpressio
             shareClick={() => this.props.onShare()}
             ConfigEntity={formatColumn}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyNames.FormatColumnStrategyName} />
+            EntityName={StrategyIds.FormatColumnStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }

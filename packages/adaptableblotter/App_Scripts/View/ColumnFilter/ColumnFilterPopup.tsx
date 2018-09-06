@@ -7,8 +7,6 @@ import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
@@ -63,8 +61,8 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
-                glyphicon={StrategyGlyphs.ColumnFilterGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
+                glyphicon={StrategyIds.ColumnFilterGlyph}>
 
                 {columnFilterItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={columnFilterItems} />

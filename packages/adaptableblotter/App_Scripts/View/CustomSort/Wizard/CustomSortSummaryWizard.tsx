@@ -7,7 +7,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
@@ -27,7 +27,7 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
             { Key: "Values", Value: this.props.Data.SortedValues.join(', ') }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.CustomSortStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.CustomSortStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

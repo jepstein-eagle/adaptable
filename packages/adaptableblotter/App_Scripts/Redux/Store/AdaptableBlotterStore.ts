@@ -65,6 +65,7 @@ import { KeyValuePair } from '../../View/UIInterfaces';
 import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { LayoutHelper } from '../../Core/Helpers/LayoutHelper';
+import { ColumnFilterHelper } from '../../Core/Helpers/ColumnFilterHelper';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -366,7 +367,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                     middlewareAPI.dispatch(FilterRedux.UserFilterAddUpdate(-1, userFilter));
 
                     // then create a new column filter from the user filter - so that it will display the user filter name
-                    let newColumnFilter: IColumnFilter = FilterHelper.CreateColumnFilterFromUserFilter(userFilter);
+                    let newColumnFilter: IColumnFilter = ColumnFilterHelper.CreateColumnFilterFromUserFilter(userFilter);
                     middlewareAPI.dispatch(FilterRedux.ColumnFilterAddUpdate(newColumnFilter));
 
                     return next(action);

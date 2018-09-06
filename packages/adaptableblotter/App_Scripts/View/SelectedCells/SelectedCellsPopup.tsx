@@ -5,8 +5,7 @@ import {  ControlLabel } from 'react-bootstrap';
 import { StrategyViewPopupProps } from "../Components/SharedProps/StrategyViewPopupProps";
 import { EditableConfigEntityState } from "../Components/SharedProps/EditableConfigEntityState";
 import { IColItem } from "../UIInterfaces";
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/SelectedCellsRedux'
@@ -51,8 +50,8 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
         }
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.SelectedCellsStrategyName} className="ab_main_popup"
-                bsStyle="primary" glyphicon={StrategyGlyphs.SelectedCellsGlyph}
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.SelectedCellsStrategyName} className="ab_main_popup"
+                bsStyle="primary" glyphicon={StrategyIds.SelectedCellsGlyph}
                 infoBody={infoBody}>
 
                 <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>

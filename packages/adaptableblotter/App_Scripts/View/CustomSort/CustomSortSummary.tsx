@@ -8,7 +8,6 @@ import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
@@ -42,32 +41,32 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         if (!this.props.SummarisedColumn.Sortable) {
             customSortRow = <StrategyHeader
                 cssClassName={this.props.cssClassName}
-                key={StrategyNames.CustomSortStrategyName}
+                key={StrategyIds.CustomSortStrategyName}
                 StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"Column is not sortable"}
                 NewButtonDisabled={true}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyNames.CustomSortStrategyName}
+                NewButtonTooltip={StrategyIds.CustomSortStrategyName}
             />
         }
         else if (noCustomSort) {
             // title row
             customSortRow = <StrategyHeader
                 cssClassName={this.props.cssClassName}
-                key={StrategyNames.CustomSortStrategyName}
+                key={StrategyIds.CustomSortStrategyName}
                 StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort Set"}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyNames.CustomSortStrategyName}
+                NewButtonTooltip={StrategyIds.CustomSortStrategyName}
             />
         } else {
             customSortRow = <StrategyDetail
                 cssClassName={this.props.cssClassName}
-                key={StrategyNames.CustomSortStrategyName}
+                key={StrategyIds.CustomSortStrategyName}
                 Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.CustomSortStrategyId} />}
                 Item2={customSort.SortedValues.join(', ')}
                 ConfigEnity={customSort}
-                EntityName={StrategyNames.CustomSortStrategyName}
+                EntityName={StrategyIds.CustomSortStrategyName}
                 onEdit={() => this.onEdit(customSort)}
                 onShare={() => this.props.onShare(customSort)}
                 showShare={this.props.TeamSharingActivated}

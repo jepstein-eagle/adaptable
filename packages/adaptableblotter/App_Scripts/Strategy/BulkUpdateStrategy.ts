@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { MathOperation, DataType, MessageType } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
@@ -22,7 +20,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyGlyphs.BulkUpdateGlyph);
+        this.createMenuItemShowPopup(StrategyIds.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyIds.BulkUpdateGlyph);
     }
 
     public ApplyBulkUpdate(newValues: ICellInfo[]): void {

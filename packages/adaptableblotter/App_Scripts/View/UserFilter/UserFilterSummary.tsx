@@ -7,7 +7,6 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
@@ -41,12 +40,12 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyNames.UserFilterStrategyName}
+            key={StrategyIds.UserFilterStrategyName}
             cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.UserFilterStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.UserFilterStrategyName)}
+            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.UserFilterStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyNames.UserFilterStrategyName}
+            NewButtonTooltip={StrategyIds.UserFilterStrategyName}
         />
         strategySummaries.push(titleRow);
 
@@ -61,7 +60,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyNames.UserFilterStrategyName}
+                        EntityName={StrategyIds.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={FilterRedux.UserFilterDelete(item)}

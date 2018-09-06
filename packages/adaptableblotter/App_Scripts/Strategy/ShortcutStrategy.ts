@@ -1,8 +1,6 @@
 import { IShortcutStrategy } from './Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
@@ -28,7 +26,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyGlyphs.ShortcutGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyIds.ShortcutGlyph);
     }
 
     protected InitState() {

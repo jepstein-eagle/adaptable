@@ -3,7 +3,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IAlertDefinition, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
@@ -34,7 +34,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
             }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.AlertStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.AlertStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

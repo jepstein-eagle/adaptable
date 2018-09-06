@@ -11,7 +11,6 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { MenuState, EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IColumn';

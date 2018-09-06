@@ -9,8 +9,6 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
@@ -58,7 +56,7 @@ class DataSourceToolbarControlComponent extends React.Component<DataSourceToolba
            </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyNames.DataSourceStrategyName} glyphicon={StrategyGlyphs.DataSourceGlyph} onClose={() => this.props.onClose(StrategyIds.DataSourceStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.DataSourceStrategyName} glyphicon={StrategyIds.DataSourceGlyph} onClose={() => this.props.onClose(StrategyIds.DataSourceStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
             {content}
         </PanelDashboard>
     }

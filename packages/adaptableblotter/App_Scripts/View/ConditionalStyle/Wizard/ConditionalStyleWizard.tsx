@@ -5,7 +5,7 @@ import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard'
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard'
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
@@ -19,7 +19,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
         let stepNames: string[] = ["Select Scope", "Create Style", "Build Query"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.ConditionalStyleStrategyName}
+                FriendlyName={StrategyIds.ConditionalStyleStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

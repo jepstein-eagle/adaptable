@@ -6,7 +6,7 @@ import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard'
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataType } from "../../../Core/Enums";
 
@@ -21,7 +21,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
         let stepNames: string[] = ["Select Column", "Settings", "Build Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.PlusMinusStrategyName}
+                FriendlyName={StrategyIds.PlusMinusStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

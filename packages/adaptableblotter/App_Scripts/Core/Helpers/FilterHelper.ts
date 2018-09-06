@@ -55,18 +55,6 @@ export module FilterHelper {
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null)
     }
 
-    //  export function GetSystemFilters(allSystemFilters: string[], columnSystemFilters: string[]): string[] {
-    //    return allSystemFilters.filter(f => columnSystemFilters.find(u => u == f) != null)
-    // }
-
-
-    export function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter {
-        return {
-            ColumnId: userFilter.ColumnId,
-            Filter: ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [],[], [userFilter.Name], []),
-            IsReadOnly: false
-        }
-    }
 
     export function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter {
         return {

@@ -1,8 +1,6 @@
 import { IAboutStrategy } from './Interface/IAboutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
@@ -17,7 +15,7 @@ export class AboutStrategy extends AdaptableStrategyBase implements IAboutStrate
 
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.AboutStrategyName, ScreenPopups.AboutPopup, StrategyGlyphs.AboutGlyph);
+        this.createMenuItemShowPopup(StrategyIds.AboutStrategyName, ScreenPopups.AboutPopup, StrategyIds.AboutGlyph);
     }
 
     public CreateAboutInfo(): KeyValuePair[] {

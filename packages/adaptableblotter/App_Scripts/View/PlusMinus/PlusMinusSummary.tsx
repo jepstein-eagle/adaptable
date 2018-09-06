@@ -8,7 +8,6 @@ import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
@@ -39,7 +38,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyNames.PlusMinusStrategyName}
+            key={StrategyIds.PlusMinusStrategyName}
             cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.PlusMinusStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
@@ -60,7 +59,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyNames.PlusMinusStrategyName}
+                        EntityName={StrategyIds.PlusMinusStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={PlusMinusRedux.PlusMinusDeleteCondition(index)}

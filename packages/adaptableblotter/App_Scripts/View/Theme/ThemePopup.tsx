@@ -6,8 +6,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IUserTheme } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 
@@ -35,7 +34,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
             return <option value={x} key={x}>{x}</option>
         })
         return (<div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyNames.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyGlyphs.ThemeGlyph} infoBody={infoBody}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyIds.ThemeGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="themepicker">
                         <Col xs={2} >

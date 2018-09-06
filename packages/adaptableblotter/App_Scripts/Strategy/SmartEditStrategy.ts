@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { MathOperation, DataType, MessageType } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
@@ -22,7 +20,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyGlyphs.SmartEditGlyph);
+        this.createMenuItemShowPopup(StrategyIds.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyIds.SmartEditGlyph);
     }
 
     public ApplySmartEdit(newValues: ICellInfo[]): void {

@@ -9,7 +9,7 @@ import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CellValidationWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CellValidationWizard> {
@@ -21,7 +21,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
         let stepNames: string[] = ["Select Column", "Choose Action", "Create Rule", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.CellValidationStrategyName}
+                FriendlyName={StrategyIds.CellValidationStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

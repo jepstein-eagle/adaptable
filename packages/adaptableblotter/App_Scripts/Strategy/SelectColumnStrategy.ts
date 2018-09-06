@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { ISelectColumnStrategy } from "./Interface/ISelectColumnStrategy";
@@ -17,8 +15,8 @@ export class SelectColumnStrategy extends AdaptableStrategyBase implements ISele
             if (this.canCreateContextMenuItem(columnId)) {
 
                 this.createContextMenuItemReduxAction(
-                    StrategyNames.SelectColumnStrategyName,
-                    StrategyGlyphs.SelectColumnGlyph,
+                    StrategyIds.SelectColumnStrategyName,
+                    StrategyIds.SelectColumnGlyph,
                     GridRedux.GridSelectColumn(columnId)
                 )
             }

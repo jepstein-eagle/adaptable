@@ -4,7 +4,7 @@ import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdvancedSearch } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>, {}> {
@@ -13,7 +13,7 @@ export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjec
         let stepNames: string[] = ["Build Query", "Create Name", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.AdvancedSearchStrategyName}
+                FriendlyName={StrategyIds.AdvancedSearchStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

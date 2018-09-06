@@ -11,8 +11,7 @@ import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Core/Helpers/Helper'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
+import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
@@ -98,7 +97,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         </AdaptableBlotterForm>;
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyNames.FlashingCellsStrategyName} bsStyle="primary" className="ab_main_popup" glyphicon={StrategyGlyphs.FlashingCellGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.FlashingCellsStrategyName} bsStyle="primary" className="ab_main_popup" glyphicon={StrategyIds.FlashingCellGlyph} infoBody={infoBody}>
                 {setAllOption}
                 <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={allFlashingCells} reducedPanel={true} />
 

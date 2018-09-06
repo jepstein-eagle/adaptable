@@ -13,7 +13,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
@@ -34,7 +34,7 @@ export class AdvancedSearchSummaryWizard extends React.Component<AdvancedSearchS
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString( this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.AdvancedSearchStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.AdvancedSearchStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

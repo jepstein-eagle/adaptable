@@ -9,7 +9,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Core/Enums";
 import { IConditionalStyle, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -38,7 +38,7 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.ConditionalStyleStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.ConditionalStyleStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

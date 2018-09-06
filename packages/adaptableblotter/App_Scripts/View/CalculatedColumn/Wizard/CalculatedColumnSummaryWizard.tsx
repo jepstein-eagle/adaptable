@@ -6,7 +6,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ICalculatedColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 
@@ -26,7 +26,7 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
             { Key: "Expression", Value: this.props.Data.ColumnExpression }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.CalculatedColumnStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.CalculatedColumnStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

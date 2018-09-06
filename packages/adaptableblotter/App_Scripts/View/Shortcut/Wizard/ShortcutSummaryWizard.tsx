@@ -9,7 +9,7 @@ import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IShortcut } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {
@@ -33,7 +33,7 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
             { Key: "Columns", Value: this.props.Data.ColumnType },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.ShortcutStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.ShortcutStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

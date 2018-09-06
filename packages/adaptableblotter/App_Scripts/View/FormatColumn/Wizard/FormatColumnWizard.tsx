@@ -4,7 +4,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { FormatColumnScopeWizard } from './FormatColumnScopeWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'
 import { FormatColumnSummaryWizard } from './FormatColumnSummaryWizard'
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
@@ -18,7 +18,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
         let stepNames: string[] = ["Select Column", "Create Style", "Settings"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyNames.FormatColumnStrategyName}
+                FriendlyName={StrategyIds.FormatColumnStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

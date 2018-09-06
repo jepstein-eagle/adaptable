@@ -7,7 +7,7 @@ import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyNames from '../../../Core/Constants/StrategyNames'
+import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
 import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
@@ -35,7 +35,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
             },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyNames.PlusMinusStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.PlusMinusStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

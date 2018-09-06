@@ -6,8 +6,6 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import * as StrategyNames from '../../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../../Core/Constants/StrategyGlyphs'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'
@@ -63,7 +61,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         ]
         let selectedColumnId: string = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null
 
-        let headerText = StrategyNames.ColumnInfoStrategyName;
+        let headerText = StrategyIds.ColumnInfoStrategyName;
 
         let summaries: any[] = [];
         if (this.isStrategyVisible(StrategyIds.CustomSortStrategyId)) {
@@ -130,7 +128,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         }
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={headerText} bsStyle="primary" glyphicon={StrategyGlyphs.ColumnInfoGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={headerText} bsStyle="primary" glyphicon={StrategyIds.ColumnInfoGlyph} infoBody={infoBody}>
 
                 {this.state.ShowSelector &&
                     <AdaptableBlotterForm horizontal>

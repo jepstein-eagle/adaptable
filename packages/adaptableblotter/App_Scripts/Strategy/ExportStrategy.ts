@@ -1,7 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
@@ -68,7 +66,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ExportStrategyName, ScreenPopups.ExportPopup, StrategyGlyphs.ExportGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ExportStrategyName, ScreenPopups.ExportPopup, StrategyIds.ExportGlyph);
     }
 
     private sendNewDataToLiveExcel() {

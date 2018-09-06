@@ -4,8 +4,6 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
-import * as StrategyNames from '../Core/Constants/StrategyNames'
-import * as StrategyGlyphs from '../Core/Constants/StrategyGlyphs'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIConfirmation } from '../Core/Interface/IMessage';
 import { DataType } from '../Core/Enums'
@@ -33,7 +31,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyGlyphs.PlusMinusGlyph)
+        this.createMenuItemShowPopup(StrategyIds.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyIds.PlusMinusGlyph)
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -44,7 +42,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             this.createContextMenuItemShowPopup(
                 "Create Plus/Minus Rule",
                 ScreenPopups.PlusMinusPopup,
-                StrategyGlyphs.PlusMinusGlyph,
+                StrategyIds.PlusMinusGlyph,
                 "New|" + columnId)
             }
         }
