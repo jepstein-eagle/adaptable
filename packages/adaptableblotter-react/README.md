@@ -13,9 +13,9 @@ There are 2 React Components available:
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
 
-* Community - free for charities, students in full time education and open-source projects.  
-* End User - licences are sold in bands depending on the number of end users
-* Universal - unlimited users and usage.
+* *Community* - free for charities, students in full time education and open-source projects.  
+* *End User* - licences are sold in bands depending on the number of end users
+* *Universal* - unlimited users and usage.
 
 (The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
