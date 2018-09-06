@@ -14,7 +14,7 @@ class DashboardComponent extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
         let cssBaseClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE;
-        let optionsBlotterName = this.props.AdaptableBlotter.BlotterOptions.blotterId;
+        let optionsBlotterName = this.props.Blotter.BlotterOptions.blotterId;
         let blotterName = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName = "Show " + blotterName + " Dashboard";
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars; //.filter(dc => dc.IsVisible);
@@ -25,14 +25,13 @@ class DashboardComponent extends React.Component {
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control && x.AccessLevel == "ReadOnly") > -1;
                 let dashboardElememt = React.createElement(dashboardControl, {
-                    AdaptableBlotter: this.props.AdaptableBlotter,
+                    Blotter: this.props.Blotter,
                     IsReadOnly: isReadOnly,
                     Columns: this.props.Columns,
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
                     ColorPalette: this.props.ColorPalette,
                     GridSorts: this.props.GridSorts,
-                    getColumnValueDisplayValuePairDistinctList: (columnId, distinctCriteria) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
                     cssClassName: cssClassName
                 });
                 return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
@@ -42,7 +41,7 @@ class DashboardComponent extends React.Component {
             }
         });
         let homeToolbar = AdaptableViewFactory_1.AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId);
-        let homeToolbarElement = React.createElement(react_bootstrap_1.Nav, { key: "home", style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, React.createElement(homeToolbar, { cssClassName: cssClassName, AdaptableBlotter: this.props.AdaptableBlotter }));
+        let homeToolbarElement = React.createElement(react_bootstrap_1.Nav, { key: "home", style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, React.createElement(homeToolbar, { cssClassName: cssClassName, Blotter: this.props.Blotter }));
         return React.createElement("div", { className: cssBaseClassName }, this.props.DashboardState.DashboardVisibility != Enums_1.Visibility.Hidden &&
             React.createElement("div", { className: "ab_no_margin" }, this.props.DashboardState.DashboardVisibility == Enums_1.Visibility.Minimised ?
                 React.createElement(react_bootstrap_1.ButtonToolbar, { bsSize: "small", bsStyle: "primary", className: "ab_no_padding_no_margin" },

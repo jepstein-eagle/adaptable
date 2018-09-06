@@ -19,7 +19,7 @@ class ChartAdditionalColumnWizard extends React.Component {
             AdditionalColumnValues: props.Data.AdditionalColumnValues ? props.Data.AdditionalColumnValues : [],
             UseAllAdditionalColumnValues: (hasDistinctColumnValues) ? false : true,
             AvailableAdditionalColumnValues: (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.Data.AdditionalColumn)) ?
-                props.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
                 null
         };
     }
@@ -60,7 +60,7 @@ class ChartAdditionalColumnWizard extends React.Component {
             UseAllAdditionalColumnValues: true,
             AdditionalColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
             AvailableAdditionalColumnValues: isColumn ?
-                this.props.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
+                this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
                 null
         }, () => this.props.UpdateGoBackState());
     }

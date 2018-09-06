@@ -31,13 +31,13 @@ class SmartEditToolbarControlComponent extends React.Component {
         };
     }
     componentDidMount() {
-        if (this.props.AdaptableBlotter) {
-            this.props.AdaptableBlotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
+        if (this.props.Blotter) {
+            this.props.Blotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
         }
     }
     componentWillUnmount() {
-        if (this.props.AdaptableBlotter) {
-            this.props.AdaptableBlotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
+        if (this.props.Blotter) {
+            this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
         }
     }
     render() {

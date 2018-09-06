@@ -19,7 +19,7 @@ class ChartXAxisWizard extends React.Component {
             XAxisColumnValues: props.Data.XAxisColumnValues,
             UseAllXAsisColumnValues: (hasDistinctColumnValues) ? false : true,
             AvailableXAxisColumnValues: (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumn)) ?
-                props.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
                 null
         };
     }
@@ -64,7 +64,7 @@ class ChartXAxisWizard extends React.Component {
             UseAllXAsisColumnValues: true,
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
             AvailableXAxisColumnValues: isColumn ?
-                this.props.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
+                this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
                 null
         }, () => this.props.UpdateGoBackState());
     }

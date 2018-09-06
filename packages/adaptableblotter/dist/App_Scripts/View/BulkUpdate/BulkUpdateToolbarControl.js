@@ -31,13 +31,13 @@ class BulkUpdateToolbarControlComponent extends React.Component {
         };
     }
     componentDidMount() {
-        if (this.props.AdaptableBlotter) {
-            this.props.AdaptableBlotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
+        if (this.props.Blotter) {
+            this.props.Blotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
         }
     }
     componentWillUnmount() {
-        if (this.props.AdaptableBlotter) {
-            this.props.AdaptableBlotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
+        if (this.props.Blotter) {
+            this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
         }
     }
     render() {
@@ -56,7 +56,7 @@ class BulkUpdateToolbarControlComponent extends React.Component {
             React.createElement("div", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
                     React.createElement(react_bootstrap_1.InputGroup.Button, null, activeButton),
-                    React.createElement(ColumnValueSelector_1.ColumnValueSelector, { style: { width: "120px" }, cssClassName: cssClassName, disabled: !this.props.IsValidSelection, bsSize: "small", SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: selectedColumn, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
+                    React.createElement(ColumnValueSelector_1.ColumnValueSelector, { style: { width: "120px" }, cssClassName: cssClassName, disabled: !this.props.IsValidSelection, bsSize: "small", SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: selectedColumn, Blotter: this.props.Blotter, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Bulk Update", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph" }),
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&

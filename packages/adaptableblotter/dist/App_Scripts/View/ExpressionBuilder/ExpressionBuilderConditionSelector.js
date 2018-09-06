@@ -43,7 +43,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
             // get selectedcolumn values
             let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
             if (keyValuePair) {
-                selectedColumnValues = keyValuePair.ColumnValues;
+                selectedColumnValues = keyValuePair.ColumnDisplayValues;
             }
             else {
                 selectedColumnValues = [];
@@ -101,7 +101,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(di => {
                             let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.SelectedColumnId, di);
                             columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
@@ -218,11 +218,11 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 colValuesExpression.splice(keyValuePairIndex, 1);
             }
             else {
-                valuesCol.ColumnValues = selectedColumnValues;
+                valuesCol.ColumnDisplayValues = selectedColumnValues;
             }
         }
         else {
-            colValuesExpression.push({ ColumnId: this.props.SelectedColumnId, ColumnValues: selectedColumnValues });
+            colValuesExpression.push({ ColumnId: this.props.SelectedColumnId, ColumnDisplayValues: selectedColumnValues, ColumnRawValues: [] });
         }
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { ColumnValueExpressions: colValuesExpression }));
         this.setState({ SelectedColumnValues: selectedColumnValues });

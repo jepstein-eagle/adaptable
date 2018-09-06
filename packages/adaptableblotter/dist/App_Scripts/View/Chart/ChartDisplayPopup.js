@@ -5,20 +5,23 @@ const react_redux_1 = require("react-redux");
 const StrategyNames = require("../../Core/Constants/StrategyNames");
 const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
+const igr_category_chart_1 = require("igniteui-react-charts/ES2015/igr-category-chart");
+const igr_category_chart_module_1 = require("igniteui-react-charts/ES2015/igr-category-chart-module");
 class ChartDisplayPopupComponent extends React.Component {
     constructor(props) {
         super(props);
         // this line is commented out as we cannot run it otherwise...
-        //  IgrCategoryChartModule.register();
+        igr_category_chart_module_1.IgrCategoryChartModule.register();
         let currentChartDefinition = this.props.ChartDefinitions.find(cd => cd.Name == this.props.CurrentChartName);
         this.state = {
-        //      chartData: this.props.ChartService.BuildChartData(currentChartDefinition, this.props.Columns)
+            chartData: this.props.ChartService.BuildChartData(currentChartDefinition, this.props.Columns)
         };
     }
     render() {
         let cssClassName = this.props.cssClassName + "__Charts";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.ChartStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.ChartGlyph }, "}"));
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.ChartStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.ChartGlyph }, this.state.chartData != null &&
+                React.createElement(igr_category_chart_1.IgrCategoryChart, { yAxisMinimumValue: 0, chartTitle: this.props.CurrentChartName, yAxisTitle: "Notional", xAxisTitle: "Counterparty", width: "700px", height: "500px", dataSource: this.state.chartData })));
     }
 }
 function mapStateToProps(state, ownProps) {
@@ -33,13 +36,5 @@ function mapDispatchToProps(dispatch) {
 }
 exports.ChartDisplayPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ChartDisplayPopupComponent);
 /*
- {this.state.chartData != null &&
-                    <IgrCategoryChart
-                        yAxisMinimumValue={0}
-                        chartTitle={this.props.CurrentChartName}
-                        yAxisTitle="Notional"
-                        xAxisTitle="Counterparty"
-                        width="700px"
-                        height="500px"
-                        dataSource={this.state.chartData} />
+ 
 */ 

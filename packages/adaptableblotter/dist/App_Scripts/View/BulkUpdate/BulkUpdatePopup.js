@@ -66,7 +66,7 @@ class BulkUpdatePopupComponent extends React.Component {
                                             "Select from existing column values"))),
                                 React.createElement(react_bootstrap_1.Row, null,
                                     React.createElement(react_bootstrap_1.Col, { xs: 9 }, this.state.useSelector ?
-                                        React.createElement(ColumnValueSelector_1.ColumnValueSelector, { cssClassName: cssClassName, SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: col, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns), AllowNew: false })
+                                        React.createElement(ColumnValueSelector_1.ColumnValueSelector, { cssClassName: cssClassName, SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: col, Blotter: this.props.Blotter, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns), AllowNew: false })
                                         :
                                             React.createElement(react_bootstrap_1.FormControl, { value: String(this.props.BulkUpdateValue), type: UIHelper_1.UIHelper.getDescriptionForDataType(col.DataType), placeholder: UIHelper_1.UIHelper.getPlaceHolderforDataType(col.DataType), onChange: (e) => this.onBulkUpdateValueChange(e) })),
                                     React.createElement(react_bootstrap_1.Col, { xs: 3 },
@@ -77,7 +77,7 @@ class BulkUpdatePopupComponent extends React.Component {
                                 " ",
                                 React.createElement(react_bootstrap_1.Row, null,
                                     React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                                        React.createElement(ColumnValueSelector_1.ColumnValueSelector, { cssClassName: cssClassName, SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: col, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
+                                        React.createElement(ColumnValueSelector_1.ColumnValueSelector, { cssClassName: cssClassName, SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: col, Blotter: this.props.Blotter, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
                                     React.createElement(react_bootstrap_1.Col, { xs: 4 },
                                         React.createElement(react_bootstrap_1.Button, { bsStyle: this.getButtonStyle(), disabled: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent || hasDataTypeError, onClick: () => { this.onApplyClick(); } }, "Apply to Grid"),
                                         ' ',

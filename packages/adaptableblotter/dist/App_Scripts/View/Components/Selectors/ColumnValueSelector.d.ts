@@ -1,12 +1,11 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { DistinctCriteriaPairValue } from '../../../Core/Enums';
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
     SelectedColumn: IColumn;
     SelectedColumnValue: string;
     onColumnValueChange: (columnvalue: any) => void;
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>;
+    Blotter: IAdaptableBlotter;
     AllowNew?: boolean;
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
     cssClassName: string;

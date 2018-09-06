@@ -12,7 +12,7 @@ export interface IRangeEvaluation {
     initialValue: any;
 }
 export declare module ExpressionHelper {
-    function CreateSingleColumnExpression(columnId: string, columnValues: Array<string>, userFilters: Array<string>, ranges: Array<IRange>): Expression;
+    function CreateSingleColumnExpression(columnId: string, columnDisplayValues: Array<string>, columnRawValues: Array<string>, userFilters: Array<string>, ranges: Array<IRange>): Expression;
     function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, filters: any): string;
     function ConvertRangeToString(range: IRange, columns: IColumn[]): string;
     function IsSatisfied(Expression: Expression, getColumnValue: (columnId: string) => any, getDisplayColumnValue: (columnId: string) => string, getOtherColumnValue: (columnId: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: string[], blotter: IAdaptableBlotter): boolean;

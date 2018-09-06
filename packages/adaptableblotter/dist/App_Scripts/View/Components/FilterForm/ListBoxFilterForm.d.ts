@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LeafExpressionOperator, DataType } from '../../../Core/Enums';
+import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Core/Enums';
 import { ListGroupProps } from 'react-bootstrap';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
@@ -7,7 +7,7 @@ import { IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 export interface ListBoxFilterFormProps extends ListGroupProps {
     CurrentColumn: IColumn;
     Columns: IColumn[];
-    ColumnValues: Array<IRawValueDisplayValuePair>;
+    ColumnValuePairs: Array<IRawValueDisplayValuePair>;
     UserFilters: Array<IRawValueDisplayValuePair>;
     UiSelectedColumnValues: Array<string>;
     UiSelectedUserFilters: Array<string>;
@@ -18,12 +18,14 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     Operators: Array<LeafExpressionOperator>;
     DataType: DataType;
     cssClassName: string;
+    DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
     UiSelectedColumnValues: Array<string>;
     UiSelectedUserFilters: Array<string>;
     UiSelectedRange: IRange;
     FilterValue: string;
+    DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
 export declare class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, ListBoxFilterFormState> {
     constructor(props: ListBoxFilterFormProps);

@@ -24,8 +24,8 @@ class ColumnValueSelector extends React.Component {
         if (allowNew) {
             placeholderText += " or enter free text";
         }
-        if (this.props.SelectedColumn != null && this.props.getColumnValueDisplayValuePairDistinctList != null) {
-            let columnDisplayValuePairs = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+        if (this.props.SelectedColumn != null && this.props.Blotter != null && this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null) {
+            let columnDisplayValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
             if (StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
                 selectedValue = "";
             }

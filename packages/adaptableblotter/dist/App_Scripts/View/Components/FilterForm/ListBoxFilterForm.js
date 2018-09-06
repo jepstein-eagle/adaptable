@@ -17,6 +17,7 @@ class ListBoxFilterForm extends React.Component {
             UiSelectedUserFilters: this.props.UiSelectedUserFilters,
             UiSelectedRange: this.props.UiSelectedRange,
             FilterValue: "",
+            DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue
         };
     }
     componentWillReceiveProps(nextProps, nextContext) {
@@ -40,15 +41,22 @@ class ListBoxFilterForm extends React.Component {
                 return React.createElement(react_bootstrap_1.ListGroupItem, { key: "userFilter" + y, style: userFilterItemStyle, onClick: () => this.onClickItemUserFilter(x), active: isActive, value: value }, display);
             }
         });
-        let columnValuesItemsElements = this.props.ColumnValues.map((x, y) => {
-            let isActive = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
-            let value = x.DisplayValue;
-            let display = x.DisplayValue;
-            if (StringExtensions_1.StringExtensions.IsNotEmpty(this.state.FilterValue) && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
+        let columnValuesItemsElements = this.props.ColumnValuePairs.map((x, y) => {
+            let isActive;
+            let columnValue;
+            if (this.props.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) {
+                isActive = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
+                columnValue = x.DisplayValue;
+            }
+            else {
+                isActive = this.state.UiSelectedColumnValues.indexOf(x.RawValue) >= 0;
+                columnValue = x.RawValue;
+            }
+            if (StringExtensions_1.StringExtensions.IsNotEmpty(this.state.FilterValue) && columnValue.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
                 return null;
             }
             else {
-                return React.createElement(react_bootstrap_1.ListGroupItem, { key: "columnValue" + y, style: columnVItemStyle, onClick: () => this.onClickItemColumnValue(x), active: isActive, value: value }, display);
+                return React.createElement(react_bootstrap_1.ListGroupItem, { key: "columnValue" + y, style: columnVItemStyle, onClick: () => this.onClickItemColumnValue(x), active: isActive, value: columnValue }, columnValue);
             }
         });
         let textClear = React.createElement(AdaptableBlotterFormControlTextClear_1.AdaptableBlotterFormControlTextClear, { cssClassName: this.props.cssClassName, autoFocus: true, style: searchFilterStyle, type: "text", placeholder: "Search Filters", value: this.state.FilterValue, bsSize: "small", OnTextChange: (x) => this.onUpdateFilterSearch(x) });

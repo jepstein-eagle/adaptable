@@ -39,7 +39,8 @@ class ChartService {
         let columnValueExpressions = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,
-                ColumnValues: [kvp.Value]
+                ColumnDisplayValues: [kvp.Value],
+                ColumnRawValues: []
             };
         });
         let completedExpression = {

@@ -54,7 +54,7 @@ var FilterHelper;
     function CreateColumnFilterFromUserFilter(userFilter) {
         return {
             ColumnId: userFilter.ColumnId,
-            Filter: ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [userFilter.Name], []),
+            Filter: ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [], [userFilter.Name], []),
             IsReadOnly: false
         };
     }

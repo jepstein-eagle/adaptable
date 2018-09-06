@@ -62,6 +62,7 @@ const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
 const DefaultAdaptableBlotterOptions_1 = require("../../Core/DefaultAdaptableBlotterOptions");
 const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
+const ChartStrategy_1 = require("../../Strategy/ChartStrategy");
 const ChartService_1 = require("../../Core/Services/ChartService");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
@@ -101,7 +102,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        // this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
@@ -1028,6 +1029,7 @@ class AdaptableBlotter {
             let columns = this.getState().Grid.Columns;
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
+                alert("first");
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
@@ -1041,7 +1043,8 @@ class AdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.BlotterOptions.serverSearchOption == 'None' || 'AdvancedSearch') {
+            if (this.BlotterOptions.serverSearchOption == 'None' || this.BlotterOptions.serverSearchOption == 'AdvancedSearch') {
+                alert(this.BlotterOptions.serverSearchOption);
                 let columnFilters = this.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {

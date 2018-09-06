@@ -10,8 +10,8 @@ const AdaptableBlotterLogger_1 = require("./AdaptableBlotterLogger");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 var ExpressionHelper;
 (function (ExpressionHelper) {
-    function CreateSingleColumnExpression(columnId, columnValues, userFilters, ranges) {
-        return new Expression_1.Expression(columnValues && columnValues.length > 0 ? [{ ColumnId: columnId, ColumnValues: columnValues }] : [], userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [], ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []);
+    function CreateSingleColumnExpression(columnId, columnDisplayValues, columnRawValues, userFilters, ranges) {
+        return new Expression_1.Expression(columnDisplayValues && columnDisplayValues.length > 0 ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues: columnRawValues }] : [], userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [], ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []);
     }
     ExpressionHelper.CreateSingleColumnExpression = CreateSingleColumnExpression;
     function ConvertExpressionToString(Expression, columns, filters) {
@@ -24,9 +24,9 @@ var ExpressionHelper;
             let columnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(columnId, columns);
             let columnToString = "";
             // Column Display Values
-            let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
-            if (columnValues) {
-                columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName);
+            let columnValueExpression = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
+            if (columnValueExpression) {
+                columnToString = ColumnValueExpressionToString(columnValueExpression, columnFriendlyName);
             }
             // User Filters
             let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
@@ -34,15 +34,15 @@ var ExpressionHelper;
                 if (columnToString != "") {
                     columnToString += " OR ";
                 }
-                columnToString += UserFiltersKeyPairToString(columnUserFilters.Filters, columnFriendlyName);
+                columnToString += UserFiltersToString(columnUserFilters.Filters, columnFriendlyName);
             }
             // Column Ranges
-            let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
-            if (columnRanges) {
+            let columnRange = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
+            if (columnRange) {
                 if (columnToString != "") {
                     columnToString += " OR ";
                 }
-                columnToString += RangesToString(columnRanges, columnFriendlyName, columns);
+                columnToString += RangesToString(columnRange, columnFriendlyName, columns);
             }
             if (returnValue != "") {
                 returnValue += " AND ";
@@ -76,7 +76,7 @@ var ExpressionHelper;
                 let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
                 if (columnValues) {
                     let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId);
-                    isColumnSatisfied = ArrayExtensions_1.ArrayExtensions.ContainsItem(columnValues.ColumnValues, columnDisplayValue);
+                    isColumnSatisfied = ArrayExtensions_1.ArrayExtensions.ContainsItem(columnValues.ColumnDisplayValues, columnDisplayValue);
                 }
             }
             // Check for filter expressions if column fails
@@ -126,11 +126,11 @@ var ExpressionHelper;
         return true;
     }
     ExpressionHelper.IsSatisfied = IsSatisfied;
-    function ColumnValuesKeyValuePairToString(keyValuePair, columnFriendlyName) {
+    function ColumnValueExpressionToString(columnValueExpression, columnFriendlyName) {
         return "[" + columnFriendlyName + "]"
-            + " In (" + keyValuePair.ColumnValues.join(", ") + ")";
+            + " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")";
     }
-    function UserFiltersKeyPairToString(userFilters, columnFriendlyName) {
+    function UserFiltersToString(userFilters, columnFriendlyName) {
         let returnValue = "";
         for (let userFilter of userFilters) {
             if (returnValue != "") {
@@ -272,9 +272,9 @@ var ExpressionHelper;
         }
     }
     ExpressionHelper.GetOperatorsForDataType = GetOperatorsForDataType;
-    function RangesToString(keyValuePair, columnFriendlyName, columns) {
+    function RangesToString(rangeExpression, columnFriendlyName, columns) {
         let returnValue = "";
-        for (let range of keyValuePair.Ranges) {
+        for (let range of rangeExpression.Ranges) {
             if (returnValue != "") {
                 returnValue += " OR ";
             }

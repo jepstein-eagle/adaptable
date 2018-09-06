@@ -8,11 +8,12 @@ export interface IAdaptableBlotterObject {
     IsReadOnly: boolean;
 }
 /**
- * Any column values contained in the expression, grouped by column (using their DISPLAY value, not their raw value)
+ * Any column display (and optionally raw) values contained in the expression, grouped by column
  */
 export interface IColumnValueExpression {
     ColumnId: string;
-    ColumnValues: string[];
+    ColumnDisplayValues: string[];
+    ColumnRawValues?: string[];
 }
 /**
  * Any filters - user, system or column - contained in the expression, grouped by column

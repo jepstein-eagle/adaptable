@@ -93,5 +93,9 @@ export interface IAdaptableBlotterOptions {
      * Promise providing list of column values
      * Called each time a query is built or filter is opened
      */
-    getColumnValues?: (column: string) => Promise<string[]>;
+    getColumnValues?: (column: string) => Promise<IServerColumnValues>;
+}
+export interface IServerColumnValues {
+    DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
+    ColumnValues: string[];
 }

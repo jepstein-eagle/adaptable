@@ -1,13 +1,13 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IChartDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
-import { DistinctCriteriaPairValue } from "../../../Core/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[];
     Columns: IColumn[];
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>;
+    Blotter: IAdaptableBlotter;
 }
 export interface ChartXAxisWizardState {
     XAxisColumn: string;
