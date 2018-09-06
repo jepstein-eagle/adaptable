@@ -39,7 +39,7 @@ export default class App extends React.Component {
 
    createAdaptableBlotterOptions(gridOptions) {
     return {
-      primaryKey: "tradeId",
+      primaryKey: "make",
       vendorGrid: gridOptions,
       userName: "AgGrid Wrapper user",
       blotterId: "AgGrid Wrapper"
