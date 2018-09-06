@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const Helper_1 = require("../../Core/Helpers/Helper");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const CalculatedColumnRedux = require("../../Redux/ActionsReducers/CalculatedColumnRedux");
 const CalculatedColumnWizard_1 = require("./Wizard/CalculatedColumnWizard");
 const UIHelper_1 = require("../UIHelper");
@@ -22,7 +22,7 @@ class CalculatedColumnSummaryComponent extends React.Component {
         this.props.CalculatedColumns.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 detailRow =
-                    React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "UF" + index, Item1: StrategyNames.CalculatedColumnStrategyName, Item2: item.ColumnExpression, ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyNames.CalculatedColumnStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CalculatedColumnRedux.CalculatedColumnDelete(index), showBold: true });
+                    React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "UF" + index, Item1: StrategyIds.CalculatedColumnStrategyName, Item2: item.ColumnExpression, ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.CalculatedColumnStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CalculatedColumnRedux.CalculatedColumnDelete(index), showBold: true });
             }
         });
         return React.createElement("div", null,

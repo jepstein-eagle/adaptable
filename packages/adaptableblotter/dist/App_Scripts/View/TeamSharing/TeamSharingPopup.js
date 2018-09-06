@@ -7,8 +7,6 @@ const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux")
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const StrategyProfile_1 = require("../Components/StrategyProfile");
 const StyleVisualItem_1 = require("../Components/StyleVisualItem");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
@@ -44,7 +42,7 @@ class TeamSharingPopupComponent extends React.Component {
                                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: "import" }))))));
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.TeamSharingStrategyName, infoBody: infoBody, bsStyle: "primary", glyphicon: StrategyGlyphs.TeamSharingGlyph },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.TeamSharingStrategyName, infoBody: infoBody, bsStyle: "primary", glyphicon: StrategyIds.TeamSharingGlyph },
                 this.props.Entities.length == 0 ?
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Shared Items will appear here when available.")
                     : React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: colItems, bsStyle: "info" }),

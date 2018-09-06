@@ -8,7 +8,7 @@ const ReportHelper_1 = require("../../Core/Helpers/ReportHelper");
 const OpenfinHelper_1 = require("../../Core/Helpers/OpenfinHelper");
 const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 class ReportEntityRow extends React.Component {
     render() {
         let report = this.props.AdaptableBlotterObject;
@@ -30,7 +30,7 @@ class ReportEntityRow extends React.Component {
             : React.createElement(react_bootstrap_1.MenuItem, { onClick: () => this.props.onExport(Enums_1.ExportDestination.iPushPull), key: "IPPExcel" },
                 " ",
                 "Start Sync with iPushPull");
-        let exportGlyph = React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyGlyphs.ExportGlyph });
+        let exportGlyph = React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyIds.ExportGlyph });
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = report.Name;

@@ -4,7 +4,7 @@ const React = require("react");
 const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const ChartYAxisWizard_1 = require("./ChartYAxisWizard");
 const ChartSummaryWizard_1 = require("./ChartSummaryWizard");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 const ChartXAxisWizard_1 = require("./ChartXAxisWizard");
 const ChartSettingsWizard_1 = require("./ChartSettingsWizard");
 const ChartAdditionalColumnWizard_1 = require("./ChartAdditionalColumnWizard");
@@ -13,7 +13,7 @@ class ChartWizard extends React.Component {
         let stepNames = ["Settings", "Y Axis", "X Axis", "Segemented", "Summary"];
         let Charts = this.props.ConfigEntities;
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyNames.ChartStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyIds.ChartStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(ChartSettingsWizard_1.ChartSettingsWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], ChartDefinitions: Charts }),
                     React.createElement(ChartYAxisWizard_1.ChartYAxisWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], ChartDefinitions: Charts, Columns: this.props.Columns }),
                     React.createElement(ChartXAxisWizard_1.ChartXAxisWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2], ChartDefinitions: Charts, Columns: this.props.Columns, Blotter: this.props.Blotter }),

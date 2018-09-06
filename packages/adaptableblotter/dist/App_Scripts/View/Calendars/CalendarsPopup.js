@@ -9,8 +9,7 @@ const CalendarsEntryRow_1 = require("./CalendarsEntryRow");
 const CalendarEntryItem_1 = require("./CalendarEntryItem");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 class CalendarsPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +35,7 @@ class CalendarsPopupComponent extends React.Component {
             this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry) => {
                 return React.createElement(CalendarEntryItem_1.CalendarEntryItem, { cssClassName: cssClassName, CalendarEntry: calendarEntry, key: calendarEntry.HolidayName + calendarEntry.HolidayDate });
             });
-        return React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.CalendarStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.CalendarGlyph, infoBody: infoBody },
+        return React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.CalendarStrategyName, bsStyle: "primary", glyphicon: StrategyIds.CalendarGlyph, infoBody: infoBody },
             React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: allCalenderColItems, bsStyle: "info", className: "ab_preview_panel" }),
             React.createElement(react_bootstrap_1.ListGroup, null, allCalendars),
             this.state.DisplayedCalendar &&

@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class AboutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
@@ -11,7 +9,7 @@ class AboutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyIds.AboutStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.AboutStrategyName, ScreenPopups.AboutPopup, StrategyGlyphs.AboutGlyph);
+        this.createMenuItemShowPopup(StrategyIds.AboutStrategyName, ScreenPopups.AboutPopup, StrategyIds.AboutGlyph);
     }
     CreateAboutInfo() {
         let options = this.blotter.BlotterOptions;

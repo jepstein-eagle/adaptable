@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const GridRedux = require("../Redux/ActionsReducers/GridRedux");
 class ColumnChooserStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
@@ -11,11 +9,11 @@ class ColumnChooserStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         super(StrategyIds.ColumnChooserStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyGlyphs.ColumnChooserGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyIds.ColumnChooserGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId)) {
-            this.createContextMenuItemReduxAction("Hide Column", StrategyGlyphs.ColumnChooserGlyph, GridRedux.GridHideColumn(columnId));
+            this.createContextMenuItemReduxAction("Hide Column", StrategyIds.ColumnChooserGlyph, GridRedux.GridHideColumn(columnId));
         }
     }
 }

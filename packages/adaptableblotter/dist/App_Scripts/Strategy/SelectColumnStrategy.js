@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const GridRedux = require("../Redux/ActionsReducers/GridRedux");
 class SelectColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
@@ -12,7 +10,7 @@ class SelectColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
     addContextMenuItem(columnId) {
         if (this.blotter.isSelectable()) {
             if (this.canCreateContextMenuItem(columnId)) {
-                this.createContextMenuItemReduxAction(StrategyNames.SelectColumnStrategyName, StrategyGlyphs.SelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
+                this.createContextMenuItemReduxAction(StrategyIds.SelectColumnStrategyName, StrategyIds.SelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
             }
         }
     }

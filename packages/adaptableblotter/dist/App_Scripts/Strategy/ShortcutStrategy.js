@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ShortcutRedux = require("../Redux/ActionsReducers/ShortcutRedux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
@@ -17,7 +15,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyGlyphs.ShortcutGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyIds.ShortcutGlyph);
     }
     InitState() {
         if (this.Shortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts) {

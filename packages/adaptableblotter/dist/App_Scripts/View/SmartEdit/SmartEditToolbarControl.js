@@ -10,8 +10,6 @@ const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const ButtonApply_1 = require("../Components/Buttons/ButtonApply");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const AdaptablePopover_1 = require("../AdaptablePopover");
@@ -58,7 +56,7 @@ class SmartEditToolbarControlComponent extends React.Component {
                 this.props.IsValidSelection &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Preview Results", tooltipText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.SmartEditStrategyName, glyphicon: StrategyGlyphs.SmartEditGlyph, onClose: () => this.props.onClose(StrategyIds.SmartEditStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SmartEditStrategyName, glyphicon: StrategyIds.SmartEditGlyph, onClose: () => this.props.onClose(StrategyIds.SmartEditStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
     onSmartEditValueChange(event) {
         const e = event.target;

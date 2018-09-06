@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 const PreviewHelper_1 = require("../Core/Helpers/PreviewHelper");
@@ -12,7 +10,7 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyIds.SmartEditStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyGlyphs.SmartEditGlyph);
+        this.createMenuItemShowPopup(StrategyIds.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyIds.SmartEditGlyph);
     }
     ApplySmartEdit(newValues) {
         this.blotter.setValueBatch(newValues);

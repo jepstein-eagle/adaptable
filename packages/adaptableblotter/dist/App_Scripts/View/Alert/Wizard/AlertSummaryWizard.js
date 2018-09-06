@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
 class AlertSummaryWizard extends React.Component {
@@ -22,7 +22,7 @@ class AlertSummaryWizard extends React.Component {
                     "None"
             }
         ];
-        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyNames.AlertStrategyName });
+        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.AlertStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     canNext() {

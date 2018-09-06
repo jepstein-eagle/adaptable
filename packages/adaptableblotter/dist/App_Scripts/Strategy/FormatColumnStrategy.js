@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class FormatColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
@@ -11,14 +9,14 @@ class FormatColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         super(StrategyIds.FormatColumnStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph);
+        this.createMenuItemShowPopup(StrategyIds.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyIds.FormatColumnGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId)) {
             let formatExists = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f => f.ColumnId), columnId);
             let label = formatExists ? "Edit " : "Create ";
             let popupParam = formatExists ? "Edit|" : "New|";
-            this.createContextMenuItemShowPopup(label + StrategyNames.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyGlyphs.FormatColumnGlyph, popupParam + columnId);
+            this.createContextMenuItemShowPopup(label + StrategyIds.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyIds.FormatColumnGlyph, popupParam + columnId);
         }
     }
     InitState() {

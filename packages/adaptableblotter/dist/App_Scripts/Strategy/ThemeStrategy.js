@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const themes_1 = require("../Styles/themes");
 class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
@@ -19,7 +17,7 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         document.head.appendChild(this.theme);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyGlyphs.ThemeGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyIds.ThemeGlyph);
     }
     InitState() {
         if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {

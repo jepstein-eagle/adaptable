@@ -7,7 +7,6 @@ const CellValidationWizard_1 = require("./Wizard/CellValidationWizard");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
@@ -23,12 +22,12 @@ class CellValidationSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyNames.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyNames.CellValidationStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CellValidationStrategyName });
         strategySummaries.push(titleRow);
         // existing items
         this.props.CellValidations.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: item.Description, ConfigEnity: item, EntityName: StrategyNames.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: item.Description, ConfigEnity: item, EntityName: StrategyIds.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });

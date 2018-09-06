@@ -12,8 +12,6 @@ const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -51,7 +49,7 @@ class FormatColumnPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.FormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyGlyphs.FormatColumnGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.FormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyIds.FormatColumnGlyph, infoBody: infoBody },
                 this.props.FormatColumns.length == 0 &&
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new column format."),
                 FormatColumns.length > 0 &&

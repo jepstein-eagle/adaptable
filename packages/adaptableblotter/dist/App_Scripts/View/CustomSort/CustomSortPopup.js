@@ -7,8 +7,6 @@ const CustomSortRedux = require("../../Redux/ActionsReducers/CustomSortRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const CustomSortEntityRow_1 = require("./CustomSortEntityRow");
@@ -56,7 +54,7 @@ class CustomSortPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Custom Sort", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.CustomSortStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyGlyphs.CustomSortGlyph },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.CustomSortStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyIds.CustomSortGlyph },
                 customSorts.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: customSorts }),
                 customSorts.length == 0 &&

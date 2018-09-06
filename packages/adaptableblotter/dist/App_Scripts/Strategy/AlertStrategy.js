@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../Core/Enums");
@@ -20,7 +18,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.AlertStrategyName, ScreenPopups.AlertPopup, StrategyGlyphs.AlertGlyph);
+        this.createMenuItemShowPopup(StrategyIds.AlertStrategyName, ScreenPopups.AlertPopup, StrategyIds.AlertGlyph);
     }
     handleDataSourceChanged(dataChangedEvent) {
         let failedRules = this.CheckDataChanged(dataChangedEvent);

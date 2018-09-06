@@ -7,8 +7,6 @@ const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const ColumnFilterEntityRow_1 = require("./ColumnFilterEntityRow");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
@@ -30,7 +28,7 @@ class ColumnFilterPopupComponent extends React.Component {
             return React.createElement(ColumnFilterEntityRow_1.ColumnFilterEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: null, ColumnFilter: columnFilter, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: null, onDeleteConfirm: null, onClear: () => this.props.onClearColumnFilter(columnFilter), onSaveColumnFilterasUserFilter: () => this.onSaveColumnFilterasUserFilter(columnFilter) });
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.ColumnFilterStrategyName, bsStyle: "primary", className: "ab_main_popup", infoBody: infoBody, glyphicon: StrategyGlyphs.ColumnFilterGlyph },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.ColumnFilterStrategyName, bsStyle: "primary", className: "ab_main_popup", infoBody: infoBody, glyphicon: StrategyIds.ColumnFilterGlyph },
                 columnFilterItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: columnFilterItems }),
                 columnFilterItems.length == 0 &&

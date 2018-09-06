@@ -8,8 +8,6 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Core/Enums");
@@ -44,7 +42,7 @@ class AlertToolbarControlComponent extends React.Component {
             this.props.Alerts.length > 0 &&
                 React.createElement("span", { style: { marginLeft: "3px" } },
                     React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "", tooltipText: "Alerts", bodyText: [alertsPanel], MessageType: this.getMessageType(), useButton: true, triggerAction: "click" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.AlertStrategyName, glyphicon: StrategyGlyphs.AlertGlyph, onClose: () => this.props.onClose(StrategyIds.AlertStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.AlertStrategyName, glyphicon: StrategyIds.AlertGlyph, onClose: () => this.props.onClose(StrategyIds.AlertStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
     getMessageType() {
         if (this.props.Alerts.find(a => a.MessageType == Enums_1.MessageType.Error) != null) {

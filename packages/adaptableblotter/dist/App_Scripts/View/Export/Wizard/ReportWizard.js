@@ -7,12 +7,12 @@ const ReportColumnTypeWizard_1 = require("./ReportColumnTypeWizard");
 const ReportExpressionWizard_1 = require("./ReportExpressionWizard");
 const ReportSettingsWizard_1 = require("./ReportSettingsWizard");
 const ReportSummaryWizard_1 = require("./ReportSummaryWizard");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 class ReportWizard extends React.Component {
     render() {
         let stepNames = ["Select Columns", "Build Query", "Choose Name", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyNames.ExportStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyIds.ExportStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(ReportColumnTypeWizard_1.ReportColumnTypeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0] }),
                     React.createElement(ReportColumnChooserWizard_1.ReportColumnChooserWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),
                     React.createElement(ReportExpressionWizard_1.ReportExpressionWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter }),

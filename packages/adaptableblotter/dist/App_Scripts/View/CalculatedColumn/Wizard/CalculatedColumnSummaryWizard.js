@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 class CalculatedColumnSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ class CalculatedColumnSummaryWizard extends React.Component {
             { Key: "Name", Value: this.props.Data.ColumnId },
             { Key: "Expression", Value: this.props.Data.ColumnExpression }
         ];
-        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyNames.CalculatedColumnStrategyName });
+        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.CalculatedColumnStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     canNext() { return true; }

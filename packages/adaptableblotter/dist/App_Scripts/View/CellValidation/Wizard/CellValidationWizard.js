@@ -8,12 +8,12 @@ const CellValidationExpressionWizard_1 = require("./CellValidationExpressionWiza
 const CellValidationRulesWizard_1 = require("./CellValidationRulesWizard");
 const CellValidationSummaryWizard_1 = require("./CellValidationSummaryWizard");
 const CellValidationSelectQueryWizard_1 = require("./CellValidationSelectQueryWizard");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 class CellValidationWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Choose Action", "Create Rule", "Query", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyNames.CellValidationStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyIds.CellValidationStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(CellValidationSelectColumnWizard_1.CellValidationSelectColumnWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),
                     React.createElement(CellValidationActionWizard_1.CellValidationActionWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns }),
                     React.createElement(CellValidationRulesWizard_1.CellValidationRulesWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2], Columns: this.props.Columns }),

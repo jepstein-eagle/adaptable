@@ -5,12 +5,12 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const FormatColumnScopeWizard_1 = require("./FormatColumnScopeWizard");
 const FormatColumnStyleWizard_1 = require("./FormatColumnStyleWizard");
 const FormatColumnSummaryWizard_1 = require("./FormatColumnSummaryWizard");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 class FormatColumnWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Create Style", "Settings"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyNames.FormatColumnStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyIds.FormatColumnStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(FormatColumnScopeWizard_1.FormatColumnScopeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),
                     React.createElement(FormatColumnStyleWizard_1.FormatColumnStyleWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames }),
                     React.createElement(FormatColumnSummaryWizard_1.FormatColumnSummaryWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2], Columns: this.props.Columns })

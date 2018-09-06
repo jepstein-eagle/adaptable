@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -30,7 +29,7 @@ class AboutPopupComponent extends React.Component {
             return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: cssClassName, key: index, colItems: rowColItems });
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.AboutStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.AboutGlyph },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.AboutStrategyName, bsStyle: "primary", glyphicon: StrategyIds.AboutGlyph },
                 React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: aboutItems })));
     }
 }

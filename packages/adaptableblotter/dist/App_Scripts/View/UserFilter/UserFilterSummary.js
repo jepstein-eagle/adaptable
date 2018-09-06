@@ -6,7 +6,6 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
 const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
@@ -24,12 +23,12 @@ class UserFilterSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__userfilter";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyNames.UserFilterStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.UserFilterStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyNames.UserFilterStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyNames.UserFilterStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.UserFilterStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.UserFilterStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.UserFilterStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.UserFilterStrategyName });
         strategySummaries.push(titleRow);
         // existing items
         this.props.UserFilters.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyNames.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: FilterRedux.UserFilterDelete(item) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: FilterRedux.UserFilterDelete(item) });
                 strategySummaries.push(detailRow);
             }
         });

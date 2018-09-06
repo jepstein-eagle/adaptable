@@ -7,7 +7,6 @@ const CustomSortWizard_1 = require("./Wizard/CustomSortWizard");
 const CustomSortRedux = require("../../Redux/ActionsReducers/CustomSortRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const StrategyProfile_1 = require("../Components/StrategyProfile");
@@ -27,14 +26,14 @@ class CustomSortSummaryComponent extends React.Component {
         let noCustomSort = customSort == null;
         let customSortRow;
         if (!this.props.SummarisedColumn.Sortable) {
-            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyNames.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "Column is not sortable", NewButtonDisabled: true, onNew: () => this.onNew(), NewButtonTooltip: StrategyNames.CustomSortStrategyName });
+            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "Column is not sortable", NewButtonDisabled: true, onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CustomSortStrategyName });
         }
         else if (noCustomSort) {
             // title row
-            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyNames.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "No Custom Sort Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyNames.CustomSortStrategyName });
+            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "No Custom Sort Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CustomSortStrategyName });
         }
         else {
-            customSortRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: StrategyNames.CustomSortStrategyName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CustomSortStrategyId }), Item2: customSort.SortedValues.join(', '), ConfigEnity: customSort, EntityName: StrategyNames.CustomSortStrategyName, onEdit: () => this.onEdit(customSort), onShare: () => this.props.onShare(customSort), showShare: this.props.TeamSharingActivated, onDelete: CustomSortRedux.CustomSortDelete(customSort), showBold: true });
+            customSortRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CustomSortStrategyId }), Item2: customSort.SortedValues.join(', '), ConfigEnity: customSort, EntityName: StrategyIds.CustomSortStrategyName, onEdit: () => this.onEdit(customSort), onShare: () => this.props.onShare(customSort), showShare: this.props.TeamSharingActivated, onDelete: CustomSortRedux.CustomSortDelete(customSort), showBold: true });
         }
         return React.createElement("div", null,
             customSortRow,

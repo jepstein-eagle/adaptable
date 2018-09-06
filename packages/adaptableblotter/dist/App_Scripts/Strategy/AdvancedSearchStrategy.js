@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
@@ -11,7 +9,7 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
         super(StrategyIds.AdvancedSearchStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyGlyphs.AdvancedSearchGlyph);
+        this.createMenuItemShowPopup(StrategyIds.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyIds.AdvancedSearchGlyph);
     }
     InitState() {
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {

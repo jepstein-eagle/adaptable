@@ -7,8 +7,6 @@ const PlusMinusRedux = require("../../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const PlusMinusWizard_1 = require("./Wizard/PlusMinusWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
@@ -52,7 +50,7 @@ class PlusMinusPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createColumnNudgeValue(), overrideTooltip: "Create Plus / Minus Rule", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyNames.PlusMinusStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyGlyphs.PlusMinusGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.PlusMinusStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.PlusMinusGlyph, infoBody: infoBody },
                 PlusMinusRules.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: PlusMinusRules }),
                 PlusMinusRules.length == 0 &&

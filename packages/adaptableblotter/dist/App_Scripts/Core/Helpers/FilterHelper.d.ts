@@ -19,7 +19,6 @@ export declare module FilterHelper {
     const FALSE_SYSTEM_FILTER = "False";
     function GetAllSystemFilters(): string[];
     function GetUserFilters(userFilters: IUserFilter[], userFilterNames: string[]): IUserFilter[];
-    function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter;
     function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter;
     function GetSystemFiltersForColumn(column: IColumn, systemFilters: string[]): string[];
     function GetUserFiltersForColumn(column: IColumn, userFilters: IUserFilter[]): IUserFilter[];

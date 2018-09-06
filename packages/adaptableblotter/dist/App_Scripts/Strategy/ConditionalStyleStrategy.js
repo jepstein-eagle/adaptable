@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
@@ -12,7 +10,7 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter));
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph);
+        this.createMenuItemShowPopup(StrategyIds.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyIds.ConditionalStyleGlyph);
     }
     InitState() {
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
@@ -22,7 +20,7 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId)) {
-            this.createContextMenuItemShowPopup("Create " + StrategyNames.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyGlyphs.ConditionalStyleGlyph, "New|" + columnId);
+            this.createContextMenuItemShowPopup("Create " + StrategyIds.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyIds.ConditionalStyleGlyph, "New|" + columnId);
         }
     }
     // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(

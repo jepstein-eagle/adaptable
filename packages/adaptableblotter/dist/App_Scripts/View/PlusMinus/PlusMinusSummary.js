@@ -7,7 +7,6 @@ const PlusMinusWizard_1 = require("./Wizard/PlusMinusWizard");
 const PlusMinusRedux = require("../../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
@@ -25,12 +24,12 @@ class PlusMinusSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__plusminus";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyNames.PlusMinusStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.PlusMinusStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition"), onNew: () => this.onNew(), NewButtonTooltip: "Plus / Minus Rule" });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.PlusMinusStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.PlusMinusStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition"), onNew: () => this.onNew(), NewButtonTooltip: "Plus / Minus Rule" });
         strategySummaries.push(titleRow);
         // existing items
         this.props.PlusMinusRules.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "PM" + index, cssClassName: this.props.cssClassName, Item1: "Nudge Value: " + item.NudgeValue, Item2: this.wrapExpressionDescription(ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyNames.PlusMinusStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: PlusMinusRedux.PlusMinusDeleteCondition(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "PM" + index, cssClassName: this.props.cssClassName, Item1: "Nudge Value: " + item.NudgeValue, Item2: this.wrapExpressionDescription(ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.PlusMinusStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: PlusMinusRedux.PlusMinusDeleteCondition(index) });
                 strategySummaries.push(detailRow);
             }
         });

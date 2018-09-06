@@ -49,6 +49,7 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
+const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
@@ -280,7 +281,7 @@ var functionLogMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                     let userFilter = FilterHelper_1.FilterHelper.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText);
                     middlewareAPI.dispatch(FilterRedux.UserFilterAddUpdate(-1, userFilter));
                     // then create a new column filter from the user filter - so that it will display the user filter name
-                    let newColumnFilter = FilterHelper_1.FilterHelper.CreateColumnFilterFromUserFilter(userFilter);
+                    let newColumnFilter = ColumnFilterHelper_1.ColumnFilterHelper.CreateColumnFilterFromUserFilter(userFilter);
                     middlewareAPI.dispatch(FilterRedux.ColumnFilterAddUpdate(newColumnFilter));
                     return next(action);
                 }

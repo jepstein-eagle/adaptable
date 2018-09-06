@@ -6,7 +6,6 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const FormatColumnWizard_1 = require("./Wizard/FormatColumnWizard");
 const FormatColumnRedux = require("../../Redux/ActionsReducers/FormatColumnRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
@@ -27,10 +26,10 @@ class FormatColumnSummaryComponent extends React.Component {
         let noFormatColumn = formatColumn == null;
         let formatColumnRow;
         if (noFormatColumn) {
-            formatColumnRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyNames.FormatColumnStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId, StrategySummary: "No Format Column Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyNames.FormatColumnStrategyName });
+            formatColumnRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.FormatColumnStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId, StrategySummary: "No Format Column Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.FormatColumnStrategyName });
         }
         else {
-            formatColumnRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: StrategyNames.FormatColumnStrategyName, cssClassName: this.props.cssClassName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId }), Item2: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: formatColumn.Style }), ConfigEnity: formatColumn, showShare: this.props.TeamSharingActivated, EntityName: StrategyNames.FormatColumnStrategyName, onEdit: () => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), onDelete: FormatColumnRedux.FormatColumnDelete(formatColumn), showBold: true });
+            formatColumnRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: StrategyIds.FormatColumnStrategyName, cssClassName: this.props.cssClassName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId }), Item2: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: formatColumn.Style }), ConfigEnity: formatColumn, showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.FormatColumnStrategyName, onEdit: () => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), onDelete: FormatColumnRedux.FormatColumnDelete(formatColumn), showBold: true });
         }
         return React.createElement("div", null,
             formatColumnRow,

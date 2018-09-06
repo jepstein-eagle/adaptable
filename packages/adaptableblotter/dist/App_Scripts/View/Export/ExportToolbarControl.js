@@ -15,12 +15,10 @@ const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const Enums_1 = require("../../Core/Enums");
 const OpenfinHelper_1 = require("../../Core/Helpers/OpenfinHelper");
 const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 class ExportToolbarControlComponent extends React.Component {
     render() {
@@ -63,7 +61,7 @@ class ExportToolbarControlComponent extends React.Component {
         const exportGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "exportOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "Export") },
-            React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyGlyphs.ExportGlyph }));
+            React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyIds.ExportGlyph }));
         let content = React.createElement("span", null,
             React.createElement(react_bootstrap_1.InputGroup, null,
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableReports.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentReportId, id: "report" }, availableReports),
@@ -81,7 +79,7 @@ class ExportToolbarControlComponent extends React.Component {
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, onClick: () => this.props.onEditReport(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Report", overrideDisableButton: savedReport == null || savedReport.IsReadOnly, ConfigEntity: savedReport, DisplayMode: "Glyph" }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewReport(), size: "small", overrideTooltip: "Create New Report", DisplayMode: "Glyph" }),
                 React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || savedReport.IsReadOnly, ConfigEntity: savedReport, DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: "Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?", ConfirmationTitle: "Delete Report" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.ExportStrategyName, glyphicon: StrategyGlyphs.ExportGlyph, onClose: () => this.props.onClose(StrategyIds.ExportStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ExportStrategyName, glyphicon: StrategyIds.ExportGlyph, onClose: () => this.props.onClose(StrategyIds.ExportStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
     onSelectedReportChanged(reportName) {
         this.props.onSelectReport(reportName);

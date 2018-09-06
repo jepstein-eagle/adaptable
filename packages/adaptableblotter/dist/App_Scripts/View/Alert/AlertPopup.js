@@ -4,8 +4,6 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -51,7 +49,7 @@ class AlertPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createAlert(), overrideTooltip: "Create Alert", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyNames.AlertStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyGlyphs.AlertGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.AlertStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.AlertGlyph, infoBody: infoBody },
                 AlertItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: AlertItems }),
                 AlertItems.length == 0 &&

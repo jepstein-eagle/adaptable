@@ -7,13 +7,13 @@ const AlertExpressionWizard_1 = require("./AlertExpressionWizard");
 const AlertRulesWizard_1 = require("./AlertRulesWizard");
 const AlertSummaryWizard_1 = require("./AlertSummaryWizard");
 const AlertSelectQueryWizard_1 = require("./AlertSelectQueryWizard");
-const StrategyNames = require("../../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../../Core/Constants/StrategyIds");
 const AlertTypeWizard_1 = require("./AlertTypeWizard");
 class AlertWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Alert Rules", "Type", "Add Query", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyNames.AlertStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyIds.AlertStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(AlertSelectColumnWizard_1.AlertSelectColumnWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),
                     React.createElement(AlertRulesWizard_1.AlertRulesWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns }),
                     React.createElement(AlertTypeWizard_1.AlertTypeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2] }),

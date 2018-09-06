@@ -6,8 +6,6 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ShortcutRedux = require("../../Redux/ActionsReducers/ShortcutRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const Enums_1 = require("../../Core/Enums");
 const Enums_2 = require("../../Core/Enums");
 const ShortcutEntityRow_1 = require("./ShortcutEntityRow");
@@ -44,7 +42,7 @@ class ShortcutPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.CreateShortcut(), overrideTooltip: "Create New Shortcut", DisplayMode: "Glyph+Text", size: "small" });
         let shortcut = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.ShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyGlyphs.ShortcutGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyIds.ShortcutGlyph, infoBody: infoBody },
                 shortcuts.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: shortcuts }),
                 shortcuts.length == 0 &&

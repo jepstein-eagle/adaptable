@@ -6,7 +6,7 @@ const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActio
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const Enums_1 = require("../../Core/Enums");
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 class CellValidationEntityRow extends React.Component {
@@ -20,7 +20,7 @@ class CellValidationEntityRow extends React.Component {
         colItems[1].Content = this.setExpressionDescription(cellValidation);
         colItems[2].Content =
             React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: cellValidation.ActionMode, onChange: (x) => this.onActionModeChanged(this.props.Index, x) }, ActionModeTypes);
-        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, cellValidation), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, ConfigEntity: cellValidation, EntityName: StrategyNames.CellValidationStrategyName });
+        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, cellValidation), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, ConfigEntity: cellValidation, EntityName: StrategyIds.CellValidationStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     setExpressionDescription(CellValidation) {

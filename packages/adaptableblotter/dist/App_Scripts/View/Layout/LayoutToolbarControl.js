@@ -12,9 +12,7 @@ const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const ButtonUndo_1 = require("../Components/Buttons/ButtonUndo");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
@@ -44,7 +42,7 @@ class LayoutToolbarControlComponent extends React.Component {
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewLayout(), size: "small", overrideTooltip: "Create a new Layout", DisplayMode: "Glyph" }),
                 React.createElement(ButtonUndo_1.ButtonUndo, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onSelectLayout(this.props.CurrentLayout), size: "small", overrideTooltip: "Undo Layout Changes", overrideDisableButton: !currentLayoutTitle.endsWith(("(Modified)")), ConfigEntity: layoutEntity, DisplayMode: "Glyph" }),
                 React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, ConfigEntity: layoutEntity, DisplayMode: "Glyph", ConfirmAction: LayoutRedux.LayoutDelete(this.props.CurrentLayout), ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?", ConfirmationTitle: "Delete Layout" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.LayoutStrategyName, glyphicon: StrategyGlyphs.LayoutGlyph, onClose: () => this.props.onClose(StrategyIds.LayoutStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.LayoutStrategyName, glyphicon: StrategyIds.LayoutGlyph, onClose: () => this.props.onClose(StrategyIds.LayoutStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
     isLayoutModified(layoutEntity) {
         if (layoutEntity) {

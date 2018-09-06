@@ -5,8 +5,6 @@ const react_redux_1 = require("react-redux");
 const ConditionalStyleRedux = require("../../Redux/ActionsReducers/ConditionalStyleRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../Core/Enums");
 const ConditionalStyleEntityRow_1 = require("./ConditionalStyleEntityRow");
@@ -52,7 +50,7 @@ class ConditionalStylePopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Conditional Style", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyNames.ConditionalStyleStrategyName, button: newButton, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyGlyphs.ConditionalStyleGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.ConditionalStyleStrategyName, button: newButton, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyIds.ConditionalStyleGlyph, infoBody: infoBody },
                 this.props.ConditionalStyles.length == 0 &&
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new conditional style to be applied at row or column level."),
                 conditionalStyles.length > 0 &&

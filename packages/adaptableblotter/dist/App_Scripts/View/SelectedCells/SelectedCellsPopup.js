@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const SelectedCellsRedux = require("../../Redux/ActionsReducers/SelectedCellsRedux");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -36,7 +35,7 @@ class SelectedCellsPopupComponent extends React.Component {
             rowElements.push(this.createRow(colItems, Enums_1.SelectedCellOperation.VWAP, this.props.SelectedCellSummary.VWAP, cssClassName));
         }
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.SelectedCellsStrategyName, className: "ab_main_popup", bsStyle: "primary", glyphicon: StrategyGlyphs.SelectedCellsGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.SelectedCellsStrategyName, className: "ab_main_popup", bsStyle: "primary", glyphicon: StrategyIds.SelectedCellsGlyph, infoBody: infoBody },
                 React.createElement("div", { className: this.props.cssClassName + StyleConstants.ITEMS_TABLE },
                     React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: colItems, bsStyle: "info" }),
                     this.props.SelectedCellSummary != null ?

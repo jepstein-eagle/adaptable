@@ -6,8 +6,6 @@ const react_bootstrap_1 = require("react-bootstrap");
 const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
@@ -66,7 +64,7 @@ class UserFilterPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create User Filter", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyNames.UserFilterStrategyName, bsStyle: "primary", cssClassName: cssClassName, infoBody: infoBody, button: newButton, glyphicon: StrategyGlyphs.UserFilterGlyph },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.UserFilterStrategyName, bsStyle: "primary", cssClassName: cssClassName, infoBody: infoBody, button: newButton, glyphicon: StrategyIds.UserFilterGlyph },
                 UserFilterItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: UserFilterItems }),
                 UserFilterItems.length == 0 &&

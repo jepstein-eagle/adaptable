@@ -21,12 +21,13 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const FormatColumnRedux = require("../../Redux/ActionsReducers/FormatColumnRedux");
 const GeneralConstants_1 = require("../Constants/GeneralConstants");
-const StrategyNames = require("../Constants/StrategyNames");
+const StrategyIds = require("../Constants/StrategyIds");
 const Enums_1 = require("../Enums");
 const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore");
 const AdaptableBlotterLogger_1 = require("../Helpers/AdaptableBlotterLogger");
 const FilterHelper_1 = require("../Helpers/FilterHelper");
 const ObjectFactory_1 = require("../ObjectFactory");
+const ColumnFilterHelper_1 = require("../Helpers/ColumnFilterHelper");
 class BlotterApiBase {
     constructor(blotter) {
         this.blotter = blotter;
@@ -37,7 +38,7 @@ class BlotterApiBase {
     // Layout api methods
     layoutSet(layoutName) {
         let layout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
-        if (this.checkItemExists(layout, layoutName, StrategyNames.LayoutStrategyName)) {
+        if (this.checkItemExists(layout, layoutName, StrategyIds.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
         }
     }
@@ -218,7 +219,7 @@ class BlotterApiBase {
     columnFilterSetUserFilter(userFilter) {
         let existingUserFilter = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
-            let columnFilter = FilterHelper_1.FilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter);
+            let columnFilter = ColumnFilterHelper_1.ColumnFilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter);
             this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(columnFilter));
         }
     }
@@ -263,7 +264,7 @@ class BlotterApiBase {
     // Data Source api methods
     dataSourceSet(dataSourceName) {
         let dataSource = this.blotter.AdaptableBlotterStore.TheStore.getState().DataSource.DataSources.find(a => a == dataSourceName);
-        if (this.checkItemExists(dataSource, dataSourceName, StrategyNames.DataSourceStrategyName)) {
+        if (this.checkItemExists(dataSource, dataSourceName, StrategyIds.DataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource));
         }
     }
@@ -273,7 +274,7 @@ class BlotterApiBase {
     // Advanced Search api methods
     advancedSearchSet(advancedSearchName) {
         let advancedSearch = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
-        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyNames.AdvancedSearchStrategyName)) {
+        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyIds.AdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));
         }
     }

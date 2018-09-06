@@ -8,8 +8,6 @@ const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Core/Enums");
@@ -46,7 +44,7 @@ class ColumnFilterToolbarControlComponent extends React.Component {
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Active Filters", bodyText: infoBody, tooltipText: "Show Filter Details", MessageType: Enums_1.MessageType.Info, useButton: true, triggerAction: "click" }),
                         ' ',
                         React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0 }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.ColumnFilterStrategyName, glyphicon: StrategyGlyphs.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyIds.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ColumnFilterStrategyName, glyphicon: StrategyIds.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyIds.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
 }
 function mapStateToProps(state, ownProps) {

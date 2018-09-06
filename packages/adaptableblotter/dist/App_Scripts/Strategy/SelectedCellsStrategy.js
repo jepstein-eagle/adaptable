@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
@@ -12,7 +10,7 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         super(StrategyIds.SelectedCellsStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyGlyphs.SelectedCellsGlyph);
+        this.createMenuItemShowPopup(StrategyIds.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyIds.SelectedCellsGlyph);
     }
     CreateSelectedCellSummary(selectedCellInfo) {
         let selectedCellSummary;

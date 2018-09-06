@@ -6,13 +6,11 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 class ApplicationToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__Application";
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.ApplicationStrategyName, glyphicon: StrategyGlyphs.ApplicationGlyph, onClose: () => this.props.onClose(StrategyIds.ApplicationStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) },
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ApplicationStrategyName, glyphicon: StrategyIds.ApplicationGlyph, onClose: () => this.props.onClose(StrategyIds.ApplicationStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) },
             React.createElement("div", { className: "ApplicationToolBarContents", style: { minHeight: 30 } }));
     }
 }

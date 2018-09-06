@@ -11,8 +11,6 @@ const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const Enums_1 = require("../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
@@ -40,7 +38,7 @@ class ChartToolbarControlComponent extends React.Component {
                 React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph" }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewChartDefinition(), size: "small", overrideTooltip: "Create New Chart Definition", DisplayMode: "Glyph" }),
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.ChartStrategyName, glyphicon: StrategyGlyphs.ChartGlyph, onClose: () => this.props.onClose(StrategyIds.ChartStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ChartStrategyName, glyphicon: StrategyIds.ChartGlyph, onClose: () => this.props.onClose(StrategyIds.ChartStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
     onSelectedChartDefinitionChanged(chartDefinitionName) {
         this.props.onSelectChartDefinition(chartDefinitionName);

@@ -5,8 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const ThemeRedux = require("../../Redux/ActionsReducers/ThemeRedux");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 class ThemePopupComponent extends React.Component {
     render() {
@@ -23,7 +22,7 @@ class ThemePopupComponent extends React.Component {
             return React.createElement("option", { value: x, key: x }, x);
         });
         return (React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.ThemeStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.ThemeGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ThemeStrategyName, bsStyle: "primary", glyphicon: StrategyIds.ThemeGlyph, infoBody: infoBody },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "themepicker" },
                         React.createElement(react_bootstrap_1.Col, { xs: 2 },

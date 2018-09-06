@@ -13,8 +13,6 @@ const ReportWizard_1 = require("./Wizard/ReportWizard");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -52,7 +50,7 @@ class ExportPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Report", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.ExportStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.ExportGlyph, infoBody: infoBody, button: newButton },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ExportStrategyName, bsStyle: "primary", glyphicon: StrategyIds.ExportGlyph, infoBody: infoBody, button: newButton },
                 Reports.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: Reports, allowOverflow: false }),
                 Reports.length == 0 &&

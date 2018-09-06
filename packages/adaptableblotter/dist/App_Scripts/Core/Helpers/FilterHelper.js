@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ExpressionHelper_1 = require("./ExpressionHelper");
 const Enums_1 = require("../Enums");
 const Helper_1 = require("./Helper");
 var FilterHelper;
@@ -48,17 +47,6 @@ var FilterHelper;
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null);
     }
     FilterHelper.GetUserFilters = GetUserFilters;
-    //  export function GetSystemFilters(allSystemFilters: string[], columnSystemFilters: string[]): string[] {
-    //    return allSystemFilters.filter(f => columnSystemFilters.find(u => u == f) != null)
-    // }
-    function CreateColumnFilterFromUserFilter(userFilter) {
-        return {
-            ColumnId: userFilter.ColumnId,
-            Filter: ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [], [userFilter.Name], []),
-            IsReadOnly: false
-        };
-    }
-    FilterHelper.CreateColumnFilterFromUserFilter = CreateColumnFilterFromUserFilter;
     function CreateUserFilterFromColumnFilter(columnFilter, name) {
         return {
             Name: name,

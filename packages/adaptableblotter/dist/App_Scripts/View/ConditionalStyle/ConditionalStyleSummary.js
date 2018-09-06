@@ -7,7 +7,6 @@ const ConditionalStyleWizard_1 = require("./Wizard/ConditionalStyleWizard");
 const ConditionalStyleRedux = require("../../Redux/ActionsReducers/ConditionalStyleRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const Enums_1 = require("../../Core/Enums");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const StyleVisualItem_1 = require("../Components/StyleVisualItem");
@@ -26,12 +25,12 @@ class ConditionalStyleSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyNames.ConditionalStyleStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ConditionalStyleStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), StrategyNames.ConditionalStyleStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyNames.ConditionalStyleStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.ConditionalStyleStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ConditionalStyleStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), StrategyIds.ConditionalStyleStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.ConditionalStyleStrategyName });
         strategySummaries.push(titleRow);
         // existing items
         this.props.ConditionalStyles.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CS" + index, Item1: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: item.Style }), Item2: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters), ConfigEnity: item, EntityName: StrategyNames.ConditionalStyleStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: ConditionalStyleRedux.ConditionalStyleDelete(index, item) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CS" + index, Item1: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: item.Style }), Item2: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters), ConfigEnity: item, EntityName: StrategyIds.ConditionalStyleStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: ConditionalStyleRedux.ConditionalStyleDelete(index, item) });
                 strategySummaries.push(detailRow);
             }
         });

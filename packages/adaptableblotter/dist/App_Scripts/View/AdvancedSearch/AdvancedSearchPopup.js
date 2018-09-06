@@ -12,8 +12,6 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -54,7 +52,7 @@ class AdvancedSearchPopupComponent extends React.Component {
         });
         let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyNames.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyGlyphs.AdvancedSearchGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyIds.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyIds.AdvancedSearchGlyph, className: "ab_main_popup" },
                 advancedSearchRows.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: advancedSearchRows }),
                 advancedSearchRows.length == 0 &&

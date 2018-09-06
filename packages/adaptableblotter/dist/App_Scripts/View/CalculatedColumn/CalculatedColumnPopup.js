@@ -6,8 +6,6 @@ const react_bootstrap_1 = require("react-bootstrap");
 const CalculatedColumnRedux = require("../../Redux/ActionsReducers/CalculatedColumnRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
@@ -51,7 +49,7 @@ class CalculatedColumnPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyNames.CalculatedColumnStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyGlyphs.CalculatedColumnGlyph },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.CalculatedColumnStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyIds.CalculatedColumnGlyph },
                 this.props.CalculatedColumns.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: calculatedColumns }),
                 this.props.CalculatedColumns.length == 0 &&

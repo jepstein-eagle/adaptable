@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const igr_category_chart_1 = require("igniteui-react-charts/ES2015/igr-category-chart");
 const igr_category_chart_module_1 = require("igniteui-react-charts/ES2015/igr-category-chart-module");
@@ -20,7 +19,7 @@ class ChartDisplayPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__Charts";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.ChartStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.ChartGlyph }, this.state.chartData != null &&
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.ChartStrategyName, bsStyle: "primary", glyphicon: StrategyIds.ChartGlyph }, this.state.chartData != null &&
                 React.createElement(igr_category_chart_1.IgrCategoryChart, { yAxisMinimumValue: 0, chartTitle: this.props.CurrentChartName, yAxisTitle: "Notional", xAxisTitle: "Counterparty", width: "700px", height: "500px", dataSource: this.state.chartData })));
     }
 }

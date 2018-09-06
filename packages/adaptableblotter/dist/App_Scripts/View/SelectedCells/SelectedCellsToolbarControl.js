@@ -6,8 +6,6 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const SelectedCellsRedux = require("../../Redux/ActionsReducers/SelectedCellsRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const Enums_1 = require("../../Core/Enums");
@@ -46,7 +44,7 @@ class SelectedCellsToolbarControlComponent extends React.Component {
                         React.createElement(react_bootstrap_1.ControlLabel, { style: { marginTop: "5px", marginLeft: "3px" } },
                             this.getOperationValue(),
                             " "))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyNames.SelectedCellsStrategyName, glyphicon: StrategyGlyphs.SelectedCellsGlyph, onClose: () => this.props.onClose(StrategyIds.SelectedCellsStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SelectedCellsStrategyName, glyphicon: StrategyIds.SelectedCellsGlyph, onClose: () => this.props.onClose(StrategyIds.SelectedCellsStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
     }
     onSelectionChanged() {
         this.props.onSelectedCellsCreateSummary();

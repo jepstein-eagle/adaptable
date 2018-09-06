@@ -5,8 +5,7 @@ const react_redux_1 = require("react-redux");
 const DataSourceRedux = require("../../Redux/ActionsReducers/DataSourceRedux");
 const react_bootstrap_1 = require("react-bootstrap");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
@@ -31,7 +30,7 @@ class DataSourcePopupComponent extends React.Component {
                         React.createElement(react_bootstrap_1.InputGroup.Button, null,
                             React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), overrideTooltip: "Clear Data Source", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), ConfigEntity: null, DisplayMode: "Text+Glyph" }))))));
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.DataSourceStrategyName, bsStyle: "primary", infoBody: infoBody, glyphicon: StrategyGlyphs.DataSourceGlyph }, content));
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.DataSourceStrategyName, bsStyle: "primary", infoBody: infoBody, glyphicon: StrategyIds.DataSourceGlyph }, content));
     }
     onSelectedDataSourceChanged(dataSource) {
         this.props.onSelectDataSource(dataSource);

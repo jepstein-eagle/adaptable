@@ -9,8 +9,7 @@ const FlashingCellEntityRow_1 = require("./FlashingCellEntityRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
@@ -49,7 +48,7 @@ class FlashingCellsPopupComponent extends React.Component {
                 React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
                     React.createElement(react_bootstrap_1.Checkbox, { onChange: () => this.props.onSelectAllColumns(!areAllLive, allPotentialFlashingCells), checked: areAllLive }, " All Columns "))));
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.FlashingCellsStrategyName, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyGlyphs.FlashingCellGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.FlashingCellsStrategyName, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyIds.FlashingCellGlyph, infoBody: infoBody },
                 setAllOption,
                 React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: allFlashingCells, reducedPanel: true })));
     }

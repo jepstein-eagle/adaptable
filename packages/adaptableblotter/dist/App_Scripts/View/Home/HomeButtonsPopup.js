@@ -4,8 +4,6 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
 const DualListBoxEditor_1 = require("../Components/ListBox/DualListBoxEditor");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 class HomeButtonsPopupComponent extends React.Component {
@@ -15,12 +13,12 @@ class HomeButtonsPopupComponent extends React.Component {
         this.props.DashboardState.VisibleButtons.forEach(x => {
             let menuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == x);
             if (menuItem != null && menuItem.IsVisible) {
-                selectedValues.push(StrategyNames.getNameForStrategy(x));
+                selectedValues.push(StrategyIds.getNameForStrategy(x));
             }
         });
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label);
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Function Buttons Configuration", bsStyle: "primary", glyphicon: StrategyGlyphs.FunctionsGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Function Buttons Configuration", bsStyle: "primary", glyphicon: StrategyIds.FunctionsGlyph, className: "ab_main_popup" },
                 React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableValues, cssClassName: cssClassName, SelectedValues: selectedValues, HeaderAvailable: "Hidden Function Buttons", HeaderSelected: "Visible Function Buttons", onChange: (SelectedValues) => this.ListChange(SelectedValues) })));
     }
     ListChange(selectedValues) {

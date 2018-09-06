@@ -4,8 +4,6 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const CustomSortSummary_1 = require("../CustomSort/CustomSortSummary");
 const ConditionalStyleSummary_1 = require("../ConditionalStyle/ConditionalStyleSummary");
@@ -41,7 +39,7 @@ class ColumnInfoPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let selectedColumnId = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null;
-        let headerText = StrategyNames.ColumnInfoStrategyName;
+        let headerText = StrategyIds.ColumnInfoStrategyName;
         let summaries = [];
         if (this.isStrategyVisible(StrategyIds.CustomSortStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.CustomSortStrategyId, className: this.isStrategyReadOnly(StrategyIds.CustomSortStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
@@ -83,7 +81,7 @@ class ColumnInfoPopupComponent extends React.Component {
             headerText = headerText + ": " + this.state.SelectedColumn.FriendlyName;
         }
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: headerText, bsStyle: "primary", glyphicon: StrategyGlyphs.ColumnInfoGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: headerText, bsStyle: "primary", glyphicon: StrategyIds.ColumnInfoGlyph, infoBody: infoBody },
                 this.state.ShowSelector &&
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                         React.createElement(react_bootstrap_1.FormGroup, { controlId: "searchName" },

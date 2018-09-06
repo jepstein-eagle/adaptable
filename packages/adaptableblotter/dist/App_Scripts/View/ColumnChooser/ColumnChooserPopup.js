@@ -4,8 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const ColumnChooserRedux = require("../../Redux/ActionsReducers/ColumnChooserRedux");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
+const StrategyIds = require("../../Core/Constants/StrategyIds");
 const DualListBoxEditor_1 = require("../Components/ListBox/DualListBoxEditor");
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 class ColumnChooserPopupComponent extends React.Component {
@@ -15,7 +14,7 @@ class ColumnChooserPopupComponent extends React.Component {
             "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.", React.createElement("br", null), React.createElement("br", null),
             "All changes made while using the Column Chooser are implemented in the Blotter immediately."];
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyNames.ColumnChooserStrategyName, bsStyle: "primary", glyphicon: StrategyGlyphs.ColumnChooserGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.ColumnChooserStrategyName, bsStyle: "primary", glyphicon: StrategyIds.ColumnChooserGlyph, infoBody: infoBody },
                 React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x)), cssClassName: cssClassName, SelectedValues: this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x)), HeaderAvailable: "Hidden Columns", HeaderSelected: "Visible Columns", onChange: (SelectedValues) => this.ColumnListChange(SelectedValues) })));
     }
     ColumnListChange(columnList) {

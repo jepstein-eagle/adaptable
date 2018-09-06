@@ -4,8 +4,6 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
-const StrategyNames = require("../../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../../Core/Constants/StrategyGlyphs");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -52,7 +50,7 @@ class CellValidationPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createCellValidation(), overrideTooltip: "Create Cell Validation Rule", DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyNames.CellValidationStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyGlyphs.CellValidationGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.CellValidationStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.CellValidationGlyph, infoBody: infoBody },
                 CellValidationItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: CellValidationItems }),
                 CellValidationItems.length == 0 &&

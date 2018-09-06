@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
-const StrategyNames = require("../Core/Constants/StrategyNames");
-const StrategyGlyphs = require("../Core/Constants/StrategyGlyphs");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
@@ -16,11 +14,11 @@ class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         }
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyGlyphs.CalculatedColumnGlyph);
+        this.createMenuItemShowPopup(StrategyIds.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyIds.CalculatedColumnGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId)) {
-            this.createContextMenuItemShowPopup("Edit " + StrategyNames.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyGlyphs.CalculatedColumnGlyph, "Edit|" + columnId);
+            this.createContextMenuItemShowPopup("Edit " + StrategyIds.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyIds.CalculatedColumnGlyph, "Edit|" + columnId);
         }
     }
 }
