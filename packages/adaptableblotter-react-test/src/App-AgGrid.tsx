@@ -4,6 +4,7 @@ import { ReactHarnessHelper } from "./ReactHarnessHelper";
 import { DataGenerator } from "./DataGenerator";
 import { GridOptions } from "ag-grid";
 import "ag-grid/dist/styles/ag-theme-blue.css";
+import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;

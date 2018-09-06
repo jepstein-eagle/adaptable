@@ -3,7 +3,9 @@
   import { AgGridReact } from "ag-grid-react";
   import "ag-grid/dist/styles/ag-grid.css";
   import "ag-grid/dist/styles/ag-theme-balham.css";
+  import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
+  
 export default class App extends React.Component {
   constructor(props) {
     super(props);

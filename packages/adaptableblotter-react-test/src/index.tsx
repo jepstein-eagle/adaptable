@@ -9,11 +9,11 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <AppJS />,
+  <App />,
   document.getElementById('root') as HTMLElement
 );
 ReactDOM.render(
-  <AppAgGridJS />,
+  <AppAgGrid />,
   document.getElementById('root-aggrid') as HTMLElement
 );
 registerServiceWorker();

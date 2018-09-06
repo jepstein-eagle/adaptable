@@ -6,6 +6,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid/dist/styles/ag-grid.css";
 import "ag-grid/dist/styles/ag-theme-balham.css";
 import { ReactHarnessHelper } from "./ReactHarnessHelper";
+import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;
