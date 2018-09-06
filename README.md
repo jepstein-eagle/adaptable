@@ -1,6 +1,6 @@
 # adaptableblotter
 Repository for the multiple Adaptable Blotter packages developed by Adaptable Tools, including: 
-* core HTML5 version (AdaptableBlotter.JS)
+* 'Core' HTML5 version (AdaptableBlotter.JS)
 * React wrapper (adaptableblotter-react)
 * Angular wrapper (adaptableblotter-angular).
 
