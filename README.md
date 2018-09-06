@@ -9,7 +9,12 @@ Grid components supported included Telerik's Kendo Grid, the ag-Grid, OpenFin's 
 
 AdaptableBlotter.JS is fully data agnostic and can work with any data set you provide it with.  It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
-The Adaptable Blotter is free for development and evaluation use.  A free Community Licence is available for charities, students in full time education and open-source projects.  For all other usage, a commercial annual licence must be purchased.  We offer 2 types of licences: 'Production End User' and 'Universal' to fit our clients different requirements. (This licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  Please see the LICENSE file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
+The Adaptable Blotter is free for development and evaluation use.  
+A free Community Licence is available for charities, students in full time education and open-source projects.  
+For all other usage, a commercial annual licence must be purchased.  
+We offer 2 types of licences: 'Production End User' and 'Universal' to fit our clients different requirements. 
+(This licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  
+Please see the LICENSE file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
 
 The Adaptable Blotter offers wrappers to allow those using JavaScript framworks to implement the product in a framework-friendly manner.  Please see the associated packages for the React Wrapper and Angular Wrapper.
 
