@@ -35,7 +35,10 @@ export class AppComponent {
   ];
 
   gridOptions: GridOptions = {
-    enableSorting: true
+    enableSorting: true,
+    enableRangeSelection: true,
+    enableFilter: true,
+    enableColResize: true
   };
 
   blotterOptions: IAdaptableBlotterOptions = {

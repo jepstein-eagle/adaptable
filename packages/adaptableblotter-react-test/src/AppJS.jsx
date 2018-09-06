@@ -1,16 +1,19 @@
-  import * as React from "react";
-  import { AdaptableBlotter } from "adaptableblotter-react";
-  import { AgGridReact } from "ag-grid-react";
-  import "ag-grid/dist/styles/ag-grid.css";
-  import "ag-grid/dist/styles/ag-theme-balham.css";
-  import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
+import * as React from "react";
+import { AdaptableBlotter } from "adaptableblotter-react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid/dist/styles/ag-grid.css";
+import "ag-grid/dist/styles/ag-theme-balham.css";
+import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
-  
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     let gridOptions = {
-      enableSorting: true
+      enableSorting: true,
+      enableRangeSelection: true,
+      enableFilter: true,
+      enableColResize: true
     };
     this.state = {
       gridOptions: gridOptions,
