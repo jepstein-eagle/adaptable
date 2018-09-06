@@ -6,7 +6,6 @@ import AppAgGrid from './App-AgGrid';
 import AppAgGridJS from './App-AgGridJS';
 import './index.css';
 // import the main style file
-import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(

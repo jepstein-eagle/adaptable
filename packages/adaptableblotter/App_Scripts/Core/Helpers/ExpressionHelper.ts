@@ -6,7 +6,7 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
-import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IRange, IUserFilter, IColumnValueExpression, IRangeExpression } from '../Api/Interface/AdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';
 import { ColumnHelper } from './ColumnHelper';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
@@ -23,10 +23,12 @@ export interface IRangeEvaluation {
 export module ExpressionHelper {
   
     export function CreateSingleColumnExpression(columnId: string,
-        columnValues: Array<string>,
+        columnDisplayValues: Array<string>,
+        columnRawValues: Array<string>,
         userFilters: Array<string>,
         ranges: Array<IRange>) {
-        return new Expression(columnValues && columnValues.length > 0 ? [{ ColumnId: columnId, ColumnValues: columnValues }] : [],
+        return new Expression(
+            columnDisplayValues && columnDisplayValues.length > 0 ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues:columnRawValues     }] : [],
             userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
@@ -46,9 +48,9 @@ export module ExpressionHelper {
             let columnToString = ""
 
             // Column Display Values
-            let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
-            if (columnValues) {
-                columnToString = ColumnValuesKeyValuePairToString(columnValues, columnFriendlyName)
+            let columnValueExpression : IColumnValueExpression = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
+            if (columnValueExpression) {
+                columnToString = ColumnValueExpressionToString(columnValueExpression, columnFriendlyName)
             }
 
             // User Filters
@@ -57,16 +59,16 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += UserFiltersKeyPairToString(columnUserFilters.Filters, columnFriendlyName)
+                columnToString += UserFiltersToString(columnUserFilters.Filters, columnFriendlyName)
             }
 
             // Column Ranges
-            let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId)
-            if (columnRanges) {
+            let columnRange: IRangeExpression = Expression.RangeExpressions.find(x => x.ColumnId == columnId)
+            if (columnRange) {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += RangesToString(columnRanges, columnFriendlyName, columns)
+                columnToString += RangesToString(columnRange, columnFriendlyName, columns)
             }
             if (returnValue != "") {
                 returnValue += " AND "
@@ -104,7 +106,7 @@ export module ExpressionHelper {
                 let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
                 if (columnValues) {
                     let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId)
-                    isColumnSatisfied = ArrayExtensions.ContainsItem(columnValues.ColumnValues, columnDisplayValue)
+                    isColumnSatisfied = ArrayExtensions.ContainsItem(columnValues.ColumnDisplayValues, columnDisplayValue)
                 }
             }
 
@@ -160,12 +162,12 @@ export module ExpressionHelper {
         return true;
     }
 
-    function ColumnValuesKeyValuePairToString(keyValuePair: { ColumnId: string, ColumnValues: Array<any> }, columnFriendlyName: string): string {
+    function ColumnValueExpressionToString(columnValueExpression: IColumnValueExpression, columnFriendlyName: string): string {
         return "[" + columnFriendlyName + "]"
-            + " In (" + keyValuePair.ColumnValues.join(", ") + ")"
+            + " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
     }
 
-    function UserFiltersKeyPairToString(userFilters: string[], columnFriendlyName: string): string {
+    function UserFiltersToString(userFilters: string[], columnFriendlyName: string): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {
@@ -303,9 +305,9 @@ export module ExpressionHelper {
         }
     }
 
-    function RangesToString(keyValuePair: { ColumnId: string, Ranges: Array<IRange> }, columnFriendlyName: string, columns: IColumn[]): string {
+    function RangesToString(rangeExpression : IRangeExpression, columnFriendlyName: string, columns: IColumn[]): string {
         let returnValue = ""
-        for (let range of keyValuePair.Ranges) {
+        for (let range of rangeExpression.Ranges) {
             if (returnValue != "") {
                 returnValue += " OR "
             }

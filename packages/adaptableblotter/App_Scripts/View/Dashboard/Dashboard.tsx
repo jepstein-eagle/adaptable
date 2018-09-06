@@ -17,7 +17,6 @@ import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogge
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
     EntitlementsState: EntitlementsState
-    AdaptableBlotter: IAdaptableBlotter
     onClick: (action: Redux.Action) => Redux.Action
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
 }
@@ -27,7 +26,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
         let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
-        let optionsBlotterName: string = this.props.AdaptableBlotter.BlotterOptions.blotterId;
+        let optionsBlotterName: string = this.props.Blotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Dashboard"
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars//.filter(dc => dc.IsVisible);
@@ -38,14 +37,13 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             if (dashboardControl) {
                 let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control && x.AccessLevel == "ReadOnly") > -1
                 let dashboardElememt = React.createElement(dashboardControl, {
-                    AdaptableBlotter: this.props.AdaptableBlotter,
+                    Blotter: this.props.Blotter,
                     IsReadOnly: isReadOnly,
                     Columns: this.props.Columns,
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
                     ColorPalette: this.props.ColorPalette,
                     GridSorts: this.props.GridSorts,
-                    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
                     cssClassName: cssClassName
                 });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
@@ -59,7 +57,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
 
         let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId)
         let homeToolbarElement = <Nav key={"home"} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
-            {React.createElement(homeToolbar, { cssClassName: cssClassName, AdaptableBlotter: this.props.AdaptableBlotter })}
+            {React.createElement(homeToolbar, { cssClassName: cssClassName, Blotter: this.props.Blotter })}
         </Nav>
 
         return <div className={cssBaseClassName}>

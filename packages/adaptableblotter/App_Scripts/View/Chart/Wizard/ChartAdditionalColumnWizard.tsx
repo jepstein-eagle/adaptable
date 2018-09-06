@@ -11,11 +11,12 @@ import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
     Columns: IColumn[]
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+   Blotter : IAdaptableBlotter
 }
 
 export interface ChartAdditionalColumnWizardState {
@@ -34,7 +35,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
             AdditionalColumnValues: props.Data.AdditionalColumnValues ? props.Data.AdditionalColumnValues : [],
             UseAllAdditionalColumnValues: (hasDistinctColumnValues) ? false : true,
             AvailableAdditionalColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.AdditionalColumn)) ?
-                props.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumn, DistinctCriteriaPairValue.DisplayValue) :
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumn, DistinctCriteriaPairValue.DisplayValue) :
                 null
         }
     }
@@ -103,7 +104,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
             UseAllAdditionalColumnValues: true,
             AdditionalColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
             AvailableAdditionalColumnValues: isColumn ?
-                this.props.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, DistinctCriteriaPairValue.DisplayValue) :
+                this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, DistinctCriteriaPairValue.DisplayValue) :
                 null
         } as ChartAdditionalColumnWizardState, () => this.props.UpdateGoBackState())
     }

@@ -26,8 +26,8 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                 Steps={[
                     <ChartSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} ChartDefinitions={Charts} />,
                     <ChartYAxisWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ChartDefinitions={Charts} Columns={this.props.Columns} />,
-                    <ChartXAxisWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} ChartDefinitions={Charts} Columns={this.props.Columns} getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList} />,
-                    <ChartAdditionalColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} ChartDefinitions={Charts} Columns={this.props.Columns} getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList} />,
+                    <ChartXAxisWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} ChartDefinitions={Charts} Columns={this.props.Columns} Blotter={this.props.Blotter} />,
+                    <ChartAdditionalColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} ChartDefinitions={Charts} Columns={this.props.Columns} Blotter={this.props.Blotter} />,
                     <ChartSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[4]} Columns={this.props.Columns} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

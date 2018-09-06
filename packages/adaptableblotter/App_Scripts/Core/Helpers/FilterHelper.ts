@@ -63,7 +63,7 @@ export module FilterHelper {
     export function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter {
         return {
             ColumnId: userFilter.ColumnId,
-            Filter: ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [userFilter.Name], []),
+            Filter: ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [],[], [userFilter.Name], []),
             IsReadOnly: false
         }
     }

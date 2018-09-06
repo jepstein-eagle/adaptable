@@ -11,11 +11,12 @@ export interface IAdaptableBlotterObject {
 }
 
 /**
- * Any column values contained in the expression, grouped by column (using their DISPLAY value, not their raw value)
+ * Any column display (and optionally raw) values contained in the expression, grouped by column
  */
 export interface IColumnValueExpression {
   ColumnId: string,
-  ColumnValues: string[]
+  ColumnDisplayValues: string[]
+  ColumnRawValues?: string[]
 }
 
 /**
@@ -80,7 +81,7 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
   XAxisColumn: string
   XAxisColumnValues: string[]
   AdditionalColumn?: string
-   AdditionalColumnValues?: string[]
+  AdditionalColumnValues?: string[]
 }
 
 

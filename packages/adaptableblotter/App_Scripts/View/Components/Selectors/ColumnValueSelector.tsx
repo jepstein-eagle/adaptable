@@ -6,12 +6,13 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '../../../Core/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
     SelectedColumn: IColumn
     SelectedColumnValue: string
     onColumnValueChange: (columnvalue: any) => void
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
+    Blotter: IAdaptableBlotter
     AllowNew?: boolean // defaults to true if not provided
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
     cssClassName: string
@@ -36,8 +37,8 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
             placeholderText += " or enter free text"
         }
 
-        if (this.props.SelectedColumn != null && this.props.getColumnValueDisplayValuePairDistinctList!= null) {
-            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+        if (this.props.SelectedColumn != null && this.props.Blotter !=null && this.props.Blotter.getColumnValueDisplayValuePairDistinctList!= null) {
+            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
 
             if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
                 selectedValue = "";

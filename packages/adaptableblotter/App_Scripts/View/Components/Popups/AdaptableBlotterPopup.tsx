@@ -14,7 +14,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   ComponentName: string;
   IsReadOnly: boolean
   onHide?: Function;
-  AdaptableBlotter: IAdaptableBlotter;
+  Blotter: IAdaptableBlotter;
   PopupParams: string
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
 }
@@ -24,22 +24,22 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
 
     let cssClassName: string = StyleConstants.AB_STYLE
 
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.Blotter.BlotterOptions, document);
     if (this.props.ComponentName) {
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
-        TeamSharingActivated: this.props.AdaptableBlotter.BlotterOptions.enableRemoteConfigServer,
-        Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
-        UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
-        SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
+        TeamSharingActivated: this.props.Blotter.BlotterOptions.enableRemoteConfigServer,
+        Columns: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
+        UserFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
+        SystemFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
         ModalContainer: modalContainer,
-        ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
-        GridSorts: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
+        ColorPalette: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
+        GridSorts: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
         cssClassName: cssClassName + StyleConstants.MODAL_BODY,
-        Blotter: this.props.AdaptableBlotter
+        Blotter: this.props.Blotter
       }
 
       var body: any = React.createElement(bodyElement, commonProps);

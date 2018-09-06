@@ -1,6 +1,7 @@
 import * as React from "react";
 import { AdaptableBlotterAgGrid } from "adaptableblotter-react";
 import "ag-grid/dist/styles/ag-theme-blue.css";
+import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -24,9 +25,9 @@ export default class App extends React.Component {
       ],
 
       columnDefs: [
-        { headerName: "Make", field: "make" },
+        { headerName: "Make", field: "make", },
         { headerName: "Model", field: "model" },
-        { headerName: "Price", field: "price" }
+        { headerName: "Price", field: "price" ,editable: true}
       ],
       enableSorting: true,
       enableRangeSelection: true,

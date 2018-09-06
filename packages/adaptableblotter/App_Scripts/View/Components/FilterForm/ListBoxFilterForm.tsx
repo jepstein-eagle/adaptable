@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LeafExpressionOperator, DataType, SelectionMode } from '../../../Core/Enums'
+import { LeafExpressionOperator, DataType, SelectionMode, DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { MenuItem, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
@@ -19,7 +19,7 @@ import { ButtonClear } from "../Buttons/ButtonClear";
 export interface ListBoxFilterFormProps extends ListGroupProps {
     CurrentColumn: IColumn;
     Columns: IColumn[],
-    ColumnValues: Array<IRawValueDisplayValuePair>
+    ColumnValuePairs: Array<IRawValueDisplayValuePair>
     UserFilters: Array<IRawValueDisplayValuePair>
     UiSelectedColumnValues: Array<string>
     UiSelectedUserFilters: Array<string>
@@ -30,6 +30,7 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
     Operators: Array<LeafExpressionOperator>
     DataType: DataType
     cssClassName: string
+    DistinctCriteriaPairValue: DistinctCriteriaPairValue
 }
 
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
@@ -37,6 +38,7 @@ export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFil
     UiSelectedUserFilters: Array<string>
     UiSelectedRange: IRange
     FilterValue: string
+    DistinctCriteriaPairValue: DistinctCriteriaPairValue
 }
 
 export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, ListBoxFilterFormState> {
@@ -48,6 +50,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             UiSelectedUserFilters: this.props.UiSelectedUserFilters,
             UiSelectedRange: this.props.UiSelectedRange,
             FilterValue: "",
+            DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue
         };
     }
     componentWillReceiveProps(nextProps: ListBoxFilterFormProps, nextContext: any) {
@@ -77,19 +80,24 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
             }
         })
 
-        let columnValuesItemsElements = this.props.ColumnValues.map((x, y) => {
-            let isActive: boolean = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
-            let value: any = x.DisplayValue;
-
-            let display: string = x.DisplayValue;
-            if (StringExtensions.IsNotEmpty(this.state.FilterValue) && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
+        let columnValuesItemsElements = this.props.ColumnValuePairs.map((x, y) => {
+            let isActive: boolean
+            let columnValue: string
+            if(this.props.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue){
+                 isActive = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
+                 columnValue = x.DisplayValue;
+            }else{
+                isActive = this.state.UiSelectedColumnValues.indexOf(x.RawValue) >= 0;
+                columnValue = x.RawValue;
+            }
+            if (StringExtensions.IsNotEmpty(this.state.FilterValue) && columnValue.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
                 return null;
             }
             else {
                 return <ListGroupItem key={"columnValue" + y} style={columnVItemStyle}
                     onClick={() => this.onClickItemColumnValue(x)}
                     active={isActive}
-                    value={value} >{display}</ListGroupItem>
+                    value={columnValue} >{columnValue}</ListGroupItem>
             }
         })
 

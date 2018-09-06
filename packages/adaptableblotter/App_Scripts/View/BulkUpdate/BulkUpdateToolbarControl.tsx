@@ -61,14 +61,14 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         }
     }
     public componentDidMount() {
-        if (this.props.AdaptableBlotter) {
-            this.props.AdaptableBlotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc)
+        if (this.props.Blotter) {
+            this.props.Blotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc)
         }
     }
 
     public componentWillUnmount() {
-        if (this.props.AdaptableBlotter) {
-            this.props.AdaptableBlotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc)
+        if (this.props.Blotter) {
+            this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc)
         }
     }
 
@@ -115,7 +115,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         bsSize={"small"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
                         SelectedColumn={selectedColumn}
-                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                        Blotter ={this.props.Blotter} 
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                     />
 

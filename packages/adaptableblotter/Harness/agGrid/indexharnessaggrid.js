@@ -32,16 +32,16 @@ function InitTradeBlotter() {
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
     new agGrid.Grid(gridcontainer, gridOptions);
-     setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
+    setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
 
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
         primaryKey: "tradeId",                  // pk for blotter - required
         userName: "demo user",                  // name of current user
         blotterId: "demo blotter",              // id for blotter 
-        enableAuditLog: true,                  // not running audit log
+        enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-         predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
         //  serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -50,7 +50,7 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         autoSaveLayouts: true,                  // layous will save automatically
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
-         //   getColumnValues: retrieveValues,
+        getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -73,24 +73,26 @@ function listenToColumnStateChange(columnChangedArgs) {
 }
 
 function getValuesForColumn(columnName) {
+    let vals;
     if (columnName == "notional") {
-        return [1000000, 5000000, 10000000];
+        vals = [1000000, 5000000, 10000000];
     }
-    if (columnName == "settlementDate") {
-        return [
+    else if (columnName == "settlementDate") {
+        vals = [
             trades[0]["settlementDate"],
             trades[1]["settlementDate"],
             trades[2]["settlementDate"],
             trades[3]["settlementDate"],
             trades[4]["settlementDate"],
         ];
+    } else {
+        vals = ["val1", "val2", "val3"]
     }
-    return ["val1", "val2", "val3"];
+    return { DistinctCriteriaPairValue: "DisplayValue", ColumnValues: vals }
 }
 
 function getTradeSchema() {
     var schema = []
-    schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, filter: 'text', type: "abColDefNumber", sortable: false });
     schema.push({ headerName: "Notional", field: "notional", editable: true, valueFormatter: notionalFormatter, cellClass: 'number-cell' });
     schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: false });
@@ -115,6 +117,7 @@ function getTradeSchema() {
     schema.push({ headerName: "Moodys", field: "moodysRating", editable: true, filter: 'text' });
     schema.push({ headerName: "SandP", field: "sandpRating", editable: true, filter: 'text' });
     schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
+    schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Pct Change", field: "percentChange", filter: 'text' });
     schema.push({ headerName: "Last Updated By", field: "lastUpdatedBy", filter: 'text', enableRowGroup: true });
     schema.push({ headerName: "Last Updated", field: "lastUpdated", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });

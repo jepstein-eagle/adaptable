@@ -52,7 +52,8 @@ export class ChartService implements IChartService {
         let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,
-                ColumnValues: [kvp.Value]
+                ColumnDisplayValues: [kvp.Value],
+                ColumnRawValues: []
             }
         })
 

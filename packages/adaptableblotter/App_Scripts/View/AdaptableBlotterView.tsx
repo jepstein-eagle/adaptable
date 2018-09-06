@@ -16,7 +16,7 @@ import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
-    AdaptableBlotter: IAdaptableBlotter;
+    Blotter: IAdaptableBlotter;
     showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowScreenAction;
     onCloseScreenPopup: () => PopupRedux.PopupHideScreenAction;
     onCloseAlertPopup: () => PopupRedux.PopupHideAlertAction;
@@ -33,10 +33,10 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
     render() {
         return (
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
-                <Dashboard AdaptableBlotter={this.props.AdaptableBlotter} />
+                <Dashboard Blotter={this.props.Blotter} />
 
                 <AdaptableBlotterChart
-                    AdaptableBlotter={this.props.AdaptableBlotter}
+                    AdaptableBlotter={this.props.Blotter}
                     onClose={this.props.onCloseChartPopup}
                     showChart={this.props.PopupState.ChartPopup.ShowChartPopup}
                 />
@@ -74,7 +74,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     ComponentName={this.props.PopupState.ScreenPopup.ComponentName}
                     onHide={this.props.onCloseScreenPopup}
                     IsReadOnly={this.props.PopupState.ScreenPopup.IsReadOnly}
-                    AdaptableBlotter={this.props.AdaptableBlotter}
+                    Blotter={this.props.Blotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
                     PopupParams={this.props.PopupState.ScreenPopup.Params}
                 />

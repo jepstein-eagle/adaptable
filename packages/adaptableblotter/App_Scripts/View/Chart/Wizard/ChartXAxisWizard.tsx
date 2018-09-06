@@ -12,12 +12,12 @@ import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
+import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
     Columns: IColumn[]
-    getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => Array<IRawValueDisplayValuePair>
-
+    Blotter: IAdaptableBlotter
 }
 
 export interface ChartXAxisWizardState {
@@ -37,7 +37,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
             XAxisColumnValues: props.Data.XAxisColumnValues,
             UseAllXAsisColumnValues: (hasDistinctColumnValues) ? false : true,
             AvailableXAxisColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumn)) ?
-                props.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, DistinctCriteriaPairValue.DisplayValue) :
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, DistinctCriteriaPairValue.DisplayValue) :
                 null
         }
     }
@@ -118,7 +118,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
             UseAllXAsisColumnValues: true,
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
             AvailableXAxisColumnValues: isColumn ?
-                this.props.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, DistinctCriteriaPairValue.DisplayValue) :
+                this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, DistinctCriteriaPairValue.DisplayValue) :
                 null
         } as ChartXAxisWizardState, () => this.props.UpdateGoBackState())
     }

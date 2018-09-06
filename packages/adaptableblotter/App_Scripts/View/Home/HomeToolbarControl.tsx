@@ -87,7 +87,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         let toolbarTitle = this.props.DashboardState.HomeToolbarTitle
         if (StringExtensions.IsNullOrEmpty(toolbarTitle)) {
-            toolbarTitle = this.props.AdaptableBlotter.BlotterOptions.blotterId;
+            toolbarTitle = this.props.Blotter.BlotterOptions.blotterId;
             if (toolbarTitle == GeneralConstants.USER_NAME) {
                 toolbarTitle = "Blotter "
             }

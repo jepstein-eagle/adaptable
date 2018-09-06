@@ -1,8 +1,8 @@
-import * as React from "react";
-import { AdaptableBlotter } from "adaptableblotter-react";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid/dist/styles/ag-grid.css";
-import "ag-grid/dist/styles/ag-theme-balham.css";
+  import * as React from "react";
+  import { AdaptableBlotter } from "adaptableblotter-react";
+  import { AgGridReact } from "ag-grid-react";
+  import "ag-grid/dist/styles/ag-grid.css";
+  import "ag-grid/dist/styles/ag-theme-balham.css";
 
 export default class App extends React.Component {
   constructor(props) {

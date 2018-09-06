@@ -19,7 +19,7 @@ import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { Expression } from "../../../Core/Api/Expression";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
-import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
@@ -46,13 +46,14 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
-  
+
 }
 
 export interface FilterFormState {
     ColumnValuePairs: Array<IRawValueDisplayValuePair>
     ShowWaitingMessage: boolean
     SelectedTab: ContextMenuTab
+    DistinctCriteriaPairValue: DistinctCriteriaPairValue
 }
 
 class FilterFormComponent extends React.Component<FilterFormProps, FilterFormState> {
@@ -63,8 +64,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         this.state = {
             ColumnValuePairs: [],
             ShowWaitingMessage: false,
-            SelectedTab: ContextMenuTab.Filter
-        };
+            SelectedTab: ContextMenuTab.Filter,
+            DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
+         };
     }
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
@@ -76,14 +78,17 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
+                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
                         } else { // get the distinct items and make sure within max items that can be displayed
-                            let distinctItems = ArrayExtensions.RetrieveDistinct(result).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
-                            distinctItems.forEach(di => {
-                                let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, di)
-                                columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                            distinctItems.forEach(distinctItem => {
+                                let displayValue = (result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue) ?
+                                    this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, distinctItem) :
+                                    distinctItem
+                                columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
                             })
-                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
+                            let distinctCriteriaPairValue: DistinctCriteriaPairValue = result.DistinctCriteriaPairValue=='RawValue'? DistinctCriteriaPairValue.RawValue: DistinctCriteriaPairValue.DisplayValue;
+                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                             // set the UIPermittedValues for this column to what has been sent
                             this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
                         }
@@ -94,7 +99,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             else {
                 columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                 columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false });
+                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
             }
         }
     }
@@ -108,10 +113,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf } })
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
-        let uiSelectedColumnValues: string[] = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
 
-        let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
+        let uiSelectedColumnValues: string[] = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues : []
+
+         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
 
         let uiSelectedRangeExpression: IRange = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
@@ -179,8 +185,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                             <ListBoxFilterForm cssClassName={cssClassName}
                                 CurrentColumn={this.props.CurrentColumn}
                                 Columns={this.props.Columns}
-                                ColumnValues={this.state.ColumnValuePairs}
+                                ColumnValuePairs={this.state.ColumnValuePairs}
                                 DataType={this.props.CurrentColumn.DataType}
+                                DistinctCriteriaPairValue={this.state.DistinctCriteriaPairValue}
                                 UiSelectedColumnValues={uiSelectedColumnValues}
                                 UiSelectedUserFilters={uiSelectedUserFilters}
                                 UiSelectedRange={uiSelectedRangeExpression}
@@ -207,6 +214,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
 
     onClickColumValue(columnValues: string[]) {
+
+        let displayValues: string[] = []
+        let rawValues: string[] = []
+
+        columnValues.forEach(columnValue => {
+            let columnValuePair: IRawValueDisplayValuePair = (this.state.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue) ?
+                this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue) :
+                this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue)
+
+            displayValues.push(columnValuePair.DisplayValue);
+            rawValues.push(columnValuePair.RawValue);
+        })
+
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
@@ -215,19 +235,22 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
             existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
 
-        this.persistFilter(columnValues, userFilters, rangeExpressions);
+        this.persistFilter(displayValues, rawValues, userFilters, rangeExpressions);
     }
 
     onClickUserFilter(userFilters: string[]) {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
-        let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
+        let columnDisplayValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues : []
+
+        let columnRawValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues : []
 
         let rangeExpressions = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
             existingColumnFilter.Filter.RangeExpressions[0].Ranges : []
 
-        this.persistFilter(columnValues, userFilters, rangeExpressions);
+        this.persistFilter(columnDisplayValues, columnRawValues, userFilters, rangeExpressions);
     }
 
     onSetCustomExpression(rangeExpression: IRange) {
@@ -236,24 +259,29 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
 
-        let columnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
-            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnValues : []
+        let columnDisplayValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues : []
 
-        this.persistFilter(columnValues, userFilters, [rangeExpression]);
+        let columnRawValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
+            existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues : []
+
+        this.persistFilter(columnDisplayValues, columnRawValues, userFilters, [rangeExpression]);
     }
 
-    persistFilter(columnValues: string[], userFilters: string[], rangeExpressions: IRange[]): void {
+    persistFilter(columnDisplayValues: string[], columnRawValues: string[], userFilters: string[], rangeExpressions: IRange[]): void {
         let expression: Expression
-        expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnValues, userFilters, rangeExpressions)
+        expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnDisplayValues, columnRawValues, userFilters, rangeExpressions)
 
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
 
         //delete if empty
-        if (columnValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
+        if (columnDisplayValues.length == 0 && columnRawValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
             this.props.onClearColumnFilter(columnFilter);
         } else {
             this.props.onAddEditColumnFilter(columnFilter);
         }
+
+        console.log(expression.ColumnValueExpressions)
     }
 
     onSaveFilter() {
@@ -268,7 +296,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
 
     onClearFilter() {
-        this.persistFilter([], [], [])
+        this.persistFilter([], [], [], [])
     }
 
     onCloseForm() {
@@ -308,7 +336,7 @@ export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormC
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
     <FilterForm
-        Blotter={FilterContext.Blotter} 
+        Blotter={FilterContext.Blotter}
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
         EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu} />

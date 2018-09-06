@@ -118,7 +118,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                         cssClassName={cssClassName}
                                                         SelectedColumnValue={this.props.BulkUpdateValue}
                                                         SelectedColumn={col}
-                                                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                                                        Blotter={this.props.Blotter}
                                                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                                                         AllowNew={false} />
                                                     :
@@ -141,7 +141,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                                                     cssClassName={cssClassName}
                                                     SelectedColumnValue={this.props.BulkUpdateValue}
                                                     SelectedColumn={col}
-                                                    getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                                                   Blotter = {this.props.Blotter} 
                                                     onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)} />
                                             </Col>
                                             <Col xs={4}>

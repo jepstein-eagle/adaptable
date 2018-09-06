@@ -1,3 +1,5 @@
+import { DistinctCriteriaPairValue } from "../../Enums";
+
 /**
  * The class injected into the Adaptable Blotter at startup 
  * providing all the user, grid and config information required
@@ -93,5 +95,10 @@ export interface IAdaptableBlotterOptions {
      * Promise providing list of column values
      * Called each time a query is built or filter is opened
      */
-    getColumnValues?: (column: string) => Promise<string[]>;
+    getColumnValues?: (column: string) => Promise<IServerColumnValues>;
+}
+
+export interface IServerColumnValues {
+    DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
+    ColumnValues: string[];
 }

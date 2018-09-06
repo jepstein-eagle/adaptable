@@ -179,7 +179,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
         StrategyIds.AlertStrategyId,
-        // StrategyIds.ChartStrategyId,
+        StrategyIds.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,
@@ -187,7 +187,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.LayoutStrategyId,
         StrategyIds.ExportStrategyId,
         StrategyIds.ColumnFilterStrategyId,
-        //  StrategyIds.ChartStrategyId,
+        // StrategyIds.ChartStrategyId,
         //   StrategyIds.AlertStrategyId,
         // StrategyIds.SelectedCellsStrategyId,
         // StrategyIds.BulkUpdateStrategyId
@@ -280,7 +280,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
             let actionTyped = <DashboardSetHomeToolbarTitleAction>action;
             return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
         }
-        
+
         case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
             let actionTyped = <DashboardSetApplicationToolbarTitleAction>action;
             return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
