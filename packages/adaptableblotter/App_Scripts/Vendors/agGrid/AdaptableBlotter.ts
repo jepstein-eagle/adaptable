@@ -1345,7 +1345,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private checkColumnsDataTypeSet(): any {
         // check that we have no unknown columns - if we do then ok
         let firstCol = this.getState().Grid.Columns[0];
-        if (firstCol.DataType == DataType.Unknown) {
+        if (firstCol && firstCol.DataType == DataType.Unknown) {
             this.setColumnIntoStore();
         }
     }
