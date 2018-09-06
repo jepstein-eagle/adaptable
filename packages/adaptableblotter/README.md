@@ -9,6 +9,10 @@ Grid components supported included Telerik's Kendo Grid, the ag-Grid, OpenFin's 
 
 AdaptableBlotter.JS is fully data agnostic and can work with any data set you provide it with.  It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
+## Installation
+blah
+  
+## Licences
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
 
