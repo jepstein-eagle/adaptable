@@ -1184,6 +1184,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
+                alert("first")
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
@@ -1197,7 +1198,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.BlotterOptions.serverSearchOption == 'None' || 'AdvancedSearch') {
+            if (this.BlotterOptions.serverSearchOption == 'None' || this.BlotterOptions.serverSearchOption == 'AdvancedSearch') {
+                alert(this.BlotterOptions.serverSearchOption)
                 let columnFilters: IColumnFilter[] = this.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {

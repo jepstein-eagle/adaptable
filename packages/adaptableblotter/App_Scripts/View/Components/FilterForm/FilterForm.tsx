@@ -66,7 +66,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             ShowWaitingMessage: false,
             SelectedTab: ContextMenuTab.Filter,
             DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
-         };
+        };
     }
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
@@ -87,7 +87,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                                     distinctItem
                                 columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
                             })
-                            let distinctCriteriaPairValue: DistinctCriteriaPairValue = result.DistinctCriteriaPairValue=='RawValue'? DistinctCriteriaPairValue.RawValue: DistinctCriteriaPairValue.DisplayValue;
+                            let distinctCriteriaPairValue: DistinctCriteriaPairValue = result.DistinctCriteriaPairValue == 'RawValue' ? DistinctCriteriaPairValue.RawValue : DistinctCriteriaPairValue.DisplayValue;
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                             // set the UIPermittedValues for this column to what has been sent
                             this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
@@ -117,7 +117,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let uiSelectedColumnValues: string[] = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
             existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues : []
 
-         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
+        let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : []
 
         let uiSelectedRangeExpression: IRange = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
@@ -280,8 +280,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         } else {
             this.props.onAddEditColumnFilter(columnFilter);
         }
-
-        console.log(expression.ColumnValueExpressions)
     }
 
     onSaveFilter() {

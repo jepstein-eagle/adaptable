@@ -42,7 +42,7 @@ function InitTradeBlotter() {
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
         predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
-        //  serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
+          serverSearchOption: "AllSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -58,7 +58,7 @@ function InitTradeBlotter() {
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
-    //  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+      adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
 }
 
