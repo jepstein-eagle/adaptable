@@ -18,6 +18,8 @@ More grid components are being added all the time so contact us if you would lik
 
 AdaptableBlotter.JS is fully data agnostic and can work with any data set you provide it with.  It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
 
+  
+## Licences
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
 
@@ -27,8 +29,8 @@ There are 3 licence types available (all sold on an annual basis):
 
 (The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
-The Adaptable Blotter offers wrappers to allow those using JavaScript framworks to implement the product in a framework-friendly manner.  Please see the associated packages for the React Wrapper and Angular Wrapper.
 
+## Help
 Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
 For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.

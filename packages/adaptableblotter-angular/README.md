@@ -4,6 +4,13 @@ Repository for the Adaptable Blotter Angular Wrapper.
 
 This allows you to install, instantiate and reference the Adaptable Blotter in an "Angular-friendly" manner.
 
+## Installation
+To install Adaptable Blotter via npm, run:
+```javascript
+install adaptableblotter-angular
+```
+  
+## Licences
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
 
@@ -13,6 +20,8 @@ There are 3 licence types available (all sold on an annual basis):
 
 (The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
+
+## Help
 Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
 For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
