@@ -1178,7 +1178,7 @@ class AdaptableBlotter {
     checkColumnsDataTypeSet() {
         // check that we have no unknown columns - if we do then ok
         let firstCol = this.getState().Grid.Columns[0];
-        if (firstCol.DataType == Enums_1.DataType.Unknown) {
+        if (firstCol && firstCol.DataType == Enums_1.DataType.Unknown) {
             this.setColumnIntoStore();
         }
     }

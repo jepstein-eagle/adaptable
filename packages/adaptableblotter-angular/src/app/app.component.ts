@@ -5,14 +5,15 @@ import { GridOptions } from 'ag-grid';
 @Component({
   selector: 'adaptableblotter-root',
   template: `
-  <div>
+  <h2>Adaptable Blotter Wrapper - working alongside ag-Grid angular component</h2>
+ <div>
     <adaptable-blotter
       [adaptableBlotterOptions]="blotterOptions"
       vendorGridName="agGrid">
     </adaptable-blotter>
     <ag-grid-angular
       style="width: 100%; height: 97vh;"
-      class="ag-theme-balham"
+      class="ag-theme-blue"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [gridOptions]="gridOptions">
@@ -40,7 +41,7 @@ export class AppComponent {
   blotterOptions: IAdaptableBlotterOptions = {
     primaryKey: 'make',
     vendorGrid: this.gridOptions,
-    userName: 'UtibeAbasi',
+    userName: 'demo user',
     blotterId: 'demo blotter',
   };
 }

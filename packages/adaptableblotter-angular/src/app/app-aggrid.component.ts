@@ -8,6 +8,7 @@ import DataGenerator from './data-generator';
 @Component({
   selector: 'adaptableblotter-aggrid-root',
   template: `
+  <h2>AgGrid Wrapper - wraps Adaptable Blotter and ag-Grid components</h2>
   <div id="adaptableblotter-aggrid-react-demo-app">
     <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
