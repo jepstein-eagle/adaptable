@@ -13,6 +13,7 @@ Grid components supported include:
 * Hypergrid by OpenFin
 * Kendo Grid by Telerik
 * Adaptable Grid by Adaptable Tools. 
+
 More grid components are being added all the time so contact us if you would like us to implement your favourite HTML5 grid control.
 
 AdaptableBlotter.JS is fully data agnostic and can work with any data set you provide it with.  It is suitable for all data, all asset classes, all grid types, all locations and all use cases.
