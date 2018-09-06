@@ -5,7 +5,7 @@ Repository for the Adaptable Blotter Angular Wrapper.
 This allows you to install, instantiate and reference the Adaptable Blotter in an "Angular-friendly" manner.
 
 ## Installation
-To install Adaptable Blotter via npm, run:
+To install Adaptable Blotter Angular via npm, run:
 ```javascript
 install adaptableblotter-angular
 ```

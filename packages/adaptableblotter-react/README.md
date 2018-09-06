@@ -12,7 +12,7 @@ There are 2 React Components available:
 
 
 ## Installation
-To install Adaptable Blotter via npm, run:
+To install Adaptable Blotter React via npm, run:
 ```javascript
 install adaptableblotter-react
 ```
