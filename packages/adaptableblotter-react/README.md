@@ -5,15 +5,19 @@ Repository for the Adaptable Blotter React Wrapper.
 This allows you to install, instantiate and reference the Adaptable Blotter in a "React-friendly" manner.
 
 There are 2 React Components available:
-AdaptableBlotter - this wraps the core Adaptable Blotter package. If used then you will need to provide an immplementation for the underlying vendor grid you are using.
-AdaptableBlotterAgGrid - this wraps both the core Adaptable Blotter package and also ag-Grids AgGridReact component.
 
-The Adaptable Blotter is free for development and evaluation use.  
-A free Community Licence is available for charities, students in full time education and open-source projects.  
-For all other usage, a commercial annual licence must be purchased.  
-We offer 2 types of licences: 'Production End User' and 'Universal' to fit our clients different requirements. 
-(This licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  
-Please see the LICENSE file for more information or contact the Adaptable Tools Sales Team at sales@adaptabletools.com.
+* *AdaptableBlotter* - this wraps the core Adaptable Blotter package. If used then you will need to provide an immplementation for the underlying vendor grid you are using.
+
+* *AdaptableBlotterAgGrid* - this wraps both the core Adaptable Blotter package and also ag-Grids AgGridReact component.
+
+The Adaptable Blotter is a commercial product and requires a purchased licence for use.
+There are 3 licence types available (all sold on an annual basis):
+
+* Community - free for charities, students in full time education and open-source projects.  
+* End User - licences are sold in bands depending on the number of end users
+* Universal - unlimited users and usage.
+
+(The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
 Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
