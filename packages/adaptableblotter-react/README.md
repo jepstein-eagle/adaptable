@@ -8,7 +8,7 @@ There are 2 React Components available:
 
 * *AdaptableBlotter* - this wraps the core Adaptable Blotter package. If used then you will need to provide an immplementation for the underlying vendor grid you are using.
 
-* AdaptableBlotterAgGrid - this wraps both the core Adaptable Blotter package and also ag-Grids AgGridReact component.
+* *AdaptableBlotterAgGrid* - this wraps both the core Adaptable Blotter package and also ag-Grids AgGridReact component.
 
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
