@@ -894,10 +894,10 @@ class AdaptableBlotter {
             }
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_COLUMN_PINNED, (params) => {
-            console.log(params);
+            //  console.log(params)
             let column = params.columns[0].getColId();
             let pinned = params.pinned;
-            console.log("column: " + column);
+            //  console.log("column: " + column);
             if (params.pinned != null) { // pinned column added
                 let pinnedColumnDirection = (pinned == "left") ? Enums_1.PinnedColumnDirection.Left : Enums_1.PinnedColumnDirection.Right;
                 this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));
@@ -1029,7 +1029,6 @@ class AdaptableBlotter {
             let columns = this.getState().Grid.Columns;
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
-                alert("first");
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // if its a static search then it wont be in advanced searches so nothing to do
@@ -1044,7 +1043,6 @@ class AdaptableBlotter {
             }
             //we then assess filters
             if (this.BlotterOptions.serverSearchOption == 'None' || this.BlotterOptions.serverSearchOption == 'AdvancedSearch') {
-                alert(this.BlotterOptions.serverSearchOption);
                 let columnFilters = this.getState().Filter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
