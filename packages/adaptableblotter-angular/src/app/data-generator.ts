@@ -1,34 +1,3 @@
-export interface IBond {
-  tradeId: number;
-  buySell: string;
-  currency: string;
-  tradedAt: number;
-  isin: string;
-  counterparty: string;
-  ticker: string;
-  coupon: number;
-  trader: string;
-  tradeDate: Date;
-  effectiveDate: Date;
-  maturityDate: Date;
-  lastUpdated: Date;
-}
-
-export interface IFX {
-  tradeId: number;
-  dealType: string;
-  baseCcy: string;
-  baseAmount: number;
-  secondCcy: string;
-  secondAmount: number;
-  rate: number;
-  pnL: number;
-  counterparty: string;
-  trader: string;
-  tradeDate: Date;
-  effectiveDate: Date;
-  lastUpdated: Date;
-}
 
 export default class DataGenerator {
   private _numericCols: string[] = ['price', 'bid', 'ask'];
@@ -41,71 +10,6 @@ export default class DataGenerator {
       trades.push(this.createTrade(i));
     }
     return trades;
-  }
-
-  getDollarTrades(count: number) {
-    const trades = [];
-    for (let i = 1; i <= count; i++) {
-      trades.push(this.createTrade(i, 'USD'));
-    }
-    return trades;
-  }
-
-  getGBPTrades(count: number) {
-    const trades = [];
-    for (let i = 1; i <= count; i++) {
-      trades.push(this.createTrade(i, 'GBP'));
-    }
-    return trades;
-  }
-
-  getEuroTrades(count: number) {
-    const trades = [];
-    for (let i = 1; i <= count; i++) {
-      trades.push(this.createTrade(i, 'EUR'));
-    }
-    return trades;
-  }
-
-  getBonds(count: number): IBond[] {
-    const bonds: IBond[] = [];
-    for (let i = 1; i <= count; i++) {
-      bonds.push(this.createBond(i));
-    }
-    return bonds;
-  }
-
-  getFX(count: number): IFX[] {
-    const fxs: IFX[] = [];
-    for (let i = 1; i <= count; i++) {
-      fxs.push(this.createFX(i));
-    }
-    return fxs;
-  }
-
-  // Can't be bothered to create a ts file for kendo....
-  startTickingDataKendo(grid: any) {
-    setInterval(() => {
-      const numberToAdd: number = this.generateRandomInt(1, 2) === 1 ? -0.5 : 0.5;
-      // pick a random trade in the first ten
-      const trade = this.getRandomItem(grid.dataSource.data(), 10);
-      // pick a random colum in the numeric col
-      const columnName = this.getRandomItem(this._numericCols);
-      const initialNewValue = trade[columnName];
-      const newValue = initialNewValue + numberToAdd;
-      // for now I decide to use dataItem.set but we'll need to see how people are
-      // managing ticking data since the grid doesn't allow partial refresh... so if we keep calling sync on
-      // every tick the grid becomes unusable since we loose editing, cell selection etc......
-      // also if people call sync then we don't have the 'change' event
-
-      // JW. Im still not sure that the crude cell.html isnt the easiest after all so long as we make sure it covers all bases
-      // as that way at least we dont refresh anything etc and it has no impact.
-      //   trade.set(columnName, newValue);
-
-      // trade[columnName] = newValue;
-      // trade.dirty = true;
-      // grid.dataSource.sync();
-    }, 5000);
   }
 
   startTickingDataHypergrid(grid: any) {
@@ -165,55 +69,6 @@ export default class DataGenerator {
     }, 100);
   }
 
-  createBond(i: number): IBond {
-    const tradedAt = this.getMeaningfulDoubleInRange(0, 2);
-    const coupon = this.roundTo4Dp(
-      this.getMeaningfulDouble() * this.getRandomItem(this.getBidOfferSpreads())
-    );
-    const tradeDate = this.generateRandomDateAndTime(-1000, 1000);
-    const bond = {
-      tradeId: i,
-      notional: this.getRandomItem(this.getNotionals()),
-      buySell: this.getRandomItem(this.getBuySell()),
-      currency: this.getRandomItem(this.getCurrencies()),
-      tradedAt: tradedAt,
-      isin: this.getIsin(i),
-      counterparty: this.getRandomItem(this.getCounterparties()),
-      ticker: this.getTicker(i),
-      coupon: coupon,
-      trader: this.getRandomItem(this.getNames()),
-      tradeDate: tradeDate,
-      effectiveDate: this.addDays(tradeDate, 3),
-      maturityDate: this.addDays(tradeDate, 245),
-      lastUpdated: this.generateRandomDateAndTime(-7, 0)
-    };
-    return bond;
-  }
-
-  createFX(i: number): IFX {
-    const baseAmount = this.getRandomItem(this.getNotionals());
-    const rate = this.getMeaningfulDoubleInRange(0, 2);
-    const secondaryAmount = this.removeDecimalPoints(baseAmount * rate);
-    const tradeDate = this.generateRandomDateAndTime(-1000, 1000);
-    const baseCurrency = this.getRandomItem(this.getCurrencies());
-    const fx = {
-      tradeId: i,
-      notional: this.getRandomItem(this.getNotionals()),
-      dealType: this.getRandomItem(this.getDealType()),
-      baseCcy: baseCurrency,
-      baseAmount: baseAmount,
-      secondCcy: this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
-      secondAmount: secondaryAmount,
-      rate: rate,
-      pnL: this.getMeaningfulDoubleInRange(3, 40),
-      counterparty: this.getRandomItem(this.getCounterparties()),
-      trader: this.getRandomItem(this.getNames()),
-      tradeDate: tradeDate,
-      effectiveDate: this.addDays(tradeDate, 3),
-      lastUpdated: this.generateRandomDateAndTime(-7, 0)
-    };
-    return fx;
-  }
 
   createTrade(i: number, currency?: string) {
     const price = this.getMeaningfulDouble();
@@ -248,56 +103,8 @@ export default class DataGenerator {
       percentChange: this.generateRandomNullableDouble(),
       lastUpdated: this.generateRandomDateAndTime(-7, 0),
       lastUpdatedBy: this.getRandomItem(this.getNames())
-      /*
-             'extraCol1': '1',
-             'extraCol2': '2',
-             'extraCol3': '3',
-             'extraCol4': '4',
-             'extraCol5': '5',
-             'extraCol6': '6',
-             'extraCol7': '7',
-             'extraCol8': '8',
-             'extraCol9': '9',
-             'extraCol10': '10',
-             'extraCol11': '11',
-             'extraCol12': '12',
-             'extraCol13': '13',
-             'extraCol14': '14',
-             'extraCol15': '15',
-             'extraCol16': '16',
-             'extraCol17': '17',
-             'extraCol18': '18'
-               'bid2': bid,
-               'ask2': ask,
-               'bidOfferSpread2': bidOfferSpread,
-               'isLive2': this.generateRandomBool(),
-               'moodysRating2': moodyRating,
-               'fitchRating2': this.getRatingFromMoodyRating(moodyRating),
-               'sandpRating2': this.getRatingFromMoodyRating(moodyRating),
-               'tradeDate2': tradeDate,
-               'settlementDate2': this.addDays(tradeDate, 3),
-               'bloombergAsk2': this.roundTo4Dp(ask + 0.01),
-               'bloombergBid2': this.roundTo4Dp(bid - 0.01),
-               'percentChange2': this.generateRandomNullableDouble(),
-               'lastUpdated2': this.generateRandomDateAndTime(-7, 0),
-               'lastUpdatedBy2': this.getRandomItem(this.getNames())
-               */
     };
     return trade;
-  }
-
-  // jo: just a poor attempt to create GUID in JS.... what a stupid language
-  protected generateUuid(): string {
-    let d = new Date().getTime();
-    if (window.performance && typeof window.performance.now === 'function') {
-      d += performance.now(); // use high-precision timer if available
-    }
-    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-      const r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
-    });
-    return uuid;
   }
 
   // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
@@ -414,94 +221,6 @@ export default class DataGenerator {
   protected generateCurrency(): string {
     const currencies = this.getCurrencies();
     return currencies[this.generateRandomInt(0, currencies.length - 1)];
-  }
-
-  protected getIsin(index: number): string {
-    const isins: string[] = [
-      'US046353AB45',
-      'FR0010326975',
-      'XS0133582147',
-      'XS0097283096',
-      'XS0253989635',
-      'FR0010828095',
-      'XS0315528850',
-      'XS0173501379',
-      'XS0297700006',
-      'XS0630204351',
-      'FR0010967216',
-      'XS0323411016',
-      'FR0010185975',
-      'USF7061BAN04',
-      'DE000A1MA9V5',
-      'DE000DB5S5U8',
-      'XS1000918018',
-      'US822582AC66',
-      'XS0097283096',
-      'FR0011043124',
-      'DE000A0TKUU3',
-      'XS0469026453',
-      'XS0133582147',
-      'XS0493098486',
-      'FR0010394478',
-      'XS0369461644',
-      'S780641AH94',
-      'XS0369461644',
-      'XS0909769407',
-      'XS0741004062',
-      'XS0783934911',
-      'XS0133582147',
-      'XS0097283096',
-      'XS0253989635',
-      'FR0010828095',
-      'XS0315528850',
-      'XS0173501379'
-    ];
-    return isins[index];
-  }
-
-  protected getTicker(index: number): string {
-    const tickers: string[] = [
-      'AZN',
-      'BOUY',
-      'BYLAN',
-      'KONIPHI',
-      'SIEM',
-      'LADBRK',
-      'RNTKIL',
-      'WENL',
-      'PSON',
-      'BAB',
-      'DANONE',
-      'STAN-Bank',
-      'LOUISDR',
-      'AF-AirFrance',
-      'PERNOD',
-      'RDSPLC',
-      'DB',
-      'BRITEL-BritTel',
-      'DAMLR',
-      'VLOF',
-      'HEI',
-      'TATELN',
-      'SESG',
-      'BAB',
-      'SIEM',
-      'CARR',
-      'KPN',
-      'SIEM',
-      'LBTG-UPC',
-      'TECHGH',
-      'WENL',
-      'CPGLN',
-      'KONIPHI',
-      'SIEM',
-      'LADBRK',
-      'RNTKIL',
-      'WENL',
-      'PSON',
-      'BAB'
-    ];
-    return tickers[index];
   }
 
   public getRandomItem(ary: any, max?: number): any {

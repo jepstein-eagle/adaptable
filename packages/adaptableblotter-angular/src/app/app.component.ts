@@ -5,8 +5,7 @@ import { GridOptions } from 'ag-grid';
 @Component({
   selector: 'adaptableblotter-root',
   template: `
-  <h2>Adaptable Blotter Wrapper - working alongside ag-Grid angular component</h2>
- <div>
+  <div>
     <adaptable-blotter
       [adaptableBlotterOptions]="blotterOptions"
       vendorGridName="agGrid">
