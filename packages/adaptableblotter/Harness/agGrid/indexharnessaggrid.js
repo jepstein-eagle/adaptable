@@ -31,7 +31,8 @@ function InitTradeBlotter() {
     // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
-    new agGrid.Grid(gridcontainer, gridOptions);
+  let grid=  new agGrid.Grid(gridcontainer, gridOptions);
+  dataGen.startTickingDataagGrid(gridOptions);
     setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
 
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
@@ -176,6 +177,8 @@ function apiTester(state, gridOptions) {
             adaptableblotter.api.layoutSave()
         } else if (quickSearchText == "#setlayout") {
             adaptableblotter.api.layoutSet("miguel")
+        } else if (quickSearchText == "#toolbarTitle") {
+            adaptableblotter.api.dashboardSetApplicationToolbarTitle("my app")
         } else if (quickSearchText == "#notional") {
             gridOptions.api.forEachNode((rowNode, index) => {
                 if (rowNode.group) {

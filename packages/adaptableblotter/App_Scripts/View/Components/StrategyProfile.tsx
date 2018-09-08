@@ -15,8 +15,8 @@ export class StrategyProfile extends React.Component<StrategyProfileProps, {}> {
     render(): any {
         let cssClassName: string = this.props.cssClassName + StyleConstants.STRATEGY_PROFILE
         return <div className={cssClassName}>
-            <Glyphicon glyph={StrategyIds.getGhyphiconForStrategy(this.props.StrategyId)} />{' '}
-            {StrategyIds.getNameForStrategy(this.props.StrategyId)}
+            <Glyphicon glyph={StrategyIds.getGhyphiconForStrategyId(this.props.StrategyId)} />{' '}
+            {StrategyIds.getNameForStrategyId(this.props.StrategyId)}
         </div>
 
     }

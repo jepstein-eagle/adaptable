@@ -22,6 +22,12 @@ export module UIHelper {
         }
     }
 
+    export function getExpressionBuilderStateWithColumn(expression: Expression, columnId: string): ExpressionBuilderPageState {
+        return {
+            Expression: expression, SelectedColumnId: columnId, SelectedTab: null
+        }
+    }
+
     export function getDescriptionForDataType(dataType: DataType) {
         switch (dataType) {
             case DataType.String:

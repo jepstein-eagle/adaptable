@@ -8,7 +8,7 @@ import { UIHelper } from '../../UIHelper';
 export class UserFilterExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IUserFilter>) {
         super(props2)
-        this.state = UIHelper.getExpressionBuilderState(this.props2.Data.Expression)
+        this.state = UIHelper.getExpressionBuilderStateWithColumn(this.props2.Data.Expression, this.props2.Data.ColumnId)
     }
 
     public Next(): void {

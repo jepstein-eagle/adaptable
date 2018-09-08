@@ -155,6 +155,10 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title))
     }
 
+    public dashboardSetApplicationToolbarTitle(title: string): void {
+        this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title))
+    }
+
 
     // Quick Search api methods
     public quickSearchRun(quickSearchText: string): void {

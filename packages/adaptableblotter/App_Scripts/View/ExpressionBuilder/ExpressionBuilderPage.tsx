@@ -42,7 +42,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
         let newButton = <ButtonCondition cssClassName={cssClassName} onClick={() => this.onSelectedColumnChanged()}
-            overrideDisableButton={queryBuildStatus == QueryBuildStatus.SelectFirstColumn || queryBuildStatus == QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == QueryBuildStatus.SingleConditionsAdded}
+            overrideDisableButton={this.props.ExpressionMode==ExpressionMode.SingleColumn|| queryBuildStatus == QueryBuildStatus.SelectFirstColumn || queryBuildStatus == QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == QueryBuildStatus.SingleConditionsAdded}
             overrideTooltip="Add Condition"
             style={{ width: "230px" }}
             DisplayMode="Glyph+Text"
@@ -50,9 +50,11 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         />
 
         return <div className={cssClassName}>
+
             <PanelWithButton cssClassName={cssClassName} headerText="Query Builder"
                 button={newButton}
                 bsStyle="primary" style={{ height: '520px' }}>
+                
                 <Row>
                     <Col xs={6}>
                         <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
@@ -181,7 +183,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
     public canNext(): boolean {
         return ExpressionHelper.IsNotEmptyOrInvalidExpression(this.state.Expression)
     }
-    public canBack(): boolean { return true; /*return !this.state.IsEdit; */ }
+    public canBack(): boolean { return this.props.ExpressionMode != ExpressionMode.SingleColumn }
     public Next(): void { /*this.props.Data.Values = this.state.SelectedValues*/ }
     public Back(): void {
         // todo

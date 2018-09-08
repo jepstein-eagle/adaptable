@@ -160,7 +160,7 @@ export function getIdForStrategyName(strategyName: string) {
     }
 }
 
-export function getNameForStrategy(strategyID: string) {
+export function getNameForStrategyId(strategyID: string) {
     switch (strategyID) {
         case AboutStrategyId:
             return AboutStrategyName
@@ -225,7 +225,7 @@ export function getNameForStrategy(strategyID: string) {
     }
 }
 
-export function getGhyphiconForStrategy(strategyID: string) {
+export function getGhyphiconForStrategyId(strategyID: string) {
     switch (strategyID) {
         case AboutStrategyId:
             return AboutGlyph

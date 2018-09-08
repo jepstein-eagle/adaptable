@@ -9,6 +9,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
@@ -25,13 +26,20 @@ interface DashboardPopupState {
 }
 
 class DashboardPopupComponent extends React.Component<DashboardPopupProps, DashboardPopupState> {
-    private placeholder: HTMLButtonElement
     constructor(props: DashboardPopupProps) {
         super(props)
         this.state = { CurrentDashboardPopup: "", EditedZoomFactor: props.Zoom }
     }
     render() {
         let cssClassName: string = this.props.cssClassName + "__dashboard";
+
+        let availableToolbarNames: string[] = this.props.AvailableToolbars.map(at => {
+            return StrategyIds.getNameForStrategyId(at)
+        })
+
+        let visibleToolbarNames: string[] = this.props.VisibleToolbars.map(vt => {
+            return StrategyIds.getNameForStrategyId(vt)
+        })
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText="Dashboard Toolbars" bsStyle="primary" glyphicon={StrategyIds.FunctionsGlyph} className="ab_main_popup">
@@ -44,9 +52,9 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                 {' '}
                 <div><br /></div>
 
-                <DualListBoxEditor AvailableValues={this.props.AvailableToolbars}
+                <DualListBoxEditor AvailableValues={availableToolbarNames}
                     cssClassName={cssClassName}
-                    SelectedValues={this.props.VisibleToolbars}
+                    SelectedValues={visibleToolbarNames}
                     HeaderAvailable="Available Toolbars"
                     HeaderSelected="Visible Toolbars"
                     onChange={(SelectedValues) => this.ListChange(SelectedValues)}
@@ -54,13 +62,14 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
 
             </PanelWithButton>
         </div>
-
     }
 
     private ListChange(selectedValues: string[]) {
-        this.props.onDashboardSetToolbars(selectedValues)
+        let selectedColumnIds: string[] = selectedValues.map(sv => {
+            return StrategyIds.getIdForStrategyName(sv)
+        })
+        this.props.onDashboardSetToolbars(selectedColumnIds)
     }
-
 
     private onSetFactorChange(event: React.FormEvent<any>) {
         const e = event.target as HTMLInputElement;
@@ -78,6 +87,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     }
 
 }
+
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AvailableToolbars: state.Dashboard.AvailableToolbars,

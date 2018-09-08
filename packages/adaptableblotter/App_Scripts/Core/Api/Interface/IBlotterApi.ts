@@ -103,6 +103,7 @@ export interface IBlotterApi {
   dashboardShowColumnsDropdown(): void
   dashboardHideColumnsDropdown(): void
   dashboardSetHomeToolbarTitle(title: string): void
+  dashboardSetApplicationToolbarTitle(title: string): void
   dashboardMinimise(): void
 
   // Calendar State
