@@ -43,7 +43,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
 
 
     private wrapExpressionDescription(PlusMinusRule: IPlusMinusRule): string {
-        return (PlusMinusRule.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns, this.props.UserFilters);
+        return (PlusMinusRule.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns);
     }
 }
 

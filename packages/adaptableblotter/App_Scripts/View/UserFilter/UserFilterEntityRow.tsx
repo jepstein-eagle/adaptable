@@ -18,7 +18,7 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
 
         colItems[0].Content = userFilter.Name
         colItems[1].Content = ColumnHelper.getFriendlyNameFromColumnId(userFilter.ColumnId, this.props.Columns)
-        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns, this.props.UserFilters)
+        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns)
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             editClick={() => this.props.onEdit(this.props.Index, userFilter)}

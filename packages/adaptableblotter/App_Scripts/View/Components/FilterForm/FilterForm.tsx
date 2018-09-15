@@ -34,14 +34,14 @@ import { IUIPrompt } from "../../../Core/Interface/IMessage";
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     CurrentColumn: IColumn;
+    Blotter: IAdaptableBlotter;
     Columns: IColumn[];
     UserFilters: IUserFilter[];
     SystemFilters: string[];
     ColumnFilters: IColumnFilter[];
-    Blotter: IAdaptableBlotter;
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
-    onClearColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterClearAction
+    onClearColumnFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
@@ -276,7 +276,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         //delete if empty
         if (columnDisplayValues.length == 0 && columnRawValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
-            this.props.onClearColumnFilter(columnFilter);
+            this.props.onClearColumnFilter(columnFilter.ColumnId);
         } else {
             this.props.onAddEditColumnFilter(columnFilter);
         }
@@ -311,19 +311,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        ColumnFilters: state.Filter.ColumnFilters,
+        Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
+       ColumnFilters: state.Filter.ColumnFilters,
+         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
-        Blotter: ownProps.Blotter
-    };
+     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
-        onClearColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onClearColumnFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),

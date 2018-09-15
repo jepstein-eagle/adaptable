@@ -19,7 +19,7 @@ import { IUIPrompt } from "../../Core/Interface/IMessage";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]
-    onClearColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterClearAction,
+    onClearColumnFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -54,7 +54,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
                 Index={index}
                 onEdit={null}
                 onDeleteConfirm={null}
-                onClear={() => this.props.onClearColumnFilter(columnFilter)}
+                onClear={() => this.props.onClearColumnFilter(columnFilter.ColumnId)}
                 onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
             />
 
@@ -94,7 +94,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClearColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onClearColumnFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };

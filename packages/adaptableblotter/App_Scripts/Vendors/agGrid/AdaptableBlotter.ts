@@ -10,6 +10,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
+import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 // services
@@ -62,7 +63,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, PinnedColumnDirection } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { FilterWrapperFactory } from './FilterWrapper'
+import { FilterWrapperFactory, FloatingFilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
@@ -93,6 +94,8 @@ import { AlertStrategy } from '../../Strategy/AlertStrategy';
 import { ChartStrategy } from '../../Strategy/ChartStrategy';
 import { ChartService } from '../../Core/Services/ChartService';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
+import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
+
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -147,7 +150,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-         this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
+     //   this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -217,6 +220,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.destroyFilter(col)
         this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
         col.initialise()
+    }
+
+    private createFloatingFilterWrapper(col: Column) {
+        console.log("in method for: " + col.getId())
+        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: true }
+        this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(this)
     }
 
     public InitAuditService() {
@@ -1046,10 +1055,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_PINNED, (params: any) => {
-          //  console.log(params)
+            //  console.log(params)
             let column: string = params.columns[0].getColId();
             let pinned: string = params.pinned
-          //  console.log("column: " + column);
+            //  console.log("column: " + column);
             if (params.pinned != null) { // pinned column added
                 let pinnedColumnDirection: PinnedColumnDirection = (pinned == "left") ? PinnedColumnDirection.Left : PinnedColumnDirection.Right
                 this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));
@@ -1240,6 +1249,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
             this.createFilterWrapper(col);
         });
+        if (this.gridOptions.floatingFilter) {
+            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+                this.createFloatingFilterWrapper(col);
+            });
+            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+        }
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 

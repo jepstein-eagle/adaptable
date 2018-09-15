@@ -40,7 +40,7 @@ export module ReportHelper {
                 return "[Selected Cells Data]";
             }
         }
-        return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols, userFilters)
+        return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols)
     }
 
     export function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]> {

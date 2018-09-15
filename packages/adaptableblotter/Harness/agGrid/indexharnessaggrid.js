@@ -17,6 +17,7 @@ function InitTradeBlotter() {
         enableFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
+        floatingFilter:true,
         //    pagination: true,
         //    paginationPageSize: 100,
         columnTypes: {                  // not required but helpful for column data type identification

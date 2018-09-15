@@ -22,7 +22,7 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
 
         colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(advancedSearch)} checked={this.props.IsCurrentAdvancedSearch} />
         colItems[1].Content = advancedSearch.Name;
-        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns, this.props.UserFilters)
+        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns)
 
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}

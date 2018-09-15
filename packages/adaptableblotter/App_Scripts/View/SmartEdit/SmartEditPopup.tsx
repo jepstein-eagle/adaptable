@@ -114,7 +114,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         let returnString: string[] = []
         for (let CellValidation of CellValidations) {
             let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression( CellValidation.Expression)) ?
-                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns, this.props.UserFilters) :
+                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
                 "";
             returnString.push(CellValidation.Description + expressionDescription)
         }

@@ -31,7 +31,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
             { Key: "Is Column Default", Value: this.props.Data.IsDefaultNudge ? "True" : "False" },
             {
                 Key: "Custom Rule", Value: this.props.Data.IsDefaultNudge ?
-                    "None" : ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
+                    "None" : ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns)
             },
         ]
 

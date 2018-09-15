@@ -29,7 +29,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
             { Key: "Alert Type", Value: this.props.Data.MessageType },
             {
                 Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression) ?
-                    ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) :
+                    ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) :
                     "None"
             }
         ]

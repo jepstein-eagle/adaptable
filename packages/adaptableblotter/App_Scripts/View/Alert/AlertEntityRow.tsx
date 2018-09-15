@@ -52,7 +52,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
     setExpressionDescription(Alert: IAlertDefinition): string {
         return (ExpressionHelper.IsNotEmptyExpression(Alert.Expression)) ?
-            ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.Columns, this.props.UserFilters) :
+            ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.Columns) :
             "No Expression";
     }
 

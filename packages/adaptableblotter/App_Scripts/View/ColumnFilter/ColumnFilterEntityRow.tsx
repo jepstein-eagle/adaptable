@@ -22,7 +22,7 @@ export class ColumnFilterEntityRow extends React.Component<ColumnFilterEntityRow
     render(): any {
         let colItems: IColItem[] = [].concat(this.props.colItems)
         colItems[0].Content = ColumnHelper.getFriendlyNameFromColumnId(this.props.ColumnFilter.ColumnId, this.props.Columns)
-        colItems[1].Content = ExpressionHelper.ConvertExpressionToString(this.props.ColumnFilter.Filter, this.props.Columns, this.props.UserFilters)
+        colItems[1].Content = ExpressionHelper.ConvertExpressionToString(this.props.ColumnFilter.Filter, this.props.Columns)
         colItems[2].Content = <span>
             <ButtonSave cssClassName={this.props.cssClassName} onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
                 overrideTooltip="Save as User Filter"

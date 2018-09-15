@@ -9,6 +9,7 @@
             "request": "attach",
             "name": "Attach to Chrome",
             "sourceMaps": true,
+            "url": "http://localhost:8080",
             "port": 9222,
             "webRoot": "${workspaceFolder}/packages/adaptableblotter"
         },

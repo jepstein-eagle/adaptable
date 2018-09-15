@@ -297,7 +297,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public columnFilterClear(columnFilter: IColumnFilter): void {
-        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter));
+        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter.ColumnId));
     }
 
     public columnFilterClearByColumns(columns: string[]): void {
@@ -307,12 +307,8 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public columnFilterClearByColumn(column: string): void {
-        let currentColumnFilters = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-        let currentColumnFilter = currentColumnFilters.find(c => c.ColumnId == column);
-        if (currentColumnFilter) {
-            this.dispatchAction(FilterRedux.ColumnFilterClear(currentColumnFilter));
-        }
-    }
+           this.dispatchAction(FilterRedux.ColumnFilterClear(column));
+     }
 
     public columnFilterClearAll(): void {
         this.dispatchAction(FilterRedux.ColumnFilterClearAll());

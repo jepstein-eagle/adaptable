@@ -147,7 +147,7 @@ export module ObjectFactory {
         let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
-            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns, userFilters) :
+            " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :
             "";
         return (columnFriendlyName + ": " + CellValidation.Description + expressionDescription);
     }

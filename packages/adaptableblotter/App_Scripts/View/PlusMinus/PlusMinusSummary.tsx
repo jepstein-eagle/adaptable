@@ -56,7 +56,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                         key={"PM" + index}
                         cssClassName={this.props.cssClassName}
                         Item1={"Nudge Value: " + item.NudgeValue}
-                        Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters))}
+                        Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns))}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
                         EntityName={StrategyIds.PlusMinusStrategyName}

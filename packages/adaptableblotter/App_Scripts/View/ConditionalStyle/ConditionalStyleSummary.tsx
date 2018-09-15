@@ -60,7 +60,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                         cssClassName={this.props.cssClassName}
                         key={"CS" + index}
                         Item1={<StyleVisualItem Style={item.Style} />}
-                        Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
+                        Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
                         ConfigEnity={item}
                         EntityName={StrategyIds.ConditionalStyleStrategyName}
                         showShare={this.props.TeamSharingActivated}

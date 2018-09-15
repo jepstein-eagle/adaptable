@@ -114,7 +114,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                     <Col xs={4}>
                         {(ExpressionHelper.IsNotEmptyExpression (cellVal.Expression) )?
-                            ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns, this.props.UserFilters) :
+                            ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns) :
                             "No Expression"}
                     </Col>
                 </Row>
@@ -132,7 +132,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         <StyleVisualItem Style={cs.Style} />
                     </Col>
                     <Col xs={5}>
-                        {ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns, this.props.UserFilters)}
+                        {ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns)}
                     </Col>
                 </Row>
             }
@@ -146,7 +146,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                         {plusMinus.NudgeValue.toString()}
                     </Col>
                     <Col xs={5}>
-                        {ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns, this.props.UserFilters)}
+                        {ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns)}
                     </Col>
                 </Row>
             }
@@ -166,7 +166,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.UserFilterStrategyId: {
                 let filter = sharedEntity.entity as IUserFilter
-                let expressionString = ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns, this.props.UserFilters)
+                let expressionString = ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
                         {filter.Name}
@@ -178,7 +178,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.AdvancedSearchStrategyId: {
                 let search = sharedEntity.entity as IAdvancedSearch
-                let expressionString = ExpressionHelper.ConvertExpressionToString(search.Expression, this.props.Columns, this.props.UserFilters)
+                let expressionString = ExpressionHelper.ConvertExpressionToString(search.Expression, this.props.Columns)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
                         {search.Name}
@@ -210,7 +210,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             }
             case StrategyIds.ExportStrategyId: {
                 let range = sharedEntity.entity as IReport
-                let expressionString = ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns, this.props.UserFilters)
+                let expressionString = ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
                         {range.Name}

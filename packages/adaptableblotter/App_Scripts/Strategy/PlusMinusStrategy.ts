@@ -16,6 +16,7 @@ import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
@@ -37,13 +38,13 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId)) {
             let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-      
-        if (column && column.DataType == DataType.Number) {
-            this.createContextMenuItemShowPopup(
-                "Create Plus/Minus Rule",
-                ScreenPopups.PlusMinusPopup,
-                StrategyIds.PlusMinusGlyph,
-                "New|" + columnId)
+
+            if (column && column.DataType == DataType.Number) {
+                this.createContextMenuItemShowPopup(
+                    "Create Plus/Minus Rule",
+                    ScreenPopups.PlusMinusPopup,
+                    StrategyIds.PlusMinusGlyph,
+                    "New|" + columnId)
             }
         }
     }
@@ -51,8 +52,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     private handleKeyDown(keyEvent: KeyboardEvent | any) {
         //it's a speacial key so we handle the string representation of the key '
         let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
-        if (keyEventString == "-" || keyEventString == "+") {
-            let successfulValues: ICellInfo[] = [];
+        if ((keyEventString == "-" || keyEventString == "+") && ArrayExtensions.IsNotNullOrEmpty(this.PlusMinusState.PlusMinusRules)) {
+             let successfulValues: ICellInfo[] = [];
             let side = 1
             if (Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1
@@ -118,13 +119,15 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         } else {
                             successfulValues.push(newValue)
                         }
+
+                        //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
+                        keyEvent.preventDefault()
                     }
                 }
             }
 
 
-            //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
-            keyEvent.preventDefault()
+
             // first inform if any failed with prevent
             this.ShowErrorPreventMessage(failedPreventEdits);
             if (failedWarningEdits.length > 0) {

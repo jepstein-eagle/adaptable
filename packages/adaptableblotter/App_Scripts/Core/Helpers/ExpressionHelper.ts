@@ -28,14 +28,14 @@ export module ExpressionHelper {
         userFilters: Array<string>,
         ranges: Array<IRange>) {
         return new Expression(
-            columnDisplayValues && columnDisplayValues.length > 0 ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues:columnRawValues     }] : [],
+          ( ( columnDisplayValues && columnDisplayValues.length > 0 ) || (columnRawValues && columnRawValues.length > 0))? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues:columnRawValues     }] : [],
             userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
     }
 
 
-    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, filters: any): string {
+    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>): string {
         let returnValue = ""
         if (IsEmptyExpression(Expression)) {
             return "Any";
@@ -177,6 +177,38 @@ export module ExpressionHelper {
         }
         return returnValue
     }
+
+    export function OperatorToOneCharacterString(operator: LeafExpressionOperator): string {
+        switch (operator) {
+            case LeafExpressionOperator.Unknown:
+                return "X"
+            case LeafExpressionOperator.GreaterThan:
+                return ">"
+            case LeafExpressionOperator.LessThan:
+                return "<"
+            case LeafExpressionOperator.Equals:
+                return "="
+            case LeafExpressionOperator.NotEquals:
+                return "<>"
+            case LeafExpressionOperator.GreaterThanOrEqual:
+                return ">="
+            case LeafExpressionOperator.LessThanOrEqual:
+                return "<="
+            case LeafExpressionOperator.Between:
+                return "In"
+            case LeafExpressionOperator.Contains:
+                return "C"
+            case LeafExpressionOperator.NotContains:
+                return "!C"
+            case LeafExpressionOperator.StartsWith:
+                return "S"
+            case LeafExpressionOperator.EndsWith:
+                return "E"
+            case LeafExpressionOperator.Regex:
+                return "R"
+        }
+    }
+
 
     export function OperatorToShortFriendlyString(operator: LeafExpressionOperator): string {
         switch (operator) {
@@ -492,9 +524,9 @@ export module ExpressionHelper {
                 let changeInValue: number = Math.abs(rangeEvaluation.newValue - oldChangeValue);
                 return changeInValue > Number(rangeEvaluation.operand1);
             case LeafExpressionOperator.Between:
-                return (rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+                return (rangeEvaluation.newValue >= rangeEvaluation.operand1 && rangeEvaluation.newValue <= rangeEvaluation.operand2);
             case LeafExpressionOperator.NotBetween:
-                return !(rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+                return !(rangeEvaluation.newValue >= rangeEvaluation.operand1 && rangeEvaluation.newValue <= rangeEvaluation.operand2);
             case LeafExpressionOperator.IsNotNumber:
                 return (isNaN(Number(rangeEvaluation.newValue)));
             case LeafExpressionOperator.IsPositive:

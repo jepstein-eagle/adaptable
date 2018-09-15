@@ -34,7 +34,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
                             bsStyle={"default"}
                             cssClassName={cssClassName}
                             onClick={() => this.props.OnTextChange("")}
-                            size={"small"}
+                            size={size}
                             overrideTooltip="Clear"
                             ConfigEntity={null}
                             DisplayMode="Glyph" />

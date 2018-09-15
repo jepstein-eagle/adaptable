@@ -18,7 +18,7 @@ import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
-    onDeleteFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterClearAction,
+    onClearFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -33,7 +33,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
 
         let columnFilter: IColumnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
-        let description: string = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters)
+        let description: string = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns)
 
         let summaryItems: any[] = []
         summaryItems.push(<b>{<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
@@ -41,7 +41,8 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         summaryItems.push(
             <ButtonClear cssClassName={this.props.cssClassName}
                 bsStyle={"primary"}
-                size={"small"} onClick={() => this.props.onDeleteFilter(columnFilter)} overrideTooltip="Clear Column Filter"
+                size={"small"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)} 
+                overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null} />)
 
@@ -58,7 +59,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onClearFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
     };

@@ -57,7 +57,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         key={"UF" + index}
                         cssClassName={this.props.cssClassName}
                         Item1={item.Name}
-                        Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters)}
+                        Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
                         EntityName={StrategyIds.UserFilterStrategyName}

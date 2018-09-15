@@ -28,7 +28,7 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
                 "Whole Row"
 
         colItems[1].Content = <StyleVisualItem Style={conditionalStyle.Style} />
-        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns, this.props.UserFilters)
+        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns)
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}

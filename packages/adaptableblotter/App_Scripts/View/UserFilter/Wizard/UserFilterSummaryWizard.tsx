@@ -29,7 +29,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
+            { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.UserFilterStrategyName} />
