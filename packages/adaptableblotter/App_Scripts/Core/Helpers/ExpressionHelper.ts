@@ -21,21 +21,21 @@ export interface IRangeEvaluation {
 }
 
 export module ExpressionHelper {
-  
+
     export function CreateSingleColumnExpression(columnId: string,
         columnDisplayValues: Array<string>,
         columnRawValues: Array<string>,
         userFilters: Array<string>,
         ranges: Array<IRange>) {
         return new Expression(
-          ( ( columnDisplayValues && columnDisplayValues.length > 0 ) || (columnRawValues && columnRawValues.length > 0))? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues:columnRawValues     }] : [],
+            ((columnDisplayValues && columnDisplayValues.length > 0) || (columnRawValues && columnRawValues.length > 0)) ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues: columnRawValues }] : [],
             userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [],
             ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []
         )
     }
 
 
-    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>): string {
+    export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, includeColumnName: boolean = true): string {
         let returnValue = ""
         if (IsEmptyExpression(Expression)) {
             return "Any";
@@ -44,13 +44,12 @@ export module ExpressionHelper {
         let columnList = GetColumnListFromExpression(Expression)
         for (let columnId of columnList) {
             let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(columnId, columns)
-
             let columnToString = ""
 
             // Column Display Values
-            let columnValueExpression : IColumnValueExpression = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
+            let columnValueExpression: IColumnValueExpression = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
             if (columnValueExpression) {
-                columnToString = ColumnValueExpressionToString(columnValueExpression, columnFriendlyName)
+                columnToString = ColumnValueExpressionToString(columnValueExpression, columnFriendlyName, includeColumnName)
             }
 
             // User Filters
@@ -59,7 +58,7 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += UserFiltersToString(columnUserFilters.Filters, columnFriendlyName)
+                columnToString += UserFiltersToString(columnUserFilters.Filters, columnFriendlyName, includeColumnName)
             }
 
             // Column Ranges
@@ -68,12 +67,19 @@ export module ExpressionHelper {
                 if (columnToString != "") {
                     columnToString += " OR "
                 }
-                columnToString += RangesToString(columnRange, columnFriendlyName, columns)
+                columnToString += RangesToString(columnRange, columnFriendlyName, columns, includeColumnName)
             }
             if (returnValue != "") {
                 returnValue += " AND "
             }
-            returnValue += "(" + columnToString + ")";
+            if (includeColumnName) {
+                returnValue += "("
+            }
+            returnValue += columnToString ;
+
+            if (includeColumnName) {
+                returnValue += ")"
+            }
         }
         return returnValue
     }
@@ -162,21 +168,50 @@ export module ExpressionHelper {
         return true;
     }
 
-    function ColumnValueExpressionToString(columnValueExpression: IColumnValueExpression, columnFriendlyName: string): string {
-        return "[" + columnFriendlyName + "]"
-            + " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
+    function ColumnValueExpressionToString(columnValueExpression: IColumnValueExpression, columnFriendlyName: string, includeColumnName: boolean): string {
+        let returnValue = ""
+        if (includeColumnName) {
+            returnValue += "[" + columnFriendlyName + "]"
+        }
+        returnValue += " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
+        return returnValue;
     }
 
-    function UserFiltersToString(userFilters: string[], columnFriendlyName: string): string {
+    function UserFiltersToString(userFilters: string[], columnFriendlyName: string, includeColumnName: boolean): string {
         let returnValue = ""
         for (let userFilter of userFilters) {
             if (returnValue != "") {
                 returnValue += " OR "
             }
-            returnValue += "[" + columnFriendlyName + "] " + userFilter;
+            if (includeColumnName) {
+                returnValue += "[" + columnFriendlyName + "] "
+            }
+            returnValue += userFilter;
         }
         return returnValue
     }
+
+    function RangesToString(rangeExpression: IRangeExpression, columnFriendlyName: string, columns: IColumn[], includeColumnName: boolean): string {
+        let returnValue = ""
+        for (let range of rangeExpression.Ranges) {
+            if (returnValue != "") {
+                returnValue += " OR "
+            }
+            if (range.Operator == LeafExpressionOperator.Between) {
+                if (includeColumnName) {
+                    returnValue += "[" + columnFriendlyName + "] "
+                }
+                returnValue += OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns) + " AND " + getOperandValue(range.Operand2Type, range.Operand2, columns)
+            } else {
+                if (includeColumnName) {
+                    returnValue += "[" + columnFriendlyName + "] "
+                }
+                returnValue += OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns)
+            }
+        }
+        return returnValue
+    }
+
 
     export function OperatorToOneCharacterString(operator: LeafExpressionOperator): string {
         switch (operator) {
@@ -337,21 +372,6 @@ export module ExpressionHelper {
         }
     }
 
-    function RangesToString(rangeExpression : IRangeExpression, columnFriendlyName: string, columns: IColumn[]): string {
-        let returnValue = ""
-        for (let range of rangeExpression.Ranges) {
-            if (returnValue != "") {
-                returnValue += " OR "
-            }
-            if (range.Operator == LeafExpressionOperator.Between) {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns) + " AND " + getOperandValue(range.Operand2Type, range.Operand2, columns)
-            } else {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns)
-            }
-        }
-        return returnValue
-
-    }
 
     function getOperandValue(rangeOperandType: string, operand: string, columns: IColumn[]): string {
         if (rangeOperandType == "Value") {
@@ -382,10 +402,10 @@ export module ExpressionHelper {
     }
 
     export function IsEmptyOrValidExpression(expression: Expression): boolean {
-        if(IsEmptyExpression(expression)) {
+        if (IsEmptyExpression(expression)) {
             return true;
         }
-        return  IsExpressionValid(expression)
+        return IsExpressionValid(expression)
     }
 
     export function IsExpressionValid(expression: Expression): boolean {

@@ -33,6 +33,7 @@ export interface FloatingFilterFormState {
     filterExpression: Expression
     numberOperatorPairs: KeyValuePair[]
     stringOperatorPairs: KeyValuePair[]
+    placeholder: string
 }
 
 class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProps, FloatingFilterFormState> {
@@ -56,7 +57,8 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
                 { Key: "*", Value: LeafExpressionOperator.Contains },
                 { Key: "!", Value: LeafExpressionOperator.NotContains },
                 { Key: "=", Value: LeafExpressionOperator.Equals },
-            ]
+            ],
+            placeholder: ""
         }
 
     }
@@ -66,23 +68,63 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         // and we are NOT going to match them up.  
         // if we need to do that, then we can do it in Phase 2; for Phase 1 they are not synced up.
 
-        if (ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression)) {
-            let test: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId)
+        if (this.props.CurrentColumn.ColumnId == "tradeId") {
+            console.log("in did update for: " + this.props.CurrentColumn.ColumnId)
+        }
+        this.testMethod();
 
-            if (test) {
-                let diff = DeepDiff.diff(test.Filter, this.state.filterExpression)
-                if (diff) {
-                    this.clearState()
-                }
-            } else {
-                this.clearState()
-            }
+    }
+
+    componentWillMount() {
+        if (this.props.CurrentColumn.ColumnId == "tradeId") {
+            console.log("in will mount")
         }
     }
 
+    componentDidMount() {
+        if (this.props.CurrentColumn.ColumnId == "tradeId") {
+            console.log("in did mount")
+        }
+        this.testMethod();
+
+    }
+
+    testMethod(): void {
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId)
+
+        if (existingColumnFilter) {
+
+            // first check to see if we have an expression
+            if (ExpressionHelper.IsEmptyExpression(this.state.filterExpression)) {
+                // if we have no placeholder then set one - together with the placeholder
+                if (this.props.CurrentColumn.ColumnId == "tradeId") {
+                    console.log("need to build from filter as we are empty. column: " + this.props.CurrentColumn.ColumnId)
+                }
+                let expressionDescription = ExpressionHelper.ConvertExpressionToString(existingColumnFilter.Filter, this.props.Columns, false)
+                this.setState({ filterExpression: existingColumnFilter.Filter, placeholder: expressionDescription })
+            } else {
+                // we have an expression also - but if its not the same as the new one then update it to the new one
+                let diff = DeepDiff.diff(existingColumnFilter.Filter, this.state.filterExpression)
+                if (diff) {
+                    if (this.props.CurrentColumn.ColumnId == "tradeId") {
+                        console.log("expressions are different - rebuild. column: " + this.props.CurrentColumn.ColumnId)
+                    }
+                    let expressionDescription = ExpressionHelper.ConvertExpressionToString(existingColumnFilter.Filter, this.props.Columns, false)
+                    this.setState({ filterExpression: existingColumnFilter.Filter, placeholder: expressionDescription, floatingFilterFormText: "" })
+                }
+            }
+        } else {
+            // no filter so make sure our stuff is clear
+            this.clearState()
+        }
+    }
 
     render(): any {
-
+        //    if (this.props.CurrentColumn.ColumnId == "tradeId") {
+        //        console.log("rendering for: " + this.props.CurrentColumn.ColumnId)
+        //        console.log("expression: " +this.state.filterExpression)
+        //        console.log("placeholder: " +this.state.placeholder)
+        //    }
         let cssClassName: string = this.props.cssClassName + "__floatingFilterForm";
 
         return <span>
@@ -92,7 +134,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
                 autoFocus={false}
                 bsSize={"sm"}
                 type="text"
-                placeholder={""}
+                placeholder={this.state.placeholder}
                 value={this.state.floatingFilterFormText}
                 onChange={(x) => this.OnTextChange((x.target as HTMLInputElement).value)} />
         </span>
@@ -100,27 +142,39 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
 
 
     OnTextChange(searchText: string) {
+        // as soon as anything changes clear existing column filter
+        if (searchText.trim() != this.state.floatingFilterFormText.trim()) {
+            console.log("clearingfor column: " + this.props.CurrentColumn.ColumnId)
+            this.clearExistingColumnFilter();
+        }
+
+        // if text is empty then clear our state
         if (StringExtensions.IsNullOrEmpty(searchText.trim())) {
             this.clearState()
-            this.clearExistingColumnFilter();
             return;
         }
-        this.handleNumberFilter(searchText);
+
+        // otherwise handle the change
+        this.handleFilterChange(searchText);
     }
 
     clearExistingColumnFilter(): void {
-        this.props.onClearColumnFilter(this.props.CurrentColumn.ColumnId)
+        let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId)
+        if (existingColumnFilter) {
+            console.log("in method clearing for: " + this.props.CurrentColumn.ColumnId)
+            this.props.onClearColumnFilter(this.props.CurrentColumn.ColumnId)
+        }
     }
 
     createColumnFilter(expression: Expression, searchText: string): void {
         let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
-        this.setState({ floatingFilterFormText: searchText, filterExpression: expression })
+        this.setState({ floatingFilterFormText: searchText, filterExpression: expression, placeholder:"" })
         this.props.onAddEditColumnFilter(columnFilter)
     }
 
     createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
         if (searchText.trim() == operatorKVP.Key) {
-            // its operator only so do nothing
+            // its operator only so do nothing (but set placeholder to ensure not wiped)
             this.clearExpressionState(searchText)
         } else {
             let operand1 = searchText.replace(operatorKVP.Key, '')
@@ -146,16 +200,17 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         }
     }
 
-    handleNumberFilter(searchText: string): void {
+    handleFilterChange(searchText: string): void {
         // first check for existing operators and handle those
         let isRangeExpression: boolean = false
 
+        console.log("in handle filter change")
         let operators: KeyValuePair[];
         switch (this.props.CurrentColumn.DataType) {
             case DataType.Number:
                 operators = this.state.numberOperatorPairs;
                 break;
-              case DataType.String:
+            case DataType.String:
                 operators = this.state.stringOperatorPairs;
                 break;
         }
@@ -164,6 +219,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         operators.forEach(op => {
             if (!isRangeExpression) {
                 if (searchText.includes(op.Key)) {
+                    console.log("found the op: " + op.Key)
                     this.createRangeExpression(op, searchText);
                     isRangeExpression = true; // set to true so dont do >= and then later >
                 }
@@ -184,29 +240,18 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         }
     }
 
-    handleStringFilter(searchText: string): void {
-        let isRangeExpression: boolean = false
-        this.state.stringOperatorPairs.forEach(op => {
-            if (!isRangeExpression) {
-                if (searchText.includes(op.Key)) {
-                    this.createRangeExpression(op, searchText);
-                    isRangeExpression = true;
-                }
+    clearState(): void {
+        if (this.state.placeholder != "TEMP") {
+            if (ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) || StringExtensions.IsNotNullOrEmpty(this.state.placeholder) || StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)) {
+                console.log("im clearing the filter")
+                this.setState({ floatingFilterFormText: "", filterExpression: ExpressionHelper.CreateEmptyExpression(), placeholder: "" })
             }
-        })
-
-        if (!isRangeExpression) {
-            let equalOperatorPair: KeyValuePair = this.state.numberOperatorPairs.find(op => op.Value == LeafExpressionOperator.Equals)
-            this.createRangeExpression(equalOperatorPair, searchText);
         }
     }
 
-    clearState(): void {
-        this.setState({ floatingFilterFormText: "", filterExpression: ExpressionHelper.CreateEmptyExpression() })
-    }
-
     clearExpressionState(searchText: string): void {
-        this.setState({ floatingFilterFormText: searchText, filterExpression: ExpressionHelper.CreateEmptyExpression() })
+        console.log("setting search text to: " + searchText)
+        this.setState({ floatingFilterFormText: searchText, filterExpression: ExpressionHelper.CreateEmptyExpression(), placeholder: "TEMP" })
     }
 
     isValidBetweenValues(values: any[]): boolean {

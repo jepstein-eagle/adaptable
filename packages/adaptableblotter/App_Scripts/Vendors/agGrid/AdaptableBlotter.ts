@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as StyleConstants from '../../Core/Constants/StyleConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
@@ -24,9 +25,13 @@ import { ValidationService } from '../../Core/Services/ValidationService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { ChartService } from '../../Core/Services/ChartService';
+import { IChartService } from '../../Core/Services/Interface/IChartService';
 // strategies
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
+import { AlertStrategy } from '../../Strategy/AlertStrategy';
+import { ChartStrategy } from '../../Strategy/ChartStrategy';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
@@ -55,22 +60,24 @@ import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrateg
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
+// components
+import { FilterWrapperFactory } from './FilterWrapper'
+import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
 import { IMenuItem } from '../../Core/Interface/IMenu';
 import { IEvent } from '../../Core/Interface/IEvent';
-import { IAlert, IUIConfirmation } from '../../Core/Interface/IMessage';
+import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, PinnedColumnDirection } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
-import { FilterWrapperFactory, FloatingFilterWrapperFactory } from './FilterWrapper'
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ILayout } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
@@ -88,14 +95,6 @@ import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } fr
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
-import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
-import { Alert } from 'react-bootstrap';
-import { AlertStrategy } from '../../Strategy/AlertStrategy';
-import { ChartStrategy } from '../../Strategy/ChartStrategy';
-import { ChartService } from '../../Core/Services/ChartService';
-import { IChartService } from '../../Core/Services/Interface/IChartService';
-import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
-
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -223,8 +222,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private createFloatingFilterWrapper(col: Column) {
-        console.log("in method for: " + col.getId())
-        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: true }
+         this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: true }
         this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(this)
     }
 
