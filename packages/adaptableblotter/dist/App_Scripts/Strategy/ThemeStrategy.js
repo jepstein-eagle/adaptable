@@ -9,6 +9,7 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyIds.ThemeStrategyId, blotter);
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
+        this.style.id = `${blotter.BlotterOptions.adaptableBlotterContainer}-theme`;
         this.style.appendChild(document.createTextNode("")); // WebKit hack :(
         document.head.appendChild(this.style); // Adds the <style> element to the page
         // Create the theme link for predefined themes
