@@ -12,9 +12,9 @@ export interface IAdaptableBlotterOptions {
     primaryKey: string;
     /**
     * The underlying vendor grid or grid object
-    * One of the three MANDATORY properties
+    * One of the three MANDATORY properties (except for Hypergrid Angular wrapper)
     */
-    vendorGrid: any;
+    vendorGrid?: any;
     /**
      * How to identifier this Blotter
      * Useful if Audit Log is turned on or you are using multiple Blotters

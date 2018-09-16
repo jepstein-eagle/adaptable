@@ -13,9 +13,10 @@ export interface IRangeEvaluation {
 }
 export declare module ExpressionHelper {
     function CreateSingleColumnExpression(columnId: string, columnDisplayValues: Array<string>, columnRawValues: Array<string>, userFilters: Array<string>, ranges: Array<IRange>): Expression;
-    function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, filters: any): string;
+    function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, includeColumnName?: boolean): string;
     function ConvertRangeToString(range: IRange, columns: IColumn[]): string;
     function IsSatisfied(Expression: Expression, getColumnValue: (columnId: string) => any, getDisplayColumnValue: (columnId: string) => string, getOtherColumnValue: (columnId: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: string[], blotter: IAdaptableBlotter): boolean;
+    function OperatorToOneCharacterString(operator: LeafExpressionOperator): string;
     function OperatorToShortFriendlyString(operator: LeafExpressionOperator): string;
     function OperatorToLongFriendlyString(leafExpressionOperator: LeafExpressionOperator, dataType: DataType): string;
     function GetOperatorsForDataType(dataType: DataType): LeafExpressionOperator[];

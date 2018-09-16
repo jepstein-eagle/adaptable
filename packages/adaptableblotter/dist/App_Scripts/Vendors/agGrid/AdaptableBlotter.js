@@ -4,11 +4,13 @@ require("../../Styles/stylesheets/adaptableblotter-style.css");
 const ReactDOM = require("react-dom");
 const _ = require("lodash");
 const AdaptableBlotterView_1 = require("../../View/AdaptableBlotterView");
+const DefaultAdaptableBlotterOptions_1 = require("../../Core/DefaultAdaptableBlotterOptions");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore");
 const MenuRedux = require("../../Redux/ActionsReducers/MenuRedux");
+const LayoutRedux = require("../../Redux/ActionsReducers/LayoutRedux");
 const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const CalendarService_1 = require("../../Core/Services/CalendarService");
@@ -17,6 +19,8 @@ const AuditService_1 = require("../../Core/Services/AuditService");
 const ValidationService_1 = require("../../Core/Services/ValidationService");
 const StyleService_1 = require("../../Core/Services/StyleService");
 const AuditLogService_1 = require("../../Core/Services/AuditLogService");
+const ChartService_1 = require("../../Core/Services/ChartService");
+const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
 const AboutStrategy_1 = require("../../Strategy/AboutStrategy");
 const ApplicationStrategy_1 = require("../../Strategy/ApplicationStrategy");
 const BulkUpdateStrategy_1 = require("../../Strategy/BulkUpdateStrategy");
@@ -45,11 +49,13 @@ const CalculatedColumnStrategy_1 = require("../../Strategy/CalculatedColumnStrat
 const SelectColumnStrategy_1 = require("../../Strategy/SelectColumnStrategy");
 const SelectedCellsStrategy_1 = require("../../Strategy/SelectedCellsStrategy");
 const DataSourceStrategy_1 = require("../../Strategy/DataSourceStrategy");
+// components
+const FilterWrapper_1 = require("./FilterWrapper");
+const FloatingFilterWrapper_1 = require("./FloatingFilterWrapper");
 const EventDispatcher_1 = require("../../Core/EventDispatcher");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const Enums_1 = require("../../Core/Enums");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const FilterWrapper_1 = require("./FilterWrapper");
 const color_1 = require("../../Core/color");
 const BlotterApi_1 = require("./BlotterApi");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
@@ -60,10 +66,6 @@ const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
-const DefaultAdaptableBlotterOptions_1 = require("../../Core/DefaultAdaptableBlotterOptions");
-const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
-const ChartStrategy_1 = require("../../Strategy/ChartStrategy");
-const ChartService_1 = require("../../Core/Services/ChartService");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this.calculatedColumnPathMap = new Map();
@@ -102,7 +104,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
+        //   this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
@@ -161,6 +163,10 @@ class AdaptableBlotter {
         this.gridOptions.api.destroyFilter(col);
         this.gridOptions.api.getColumnDef(col).filter = FilterWrapper_1.FilterWrapperFactory(this);
         col.initialise();
+    }
+    createFloatingFilterWrapper(col) {
+        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: true };
+        this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapper_1.FloatingFilterWrapperFactory(this);
     }
     InitAuditService() {
         //Probably Temporary but we init the Audit service with current data
@@ -1085,6 +1091,13 @@ class AdaptableBlotter {
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
             this.createFilterWrapper(col);
         });
+        if (this.gridOptions.floatingFilter) {
+            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+                this.createFloatingFilterWrapper(col);
+            });
+            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
+            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
+        }
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 

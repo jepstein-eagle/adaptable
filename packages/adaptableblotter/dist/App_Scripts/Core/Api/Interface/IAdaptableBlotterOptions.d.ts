@@ -10,9 +10,9 @@ export interface IAdaptableBlotterOptions {
     primaryKey: string;
     /**
     * The underlying vendor grid or grid object
-    * One of the three MANDATORY properties
+    * One of the three MANDATORY properties (except for Hypergrid Angular wrapper)
     */
-    vendorGrid: any;
+    vendorGrid?: any;
     /**
      * How to identifier this Blotter
      * Useful if Audit Log is turned on or you are using multiple Blotters
@@ -78,6 +78,12 @@ export interface IAdaptableBlotterOptions {
      * Defaults to false - user needs to click save to persist changes
      */
     autoSaveLayouts?: boolean;
+    /**
+     * When running queries on text columns to ignore case
+     * Defaults to true - case is ignored by default
+     * (e.g. [StartsWith 'c'] will return true for the value 'Canada')
+     */
+    ignoreCaseInQueries?: boolean;
     /**
     * Required if using iPushPull to display / send live report data
     */

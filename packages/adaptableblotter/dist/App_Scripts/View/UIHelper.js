@@ -16,6 +16,12 @@ var UIHelper;
         };
     }
     UIHelper.getExpressionBuilderState = getExpressionBuilderState;
+    function getExpressionBuilderStateWithColumn(expression, columnId) {
+        return {
+            Expression: expression, SelectedColumnId: columnId, SelectedTab: null
+        };
+    }
+    UIHelper.getExpressionBuilderStateWithColumn = getExpressionBuilderStateWithColumn;
     function getDescriptionForDataType(dataType) {
         switch (dataType) {
             case Enums_1.DataType.String:

@@ -7,15 +7,21 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
+const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 class ApplicationToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__Application";
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ApplicationStrategyName, glyphicon: StrategyIds.ApplicationGlyph, onClose: () => this.props.onClose(StrategyIds.ApplicationStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) },
+        let headerText = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle) ?
+            this.props.ApplicationToolbarTitle :
+            StrategyIds.ApplicationStrategyName;
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: headerText, glyphicon: StrategyIds.ApplicationGlyph, onClose: () => this.props.onClose(StrategyIds.ApplicationStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) },
             React.createElement("div", { className: "ApplicationToolBarContents", style: { minHeight: 30 } }));
     }
 }
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        ApplicationToolbarTitle: state.Dashboard.ApplicationToolbarTitle,
+    };
 }
 function mapDispatchToProps(dispatch) {
     return {

@@ -91,5 +91,5 @@ export declare const TeamSharingGlyph: string;
 export declare const ThemeGlyph: string;
 export declare const UserFilterGlyph: string;
 export declare function getIdForStrategyName(strategyName: string): string;
-export declare function getNameForStrategy(strategyID: string): string;
-export declare function getGhyphiconForStrategy(strategyID: string): string;
+export declare function getNameForStrategyId(strategyID: string): string;
+export declare function getGhyphiconForStrategyId(strategyID: string): string;

@@ -7,7 +7,7 @@ exports.FilterWrapperFactory = (blotter) => {
         init(params) {
             this.params = params;
             this.filterContainer = document.createElement("div");
-            this.filterContainer.id = "filter" + this.params.column.getColId();
+            this.filterContainer.id = "filter_" + this.params.column.getColId();
         }
         isFilterActive() {
             //make the small filter icon to appear when there is a filter

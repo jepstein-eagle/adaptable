@@ -30,7 +30,7 @@ class ConditionalStyleSummaryComponent extends React.Component {
         // existing items
         this.props.ConditionalStyles.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CS" + index, Item1: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: item.Style }), Item2: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns, this.props.UserFilters), ConfigEnity: item, EntityName: StrategyIds.ConditionalStyleStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: ConditionalStyleRedux.ConditionalStyleDelete(index, item) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CS" + index, Item1: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: item.Style }), Item2: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns), ConfigEnity: item, EntityName: StrategyIds.ConditionalStyleStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: ConditionalStyleRedux.ConditionalStyleDelete(index, item) });
                 strategySummaries.push(detailRow);
             }
         });

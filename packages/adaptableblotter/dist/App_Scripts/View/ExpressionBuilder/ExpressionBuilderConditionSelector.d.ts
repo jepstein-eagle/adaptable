@@ -27,6 +27,7 @@ export interface ExpressionBuilderConditionSelectorState {
     SelectedColumnRanges: Array<IRange>;
     QueryBuildStatus: QueryBuildStatus;
     ShowWaitingMessage: boolean;
+    SelectedTab: QueryTab;
 }
 export declare class ExpressionBuilderConditionSelector extends React.Component<ExpressionBuilderConditionSelectorProps, ExpressionBuilderConditionSelectorState> {
     constructor(props: ExpressionBuilderConditionSelectorProps);

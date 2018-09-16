@@ -27,7 +27,7 @@ class ColumnFilterToolbarControlComponent extends React.Component {
         this.props.ColumnFilters.forEach(x => {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
             if (column) {
-                let expression = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(x.Filter, this.props.Columns, this.props.UserFilters);
+                let expression = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(x.Filter, this.props.Columns, false);
                 infoBody.push(React.createElement("b", null,
                     " ",
                     ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(x.ColumnId, this.props.Columns),

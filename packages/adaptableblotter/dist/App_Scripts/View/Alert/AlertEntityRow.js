@@ -25,7 +25,7 @@ class AlertEntityRow extends React.Component {
     }
     setExpressionDescription(Alert) {
         return (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(Alert.Expression)) ?
-            ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.Columns, this.props.UserFilters) :
+            ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.Columns) :
             "No Expression";
     }
     getColumnandRule(Alert) {

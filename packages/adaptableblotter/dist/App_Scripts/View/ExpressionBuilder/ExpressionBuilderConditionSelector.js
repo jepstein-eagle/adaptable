@@ -33,52 +33,69 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 SelectedFilterExpressions: [],
                 SelectedColumnRanges: [],
                 QueryBuildStatus: this.props.QueryBuildStatus,
-                ShowWaitingMessage: false
+                ShowWaitingMessage: false,
+                SelectedTab: this.props.SelectedTab
             };
         }
         else {
-            let selectedColumnValues;
-            let selectedColumnFilterExpressions;
-            let selectedColumnRanges;
-            // get selectedcolumn values
-            let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
-            if (keyValuePair) {
-                selectedColumnValues = keyValuePair.ColumnDisplayValues;
+            if (this.state == null && this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn) { // no state so we have come in with a column and nothing else
+                return {
+                    SelectedColumnId: theProps.SelectedColumnId,
+                    ColumnValues: [],
+                    SelectedColumnValues: [],
+                    AllFilterExpresions: [],
+                    SelectedFilterExpressions: [],
+                    SelectedColumnRanges: [],
+                    QueryBuildStatus: Enums_1.QueryBuildStatus.ColumnSelected,
+                    ShowWaitingMessage: false,
+                    SelectedTab: Enums_1.QueryTab.ColumnValue
+                };
             }
             else {
-                selectedColumnValues = [];
+                let selectedColumnValues;
+                let selectedColumnFilterExpressions;
+                let selectedColumnRanges;
+                // get selectedcolumn values
+                let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
+                if (keyValuePair) {
+                    selectedColumnValues = keyValuePair.ColumnDisplayValues;
+                }
+                else {
+                    selectedColumnValues = [];
+                }
+                // get selected filter expressions
+                let filterExpressions = theProps.Expression.FilterExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
+                selectedColumnFilterExpressions = [];
+                if (filterExpressions) {
+                    filterExpressions.Filters.forEach((fe) => {
+                        // if its a userfilter add it to that list
+                        let userFilter = this.props.UserFilters.find(uf => uf.Name == fe);
+                        if (userFilter) {
+                            selectedColumnFilterExpressions.push(fe);
+                        }
+                        // if it is a system filter add it ot that list
+                        let selectedSystemFilter = this.props.SystemFilters.find(sf => sf == fe);
+                        if (selectedSystemFilter) {
+                            selectedColumnFilterExpressions.push(fe);
+                        }
+                    });
+                }
+                let availableFilterExpressions = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf));
+                // get ranges
+                let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
+                selectedColumnRanges = (ranges) ? ranges.Ranges : [];
+                return {
+                    SelectedColumnId: this.state.SelectedColumnId,
+                    ColumnValues: this.state.ColumnValues,
+                    SelectedColumnValues: selectedColumnValues,
+                    AllFilterExpresions: availableFilterExpressions,
+                    SelectedFilterExpressions: selectedColumnFilterExpressions,
+                    SelectedColumnRanges: selectedColumnRanges,
+                    QueryBuildStatus: this.props.QueryBuildStatus,
+                    ShowWaitingMessage: false,
+                    SelectedTab: this.props.SelectedTab == null ? Enums_1.QueryTab.ColumnValue : this.props.SelectedTab
+                };
             }
-            // get selected filter expressions
-            let filterExpressions = theProps.Expression.FilterExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
-            selectedColumnFilterExpressions = [];
-            if (filterExpressions) {
-                filterExpressions.Filters.forEach((fe) => {
-                    // if its a userfilter add it to that list
-                    let userFilter = this.props.UserFilters.find(uf => uf.Name == fe);
-                    if (userFilter) {
-                        selectedColumnFilterExpressions.push(fe);
-                    }
-                    // if it is a system filter add it ot that list
-                    let selectedSystemFilter = this.props.SystemFilters.find(sf => sf == fe);
-                    if (selectedSystemFilter) {
-                        selectedColumnFilterExpressions.push(fe);
-                    }
-                });
-            }
-            let availableFilterExpressions = this.props.UserFilters.map(f => f.Name).concat(...this.props.SystemFilters.map(sf => sf));
-            // get ranges
-            let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
-            selectedColumnRanges = (ranges) ? ranges.Ranges : [];
-            return {
-                SelectedColumnId: this.state.SelectedColumnId,
-                ColumnValues: this.state.ColumnValues,
-                SelectedColumnValues: selectedColumnValues,
-                AllFilterExpresions: availableFilterExpressions,
-                SelectedFilterExpressions: selectedColumnFilterExpressions,
-                SelectedColumnRanges: selectedColumnRanges,
-                QueryBuildStatus: this.props.QueryBuildStatus,
-                ShowWaitingMessage: false
-            };
         }
     }
     buildColumnValuesState() {
@@ -110,7 +127,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         // set the UIPermittedValues for this column to what has been sent
                         this.props.Blotter.api.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
                     }
-                }, function (error) {
+                }, function () {
                     //    this.setState({ name: error });
                 });
             }
@@ -138,12 +155,11 @@ class ExpressionBuilderConditionSelector extends React.Component {
         // get the help descriptions
         let firstTimeText = "Start creating the query by selecting a column below.";
         let secondTimeText = "Select another column for the query.";
-        let selectedColumnText = "Build the Query: Use the tabs below to add column values, filters or ranges for this column as required.";
         if (this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn) {
-            selectedColumnText += "This Query can only contain one Query Condition.";
+            //
         }
         let panelHeader = (this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
-        let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSelectedColumnChanged(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn, overrideText: "Clear", overrideTooltip: "Clear", DisplayMode: "Text" });
+        let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSelectedColumnChanged(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn, overrideText: "Clear", overrideTooltip: "Clear", DisplayMode: "Text" });
         return React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: panelHeader, bsStyle: "info", style: { height: '447px' }, button: clearButton }, this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn ?
             React.createElement("div", null,
                 this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn ?
@@ -164,7 +180,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                             :
                                 React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnValues, SelectedValues: this.state.SelectedColumnValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))
                         :
-                            React.createElement(react_bootstrap_1.Tab.Container, { id: "left-tabs-example", defaultActiveKey: this.props.SelectedTab, activeKey: this.props.SelectedTab, onSelect: () => this.onSelectTab() },
+                            React.createElement(react_bootstrap_1.Tab.Container, { id: "left-tabs-example", defaultActiveKey: this.state.SelectedTab, activeKey: this.state.SelectedTab, onSelect: () => this.onSelectTab() },
                                 React.createElement("div", null,
                                     React.createElement(react_bootstrap_1.Nav, { bsStyle: "pills" },
                                         React.createElement(react_bootstrap_1.NavItem, { eventKey: Enums_1.QueryTab.ColumnValue, onClick: () => this.onTabChanged(Enums_1.QueryTab.ColumnValue) }, "Column Values"),

@@ -25,7 +25,7 @@ export interface ColumnFilterAddUpdateAction extends Redux.Action {
 export interface ColumnFilterClearAllAction extends Redux.Action {
 }
 export interface ColumnFilterClearAction extends Redux.Action {
-    columnFilter: IColumnFilter;
+    columnId: string;
 }
 export interface SystemFilterSetAction extends Redux.Action {
     SystemFilters: string[];
@@ -38,7 +38,7 @@ export declare const UserFilterDelete: (UserFilter: IUserFilter) => UserFilterDe
 export declare const HideFilterForm: () => HideFilterFormAction;
 export declare const ColumnFilterAddUpdate: (columnFilter: IColumnFilter) => ColumnFilterAddUpdateAction;
 export declare const ColumnFilterClearAll: () => ColumnFilterClearAllAction;
-export declare const ColumnFilterClear: (columnFilter: IColumnFilter) => ColumnFilterClearAction;
+export declare const ColumnFilterClear: (columnId: string) => ColumnFilterClearAction;
 export declare const SystemFilterSet: (SystemFilters: string[]) => SystemFilterSetAction;
 export declare const CreateUserFilterFromColumnFilter: (ColumnFilter: IColumnFilter, InputText: string) => CreateUserFilterFromColumnFilterAction;
 export declare const FilterReducer: Redux.Reducer<FilterState>;

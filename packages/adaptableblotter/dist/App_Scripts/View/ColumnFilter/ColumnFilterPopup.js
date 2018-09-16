@@ -25,7 +25,7 @@ class ColumnFilterPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
-            return React.createElement(ColumnFilterEntityRow_1.ColumnFilterEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: null, ColumnFilter: columnFilter, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: null, onDeleteConfirm: null, onClear: () => this.props.onClearColumnFilter(columnFilter), onSaveColumnFilterasUserFilter: () => this.onSaveColumnFilterasUserFilter(columnFilter) });
+            return React.createElement(ColumnFilterEntityRow_1.ColumnFilterEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: null, ColumnFilter: columnFilter, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: null, onDeleteConfirm: null, onClear: () => this.props.onClearColumnFilter(columnFilter.ColumnId), onSaveColumnFilterasUserFilter: () => this.onSaveColumnFilterasUserFilter(columnFilter) });
         });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.ColumnFilterStrategyName, bsStyle: "primary", className: "ab_main_popup", infoBody: infoBody, glyphicon: StrategyIds.ColumnFilterGlyph },
@@ -50,7 +50,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onClearColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onClearColumnFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };

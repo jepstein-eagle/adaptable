@@ -158,7 +158,7 @@ function getIdForStrategyName(strategyName) {
     }
 }
 exports.getIdForStrategyName = getIdForStrategyName;
-function getNameForStrategy(strategyID) {
+function getNameForStrategyId(strategyID) {
     switch (strategyID) {
         case exports.AboutStrategyId:
             return exports.AboutStrategyName;
@@ -222,8 +222,8 @@ function getNameForStrategy(strategyID) {
             return exports.UserFilterStrategyName;
     }
 }
-exports.getNameForStrategy = getNameForStrategy;
-function getGhyphiconForStrategy(strategyID) {
+exports.getNameForStrategyId = getNameForStrategyId;
+function getGhyphiconForStrategyId(strategyID) {
     switch (strategyID) {
         case exports.AboutStrategyId:
             return exports.AboutGlyph;
@@ -281,4 +281,4 @@ function getGhyphiconForStrategy(strategyID) {
             return exports.UserFilterGlyph;
     }
 }
-exports.getGhyphiconForStrategy = getGhyphiconForStrategy;
+exports.getGhyphiconForStrategyId = getGhyphiconForStrategyId;

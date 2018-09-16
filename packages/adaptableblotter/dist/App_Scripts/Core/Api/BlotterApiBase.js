@@ -120,6 +120,9 @@ class BlotterApiBase {
     dashboardSetHomeToolbarTitle(title) {
         this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));
     }
+    dashboardSetApplicationToolbarTitle(title) {
+        this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title));
+    }
     // Quick Search api methods
     quickSearchRun(quickSearchText) {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText));
@@ -224,7 +227,7 @@ class BlotterApiBase {
         }
     }
     columnFilterClear(columnFilter) {
-        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter));
+        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter.ColumnId));
     }
     columnFilterClearByColumns(columns) {
         columns.forEach(c => {
@@ -232,11 +235,7 @@ class BlotterApiBase {
         });
     }
     columnFilterClearByColumn(column) {
-        let currentColumnFilters = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-        let currentColumnFilter = currentColumnFilters.find(c => c.ColumnId == column);
-        if (currentColumnFilter) {
-            this.dispatchAction(FilterRedux.ColumnFilterClear(currentColumnFilter));
-        }
+        this.dispatchAction(FilterRedux.ColumnFilterClear(column));
     }
     columnFilterClearAll() {
         this.dispatchAction(FilterRedux.ColumnFilterClearAll());

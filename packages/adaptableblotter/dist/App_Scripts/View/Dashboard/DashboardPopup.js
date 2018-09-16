@@ -15,6 +15,12 @@ class DashboardPopupComponent extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "__dashboard";
+        let availableToolbarNames = this.props.AvailableToolbars.map(at => {
+            return StrategyIds.getNameForStrategyId(at);
+        });
+        let visibleToolbarNames = this.props.VisibleToolbars.map(vt => {
+            return StrategyIds.getNameForStrategyId(vt);
+        });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Dashboard Toolbars", bsStyle: "primary", glyphicon: StrategyIds.FunctionsGlyph, className: "ab_main_popup" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
@@ -24,10 +30,13 @@ class DashboardPopupComponent extends React.Component {
                 ' ',
                 React.createElement("div", null,
                     React.createElement("br", null)),
-                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.props.AvailableToolbars, cssClassName: cssClassName, SelectedValues: this.props.VisibleToolbars, HeaderAvailable: "Available Toolbars", HeaderSelected: "Visible Toolbars", onChange: (SelectedValues) => this.ListChange(SelectedValues), ReducedDisplay: true })));
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableToolbarNames, cssClassName: cssClassName, SelectedValues: visibleToolbarNames, HeaderAvailable: "Available Toolbars", HeaderSelected: "Visible Toolbars", onChange: (SelectedValues) => this.ListChange(SelectedValues), ReducedDisplay: true })));
     }
     ListChange(selectedValues) {
-        this.props.onDashboardSetToolbars(selectedValues);
+        let selectedColumnIds = selectedValues.map(sv => {
+            return StrategyIds.getIdForStrategyName(sv);
+        });
+        this.props.onDashboardSetToolbars(selectedColumnIds);
     }
     onSetFactorChange(event) {
         const e = event.target;

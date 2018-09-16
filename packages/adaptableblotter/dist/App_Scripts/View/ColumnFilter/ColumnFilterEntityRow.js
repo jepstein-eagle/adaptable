@@ -11,7 +11,7 @@ class ColumnFilterEntityRow extends React.Component {
     render() {
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.ColumnFilter.ColumnId, this.props.Columns);
-        colItems[1].Content = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.ColumnFilter.Filter, this.props.Columns, this.props.UserFilters);
+        colItems[1].Content = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.ColumnFilter.Filter, this.props.Columns);
         colItems[2].Content = React.createElement("span", null,
             React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName, onClick: () => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter), overrideTooltip: "Save as User Filter", bsStyle: "primary", DisplayMode: "Glyph", size: "small", overrideDisableButton: this.props.ColumnFilter == null || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Filter.FilterExpressions) }),
             ' ',

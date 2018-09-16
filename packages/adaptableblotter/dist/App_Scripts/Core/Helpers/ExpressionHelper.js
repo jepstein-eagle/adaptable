@@ -11,10 +11,10 @@ const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 var ExpressionHelper;
 (function (ExpressionHelper) {
     function CreateSingleColumnExpression(columnId, columnDisplayValues, columnRawValues, userFilters, ranges) {
-        return new Expression_1.Expression(columnDisplayValues && columnDisplayValues.length > 0 ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues: columnRawValues }] : [], userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [], ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []);
+        return new Expression_1.Expression(((columnDisplayValues && columnDisplayValues.length > 0) || (columnRawValues && columnRawValues.length > 0)) ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues: columnRawValues }] : [], userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [], ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []);
     }
     ExpressionHelper.CreateSingleColumnExpression = CreateSingleColumnExpression;
-    function ConvertExpressionToString(Expression, columns, filters) {
+    function ConvertExpressionToString(Expression, columns, includeColumnName = true) {
         let returnValue = "";
         if (IsEmptyExpression(Expression)) {
             return "Any";
@@ -26,7 +26,7 @@ var ExpressionHelper;
             // Column Display Values
             let columnValueExpression = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
             if (columnValueExpression) {
-                columnToString = ColumnValueExpressionToString(columnValueExpression, columnFriendlyName);
+                columnToString = ColumnValueExpressionToString(columnValueExpression, columnFriendlyName, includeColumnName);
             }
             // User Filters
             let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
@@ -34,7 +34,7 @@ var ExpressionHelper;
                 if (columnToString != "") {
                     columnToString += " OR ";
                 }
-                columnToString += UserFiltersToString(columnUserFilters.Filters, columnFriendlyName);
+                columnToString += UserFiltersToString(columnUserFilters.Filters, columnFriendlyName, includeColumnName);
             }
             // Column Ranges
             let columnRange = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
@@ -42,12 +42,18 @@ var ExpressionHelper;
                 if (columnToString != "") {
                     columnToString += " OR ";
                 }
-                columnToString += RangesToString(columnRange, columnFriendlyName, columns);
+                columnToString += RangesToString(columnRange, columnFriendlyName, columns, includeColumnName);
             }
             if (returnValue != "") {
                 returnValue += " AND ";
             }
-            returnValue += "(" + columnToString + ")";
+            if (includeColumnName) {
+                returnValue += "(";
+            }
+            returnValue += columnToString;
+            if (includeColumnName) {
+                returnValue += ")";
+            }
         }
         return returnValue;
     }
@@ -126,20 +132,79 @@ var ExpressionHelper;
         return true;
     }
     ExpressionHelper.IsSatisfied = IsSatisfied;
-    function ColumnValueExpressionToString(columnValueExpression, columnFriendlyName) {
-        return "[" + columnFriendlyName + "]"
-            + " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")";
+    function ColumnValueExpressionToString(columnValueExpression, columnFriendlyName, includeColumnName) {
+        let returnValue = "";
+        if (includeColumnName) {
+            returnValue += "[" + columnFriendlyName + "]";
+        }
+        returnValue += " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")";
+        return returnValue;
     }
-    function UserFiltersToString(userFilters, columnFriendlyName) {
+    function UserFiltersToString(userFilters, columnFriendlyName, includeColumnName) {
         let returnValue = "";
         for (let userFilter of userFilters) {
             if (returnValue != "") {
                 returnValue += " OR ";
             }
-            returnValue += "[" + columnFriendlyName + "] " + userFilter;
+            if (includeColumnName) {
+                returnValue += "[" + columnFriendlyName + "] ";
+            }
+            returnValue += userFilter;
         }
         return returnValue;
     }
+    function RangesToString(rangeExpression, columnFriendlyName, columns, includeColumnName) {
+        let returnValue = "";
+        for (let range of rangeExpression.Ranges) {
+            if (returnValue != "") {
+                returnValue += " OR ";
+            }
+            if (range.Operator == Enums_1.LeafExpressionOperator.Between) {
+                if (includeColumnName) {
+                    returnValue += "[" + columnFriendlyName + "] ";
+                }
+                returnValue += OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns) + " AND " + getOperandValue(range.Operand2Type, range.Operand2, columns);
+            }
+            else {
+                if (includeColumnName) {
+                    returnValue += "[" + columnFriendlyName + "] ";
+                }
+                returnValue += OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns);
+            }
+        }
+        return returnValue;
+    }
+    function OperatorToOneCharacterString(operator) {
+        switch (operator) {
+            case Enums_1.LeafExpressionOperator.Unknown:
+                return "X";
+            case Enums_1.LeafExpressionOperator.GreaterThan:
+                return ">";
+            case Enums_1.LeafExpressionOperator.LessThan:
+                return "<";
+            case Enums_1.LeafExpressionOperator.Equals:
+                return "=";
+            case Enums_1.LeafExpressionOperator.NotEquals:
+                return "<>";
+            case Enums_1.LeafExpressionOperator.GreaterThanOrEqual:
+                return ">=";
+            case Enums_1.LeafExpressionOperator.LessThanOrEqual:
+                return "<=";
+            case Enums_1.LeafExpressionOperator.Between:
+                return "In";
+            case Enums_1.LeafExpressionOperator.Contains:
+                return "C";
+            case Enums_1.LeafExpressionOperator.NotContains:
+                return "!C";
+            case Enums_1.LeafExpressionOperator.StartsWith:
+                return "S";
+            case Enums_1.LeafExpressionOperator.EndsWith:
+                return "E";
+            case Enums_1.LeafExpressionOperator.Regex:
+                return "R";
+        }
+    }
+    ExpressionHelper.OperatorToOneCharacterString = OperatorToOneCharacterString;
     function OperatorToShortFriendlyString(operator) {
         switch (operator) {
             case Enums_1.LeafExpressionOperator.Unknown:
@@ -272,21 +337,6 @@ var ExpressionHelper;
         }
     }
     ExpressionHelper.GetOperatorsForDataType = GetOperatorsForDataType;
-    function RangesToString(rangeExpression, columnFriendlyName, columns) {
-        let returnValue = "";
-        for (let range of rangeExpression.Ranges) {
-            if (returnValue != "") {
-                returnValue += " OR ";
-            }
-            if (range.Operator == Enums_1.LeafExpressionOperator.Between) {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns) + " AND " + getOperandValue(range.Operand2Type, range.Operand2, columns);
-            }
-            else {
-                returnValue += "[" + columnFriendlyName + "] " + OperatorToShortFriendlyString(range.Operator) + " " + getOperandValue(range.Operand1Type, range.Operand1, columns);
-            }
-        }
-        return returnValue;
-    }
     function getOperandValue(rangeOperandType, operand, columns) {
         if (rangeOperandType == "Value") {
             return operand;
@@ -415,12 +465,21 @@ var ExpressionHelper;
                 break;
             case Enums_2.DataType.Object:
             case Enums_2.DataType.String:
+                if (blotter.BlotterOptions.ignoreCaseInQueries) {
+                    rangeEvaluation.newValue = rangeEvaluation.newValue.toLowerCase();
+                }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
-                    rangeExpression.Operand1; //.toLowerCase() - not sure what to do about case but this is currently breaking...
+                    (rangeExpression.Operand1 == null) ? null :
+                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                            rangeExpression.Operand1.toLowerCase() :
+                            rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
-                    rangeExpression.Operand2; //.toLowerCase();
+                    (rangeExpression.Operand2 == null) ? null :
+                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                            rangeExpression.Operand2.toLowerCase() :
+                            rangeExpression.Operand2;
                 break;
         }
         return rangeEvaluation;
@@ -449,9 +508,9 @@ var ExpressionHelper;
                 let changeInValue = Math.abs(rangeEvaluation.newValue - oldChangeValue);
                 return changeInValue > Number(rangeEvaluation.operand1);
             case Enums_1.LeafExpressionOperator.Between:
-                return (rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+                return (rangeEvaluation.newValue >= rangeEvaluation.operand1 && rangeEvaluation.newValue <= rangeEvaluation.operand2);
             case Enums_1.LeafExpressionOperator.NotBetween:
-                return !(rangeEvaluation.newValue > rangeEvaluation.operand1 && rangeEvaluation.newValue < rangeEvaluation.operand2);
+                return !(rangeEvaluation.newValue >= rangeEvaluation.operand1 && rangeEvaluation.newValue <= rangeEvaluation.operand2);
             case Enums_1.LeafExpressionOperator.IsNotNumber:
                 return (isNaN(Number(rangeEvaluation.newValue)));
             case Enums_1.LeafExpressionOperator.IsPositive:

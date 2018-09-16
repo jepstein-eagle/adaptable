@@ -13,7 +13,7 @@ class HomeButtonsPopupComponent extends React.Component {
         this.props.DashboardState.VisibleButtons.forEach(x => {
             let menuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == x);
             if (menuItem != null && menuItem.IsVisible) {
-                selectedValues.push(StrategyIds.getNameForStrategy(x));
+                selectedValues.push(StrategyIds.getNameForStrategyId(x));
             }
         });
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label);

@@ -17,7 +17,7 @@ class ExpressionBuilderPage extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__querybuilder";
         let queryBuildStatus = this.getQueryBuildStatus();
-        let newButton = React.createElement(ButtonCondition_1.ButtonCondition, { cssClassName: cssClassName, onClick: () => this.onSelectedColumnChanged(), overrideDisableButton: queryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SingleConditionsAdded, overrideTooltip: "Add Condition", style: { width: "230px" }, DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonCondition_1.ButtonCondition, { cssClassName: cssClassName, onClick: () => this.onSelectedColumnChanged(), overrideDisableButton: this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SingleConditionsAdded, overrideTooltip: "Add Condition", style: { width: "230px" }, DisplayMode: "Glyph+Text", size: "small" });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Query Builder", button: newButton, bsStyle: "primary", style: { height: '520px' } },
                 React.createElement(react_bootstrap_1.Row, null,
@@ -108,7 +108,7 @@ class ExpressionBuilderPage extends React.Component {
     canNext() {
         return ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(this.state.Expression);
     }
-    canBack() { return true; /*return !this.state.IsEdit; */ }
+    canBack() { return this.props.ExpressionMode != Enums_1.ExpressionMode.SingleColumn; }
     Next() { }
     Back() {
         // todo

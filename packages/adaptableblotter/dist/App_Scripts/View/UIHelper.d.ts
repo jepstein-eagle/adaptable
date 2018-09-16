@@ -7,6 +7,7 @@ import { Expression } from '../Core/Api/Expression';
 export declare module UIHelper {
     function EmptyConfigState(): EditableConfigEntityState;
     function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState;
+    function getExpressionBuilderStateWithColumn(expression: Expression, columnId: string): ExpressionBuilderPageState;
     function getDescriptionForDataType(dataType: DataType): "string" | "number" | "date";
     function getPlaceHolderforDataType(dataType: DataType): "Enter Value" | "Enter Number" | "Enter Date";
     function getModalContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement;

@@ -25,7 +25,7 @@ class CellValidationEntityRow extends React.Component {
     }
     setExpressionDescription(CellValidation) {
         return (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
-            ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns, this.props.UserFilters) :
+            ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
             "No Expression";
     }
     getColumnandRule(cellValidation) {

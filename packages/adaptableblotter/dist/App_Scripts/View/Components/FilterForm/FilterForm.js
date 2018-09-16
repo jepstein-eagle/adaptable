@@ -139,7 +139,7 @@ class FilterFormComponent extends React.Component {
         let columnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
         //delete if empty
         if (columnDisplayValues.length == 0 && columnRawValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
-            this.props.onClearColumnFilter(columnFilter);
+            this.props.onClearColumnFilter(columnFilter.ColumnId);
         }
         else {
             this.props.onAddEditColumnFilter(columnFilter);
@@ -168,18 +168,18 @@ class FilterFormComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         CurrentColumn: ownProps.CurrentColumn,
-        ColumnFilters: state.Filter.ColumnFilters,
+        Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
+        ColumnFilters: state.Filter.ColumnFilters,
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
-        Blotter: ownProps.Blotter
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onContextMenuItemClick: (action) => dispatch(action),
-        onClearColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onClearColumnFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
