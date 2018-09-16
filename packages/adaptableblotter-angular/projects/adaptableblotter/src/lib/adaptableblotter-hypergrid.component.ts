@@ -7,16 +7,18 @@ import Hypergrid from 'fin-hypergrid';
   template: `<div id="adaptableBlotter">
     <adaptable-blotter
       [adaptableBlotterOptions]="adaptableBlotterOptions"
-      vendorGridName="Hypergrid">
+      vendorGridName="Hypergrid"
+      *ngIf="gridLoaded">
     </adaptable-blotter>
     <div class="hypergrid-container"></div>
   </div>`,
 })
 export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
   private grid;
+  gridLoaded = false;
 
   @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
-  @Input() hyperGridOptions?: any = {};
+  @Input() gridOptions?: any = {};
   @Input() data?: Array<any> = [];
 
   /**
@@ -28,10 +30,13 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     const container = this.elRef.nativeElement.firstChild.lastChild;
-    this.grid = new Hypergrid(container, this.hyperGridOptions);
-    if (!this.hyperGridOptions.data) {
+    this.grid = new Hypergrid(container, this.gridOptions);
+    if (!this.gridOptions.data) {
       this.grid.setData(this.data);
     }
+    this.adaptableBlotterOptions.vendorGrid = this.grid;
+    this.gridLoaded = true;
+    console.log('grid loaded', this.grid);
     this.gridMounted.emit(this.grid);
   }
 
@@ -41,7 +46,7 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
    */
   ngOnChanges(changes: SimpleChanges) {
     if (!this.grid) { return; }
-    const hgOptionsChange = changes.hyperGridOptions;
+    const hgOptionsChange = changes.gridOptions;
     const dataChange = changes.data;
     if (dataChange && dataChange.previousValue !== dataChange.currentValue) {
       this.grid.setData(changes.data.currentValue);
