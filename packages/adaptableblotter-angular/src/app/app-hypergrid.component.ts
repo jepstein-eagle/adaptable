@@ -10,8 +10,7 @@ import DataGenerator from './data-generator';
    <div id="adaptableblotter-hypergrid-react-demo-app">
     <adaptable-blotter-hypergrid
       [adaptableBlotterOptions]="blotterOptions"
-      [gridOptions]="gridOptions"
-      (gridMounted)="onGridMounted">
+      [gridOptions]="gridOptions">
     </adaptable-blotter-hypergrid>
   </div>
   `

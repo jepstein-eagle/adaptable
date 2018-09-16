@@ -22,15 +22,23 @@ export class AdaptableBlotterComponent implements OnInit {
   ngOnInit() {
     this.adaptableBlotterOptions.adaptableBlotterContainer =
       this.adaptableBlotterOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
-    this.adaptableBlotter = BlotterFactory.CreateAdaptableBlotter(
-      this.adaptableBlotterOptions,
-      this.vendorGridName
-    );
-    this.adaptableBlotterMounted.emit(this.adaptableBlotter);
-    ReactDOM.render(
-      AdaptableBlotterApp({ AdaptableBlotter: this.adaptableBlotter }),
-      this.elRef.nativeElement.firstChild,
-    );
+    const waitForContainer = setInterval(() => {
+      try {
+        document.getElementById(this.adaptableBlotterOptions.adaptableBlotterContainer);
+        // Element is mounted
+        this.adaptableBlotter = BlotterFactory.CreateAdaptableBlotter(
+          this.adaptableBlotterOptions,
+          this.vendorGridName
+        );
+        this.adaptableBlotterMounted.emit(this.adaptableBlotter);
+        ReactDOM.render(
+          AdaptableBlotterApp({ AdaptableBlotter: this.adaptableBlotter }),
+          this.elRef.nativeElement.firstChild,
+        );
+        clearInterval(waitForContainer);
+      } catch (e) {
+      }
+    }, 100);
   }
 
 }

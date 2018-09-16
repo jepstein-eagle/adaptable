@@ -334,8 +334,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
-
-
     public getPrimaryKeyValueFromRecord(record: any): any {
         return record[this.BlotterOptions.primaryKey]
     }
@@ -1154,7 +1152,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
-                if (config.isDataRow) {
+                if (config.isDataRow && config.dataRow) {
                     let row = config.dataRow;
                     let columnId = config.name;
                     if (columnId && row) {

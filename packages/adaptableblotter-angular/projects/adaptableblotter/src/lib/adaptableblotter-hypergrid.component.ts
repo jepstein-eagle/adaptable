@@ -4,13 +4,13 @@ import Hypergrid from 'fin-hypergrid';
 
 @Component({
   selector: 'adaptable-blotter-hypergrid',
-  template: `<div id="adaptableBlotter">
+  template: `<div id="adaptableBlotter-angular-hypergrid">
     <adaptable-blotter
       [adaptableBlotterOptions]="adaptableBlotterOptions"
       vendorGridName="Hypergrid"
       *ngIf="gridLoaded">
     </adaptable-blotter>
-    <div class="hypergrid-container"></div>
+    <div id="hypergrid-container"></div>
   </div>`,
 })
 export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
@@ -36,7 +36,6 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
     }
     this.adaptableBlotterOptions.vendorGrid = this.grid;
     this.gridLoaded = true;
-    console.log('grid loaded', this.grid);
     this.gridMounted.emit(this.grid);
   }
 
@@ -57,5 +56,4 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
       this.ngOnInit();
     }
   }
-
 }

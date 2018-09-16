@@ -5,7 +5,7 @@ import 'ag-grid-enterprise';
 
 @Component({
   selector: 'adaptable-blotter-aggrid',
-  template: `<div id="adaptableBlotter">
+  template: `<div id="adaptableBlotter-angular-aggrid">
     <adaptable-blotter
       [adaptableBlotterOptions]="adaptableBlotterOptions"
       vendorGridName="agGrid">
