@@ -60,7 +60,6 @@ export class SwitchComponent implements OnInit {
             style.innerText = '';
           }
         });
-
         this.show = num;
       }
     }, 100);

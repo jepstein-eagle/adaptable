@@ -15,7 +15,7 @@ import DataGenerator from './data-generator';
   `
 })
 export class AppHyperGridComponent {
-  data = new DataGenerator().getTrades(15000);
+  data = new DataGenerator().getTrades(1000);
   gridOptions = {
     data: this.data,
     schema: AppHyperGridComponent.getSchema(this.data)
