@@ -54,7 +54,7 @@ export class SwitchComponent implements OnInit {
       const el = document.querySelector(rootId).querySelector('adaptable-blotter').querySelector('[id^=adaptableBlotter]');
       if (el) {
         clearInterval(interval);
-        document.querySelectorAll('style').forEach(style => {
+        Array.from(document.querySelectorAll('style')).forEach(style => {
           if (style.id.includes('adaptableBlotter') && !style.id.startsWith(el.id)) {
             this.styles.set(style.id, style.innerText);
             style.innerText = '';
