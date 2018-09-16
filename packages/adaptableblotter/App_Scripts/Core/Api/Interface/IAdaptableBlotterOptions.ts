@@ -81,6 +81,12 @@ export interface IAdaptableBlotterOptions {
      */
     autoSaveLayouts?: boolean;
     /**
+     * When running queries on text columns to ignore case
+     * Defaults to true - case is ignored by default 
+     * (e.g. [StartsWith 'c'] will return true for the value 'Canada')
+     */
+    ignoreCaseInQueries?: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

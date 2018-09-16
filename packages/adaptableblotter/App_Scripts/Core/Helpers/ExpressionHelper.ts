@@ -75,7 +75,7 @@ export module ExpressionHelper {
             if (includeColumnName) {
                 returnValue += "("
             }
-            returnValue += columnToString ;
+            returnValue += columnToString;
 
             if (includeColumnName) {
                 returnValue += ")"
@@ -509,12 +509,21 @@ export module ExpressionHelper {
                 break;
             case DataType.Object:
             case DataType.String:
+                if (blotter.BlotterOptions.ignoreCaseInQueries) {
+                    rangeEvaluation.newValue = rangeEvaluation.newValue.toLowerCase();
+                }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
-                    rangeExpression.Operand1;//.toLowerCase() - not sure what to do about case but this is currently breaking...
+                    (rangeExpression.Operand1 == null) ? null :
+                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                            rangeExpression.Operand1.toLowerCase() :
+                            rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
-                    rangeExpression.Operand2;//.toLowerCase();
+                    (rangeExpression.Operand2 == null) ? null :
+                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                            rangeExpression.Operand2.toLowerCase() :
+                            rangeExpression.Operand2;
                 break;
         }
         return rangeEvaluation;

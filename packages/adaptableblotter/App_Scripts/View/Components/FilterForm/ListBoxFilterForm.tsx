@@ -14,6 +14,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ButtonClear } from "../Buttons/ButtonClear";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
@@ -42,7 +43,7 @@ export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFil
 }
 
 export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, ListBoxFilterFormState> {
-        constructor(props: ListBoxFilterFormProps) {
+    constructor(props: ListBoxFilterFormProps) {
         super(props);
 
         this.state = {
@@ -83,10 +84,10 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         let columnValuesItemsElements = this.props.ColumnValuePairs.map((x, y) => {
             let isActive: boolean
             let columnValue: string
-            if(this.props.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue){
-                 isActive = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
-                 columnValue = x.DisplayValue;
-            }else{
+            if (this.props.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue) {
+                isActive = this.state.UiSelectedColumnValues.indexOf(x.DisplayValue) >= 0;
+                columnValue = x.DisplayValue;
+            } else {
                 isActive = this.state.UiSelectedColumnValues.indexOf(x.RawValue) >= 0;
                 columnValue = x.RawValue;
             }
@@ -154,12 +155,12 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 </FormGroup>
             </AdaptableBlotterForm>
 
-  
+
         return <div style={divStyle}>
             {rangeForm}
 
             {textClear}
-            <ListGroup  style={listGroupStyle} >
+            <ListGroup style={listGroupStyle} >
                 {userFiltersItemsElements}
                 {columnValuesItemsElements}
             </ListGroup>
@@ -186,8 +187,9 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private getOperand1FormControl(): any {
         if (this.state.UiSelectedRange.Operand1Type == "Column") {
-            let selectedColums: IColumn[] = this.props.Columns.filter(x => this.props.CurrentColumn)
-            let operand1 = (StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)) ? this.state.UiSelectedRange.Operand1 : "Select a column"
+            let operand1 = (StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)) ?
+                ColumnHelper.getFriendlyNameFromColumnId(this.state.UiSelectedRange.Operand1, this.props.Columns) :
+                "Select a column"
 
             let availableColumns: any = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
                 return <MenuItem key={index} eventKey={index} onClick={() => this.onColumnOperand1SelectedChanged(column)}>{column.FriendlyName}</MenuItem>
@@ -375,6 +377,6 @@ let separatorStyle = {
     'marginBottom': '0px',
     'marginLeft': '15px',
     'width': '222px',
-   
+
 }
 
