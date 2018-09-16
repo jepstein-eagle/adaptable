@@ -18,10 +18,13 @@ export default class AdaptableBlotter extends React.Component<
   AdaptableBlotterState
 > {
   componentWillMount() {
+    const { AdaptableBlotterOptions, VendorGridName } = this.props;
+    AdaptableBlotterOptions.adaptableBlotterContainer =
+      AdaptableBlotterOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
     this.setState({
       AdaptableBlotter: BlotterFactory.CreateAdaptableBlotter(
-        this.props.AdaptableBlotterOptions,
-        this.props.VendorGridName
+        AdaptableBlotterOptions,
+        VendorGridName
       )
     })
   }
