@@ -11,7 +11,7 @@ class ColumnInfoStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyIds.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyIds.ColumnInfoGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             this.createContextMenuItemShowPopup(StrategyIds.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyIds.ColumnInfoGlyph, columnId);
         }
     }

@@ -12,7 +12,7 @@ class FormatColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         this.createMenuItemShowPopup(StrategyIds.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyIds.FormatColumnGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             let formatExists = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f => f.ColumnId), columnId);
             let label = formatExists ? "Edit " : "Create ";
             let popupParam = formatExists ? "Edit|" : "New|";

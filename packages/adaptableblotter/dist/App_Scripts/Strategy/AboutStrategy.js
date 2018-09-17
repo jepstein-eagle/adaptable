@@ -36,6 +36,7 @@ class AboutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         output.push({ Key: "All Columns", Value: this.blotter.getColumnCount() });
         output.push({ Key: "Visible Columns", Value: this.blotter.getVisibleColumnCount() });
         output.push({ Key: "Can Sort", Value: this.blotter.isSortable() ? "True" : "False" });
+        output.push({ Key: "Can Filter", Value: this.blotter.isFilterable() ? "True" : "False" });
         output.push({ Key: "Can Multi Select", Value: this.blotter.isSelectable() ? "True" : "False" });
         let calcColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.map(c => c.ColumnId);
         output.push({ Key: "Calculated Columns", Value: ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(calcColumns) ? calcColumns : "None" });

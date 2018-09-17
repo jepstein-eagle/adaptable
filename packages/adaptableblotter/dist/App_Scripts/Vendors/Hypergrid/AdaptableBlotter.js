@@ -204,7 +204,8 @@ class AdaptableBlotter {
                 Visible: true,
                 Index: index,
                 ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name)
+                Sortable: this.isColumnSortable(x.name),
+                Filterable: this.isFilterable() // TODO: can we manage by column
             };
         });
         let hiddenColumns = this.hyperGrid.behavior.getHiddenColumns().map((x) => {
@@ -215,7 +216,8 @@ class AdaptableBlotter {
                 Visible: false,
                 Index: -1,
                 ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name)
+                Sortable: this.isColumnSortable(x.name),
+                Filterable: this.isFilterable() // TODO: can we manage by column
             };
         });
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -1176,7 +1178,13 @@ class AdaptableBlotter {
     }
     isSortable() {
         if (this.hyperGrid.properties.hasOwnProperty('unsortable')) {
-            return this.hyperGrid.behavior.unsortable;
+            return !this.hyperGrid.behavior.unsortable;
+        }
+        return true;
+    }
+    isFilterable() {
+        if (this.hyperGrid.properties.hasOwnProperty('filterable')) {
+            return this.hyperGrid.behavior.filterable;
         }
         return true;
     }

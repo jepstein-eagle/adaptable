@@ -185,8 +185,13 @@ class AdaptableBlotter {
         return this._onRefresh;
     }
     applyGridFiltering() {
-        this.gridOptions.api.onFilterChanged();
-        this._onRefresh.Dispatch(this, this);
+        if (this.isFilterable()) {
+            this.gridOptions.api.onFilterChanged();
+            this._onRefresh.Dispatch(this, this);
+        }
+        else {
+            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Trying to filter on a non-filterable grid.');
+        }
     }
     hideFilterForm() {
         if (this.hideFilterFormPopup) {
@@ -242,7 +247,8 @@ class AdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: vendorColumn.isVisible(),
             ReadOnly: this.isColumnReadonly(colId),
-            Sortable: this.isColumnSortable(colId)
+            Sortable: this.isColumnSortable(colId),
+            Filterable: this.isColumnFilterable(colId),
         };
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
@@ -562,6 +568,16 @@ class AdaptableBlotter {
         }
         return true;
     }
+    isColumnFilterable(columnId) {
+        if (!this.isFilterable()) {
+            return false;
+        }
+        let colDef = this.gridOptions.api.getColumnDef(columnId);
+        if (colDef.suppressFilter != null) {
+            return !colDef.suppressFilter;
+        }
+        return true;
+    }
     setCustomSort(columnId, comparer) {
         let sortModel = this.gridOptions.api.getSortModel();
         let columnDef = this.gridOptions.api.getColumnDef(columnId);
@@ -793,12 +809,15 @@ class AdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
             ReadOnly: true,
-            Sortable: this.isSortable()
+            Sortable: this.isSortable(),
+            Filterable: this.isFilterable(),
         };
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridAddColumn(hiddenCol));
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
-        this.createFilterWrapper(vendorColumn);
+        if (this.isFilterable()) {
+            this.createFilterWrapper(vendorColumn);
+        }
         let conditionalStyleagGridStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId);
         conditionalStyleagGridStrategy.InitStyles();
     }
@@ -1088,13 +1107,17 @@ class AdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
+        // if (this.isFilterable()) {
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
             this.createFilterWrapper(col);
         });
+        // }
         if (this.gridOptions.floatingFilter) {
+            //      if (this.isFilterable()) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
+            //     }
             let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
             this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
         }
@@ -1229,13 +1252,22 @@ class AdaptableBlotter {
         columnApi.setColumnState(columnState, columnEventType);
     }
     isSelectable() {
-        return this.gridOptions.enableRangeSelection;
+        if (this.gridOptions.enableRangeSelection != null) {
+            return this.gridOptions.enableRangeSelection;
+        }
+        return false;
     }
     isSortable() {
         if (this.gridOptions.enableSorting != null) {
             return this.gridOptions.enableSorting;
         }
-        return true;
+        return false;
+    }
+    isFilterable() {
+        if (this.gridOptions.enableFilter != null) {
+            return this.gridOptions.enableFilter;
+        }
+        return false;
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

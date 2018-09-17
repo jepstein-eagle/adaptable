@@ -11,6 +11,11 @@ export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterS
 export declare class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, EditableConfigEntityState> {
     constructor(props: UserFilterSummaryProps);
     render(): any;
+    getSummary(): string;
+    getDescription(userFilter: IUserFilter): string;
+    isFilterable(): boolean;
+    isGridFilterable(): boolean;
+    isColumnFilterable(): boolean;
     onNew(): void;
     onEdit(index: number, UserFilter: IUserFilter): void;
     onCloseWizard(): void;

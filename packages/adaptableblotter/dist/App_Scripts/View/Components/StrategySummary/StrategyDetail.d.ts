@@ -11,6 +11,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
     onShare: () => void;
     onDelete: Redux.Action;
     showBold?: boolean;
+    showEdit?: boolean;
     showShare?: boolean;
     cssClassName: string;
 }

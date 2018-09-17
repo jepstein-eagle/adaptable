@@ -79,4 +79,5 @@ export interface IAdaptableBlotter {
     setVendorGridState(vendorGridState: any): void;
     isSelectable(): boolean;
     isSortable(): boolean;
+    isFilterable(): boolean;
 }

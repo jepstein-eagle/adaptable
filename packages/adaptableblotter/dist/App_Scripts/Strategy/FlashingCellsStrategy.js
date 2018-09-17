@@ -16,7 +16,7 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         this.createMenuItemShowPopup(StrategyIds.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyIds.FlashingCellGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
             if (column.DataType == Enums_1.DataType.Number) {
                 if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {

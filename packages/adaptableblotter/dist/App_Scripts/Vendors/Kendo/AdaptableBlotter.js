@@ -186,7 +186,8 @@ class AdaptableBlotter {
                 Visible: isVisible,
                 Index: isVisible ? index : -1,
                 ReadOnly: this.isColumnReadonly(x.field),
-                Sortable: true // TODO
+                Sortable: true,
+                Filterable: true // TODO
             };
         });
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(columns));
@@ -851,6 +852,9 @@ class AdaptableBlotter {
         return true;
     }
     isSortable() {
+        return true;
+    }
+    isFilterable() {
         return true;
     }
 }

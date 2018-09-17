@@ -6,4 +6,5 @@ export interface IColumn {
     Visible: boolean;
     ReadOnly: boolean;
     Sortable: boolean;
+    Filterable: boolean;
 }

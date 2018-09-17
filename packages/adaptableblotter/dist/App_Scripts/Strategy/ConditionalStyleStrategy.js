@@ -19,7 +19,7 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         }
     }
     addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             this.createContextMenuItemShowPopup("Create " + StrategyIds.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyIds.ConditionalStyleGlyph, "New|" + columnId);
         }
     }

@@ -58,12 +58,16 @@ class FloatingFilterFormComponent extends React.Component {
         }
         else {
             // no filter so make sure our stuff is clear
-            this.clearState();
+            if (this.state.placeholder != "TEMP") {
+                if (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.placeholder) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)) {
+                    this.clearState();
+                }
+            }
         }
     }
     render() {
         let cssClassName = this.props.cssClassName + "__floatingFilterForm";
-        return React.createElement("span", null,
+        return React.createElement("span", null, this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable &&
             React.createElement(react_bootstrap_1.FormControl, { style: { marginTop: '5px', minHeight: '22px' }, className: cssClassName, autoFocus: false, bsSize: "sm", type: "text", placeholder: this.state.placeholder, value: this.state.floatingFilterFormText, onChange: (x) => this.OnTextChange(x.target.value) }));
     }
     OnTextChange(searchText) {
@@ -83,7 +87,6 @@ class FloatingFilterFormComponent extends React.Component {
     clearExistingColumnFilter() {
         let existingColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         if (existingColumnFilter) {
-            console.log("in method clearing for: " + this.props.CurrentColumn.ColumnId);
             this.props.onClearColumnFilter(this.props.CurrentColumn.ColumnId);
         }
     }
@@ -155,11 +158,7 @@ class FloatingFilterFormComponent extends React.Component {
         }
     }
     clearState() {
-        if (this.state.placeholder != "TEMP") {
-            if (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.placeholder) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)) {
-                this.setState({ floatingFilterFormText: "", filterExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(), placeholder: "" });
-            }
-        }
+        this.setState({ floatingFilterFormText: "", filterExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(), placeholder: "" });
     }
     clearExpressionState(searchText) {
         this.setState({ floatingFilterFormText: searchText, filterExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(), placeholder: "TEMP" });

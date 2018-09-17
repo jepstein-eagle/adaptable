@@ -128,7 +128,8 @@ class AdaptableBlotter {
                 Visible: true,
                 Index: index,
                 ReadOnly: true,
-                Sortable: true // TODO
+                Sortable: true,
+                Filterable: true // TODO
             };
         });
         let hiddenColumns = this.grid.getHiddenColumns().map((x) => {
@@ -140,7 +141,8 @@ class AdaptableBlotter {
                 Visible: false,
                 Index: -1,
                 ReadOnly: true,
-                Sortable: true // TODO
+                Sortable: true,
+                Filterable: true // TODO
             };
         });
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -444,6 +446,9 @@ class AdaptableBlotter {
         return true;
     }
     isSortable() {
+        return true;
+    }
+    isFilterable() {
         return true;
     }
 }

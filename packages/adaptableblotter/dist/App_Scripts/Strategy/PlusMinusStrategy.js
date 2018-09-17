@@ -25,7 +25,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyIds.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyIds.PlusMinusGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
             if (column && column.DataType == Enums_1.DataType.Number) {
                 this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyIds.PlusMinusGlyph, "New|" + columnId);

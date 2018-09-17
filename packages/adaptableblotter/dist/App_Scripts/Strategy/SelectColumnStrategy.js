@@ -9,7 +9,7 @@ class SelectColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
     }
     addContextMenuItem(columnId) {
         if (this.blotter.isSelectable()) {
-            if (this.canCreateContextMenuItem(columnId)) {
+            if (this.canCreateContextMenuItem(columnId, this.blotter)) {
                 this.createContextMenuItemReduxAction(StrategyIds.SelectColumnStrategyName, StrategyIds.SelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
             }
         }

@@ -22,6 +22,6 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     createContextMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any;
     createContextMenuItemShowPopup(Label: string, ComponentName: string, GlyphIcon: string, PopupParams?: string): void;
     addContextMenuItemToStore(menuItem: IMenuItem): void;
-    canCreateContextMenuItem(columnId: string): boolean;
+    canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType?: string): boolean;
     publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void;
 }

@@ -84,12 +84,21 @@ class AdaptableStrategyBase {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.AddItemColumnContextMenu(menuItem));
         }
     }
-    canCreateContextMenuItem(columnId) {
-        if (!this.isReadOnlyStrategy()) {
-            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-            return (column != null);
+    canCreateContextMenuItem(columnId, blotter, functionType = "") {
+        if (this.isReadOnlyStrategy()) {
+            return false;
         }
-        return false;
+        let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+        if (column == null) {
+            return false;
+        }
+        if (functionType == "sort" && !column.Sortable) {
+            return false;
+        }
+        else if (functionType == "filter" && (!column.Filterable || !blotter.isFilterable())) {
+            return false;
+        }
+        return true;
     }
     publishServerSearch(searchChangedTrigger) {
         let state = this.blotter.AdaptableBlotterStore.TheStore.getState();

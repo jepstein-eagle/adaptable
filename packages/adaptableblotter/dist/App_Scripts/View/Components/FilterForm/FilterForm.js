@@ -11,10 +11,12 @@ const Helper_1 = require("../../../Core/Helpers/Helper");
 const ListBoxFilterForm_1 = require("./ListBoxFilterForm");
 const ButtonClose_1 = require("../Buttons/ButtonClose");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
 const Waiting_1 = require("./Waiting");
 const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
 const ListBoxMenu_1 = require("./ListBoxMenu");
+const react_bootstrap_1 = require("react-bootstrap");
 const FilterFormPanel_1 = require("../Panels/FilterFormPanel");
 const ButtonSave_1 = require("../Buttons/ButtonSave");
 class FilterFormComponent extends React.Component {
@@ -65,6 +67,7 @@ class FilterFormComponent extends React.Component {
     }
     render() {
         let cssClassName = StyleConstants.FILTER_FORM;
+        let isFilterable = this.isFilterable();
         // get user filter expressions appropriate for this column
         let appropriateFilters = FilterHelper_1.FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper_1.FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf)); //.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
         let appropriateFilterItems = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf }; });
@@ -81,14 +84,25 @@ class FilterFormComponent extends React.Component {
         let closeButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onCloseForm(), bsStyle: "default", size: "xsmall", DisplayMode: "Glyph", hideToolTip: true });
         let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onClearFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter, overrideText: "Clear", DisplayMode: "Text", hideToolTip: true });
         let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true });
-        return React.createElement("div", null,
+        return React.createElement("div", null, StringExtensions_1.StringExtensions.IsNullOrEmpty(isFilterable) ?
             React.createElement(FilterFormPanel_1.FilterFormPanel, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, saveButton: saveButton, closeButton: closeButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
                 React.createElement(ListBoxMenu_1.ListBoxMenu, { ContextMenuItems: this.props.ContextMenuItems, onContextMenuItemClick: (action) => this.onContextMenuItemClick(action) })
                 :
                     React.createElement("div", null, this.state.ShowWaitingMessage ?
                         React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                         :
-                            React.createElement(ListBoxFilterForm_1.ListBoxFilterForm, { cssClassName: cssClassName, CurrentColumn: this.props.CurrentColumn, Columns: this.props.Columns, ColumnValuePairs: this.state.ColumnValuePairs, DataType: this.props.CurrentColumn.DataType, DistinctCriteriaPairValue: this.state.DistinctCriteriaPairValue, UiSelectedColumnValues: uiSelectedColumnValues, UiSelectedUserFilters: uiSelectedUserFilters, UiSelectedRange: uiSelectedRangeExpression, UserFilters: appropriateFilterItems, onColumnValueSelectedChange: (list) => this.onClickColumValue(list), onUserFilterSelectedChange: (list) => this.onClickUserFilter(list), Operators: leafExpressionOperators, onCustomRangeExpressionChange: (range) => this.onSetCustomExpression(range) }))));
+                            React.createElement(ListBoxFilterForm_1.ListBoxFilterForm, { cssClassName: cssClassName, CurrentColumn: this.props.CurrentColumn, Columns: this.props.Columns, ColumnValuePairs: this.state.ColumnValuePairs, DataType: this.props.CurrentColumn.DataType, DistinctCriteriaPairValue: this.state.DistinctCriteriaPairValue, UiSelectedColumnValues: uiSelectedColumnValues, UiSelectedUserFilters: uiSelectedUserFilters, UiSelectedRange: uiSelectedRangeExpression, UserFilters: appropriateFilterItems, onColumnValueSelectedChange: (list) => this.onClickColumValue(list), onUserFilterSelectedChange: (list) => this.onClickUserFilter(list), Operators: leafExpressionOperators, onCustomRangeExpressionChange: (range) => this.onSetCustomExpression(range) })))
+            :
+                React.createElement(react_bootstrap_1.Well, { bsSize: "medium" }, isFilterable));
+    }
+    isFilterable() {
+        if (!this.props.Blotter.isFilterable()) {
+            return "Grid is not filterable";
+        }
+        if (!this.props.CurrentColumn.Filterable) {
+            return "Column is not filterable";
+        }
+        return "";
     }
     onSelectTab(tab) {
         this.setState({ SelectedTab: tab });

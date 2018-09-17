@@ -20,12 +20,24 @@ class ColumnFilterSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
         let columnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
-        let description = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns);
+        let description = this.getDescription(columnFilter);
         let summaryItems = [];
         summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ColumnFilterStrategyId })));
         summaryItems.push(description);
         summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: "primary", size: "small", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null }));
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: cssWizardClassName, SummaryItems: summaryItems });
+    }
+    getDescription(columnFilter) {
+        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
+            return "Grid is not filterable";
+        }
+        if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
+            return "Column is not filterable";
+        }
+        if (columnFilter == null) {
+            return "No Column Filter Active";
+        }
+        return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns);
     }
 }
 exports.ColumnFilterSummaryComponent = ColumnFilterSummaryComponent;

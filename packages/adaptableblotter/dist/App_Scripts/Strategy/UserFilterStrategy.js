@@ -13,8 +13,8 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopupPopup, StrategyIds.UserFilterGlyph);
     }
     addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId)) {
-            this.createContextMenuItemShowPopup("Create User Filter", ScreenPopups.UserFilterPopupPopup, StrategyIds.UserFilterGlyph, "New|" + columnId);
+        if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
+            this.createContextMenuItemShowPopup("Create User Filter", ScreenPopups.UserFilterPopupPopup, StrategyIds.UserFilterGlyph);
         }
     }
     InitState() {

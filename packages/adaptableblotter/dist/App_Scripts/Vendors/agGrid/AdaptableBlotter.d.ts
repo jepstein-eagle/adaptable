@@ -80,6 +80,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getColumnIndex(columnId: string): number;
     private isColumnReadonly;
     private isColumnSortable;
+    private isColumnFilterable;
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
@@ -115,4 +116,5 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private tempSetColumnStateFixForBuild;
     isSelectable(): boolean;
     isSortable(): boolean;
+    isFilterable(): boolean;
 }
