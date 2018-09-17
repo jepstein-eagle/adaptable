@@ -1156,7 +1156,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
                 if (config.isDataRow) {
-                    console.log(config.dataRow);
                     let row = config.dataRow;
                     let columnId = config.name;
                     if (columnId && row) {
