@@ -150,11 +150,7 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
     const currentTheme = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme;
     if (this.themeName !== currentTheme) {
         this.themeName = currentTheme;
-        if (this.themeName === 'Dark Theme' ||
-          this.themeName === 'Slate' ||
-          this.themeName === 'Cyborg' ||
-          this.themeName === 'Darkly' ||
-          this.themeName === 'Superhero') {
+        if (this.themeName === 'Dark Theme') {
             this.grid.addProperties(darkTheme);
         } else {
             this.grid.addProperties(lightTheme);
