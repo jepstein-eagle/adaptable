@@ -123,6 +123,7 @@ function getSchema(data) {
     }
     return schema;
 }
+
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
     var trades = dataGen.getTrades(15000);

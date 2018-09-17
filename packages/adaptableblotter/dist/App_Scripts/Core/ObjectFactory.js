@@ -141,7 +141,7 @@ var ObjectFactory;
         let userFilters = blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
         let columnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns);
         let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
-            " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns, userFilters) :
+            " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :
             "";
         return (columnFriendlyName + ": " + CellValidation.Description + expressionDescription);
     }

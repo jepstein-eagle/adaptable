@@ -3,13 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppAgGridComponent } from './app-aggrid.component';
+import { AppHyperGridComponent } from './app-hypergrid.component';
+import { SwitchComponent } from './switch.component';
 import { AdaptableBlotterModule } from 'adaptableblotter-angular';
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppAgGridComponent
+    AppAgGridComponent,
+    AppHyperGridComponent,
+    SwitchComponent,
   ],
   imports: [
     BrowserModule,
@@ -18,8 +22,7 @@ import { AgGridModule } from 'ag-grid-angular';
   ],
   providers: [],
   bootstrap: [
-    AppComponent,
-    AppAgGridComponent,
+    SwitchComponent,
   ]
 })
 export class AppModule { }

@@ -28,9 +28,9 @@ exports.ColumnFilterAddUpdate = (columnFilter) => ({
 exports.ColumnFilterClearAll = () => ({
     type: exports.COLUMN_FILTER_CLEAR_ALL
 });
-exports.ColumnFilterClear = (columnFilter) => ({
+exports.ColumnFilterClear = (columnId) => ({
     type: exports.COLUMN_FILTER_CLEAR,
-    columnFilter
+    columnId
 });
 exports.SystemFilterSet = (SystemFilters) => ({
     type: exports.SYSTEM_FILTER_SET,
@@ -88,7 +88,7 @@ exports.FilterReducer = (state = initialFilterState, action) => {
         case exports.COLUMN_FILTER_CLEAR: {
             let actionTypedDelete = action;
             columnFilters = [].concat(state.ColumnFilters);
-            index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnFilter.ColumnId);
+            index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnId);
             columnFilters.splice(index, 1);
             return Object.assign({}, state, { ColumnFilters: columnFilters });
         }

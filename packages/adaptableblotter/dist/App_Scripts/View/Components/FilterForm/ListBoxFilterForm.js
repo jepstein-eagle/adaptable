@@ -9,6 +9,7 @@ const AdaptableBlotterFormControlTextClear_1 = require("../Forms/AdaptableBlotte
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
 const UIHelper_1 = require("../../UIHelper");
 const ColumnSelector_1 = require("../Selectors/ColumnSelector");
+const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
 class ListBoxFilterForm extends React.Component {
     constructor(props) {
         super(props);
@@ -104,8 +105,9 @@ class ListBoxFilterForm extends React.Component {
     }
     getOperand1FormControl() {
         if (this.state.UiSelectedRange.Operand1Type == "Column") {
-            let selectedColums = this.props.Columns.filter(x => this.props.CurrentColumn);
-            let operand1 = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)) ? this.state.UiSelectedRange.Operand1 : "Select a column";
+            let operand1 = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)) ?
+                ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.state.UiSelectedRange.Operand1, this.props.Columns) :
+                "Select a column";
             let availableColumns = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
                 return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onColumnOperand1SelectedChanged(column) }, column.FriendlyName);
             });

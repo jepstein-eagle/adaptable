@@ -18,7 +18,7 @@ class PlusMinusEntityRow extends React.Component {
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     wrapExpressionDescription(PlusMinusRule) {
-        return (PlusMinusRule.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns, this.props.UserFilters);
+        return (PlusMinusRule.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns);
     }
 }
 exports.PlusMinusEntityRow = PlusMinusEntityRow;

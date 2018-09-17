@@ -68,7 +68,7 @@ class TeamSharingPopupComponent extends React.Component {
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)),
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, cellVal.Description),
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(cellVal.Expression)) ?
-                        ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns, this.props.UserFilters) :
+                        ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns) :
                         "No Expression"));
             }
             case StrategyIds.ConditionalStyleStrategyId: {
@@ -79,14 +79,14 @@ class TeamSharingPopupComponent extends React.Component {
                         "Whole Row"),
                     React.createElement(react_bootstrap_1.Col, { md: 3 },
                         React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: cs.Style })),
-                    React.createElement(react_bootstrap_1.Col, { xs: 5 }, ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns, this.props.UserFilters)));
+                    React.createElement(react_bootstrap_1.Col, { xs: 5 }, ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns)));
             }
             case StrategyIds.PlusMinusStrategyId: {
                 let plusMinus = sharedEntity.entity;
                 return React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center" } },
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(plusMinus.ColumnId, this.props.Columns)),
                     React.createElement(react_bootstrap_1.Col, { xs: 3 }, plusMinus.NudgeValue.toString()),
-                    React.createElement(react_bootstrap_1.Col, { xs: 5 }, ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns, this.props.UserFilters)));
+                    React.createElement(react_bootstrap_1.Col, { xs: 5 }, ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns)));
             }
             case StrategyIds.ShortcutStrategyId: {
                 let shortcut = sharedEntity.entity;
@@ -97,14 +97,14 @@ class TeamSharingPopupComponent extends React.Component {
             }
             case StrategyIds.UserFilterStrategyId: {
                 let filter = sharedEntity.entity;
-                let expressionString = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns, this.props.UserFilters);
+                let expressionString = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns);
                 return React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center" } },
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, filter.Name),
                     React.createElement(react_bootstrap_1.Col, { xs: 8 }, expressionString));
             }
             case StrategyIds.AdvancedSearchStrategyId: {
                 let search = sharedEntity.entity;
-                let expressionString = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(search.Expression, this.props.Columns, this.props.UserFilters);
+                let expressionString = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(search.Expression, this.props.Columns);
                 return React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center" } },
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, search.Name),
                     React.createElement(react_bootstrap_1.Col, { xs: 8 }, expressionString));
@@ -124,7 +124,7 @@ class TeamSharingPopupComponent extends React.Component {
             }
             case StrategyIds.ExportStrategyId: {
                 let range = sharedEntity.entity;
-                let expressionString = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns, this.props.UserFilters);
+                let expressionString = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns);
                 return React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center" } },
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, range.Name),
                     React.createElement(react_bootstrap_1.Col, { xs: 8 }, expressionString));

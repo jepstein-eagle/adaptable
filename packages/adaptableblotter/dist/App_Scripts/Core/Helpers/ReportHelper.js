@@ -35,7 +35,7 @@ var ReportHelper;
                 return "[Selected Cells Data]";
             }
         }
-        return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(Report.Expression, cols, userFilters);
+        return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(Report.Expression, cols);
     }
     ReportHelper.GetReportExpressionDescription = GetReportExpressionDescription;
     function ConvertReportToArray(blotter, Report) {

@@ -10,6 +10,7 @@ const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const Helper_1 = require("../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../Core/ObjectFactory");
 const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
+const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.PlusMinusStrategyId, blotter);
@@ -34,7 +35,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     handleKeyDown(keyEvent) {
         //it's a speacial key so we handle the string representation of the key '
         let keyEventString = Helper_1.Helper.getStringRepresentionFromKey(keyEvent);
-        if (keyEventString == "-" || keyEventString == "+") {
+        if ((keyEventString == "-" || keyEventString == "+") && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.PlusMinusState.PlusMinusRules)) {
             let successfulValues = [];
             let side = 1;
             if (Helper_1.Helper.getStringRepresentionFromKey(keyEvent) == "-") {
@@ -95,11 +96,11 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         else {
                             successfulValues.push(newValue);
                         }
+                        //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
+                        keyEvent.preventDefault();
                     }
                 }
             }
-            //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
-            keyEvent.preventDefault();
             // first inform if any failed with prevent
             this.ShowErrorPreventMessage(failedPreventEdits);
             if (failedWarningEdits.length > 0) {

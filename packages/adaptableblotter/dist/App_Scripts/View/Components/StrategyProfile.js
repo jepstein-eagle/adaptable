@@ -9,9 +9,9 @@ class StrategyProfile extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.STRATEGY_PROFILE;
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyIds.getGhyphiconForStrategy(this.props.StrategyId) }),
+            React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyIds.getGhyphiconForStrategyId(this.props.StrategyId) }),
             ' ',
-            StrategyIds.getNameForStrategy(this.props.StrategyId));
+            StrategyIds.getNameForStrategyId(this.props.StrategyId));
     }
 }
 exports.StrategyProfile = StrategyProfile;

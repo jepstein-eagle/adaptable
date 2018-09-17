@@ -18,7 +18,7 @@ class PlusMinusSummaryWizard extends React.Component {
             { Key: "Is Column Default", Value: this.props.Data.IsDefaultNudge ? "True" : "False" },
             {
                 Key: "Custom Rule", Value: this.props.Data.IsDefaultNudge ?
-                    "None" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters)
+                    "None" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns)
             },
         ];
         let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.PlusMinusStrategyName });

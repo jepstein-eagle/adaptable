@@ -19,6 +19,7 @@ export class StyleService {
     constructor(private blotter: IAdaptableBlotter) {
         // Create the <style> tag
         this.style = document.createElement("style");
+        this.style.id = `${blotter.BlotterOptions.adaptableBlotterContainer}-style`;
         // WebKit hack :(
         this.style.appendChild(document.createTextNode(""));
         // Add the <style> element to the page

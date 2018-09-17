@@ -20,11 +20,11 @@ class ColumnFilterSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
         let columnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
-        let description = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, this.props.UserFilters);
+        let description = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns);
         let summaryItems = [];
         summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ColumnFilterStrategyId })));
         summaryItems.push(description);
-        summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: "primary", size: "small", onClick: () => this.props.onDeleteFilter(columnFilter), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null }));
+        summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: "primary", size: "small", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null }));
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: cssWizardClassName, SummaryItems: summaryItems });
     }
 }
@@ -38,7 +38,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onDeleteFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
+        onClearFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
     };

@@ -18,7 +18,7 @@ class CellValidationSummaryWizard extends React.Component {
             { Key: "Rule", Value: this.props.Data.Description },
             {
                 Key: "Query", Value: ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression) ?
-                    ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) :
+                    ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) :
                     "None"
             }
         ];

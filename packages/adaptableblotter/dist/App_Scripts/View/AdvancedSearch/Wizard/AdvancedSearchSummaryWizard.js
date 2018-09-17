@@ -13,7 +13,7 @@ class AdvancedSearchSummaryWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-summary";
         let keyValuePairs = [
             { Key: "Name", Value: this.props.Data.Name },
-            { Key: "Query", Value: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns, this.props.UserFilters) }
+            { Key: "Query", Value: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }
         ];
         let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.AdvancedSearchStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);

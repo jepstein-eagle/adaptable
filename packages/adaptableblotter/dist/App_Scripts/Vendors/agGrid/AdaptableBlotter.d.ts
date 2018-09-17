@@ -8,6 +8,7 @@ import { IValidationService } from '../../Core/Services/Interface/IValidationSer
 import { StyleService } from '../../Core/Services/StyleService';
 import { AuditLogService } from '../../Core/Services/AuditLogService';
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
+import { IChartService } from '../../Core/Services/Interface/IChartService';
 import { IEvent } from '../../Core/Interface/IEvent';
 import { EventDispatcher } from '../../Core/EventDispatcher';
 import { DistinctCriteriaPairValue } from '../../Core/Enums';
@@ -20,7 +21,6 @@ import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
 import { RowNode } from "ag-grid";
-import { IChartService } from '../../Core/Services/Interface/IChartService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -42,6 +42,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private getState;
     setVendorGridState(vendorGridState: any): void;
     private createFilterWrapper;
+    private createFloatingFilterWrapper;
     InitAuditService(): void;
     private _currentEditor;
     private _onKeyDown;

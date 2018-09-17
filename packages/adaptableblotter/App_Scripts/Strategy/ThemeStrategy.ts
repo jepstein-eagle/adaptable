@@ -18,6 +18,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
+        this.style.id = `${blotter.BlotterOptions.adaptableBlotterContainer}-theme`;
         this.style.appendChild(document.createTextNode(""));   // WebKit hack :(
         document.head.appendChild(this.style);  // Adds the <style> element to the page
 

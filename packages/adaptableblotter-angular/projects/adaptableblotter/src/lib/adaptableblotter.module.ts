@@ -13,11 +13,12 @@ import { AgGridModule } from 'ag-grid-angular';
   declarations: [
     AdaptableBlotterComponent,
     AdaptableblotterAgGridComponent,
-    AdaptableblotterHyperGridComponent
+    AdaptableblotterHyperGridComponent,
   ],
   exports: [
     AdaptableBlotterComponent,
-    AdaptableblotterAgGridComponent
+    AdaptableblotterAgGridComponent,
+    AdaptableblotterHyperGridComponent,
   ]
 })
 export class AdaptableBlotterModule { }

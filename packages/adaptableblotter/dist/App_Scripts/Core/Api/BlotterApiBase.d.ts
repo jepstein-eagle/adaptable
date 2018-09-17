@@ -33,6 +33,7 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     dashboardShowColumnsDropdown(): void;
     dashboardHideColumnsDropdown(): void;
     dashboardSetHomeToolbarTitle(title: string): void;
+    dashboardSetApplicationToolbarTitle(title: string): void;
     quickSearchRun(quickSearchText: string): void;
     quickSearchClear(): void;
     quickSearchGetValue(): string;
