@@ -15,11 +15,9 @@ function InitTradeBlotter() {
         enableSorting: true,
         enableRangeSelection: true,
         enableFilter: true,
+       // floatingFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
-        floatingFilter: true,
-        //    pagination: true,
-        //    paginationPageSize: 100,
         columnTypes: {                  // not required but helpful for column data type identification
             "abColDefNumber": {},
             "abColDefString": {},
@@ -98,11 +96,11 @@ function getTradeSchema() {
     var schema = []
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, type: "abColDefNumber", sortable: false });
     schema.push({ headerName: "Notional", field: "notional", editable: true, valueFormatter: notionalFormatter, cellClass: 'number-cell' });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, enableRowGroup: true, suppressSorting: false });
+    schema.push({ headerName: "Desk No.", field: "deskId", editable: true, enableRowGroup: true, suppressSorting: false,  suppressFilter: true });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, enableRowGroup: true });
-    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, suppressFilter: true });
+    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true });
 
     schema.push({ headerName: "B/O Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
     schema.push({ headerName: "Status", field: "status", editable: true, enableRowGroup: true });

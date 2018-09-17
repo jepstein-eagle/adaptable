@@ -1,7 +1,7 @@
 function ThemeChange(blotter, vendorGrid) {
     if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
         themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if (themeName == "Dark Theme" || themeName == "Slate" || themeName == "Cyborg" || themeName == "Darkly" || themeName == "Superhero") {
+        if (themeName == "Dark Theme" ) {
             vendorGrid.addProperties(darkTheme);
         }
         else {

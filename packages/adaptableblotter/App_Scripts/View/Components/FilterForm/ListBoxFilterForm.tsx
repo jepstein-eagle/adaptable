@@ -207,10 +207,18 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     private getOperand2FormControl(): any {
         if (this.state.UiSelectedRange.Operand2Type == "Column") {
-            return <ColumnSelector cssClassName={this.props.cssClassName} SelectedColumnIds={[this.state.UiSelectedRange.Operand2]} bsSize={"sm"} className={"ab_filterFormColumnSelector"}
-                ColumnList={this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId)}
-                onColumnChange={columns => this.onColumnOperand2SelectedChanged(columns)}
-                SelectionMode={SelectionMode.Single} />
+            let operand2 = (StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand2)) ?
+                ColumnHelper.getFriendlyNameFromColumnId(this.state.UiSelectedRange.Operand2, this.props.Columns) :
+                "Select a column"
+
+            let availableColumns: any = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
+                return <MenuItem key={index} eventKey={index} onClick={() => this.onColumnOperand2SelectedChanged(column)}>{column.FriendlyName}</MenuItem>
+            })
+
+            return <DropdownButton disabled={availableColumns.length == 0} style={{ minWidth: "150px" }} className={this.props.cssClassName} bsSize={"small"} bsStyle={"default"} title={operand2}id="operand2" >
+                {availableColumns}
+            </DropdownButton>
+
         }
         else {
             return <FormControl value={String(this.state.UiSelectedRange.Operand2)} bsSize={"small"} style={rangeOperandStyle} type={UIHelper.getDescriptionForDataType(this.props.DataType)} placeholder={UIHelper.getPlaceHolderforDataType(this.props.DataType)} onChange={(e) => this.onOperand2Edit(e)} />
@@ -235,11 +243,11 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 
-    private onColumnOperand2SelectedChanged(columns: IColumn[]) {
-        let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : ""
-        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: selectedColumn }
+    private onColumnOperand2SelectedChanged(column: IColumn) {
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand2Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId }
         this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
+
 
     // Methods for getting column values or filters
     onUpdateFilterSearch(filterSearch: string) {

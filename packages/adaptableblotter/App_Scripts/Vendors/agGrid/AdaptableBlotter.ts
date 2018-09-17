@@ -222,7 +222,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private createFloatingFilterWrapper(col: Column) {
-        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: true }
+        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: false }
         this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(this)
     }
 

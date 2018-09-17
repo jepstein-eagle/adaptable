@@ -42,6 +42,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ColumnFilters: IColumnFilter[];
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
+    ShowCloseButton: boolean;
     onClearColumnFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => FilterRedux.HideFilterFormAction
@@ -159,6 +160,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             bsStyle={"default"}
             style={{ margin: "5px" }}
             size={"xsmall"}
+
             overrideDisableButton={isEmptyFilter || hasUserFilter}
             overrideText={"Save as User Filter"}
             DisplayMode="Glyph"
@@ -177,7 +179,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     bsStyle="default"
                     clearFilterButton={clearFilterButton}
                     saveButton={saveButton}
-                    closeButton={closeButton}>
+                    closeButton={closeButton}
+                    showCloseButton={this.props.ShowCloseButton}
+                >
 
                     {this.state.SelectedTab == ContextMenuTab.Menu ?
                         <ListBoxMenu ContextMenuItems={this.props.ContextMenuItems} onContextMenuItemClick={(action) => this.onContextMenuItemClick(action)}
@@ -335,6 +339,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
+        ShowCloseButton: ownProps.ShowCloseButton
     };
 }
 
@@ -355,7 +360,8 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
         Blotter={FilterContext.Blotter}
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
-        EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu} />
+        EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu}
+        ShowCloseButton={FilterContext.ShowCloseButton} />
 </Provider>;
 
 let panelStyle = {

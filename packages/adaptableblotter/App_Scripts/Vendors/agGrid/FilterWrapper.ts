@@ -1,4 +1,4 @@
-import { IFilterComp, IDoesFilterPassParams, IFilterParams } from "ag-grid"
+import { IFilterComp, IDoesFilterPassParams, IFilterParams, Column } from "ag-grid"
 import * as ReactDOM from "react-dom";
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from './AdaptableBlotter'
@@ -8,8 +8,10 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
     return <any>class FilterWrapper implements IFilterComp {
         private params: IFilterParams
         private filterContainer: HTMLDivElement
+        private column: Column
         init(params: IFilterParams): void {
             this.params = params
+            this.column = params.column
             this.filterContainer = document.createElement("div")
             this.filterContainer.id = "filter_" + this.params.column.getColId()
         }
@@ -37,10 +39,11 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
             //we always unmount first so the autofocus from the form works... in other grids we unmount when hidden
             ReactDOM.unmountComponentAtNode(this.filterContainer)
             let filterContext: IColumnFilterContext = {
-                Column: blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == this.params.column.getColId()),
+                Column: blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == this.column.getColId()),
                 Blotter: blotter,
+                ShowCloseButton : (params != null && params.hidePopup !=null)
             };
-            blotter.hideFilterFormPopup = params.hidePopup
+            blotter.hideFilterFormPopup = (params)? params.hidePopup: null
             ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
         }
     }

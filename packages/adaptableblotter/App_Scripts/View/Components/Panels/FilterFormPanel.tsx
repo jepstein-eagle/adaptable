@@ -20,6 +20,8 @@ export interface FilterFormPanelProps extends PanelProps {
     ContextMenuChanged: (e: any) => void
 
     IsAlwaysFilter: boolean
+
+    showCloseButton: boolean
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -27,7 +29,7 @@ export interface FilterFormPanelProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
     render() {
-        let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL
+         let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL
 
         let className = "ab_panel-with-button"
         if (this.props.className) {
@@ -54,9 +56,11 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
                 <Col xs={2}>
                     {this.props.saveButton && this.props.ContextMenuTab == ContextMenuTab.Filter && React.cloneElement(this.props.saveButton, { style: { float: 'right' } })}
                 </Col>
-                <Col xs={2}>
-                    {this.props.closeButton && React.cloneElement(this.props.closeButton, { style: { float: 'right' } })}
-                </Col>
+                {this.props.showCloseButton &&
+                    <Col xs={2}>
+                        {this.props.closeButton && React.cloneElement(this.props.closeButton, { style: { float: 'right' } })}
+                    </Col>
+                }
             </Row>
         </AdaptableBlotterForm>;
         return <div className={cssClassName}>

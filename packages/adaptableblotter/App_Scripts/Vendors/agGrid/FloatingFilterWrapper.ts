@@ -16,6 +16,7 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
             let filterContext: IColumnFilterContext = {
                 Column: blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId),
                 Blotter: blotter,
+                ShowCloseButton: false
             };
             ReactDOM.render(FloatingFilterFormReact(filterContext), this.filterContainer);
         }

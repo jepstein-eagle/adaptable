@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
-import { FormControl, Button, FormGroup, InputGroup } from "react-bootstrap";
+import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { IColumnFilter, IUserFilter, IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../../Core/Api/Expression";
@@ -104,10 +104,10 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         return <span>
             {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable &&
                 <FormControl
-                    style={{ marginTop: '5px', minHeight: '22px' }}
+                    style={{ padding:'1px', marginTop: '5px',  minHeight: '20px',  maxHeight: '20px', fontSize: "x-small" , fontWeight: "lighter"}}
                     className={cssClassName}
                     autoFocus={false}
-                    bsSize={"sm"}
+                    bsSize={"small"}
                     type="text"
                     placeholder={this.state.placeholder}
                     value={this.state.floatingFilterFormText}
@@ -189,7 +189,6 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
                 break;
         }
 
-
         operators.forEach(op => {
             if (!isRangeExpression) {
                 if (searchText.includes(op.Key)) {
@@ -248,7 +247,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onClearColumnFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
-
     };
 }
 
