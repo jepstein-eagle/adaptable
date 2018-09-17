@@ -209,7 +209,7 @@ function InitBlotter() {
         enableAuditLog: false,
         enableRemoteConfigServer: false,
         //  predefinedConfig: json,
-        serverSearchOption: "AdvancedSearch",
+        serverSearchOption: "None",
         vendorGrid: vendorGrid,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
