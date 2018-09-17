@@ -170,7 +170,8 @@ function InitBlotter() {
 
     // Make DeskID not sortable
     behavior.setColumnProperties(2, {
-        unsortable: true
+        unsortable: true,
+     //   unfilterable: true
     });
 
 

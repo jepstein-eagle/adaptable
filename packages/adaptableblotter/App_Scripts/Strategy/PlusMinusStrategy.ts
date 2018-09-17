@@ -36,7 +36,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
 
             if (column && column.DataType == DataType.Number) {

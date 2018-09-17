@@ -183,7 +183,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: true,
                 Index: index,
                 ReadOnly: true,
-                Sortable: true // TODO
+                Sortable: true, // TODO
+                Filterable: true // TODO
             }
         });
         let hiddenColumns: IColumn[] = this.grid.getHiddenColumns().map((x: any) => {
@@ -195,8 +196,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: false,
                 Index: -1,
                 ReadOnly: true,
-                Sortable: true // TODO
-
+                Sortable: true ,// TODO
+                Filterable: true // TODO
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -571,6 +572,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
     public isSortable(): boolean {
+        return true;
+    }
+    public isFilterable(): boolean {
         return true;
     }
 }

@@ -17,6 +17,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { Expression } from "../../../Core/Api/Expression";
+import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
@@ -24,7 +25,7 @@ import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
-import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem } from 'react-bootstrap';
+import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem, Well } from 'react-bootstrap';
 import { IMenuItem } from "../../../Core/Interface/IMenu";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
@@ -107,6 +108,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     render(): any {
         let cssClassName: string = StyleConstants.FILTER_FORM
 
+        let isFilterable: string = this.isFilterable();
+
         // get user filter expressions appropriate for this column
         let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf))
             ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
@@ -164,45 +167,60 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
 
         return <div>
-            <FilterFormPanel cssClassName={cssClassName} style={panelStyle}
-                className="ab_no-padding-except-top-panel ab_small-padding-panel"
-                ContextMenuTab={this.state.SelectedTab}
-                ContextMenuChanged={(e) => this.onSelectTab(e)}
-                IsAlwaysFilter={this.props.EmbedColumnMenu}
-                bsStyle="default"
-                clearFilterButton={clearFilterButton}
-                saveButton={saveButton}
-                closeButton={closeButton}>
+            {StringExtensions.IsNullOrEmpty(isFilterable) ?
 
-                {this.state.SelectedTab == ContextMenuTab.Menu ?
-                    <ListBoxMenu ContextMenuItems={this.props.ContextMenuItems} onContextMenuItemClick={(action) => this.onContextMenuItemClick(action)}
-                    />
-                    :
-                    <div>
-                        {this.state.ShowWaitingMessage ?
-                            <Waiting WaitingMessage="Retrieving Column Values..." />
-                            :
-                            <ListBoxFilterForm cssClassName={cssClassName}
-                                CurrentColumn={this.props.CurrentColumn}
-                                Columns={this.props.Columns}
-                                ColumnValuePairs={this.state.ColumnValuePairs}
-                                DataType={this.props.CurrentColumn.DataType}
-                                DistinctCriteriaPairValue={this.state.DistinctCriteriaPairValue}
-                                UiSelectedColumnValues={uiSelectedColumnValues}
-                                UiSelectedUserFilters={uiSelectedUserFilters}
-                                UiSelectedRange={uiSelectedRangeExpression}
-                                UserFilters={appropriateFilterItems}
-                                onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
-                                onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
-                                Operators={leafExpressionOperators}
-                                onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
-                            </ListBoxFilterForm>
-                        }
-                    </div>
-                }
-            </FilterFormPanel>
+                <FilterFormPanel cssClassName={cssClassName} style={panelStyle}
+                    className="ab_no-padding-except-top-panel ab_small-padding-panel"
+                    ContextMenuTab={this.state.SelectedTab}
+                    ContextMenuChanged={(e) => this.onSelectTab(e)}
+                    IsAlwaysFilter={this.props.EmbedColumnMenu}
+                    bsStyle="default"
+                    clearFilterButton={clearFilterButton}
+                    saveButton={saveButton}
+                    closeButton={closeButton}>
 
+                    {this.state.SelectedTab == ContextMenuTab.Menu ?
+                        <ListBoxMenu ContextMenuItems={this.props.ContextMenuItems} onContextMenuItemClick={(action) => this.onContextMenuItemClick(action)}
+                        />
+                        :
+                        <div>
+                            {this.state.ShowWaitingMessage ?
+                                <Waiting WaitingMessage="Retrieving Column Values..." />
+                                :
+                                <ListBoxFilterForm cssClassName={cssClassName}
+                                    CurrentColumn={this.props.CurrentColumn}
+                                    Columns={this.props.Columns}
+                                    ColumnValuePairs={this.state.ColumnValuePairs}
+                                    DataType={this.props.CurrentColumn.DataType}
+                                    DistinctCriteriaPairValue={this.state.DistinctCriteriaPairValue}
+                                    UiSelectedColumnValues={uiSelectedColumnValues}
+                                    UiSelectedUserFilters={uiSelectedUserFilters}
+                                    UiSelectedRange={uiSelectedRangeExpression}
+                                    UserFilters={appropriateFilterItems}
+                                    onColumnValueSelectedChange={(list) => this.onClickColumValue(list)}
+                                    onUserFilterSelectedChange={(list) => this.onClickUserFilter(list)}
+                                    Operators={leafExpressionOperators}
+                                    onCustomRangeExpressionChange={(range) => this.onSetCustomExpression(range)}   >
+                                </ListBoxFilterForm>
+                            }
+                        </div>
+                    }
+                </FilterFormPanel>
+                :
+                <Well bsSize="medium">{isFilterable}</Well>
+            }
         </div>
+    }
+
+    isFilterable(): string {
+        if (!this.props.Blotter.isFilterable()) {
+            return "Grid is not filterable"
+        }
+
+        if (!this.props.CurrentColumn.Filterable) {
+            return "Column is not filterable"
+        }
+        return ""
     }
 
     onSelectTab(tab: any): any {
@@ -313,11 +331,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentColumn: ownProps.CurrentColumn,
         Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
-       ColumnFilters: state.Filter.ColumnFilters,
-         UserFilters: state.Filter.UserFilters,
+        ColumnFilters: state.Filter.ColumnFilters,
+        UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
-     };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

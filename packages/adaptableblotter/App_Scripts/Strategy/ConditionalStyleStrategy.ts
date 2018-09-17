@@ -28,7 +28,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             this.createContextMenuItemShowPopup(
                 "Create " + StrategyIds.ConditionalStyleStrategyName,
                 ScreenPopups.ConditionalStylePopup,

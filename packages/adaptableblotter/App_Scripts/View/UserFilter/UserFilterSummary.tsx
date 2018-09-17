@@ -27,7 +27,7 @@ export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterS
 
 export class UserFilterSummaryComponent extends React.Component<UserFilterSummaryProps, EditableConfigEntityState> {
 
-    
+
     constructor(props: UserFilterSummaryProps) {
         super(props);
         this.state = UIHelper.EmptyConfigState();
@@ -35,16 +35,19 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__userfilter";
-       
+
         let strategySummaries: any = []
+
+
 
         // title row
         let titleRow = <StrategyHeader
             key={StrategyIds.UserFilterStrategyName}
             cssClassName={this.props.cssClassName}
             StrategyId={StrategyIds.UserFilterStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.UserFilterStrategyName)}
+            StrategySummary={this.getSummary()}
             onNew={() => this.onNew()}
+            NewButtonDisabled={!this.isFilterable()}
             NewButtonTooltip={StrategyIds.UserFilterStrategyName}
         />
         strategySummaries.push(titleRow);
@@ -57,9 +60,10 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         key={"UF" + index}
                         cssClassName={this.props.cssClassName}
                         Item1={item.Name}
-                        Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
+                        Item2={this.getDescription(item)}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
+                        showEdit={this.isFilterable()}
                         EntityName={StrategyIds.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
@@ -74,8 +78,8 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
             {this.state.EditedAdaptableBlotterObject &&
                 <UserFilterWizard
-                cssClassName={cssWizardClassName}
-                EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+                    cssClassName={cssWizardClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
@@ -86,10 +90,55 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
                     onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={()=>this.canFinishWizard()}
+                    canFinishWizard={() => this.canFinishWizard()}
                 />
             }
         </div>
+    }
+
+    getSummary(): string {
+       if (!this.isGridFilterable()) {
+            return "Grid is not filterable"
+        }
+
+        if (!this.isColumnFilterable()) {
+            return "Column is not filterable"
+        }
+
+        return Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.UserFilterStrategyName)
+    }
+
+    getDescription(userFilter: IUserFilter): string {
+        if (!this.isGridFilterable()) {
+            return "Grid is not filterable"
+        }
+
+        if (!this.isColumnFilterable()) {
+            return "Column is not filterable"
+        }
+
+        return ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns)
+    }
+
+    isFilterable(): boolean {
+        if (!this.isGridFilterable() || !this.isColumnFilterable()) {
+            return false;
+        }
+        return true;
+    }
+
+    isGridFilterable(): boolean {
+        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
+            return false;
+        }
+        return true;
+    }
+
+    isColumnFilterable(): boolean {
+        if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
+            return false
+        }
+        return true;
     }
 
     onNew() {
@@ -111,7 +160,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
         this.props.onAddUpdateUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
-    
+
     canFinishWizard() {
         let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter
         return StringExtensions.IsNotNullOrEmpty(userFilter.Name) && StringExtensions.IsNotEmpty(userFilter.ColumnId) && ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression);

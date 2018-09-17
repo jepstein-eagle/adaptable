@@ -112,5 +112,6 @@ export interface IAdaptableBlotter {
     // vendor grid related
     isSelectable(): boolean
     isSortable(): boolean
+    isFilterable(): boolean
 }
 

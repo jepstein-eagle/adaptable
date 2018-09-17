@@ -143,12 +143,25 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    canCreateContextMenuItem(columnId: string): boolean {
-        if (!this.isReadOnlyStrategy()) {
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-            return (column != null)
+    canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
+        if (this.isReadOnlyStrategy()) {
+            return false;
         }
-        return false;
+
+        let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+        if (column == null) {
+            return false;
+        }
+
+        if (functionType == "sort" && !column.Sortable) {
+            return false;
+        } else if (functionType == "filter" && (!column.Filterable || !blotter.isFilterable())) {
+            return false;
+        }
+
+
+
+        return true;
     }
 
     publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {

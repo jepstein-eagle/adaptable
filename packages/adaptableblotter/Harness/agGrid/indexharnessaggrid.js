@@ -17,7 +17,7 @@ function InitTradeBlotter() {
         enableFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
-        floatingFilter:true,
+        floatingFilter: true,
         //    pagination: true,
         //    paginationPageSize: 100,
         columnTypes: {                  // not required but helpful for column data type identification
@@ -32,8 +32,8 @@ function InitTradeBlotter() {
     // Create and instantiate an ag-Grid object
     let gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = ""
-  let grid=  new agGrid.Grid(gridcontainer, gridOptions);
-  dataGen.startTickingDataagGrid(gridOptions);
+    let grid = new agGrid.Grid(gridcontainer, gridOptions);
+    dataGen.startTickingDataagGrid(gridOptions);
     setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
 
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
@@ -52,6 +52,7 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,      // whether layouts should include things like column size
         autoSaveLayouts: true,                  // layous will save automatically
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
+        ignoreCaseInQueries: true,
         // getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
@@ -97,31 +98,25 @@ function getTradeSchema() {
     var schema = []
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, type: "abColDefNumber", sortable: false });
     schema.push({ headerName: "Notional", field: "notional", editable: true, valueFormatter: notionalFormatter, cellClass: 'number-cell' });
-    schema.push({ headerName: "DeskId", field: "deskId", editable: true, filter: 'text', enableRowGroup: true, suppressSorting: false });
-    schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Country", field: "country", editable: true, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Currency", field: "currency", editable: false, filter: 'text', enableRowGroup: true });
-    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, filter: 'text', suppressFilter: true });
+    schema.push({ headerName: "DeskId", field: "deskId", editable: true, enableRowGroup: true, suppressSorting: false });
+    schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, enableRowGroup: true });
+    schema.push({ headerName: "Country", field: "country", editable: true, enableRowGroup: true });
+    schema.push({ headerName: "Currency", field: "currency", editable: false, enableRowGroup: true });
+    schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true, suppressFilter: true });
 
     schema.push({ headerName: "B/O Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
-    schema.push({ headerName: "Status", field: "status", editable: true, filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Status", field: "status", editable: true, enableRowGroup: true });
     schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true });
     schema.push({ headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bbg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bbg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' });
-    // schema.push({
-    //     headerName: "Is Live", field: "isLive", editable: false, cellRenderer: params => {
-    //         return `<input type='checkbox' ${params.value ? 'checked' : ''} />`;
-    //     }
-    // });
-    schema.push({ headerName: "Fitch", field: "fitchRating", editable: true, filter: 'text', });
     schema.push({ headerName: "Moodys", field: "moodysRating", editable: true, filter: 'text' });
     schema.push({ headerName: "SandP", field: "sandpRating", editable: true, filter: 'text' });
     schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Pct Change", field: "percentChange", filter: 'text' });
-    schema.push({ headerName: "Last Updated By", field: "lastUpdatedBy", filter: 'text', enableRowGroup: true });
+    schema.push({ headerName: "Last Updated By", field: "lastUpdatedBy", enableRowGroup: true });
     schema.push({ headerName: "Last Updated", field: "lastUpdated", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     return schema;
 }

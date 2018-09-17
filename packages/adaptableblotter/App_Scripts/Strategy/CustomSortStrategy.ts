@@ -26,10 +26,8 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId)) {
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-            if (column && column.Sortable) {
-                let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
+        if (this.canCreateContextMenuItem(columnId, this.blotter, "sort")) {
+            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
                 let label = (customSort) ? "Edit " : "Create "
                 let popupParam = (customSort) ? "Edit|" : "New|"
                 this.createContextMenuItemShowPopup(
@@ -37,8 +35,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
                     ScreenPopups.CustomSortPopup,
                     StrategyIds.CustomSortGlyph,
                     popupParam + columnId)
-            }
-        }
+                 }
     }
 
     removeCustomSorts() {

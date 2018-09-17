@@ -20,7 +20,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
     }
 
     public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId)) {
+        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             let formatExists: boolean = ArrayExtensions.ContainsItem(this.FormatColumnState.FormatColumns.map(f => f.ColumnId), columnId)
             let label = formatExists ? "Edit " : "Create "
             let popupParam = formatExists ? "Edit|" : "New|"

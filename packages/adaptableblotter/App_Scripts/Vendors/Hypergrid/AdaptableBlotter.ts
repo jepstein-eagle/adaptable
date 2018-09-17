@@ -259,7 +259,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: true,
                 Index: index,
                 ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name)
+                Sortable: this.isColumnSortable(x.name),
+                Filterable: this.isFilterable() // TODO: can we manage by column
             }
         });
         let hiddenColumns: IColumn[] = this.hyperGrid.behavior.getHiddenColumns().map((x: any) => {
@@ -270,8 +271,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: false,
                 Index: -1,
                 ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name)
-
+                Sortable: this.isColumnSortable(x.name),
+                Filterable: this.isFilterable() // TODO: can we manage by column
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -1155,6 +1156,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
                 if (config.isDataRow) {
+                    console.log(config.dataRow);
                     let row = config.dataRow;
                     let columnId = config.name;
                     if (columnId && row) {
@@ -1347,9 +1349,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public isSelectable(): boolean {
         return true;
     }
+
     public isSortable(): boolean {
         if (this.hyperGrid.properties.hasOwnProperty('unsortable')) {
-            return this.hyperGrid.behavior.unsortable;
+            return !this.hyperGrid.behavior.unsortable;
+        }
+        return true;
+    }
+
+    public isFilterable(): boolean {
+        if (this.hyperGrid.properties.hasOwnProperty('filterable')) {
+            return this.hyperGrid.behavior.filterable;
         }
         return true;
     }

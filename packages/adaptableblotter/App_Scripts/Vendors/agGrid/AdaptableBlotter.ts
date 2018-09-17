@@ -91,7 +91,7 @@ import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } from "ag-grid"
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, LoggerFactory } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
@@ -259,8 +259,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public applyGridFiltering() {
-        this.gridOptions.api.onFilterChanged()
-        this._onRefresh.Dispatch(this, this);
+        if (this.isFilterable()) {
+            this.gridOptions.api.onFilterChanged()
+            this._onRefresh.Dispatch(this, this);
+        } else {
+            AdaptableBlotterLogger.LogError('Trying to filter on a non-filterable grid.')
+        }
     }
 
     public hideFilterFormPopup: Function
@@ -324,7 +328,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: vendorColumn.isVisible(),
             ReadOnly: this.isColumnReadonly(colId),
-            Sortable: this.isColumnSortable(colId)
+            Sortable: this.isColumnSortable(colId),
+            Filterable: this.isColumnFilterable(colId),
+            
         }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
@@ -682,6 +688,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
+    private isColumnFilterable(columnId: string): boolean {
+        if (!this.isFilterable()) {
+            return false;
+        }
+
+        let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
+        if (colDef.suppressFilter != null) {
+            return !colDef.suppressFilter;
+        }
+        return true;
+    }
+
     public setCustomSort(columnId: string, comparer: Function): void {
 
         let sortModel = this.gridOptions.api.getSortModel()
@@ -937,14 +955,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
             ReadOnly: true,
-            Sortable: this.isSortable()
+            Sortable: this.isSortable(),
+            Filterable: this.isFilterable(),
         }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(hiddenCol));
 
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
 
-        this.createFilterWrapper(vendorColumn)
+        if (this.isFilterable()) {
+            this.createFilterWrapper(vendorColumn)
+        }
         let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
         conditionalStyleagGridStrategy.InitStyles();
     }
@@ -1244,16 +1265,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
+
+        // if (this.isFilterable()) {
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
             this.createFilterWrapper(col);
         });
+        // }
         if (this.gridOptions.floatingFilter) {
+            //      if (this.isFilterable()) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
+            //     }
             let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
             this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
         }
+
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 
@@ -1405,14 +1432,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isSelectable(): boolean {
-        return this.gridOptions.enableRangeSelection;
-    }
+        if (this.gridOptions.enableRangeSelection != null) {
+            return this.gridOptions.enableRangeSelection;
+        }
+        return false;
+      }
 
     public isSortable(): boolean {
         if (this.gridOptions.enableSorting != null) {
             return this.gridOptions.enableSorting;
         }
-        return true;
+        return false;
+    }
+
+    public isFilterable(): boolean {
+        if (this.gridOptions.enableFilter != null) {
+            return this.gridOptions.enableFilter;
+        }
+        return false;
     }
 
 }

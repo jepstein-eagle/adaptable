@@ -22,7 +22,7 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     ConfigEntity?: IAdaptableBlotterObject
     ConfirmDeleteAction: Redux.Action
     EntityName: string
-     cssClassName: string
+    cssClassName: string
 }
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {

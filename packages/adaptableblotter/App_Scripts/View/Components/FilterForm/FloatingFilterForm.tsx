@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
-import { FormControl } from "react-bootstrap";
+import { FormControl, Button, FormGroup, InputGroup } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { IColumnFilter, IUserFilter, IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../../Core/Api/Expression";
@@ -90,7 +90,11 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
             }
         } else {
             // no filter so make sure our stuff is clear
-            this.clearState()
+            if (this.state.placeholder != "TEMP") {
+                if (ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) || StringExtensions.IsNotNullOrEmpty(this.state.placeholder) || StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)) {
+                    this.clearState();
+                }
+            }
         }
     }
 
@@ -98,15 +102,17 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         let cssClassName: string = this.props.cssClassName + "__floatingFilterForm";
 
         return <span>
-            <FormControl
-                style={{ marginTop: '5px', minHeight: '22px' }}
-                className={cssClassName}
-                autoFocus={false}
-                bsSize={"sm"}
-                type="text"
-                placeholder={this.state.placeholder}
-                value={this.state.floatingFilterFormText}
-                onChange={(x) => this.OnTextChange((x.target as HTMLInputElement).value)} />
+            {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable &&
+                <FormControl
+                    style={{ marginTop: '5px', minHeight: '22px' }}
+                    className={cssClassName}
+                    autoFocus={false}
+                    bsSize={"sm"}
+                    type="text"
+                    placeholder={this.state.placeholder}
+                    value={this.state.floatingFilterFormText}
+                    onChange={(x) => this.OnTextChange((x.target as HTMLInputElement).value)} />
+            }
         </span>
     }
 
@@ -131,7 +137,6 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
     clearExistingColumnFilter(): void {
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId)
         if (existingColumnFilter) {
-            console.log("in method clearing for: " + this.props.CurrentColumn.ColumnId)
             this.props.onClearColumnFilter(this.props.CurrentColumn.ColumnId)
         }
     }
@@ -209,11 +214,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
     }
 
     clearState(): void {
-        if (this.state.placeholder != "TEMP") {
-            if (ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) || StringExtensions.IsNotNullOrEmpty(this.state.placeholder) || StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)) {
-                this.setState({ floatingFilterFormText: "", filterExpression: ExpressionHelper.CreateEmptyExpression(), placeholder: "" })
-            }
-        }
+        this.setState({ floatingFilterFormText: "", filterExpression: ExpressionHelper.CreateEmptyExpression(), placeholder: "" })
     }
 
     clearExpressionState(searchText: string): void {

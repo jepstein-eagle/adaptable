@@ -24,16 +24,15 @@ export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFil
 
 export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSummaryProps, EditableConfigEntityState> {
 
-    constructor(props:ColumnFilterSummaryProps) {
+    constructor(props: ColumnFilterSummaryProps) {
         super(props);
         this.state = UIHelper.EmptyConfigState();
     }
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
-
         let columnFilter: IColumnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
-        let description: string = (columnFilter == null) ? "No Column Filter Active" : ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns)
+        let description: string = this.getDescription(columnFilter);
 
         let summaryItems: any[] = []
         summaryItems.push(<b>{<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
@@ -41,12 +40,27 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         summaryItems.push(
             <ButtonClear cssClassName={this.props.cssClassName}
                 bsStyle={"primary"}
-                size={"small"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)} 
+                size={"small"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
                 overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null} />)
 
         return <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
+    }
+
+    getDescription(columnFilter: IColumnFilter): string {
+        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
+            return "Grid is not filterable"
+        }
+
+        if ( this.props.SummarisedColumn  && !this.props.SummarisedColumn.Filterable) {
+            return "Column is not filterable"
+        }
+
+        if (columnFilter == null) {
+            return "No Column Filter Active"
+        }
+        return ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns)
     }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
