@@ -4,18 +4,18 @@ import { Component, OnInit } from '@angular/core';
   selector: 'switch-root',
   template: `<div>
     <button (click)="showWrapper(1)">Angular Wrapper</button>
-    <button (click)="showWrapper(2)">AgGrid Angular Wrapper</button>
-    <button (click)="showWrapper(3)">HyperGrid Angular Wrapper</button>
+    <button (click)="showWrapper(2)">agGrid Angular Wrapper</button>
+    <button (click)="showWrapper(3)">Hypergrid Angular Wrapper</button>
     <div [hidden]="show !== 1">
-      <h3>Adaptable Blotter Angular Wrapper - working alongside ag-Grid angular component</h3>
+      <h3>Adaptable Blotter Angular Wrapper - working alongside agGrid angular component</h3>
       <adaptableblotter-root></adaptableblotter-root>
     </div>
     <div [hidden]="show !== 2">
-      <h3>AgGrid Angular Wrapper - wraps Adaptable Blotter AND ag-Grid components</h3>
+      <h3>AgGrid Angular Wrapper - wraps Adaptable Blotter AND agGrid components</h3>
       <adaptableblotter-aggrid-root></adaptableblotter-aggrid-root>
     </div>
     <div [hidden]="show !== 3">
-      <h3>HyperGrid Angular Wrapper - wraps Adaptable Blotter AND hypergrid components</h3>
+      <h3>Hypergrid Angular Wrapper - wraps Adaptable Blotter AND Hypergrid components</h3>
       <adaptableblotter-hypergrid-root></adaptableblotter-hypergrid-root>
     </div>
   </div>`

@@ -121,6 +121,8 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
     this.adaptableBlotterOptions.vendorGrid = this.grid;
     this.gridLoaded = true;
     this.gridMounted.emit(this.grid);
+    // TODO: Fix so it works properly - its a temporayr way to marry up the 2 components
+    this.gridOptions.setupgrid(this.adaptableBlotterOptions.vendorGrid);
   }
 
   /**

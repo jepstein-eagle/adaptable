@@ -15,7 +15,7 @@ function InitTradeBlotter() {
         enableSorting: true,
         enableRangeSelection: true,
         enableFilter: true,
-       // floatingFilter: true,
+        floatingFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
         columnTypes: {                  // not required but helpful for column data type identification

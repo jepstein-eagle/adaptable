@@ -2,11 +2,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import {  ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy";
+import { ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumn } from '../Core/Api/Interface/AdaptableBlotterObjects';
 
-export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy{
+export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy {
     private CalculatedColumns: ICalculatedColumn[]
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CalculatedColumnStrategyId, blotter)
@@ -25,11 +24,13 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
 
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            this.createContextMenuItemShowPopup(
-                "Edit " + StrategyIds.CalculatedColumnStrategyName,
-                ScreenPopups.CalculatedColumnPopup,
-                StrategyIds.CalculatedColumnGlyph,
-                "Edit|" + columnId)
+            if (this.CalculatedColumns.find(cc => cc.ColumnId == columnId)) {
+                this.createContextMenuItemShowPopup(
+                    "Edit " + StrategyIds.CalculatedColumnStrategyName,
+                    ScreenPopups.CalculatedColumnPopup,
+                    StrategyIds.CalculatedColumnGlyph,
+                    "Edit|" + columnId)
+            }
         }
     }
 }
