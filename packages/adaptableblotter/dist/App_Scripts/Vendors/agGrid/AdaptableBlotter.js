@@ -165,7 +165,7 @@ class AdaptableBlotter {
         col.initialise();
     }
     createFloatingFilterWrapper(col) {
-        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: true };
+        this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: false };
         this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapper_1.FloatingFilterWrapperFactory(this);
     }
     InitAuditService() {

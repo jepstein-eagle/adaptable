@@ -151,6 +151,7 @@ class AdaptableBlotter {
         let filterContext = {
             Column: this.getColumnFromColumnId(e.field),
             Blotter: this,
+            ShowCloseButton: true
         };
         // Remove default filter UI
         e.container.off();

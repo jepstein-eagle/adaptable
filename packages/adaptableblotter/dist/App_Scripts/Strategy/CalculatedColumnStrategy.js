@@ -18,7 +18,9 @@ class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            this.createContextMenuItemShowPopup("Edit " + StrategyIds.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyIds.CalculatedColumnGlyph, "Edit|" + columnId);
+            if (this.CalculatedColumns.find(cc => cc.ColumnId == columnId)) {
+                this.createContextMenuItemShowPopup("Edit " + StrategyIds.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyIds.CalculatedColumnGlyph, "Edit|" + columnId);
+            }
         }
     }
 }

@@ -903,6 +903,7 @@ class AdaptableBlotter {
                     let filterContext = {
                         Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                         Blotter: this,
+                        ShowCloseButton: true
                     };
                     this.filterContainer.style.visibility = 'visible';
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';

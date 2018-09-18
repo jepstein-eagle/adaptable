@@ -85,7 +85,7 @@ class FilterFormComponent extends React.Component {
         let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onClearFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter, overrideText: "Clear", DisplayMode: "Text", hideToolTip: true });
         let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true });
         return React.createElement("div", null, StringExtensions_1.StringExtensions.IsNullOrEmpty(isFilterable) ?
-            React.createElement(FilterFormPanel_1.FilterFormPanel, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, saveButton: saveButton, closeButton: closeButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
+            React.createElement(FilterFormPanel_1.FilterFormPanel, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, saveButton: saveButton, closeButton: closeButton, showCloseButton: this.props.ShowCloseButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
                 React.createElement(ListBoxMenu_1.ListBoxMenu, { ContextMenuItems: this.props.ContextMenuItems, onContextMenuItemClick: (action) => this.onContextMenuItemClick(action) })
                 :
                     React.createElement("div", null, this.state.ShowWaitingMessage ?
@@ -188,6 +188,7 @@ function mapStateToProps(state, ownProps) {
         UserFilters: state.Filter.UserFilters,
         SystemFilters: state.Filter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
+        ShowCloseButton: ownProps.ShowCloseButton
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -201,7 +202,7 @@ function mapDispatchToProps(dispatch) {
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 exports.FilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.AdaptableBlotterStore.TheStore },
-    React.createElement(exports.FilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu }));
+    React.createElement(exports.FilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu, ShowCloseButton: FilterContext.ShowCloseButton }));
 let panelStyle = {
     width: '235px'
 };

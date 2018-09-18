@@ -9,6 +9,7 @@ export interface FilterFormPanelProps extends PanelProps {
     ContextMenuTab: ContextMenuTab;
     ContextMenuChanged: (e: any) => void;
     IsAlwaysFilter: boolean;
+    showCloseButton: boolean;
 }
 export declare class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
     render(): JSX.Element;

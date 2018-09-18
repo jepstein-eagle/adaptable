@@ -8,7 +8,6 @@ const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const AdaptableBlotterFormControlTextClear_1 = require("../Forms/AdaptableBlotterFormControlTextClear");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
 const UIHelper_1 = require("../../UIHelper");
-const ColumnSelector_1 = require("../Selectors/ColumnSelector");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
 class ListBoxFilterForm extends React.Component {
     constructor(props) {
@@ -119,7 +118,13 @@ class ListBoxFilterForm extends React.Component {
     }
     getOperand2FormControl() {
         if (this.state.UiSelectedRange.Operand2Type == "Column") {
-            return React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: this.props.cssClassName, SelectedColumnIds: [this.state.UiSelectedRange.Operand2], bsSize: "sm", className: "ab_filterFormColumnSelector", ColumnList: this.props.Columns.filter(c => c.DataType == this.props.DataType && c.ColumnId != this.props.CurrentColumn.ColumnId), onColumnChange: columns => this.onColumnOperand2SelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single });
+            let operand2 = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand2)) ?
+                ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.state.UiSelectedRange.Operand2, this.props.Columns) :
+                "Select a column";
+            let availableColumns = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
+                return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onColumnOperand2SelectedChanged(column) }, column.FriendlyName);
+            });
+            return React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableColumns.length == 0, style: { minWidth: "150px" }, className: this.props.cssClassName, bsSize: "small", bsStyle: "default", title: operand2, id: "operand2" }, availableColumns);
         }
         else {
             return React.createElement(react_bootstrap_1.FormControl, { value: String(this.state.UiSelectedRange.Operand2), bsSize: "small", style: rangeOperandStyle, type: UIHelper_1.UIHelper.getDescriptionForDataType(this.props.DataType), placeholder: UIHelper_1.UIHelper.getPlaceHolderforDataType(this.props.DataType), onChange: (e) => this.onOperand2Edit(e) });
@@ -139,9 +144,8 @@ class ListBoxFilterForm extends React.Component {
         let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: column.ColumnId, Operand2: this.state.UiSelectedRange.Operand2 };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
-    onColumnOperand2SelectedChanged(columns) {
-        let selectedColumn = columns.length > 0 ? columns[0].ColumnId : "";
-        let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: selectedColumn };
+    onColumnOperand2SelectedChanged(column) {
+        let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand2Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
     // Methods for getting column values or filters
