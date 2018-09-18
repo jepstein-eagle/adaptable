@@ -15,7 +15,7 @@ import DataGenerator from './data-generator';
   `
 })
 export class AppHyperGridComponent {
-  data = new DataGenerator().getTrades(1000);
+  data = new DataGenerator().getTrades(5000);
   gridOptions = {
     data: this.data,
     schema: AppHyperGridComponent.getSchema(this.data),
@@ -24,7 +24,7 @@ export class AppHyperGridComponent {
   blotterOptions: IAdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'jonathan',
-    blotterId: 'my Blotter',
+    blotterId: 'Hypergrid Wrapper',
     enableAuditLog: false,
     enableRemoteConfigServer: false,
     serverSearchOption: 'None',

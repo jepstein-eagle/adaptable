@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
     <button (click)="showWrapper(2)">agGrid Angular Wrapper</button>
     <button (click)="showWrapper(3)">Hypergrid Angular Wrapper</button>
     <div [hidden]="show !== 1">
-      <h3>Adaptable Blotter Angular Wrapper - working alongside agGrid angular component</h3>
+      <h3>Angular Wrapper - working alongside agGrid angular component</h3>
       <adaptableblotter-root></adaptableblotter-root>
     </div>
     <div [hidden]="show !== 2">

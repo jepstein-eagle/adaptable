@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
 import { GridOptions } from 'ag-grid';
+import HarnessHelper from './harness-helper';
+import DataGenerator from './data-generator';
 
 @Component({
   selector: 'adaptableblotter-root',
@@ -21,19 +23,10 @@ import { GridOptions } from 'ag-grid';
   `
 })
 export class AppComponent {
-  rowData = [
-    { make: 'Toyota', model: 'Celica', price: 35000 },
-    { make: 'Ford', model: 'Mondeo', price: 32000 },
-    { make: 'Porsche', model: 'Boxter', price: 72000 }
-  ];
-
-  columnDefs = [
-    { headerName: 'Make', field: 'make' },
-    { headerName: 'Model', field: 'model' },
-    { headerName: 'Price', field: 'price' }
-  ];
 
   gridOptions: GridOptions = {
+    columnDefs: new HarnessHelper().getTradeSchema(),
+    rowData: new DataGenerator().getTrades(5000),
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
@@ -41,9 +34,9 @@ export class AppComponent {
   };
 
   blotterOptions: IAdaptableBlotterOptions = {
-    primaryKey: 'make',
+    primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'demo blotter',
+    blotterId: 'angular wrapper',
   };
 }
