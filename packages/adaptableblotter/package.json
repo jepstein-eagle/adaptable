@@ -95,7 +95,7 @@
     "build-prod": "npm run prebuild && webpack --config webpack.prod.js -p && npm run build-ts",
     "prepublish": "npm run build-prod",
     "build-ts": "tsc --outDir ./dist/App_Scripts",
-    "build-ts-watch: "tsc --outDir ./dist/App_Scripts --watch",
+    "build-ts-watch": "tsc --outDir ./dist/App_Scripts --watch",
     "dev-kendo": "cross-env arg=kendo webpack-dev-server --config webpack.dev.js --content-base Harness/Kendo/",
     "dev-hypergrid": "cross-env arg=hypergrid webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
     "dev-aggrid": "cross-env arg=aggrid webpack-dev-server --config webpack.dev.js --content-base Harness/agGrid/",
