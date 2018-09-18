@@ -15,16 +15,16 @@ import DataGenerator from './data-generator';
   `
 })
 export class AppHyperGridComponent {
-  data = new DataGenerator().getTrades(1000);
+  data = new DataGenerator().getTrades(5000);
   gridOptions = {
     data: this.data,
     schema: AppHyperGridComponent.getSchema(this.data),
-    setupgrid: ((grid) => AppHyperGridComponent.setupgrid(grid))
+    setupgrid: ((grid) => AppHyperGridComponent.setupHypergrid(grid))
   };
   blotterOptions: IAdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'jonathan',
-    blotterId: 'my Blotter',
+    blotterId: 'Hypergrid Wrapper',
     enableAuditLog: false,
     enableRemoteConfigServer: false,
     serverSearchOption: 'None',
@@ -60,10 +60,8 @@ export class AppHyperGridComponent {
       .trim();
   }
 
-  // Would like a nice to do all the setup for the grid instance
-  // which would need to go in this class but not sure how it can be given an instance of the hypergrid
-  // at the moment im sticking it in gridOptions but must be a "nicer" way
-  static setupgrid(grid: any) {
+  // setupgrid method allowing you to add any additional functionality to the grid
+  static setupHypergrid(grid: any) {
     grid.addProperties({ renderFalsy: true });
     grid.addProperties({ editOnKeydown: false });
     grid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {

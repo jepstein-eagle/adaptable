@@ -20,7 +20,7 @@ import DataGenerator from './data-generator';
 export class AppAgGridComponent {
   gridOptions: GridOptions = {
     columnDefs: new HarnessHelper().getTradeSchema(),
-    rowData: new DataGenerator().getTrades(15000),
+    rowData: new DataGenerator().getTrades(5000),
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
@@ -31,6 +31,6 @@ export class AppAgGridComponent {
     primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'Trades Blotter',
+    blotterId: 'AgGrid Wrapper',
   };
 }
