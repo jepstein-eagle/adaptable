@@ -29,7 +29,7 @@ export interface FilterFormPanelProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
     render() {
-         let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL
+        let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL
 
         let className = "ab_panel-with-button"
         if (this.props.className) {
@@ -45,8 +45,18 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
                     </Col>
                     :
                     <Col xs={6}>
-                        <Radio inline value="Menu" checked={this.props.ContextMenuTab == ContextMenuTab.Menu} onChange={(e) => this.onSelectMenu(e)}>Menu</Radio>
-                        <Radio inline value="Filter" checked={this.props.ContextMenuTab == ContextMenuTab.Filter} onChange={(e) => this.onSelectFilter(e)}>Filter</Radio>
+                        <Row>
+                            <Col xs={3} />
+                            <Col xs={9}>
+                                <Radio inline value="Menu" checked={this.props.ContextMenuTab == ContextMenuTab.Menu} onChange={(e) => this.onSelectMenu(e)}>Menu</Radio>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={3} />
+                            <Col xs={9}>
+                                <Radio inline value="Filter" checked={this.props.ContextMenuTab == ContextMenuTab.Filter} onChange={(e) => this.onSelectFilter(e)}>Filter</Radio>
+                            </Col>
+                        </Row>
                     </Col>
                 }
 
