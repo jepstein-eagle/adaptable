@@ -117,5 +117,7 @@ export interface IAdaptableBlotter {
     //Theme
     applyLightTheme(): void
     applyDarkTheme(): void
+
+    isInitialised: boolean
 }
 

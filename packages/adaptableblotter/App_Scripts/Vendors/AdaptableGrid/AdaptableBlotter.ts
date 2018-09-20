@@ -77,6 +77,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public BlotterOptions: IAdaptableBlotterOptions
 
+    public isInitialised: boolean
+
     constructor(private grid: AdaptableGrid.AdaptableGrid, private container: HTMLElement, options?: IAdaptableBlotterOptions) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, options)
@@ -139,6 +141,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // get the api ready
         this.api = new BlotterApi(this);
 
+        this.isInitialised = true;
     }
 
     public Render() {
@@ -584,4 +587,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyDarkTheme(): void {
         // todo 
     }
+
+
 }

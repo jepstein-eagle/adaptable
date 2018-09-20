@@ -32,7 +32,7 @@ function InitTradeBlotter() {
     gridcontainer.innerHTML = ""
     let grid = new agGrid.Grid(gridcontainer, gridOptions);
     dataGen.startTickingDataagGrid(gridOptions);
-    setTimeout(() => gridOptions.columnApi.autoSizeAllColumns(), 3);
+
 
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
@@ -58,11 +58,18 @@ function InitTradeBlotter() {
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
- //   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
+    //   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
+    setTimeout(() => {
+        if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout == "Ab_Default_Layout") {
+            gridOptions.columnApi.autoSizeAllColumns(), 2;
+        }
+    })
 }
+
+
 
 function retrieveValues(columnName) {
     return new Promise((resolve, reject) => {
@@ -97,7 +104,7 @@ function getTradeSchema() {
     var schema = []
     schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, type: "abColDefNumber", sortable: false });
     schema.push({ headerName: "Notional", field: "notional", editable: true, valueFormatter: notionalFormatter, cellClass: 'number-cell' });
-    schema.push({ headerName: "Desk No.", field: "deskId", editable: true, enableRowGroup: true, suppressSorting: false,  suppressFilter: true });
+    schema.push({ headerName: "Desk No.", field: "deskId", editable: true, enableRowGroup: true, suppressSorting: false, suppressFilter: true });
     schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, enableRowGroup: true });
     schema.push({ headerName: "Currency", field: "currency", editable: false, enableRowGroup: true });

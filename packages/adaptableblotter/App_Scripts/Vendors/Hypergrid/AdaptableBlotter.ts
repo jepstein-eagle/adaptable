@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
@@ -120,6 +121,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
     //private contextMenuContainer: HTMLDivElement
 
+    public isInitialised: boolean
+
+
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
@@ -208,6 +212,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
                     this.initInternalGridLogic()
+                })
+                .then(() => {
+                    let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+                    this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+                    this.isInitialised = true
                 })
 
         // get the api ready
@@ -1264,7 +1273,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hyperGrid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
-    }
+      }
 
 
     public getRowCount(): number {

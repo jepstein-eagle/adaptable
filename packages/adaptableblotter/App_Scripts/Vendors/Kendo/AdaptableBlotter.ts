@@ -97,6 +97,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private contextMenuContainer: HTMLDivElement
     private vendorGrid: kendo.ui.Grid
     private abContainerElement: HTMLElement;
+    public isInitialised: boolean
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
@@ -104,7 +105,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Kendo';
         this.EmbedColumnMenu= false;
-
+       this.isInitialised = true;
+       
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
         // create the services
         this.CalendarService = new CalendarService(this);

@@ -917,7 +917,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let layout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], blotter.getVendorGridState(visibleColumnNames, true), DEFAULT_LAYOUT)
                     middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     if (layoutState.Layouts.length > 0) {
-                        //   currentLayout = layoutState.CurrentLayout
+                            currentLayout = layoutState.CurrentLayout
                     }
 
                     //Create all calculated columns before we load the layout
@@ -926,8 +926,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     })
 
                     //load either saved layout or default one
+                    // not doing it now but need to make sure hypergrid still works!
                     if (currentLayout == DEFAULT_LAYOUT) {
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                     //    middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     }
                     blotter.createMenu();
 

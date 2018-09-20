@@ -41,17 +41,15 @@ export module LayoutHelper {
 
     export function autoSaveLayout(blotter: IAdaptableBlotter): void {
         let layoutState: LayoutState = blotter.AdaptableBlotterStore.TheStore.getState().Layout;
-        if (layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
+        if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
             if (blotter.BlotterOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout)
                 if (layout != null) {
                     let gridState: GridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid
                     let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
                     let gridVendorState: any = blotter.getVendorGridState(visibleColumns.map(vc=>vc.ColumnId), false)
-                //    console.log(gridVendorState)
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout)
                     let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout)
-                //    console.log("saving layout")
                     blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave))
                 }
             }

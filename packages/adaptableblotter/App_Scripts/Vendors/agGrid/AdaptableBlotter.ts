@@ -118,6 +118,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
     public EmbedColumnMenu: boolean;
+    public isInitialised: boolean
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
@@ -125,7 +126,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions = this.BlotterOptions.vendorGrid
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
-
+        this.isInitialised = false;
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -190,8 +191,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
                     this.initInternalGridLogic()
                 }
-            )
-
+            ).then(() => {
+                let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+                this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+                this.isInitialised = true
+            })
 
         if (renderGrid) {
             if (this.abContainerElement == null) {
@@ -202,6 +206,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
+
     }
 
     private getState(): AdaptableBlotterState {
@@ -1075,18 +1080,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
         });
-        this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_PINNED, (params: any) => {
-            //  console.log(params)
-            let column: string = params.columns[0].getColId();
-            let pinned: string = params.pinned
-            //  console.log("column: " + column);
-            if (params.pinned != null) { // pinned column added
-                let pinnedColumnDirection: PinnedColumnDirection = (pinned == "left") ? PinnedColumnDirection.Left : PinnedColumnDirection.Right
-                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetPinnedColumnAction>(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));
-            } else {
-                this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridDeletePinnedColumnAction>(GridRedux.GridDeletePinnedColumn(column));
-            }
-        });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
             let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].cellComps[params.column.getColId()].cellEditor;
@@ -1278,10 +1271,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
-            //     }
-            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
-            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
-        }
+          }
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
@@ -1317,12 +1307,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
             return colMenuItems;
         };
-        this.AdaptableBlotterStore.Load.then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
-            //for now i'm still initializing the strategies even if loading state has failed.... 
-            //we may revisit that later
-            this.Strategies.forEach(strat => strat.InitializeWithRedux());
-        });
+        this.AdaptableBlotterStore.Load
+            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
+                AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                //for now i'm still initializing the strategies even if loading state has failed.... 
+                //we may revisit that later
+                this.Strategies.forEach(strat => strat.InitializeWithRedux());
+
+            });
     }
 
     private onSortChanged(params: any): void {
@@ -1394,8 +1386,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
-        let mystring: any = null;
-        // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
+         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
             return JSON.stringify(this.gridOptions.columnApi.getColumnState())
         }
@@ -1414,9 +1405,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     c.hide = true;
                 }
             })
-            mystring = JSON.stringify(columnState)
-        }
-        return mystring;
+
+            return JSON.stringify(columnState)
+             }
+        return null; // need this?
     }
 
 
