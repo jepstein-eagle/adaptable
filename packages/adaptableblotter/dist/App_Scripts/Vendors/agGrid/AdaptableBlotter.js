@@ -130,15 +130,15 @@ class AdaptableBlotter {
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
-            //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
-            this.Strategies.forEach(strat => strat.InitializeWithRedux());
-        })
+                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
+                this.Strategies.forEach(strat => strat.InitializeWithRedux());
+            })
             .then(() => this.initInternalGridLogic(), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
-            //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
-            this.initInternalGridLogic();
-        });
+                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
+                //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
+                this.initInternalGridLogic();
+            });
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -901,12 +901,12 @@ class AdaptableBlotter {
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
         let columnEventsThatTriggersStateChange = [eventKeys_1.Events.EVENT_COLUMN_MOVED,
-            eventKeys_1.Events.EVENT_GRID_COLUMNS_CHANGED,
-            eventKeys_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED,
-            eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
-            eventKeys_1.Events.EVENT_COLUMN_VISIBLE,
-            eventKeys_1.Events.EVENT_COLUMN_PINNED,
-            eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED];
+        eventKeys_1.Events.EVENT_GRID_COLUMNS_CHANGED,
+        eventKeys_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED,
+        eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
+        eventKeys_1.Events.EVENT_COLUMN_VISIBLE,
+        eventKeys_1.Events.EVENT_COLUMN_PINNED,
+        eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED];
         this.gridOptions.api.addGlobalListener((type, event) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
@@ -1273,13 +1273,17 @@ class AdaptableBlotter {
     applyLightTheme() {
         if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.vendorContainer);
-            container.className = "ag-theme-balham";
+            if (container != null) {
+                container.className = "ag-theme-balham";
+            }
         }
     }
     applyDarkTheme() {
         if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.vendorContainer);
-            container.className = "ag-theme-balham-dark";
+            if (container != null) {
+                container.className = "ag-theme-balham-dark";
+            }
         }
     }
 }
