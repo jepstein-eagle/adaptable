@@ -53,6 +53,7 @@ const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLog
 const _ = require("lodash");
 const SelectedCellsStrategy_1 = require("../../Strategy/SelectedCellsStrategy");
 const ChartService_1 = require("../../Core/Services/ChartService");
+const HypergridThemes_1 = require("./HypergridThemes");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -1188,6 +1189,34 @@ class AdaptableBlotter {
             return this.hyperGrid.behavior.filterable;
         }
         return true;
+    }
+    applyLightTheme() {
+        alert('checking for light theme');
+        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+            alert("applying light theme");
+            this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getLightTheme());
+            this.applyAlternateRowStyle();
+        }
+    }
+    applyDarkTheme() {
+        alert('checking for dark theme');
+        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+            alert("applying dark theme");
+            this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getDarkTheme());
+            this.applyAlternateRowStyle();
+        }
+    }
+    applyAlternateRowStyle() {
+        var origgetCell = this.hyperGrid.behavior.dataModel.getCell;
+        this.hyperGrid.behavior.dataModel.getCell = (config, declaredRendererName) => {
+            if (config.isDataRow) {
+                var y = config.dataCell.y;
+                if (y % 2) {
+                    config.backgroundColor = config.altbackground;
+                }
+            }
+            return origgetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName);
+        };
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

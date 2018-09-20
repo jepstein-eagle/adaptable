@@ -32,5 +32,6 @@ export class AppAgGridComponent {
     vendorGrid: this.gridOptions,
     userName: 'demo user',
     blotterId: 'AgGrid Wrapper',
+    useDefaultVendorGridThemes: true
   };
 }

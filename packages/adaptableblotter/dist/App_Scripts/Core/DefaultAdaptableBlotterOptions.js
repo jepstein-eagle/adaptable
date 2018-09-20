@@ -17,5 +17,6 @@ exports.DefaultAdaptableBlotterOptions = {
     includeVendorStateInLayouts: false,
     autoSaveLayouts: false,
     getColumnValues: null,
-    ignoreCaseInQueries: true
+    ignoreCaseInQueries: true,
+    useDefaultVendorGridThemes: true
 };

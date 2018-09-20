@@ -179,7 +179,7 @@ const initialDashboardState: DashboardState = {
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
         StrategyIds.AlertStrategyId,
-        StrategyIds.ChartStrategyId,
+      //  StrategyIds.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,

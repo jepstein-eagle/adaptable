@@ -1,6 +1,7 @@
 export declare const MISSING_COLUMN = " [MISSING]";
 export declare const DEFAULT_LAYOUT = "Ab_Default_Layout";
-export declare const DEFAULT_THEME = "Default";
+export declare const LIGHT_THEME = "Light Theme";
+export declare const DARK_THEME = "Dark Theme";
 export declare const USER_NAME: string;
 export declare const BLOTTER_ID: string;
 export declare const MENU_PREFIX: string;

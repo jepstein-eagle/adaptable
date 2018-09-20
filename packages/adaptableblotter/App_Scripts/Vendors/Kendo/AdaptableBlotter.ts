@@ -1014,5 +1014,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
+    public applyLightTheme(): void {
+        // todo 
+    }
+    public applyDarkTheme(): void {
+        // todo 
+    }
+
 }
 

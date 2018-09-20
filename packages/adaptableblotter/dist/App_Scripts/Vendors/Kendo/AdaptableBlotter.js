@@ -858,5 +858,11 @@ class AdaptableBlotter {
     isFilterable() {
         return true;
     }
+    applyLightTheme() {
+        // todo 
+    }
+    applyDarkTheme() {
+        // todo 
+    }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

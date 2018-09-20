@@ -1,15 +1,4 @@
-function ThemeChange(blotter, vendorGrid) {
-    if (themeName != blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme) {
-        themeName = blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme
-        if (themeName == "Dark Theme" ) {
-            vendorGrid.addProperties(darkTheme);
-        }
-        else {
-            vendorGrid.addProperties(lightTheme);
-        }
-    }
-}
-var themeName = ""
+
 var adaptableblotter
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
@@ -20,88 +9,6 @@ function capitalize(string) {
 function replacer(a, b, c) {
     return b.toUpperCase() + c;
 }
-
-var lightTheme = {
-    font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    color: '#003f59',
-    backgroundColor: '#ffffff',
-    altbackground: '#e6f2f8',
-    foregroundSelectionColor: '#ffffff',
-    backgroundSelectionColor: 'rgba(13, 106, 146, 0.5)',
-
-    columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    columnHeaderColor: '#00435e',
-    columnHeaderBackgroundColor: '#d9ecf5',
-    columnHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
-    columnHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
-
-    rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    rowHeaderColor: '#00435e',
-    rowHeaderBackgroundColor: '#d9ecf5',
-    rowHeaderForegroundSelectionColor: 'rgb(25, 25, 25)',
-    rowHeaderBackgroundSelectionColor: 'rgb(255, 220, 97)',
-
-    backgroundColor2: 'rgb(201, 201, 201)',
-    lineColor: '#bbdceb',
-    voffset: 0,
-    scrollbarHoverOver: 'visible',
-    scrollbarHoverOff: 'visible',
-    scrollingEnabled: true,
-
-    fixedRowAlign: 'center',
-    fixedColAlign: 'center',
-    cellPadding: 15,
-    gridLinesH: false,
-    gridLinesV: true,
-
-    defaultRowHeight: 30,
-    defaultFixedRowHeight: 15,
-    showRowNumbers: false,
-    editorActivationKeys: ['alt', 'esc'],
-    columnAutosizing: true,
-    readOnly: false
-}
-
-var darkTheme = {
-    font: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    color: '#ffffff',
-    backgroundColor: '#403E3E',
-    altbackground: '#302E2E',
-    foregroundSelectionColor: '#ffffff',
-    backgroundSelectionColor: '#546465',
-
-    columnHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    columnHeaderColor: '#ffffff',
-    columnHeaderBackgroundColor: '#626262',
-    columnHeaderForegroundSelectionColor: '#ffffff',
-    columnHeaderBackgroundSelectionColor: '#546465',
-
-    rowHeaderFont: '14px Helvetica Neue, Helvetica, Arial, sans-serif',
-    rowHeaderColor: '#ffffff',
-    rowHeaderBackgroundColor: '#07071E',
-    rowHeaderForegroundSelectionColor: '#ffffff',
-    rowHeaderBackgroundSelectionColor: '#3D77FE',
-
-    backgroundColor2: 'rgb(201, 201, 201)',
-    lineColor: 'rgb(199, 199, 199)',
-    voffset: 0,
-    scrollbarHoverOver: 'visible',
-    scrollbarHoverOff: 'visible',
-    scrollingEnabled: true,
-
-    fixedRowAlign: 'center',
-    fixedColAlign: 'center',
-    cellPadding: 15,
-    gridLinesH: false,
-    gridLinesV: false,
-
-    defaultRowHeight: 30,
-    defaultFixedRowHeight: 15,
-    showRowNumbers: false,
-    editorActivationKeys: ['alt', 'esc'],
-    columnAutosizing: true,
-    readOnly: false
-};
 
 function getSchema(data) {
     var schema = [],
@@ -191,17 +98,6 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    var origgetCell = vendorGrid.behavior.dataModel.getCell;
-    vendorGrid.behavior.dataModel.getCell = (config, declaredRendererName) => {
-        if (config.isDataRow) {
-            var y = config.dataCell.y;
-            if (y % 2) {
-                config.backgroundColor = config.altbackground;
-            }
-        }
-        return origgetCell.call(vendorGrid.behavior.dataModel, config, declaredRendererName)
-    };
-
     var blotterOptions = {
         primaryKey: "tradeId",
         userName: "jonathan",
@@ -211,6 +107,7 @@ function InitBlotter() {
         //  predefinedConfig: json,
         serverSearchOption: "None",
         vendorGrid: vendorGrid,
+        useDefaultVendorGridThemes: true,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -220,10 +117,8 @@ function InitBlotter() {
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => this.ThemeChange(adaptableblotter, vendorGrid))
-
  //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-    vendorGrid.addProperties(lightTheme);
+  //  vendorGrid.addProperties(lightTheme);
 }
 
 function retrieveValues(columnName) {

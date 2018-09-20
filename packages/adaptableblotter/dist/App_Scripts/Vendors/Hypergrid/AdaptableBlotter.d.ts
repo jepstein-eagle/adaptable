@@ -112,6 +112,9 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;
+    applyLightTheme(): void;
+    applyDarkTheme(): void;
+    private applyAlternateRowStyle;
 }
 export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle;

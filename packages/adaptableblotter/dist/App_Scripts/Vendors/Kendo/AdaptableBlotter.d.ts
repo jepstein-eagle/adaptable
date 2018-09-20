@@ -114,4 +114,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;
+    applyLightTheme(): void;
+    applyDarkTheme(): void;
 }

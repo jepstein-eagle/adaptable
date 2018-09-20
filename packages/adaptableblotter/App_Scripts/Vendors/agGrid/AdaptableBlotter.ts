@@ -1,4 +1,6 @@
-﻿import '../../Styles/stylesheets/adaptableblotter-style.css'
+﻿// import styles - ab and 2 default agGrid
+import '../../Styles/stylesheets/adaptableblotter-style.css'
+
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
@@ -330,7 +332,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             ReadOnly: this.isColumnReadonly(colId),
             Sortable: this.isColumnSortable(colId),
             Filterable: this.isColumnFilterable(colId),
-            
+
         }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
@@ -1436,7 +1438,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return this.gridOptions.enableRangeSelection;
         }
         return false;
-      }
+    }
 
     public isSortable(): boolean {
         if (this.gridOptions.enableSorting != null) {
@@ -1450,6 +1452,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return this.gridOptions.enableFilter;
         }
         return false;
+    }
+
+    public applyLightTheme(): void {
+         if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+            container.className = "ag-theme-balham";
+        }
+    }
+
+    public applyDarkTheme(): void {
+        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+            container.className = "ag-theme-balham-dark";
+        }
     }
 
 }

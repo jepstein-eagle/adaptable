@@ -38,5 +38,6 @@ export class AppComponent {
     vendorGrid: this.gridOptions,
     userName: 'demo user',
     blotterId: 'angular wrapper',
+    useDefaultVendorGridThemes: true
   };
 }

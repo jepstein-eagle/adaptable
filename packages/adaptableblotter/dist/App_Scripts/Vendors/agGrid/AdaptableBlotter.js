@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// import styles - ab and 2 default agGrid
 require("../../Styles/stylesheets/adaptableblotter-style.css");
 const ReactDOM = require("react-dom");
 const _ = require("lodash");
@@ -1268,6 +1269,18 @@ class AdaptableBlotter {
             return this.gridOptions.enableFilter;
         }
         return false;
+    }
+    applyLightTheme() {
+        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+            container.className = "ag-theme-balham";
+        }
+    }
+    applyDarkTheme() {
+        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+            container.className = "ag-theme-balham-dark";
+        }
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

@@ -25,10 +25,11 @@ export class AppHyperGridComponent {
     primaryKey: 'tradeId',
     userName: 'jonathan',
     blotterId: 'Hypergrid Wrapper',
-    enableAuditLog: false,
+    enableAuditLog: true,
     enableRemoteConfigServer: false,
     serverSearchOption: 'None',
-    maxColumnValueItemsDisplayed: 1000
+    maxColumnValueItemsDisplayed: 1000,
+    useDefaultVendorGridThemes: true
   };
 
   static getSchema(data) {

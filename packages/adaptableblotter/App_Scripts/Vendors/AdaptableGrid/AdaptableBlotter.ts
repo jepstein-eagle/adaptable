@@ -165,7 +165,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    
+
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
 
     private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
@@ -196,7 +196,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Visible: false,
                 Index: -1,
                 ReadOnly: true,
-                Sortable: true ,// TODO
+                Sortable: true,// TODO
                 Filterable: true // TODO
             }
         });
@@ -394,7 +394,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
-       // todo
+        // todo
     }
 
 
@@ -576,5 +576,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     public isFilterable(): boolean {
         return true;
+    }
+
+    public applyLightTheme(): void {
+        // todo 
+    }
+    public applyDarkTheme(): void {
+        // todo 
     }
 }

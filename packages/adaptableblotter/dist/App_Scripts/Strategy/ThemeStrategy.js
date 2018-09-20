@@ -4,6 +4,7 @@ const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const themes_1 = require("../Styles/themes");
+const GeneralConstants = require("../Core/Constants/GeneralConstants");
 class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.ThemeStrategyId, blotter);
@@ -25,6 +26,32 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme;
             this.style.innerHTML = "";
             this.theme.href = "";
+            switch (this.ThemeState.CurrentTheme) {
+                case "None":
+                    // do nothing...
+                    break;
+                case GeneralConstants.LIGHT_THEME:
+                    this.style.innerHTML = themes_1.ThemesContent.get(this.ThemeState.CurrentTheme);
+                    this.blotter.applyLightTheme();
+                    break;
+                case GeneralConstants.DARK_THEME:
+                    this.style.innerHTML = themes_1.ThemesContent.get(this.ThemeState.CurrentTheme);
+                    this.blotter.applyDarkTheme();
+                    break;
+                default:
+                    let shippedTheme = this.ThemeState.SystemThemes.find(t => t == this.ThemeState.CurrentTheme);
+                    // if its a system theme then use that..
+                    if (shippedTheme) {
+                        this.style.innerHTML = themes_1.ThemesContent.get(this.ThemeState.CurrentTheme);
+                    }
+                    else { // otherwise use the predefined one
+                        let userTheme = this.ThemeState.UserThemes.find(t => t.Name == this.ThemeState.CurrentTheme);
+                        if (userTheme) {
+                            this.theme.href = userTheme.Url;
+                        }
+                    }
+                    break;
+            }
             if (this.ThemeState.CurrentTheme == "None") {
                 // do nothing...
             }

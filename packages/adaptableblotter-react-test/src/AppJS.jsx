@@ -44,7 +44,7 @@ export default class App extends React.Component {
           AdaptableBlotterOptions={this.state.blotterOptions}
           VendorGridName={"agGrid"}
         />
-        <div className="ag-theme-balham" style={{ height: "97vh", width: "100%" }}>
+         <div id="grid" style={{ height: "97vh", width: "100%" }}>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             rowData={this.state.rowData}

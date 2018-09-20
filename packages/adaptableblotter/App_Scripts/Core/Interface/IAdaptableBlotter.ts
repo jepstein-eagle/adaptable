@@ -113,5 +113,9 @@ export interface IAdaptableBlotter {
     isSelectable(): boolean
     isSortable(): boolean
     isFilterable(): boolean
+
+    //Theme
+    applyLightTheme(): void
+    applyDarkTheme(): void
 }
 

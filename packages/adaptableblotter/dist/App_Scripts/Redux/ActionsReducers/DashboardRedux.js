@@ -91,7 +91,6 @@ const initialDashboardState = {
         StrategyIds.SelectedCellsStrategyId,
         StrategyIds.ApplicationStrategyId,
         StrategyIds.AlertStrategyId,
-        StrategyIds.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyIds.AdvancedSearchStrategyId,

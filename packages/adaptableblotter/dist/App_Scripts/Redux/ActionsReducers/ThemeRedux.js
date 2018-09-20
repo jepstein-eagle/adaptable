@@ -18,7 +18,7 @@ exports.ThemeSelect = (Theme) => ({
     Theme
 });
 const initialThemeState = {
-    CurrentTheme: GeneralConstants_1.DEFAULT_THEME,
+    CurrentTheme: GeneralConstants_1.LIGHT_THEME,
     SystemThemes: themes_1.StaticThemes,
     UserThemes: []
 };

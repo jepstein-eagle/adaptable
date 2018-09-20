@@ -1,6 +1,5 @@
 import * as React from "react";
 import { AdaptableBlotterAgGrid } from "adaptableblotter-react";
-import "ag-grid/dist/styles/ag-theme-blue.css";
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
 export default class App extends React.Component {
@@ -52,7 +51,6 @@ export default class App extends React.Component {
         <AdaptableBlotterAgGrid
           AdaptableBlotterOptions={this.state.blotterOptions}
           GridOptions={this.state.gridOptions}
-          agTheme={"blue"}
         />
       </div>
     );

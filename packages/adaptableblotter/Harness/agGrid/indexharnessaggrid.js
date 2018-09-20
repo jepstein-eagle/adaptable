@@ -51,13 +51,14 @@ function InitTradeBlotter() {
         autoSaveLayouts: true,                  // layous will save automatically
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
+        useDefaultVendorGridThemes: true
         // getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
+ //   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
@@ -348,21 +349,7 @@ function currencyRendereragGrid(params) {
 }
 
 
-function ThemeChange(theme, container, gridOptions) {
 
-
-    if (themeName != theme.CurrentTheme) {
-        themeName = theme.CurrentTheme
-        if (themeName == "Dark Theme") {
-            container.className = "ag-theme-balham-dark";
-        } else if (themeName == "Flat Theme") {
-            container.className = "ag-theme-balham";
-        }
-        else { // White theme
-            container.className = "ag-theme-balham";
-        }
-    }
-}
 
 let tradeJson = {
     "Filter": {

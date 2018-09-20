@@ -85,6 +85,12 @@ export interface IAdaptableBlotterOptions {
      */
     ignoreCaseInQueries?: boolean;
     /**
+     * Use the default theme that we provide for the vendor grid
+     * There is one each for 'Light Theme' and 'Dark Theme'
+     * See Help for more details
+     */
+    useDefaultVendorGridThemes?: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

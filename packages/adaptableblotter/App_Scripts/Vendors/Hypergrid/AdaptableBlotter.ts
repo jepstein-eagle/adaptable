@@ -73,6 +73,8 @@ import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
 import { ChartService } from '../../Core/Services/ChartService';
+import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { HypergridThemes } from './HypergridThemes';
 
 
 //icon to indicate toggle state
@@ -323,7 +325,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
 
-    
+
     public createMenu() {
         let menuItems: IMenuItem[] = [];
         this.Strategies.forEach(x => {
@@ -1360,6 +1362,37 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return this.hyperGrid.behavior.filterable;
         }
         return true;
+    }
+
+    public applyLightTheme(): void {
+        alert('checking for light theme')
+        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+            alert("applying light theme")
+            this.hyperGrid.addProperties(HypergridThemes.getLightTheme());
+            this.applyAlternateRowStyle();
+        }
+    }
+
+    public applyDarkTheme(): void {
+        alert('checking for dark theme')
+        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+            alert("applying dark theme")
+            this.hyperGrid.addProperties(HypergridThemes.getDarkTheme());
+            this.applyAlternateRowStyle();
+        }
+    }
+
+    private applyAlternateRowStyle() {
+        var origgetCell = this.hyperGrid.behavior.dataModel.getCell;
+        this.hyperGrid.behavior.dataModel.getCell = (config: any, declaredRendererName: any) => {
+            if (config.isDataRow) {
+                var y = config.dataCell.y;
+                if (y % 2) {
+                    config.backgroundColor = config.altbackground;
+                }
+            }
+            return origgetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName)
+        };
     }
 
 }
