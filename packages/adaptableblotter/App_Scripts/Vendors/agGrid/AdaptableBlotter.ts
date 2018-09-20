@@ -1455,16 +1455,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyLightTheme(): void {
-         if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
+        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.vendorContainer);
-            container.className = "ag-theme-balham";
+            if (container != null) {
+                container.className = "ag-theme-balham";
+            }
         }
     }
 
     public applyDarkTheme(): void {
         if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.vendorContainer);
-            container.className = "ag-theme-balham-dark";
+            if (container != null) {
+                container.className = "ag-theme-balham-dark";
+            }
         }
     }
 
