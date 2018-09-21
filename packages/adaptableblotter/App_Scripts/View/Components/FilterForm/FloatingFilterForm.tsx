@@ -102,9 +102,10 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         let cssClassName: string = this.props.cssClassName + "__floatingFilterForm";
 
         return <span>
-            {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable &&
+            {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable
+                && (this.props.CurrentColumn.DataType == DataType.String || this.props.CurrentColumn.DataType == DataType.Number) &&
                 <FormControl
-                    style={{ padding:'1px', marginTop: '5px',  minHeight: '20px',  maxHeight: '20px', fontSize: "x-small" , fontWeight: "lighter"}}
+                    style={{ padding: '1px', marginTop: '5px', minHeight: '20px', maxHeight: '20px', fontSize: "x-small", fontWeight: "lighter" }}
                     className={cssClassName}
                     autoFocus={false}
                     bsSize={"small"}

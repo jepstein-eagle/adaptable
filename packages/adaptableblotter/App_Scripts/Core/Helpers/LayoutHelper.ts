@@ -16,7 +16,6 @@ export module LayoutHelper {
 
     export function getLayoutDescription(layout: ILayout, columns: IColumn[]): string {
         let returnString: string = "";
-        let gridSorts: IGridSort[] = layout.GridSorts;
         returnString += layout.Columns.length + " Columns; ";
         returnString += "\n"
         returnString += " Sort: " + getGridSort(layout.GridSorts, columns);

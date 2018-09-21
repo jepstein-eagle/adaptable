@@ -7,6 +7,7 @@ import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '.
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
     SelectedColumn: IColumn
@@ -67,10 +68,10 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
     }
 
     onColumnChange(selected: any[]) {
-        if (selected.length == 0 && this.props.SelectedColumnValue == "") {
+        if (ArrayExtensions.IsEmpty(selected) && StringExtensions.IsNullOrEmpty (this.props.SelectedColumnValue)) {
             return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
         }
-        if (selected.length == 0) {
+        if (ArrayExtensions.IsEmpty(selected)) {
             this.props.onColumnValueChange("")
         } else {
             if (selected[0].customOption) {

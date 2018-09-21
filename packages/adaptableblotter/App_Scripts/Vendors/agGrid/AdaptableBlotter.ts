@@ -90,6 +90,7 @@ import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISele
 import { StyleHelper } from '../../Core/Helpers/StyleHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
+import { LayoutHelper } from '../../Core/Helpers/LayoutHelper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
@@ -1066,8 +1067,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         Events.EVENT_GRID_COLUMNS_CHANGED,
         Events.EVENT_COLUMN_EVERYTHING_CHANGED,
         Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
+        //   Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
         Events.EVENT_COLUMN_VISIBLE,
-        Events.EVENT_COLUMN_PINNED,
+        //   Events.EVENT_COLUMN_PINNED,
         Events.EVENT_NEW_COLUMNS_LOADED];
         this.gridOptions.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
@@ -1077,6 +1079,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // ignore
                 } else {
                     this.setColumnIntoStore();
+                }
+            }
+        });
+        // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
+        let columnEventsThatTriggersAutoLayoutSave = [Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED, Events.EVENT_COLUMN_PINNED];
+        this.gridOptions.api.addGlobalListener((type: string, event: any) => {
+            if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
+                if (this.BlotterOptions.includeVendorStateInLayouts) {
+                    LayoutHelper.autoSaveLayout(this);
                 }
             }
         });
@@ -1271,7 +1282,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
-          }
+        }
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
@@ -1386,7 +1397,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
-         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
+        // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
             return JSON.stringify(this.gridOptions.columnApi.getColumnState())
         }
@@ -1407,7 +1418,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
 
             return JSON.stringify(columnState)
-             }
+        }
         return null; // need this?
     }
 

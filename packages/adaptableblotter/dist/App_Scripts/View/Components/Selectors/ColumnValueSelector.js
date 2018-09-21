@@ -38,11 +38,11 @@ class ColumnValueSelector extends React.Component {
         return React.createElement(react_bootstrap_typeahead_1.Typeahead, { ref: "typeahead", bsSize: this.props.bsSize, emptyLabel: "", placeholder: placeholderText, labelKey: "DisplayValue", multiple: false, selected: [selectedValue], onChange: (selected) => { this.onColumnChange(selected); }, options: sortedColumnValues, disabled: this.props.disabled, allowNew: allowNew, newSelectionPrefix: "new value: ", filterBy: ["DisplayValue"] });
     }
     onColumnChange(selected) {
-        if (selected.length == 0 && this.props.SelectedColumnValue == "") {
+        if (ArrayExtensions.IsEmpty(selected) && StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
             return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
         }
-        if (selected.length == 0) {
-            this.props.onColumnValueChange("");
+        if (ArrayExtensions.IsEmpty(selected)) {
+            this.props.onColumnValueChange("")
         }
         else {
             if (selected[0].customOption) {
