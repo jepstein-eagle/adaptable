@@ -65,6 +65,7 @@ class AdaptableBlotter {
         this.vendorGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Kendo';
         this.EmbedColumnMenu = false;
+        this.isInitialised = true;
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         // create the services
         this.CalendarService = new CalendarService_1.CalendarService(this);

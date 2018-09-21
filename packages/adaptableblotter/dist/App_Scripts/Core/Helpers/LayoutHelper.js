@@ -9,7 +9,6 @@ var LayoutHelper;
 (function (LayoutHelper) {
     function getLayoutDescription(layout, columns) {
         let returnString = "";
-        let gridSorts = layout.GridSorts;
         returnString += layout.Columns.length + " Columns; ";
         returnString += "\n";
         returnString += " Sort: " + getGridSort(layout.GridSorts, columns);
@@ -33,17 +32,15 @@ var LayoutHelper;
     LayoutHelper.getSortOrder = getSortOrder;
     function autoSaveLayout(blotter) {
         let layoutState = blotter.AdaptableBlotterStore.TheStore.getState().Layout;
-        if (layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
+        if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
             if (blotter.BlotterOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                 if (layout != null) {
                     let gridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid;
                     let visibleColumns = gridState.Columns.filter(c => c.Visible);
                     let gridVendorState = blotter.getVendorGridState(visibleColumns.map(vc => vc.ColumnId), false);
-                    //    console.log(gridVendorState)
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);
                     let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridState.GridSorts, gridVendorState, layoutState.CurrentLayout);
-                    //    console.log("saving layout")
                     blotter.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave));
                 }
             }

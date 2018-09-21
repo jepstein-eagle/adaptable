@@ -36,6 +36,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private contextMenuContainer;
     private vendorGrid;
     private abContainerElement;
+    isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     InitAuditService(): void;
     private kendoPopup;

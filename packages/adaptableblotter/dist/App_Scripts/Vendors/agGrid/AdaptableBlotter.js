@@ -65,6 +65,7 @@ const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLog
 const StyleHelper_1 = require("../../Core/Helpers/StyleHelper");
 const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const LayoutHelper_1 = require("../../Core/Helpers/LayoutHelper");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
 class AdaptableBlotter {
@@ -82,6 +83,7 @@ class AdaptableBlotter {
         this.gridOptions = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true;
+        this.isInitialised = false;
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         // create the services
@@ -130,15 +132,19 @@ class AdaptableBlotter {
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
-                //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
-                this.Strategies.forEach(strat => strat.InitializeWithRedux());
-            })
+            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
+            this.Strategies.forEach(strat => strat.InitializeWithRedux());
+        })
             .then(() => this.initInternalGridLogic(), (e) => {
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
-                //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
-                this.initInternalGridLogic();
-            });
+            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
+            //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
+            this.initInternalGridLogic();
+        }).then(() => {
+            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
+            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
+            this.isInitialised = true;
+        });
         if (renderGrid) {
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
@@ -901,12 +907,13 @@ class AdaptableBlotter {
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
         let columnEventsThatTriggersStateChange = [eventKeys_1.Events.EVENT_COLUMN_MOVED,
-        eventKeys_1.Events.EVENT_GRID_COLUMNS_CHANGED,
-        eventKeys_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED,
-        eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
-        eventKeys_1.Events.EVENT_COLUMN_VISIBLE,
-        eventKeys_1.Events.EVENT_COLUMN_PINNED,
-        eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED];
+            eventKeys_1.Events.EVENT_GRID_COLUMNS_CHANGED,
+            eventKeys_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED,
+            eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
+            //   Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
+            eventKeys_1.Events.EVENT_COLUMN_VISIBLE,
+            //   Events.EVENT_COLUMN_PINNED,
+            eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED];
         this.gridOptions.api.addGlobalListener((type, event) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
@@ -919,17 +926,13 @@ class AdaptableBlotter {
                 }
             }
         });
-        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_COLUMN_PINNED, (params) => {
-            //  console.log(params)
-            let column = params.columns[0].getColId();
-            let pinned = params.pinned;
-            //  console.log("column: " + column);
-            if (params.pinned != null) { // pinned column added
-                let pinnedColumnDirection = (pinned == "left") ? Enums_1.PinnedColumnDirection.Left : Enums_1.PinnedColumnDirection.Right;
-                this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetPinnedColumn(column, pinnedColumnDirection));
-            }
-            else {
-                this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridDeletePinnedColumn(column));
+        // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
+        let columnEventsThatTriggersAutoLayoutSave = [eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED, eventKeys_1.Events.EVENT_COLUMN_PINNED];
+        this.gridOptions.api.addGlobalListener((type, event) => {
+            if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
+                if (this.BlotterOptions.includeVendorStateInLayouts) {
+                    LayoutHelper_1.LayoutHelper.autoSaveLayout(this);
+                }
             }
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_EDITING_STARTED, (params) => {
@@ -1118,9 +1121,6 @@ class AdaptableBlotter {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
-            //     }
-            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
-            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
         }
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params) => {
@@ -1155,7 +1155,8 @@ class AdaptableBlotter {
             });
             return colMenuItems;
         };
-        this.AdaptableBlotterStore.Load.then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
+        this.AdaptableBlotterStore.Load
+            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now i'm still initializing the strategies even if loading state has failed.... 
             //we may revisit that later
@@ -1220,7 +1221,6 @@ class AdaptableBlotter {
         }
     }
     getVendorGridState(visibleCols, forceFetch) {
-        let mystring = null;
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
             return JSON.stringify(this.gridOptions.columnApi.getColumnState());
@@ -1239,9 +1239,9 @@ class AdaptableBlotter {
                     c.hide = true;
                 }
             });
-            mystring = JSON.stringify(columnState);
+            return JSON.stringify(columnState);
         }
-        return mystring;
+        return null; // need this?
     }
     tempSetColumnVisibleFixForBuild(columnApi, col, isVisible, columnEventType) {
         columnApi.setColumnVisible(col, isVisible, columnEventType);

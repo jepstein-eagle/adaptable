@@ -6,6 +6,7 @@ const ReactDOM = require("react-dom");
 const AdaptableBlotterView_1 = require("../../View/AdaptableBlotterView");
 const MenuRedux = require("../../Redux/ActionsReducers/MenuRedux");
 const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
+const LayoutRedux = require("../../Redux/ActionsReducers/LayoutRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore");
 const CalendarService_1 = require("../../Core/Services/CalendarService");
@@ -73,7 +74,6 @@ const getFilterIcon = (state) => {
     return state ? filterOn : filterOff;
 };
 class AdaptableBlotter {
-    //private contextMenuContainer: HTMLDivElement
     constructor(blotterOptions, renderGrid = true) {
         this.cellStyleHypergridMap = new Map();
         this.cellFlashIntervalHypergridMap = new Map();
@@ -159,6 +159,11 @@ class AdaptableBlotter {
             //for now i'm still initializing the grid even if loading state has failed.... 
             //we may revisit that later
             this.initInternalGridLogic();
+        })
+            .then(() => {
+            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
+            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
+            this.isInitialised = true;
         });
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -1191,17 +1196,13 @@ class AdaptableBlotter {
         return true;
     }
     applyLightTheme() {
-        alert('checking for light theme');
         if (this.BlotterOptions.useDefaultVendorGridThemes) {
-            alert("applying light theme");
             this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getLightTheme());
             this.applyAlternateRowStyle();
         }
     }
     applyDarkTheme() {
-        alert('checking for dark theme');
         if (this.BlotterOptions.useDefaultVendorGridThemes) {
-            alert("applying dark theme");
             this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getDarkTheme());
             this.applyAlternateRowStyle();
         }

@@ -82,4 +82,5 @@ export interface IAdaptableBlotter {
     isFilterable(): boolean;
     applyLightTheme(): void;
     applyDarkTheme(): void;
+    isInitialised: boolean;
 }

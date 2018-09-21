@@ -6,12 +6,14 @@ import Hypergrid from 'fin-hypergrid';
 @Component({
   selector: 'adaptable-blotter-hypergrid',
   template: `<div id="adaptableBlotter-angular-hypergrid">
+  <div id="adaptableBlotter">
     <adaptable-blotter
       [adaptableBlotterOptions]="adaptableBlotterOptions"
       vendorGridName="Hypergrid"
       (adaptableBlotterMounted)="onAdaptableBlotterMount($event)"
       *ngIf="gridLoaded">
     </adaptable-blotter>
+  </div>
     <div id="hypergrid-container"></div>
   </div>`,
 })

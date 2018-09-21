@@ -9,6 +9,7 @@ const Helper_1 = require("../Core/Helpers/Helper");
 const Enums_1 = require("../Core/Enums");
 const Enums_2 = require("../Core/Enums");
 const ObjectFactory_1 = require("../Core/ObjectFactory");
+const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.ShortcutStrategyId, blotter);
@@ -23,7 +24,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     handleKeyDown(keyEvent) {
-        if (this.Shortcuts && this.Shortcuts.length == 0) {
+        if (this.Shortcuts && ArrayExtensions_1.ArrayExtensions.IsEmpty(this.Shortcuts)) {
             return;
         }
         let activeCell = this.blotter.getActiveCell();

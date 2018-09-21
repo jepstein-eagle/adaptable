@@ -811,15 +811,16 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], blotter.getVendorGridState(visibleColumnNames, true), GeneralConstants_1.DEFAULT_LAYOUT);
                     middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
                     if (layoutState.Layouts.length > 0) {
-                        //   currentLayout = layoutState.CurrentLayout
+                        currentLayout = layoutState.CurrentLayout;
                     }
                     //Create all calculated columns before we load the layout
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
                         blotter.addCalculatedColumnToGrid(x);
                     });
                     //load either saved layout or default one
+                    // not doing it now but need to make sure hypergrid still works!
                     if (currentLayout == GeneralConstants_1.DEFAULT_LAYOUT) {
-                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                        //    middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     }
                     blotter.createMenu();
                     blotter.InitAuditService();

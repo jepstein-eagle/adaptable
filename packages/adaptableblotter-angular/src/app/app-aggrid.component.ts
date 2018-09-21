@@ -11,8 +11,7 @@ import DataGenerator from './data-generator';
    <div id="adaptableblotter-aggrid-react-demo-app">
     <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
-      [gridOptions]="gridOptions"
-      agTheme="blue">
+      [gridOptions]="gridOptions">
     </adaptable-blotter-aggrid>
   </div>
   `

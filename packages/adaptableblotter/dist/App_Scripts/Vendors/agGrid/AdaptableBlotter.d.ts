@@ -38,6 +38,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement;
     private gridOptions;
     EmbedColumnMenu: boolean;
+    isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private getState;
     setVendorGridState(vendorGridState: any): void;

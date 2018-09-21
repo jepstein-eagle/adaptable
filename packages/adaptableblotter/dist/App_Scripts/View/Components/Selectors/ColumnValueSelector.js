@@ -6,6 +6,7 @@ const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
 const react_bootstrap_typeahead_1 = require("react-bootstrap-typeahead");
 const Enums_1 = require("../../../Core/Enums");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
 class ColumnValueSelector extends React.Component {
     componentWillReceiveProps(nextProps, nextContext) {
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) && StringExtensions_1.StringExtensions.IsNullOrEmpty(nextProps.SelectedColumnValue)) {
@@ -38,11 +39,11 @@ class ColumnValueSelector extends React.Component {
         return React.createElement(react_bootstrap_typeahead_1.Typeahead, { ref: "typeahead", bsSize: this.props.bsSize, emptyLabel: "", placeholder: placeholderText, labelKey: "DisplayValue", multiple: false, selected: [selectedValue], onChange: (selected) => { this.onColumnChange(selected); }, options: sortedColumnValues, disabled: this.props.disabled, allowNew: allowNew, newSelectionPrefix: "new value: ", filterBy: ["DisplayValue"] });
     }
     onColumnChange(selected) {
-        if (ArrayExtensions.IsEmpty(selected) && StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
+        if (ArrayExtensions_1.ArrayExtensions.IsEmpty(selected) && StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
             return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
         }
-        if (ArrayExtensions.IsEmpty(selected)) {
-            this.props.onColumnValueChange("")
+        if (ArrayExtensions_1.ArrayExtensions.IsEmpty(selected)) {
+            this.props.onColumnValueChange("");
         }
         else {
             if (selected[0].customOption) {

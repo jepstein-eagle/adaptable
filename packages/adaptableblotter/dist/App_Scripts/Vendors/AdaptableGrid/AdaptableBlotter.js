@@ -99,6 +99,7 @@ class AdaptableBlotter {
         });
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
+        this.isInitialised = true;
     }
     Render() {
         // todo

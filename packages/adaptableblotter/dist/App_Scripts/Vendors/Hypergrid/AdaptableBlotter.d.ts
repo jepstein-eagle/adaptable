@@ -37,6 +37,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement;
     private hyperGrid;
     private filterContainer;
+    isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private getState;
     InitAuditService(): void;

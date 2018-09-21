@@ -1374,18 +1374,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyLightTheme(): void {
-        alert('checking for light theme')
-        if (this.BlotterOptions.useDefaultVendorGridThemes) {
-            alert("applying light theme")
+         if (this.BlotterOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getLightTheme());
             this.applyAlternateRowStyle();
         }
     }
 
     public applyDarkTheme(): void {
-        alert('checking for dark theme')
         if (this.BlotterOptions.useDefaultVendorGridThemes) {
-            alert("applying dark theme")
             this.hyperGrid.addProperties(HypergridThemes.getDarkTheme());
             this.applyAlternateRowStyle();
         }

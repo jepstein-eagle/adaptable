@@ -12,15 +12,18 @@ import DataGenerator from './data-generator';
       [adaptableBlotterOptions]="blotterOptions"
       vendorGridName="agGrid">
     </adaptable-blotter>
+    <div id="grid">
     <ag-grid-angular
       style="width: 100%; height: 97vh;"
-      class="ag-theme-balham"
       [rowData]="rowData"
       [columnDefs]="columnDefs"
       [gridOptions]="gridOptions">
     </ag-grid-angular>
+    </div>
   </div>
   `
+  // if useDefaultVendorGridThemes is false in BlotterOptions then add an agGrid theme in the angular component
+  // e.g. something like:  class="ag-theme-balham"
 })
 export class AppComponent {
 

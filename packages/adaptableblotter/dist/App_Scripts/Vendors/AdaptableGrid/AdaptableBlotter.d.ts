@@ -36,6 +36,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     AuditLogService: AuditLogService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     BlotterOptions: IAdaptableBlotterOptions;
+    isInitialised: boolean;
     constructor(grid: AdaptableGrid.AdaptableGrid, container: HTMLElement, options?: IAdaptableBlotterOptions);
     Render(): void;
     InitAuditService(): void;

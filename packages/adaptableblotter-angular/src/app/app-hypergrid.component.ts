@@ -25,7 +25,7 @@ export class AppHyperGridComponent {
     primaryKey: 'tradeId',
     userName: 'jonathan',
     blotterId: 'Hypergrid Wrapper',
-    enableAuditLog: true,
+    enableAuditLog: false,
     enableRemoteConfigServer: false,
     serverSearchOption: 'None',
     maxColumnValueItemsDisplayed: 1000,
