@@ -817,10 +817,9 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
                         blotter.addCalculatedColumnToGrid(x);
                     });
-                    //load either saved layout or default one
-                    // not doing it now but need to make sure hypergrid still works!
+                    //load the default layout if its current
                     if (currentLayout == GeneralConstants_1.DEFAULT_LAYOUT) {
-                        //    middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     }
                     blotter.createMenu();
                     blotter.InitAuditService();
