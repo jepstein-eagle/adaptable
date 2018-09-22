@@ -196,10 +196,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
                 this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
                 this.isInitialised = true
-            })
+             })
 
         if (renderGrid) {
-            if (this.abContainerElement == null) {
+             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
             }
             if (this.abContainerElement != null) {
