@@ -10,6 +10,7 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const Enums_1 = require("../../Core/Enums");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
+const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 class DashboardComponent extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
@@ -17,7 +18,8 @@ class DashboardComponent extends React.Component {
         let optionsBlotterName = this.props.Blotter.BlotterOptions.blotterId;
         let blotterName = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName = "Show " + blotterName + " Dashboard";
-        let visibleDashboardControls = this.props.DashboardState.VisibleToolbars; //.filter(dc => dc.IsVisible);
+        let hiddenEntitlements = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
+        let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions_1.ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)); //.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
             //we'll need to use the name or something else

@@ -15,10 +15,10 @@ class DashboardPopupComponent extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "__dashboard";
-        let availableToolbarNames = this.props.AvailableToolbars.map(at => {
+        let availableToolbarNames = this.props.AvailableToolbars.filter(at => this.isVisibleStrategy(at)).map(at => {
             return StrategyIds.getNameForStrategyId(at);
         });
-        let visibleToolbarNames = this.props.VisibleToolbars.map(vt => {
+        let visibleToolbarNames = this.props.VisibleToolbars.filter(at => this.isVisibleStrategy(at)).map(vt => {
             return StrategyIds.getNameForStrategyId(vt);
         });
         return React.createElement("div", { className: cssClassName },
@@ -31,6 +31,13 @@ class DashboardPopupComponent extends React.Component {
                 React.createElement("div", null,
                     React.createElement("br", null)),
                 React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableToolbarNames, cssClassName: cssClassName, SelectedValues: visibleToolbarNames, HeaderAvailable: "Available Toolbars", HeaderSelected: "Visible Toolbars", onChange: (SelectedValues) => this.ListChange(SelectedValues), ReducedDisplay: true })));
+    }
+    isVisibleStrategy(strategyId) {
+        let entitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
+        if (entitlement) {
+            return entitlement.AccessLevel != "Hidden";
+        }
+        return true;
     }
     ListChange(selectedValues) {
         let selectedColumnIds = selectedValues.map(sv => {
@@ -57,6 +64,7 @@ function mapStateToProps(state, ownProps) {
     return {
         AvailableToolbars: state.Dashboard.AvailableToolbars,
         VisibleToolbars: state.Dashboard.VisibleToolbars,
+        Entitlements: state.Entitlements.FunctionEntitlements,
         Zoom: state.Dashboard.Zoom,
     };
 }

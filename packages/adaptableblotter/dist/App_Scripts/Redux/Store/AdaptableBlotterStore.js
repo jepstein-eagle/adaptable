@@ -803,13 +803,14 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     //we set the column list from the datasource
                     blotter.setColumnIntoStore();
-                    //create the default layout so we can revert to it if needed
-                    let currentLayout = GeneralConstants_1.DEFAULT_LAYOUT;
                     let gridState = middlewareAPI.getState().Grid;
                     let layoutState = middlewareAPI.getState().Layout;
                     let visibleColumnNames = gridState.Columns.filter(c => c.Visible).map(c => c.ColumnId);
-                    let layout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], blotter.getVendorGridState(visibleColumnNames, true), GeneralConstants_1.DEFAULT_LAYOUT);
-                    middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(0, layout));
+                    //create the default layout (if not there) so we can revert to it if needed
+                    let currentLayout = GeneralConstants_1.DEFAULT_LAYOUT;
+                    let defaultLayoutIndex = layoutState.Layouts.findIndex(l => l.Name == GeneralConstants_1.DEFAULT_LAYOUT);
+                    let defaultLayout = ObjectFactory_1.ObjectFactory.CreateLayout(gridState.Columns, [], blotter.getVendorGridState(visibleColumnNames, true), GeneralConstants_1.DEFAULT_LAYOUT);
+                    middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(defaultLayoutIndex, defaultLayout));
                     if (layoutState.Layouts.length > 0) {
                         currentLayout = layoutState.CurrentLayout;
                     }

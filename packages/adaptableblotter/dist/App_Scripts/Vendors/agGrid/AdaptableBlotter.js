@@ -141,8 +141,12 @@ class AdaptableBlotter {
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
             this.initInternalGridLogic();
         }).then(() => {
+            // at the end so load the current layout and refresh the toolbar 
             let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
             this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
+            if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
+                this.gridOptions.api.refreshHeader();
+            }
             this.isInitialised = true;
         });
         if (renderGrid) {
