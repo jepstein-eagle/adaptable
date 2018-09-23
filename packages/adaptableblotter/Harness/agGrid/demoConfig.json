@@ -1,4 +1,17 @@
 {
+	"Layout": {
+		"CurrentLayout": "Help",
+		"Layouts": [
+			{
+				"Columns": [
+					"ask"
+				],
+				"GridSorts": [],
+				"Name": "Help",
+				"IsReadOnly": false
+			}
+		]
+	},
 	"Entitlements": {
 		"FunctionEntitlements": [
 			{
@@ -6,7 +19,7 @@
 				"AccessLevel": "ReadOnly"
 			},
 			{
-				"FunctionName": "PlusMinus",
+				"FunctionName": "Layout",
 				"AccessLevel": "Hidden"
 			},
 			{
@@ -16,7 +29,9 @@
 		]
 	},
 	"Filter": {
-		"SystemFilters": ["Zero"]
+		"SystemFilters": [
+			"Zero"
+		]
 	},
 	"UserInterface": {
 		"PermittedColumnValues": [
@@ -43,7 +58,8 @@
 		"VisibleToolbars": [
 			"Export",
 			"QuickSearch",
-			"SmartEdit"
+			"SmartEdit",
+			"Layout"
 		],
 		"VisibleButtons": [
 			"About",

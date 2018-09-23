@@ -10,11 +10,13 @@ import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
-    AvailableToolbars: Array<string>;
-    VisibleToolbars: Array<string>;
+    AvailableToolbars: string[];
+    VisibleToolbars: string[];
+    Entitlements: IEntitlement[];
     Zoom: Number;
     onDashboardSetToolbars: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction
     onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
@@ -33,11 +35,11 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     render() {
         let cssClassName: string = this.props.cssClassName + "__dashboard";
 
-        let availableToolbarNames: string[] = this.props.AvailableToolbars.map(at => {
+        let availableToolbarNames: string[] = this.props.AvailableToolbars.filter(at=>this.isVisibleStrategy(at)).map(at => {
             return StrategyIds.getNameForStrategyId(at)
         })
 
-        let visibleToolbarNames: string[] = this.props.VisibleToolbars.map(vt => {
+        let visibleToolbarNames: string[] = this.props.VisibleToolbars.filter(at=>this.isVisibleStrategy(at)).map(vt => {
             return StrategyIds.getNameForStrategyId(vt)
         })
 
@@ -64,6 +66,14 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         </div>
     }
 
+    isVisibleStrategy(strategyId: string): boolean {
+        let entitlement: IEntitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);
+        if (entitlement) {
+            return entitlement.AccessLevel != "Hidden"
+        }
+        return true;
+    }
+    
     private ListChange(selectedValues: string[]) {
         let selectedColumnIds: string[] = selectedValues.map(sv => {
             return StrategyIds.getIdForStrategyName(sv)
@@ -92,6 +102,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AvailableToolbars: state.Dashboard.AvailableToolbars,
         VisibleToolbars: state.Dashboard.VisibleToolbars,
+        Entitlements: state.Entitlements.FunctionEntitlements,
         Zoom: state.Dashboard.Zoom,
     };
 }

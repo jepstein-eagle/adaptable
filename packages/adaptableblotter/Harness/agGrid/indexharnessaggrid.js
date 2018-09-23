@@ -41,14 +41,14 @@ function InitTradeBlotter() {
         blotterId: "demo blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-        //  predefinedConfig: tradeJson,  // "demoConfig.json",    // passing in predefined config with a file    
+        predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
         //   serverSearchOption: "None",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-        includeVendorStateInLayouts: true,      // whether layouts should include things like column size
-        autoSaveLayouts: true,                  // layous will save automatically
+           includeVendorStateInLayouts: true,      // whether layouts should include things like column size
+        autoSaveLayouts: true,                  // layouts will save automatically
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
         useDefaultVendorGridThemes: true
@@ -64,7 +64,7 @@ function InitTradeBlotter() {
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
     setTimeout(() => {
         if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout == "Ab_Default_Layout") {
-            gridOptions.columnApi.autoSizeAllColumns(), 2;
+        //    gridOptions.columnApi.autoSizeAllColumns(), 2;
         }
     })
 }
@@ -356,7 +356,21 @@ function currencyRendereragGrid(params) {
 }
 
 
-
+let layoutdemojson = {
+    "Layout": {
+        "IncludeVendorState": false,
+        "CurrentLayout": "Hidden",
+        "Layouts": [
+            {
+                "Columns": ["tradeId", "notional", "deskId", "counterparty"],
+                "GridSorts": [],
+                "Name": "Hidden",
+                "VendorGridInfo": null,
+                "IsReadOnly": false
+            }
+        ]
+    }
+}
 
 let tradeJson = {
     "Filter": {
@@ -366,14 +380,14 @@ let tradeJson = {
 
 let oldjson = {
     "Layout": {
-        "IncludeVendorState": true,
-        "CurrentLayout": "Ab_Default_Layout",
+        "IncludeVendorState": false,
+        "CurrentLayout": "Hidden",
         "Layouts": [
             {
-                "Columns": ["tradeId", "notional", "deskId", "counterparty", "country", "currency", "changeOnYear", "bidOfferSpread", "price", "ask", "bid", "bloombergAsk", "bloombergBid", "isLive", "fitchRating", "moodysRating", "sandpRating", "tradeDate", "settlementDate", "percentChange", "lastUpdatedBy", "lastUpdated"],
+                "Columns": ["tradeId", "notional", "deskId", "counterparty"],
                 "GridSorts": [],
-                "Name": "big desk id",
-                "VendorGridInfo": "[{\"colId\":\"tradeId\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"notional\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"deskId\",\"hide\":false,\"aggFunc\":null,\"width\":539,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"counterparty\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"country\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"currency\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"changeOnYear\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bidOfferSpread\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"price\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"ask\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergAsk\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"bloombergBid\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"isLive\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"fitchRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"moodysRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"sandpRating\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"tradeDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"settlementDate\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"percentChange\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdatedBy\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null},{\"colId\":\"lastUpdated\",\"hide\":false,\"aggFunc\":null,\"width\":200,\"pivotIndex\":null,\"pinned\":null,\"rowGroupIndex\":null}]",
+                "Name": "Hidden",
+                "VendorGridInfo": null,
                 "IsReadOnly": false
             }
         ]

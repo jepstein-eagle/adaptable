@@ -13,6 +13,8 @@ import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue, Visibility } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogger";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
@@ -29,7 +31,11 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let optionsBlotterName: string = this.props.Blotter.BlotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Dashboard"
-        let visibleDashboardControls = this.props.DashboardState.VisibleToolbars//.filter(dc => dc.IsVisible);
+        let hiddenEntitlements: IEntitlement[]=this.props.EntitlementsState.FunctionEntitlements.filter(e=>e.AccessLevel=="Hidden");
+      console.log("Entitlements: "+ hiddenEntitlements)
+      console.log("toolbars: "+ this.props.DashboardState.VisibleToolbars)
+        let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt=> ArrayExtensions.NotContainsItem(hiddenEntitlements, vt));//.filter(dc => dc.IsVisible);
+        console.log("visible contorls: "+ visibleDashboardControls)
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
             //we'll need to use the name or something else
