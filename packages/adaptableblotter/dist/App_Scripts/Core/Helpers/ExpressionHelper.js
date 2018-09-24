@@ -440,7 +440,7 @@ var ExpressionHelper;
                         rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2);
                     }
                 }
-                rangeEvaluation.newValue = newValue.setHours(0, 0, 0, 0);
+                rangeEvaluation.newValue = new Date(newValue).setHours(0, 0, 0, 0);
                 break;
             case Enums_2.DataType.Number:
                 if (rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column) {
