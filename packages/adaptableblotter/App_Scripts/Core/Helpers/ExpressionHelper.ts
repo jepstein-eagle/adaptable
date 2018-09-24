@@ -486,7 +486,7 @@ export module ExpressionHelper {
                         rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2)
                     }
                 }
-                rangeEvaluation.newValue = newValue.setHours(0, 0, 0, 0)
+                rangeEvaluation.newValue = new Date(newValue).setHours(0, 0, 0, 0)
                 break
             case DataType.Number:
                 if (rangeExpression.Operand1Type == RangeOperandType.Column) {
