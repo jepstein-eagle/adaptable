@@ -4,9 +4,7 @@ import { DataSourceIndexed } from './DataSourceIndexed'
 import { IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import * as _ from 'lodash'
 import { SortHelper } from "../../Core/Helpers/SortHelper";
-import { Helper } from '../../Core/Helpers/Helper';
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
-
 
 export interface ICustomSortInfo {
     SortedValues: any[]
@@ -28,9 +26,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         //There is a sort so we init the index array with each items index and we'll sort that
         this.buildIndex()
 
-        alert("helo")
-
-        var dataToSort = new Array(this.index.length);
+       var dataToSort = new Array(this.index.length);
 
         var hypergridColumns: any[] = []    
 
