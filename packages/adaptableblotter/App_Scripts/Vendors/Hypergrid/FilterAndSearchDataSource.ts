@@ -63,8 +63,8 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         // now let's assess COLUMN FILTERS to see if our record passes
-        // NOTE: serverSearchOption has to be 'None' or 'AdvancedSearch' becasue any other value then they are checking filters on the server and nothing for us to do 
-        if (serverSearchOption == 'None' || 'AdvancedSearch') {
+        // NOTE: serverSearchOption has to be 'None' or 'AdvancedSearch' because any other value then they are checking filters on the server and nothing for us to do 
+        if (serverSearchOption == 'None' || serverSearchOption == 'AdvancedSearch') {
             // Get the column filters
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
             if (ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
