@@ -11,7 +11,6 @@ import filter from 'redux-storage-decorator-filter'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
-import * as AboutRedux from '../ActionsReducers/AboutRedux'
 import * as ChartRedux from '../ActionsReducers/ChartRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
@@ -60,7 +59,6 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { IAboutStrategy } from '../../Strategy/Interface/IAboutStrategy';
 import { KeyValuePair } from '../../View/UIInterfaces';
 import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
@@ -71,7 +69,6 @@ import { ColumnFilterHelper } from '../../Core/Helpers/ColumnFilterHelper';
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
-    About: AboutRedux.AboutReducer,
     Alert: AlertRedux.AlertReducer,
     Chart: ChartRedux.ChartReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
@@ -115,7 +112,6 @@ export const InitState = (): ResetUserDataAction => ({
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
         //This trigger the persist of the state with nothing
-        state.About = undefined
         state.AdvancedSearch = undefined
         state.Alert = undefined
         state.BulkUpdate = undefined
@@ -193,7 +189,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             "Entitlements",
             "Menu",
             "Grid",
-            "About",
             "BulkUpdate",
             ["Alert", "Alerts"],
             ["Calendar", "AvailableCalendars"],
@@ -208,11 +203,14 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         //I think that is a part where we push a bit redux and should have two distinct stores....
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter,
             [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
-            PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION,
-            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_SHOW_CONFIRMATION, PopupRedux.POPUP_HIDE_SCREEN, PopupRedux.POPUP_HIDE_ALERT,
-            PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_SHOW_ALERT,
+            PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_PROMPT,
+            PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CONFIRM_CONFIRMATION, PopupRedux.POPUP_SHOW_CONFIRMATION,
+            PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_HIDE_SCREEN,
+            PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_HIDE_PROMPT,
+            PopupRedux.POPUP_SHOW_ALERT, PopupRedux.POPUP_HIDE_ALERT,
             PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
-            PopupRedux.POPUP_SHOW_PROMPT]);
+            PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
+            ]);
 
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
@@ -564,13 +562,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     return returnAction;
                 }
-                case AboutRedux.ABOUT_INFO_CREATE: {
-                    let aboutStrategy = <IAboutStrategy>(blotter.Strategies.get(StrategyIds.AboutStrategyId));
-                    let returnAction = next(action);
-                    let aboutInfo: KeyValuePair[] = aboutStrategy.CreateAboutInfo();
-                    middlewareAPI.dispatch(AboutRedux.AboutInfoSet(aboutInfo));
-                    return returnAction;
-                }
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
                     let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
                     if (!returnObj.IsValid) {
@@ -669,7 +660,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
                     let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
-                    let forceFetch = layout.Name== DEFAULT_LAYOUT;
+                    let forceFetch = layout.Name == DEFAULT_LAYOUT;
                     layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
                     middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
                     return returnAction;
@@ -911,15 +902,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     blotter.setColumnIntoStore();
                     let gridState: GridState = middlewareAPI.getState().Grid
                     let layoutState: LayoutState = middlewareAPI.getState().Layout
-                    let visibleColumnNames = gridState.Columns.filter(c=>c.Visible).map(c=>c.ColumnId)
+                    let visibleColumnNames = gridState.Columns.filter(c => c.Visible).map(c => c.ColumnId)
 
-                   //create the default layout (if not there) so we can revert to it if needed
-                   let currentLayout = DEFAULT_LAYOUT
-                   let defaultLayoutIndex = layoutState.Layouts.findIndex(l=>l.Name==DEFAULT_LAYOUT)
+                    //create the default layout (if not there) so we can revert to it if needed
+                    let currentLayout = DEFAULT_LAYOUT
+                    let defaultLayoutIndex = layoutState.Layouts.findIndex(l => l.Name == DEFAULT_LAYOUT)
                     let defaultLayout: ILayout = ObjectFactory.CreateLayout(gridState.Columns, [], blotter.getVendorGridState(visibleColumnNames, true), DEFAULT_LAYOUT)
                     middlewareAPI.dispatch(LayoutRedux.LayoutPreSave(defaultLayoutIndex, defaultLayout));
                     if (layoutState.Layouts.length > 0) {
-                            currentLayout = layoutState.CurrentLayout
+                        currentLayout = layoutState.CurrentLayout
                     }
 
                     //Create all calculated columns before we load the layout
@@ -929,7 +920,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
 
                     //load the default layout if its current
                     if (currentLayout == DEFAULT_LAYOUT) {
-                         middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+                        middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
                     }
                     blotter.createMenu();
 

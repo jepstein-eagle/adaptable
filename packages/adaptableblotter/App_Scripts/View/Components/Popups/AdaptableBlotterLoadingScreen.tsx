@@ -22,7 +22,7 @@ export class AdaptableBlotterLoadingScreen extends React.Component<IAdaptableBlo
       <Modal show={this.props.showLoadingScreen} onHide={this.props.onClose} className={cssClassName + StyleConstants.BASE}
         container={modalContainer} >
         <div className={cssClassName + StyleConstants.MODAL_BASE} >
-          <Modal.Title>&nbsp;&nbsp;Loading the Grid</Modal.Title>
+          <Modal.Title>&nbsp;&nbsp;&nbsp;Loading the Grid</Modal.Title>
           <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
             <div className="ab_loading_screen" >
               <span>Please wait while we initialise your settings...</span>

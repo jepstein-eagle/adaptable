@@ -37,11 +37,6 @@ export interface PopupState {
     LoadingPopup: ILoadingPopup
 }
 
-export interface AboutState {
-    AboutInfo: KeyValuePair[]
-}
-
-
 export interface TeamSharingState {
     Activated: boolean
     SharedEntities: ISharedEntity[]

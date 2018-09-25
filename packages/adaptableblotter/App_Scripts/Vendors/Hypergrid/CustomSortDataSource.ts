@@ -28,10 +28,11 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         //There is a sort so we init the index array with each items index and we'll sort that
         this.buildIndex()
 
+        alert("helo")
 
         var dataToSort = new Array(this.index.length);
 
-        var hypergridColumns: any[] = []
+        var hypergridColumns: any[] = []    
 
         var customSortInfoList: ICustomSortInfo[] = []
 

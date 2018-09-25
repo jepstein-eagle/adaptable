@@ -13,11 +13,11 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType } from '../../Core/Enums';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { Label, ControlLabel, FormControl } from "react-bootstrap";
+import { FormControl } from "react-bootstrap";
+import { ColumnFilterHelper } from "../../Core/Helpers/ColumnFilterHelper";
+import { KeyValuePair } from "../UIInterfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => FilterRedux.ColumnFilterClearAllAction,
@@ -37,14 +37,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
 
+                let filterStrings: KeyValuePair[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns)
         let infoBody: any[] = []
-        this.props.ColumnFilters.forEach(x => {
-            let column: IColumn = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
-            if (column) {
-                let expression: string = ExpressionHelper.ConvertExpressionToString(x.Filter, this.props.Columns, false)
-                infoBody.push(<b> {ColumnHelper.getFriendlyNameFromColumnId(x.ColumnId, this.props.Columns)} </b>)
-                infoBody.push(expression, <br />)
-            }
+       filterStrings.forEach(fs => {
+                infoBody.push(<b> {fs.Key} </b>)
+                infoBody.push(fs.Value, <br />)
+            
         })
 
         let content = <span>

@@ -1225,9 +1225,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (this.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-                    // if its a static search then it wont be in advanced searches so nothing to do
+                    // Get the actual Advanced Search object and check it exists
                     let currentSearch = this.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
                     if (currentSearch) {
+                        // See if our record passes the Expression - using Expression Helper; if not then return false
                         if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
                             // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
                             return false;
