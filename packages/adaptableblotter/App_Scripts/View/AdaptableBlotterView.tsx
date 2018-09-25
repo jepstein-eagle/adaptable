@@ -12,6 +12,7 @@ import { AdaptableBlotterPopupConfirmation } from './Components/Popups/Adaptable
 import * as StyleConstants from '../Core/Constants/StyleConstants';
 import { AdaptableBlotterPopupAlert } from "./Components/Popups/AdaptableBlotterPopupAlert";
 import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart";
+import { AdaptableBlotterLoadingScreen } from "./Components/Popups/AdaptableBlotterLoadingScreen";
 
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
@@ -26,6 +27,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
     onCloseChartPopup: () => PopupRedux.PopupHideChartAction;
+    onCloseLoadingPopup: () => PopupRedux.PopupHideChartAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -39,6 +41,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     AdaptableBlotter={this.props.Blotter}
                     onClose={this.props.onCloseChartPopup}
                     showChart={this.props.PopupState.ChartPopup.ShowChartPopup}
+                />
+
+                <AdaptableBlotterLoadingScreen
+                    AdaptableBlotter={this.props.Blotter}
+                    onClose={this.props.onCloseLoadingPopup}
+                    showLoadingScreen={this.props.PopupState.LoadingPopup.ShowLoadingPopup}
                 />
 
                 <AdaptableBlotterPopupAlert

@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup } from '../../../Core/Interface/IMessage'
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -33,7 +33,8 @@ export interface PopupState {
     ChartPopup: IChartPopup
     AlertPopup: IAlertPopup
     ConfirmationPopup: IConfirmationPopup
-    PromptPopup: IPromptPopup
+    PromptPopup: IPromptPopup,
+    LoadingPopup: ILoadingPopup
 }
 
 export interface AboutState {

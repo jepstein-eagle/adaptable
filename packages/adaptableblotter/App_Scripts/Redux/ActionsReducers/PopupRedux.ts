@@ -1,12 +1,14 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
-import { IAlertPopup, IConfirmationPopup, IScreenPopup, IPromptPopup, IUIConfirmation, IUIPrompt, InputAction, IAlert, IChartPopup } from '../../Core/Interface/IMessage';
+import { IAlertPopup, IConfirmationPopup, IScreenPopup, IPromptPopup, IUIConfirmation, IUIPrompt, InputAction, IAlert, IChartPopup, ILoadingPopup } from '../../Core/Interface/IMessage';
 import { MessageType } from '../../Core/Enums';
 
 export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
 export const POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
 export const POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
+export const POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
+export const POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
 export const POPUP_SHOW_ALERT = 'POPUP_SHOW_ALERT';
 export const POPUP_HIDE_ALERT = 'POPUP_HIDE_ALERT';
 export const POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
@@ -25,9 +27,13 @@ export interface PopupShowScreenAction extends Redux.Action {
 
 export interface PopupHideScreenAction extends Redux.Action { }
 
-export interface PopupShowChartAction extends Redux.Action {}
+export interface PopupShowChartAction extends Redux.Action { }
 
 export interface PopupHideChartAction extends Redux.Action { }
+
+export interface PopupShowLoadingAction extends Redux.Action { }
+
+export interface PopupHideLoadingAction extends Redux.Action { }
 
 export interface PopupShowAlertAction extends Redux.Action { Alert: IAlert }
 
@@ -80,6 +86,14 @@ export const PopupHideChart = (): PopupHideChartAction => ({
     type: POPUP_HIDE_CHART
 })
 
+export const PopupShowLoading = (): PopupShowLoadingAction => ({
+    type: POPUP_SHOW_LOADING,
+})
+
+export const PopupHideLoading = (): PopupHideLoadingAction => ({
+    type: POPUP_HIDE_LOADING
+})
+
 export const PopupShowPrompt = (Prompt: IUIPrompt): PopupShowPromptAction => ({
     type: POPUP_SHOW_PROMPT,
     Prompt
@@ -121,7 +135,10 @@ const initialPopupState: PopupState = {
     },
     ChartPopup: {
         ShowChartPopup: false,
-     },
+    },
+    LoadingPopup: {
+        ShowLoadingPopup: true,
+    },
     AlertPopup: {
         ShowAlertPopup: false,
         Header: "",
@@ -236,12 +253,20 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
         case POPUP_SHOW_CHART: {
             let newChartPopup: IChartPopup = { ShowChartPopup: true }
             return Object.assign({}, state, { ChartPopup: newChartPopup })
-       }
+        }
         case POPUP_HIDE_CHART: {
             let newChartPopup: IChartPopup = { ShowChartPopup: false }
             return Object.assign({}, state, { ChartPopup: newChartPopup })
         }
-         case POPUP_CLEAR_PARAM: {
+        case POPUP_SHOW_LOADING: {
+            let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: true }
+            return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
+        }
+        case POPUP_HIDE_LOADING: {
+            let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: false }
+            return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
+        }
+        case POPUP_CLEAR_PARAM: {
             let newScreenPopup: IScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, IsReadOnly: state.ScreenPopup.IsReadOnly, ComponentName: state.ScreenPopup.ComponentName, Params: null }
             return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }

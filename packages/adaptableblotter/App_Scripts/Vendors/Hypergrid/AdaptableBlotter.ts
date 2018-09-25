@@ -217,6 +217,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
                     this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
                     this.isInitialised = true
+                    this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())    
                 })
 
         // get the api ready
