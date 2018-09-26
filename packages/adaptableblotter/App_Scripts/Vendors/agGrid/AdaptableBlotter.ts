@@ -817,7 +817,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return render({ value: rawValue }) || "";
         }
         else {
-            return String(rawValue) || "";
+            if (rawValue == null) {
+                return null;
+            } else if (rawValue == undefined) {
+                return undefined;
+            } else {
+                return String(rawValue) || "";
+            }
         }
     }
 

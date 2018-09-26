@@ -78,12 +78,7 @@ export module Helper {
             var i;
             for (i = 0; i < infoArray.length; ++i) {
                 item = infoArray[i];
-                if (item == 'null') {
-                    item = null
-                } else if (item == 'undefined') {
-                    item = undefined
-                }
-                if (separator == ",") {
+                  if (separator == ",") {
                     if (item != null && item != undefined) {
                         if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
                             item = '"' + item.replace(/"/g, '""') + '"';
