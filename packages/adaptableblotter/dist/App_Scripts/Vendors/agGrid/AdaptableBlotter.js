@@ -148,6 +148,7 @@ class AdaptableBlotter {
                 this.gridOptions.api.refreshHeader();
             }
             this.isInitialised = true;
+            this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());
         });
         if (renderGrid) {
             if (this.abContainerElement == null) {
@@ -685,7 +686,15 @@ class AdaptableBlotter {
             return render({ value: rawValue }) || "";
         }
         else {
-            return String(rawValue) || "";
+            if (rawValue == null) {
+                return null;
+            }
+            else if (rawValue == undefined) {
+                return undefined;
+            }
+            else {
+                return String(rawValue) || "";
+            }
         }
     }
     getRawValueFromRecord(row, columnId) {
@@ -1064,9 +1073,10 @@ class AdaptableBlotter {
             if (this.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-                    // if its a static search then it wont be in advanced searches so nothing to do
+                    // Get the actual Advanced Search object and check it exists
                     let currentSearch = this.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
                     if (currentSearch) {
+                        // See if our record passes the Expression - using Expression Helper; if not then return false
                         if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, node, columns, this)) {
                             // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
                             return false;

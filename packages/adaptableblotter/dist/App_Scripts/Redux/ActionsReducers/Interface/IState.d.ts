@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup } from '../../../Core/Interface/IMessage';
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup } from '../../../Core/Interface/IMessage';
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -7,7 +7,6 @@ import { IEntitlement, IPermittedColumnValues, ISystemStatus } from '../../../Co
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
-import { KeyValuePair } from '../../../View/UIInterfaces';
 export interface GridState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
@@ -27,9 +26,7 @@ export interface PopupState {
     AlertPopup: IAlertPopup;
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
-}
-export interface AboutState {
-    AboutInfo: KeyValuePair[];
+    LoadingPopup: ILoadingPopup;
 }
 export interface TeamSharingState {
     Activated: boolean;

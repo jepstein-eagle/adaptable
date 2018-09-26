@@ -6,7 +6,6 @@ export interface AdaptableBlotterState {
     Grid: AdaptableBlotterStates.GridState;
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     UserInterface: AdaptableBlotterStates.UserInterfaceState;
-    About: AdaptableBlotterStates.AboutState;
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
     Alert: AdaptableBlotterStates.AlertState;
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;

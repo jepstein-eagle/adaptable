@@ -4,16 +4,25 @@ const DataSourceIndexed_1 = require("./DataSourceIndexed");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../../Core/Enums");
+const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+/* There are 3 possible reasons why we might need to filter / search the grid:
+1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)
+2. If there are any Column Filters applied
+3. If Quick Search has been applied (though it could be that the action is HighlightCell in which case we dont need to do any filtering)
+We also need to take account of what the server search option is, as that will affect our actions
+*/
 //All custom pipelines should extend from pipelineBase
 exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceIndexed.extend('FilterAndSearchDataSource', {
     blotter: blotter,
     apply: function () {
+        // before we start we will clear any cell highlights that are the result of Quick Search - as we will apply that at the end if required
         this.clearColorQuickSearch();
+        // Lets first get the 3 variables that indicate a filter/search is required
         let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
         let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)
-            || columnFilters.length > 0
-            || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+        let quickSearchText = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+        // If any of these 3 are set then we need to build the index and color the quick search; otherwise we should clear it
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName) || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             this.buildIndex(this.filterTest);
             this.colorQuickSearch();
         }
@@ -21,80 +30,74 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
             this.clearIndex();
         }
     },
+    /*
+    This boolean function will test for each row whether it passes ALL the possible filter / search requirements
+    Only rows that pass all 3 (i.e. Advanced Search, Column Filters, Quick Search) will return true
+    */
     filterTest: function (r, rowObject) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        if (columns.length == 0) {
+        // if no columns then nothing to filter
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columns)) {
             return true;
         }
         let serverSearchOption = blotter.BlotterOptions.serverSearchOption;
-        //first we assess AdvancedSearch 
+        // first let's assess ADVANCED SEARCH 
+        // Note: serverSearchOption has to be 'None' becasue any other value then they are performing search on the server and nothing for us to do
         if (serverSearchOption == 'None') {
             let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-                // if its a static search then it wont be in advanced searches so nothing to do
+                // Get the actual Advanced Search object and check it exists
                 let currentSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
                 if (currentSearch) {
+                    // See if our record passes the Advanced Search Expression - using Expression Helper; if not then return false
                     if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
                         return false;
                     }
                 }
             }
         }
-        //we then assess column filters
-        if (serverSearchOption == 'None' || 'AdvancedSearch') {
+        // now let's assess COLUMN FILTERS to see if our record passes
+        // NOTE: serverSearchOption has to be 'None' or 'AdvancedSearch' because any other value then they are checking filters on the server and nothing for us to do 
+        if (serverSearchOption == 'None' || serverSearchOption == 'AdvancedSearch') {
+            // Get the column filters
             let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-            if (columnFilters.length > 0) {
+            if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
                 for (let columnFilter of columnFilters) {
+                    // See if our record passes the Filter Expression - using Expression Helper; if not then return false
                     if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
                         return false;
                     }
                 }
             }
-            //we assess quicksearch
-            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
-                let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+            // finally, let's assess QUICK SEARCH
+            let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+            // check that we have quick search running
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
                 let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+                // with quick search because we need to colour and might not need to filter we dont return true/false but instead set a return value
                 let recordReturnValue = false;
+                let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject);
+                // only check on visible columns for quick search 
                 for (let column of columns.filter(c => c.Visible)) {
                     let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId);
-                    let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject);
                     let stringValueLowerCase = displayValue.toLowerCase();
-                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
-                        case Enums_1.LeafExpressionOperator.Contains:
-                            {
-                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.DisplayAction == Enums_1.DisplayAction.HighlightCell
-                                        || quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRowAndHighlightCell) {
-                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.Style } });
-                                    }
-                                    //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                    if (quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRow) {
-                                        return true;
-                                    }
-                                    recordReturnValue = true;
-                                }
-                            }
-                            break;
-                        case Enums_1.LeafExpressionOperator.StartsWith:
-                            {
-                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    //if we need to color cell then add it to the collection otherwise we add undefined so we clear previous properties
-                                    if (quickSearchState.DisplayAction == Enums_1.DisplayAction.HighlightCell
-                                        || quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRowAndHighlightCell) {
-                                        this.quickSearchColor.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.Style } });
-                                    }
-                                    //if we need to display only the rows that matched the quicksearch and no coloring then we can return
-                                    if (quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRow) {
-                                        return true;
-                                    }
-                                    recordReturnValue = true;
-                                }
-                            }
-                            break;
+                    // we need to differentiate between whether to search for 'Contains' or 'StartsWith'
+                    let isMatch = (quickSearchState.Operator == Enums_1.LeafExpressionOperator.Contains) ?
+                        stringValueLowerCase.includes(quickSearchLowerCase) :
+                        stringValueLowerCase.startsWith(quickSearchLowerCase);
+                    if (isMatch) {
+                        //if we need to display ONLY the rows that matched the quicksearch and dont need to colour them then we can return true
+                        if (quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRow) {
+                            return true;
+                        }
+                        else { // if we need to color then cell then add it to the collection otherwise we add undefined so we clear previous properties
+                            this.quickSearchColorCollection.push({ rowID: rowId, columnId: column.ColumnId, style: { quickSearchStyle: quickSearchState.Style } });
+                        }
+                        // set the return value to true (but dont return immediately as we might need to colour other cells in the row)
+                        recordReturnValue = true;
                     }
                 }
-                //if we color only then we just return true....
+                //if we color only then we just return true (as we have now built the collection of cells to colour)....
                 if (quickSearchState.DisplayAction == Enums_1.DisplayAction.HighlightCell) {
                     return true;
                 }
@@ -103,12 +106,14 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
         }
         return true;
     },
+    /* If any of the 3 causes of searching are present then return the index;
+    otherwise return the row count of the data source.
+    */
     getRowCount: function () {
         let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
         let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
-        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)
-            || columnFilters.length > 0
-            || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)) {
+        let quickSearchText = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName) || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             return this.index.length;
         }
         else {
@@ -116,14 +121,14 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
         }
     },
     colorQuickSearch: function () {
-        for (let record of this.quickSearchColor) {
+        for (let record of this.quickSearchColorCollection) {
             blotter.addCellStyleHypergrid(record.rowID, record.columnId, record.style);
         }
     },
     clearColorQuickSearch: function () {
-        if (this.quickSearchColor) {
+        if (this.quickSearchColorCollection) {
             blotter.removeAllCellStyleHypergrid("QuickSearch");
         }
-        this.quickSearchColor = [];
+        this.quickSearchColorCollection = [];
     }
 });

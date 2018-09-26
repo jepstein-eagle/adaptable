@@ -11,10 +11,9 @@ const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Core/Enums");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 const react_bootstrap_1 = require("react-bootstrap");
+const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
 class ColumnFilterToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__columnfilter";
@@ -23,17 +22,14 @@ class ColumnFilterToolbarControlComponent extends React.Component {
             this.props.ColumnFilters.length == 1 ?
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
+        let filterStrings = ColumnFilterHelper_1.ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns);
         let infoBody = [];
-        this.props.ColumnFilters.forEach(x => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
-            if (column) {
-                let expression = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(x.Filter, this.props.Columns, false);
-                infoBody.push(React.createElement("b", null,
-                    " ",
-                    ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(x.ColumnId, this.props.Columns),
-                    " "));
-                infoBody.push(expression, React.createElement("br", null));
-            }
+        filterStrings.forEach(fs => {
+            infoBody.push(React.createElement("b", null,
+                " ",
+                fs.Key,
+                " "));
+            infoBody.push(fs.Value, React.createElement("br", null));
         });
         let content = React.createElement("span", null,
             React.createElement("div", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },

@@ -31,6 +31,9 @@ export interface IScreenPopup {
 export interface IChartPopup {
     ShowChartPopup: boolean;
 }
+export interface ILoadingPopup {
+    ShowLoadingPopup: boolean;
+}
 export interface IAlertPopup {
     ShowAlertPopup: boolean;
     Header: string;

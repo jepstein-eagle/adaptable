@@ -20,6 +20,7 @@ class AdaptableBlotterPopup extends React.Component {
                 Columns: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
                 UserFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
                 SystemFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
+                ColumnFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters,
                 ModalContainer: modalContainer,
                 ColorPalette: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
                 GridSorts: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,

@@ -10,12 +10,14 @@ const AdaptableBlotterPopupConfirmation_1 = require("./Components/Popups/Adaptab
 const StyleConstants = require("../Core/Constants/StyleConstants");
 const AdaptableBlotterPopupAlert_1 = require("./Components/Popups/AdaptableBlotterPopupAlert");
 const AdaptableBlotterChart_1 = require("./Components/Popups/AdaptableBlotterChart");
+const AdaptableBlotterLoadingScreen_1 = require("./Components/Popups/AdaptableBlotterLoadingScreen");
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component {
     render() {
         return (React.createElement("div", { className: StyleConstants.AB_STYLE + StyleConstants.BASE },
             React.createElement(Dashboard_1.Dashboard, { Blotter: this.props.Blotter }),
             React.createElement(AdaptableBlotterChart_1.AdaptableBlotterChart, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseChartPopup, showChart: this.props.PopupState.ChartPopup.ShowChartPopup }),
+            React.createElement(AdaptableBlotterLoadingScreen_1.AdaptableBlotterLoadingScreen, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseLoadingPopup, showLoadingScreen: this.props.PopupState.LoadingPopup.ShowLoadingPopup }),
             React.createElement(AdaptableBlotterPopupAlert_1.AdaptableBlotterPopupAlert, { Header: this.props.PopupState.AlertPopup.Header, Msg: this.props.PopupState.AlertPopup.Msg, onClose: this.props.onCloseAlertPopup, ShowPopup: this.props.PopupState.AlertPopup.ShowAlertPopup, MessageType: this.props.PopupState.AlertPopup.MessageType }),
             React.createElement(AdaptableBlotterPopupPrompt_1.AdaptableBlotterPopupPrompt, { Msg: this.props.PopupState.PromptPopup.PromptMsg, Title: this.props.PopupState.PromptPopup.PromptTitle, onClose: this.props.onClosePromptPopup, onConfirm: this.props.onConfirmPromptPopup, ShowPopup: this.props.PopupState.PromptPopup.ShowPromptPopup }),
             React.createElement(AdaptableBlotterPopupConfirmation_1.AdaptableBlotterPopupConfirmation, { Title: this.props.PopupState.ConfirmationPopup.ConfirmationTitle, Msg: this.props.PopupState.ConfirmationPopup.ConfirmationMsg, ShowPopup: this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup, CancelText: this.props.PopupState.ConfirmationPopup.CancelText, ConfirmText: this.props.PopupState.ConfirmationPopup.ConfirmationText, onCancel: this.props.onCancelConfirmationPopup, onConfirm: this.props.onConfirmConfirmationPopup, ShowCommentBox: this.props.PopupState.ConfirmationPopup.ShowCommentBox }),

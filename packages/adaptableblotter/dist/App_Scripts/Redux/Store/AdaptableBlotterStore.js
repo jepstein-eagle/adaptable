@@ -12,7 +12,6 @@ const AdaptableBlotterReduxMerger_1 = require("./AdaptableBlotterReduxMerger");
 const redux_storage_decorator_filter_1 = require("redux-storage-decorator-filter");
 const MenuRedux = require("../ActionsReducers/MenuRedux");
 const PopupRedux = require("../ActionsReducers/PopupRedux");
-const AboutRedux = require("../ActionsReducers/AboutRedux");
 const ChartRedux = require("../ActionsReducers/ChartRedux");
 const AlertRedux = require("../ActionsReducers/AlertRedux");
 const SmartEditRedux = require("../ActionsReducers/SmartEditRedux");
@@ -53,7 +52,6 @@ const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
-    About: AboutRedux.AboutReducer,
     Alert: AlertRedux.AlertReducer,
     Chart: ChartRedux.ChartReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
@@ -92,7 +90,6 @@ exports.InitState = () => ({
 const rootReducerWithResetManagement = (state, action) => {
     if (action.type === RESET_STATE) {
         //This trigger the persist of the state with nothing
-        state.About = undefined;
         state.AdvancedSearch = undefined;
         state.Alert = undefined;
         state.BulkUpdate = undefined;
@@ -163,7 +160,6 @@ class AdaptableBlotterStore {
             "Entitlements",
             "Menu",
             "Grid",
-            "About",
             "BulkUpdate",
             ["Alert", "Alerts"],
             ["Calendar", "AvailableCalendars"],
@@ -176,11 +172,14 @@ class AdaptableBlotterStore {
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
         //I think that is a part where we push a bit redux and should have two distinct stores....
         middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
-            PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_CONFIRMATION,
-            PopupRedux.POPUP_CONFIRM_PROMPT, PopupRedux.POPUP_SHOW_CONFIRMATION, PopupRedux.POPUP_HIDE_SCREEN, PopupRedux.POPUP_HIDE_ALERT,
-            PopupRedux.POPUP_HIDE_PROMPT, PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_SHOW_ALERT,
+            PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_PROMPT,
+            PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CONFIRM_CONFIRMATION, PopupRedux.POPUP_SHOW_CONFIRMATION,
+            PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_HIDE_SCREEN,
+            PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_HIDE_PROMPT,
+            PopupRedux.POPUP_SHOW_ALERT, PopupRedux.POPUP_HIDE_ALERT,
             PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
-            PopupRedux.POPUP_SHOW_PROMPT]);
+            PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
+        ]);
         //here we use our own merger function which is derived from redux simple merger
         reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeState);
         loadStorage = ReduxStorage.createLoader(engineWithFilter);
@@ -472,13 +471,6 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity);
                         middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: Enums_1.MessageType.Error }));
                     }
-                    return returnAction;
-                }
-                case AboutRedux.ABOUT_INFO_CREATE: {
-                    let aboutStrategy = (blotter.Strategies.get(StrategyIds.AboutStrategyId));
-                    let returnAction = next(action);
-                    let aboutInfo = aboutStrategy.CreateAboutInfo();
-                    middlewareAPI.dispatch(AboutRedux.AboutInfoSet(aboutInfo));
                     return returnAction;
                 }
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {

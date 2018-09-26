@@ -16,9 +16,9 @@ exports.CustomSortDataSource = (blotter) => DataSourceIndexed_1.DataSourceIndexe
         }
         //There is a sort so we init the index array with each items index and we'll sort that
         this.buildIndex();
-        var dataToSort = new Array(this.index.length);
-        var hypergridColumns = [];
-        var customSortInfoList = [];
+        let dataToSort = new Array(this.index.length);
+        let hypergridColumns = [];
+        let customSortInfoList = [];
         let customSortFunction = function (firstElement, secondElement, direction) {
             // for now assuming there is only one custom sort... might need something clever in due course
             let customSortInfo = customSortInfoList[0];

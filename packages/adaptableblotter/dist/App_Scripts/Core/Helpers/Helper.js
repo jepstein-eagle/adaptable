@@ -79,8 +79,10 @@ var Helper;
             for (i = 0; i < infoArray.length; ++i) {
                 item = infoArray[i];
                 if (separator == ",") {
-                    if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
-                        item = '"' + item.replace(/"/g, '""') + '"';
+                    if (item != null && item != undefined) {
+                        if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+                            item = '"' + item.replace(/"/g, '""') + '"';
+                        }
                     }
                 }
                 line.push(item);

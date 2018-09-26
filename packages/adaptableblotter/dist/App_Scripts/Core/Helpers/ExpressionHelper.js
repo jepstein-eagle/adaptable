@@ -427,17 +427,19 @@ var ExpressionHelper;
         switch (column.DataType) {
             case Enums_2.DataType.Date:
                 if (rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column) {
-                    rangeEvaluation.operand1 = Date.parse(getOtherColumnValue(rangeExpression.Operand1));
+                    let columnValue = getOtherColumnValue(rangeExpression.Operand1);
+                    rangeEvaluation.operand2 = new Date(columnValue).setHours(0, 0, 0, 0);
                 }
                 else {
-                    rangeEvaluation.operand1 = Date.parse(rangeExpression.Operand1);
+                    rangeEvaluation.operand1 = new Date(rangeExpression.Operand1).setHours(0, 0, 0, 0);
                 }
                 if (StringExtensions_1.StringExtensions.IsNotEmpty(rangeExpression.Operand2)) { // between
                     if (rangeExpression.Operand2Type == Enums_1.RangeOperandType.Column) {
-                        rangeEvaluation.operand2 = Date.parse(getOtherColumnValue(rangeExpression.Operand2));
+                        let columnValue = getOtherColumnValue(rangeExpression.Operand2);
+                        rangeEvaluation.operand2 = new Date(columnValue).setHours(0, 0, 0, 0);
                     }
                     else {
-                        rangeEvaluation.operand2 = Date.parse(rangeExpression.Operand2);
+                        rangeEvaluation.operand2 = new Date(rangeExpression.Operand2).setHours(0, 0, 0, 0);
                     }
                 }
                 rangeEvaluation.newValue = new Date(newValue).setHours(0, 0, 0, 0);

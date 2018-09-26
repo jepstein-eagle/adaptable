@@ -5,6 +5,8 @@ exports.POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 exports.POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
 exports.POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
 exports.POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
+exports.POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
+exports.POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
 exports.POPUP_SHOW_ALERT = 'POPUP_SHOW_ALERT';
 exports.POPUP_HIDE_ALERT = 'POPUP_HIDE_ALERT';
 exports.POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
@@ -35,6 +37,12 @@ exports.PopupShowChart = () => ({
 });
 exports.PopupHideChart = () => ({
     type: exports.POPUP_HIDE_CHART
+});
+exports.PopupShowLoading = () => ({
+    type: exports.POPUP_SHOW_LOADING,
+});
+exports.PopupHideLoading = () => ({
+    type: exports.POPUP_HIDE_LOADING
 });
 exports.PopupShowPrompt = (Prompt) => ({
     type: exports.POPUP_SHOW_PROMPT,
@@ -70,6 +78,9 @@ const initialPopupState = {
     },
     ChartPopup: {
         ShowChartPopup: false,
+    },
+    LoadingPopup: {
+        ShowLoadingPopup: true,
     },
     AlertPopup: {
         ShowAlertPopup: false,
@@ -187,6 +198,14 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
         case exports.POPUP_HIDE_CHART: {
             let newChartPopup = { ShowChartPopup: false };
             return Object.assign({}, state, { ChartPopup: newChartPopup });
+        }
+        case exports.POPUP_SHOW_LOADING: {
+            let newLoadingPopup = { ShowLoadingPopup: true };
+            return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
+        }
+        case exports.POPUP_HIDE_LOADING: {
+            let newLoadingPopup = { ShowLoadingPopup: false };
+            return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
         }
         case exports.POPUP_CLEAR_PARAM: {
             let newScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, IsReadOnly: state.ScreenPopup.IsReadOnly, ComponentName: state.ScreenPopup.ComponentName, Params: null };

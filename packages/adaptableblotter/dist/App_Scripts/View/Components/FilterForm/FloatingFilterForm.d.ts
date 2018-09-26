@@ -7,6 +7,7 @@ export interface FloatingFilterFormState {
     filterExpression: Expression;
     numberOperatorPairs: KeyValuePair[];
     stringOperatorPairs: KeyValuePair[];
+    dateOperatorPairs: KeyValuePair[];
     placeholder: string;
 }
 export declare let FloatingFilterForm: React.ComponentClass<any, any>;

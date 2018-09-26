@@ -1,9 +1,7 @@
-import { IAboutStrategy } from './Interface/IAboutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { KeyValuePair } from '../View/UIInterfaces';
-export declare class AboutStrategy extends AdaptableStrategyBase implements IAboutStrategy {
+import { IStrategy } from './Interface/IStrategy';
+export declare class AboutStrategy extends AdaptableStrategyBase implements IStrategy {
     constructor(blotter: IAdaptableBlotter);
     protected addPopupMenuItem(): void;
-    CreateAboutInfo(): KeyValuePair[];
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IUserFilter, IGridSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter, IGridSort, IColumnFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View> {
     PopupParams: string;
@@ -11,6 +11,7 @@ export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View
     Columns: IColumn[];
     UserFilters: IUserFilter[];
     SystemFilters: string[];
+    ColumnFilters: IColumnFilter[];
     ModalContainer: HTMLElement;
     ColorPalette: string[];
     GridSorts: IGridSort[];
