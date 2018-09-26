@@ -3,7 +3,7 @@ import { StringExtensions } from '../Extensions/StringExtensions'
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 
 export module Helper {
-  
+
     export function getStringRepresentionFromKey(event: KeyboardEvent | any): string {
         if (event.key == null) {
             return event.char // IE
@@ -56,7 +56,7 @@ export module Helper {
         }, {});
     }
 
-    
+
 
     export function capitalize(string: string) {
         return (/[a-z]/.test(string) ? string : string.toLowerCase())
@@ -78,9 +78,16 @@ export module Helper {
             var i;
             for (i = 0; i < infoArray.length; ++i) {
                 item = infoArray[i];
+                if (item == 'null') {
+                    item = null
+                } else if (item == 'undefined') {
+                    item = undefined
+                }
                 if (separator == ",") {
-                    if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
-                        item = '"' + item.replace(/"/g, '""') + '"';
+                    if (item != null && item != undefined) {
+                        if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+                            item = '"' + item.replace(/"/g, '""') + '"';
+                        }
                     }
                 }
                 line.push(item);

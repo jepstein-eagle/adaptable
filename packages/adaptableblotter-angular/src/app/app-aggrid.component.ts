@@ -23,6 +23,7 @@ export class AppAgGridComponent {
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
+    floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
   };
