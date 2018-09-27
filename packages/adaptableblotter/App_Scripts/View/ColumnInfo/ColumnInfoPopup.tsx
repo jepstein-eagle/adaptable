@@ -20,16 +20,19 @@ import { DataType, SelectionMode } from '../../Core/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ColumnChooserSummary } from "../ColumnChooser/ColumnChooserSummary";
+import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
     CalculatedColumns: Array<ICalculatedColumn>
     FunctionEntitlements: IEntitlement[]
+    ColumnCategories: IColumnCategory[]
 }
 
 export interface ColumnInfoState {
@@ -64,6 +67,13 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let headerText = StrategyIds.ColumnInfoStrategyName;
 
         let summaries: any[] = [];
+        if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories)) {
+            summaries.push(
+
+                <div key={StrategyIds.ColumnChooserStrategyId} className={this.isStrategyReadOnly(StrategyIds.ColumnChooserStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <ColumnChooserSummary key={StrategyIds.ColumnChooserStrategyId} SummarisedColumn={this.state.SelectedColumn} TeamSharingActivated={this.props.TeamSharingActivated} />
+                </div>)
+        }
         if (this.isStrategyVisible(StrategyIds.CustomSortStrategyId)) {
             summaries.push(
 
@@ -176,6 +186,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
+        ColumnCategories: state.UserInterface.ColumnCategories,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }

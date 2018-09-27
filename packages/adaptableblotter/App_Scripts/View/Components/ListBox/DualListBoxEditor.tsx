@@ -364,6 +364,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
     DragSelectedEnd() {
         if (this.overHTMLElement && this.draggedElement) {
+            alert(this.overHTMLElement.classList)
             //now we need to check in which drop area we dropped the selected item
             let to: number;
             let from = this.state.SelectedValues.indexOf(this.draggedElement);

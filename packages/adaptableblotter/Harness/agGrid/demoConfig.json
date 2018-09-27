@@ -52,6 +52,23 @@
 					"NIS"
 				]
 			}
+		],
+		"ColumnCategories": [
+			{
+				"Category": "finance",
+				"Columns": [
+					"bid",
+					"ask",
+					"tradeId"
+				]
+			},
+			{
+				"Category": "date",
+				"Columns": [
+					"tradeDate",
+					"settlementDate"
+				]
+			}
 		]
 	},
 	"Dashboard": {

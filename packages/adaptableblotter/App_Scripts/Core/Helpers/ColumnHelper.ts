@@ -2,6 +2,8 @@ import { IColumn } from '../Interface/IColumn';
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 import { DataType } from '../Enums';
+import { IColumnCategory } from '../Interface/Interfaces';
+import { StringExtensions } from '../Extensions/StringExtensions';
 
 export module ColumnHelper {
 
@@ -11,7 +13,7 @@ export module ColumnHelper {
         return columnId == "ag-Grid-AutoColumn"
     }
 
-   
+
 
     export function getFriendlyNameFromColumn(columnId: string, column: IColumn): string {
         if (columnId.includes(GeneralConstants.MISSING_COLUMN)) {
@@ -60,12 +62,24 @@ export module ColumnHelper {
     }
 
     export function getColumnFromId(columnId: string, columns: IColumn[]): IColumn {
-       // TODO check for missing column
-       return columns.find(c=>c.ColumnId==columnId)
+        // TODO check for missing column
+        return columns.find(c => c.ColumnId == columnId)
     }
 
     export function getNumericColumns(columns: IColumn[]): IColumn[] {
-       return columns.filter(c=>c.DataType==DataType.Number)
+        return columns.filter(c => c.DataType == DataType.Number)
+    }
+
+    export function getColumnCategoryFromCategories(columnId: string, categories: IColumnCategory[]): string {
+        let returnValue: string = ""
+        categories.forEach(c => {
+            if (StringExtensions.IsNullOrEmpty(returnValue)) {
+                let column: string = c.Columns.find(col => col == columnId);
+                if (column) {
+                    returnValue = c.Category;
+                }
+            }
+        })
+        return returnValue;
     }
 }
-

@@ -343,6 +343,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             ReadOnly: this.isColumnReadonly(colId),
             Sortable: this.isColumnSortable(colId),
             Filterable: this.isColumnFilterable(colId),
+            Category: ColumnHelper.getColumnCategoryFromCategories(colId, this.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories)
 
         }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
@@ -788,7 +789,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == columnId)
         if (colDef.valueFormatter) {
             let formatter = colDef.valueFormatter
-            // let formattedValue = formatter({ value: rawValue })
             let params: ValueFormatterParams = {
                 value: rawValue,
                 node: null,
@@ -801,29 +801,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             let formattedValue = formatter(params)
             if (colDef.cellRenderer) {
-                let render: any = colDef.cellRenderer
-                if (typeof render == "string") {
-                    return String(formattedValue)
-                }
-                return render({ value: formattedValue }) || "";
+                return this.getRenderedValue(colDef, formattedValue);
             }
             return formattedValue || ""
         }
         else if (colDef.cellRenderer) {
-            let render: any = colDef.cellRenderer
-            if (typeof render == "string") {
-                return String(rawValue)
-            }
-            return render({ value: rawValue }) || "";
+            return this.getRenderedValue(colDef, rawValue);
         }
         else {
-            if (rawValue == null) {
-                return null;
-            } else if (rawValue == undefined) {
-                return undefined;
-            } else {
-                return String(rawValue) || "";
-            }
+            return this.cleanValue(rawValue);
+        }
+    }
+
+    private getRenderedValue(colDef: ColDef, valueToRender: any): string {
+        let render: any = colDef.cellRenderer
+        if (typeof render == "string") {
+            return this.cleanValue(valueToRender)
+        }
+        return render({ value: valueToRender }) || "";
+    }
+
+    private cleanValue(value: string): string {
+        if (value == null || value == 'null') {
+            return null;
+        } else if (value == undefined || value == 'undefined') {
+            return undefined;
+        } else {
+            return String(value) || "";
         }
     }
 

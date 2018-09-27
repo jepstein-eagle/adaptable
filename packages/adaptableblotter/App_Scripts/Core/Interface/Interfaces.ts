@@ -18,6 +18,11 @@ export interface IPermittedColumnValues {
     PermittedValues: any[]
 }
 
+export interface IColumnCategory {
+    Category: string;
+    Columns: string[]
+}
+
 export interface ICellInfo {
     Id: any;
     ColumnId: string;

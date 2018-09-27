@@ -89,8 +89,8 @@ const initialUserInterfaceState: UserInterfaceState = {
         "#FFA500", //  {/* orange */}
     ],
     StyleClassNames: [],
-    PermittedColumnValues: []
-
+    PermittedColumnValues: [],
+    ColumnCategories: []
 }
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (state: UserInterfaceState = initialUserInterfaceState, action: Redux.Action): UserInterfaceState => {
