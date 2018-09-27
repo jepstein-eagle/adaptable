@@ -132,6 +132,7 @@ class AdaptableStrategyBase {
             version: "1.0.0",
             data: [searchChangedData]
         };
+        console.log(searchChangedArgs);
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
 }

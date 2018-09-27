@@ -88,6 +88,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: RowNode, columnId: string): string;
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
+    private getRenderedValue;
+    private cleanValue;
     getRawValueFromRecord(row: RowNode, columnId: string): any;
     setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn"): void;
     forAllRecordsDo(func: (record: any) => any): void;

@@ -1,4 +1,5 @@
 import { IColumn } from '../Interface/IColumn';
+import { IColumnCategory } from '../Interface/Interfaces';
 export declare module ColumnHelper {
     function isSpecialColumn(columnId: string): boolean;
     function getFriendlyNameFromColumn(columnId: string, column: IColumn): string;
@@ -9,4 +10,5 @@ export declare module ColumnHelper {
     function getColumnsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): IColumn[];
     function getColumnFromId(columnId: string, columns: IColumn[]): IColumn;
     function getNumericColumns(columns: IColumn[]): IColumn[];
+    function getColumnCategoryFromCategories(columnId: string, categories: IColumnCategory[]): string;
 }

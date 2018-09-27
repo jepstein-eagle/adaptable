@@ -54,7 +54,8 @@ const initialUserInterfaceState = {
         "#FFA500",
     ],
     StyleClassNames: [],
-    PermittedColumnValues: []
+    PermittedColumnValues: [],
+    ColumnCategories: []
 };
 exports.UserInterfaceStateReducer = (state = initialUserInterfaceState, action) => {
     let permittedColumnValues;

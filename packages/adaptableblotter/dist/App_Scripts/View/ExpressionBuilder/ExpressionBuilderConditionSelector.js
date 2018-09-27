@@ -27,8 +27,8 @@ class ExpressionBuilderConditionSelector extends React.Component {
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)) {
             return {
                 SelectedColumnId: "",
-                ColumnValues: [],
-                SelectedColumnValues: [],
+                ColumnRawValueDisplayValuePairs: [],
+                SelectedColumnDisplayValues: [],
                 AllFilterExpresions: [],
                 SelectedFilterExpressions: [],
                 SelectedColumnRanges: [],
@@ -41,8 +41,8 @@ class ExpressionBuilderConditionSelector extends React.Component {
             if (this.state == null && this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn) { // no state so we have come in with a column and nothing else
                 return {
                     SelectedColumnId: theProps.SelectedColumnId,
-                    ColumnValues: [],
-                    SelectedColumnValues: [],
+                    ColumnRawValueDisplayValuePairs: [],
+                    SelectedColumnDisplayValues: [],
                     AllFilterExpresions: [],
                     SelectedFilterExpressions: [],
                     SelectedColumnRanges: [],
@@ -52,16 +52,16 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 };
             }
             else {
-                let selectedColumnValues;
+                let selectedColumnDisplayValues;
                 let selectedColumnFilterExpressions;
                 let selectedColumnRanges;
                 // get selectedcolumn values
                 let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
                 if (keyValuePair) {
-                    selectedColumnValues = keyValuePair.ColumnDisplayValues;
+                    selectedColumnDisplayValues = keyValuePair.ColumnDisplayValues;
                 }
                 else {
-                    selectedColumnValues = [];
+                    selectedColumnDisplayValues = [];
                 }
                 // get selected filter expressions
                 let filterExpressions = theProps.Expression.FilterExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
@@ -86,8 +86,8 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 selectedColumnRanges = (ranges) ? ranges.Ranges : [];
                 return {
                     SelectedColumnId: this.state.SelectedColumnId,
-                    ColumnValues: this.state.ColumnValues,
-                    SelectedColumnValues: selectedColumnValues,
+                    ColumnRawValueDisplayValuePairs: this.state.ColumnRawValueDisplayValuePairs,
+                    SelectedColumnDisplayValues: selectedColumnDisplayValues,
                     AllFilterExpresions: availableFilterExpressions,
                     SelectedFilterExpressions: selectedColumnFilterExpressions,
                     SelectedColumnRanges: selectedColumnRanges,
@@ -103,7 +103,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
         if (this.props.SelectedColumnId != this.state.SelectedColumnId) {
             shouldGetColumnValues = true;
         }
-        else if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.state.ColumnValues) && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.SelectedColumnId)) {
+        else if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.state.ColumnRawValueDisplayValuePairs) && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.SelectedColumnId)) {
             shouldGetColumnValues = true;
         }
         if (shouldGetColumnValues) {
@@ -115,7 +115,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
                         columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
-                        this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
+                        this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
                         let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
@@ -123,7 +123,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                             let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.SelectedColumnId, di);
                             columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
                         });
-                        this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
+                        this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         // set the UIPermittedValues for this column to what has been sent
                         this.props.Blotter.api.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
                     }
@@ -134,7 +134,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
             else {
                 columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
                 columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
-                this.setState({ ColumnValues: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
+                this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
             }
         }
     }
@@ -178,7 +178,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         React.createElement("div", null, this.state.ShowWaitingMessage ?
                             React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                             :
-                                React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnValues, SelectedValues: this.state.SelectedColumnValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))
+                                React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnRawValueDisplayValuePairs, SelectedValues: this.state.SelectedColumnDisplayValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))
                         :
                             React.createElement(react_bootstrap_1.Tab.Container, { id: "left-tabs-example", defaultActiveKey: this.state.SelectedTab, activeKey: this.state.SelectedTab, onSelect: () => this.onSelectTab() },
                                 React.createElement("div", null,
@@ -191,7 +191,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                                             React.createElement("div", null, this.state.ShowWaitingMessage ?
                                                 React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                                                 :
-                                                    React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnValues, SelectedValues: this.state.SelectedColumnValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))),
+                                                    React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnRawValueDisplayValuePairs, SelectedValues: this.state.SelectedColumnDisplayValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))),
                                         React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Filter },
                                             React.createElement(ExpressionBuilderUserFilter_1.ExpressionBuilderUserFilter, { cssClassName: cssClassName, AvailableFilterNames: availableFilterNames, SelectedFilterNames: this.state.SelectedFilterExpressions, onFilterNameChange: (selectedValues) => this.onSelectedFiltersChanged(selectedValues) })),
                                         React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Range },
@@ -225,23 +225,25 @@ class ExpressionBuilderConditionSelector extends React.Component {
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { RangeExpressions: colRangesExpression }));
         this.setState({ SelectedColumnRanges: selectedRanges });
     }
-    onSelectedColumnValuesChange(selectedColumnValues) {
+    onSelectedColumnValuesChange(selectedColumnDisplayValues) {
         let colValuesExpression = this.props.Expression.ColumnValueExpressions;
+        let columnRawValues = this.getRawValuesForDisplayValues(selectedColumnDisplayValues);
         let valuesCol = colValuesExpression.find(x => x.ColumnId == this.props.SelectedColumnId);
         if (valuesCol) {
-            if (selectedColumnValues.length == 0) {
+            if (selectedColumnDisplayValues.length == 0) {
                 let keyValuePairIndex = colValuesExpression.findIndex(x => x.ColumnId == this.props.SelectedColumnId);
                 colValuesExpression.splice(keyValuePairIndex, 1);
             }
             else {
-                valuesCol.ColumnDisplayValues = selectedColumnValues;
+                valuesCol.ColumnDisplayValues = selectedColumnDisplayValues;
+                valuesCol.ColumnRawValues = columnRawValues;
             }
         }
         else {
-            colValuesExpression.push({ ColumnId: this.props.SelectedColumnId, ColumnDisplayValues: selectedColumnValues, ColumnRawValues: [] });
+            colValuesExpression.push({ ColumnId: this.props.SelectedColumnId, ColumnDisplayValues: selectedColumnDisplayValues, ColumnRawValues: columnRawValues });
         }
         this.props.onExpressionChange(Object.assign({}, this.props.Expression, { ColumnValueExpressions: colValuesExpression }));
-        this.setState({ SelectedColumnValues: selectedColumnValues });
+        this.setState({ SelectedColumnDisplayValues: selectedColumnDisplayValues });
     }
     onSelectedFiltersChanged(selectedFilters) {
         //we assume that we manipulate a cloned object. i.e we are not mutating the state
@@ -264,6 +266,14 @@ class ExpressionBuilderConditionSelector extends React.Component {
     }
     onColumnSelectChange(columns) {
         this.props.onSelectedColumnChange(columns.length > 0 ? columns[0].ColumnId : "", Enums_1.QueryTab.ColumnValue);
+    }
+    getRawValuesForDisplayValues(selectedColumnDisplayValues) {
+        let columnRawValues = [];
+        selectedColumnDisplayValues.forEach(scv => {
+            let rawValue = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv).RawValue;
+            columnRawValues.push(rawValue);
+        });
+        return columnRawValues;
     }
 }
 exports.ExpressionBuilderConditionSelector = ExpressionBuilderConditionSelector;

@@ -3,7 +3,7 @@ import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement, IPermittedColumnValues, ISystemStatus } from '../../../Core/Interface/Interfaces';
+import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
@@ -44,6 +44,7 @@ export interface UserInterfaceState {
     ColorPalette: string[];
     StyleClassNames: string[];
     PermittedColumnValues: IPermittedColumnValues[];
+    ColumnCategories: IColumnCategory[];
 }
 export interface ApplicationState {
 }

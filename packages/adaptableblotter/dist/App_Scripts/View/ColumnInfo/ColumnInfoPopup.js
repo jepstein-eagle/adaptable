@@ -20,6 +20,8 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const ColumnChooserSummary_1 = require("../ColumnChooser/ColumnChooserSummary");
+const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 class ColumnInfoPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -41,6 +43,10 @@ class ColumnInfoPopupComponent extends React.Component {
         let selectedColumnId = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null;
         let headerText = StrategyIds.ColumnInfoStrategyName;
         let summaries = [];
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories)) {
+            summaries.push(React.createElement("div", { key: StrategyIds.ColumnChooserStrategyId, className: this.isStrategyReadOnly(StrategyIds.ColumnChooserStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(ColumnChooserSummary_1.ColumnChooserSummary, { key: StrategyIds.ColumnChooserStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated })));
+        }
         if (this.isStrategyVisible(StrategyIds.CustomSortStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyIds.CustomSortStrategyId, className: this.isStrategyReadOnly(StrategyIds.CustomSortStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(CustomSortSummary_1.CustomSortSummary, { key: StrategyIds.CustomSortStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList })));
@@ -110,6 +116,7 @@ class ColumnInfoPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
+        ColumnCategories: state.UserInterface.ColumnCategories,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }

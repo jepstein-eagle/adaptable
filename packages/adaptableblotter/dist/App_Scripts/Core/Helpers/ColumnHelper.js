@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const GeneralConstants = require("../Constants/GeneralConstants");
 const AdaptableBlotterLogger_1 = require("./AdaptableBlotterLogger");
 const Enums_1 = require("../Enums");
+const StringExtensions_1 = require("../Extensions/StringExtensions");
 var ColumnHelper;
 (function (ColumnHelper) {
     // Lets put all column mapping in one place so we can properly deal with missing columns consistently...
@@ -66,4 +67,17 @@ var ColumnHelper;
         return columns.filter(c => c.DataType == Enums_1.DataType.Number);
     }
     ColumnHelper.getNumericColumns = getNumericColumns;
+    function getColumnCategoryFromCategories(columnId, categories) {
+        let returnValue = "";
+        categories.forEach(c => {
+            if (StringExtensions_1.StringExtensions.IsNullOrEmpty(returnValue)) {
+                let column = c.Columns.find(col => col == columnId);
+                if (column) {
+                    returnValue = c.Category;
+                }
+            }
+        });
+        return returnValue;
+    }
+    ColumnHelper.getColumnCategoryFromCategories = getColumnCategoryFromCategories;
 })(ColumnHelper = exports.ColumnHelper || (exports.ColumnHelper = {}));

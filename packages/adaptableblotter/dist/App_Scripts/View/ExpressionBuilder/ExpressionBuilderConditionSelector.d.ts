@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Core/Enums';
+import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
@@ -20,8 +21,8 @@ export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttr
 }
 export interface ExpressionBuilderConditionSelectorState {
     SelectedColumnId: string;
-    ColumnValues: Array<any>;
-    SelectedColumnValues: Array<any>;
+    ColumnRawValueDisplayValuePairs: IRawValueDisplayValuePair[];
+    SelectedColumnDisplayValues: Array<any>;
     AllFilterExpresions: Array<string>;
     SelectedFilterExpressions: Array<string>;
     SelectedColumnRanges: Array<IRange>;
@@ -39,7 +40,8 @@ export declare class ExpressionBuilderConditionSelector extends React.Component<
     onTabChanged(tab: QueryTab): any;
     onSelectedColumnChanged(): void;
     onSelectedColumnRangesChange(selectedRanges: Array<IRange>): void;
-    onSelectedColumnValuesChange(selectedColumnValues: Array<any>): void;
+    onSelectedColumnValuesChange(selectedColumnDisplayValues: Array<any>): void;
     onSelectedFiltersChanged(selectedFilters: Array<string>): void;
     private onColumnSelectChange;
+    private getRawValuesForDisplayValues;
 }
