@@ -15,7 +15,7 @@ function InitTradeBlotter() {
         enableSorting: true,
         enableRangeSelection: true,
         enableFilter: true,
-        floatingFilter: true,
+        //  floatingFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
         columnTypes: {                  // not required but helpful for column data type identification
@@ -41,8 +41,8 @@ function InitTradeBlotter() {
         blotterId: "demo blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-      //  predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
-           serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
+        //  predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
+        //    serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -52,19 +52,20 @@ function InitTradeBlotter() {
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
         useDefaultVendorGridThemes: true,
-        getColumnValues: retrieveValues,
+        // getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-    //   adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { ThemeChange(adaptableblotter.AdaptableBlotterStore.TheStore.getState().Theme, gridcontainer, gridOptions); });
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { dataChangeHack(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
+
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
-    //   adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchArgs) => getTradesForSearch(searchArgs, dataGen))
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
     setTimeout(() => {
         if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout == "Ab_Default_Layout") {
-            //    gridOptions.columnApi.autoSizeAllColumns(), 2;
+            gridOptions.columnApi.autoSizeAllColumns(), 2;
         }
     })
 }
@@ -127,6 +128,15 @@ function getTradeSchema() {
     return schema;
 }
 
+function dataChangeHack(state, gridOptions) {
+    if (state.QuickSearch.QuickSearchText == "#demohack") {
+        gridOptions.api.forEachNode((rowNode, index) => {
+            if (index == 4) {
+                rowNode.setDataValue("bidOfferSpread", 20)
+            }
+        });
+    }
+}
 
 function apiTester(state, gridOptions) {
     if (state.QuickSearch.QuickSearchText != quickSearchText) {
@@ -183,13 +193,9 @@ function apiTester(state, gridOptions) {
             adaptableblotter.api.dashboardSetApplicationToolbarTitle("my app")
         } else if (quickSearchText == "#notional") {
             gridOptions.api.forEachNode((rowNode, index) => {
-                if (rowNode.group) {
-                    return;
+                if (index == 4) {
+                    rowNode.setDataValue("bidOfferSpread", 20)
                 }
-                let rowTradeId = gridOptions.api.getValue("tradeId", rowNode);
-                if (rowTradeId != 4) { return; }
-                let trade = rowNode;
-                trade.setDataValue("notional", 1234)
             });
         }
     }

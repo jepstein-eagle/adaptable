@@ -369,23 +369,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
                 let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                 let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
-
-                let stringValueLowerCase = displayValue.toLowerCase();
-                switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
-                    case LeafExpressionOperator.Contains:
-                        {
-                            if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                return true
+                if (displayValue) {
+                    let stringValueLowerCase = displayValue.toLowerCase();
+                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
+                        case LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    return true
+                                }
                             }
-                        }
-                        break;
-                    case LeafExpressionOperator.StartsWith:
-                        {
-                            if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                return true
+                            break;
+                        case LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    return true
+                                }
                             }
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
             return false;
