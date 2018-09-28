@@ -158,9 +158,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         } else if (functionType == "filter" && (!column.Filterable || !blotter.isFilterable())) {
             return false;
         }
-
-
-
         return true;
     }
 
@@ -202,7 +199,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             version: "1.0.0",
             data: [searchChangedData]
         }
-        console.log(searchChangedArgs)
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
 
