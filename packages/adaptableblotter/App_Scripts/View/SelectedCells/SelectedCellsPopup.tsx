@@ -8,7 +8,7 @@ import { IColItem } from "../UIInterfaces";
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
-import * as SelectedCellsRedux from '../../Redux/ActionsReducers/SelectedCellsRedux'
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
@@ -19,7 +19,7 @@ import { SelectedCellOperation } from "../../Core/Enums";
 
 interface SelectedCellsPopupProps extends StrategyViewPopupProps<SelectedCellsPopupComponent> {
     SelectedCellSummary: ISelectedCellSummmary
-    onSelectedCellsCreateSummary: () => SelectedCellsRedux.SelectedCellsCreateSummaryAction;
+    onSelectedCellsCreateSummary: () => GridRedux.GridCreateSelectedCellSummaryAction
 }
 
 class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProps, EditableConfigEntityState> {
@@ -81,13 +81,13 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        SelectedCellSummary: state.SelectedCells.SelectedCellSummary
+        SelectedCellSummary: state.Grid.SelectedCellSummary
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectedCellsCreateSummary: () => dispatch(SelectedCellsRedux.SelectedCellCreateSummary()),
+        onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
     };
 }
 

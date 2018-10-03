@@ -7,6 +7,7 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 //import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
@@ -31,7 +32,7 @@ interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
     onNewReport: () => PopupRedux.PopupShowScreenAction;
     onEditReport: () => PopupRedux.PopupShowScreenAction;
-    onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
+    onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => SystemRedux.ReportStopLiveAction;
     Columns: IColumn[],
     Reports: IReport[];
     CurrentReport: string;
@@ -169,7 +170,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
-        LiveReports: state.Export.CurrentLiveReports,
+        LiveReports: state.System.CurrentLiveReports,
     };
 }
 
@@ -177,7 +178,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onApplyExport: (Report: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(Report, exportDestination)),
         onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
-        onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
+        onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
         onNewReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "New")),
         onEditReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

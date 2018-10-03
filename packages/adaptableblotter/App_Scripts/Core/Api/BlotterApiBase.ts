@@ -18,6 +18,7 @@ import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
@@ -511,34 +512,35 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // System Status api Methods
     public systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
         let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus))
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
     }
     public systemStatusSetRed(statusMessage: string): void {
         let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Red }
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus))
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
     }
     public systemStatusSetAmber(statusMessage: string): void {
         let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Amber }
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus))
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
     }
     public systemStatusSetGreen(statusMessage: string): void {
         let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Green }
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus))
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
     }
 
     public systemStatusClear(): void {
-        this.dispatchAction(GridRedux.GridClearSystemStatus())
+        this.dispatchAction(SystemRedux.SystemClearHealthStatus())
     }
 
     // Alerts api Methods
     public alertShow(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void {
+        let maxAlerts: number = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert.MaxAlertsInStore;
         let MessageTypeEnum = MessageType as MessageType;
         let alert: IAlert = {
             Header: alertHeader,
             Msg: alertMessage,
             MessageType: MessageTypeEnum
         }
-        this.dispatchAction(AlertRedux.AlertAdd(alert))
+        this.dispatchAction(SystemRedux.SystemAlertAdd(alert, maxAlerts))
         if (showAsPopup) {
             this.dispatchAction(PopupRedux.PopupShowAlert(alert))
         }
@@ -570,7 +572,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public exportLiveReportsGetAll(): ILiveReport[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.CurrentLiveReports;
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
 
     }
 

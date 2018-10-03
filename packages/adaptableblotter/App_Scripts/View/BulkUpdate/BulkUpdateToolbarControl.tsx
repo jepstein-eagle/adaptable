@@ -5,6 +5,7 @@ import { ButtonToolbar, Col, InputGroup, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
@@ -38,7 +39,7 @@ interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopu
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
     onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
-    onBulkUpdateCheckSelectedCells: () => BulkUpdateRedux.BulkUpdateCheckCellSelectionAction;
+    onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
     onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
 }
@@ -210,15 +211,15 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        IsValidSelection: state.BulkUpdate.IsValidSelection,
-        PreviewInfo: state.BulkUpdate.PreviewInfo,
+        IsValidSelection: state.System.IsValidBulkUpdateSelection,
+        PreviewInfo: state.System.BulkUpdatePreviewInfo,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onBulkUpdateValueChange: (value: string) => dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),
-        onBulkUpdateCheckSelectedCells: () => dispatch(BulkUpdateRedux.BulkUpdateCheckCellSelection()),
+        onBulkUpdateCheckSelectedCells: () => dispatch(SystemRedux.BulkUpdateCheckCellSelection()),
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

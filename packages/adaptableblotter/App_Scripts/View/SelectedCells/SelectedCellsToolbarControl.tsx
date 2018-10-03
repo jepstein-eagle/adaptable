@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/SelectedCellsRedux'
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/ToolbarStrategyViewPopupProps";
@@ -20,7 +21,7 @@ interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewP
     SelectedCellInfo: ISelectedCellInfo
     SelectedCellOperation: SelectedCellOperation
     onSelectedCellsOperationChange: (SelectedCellOperation: SelectedCellOperation) => SelectedCellsRedux.SelectedCellsChangeOperationAction;
-    onSelectedCellsCreateSummary: () => SelectedCellsRedux.SelectedCellsCreateSummaryAction;
+    onSelectedCellsCreateSummary: () => GridRedux.GridCreateSelectedCellSummaryAction;
     SelectedCellSummary: ISelectedCellSummmary
 }
 
@@ -116,14 +117,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SelectedCellInfo: state.Grid.SelectedCellInfo,
         SelectedCellOperation: state.SelectedCells.SelectedCellOperation,
-        SelectedCellSummary: state.SelectedCells.SelectedCellSummary
+        SelectedCellSummary: state.Grid.SelectedCellSummary
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectedCellsOperationChange: (SelectedCellOperation: SelectedCellOperation) => dispatch(SelectedCellsRedux.SelectedCellsChangeOperation(SelectedCellOperation)),
-        onSelectedCellsCreateSummary: () => dispatch(SelectedCellsRedux.SelectedCellCreateSummary()),
+        onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SelectedCellsPopup, isReadOnly))
     };

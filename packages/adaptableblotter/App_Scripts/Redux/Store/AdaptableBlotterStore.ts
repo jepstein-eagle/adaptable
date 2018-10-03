@@ -19,6 +19,7 @@ import * as CustomSortRedux from '../ActionsReducers/CustomSortRedux'
 import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux'
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
+import * as SystemRedux from '../ActionsReducers/SystemRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExportRedux from '../ActionsReducers/ExportRedux'
@@ -58,12 +59,10 @@ import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { KeyValuePair } from '../../View/UIInterfaces';
-import { FilterHelper } from '../../Core/Helpers/FilterHelper';
-import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
-import { LayoutHelper } from '../../Core/Helpers/LayoutHelper';
 import { ColumnFilterHelper } from '../../Core/Helpers/ColumnFilterHelper';
+import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -76,6 +75,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     CustomSort: CustomSortRedux.CustomSortReducer,
     Shortcut: ShortcutRedux.ShortcutReducer,
     Grid: GridRedux.GridReducer,
+    System: SystemRedux.SystemReducer,
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     Export: ExportRedux.ExportReducer,
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
@@ -135,6 +135,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.Filter.SystemFilters = []
         state.Filter = undefined
         state.Grid = undefined
+        state.System = undefined
         state.Layout = undefined
         state.Menu.ContextMenu = undefined
         state.Menu.MenuItems = []
@@ -183,20 +184,14 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         // perhaps would be better to have 2 stores - persistence store and in-memory store
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
         engineWithFilter = filter(engineWithMigrate, [], [
-            "TeamSharing",
-            "UserInterface",
-            "Popup",
-            "Entitlements",
-            "Menu",
-            "Grid",
-            "BulkUpdate",
-            ["Alert", "Alerts"],
-            ["Calendar", "AvailableCalendars"],
-            ["Theme", "AvailableThemes"],
-            ["Export", "CurrentLiveReports"],
-            ["SmartEdit", "IsValidSelection"],
-            ["SmartEdit", "PreviewInfo"],
-            ["SelectedCells", "SelectedCellSummary"]
+            ConfigConstants.SYSTEM,
+            ConfigConstants.GRID,
+            ConfigConstants.MENU,
+            ConfigConstants.POPUP,
+            ConfigConstants.TEAMSHARING,
+            ConfigConstants.USER_INTERFACE,
+            ConfigConstants.ENTITLEMENTS,
+            ConfigConstants.APPLICATION,
         ]);
 
         //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
@@ -710,20 +705,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 /*  *********
                 SELECTED CELL ACTIONS
                 ************ */
-                case SelectedCellsRedux.SELECTED_CELLS_CREATE_SUMMARY: {
+                case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
                     let SelectedCellsStrategy = <ISelectedCellsStrategy>(blotter.Strategies.get(StrategyIds.SelectedCellsStrategyId));
-                    let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo
                     let apiSummaryReturn: ISelectedCellSummmary = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
-                    middlewareAPI.dispatch(SelectedCellsRedux.SelectedCellSetSummary(apiSummaryReturn));
+                    middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
                     return returnAction;
                 }
 
                 /*  *********
                 SMART EDIT ACTIONS
                 ************ */
-                case SmartEditRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
+                case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
                     let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
@@ -737,11 +731,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                             //We show the alert Popup 
                             middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetValidSelection(false));
+                        middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(false));
                     } else {
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetValidSelection(true));
+                        middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(true));
                         let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
-                        middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiPreviewReturn));
+                        middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiPreviewReturn));
                     }
                     return returnAction;
                 }
@@ -749,7 +743,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 // Here we have all actions that triggers a refresh of the SmartEditPreview
                 case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
                 case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
-                case SmartEditRedux.SMARTEDIT_FETCH_PREVIEW: {
+                case SystemRedux.SMARTEDIT_FETCH_PREVIEW: {
                     //all our logic needs to be executed AFTER the main reducers 
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
@@ -758,14 +752,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let state = middlewareAPI.getState();
 
                     let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
-                    middlewareAPI.dispatch(SmartEditRedux.SmartEditSetPreview(apiReturn));
+                    middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
                     return returnAction;
                 }
 
                 case SmartEditRedux.SMARTEDIT_APPLY: {
                     let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
                     let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
-                    let thePreview = middlewareAPI.getState().SmartEdit.PreviewInfo
+                    let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     SmartEditStrategy.ApplySmartEdit(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -776,7 +770,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 /*  *********
                 BULK UPDATE ACTIONS
                 ************ */
-                case BulkUpdateRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
+                case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
                     let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
@@ -791,11 +785,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                             //We show the Error Popup -- assume that will alwasy be an Error
                             middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
-                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(false));
+                        middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(false));
                     } else {
-                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetValidSelection(true));
+                        middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(true));
                         let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-                        middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiPreviewReturn));
+                        middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiPreviewReturn));
                     }
                     return returnAction;
                 }
@@ -810,14 +804,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let state = middlewareAPI.getState();
 
                     let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-                    middlewareAPI.dispatch(BulkUpdateRedux.BulkUpdateSetPreview(apiReturn));
+                    middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
                     return returnAction;
                 }
 
                 case BulkUpdateRedux.BULK_UPDATE_APPLY: {
                     let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));
                     let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
-                    let thePreview = middlewareAPI.getState().BulkUpdate.PreviewInfo
+                    let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo
                     let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
                     BulkUpdateStrategy.ApplyBulkUpdate(newValues);
                     middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -883,10 +877,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     })
                     return next(action);
                 }
-                case ExportRedux.REPORT_STOP_LIVE: {
-                    let actionTyped = (<ExportRedux.ReportStopLiveAction>action)
+                case SystemRedux.REPORT_STOP_LIVE: {
+                    let actionTyped = (<SystemRedux.ReportStopLiveAction>action)
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-                        let currentLiveReports = middlewareAPI.getState().Export.CurrentLiveReports
+                        let currentLiveReports = middlewareAPI.getState().System.CurrentLiveReports
                         let lre = currentLiveReports.find(x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination)
                         iPushPullHelper.UnloadPage(lre.WorkbookName)
                     }

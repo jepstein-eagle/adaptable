@@ -84,7 +84,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         IPPDomainsPages: state.Export.IPPDomainsPages,
         ErrorMsg: state.Export.ErrorMsg,
-        LiveReports: state.Export.CurrentLiveReports,
+        LiveReports: state.System.CurrentLiveReports,
     };
 }
 

@@ -66,8 +66,8 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = i
     let index: number;
     let layouts: ILayout[]
     switch (action.type) {
-        case LAYOUT_PRESAVE:
-            return state
+      //  case LAYOUT_PRESAVE:
+      //      return state
         case LAYOUT_SELECT:
             return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName })
         case LAYOUT_ADD_UPDATE:

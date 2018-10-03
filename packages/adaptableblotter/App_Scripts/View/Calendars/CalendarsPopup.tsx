@@ -121,7 +121,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentCalendar: state.Calendar.CurrentCalendar,
-        AvailableCalendars: state.Calendar.AvailableCalendars
+        AvailableCalendars: state.System.AvailableCalendars
     };
 }
 

@@ -34,7 +34,7 @@ export module ArrayExtensions {
     }
 
     export function IsNotNullOrEmpty(arrayToCheck: any[]) : boolean {
-        return !ArrayExtensions.IsNullOrEmpty(arrayToCheck);
+        return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
     }
 
     export function moveArray(array: any[], from: number, to: number) : void {

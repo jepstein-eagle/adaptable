@@ -5,6 +5,7 @@ import { Well } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { ExportDestination, ReportColumnScope } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
@@ -33,7 +34,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     CurrentReport: string,
     onApplyExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
     onAddUpdateReport: (index: number, Report: IReport) => ExportRedux.ReportAddUpdateAction;
-    onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ExportRedux.ReportStopLiveAction;
+    onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => SystemRedux.ReportStopLiveAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -161,7 +162,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Reports: state.Export.Reports,
         CurrentReport: state.Export.CurrentReport,
-        LiveReports: state.Export.CurrentLiveReports,
+        LiveReports: state.System.CurrentLiveReports,
     };
 }
 
@@ -169,7 +170,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
         onAddUpdateReport: (Index: number, Report: IReport) => dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
-        onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
+        onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
     };
 }

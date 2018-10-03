@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup } from '../../../Core/Interface/IMessage'
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -7,20 +7,29 @@ import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } 
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
-import { KeyValuePair } from '../../../View/UIInterfaces';
 
 /*
-Created by the system  at run-time and NOT ONE of predefined or user config and not saved
+System Config
+This is created by the system at run-time and NOT part of predefined or user config.
+Therefore it is not saved nor included in State events
 */
+
+export interface SystemState {
+    SystemStatus: ISystemStatus;
+    Alerts: IAlert[];
+    AvailableCalendars: ICalendar[];
+    CurrentLiveReports: ILiveReport[];
+    IsValidSmartEditSelection: boolean;
+    SmartEditPreviewInfo: IPreviewInfo;
+    IsValidBulkUpdateSelection: boolean;
+    BulkUpdatePreviewInfo: IPreviewInfo;
+}
 
 export interface GridState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
-    BlotterRestrictions: string[];
-    SystemStatus: ISystemStatus;
     SelectedCellInfo: ISelectedCellInfo;
-    LeftPinnedColumns: string[];
-    RightPinnedColumns: string[];
+    SelectedCellSummary: ISelectedCellSummmary
 }
 
 export interface MenuState {
@@ -42,14 +51,11 @@ export interface TeamSharingState {
     SharedEntities: ISharedEntity[]
 }
 
-export interface BulkUpdateState {
-    BulkUpdateValue: string
-    IsValidSelection: boolean
-    PreviewInfo: IPreviewInfo
-}
 
 /*
-predefined config only - never editable by users at runtime
+Predefined Config Only 
+This can be set by users in Predefined Config at design-time but never editable by users at runtime
+Therefore it is not saved nor included in State events
 */
 export interface EntitlementsState {
     FunctionEntitlements: IEntitlement[];
@@ -63,13 +69,27 @@ export interface UserInterfaceState {
 }
 
 export interface ApplicationState {
-
 }
 
 
 /* 
-predefined and user config and editable by users but not Adaptable Blotter objects 
+Full Config 
+Can bet set at design time and also editable at run time by users 
 */
+
+export interface AlertState {
+    AlertDefinitions: IAlertDefinition[]
+    MaxAlertsInStore: number
+}
+
+
+export interface BulkUpdateState {
+    BulkUpdateValue: string
+}
+
+export interface CalendarState {
+    CurrentCalendar: string;
+}
 
 export interface QuickSearchState {
     QuickSearchText: string
@@ -92,42 +112,11 @@ export interface DashboardState {
     ApplicationToolbarTitle: string
 }
 
-
-export interface SmartEditState {
-    SmartEditValue: number
-    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide'
-    IsValidSelection: boolean
-    PreviewInfo: IPreviewInfo
-
-}
-
-
-export interface SelectedCellsState {
-    SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only'
-    SelectedCellSummary: ISelectedCellSummmary
-}
-
-
-export interface CalendarState {
-    CurrentCalendar: string;
-    AvailableCalendars: ICalendar[]
-}
-
-export interface ThemeState {
-    CurrentTheme: string;
-    SystemThemes: string[];
-    UserThemes: IUserTheme[];
-}
-
-/* 
-predefined and user config and editable by users - includes Adaptable Blotter objects 
-*/
-
-
-export interface AlertState {
-    AlertDefinitions: IAlertDefinition[]
-    MaxAlertsInStore: number
-    Alerts: any[]
+export interface ExportState {
+    IPPDomainsPages: IPPDomain[]  // should we persist this???
+    CurrentReport: string;
+    Reports: IReport[];
+    ErrorMsg: string;
 }
 
 export interface AdvancedSearchState {
@@ -140,7 +129,6 @@ export interface DataSourceState {
     CurrentDataSource: string;
 }
 
-
 export interface LayoutState {
     CurrentLayout: string;
     Layouts: ILayout[]
@@ -151,7 +139,7 @@ export interface CustomSortState {
 }
 
 export interface FilterState {
-    ColumnFilters: IColumnFilter[]; 
+    ColumnFilters: IColumnFilter[];
     SavedColumnFilters: IColumnFilter[];
     UserFilters: IUserFilter[];
     SystemFilters: string[];
@@ -166,18 +154,9 @@ export interface PlusMinusState {
 }
 
 
-export interface ExportState {
-    IPPDomainsPages: IPPDomain[]
-    CurrentReport: string;
-    CurrentLiveReports: ILiveReport[];
-    Reports: IReport[];
-    ErrorMsg: string;
-}
-
 export interface FlashingCellState {
     FlashingCells: IFlashingCell[]
 }
-
 
 export interface ConditionalStyleState {
     ConditionalStyles: IConditionalStyle[];
@@ -201,4 +180,19 @@ export interface ChartState {
     ChartDefinitions: IChartDefinition[]
     CurrentChartName: string;
     ChartData: any;
+}
+
+export interface SmartEditState {
+    SmartEditValue: number
+    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide'
+}
+
+export interface ThemeState {
+    CurrentTheme: string;
+    SystemThemes: string[];
+    UserThemes: IUserTheme[];
+}
+
+export interface SelectedCellsState {
+    SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only'
 }

@@ -22,7 +22,7 @@ export module StringExtensions {
     }
 
     export function IsNotNullOrEmpty(stringToCheck: string) {
-        return !StringExtensions.IsNullOrEmpty(stringToCheck);
+        return StringExtensions.IsNotNull(stringToCheck) && StringExtensions.IsNotEmpty(stringToCheck);
     }
    
     export function PlaceSpaceBetweenCapitalisedWords(stringToCheck: string) {
@@ -34,7 +34,7 @@ export module StringExtensions {
     }
 
     export function ToLowerCase(stringToCheck: string) {
-        return  (stringToCheck==null) ? stringToCheck: stringToCheck.toLowerCase()
+        return  (StringExtensions.IsNullOrEmpty( stringToCheck)) ? stringToCheck: stringToCheck.toLowerCase()
     }
 
 }

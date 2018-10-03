@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Label, Overlay, Fade, Well, FormControl } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
@@ -19,8 +20,8 @@ import { AlertsPanel } from "../Components/AlertsPanel";
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];
     Alerts: IAlert[];
-    onDeleteAlert: (index: number) => AlertRedux.AlertDeleteAction;
-    onDeleteAllAlert: () => AlertRedux.AlertDeleteAllAction;
+    onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;
+    onDeleteAllAlert: () => SystemRedux.SystemAlertDeleteAllAction;
 }
 
 interface AlertToolbarState {
@@ -103,14 +104,14 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AlertDefinitions: state.Alert.AlertDefinitions,
-        Alerts: state.Alert.Alerts,
+        Alerts: state.System.Alerts,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDeleteAlert: (index: number) => dispatch(AlertRedux.AlertDelete(index)),
-        onDeleteAllAlert: () => dispatch(AlertRedux.AlertDeleteAll()),
+        onDeleteAlert: (index: number) => dispatch(SystemRedux.SystemAlertDelete(index)),
+        onDeleteAllAlert: () => dispatch(SystemRedux.SystemAlertDeleteAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AlertPopup, isReadOnly))
     };

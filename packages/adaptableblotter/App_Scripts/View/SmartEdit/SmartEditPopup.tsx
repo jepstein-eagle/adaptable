@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { MathOperation, MessageType } from '../../Core/Enums'
@@ -27,7 +28,7 @@ interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupCompo
     PreviewInfo: IPreviewInfo;
     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
-    onSmartEditCheckSelectedCells: () => SmartEditRedux.SmartEditCheckCellSelectionAction;
+    onSmartEditCheckSelectedCells: () => SystemRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
 }
@@ -156,7 +157,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         MathOperation: state.SmartEdit.MathOperation,
-        PreviewInfo: state.SmartEdit.PreviewInfo,
+        PreviewInfo: state.System.SmartEditPreviewInfo,
     };
 }
 
@@ -164,7 +165,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
         onSmartEditOperationChange: (SmartEditOperation: MathOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
-        onSmartEditCheckSelectedCells: () => dispatch(SmartEditRedux.SmartEditCheckCellSelection()),
+        onSmartEditCheckSelectedCells: () => dispatch(SystemRedux.SmartEditCheckCellSelection()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };

@@ -154,7 +154,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let warning: IAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: MessageType.Info
+                    MessageType: MessageType.Warning
                 }
                 this.props.onShowStatusMessage(warning)
                 return;
@@ -162,7 +162,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let error: IAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: MessageType.Info
+                    MessageType: MessageType.Error
                 }
                 this.props.onShowStatusMessage(error)
                 return;
@@ -213,7 +213,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         MenuState: state.Menu,
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
-        SystemStatus: state.Grid.SystemStatus
+        SystemStatus: state.System.SystemStatus
     };
 }
 

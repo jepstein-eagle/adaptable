@@ -9,9 +9,6 @@ export const ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
 export const ALERT_DEFIINITION_SELECT = 'ALERT_DEFIINITION_SELECT';
 export const ALERT_DEFIINITION_CHANGE_ALERT_TYPE = 'ALERT_DEFIINITION_CHANGE_ALERT_TYPE';
 
-export const ALERT_ADD = 'ALERT_ADD';
-export const ALERT_DELETE = 'ALERT_DELETE';
-export const ALERT_DELETE_ALL = 'ALERT_DELETE_ALL';
 
 export interface AlertDefinitionAddUpdateAction extends Redux.Action {
     Index: number
@@ -27,17 +24,7 @@ export interface AlertDefinitionChangeMessageTypeAction extends Redux.Action {
     MessageType: MessageType;
 }
 
-export interface AlertAddAction extends Redux.Action {
-    Alert: IAlert
-}
 
-export interface AlertDeleteAction extends Redux.Action {
-    Index: number
-}
-
-export interface AlertDeleteAllAction extends Redux.Action {
-    
-}
 
 export const AlertDefinitionAddUpdate = (Index: number, AlertDefinition: IAlertDefinition): AlertDefinitionAddUpdateAction => ({
     type: ALERT_DEFIINITION_ADD_UPDATE,
@@ -56,30 +43,16 @@ export const AlertDefinitionChangeMessageType = (Index: number, MessageType: Mes
     MessageType
 })
 
-export const AlertAdd = (Alert: IAlert): AlertAddAction => ({
-    type: ALERT_ADD,
-    Alert
-})
-
-export const AlertDelete = (Index: number): AlertDeleteAction => ({
-    type: ALERT_DELETE,
-    Index,
-})
-
-export const AlertDeleteAll = (): AlertDeleteAllAction => ({
-    type: ALERT_DELETE_ALL,
-})
 
 const initialAlertState: AlertState = {
     AlertDefinitions: [],
     MaxAlertsInStore: 5,
-    Alerts: []
+   
 }
 
 export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = initialAlertState, action: Redux.Action): AlertState => {
     let alertDefinitions: IAlertDefinition[]
-    let alerts: IAlert[]
-
+    
     switch (action.type) {
         case ALERT_DEFIINITION_ADD_UPDATE: {
             let actionTypedAddUpdate = (<AlertDefinitionAddUpdateAction>action)
@@ -105,25 +78,7 @@ export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = init
             return Object.assign({}, state, { AlertDefinitions: alertDefinitions })
         }
 
-        case ALERT_ADD: {
-            let actionTypedAdd = (<AlertAddAction>action)
-            alerts = [].concat(state.Alerts)
-            if (alerts.length == state.MaxAlertsInStore) {  // we have hit the maximum so remove first item (oldest)
-                alerts.splice(0, 1);
-            }
-            alerts.push(actionTypedAdd.Alert)
-            return Object.assign({}, state, { Alerts: alerts })
-        }
-        case ALERT_DELETE: {
-            let actionTypedDelete = (<AlertDeleteAction>action)
-            alerts = [].concat(state.Alerts)
-            alerts.splice(actionTypedDelete.Index, 1);
-            return Object.assign({}, state, { Alerts: alerts })
-        }
-        case ALERT_DELETE_ALL: {
-            return Object.assign({}, state, { Alerts: [] })
-        }
-
+       
         default:
             return state
     }

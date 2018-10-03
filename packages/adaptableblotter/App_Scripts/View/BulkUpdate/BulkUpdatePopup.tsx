@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon, Checkbox, Col, Row, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { MathOperation, MessageType, DataType } from '../../Core/Enums'
@@ -27,7 +28,7 @@ interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupCom
     BulkUpdateValue: string;
     PreviewInfo: IPreviewInfo;
     onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
-    onBulkUpdateCheckSelectedCells: () => BulkUpdateRedux.BulkUpdateCheckCellSelectionAction;
+    onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
     onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
 }
@@ -224,14 +225,14 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        PreviewInfo: state.BulkUpdate.PreviewInfo,
+        PreviewInfo: state.System.BulkUpdatePreviewInfo,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onBulkUpdateValueChange: (value: string) => dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),
-        onBulkUpdateCheckSelectedCells: () => dispatch(BulkUpdateRedux.BulkUpdateCheckCellSelection()),
+        onBulkUpdateCheckSelectedCells: () => dispatch(SystemRedux.BulkUpdateCheckCellSelection()),
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };
