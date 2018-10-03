@@ -15,7 +15,6 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
 
     protected InitState() {
         if (this.CalculatedColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn) {
-            //All the logic is managed in the redux store middleware
             this.CalculatedColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn;
        
             if (this.blotter.isInitialised) {

@@ -63,12 +63,10 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
 
-
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.FlashingCell, this.FlashingCellState)
             }
         }
-
     }
 
     protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {

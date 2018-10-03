@@ -82,11 +82,11 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-    //console.log("event received")
+    console.log("column event received" + columnChangedArgs)
 }
 
 function listenToStateChange(stateChangedArgs) {
-  //  console.log(stateChangedArgs)
+    console.log("state event received" + stateChangedArgs)
 }
 
 function getValuesForColumn(columnName) {

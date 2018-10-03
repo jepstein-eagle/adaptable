@@ -27,10 +27,9 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         if (this.BulkUpdateState != this.GetBulkUpdateState()) {
             this.BulkUpdateState = this.GetBulkUpdateState();
           
-            // we dont store bulk update so nothing to save
-          //  if (this.blotter.isInitialised) {
-          //      this.publishStateChanged(StateChangedTrigger.BulkUpdate, this.BulkUpdateState)
-          //  }
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.BulkUpdate, this.BulkUpdateState)
+            }
        
         }
     }

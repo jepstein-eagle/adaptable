@@ -3,10 +3,13 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary, ISelectedCell } from "./Interface/ISelectedCellsStrategy";
-import { DataType } from '../Core/Enums';
+import { DataType, StateChangedTrigger } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { SelectedCellsState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISelectedCellsStrategy {
+    private SelectedCellsState: SelectedCellsState
+   
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SelectedCellsStrategyId, blotter)
@@ -14,6 +17,16 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyIds.SelectedCellsGlyph);
+    }
+
+    protected InitState() {
+        if (this.SelectedCellsState != this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells) {
+            this.SelectedCellsState = this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells;
+       
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.SelectedCells, this.SelectedCellsState)
+            }
+         }
     }
 
     public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {
