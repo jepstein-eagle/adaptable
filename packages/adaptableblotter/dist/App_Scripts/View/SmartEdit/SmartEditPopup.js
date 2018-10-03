@@ -4,6 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const SmartEditRedux = require("../../Redux/ActionsReducers/SmartEditRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const Enums_1 = require("../../Core/Enums");
@@ -103,14 +104,14 @@ function mapStateToProps(state, ownProps) {
     return {
         SmartEditValue: state.SmartEdit.SmartEditValue,
         MathOperation: state.SmartEdit.MathOperation,
-        PreviewInfo: state.SmartEdit.PreviewInfo,
+        PreviewInfo: state.System.SmartEditPreviewInfo,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onSmartEditValueChange: (value) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
         onSmartEditOperationChange: (SmartEditOperation) => dispatch(SmartEditRedux.SmartEditChangeOperation(SmartEditOperation)),
-        onSmartEditCheckSelectedCells: () => dispatch(SmartEditRedux.SmartEditCheckCellSelection()),
+        onSmartEditCheckSelectedCells: () => dispatch(SystemRedux.SmartEditCheckCellSelection()),
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };

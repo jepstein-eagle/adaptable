@@ -4,6 +4,7 @@ import { ExportDestination } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 export declare class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
     private ExportState;
+    private CurrentLiveReports;
     private isSendingData;
     private workAroundOpenfinExcelDataDimension;
     private throttledRecomputeAndSendLiveExcelEvent;

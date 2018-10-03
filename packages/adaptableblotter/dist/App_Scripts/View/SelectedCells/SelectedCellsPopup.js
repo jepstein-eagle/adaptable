@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const SelectedCellsRedux = require("../../Redux/ActionsReducers/SelectedCellsRedux");
+const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -53,12 +53,12 @@ class SelectedCellsPopupComponent extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        SelectedCellSummary: state.SelectedCells.SelectedCellSummary
+        SelectedCellSummary: state.Grid.SelectedCellSummary
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onSelectedCellsCreateSummary: () => dispatch(SelectedCellsRedux.SelectedCellCreateSummary()),
+        onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
     };
 }
 exports.SelectedCellsPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(SelectedCellsPopupComponent);

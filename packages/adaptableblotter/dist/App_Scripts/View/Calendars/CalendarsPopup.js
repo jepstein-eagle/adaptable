@@ -68,7 +68,7 @@ class CalendarsPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         CurrentCalendar: state.Calendar.CurrentCalendar,
-        AvailableCalendars: state.Calendar.AvailableCalendars
+        AvailableCalendars: state.System.AvailableCalendars
     };
 }
 function mapDispatchToProps(dispatch) {

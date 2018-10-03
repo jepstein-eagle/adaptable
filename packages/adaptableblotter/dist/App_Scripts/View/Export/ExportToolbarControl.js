@@ -5,6 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 //import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
@@ -89,14 +90,14 @@ function mapStateToProps(state, ownProps) {
     return {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
-        LiveReports: state.Export.CurrentLiveReports,
+        LiveReports: state.System.CurrentLiveReports,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onApplyExport: (Report, exportDestination) => dispatch(ExportRedux.ExportApply(Report, exportDestination)),
         onSelectReport: (Report) => dispatch(ExportRedux.ReportSelect(Report)),
-        onReportStopLive: (Report, exportDestination) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
+        onReportStopLive: (Report, exportDestination) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
         onNewReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "New")),
         onEditReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "Edit")),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

@@ -35,7 +35,7 @@ var ArrayExtensions;
     }
     ArrayExtensions.IsNullOrEmpty = IsNullOrEmpty;
     function IsNotNullOrEmpty(arrayToCheck) {
-        return !ArrayExtensions.IsNullOrEmpty(arrayToCheck);
+        return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
     }
     ArrayExtensions.IsNotNullOrEmpty = IsNotNullOrEmpty;
     function moveArray(array, from, to) {

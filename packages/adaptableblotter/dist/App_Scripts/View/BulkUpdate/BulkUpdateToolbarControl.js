@@ -4,6 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const BulkUpdateRedux = require("../../Redux/ActionsReducers/BulkUpdateRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
@@ -117,14 +118,14 @@ class BulkUpdateToolbarControlComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        IsValidSelection: state.BulkUpdate.IsValidSelection,
-        PreviewInfo: state.BulkUpdate.PreviewInfo,
+        IsValidSelection: state.System.IsValidBulkUpdateSelection,
+        PreviewInfo: state.System.BulkUpdatePreviewInfo,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onBulkUpdateValueChange: (value) => dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),
-        onBulkUpdateCheckSelectedCells: () => dispatch(BulkUpdateRedux.BulkUpdateCheckCellSelection()),
+        onBulkUpdateCheckSelectedCells: () => dispatch(SystemRedux.BulkUpdateCheckCellSelection()),
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),

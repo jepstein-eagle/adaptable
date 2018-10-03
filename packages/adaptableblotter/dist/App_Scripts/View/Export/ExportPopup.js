@@ -5,6 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const Enums_1 = require("../../Core/Enums");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -88,14 +89,14 @@ function mapStateToProps(state, ownProps) {
     return {
         Reports: state.Export.Reports,
         CurrentReport: state.Export.CurrentReport,
-        LiveReports: state.Export.CurrentLiveReports,
+        LiveReports: state.System.CurrentLiveReports,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onApplyExport: (value, exportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
         onAddUpdateReport: (Index, Report) => dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
-        onReportStopLive: (Report, exportDestination) => dispatch(ExportRedux.ReportStopLive(Report, exportDestination)),
+        onReportStopLive: (Report, exportDestination) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
     };
 }

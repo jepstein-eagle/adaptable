@@ -23,7 +23,7 @@ var StringExtensions;
     }
     StringExtensions.IsNullOrEmpty = IsNullOrEmpty;
     function IsNotNullOrEmpty(stringToCheck) {
-        return !StringExtensions.IsNullOrEmpty(stringToCheck);
+        return StringExtensions.IsNotNull(stringToCheck) && StringExtensions.IsNotEmpty(stringToCheck);
     }
     StringExtensions.IsNotNullOrEmpty = IsNotNullOrEmpty;
     function PlaceSpaceBetweenCapitalisedWords(stringToCheck) {
@@ -35,7 +35,7 @@ var StringExtensions;
     }
     StringExtensions.RemoveTrailingComma = RemoveTrailingComma;
     function ToLowerCase(stringToCheck) {
-        return (stringToCheck == null) ? stringToCheck : stringToCheck.toLowerCase();
+        return (StringExtensions.IsNullOrEmpty(stringToCheck)) ? stringToCheck : stringToCheck.toLowerCase();
     }
     StringExtensions.ToLowerCase = ToLowerCase;
 })(StringExtensions = exports.StringExtensions || (exports.StringExtensions = {}));

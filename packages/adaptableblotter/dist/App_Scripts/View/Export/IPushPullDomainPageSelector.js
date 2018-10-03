@@ -64,7 +64,7 @@ function mapStateToProps(state, ownProps) {
     return {
         IPPDomainsPages: state.Export.IPPDomainsPages,
         ErrorMsg: state.Export.ErrorMsg,
-        LiveReports: state.Export.CurrentLiveReports,
+        LiveReports: state.System.CurrentLiveReports,
     };
 }
 function mapDispatchToProps(dispatch) {

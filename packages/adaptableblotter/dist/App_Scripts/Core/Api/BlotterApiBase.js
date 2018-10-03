@@ -15,8 +15,7 @@ const CalendarRedux = require("../../Redux/ActionsReducers/CalendarRedux");
 const ThemeRedux = require("../../Redux/ActionsReducers/ThemeRedux");
 const CustomSortRedux = require("../../Redux/ActionsReducers/CustomSortRedux");
 const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
-const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
-const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const FormatColumnRedux = require("../../Redux/ActionsReducers/FormatColumnRedux");
@@ -395,32 +394,33 @@ class BlotterApiBase {
     // System Status api Methods
     systemStatusSet(statusMessage, statusColour) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: statusColour };
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus));
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
     systemStatusSetRed(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Red };
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus));
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
     systemStatusSetAmber(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Amber };
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus));
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
     systemStatusSetGreen(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Green };
-        this.dispatchAction(GridRedux.GridSetSystemStatus(systemStatus));
+        this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
     systemStatusClear() {
-        this.dispatchAction(GridRedux.GridClearSystemStatus());
+        this.dispatchAction(SystemRedux.SystemClearHealthStatus());
     }
     // Alerts api Methods
     alertShow(alertHeader, alertMessage, MessageType, showAsPopup) {
+        let maxAlerts = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert.MaxAlertsInStore;
         let MessageTypeEnum = MessageType;
         let alert = {
             Header: alertHeader,
             Msg: alertMessage,
             MessageType: MessageTypeEnum
         };
-        this.dispatchAction(AlertRedux.AlertAdd(alert));
+        this.dispatchAction(SystemRedux.SystemAlertAdd(alert, maxAlerts));
         if (showAsPopup) {
             this.dispatchAction(PopupRedux.PopupShowAlert(alert));
         }
@@ -446,7 +446,7 @@ class BlotterApiBase {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports;
     }
     exportLiveReportsGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.CurrentLiveReports;
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
     }
     // Events
     onSearchedChanged() {

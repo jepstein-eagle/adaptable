@@ -5,6 +5,7 @@ const react_redux_1 = require("react-redux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const SelectedCellsRedux = require("../../Redux/ActionsReducers/SelectedCellsRedux");
+const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
@@ -77,13 +78,13 @@ function mapStateToProps(state, ownProps) {
     return {
         SelectedCellInfo: state.Grid.SelectedCellInfo,
         SelectedCellOperation: state.SelectedCells.SelectedCellOperation,
-        SelectedCellSummary: state.SelectedCells.SelectedCellSummary
+        SelectedCellSummary: state.Grid.SelectedCellSummary
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onSelectedCellsOperationChange: (SelectedCellOperation) => dispatch(SelectedCellsRedux.SelectedCellsChangeOperation(SelectedCellOperation)),
-        onSelectedCellsCreateSummary: () => dispatch(SelectedCellsRedux.SelectedCellCreateSummary()),
+        onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SelectedCellsPopup, isReadOnly))
     };

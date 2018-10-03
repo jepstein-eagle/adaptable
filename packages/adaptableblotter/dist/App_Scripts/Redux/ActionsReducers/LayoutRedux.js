@@ -31,8 +31,8 @@ exports.LayoutReducer = (state = initialLayoutState, action) => {
     let index;
     let layouts;
     switch (action.type) {
-        case exports.LAYOUT_PRESAVE:
-            return state;
+        //  case LAYOUT_PRESAVE:
+        //      return state
         case exports.LAYOUT_SELECT:
             return Object.assign({}, state, { CurrentLayout: action.LayoutName });
         case exports.LAYOUT_ADD_UPDATE:

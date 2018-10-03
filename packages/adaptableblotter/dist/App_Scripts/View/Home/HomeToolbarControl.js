@@ -98,7 +98,7 @@ class HomeToolbarControlComponent extends React.Component {
                 let warning = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: Enums_1.MessageType.Info
+                    MessageType: Enums_1.MessageType.Warning
                 };
                 this.props.onShowStatusMessage(warning);
                 return;
@@ -106,7 +106,7 @@ class HomeToolbarControlComponent extends React.Component {
                 let error = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: Enums_1.MessageType.Info
+                    MessageType: Enums_1.MessageType.Error
                 };
                 this.props.onShowStatusMessage(error);
                 return;
@@ -151,7 +151,7 @@ function mapStateToProps(state, ownProps) {
         MenuState: state.Menu,
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
-        SystemStatus: state.Grid.SystemStatus
+        SystemStatus: state.System.SystemStatus
     };
 }
 function mapDispatchToProps(dispatch) {

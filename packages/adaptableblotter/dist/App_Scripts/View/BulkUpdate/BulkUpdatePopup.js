@@ -4,6 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const BulkUpdateRedux = require("../../Redux/ActionsReducers/BulkUpdateRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const Enums_1 = require("../../Core/Enums");
@@ -135,13 +136,13 @@ class BulkUpdatePopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
-        PreviewInfo: state.BulkUpdate.PreviewInfo,
+        PreviewInfo: state.System.BulkUpdatePreviewInfo,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onBulkUpdateValueChange: (value) => dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),
-        onBulkUpdateCheckSelectedCells: () => dispatch(BulkUpdateRedux.BulkUpdateCheckCellSelection()),
+        onBulkUpdateCheckSelectedCells: () => dispatch(SystemRedux.BulkUpdateCheckCellSelection()),
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     };

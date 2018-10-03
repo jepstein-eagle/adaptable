@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup } from '../../../Core/Interface/IMessage';
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert } from '../../../Core/Interface/IMessage';
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -7,14 +7,21 @@ import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } 
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
+export interface SystemState {
+    SystemStatus: ISystemStatus;
+    Alerts: IAlert[];
+    AvailableCalendars: ICalendar[];
+    CurrentLiveReports: ILiveReport[];
+    IsValidSmartEditSelection: boolean;
+    SmartEditPreviewInfo: IPreviewInfo;
+    IsValidBulkUpdateSelection: boolean;
+    BulkUpdatePreviewInfo: IPreviewInfo;
+}
 export interface GridState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
-    BlotterRestrictions: string[];
-    SystemStatus: ISystemStatus;
     SelectedCellInfo: ISelectedCellInfo;
-    LeftPinnedColumns: string[];
-    RightPinnedColumns: string[];
+    SelectedCellSummary: ISelectedCellSummmary;
 }
 export interface MenuState {
     MenuItems: IMenuItem[];
@@ -32,11 +39,6 @@ export interface TeamSharingState {
     Activated: boolean;
     SharedEntities: ISharedEntity[];
 }
-export interface BulkUpdateState {
-    BulkUpdateValue: string;
-    IsValidSelection: boolean;
-    PreviewInfo: IPreviewInfo;
-}
 export interface EntitlementsState {
     FunctionEntitlements: IEntitlement[];
 }
@@ -47,6 +49,16 @@ export interface UserInterfaceState {
     ColumnCategories: IColumnCategory[];
 }
 export interface ApplicationState {
+}
+export interface AlertState {
+    AlertDefinitions: IAlertDefinition[];
+    MaxAlertsInStore: number;
+}
+export interface BulkUpdateState {
+    BulkUpdateValue: string;
+}
+export interface CalendarState {
+    CurrentCalendar: string;
 }
 export interface QuickSearchState {
     QuickSearchText: string;
@@ -66,29 +78,11 @@ export interface DashboardState {
     HomeToolbarTitle: string;
     ApplicationToolbarTitle: string;
 }
-export interface SmartEditState {
-    SmartEditValue: number;
-    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
-    IsValidSelection: boolean;
-    PreviewInfo: IPreviewInfo;
-}
-export interface SelectedCellsState {
-    SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
-    SelectedCellSummary: ISelectedCellSummmary;
-}
-export interface CalendarState {
-    CurrentCalendar: string;
-    AvailableCalendars: ICalendar[];
-}
-export interface ThemeState {
-    CurrentTheme: string;
-    SystemThemes: string[];
-    UserThemes: IUserTheme[];
-}
-export interface AlertState {
-    AlertDefinitions: IAlertDefinition[];
-    MaxAlertsInStore: number;
-    Alerts: any[];
+export interface ExportState {
+    IPPDomainsPages: IPPDomain[];
+    CurrentReport: string;
+    Reports: IReport[];
+    ErrorMsg: string;
 }
 export interface AdvancedSearchState {
     AdvancedSearches: IAdvancedSearch[];
@@ -117,13 +111,6 @@ export interface ShortcutState {
 export interface PlusMinusState {
     PlusMinusRules: IPlusMinusRule[];
 }
-export interface ExportState {
-    IPPDomainsPages: IPPDomain[];
-    CurrentReport: string;
-    CurrentLiveReports: ILiveReport[];
-    Reports: IReport[];
-    ErrorMsg: string;
-}
 export interface FlashingCellState {
     FlashingCells: IFlashingCell[];
 }
@@ -144,4 +131,16 @@ export interface ChartState {
     ChartDefinitions: IChartDefinition[];
     CurrentChartName: string;
     ChartData: any;
+}
+export interface SmartEditState {
+    SmartEditValue: number;
+    MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
+}
+export interface ThemeState {
+    CurrentTheme: string;
+    SystemThemes: string[];
+    UserThemes: IUserTheme[];
+}
+export interface SelectedCellsState {
+    SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
 }

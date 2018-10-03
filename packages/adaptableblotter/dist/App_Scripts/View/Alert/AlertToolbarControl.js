@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
@@ -57,13 +57,13 @@ class AlertToolbarControlComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         AlertDefinitions: state.Alert.AlertDefinitions,
-        Alerts: state.Alert.Alerts,
+        Alerts: state.System.Alerts,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onDeleteAlert: (index) => dispatch(AlertRedux.AlertDelete(index)),
-        onDeleteAllAlert: () => dispatch(AlertRedux.AlertDeleteAll()),
+        onDeleteAlert: (index) => dispatch(SystemRedux.SystemAlertDelete(index)),
+        onDeleteAllAlert: () => dispatch(SystemRedux.SystemAlertDeleteAll()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AlertPopup, isReadOnly))
     };

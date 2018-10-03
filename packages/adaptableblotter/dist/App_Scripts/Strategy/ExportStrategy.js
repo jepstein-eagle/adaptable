@@ -4,7 +4,7 @@ const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
-const ExportRedux = require("../Redux/ActionsReducers/ExportRedux");
+const SystemRedux = require("../Redux/ActionsReducers/SystemRedux");
 const Enums_1 = require("../Core/Enums");
 const Helper_1 = require("../Core/Helpers/Helper");
 const ReportHelper_1 = require("../Core/Helpers/ReportHelper");
@@ -12,6 +12,7 @@ const OpenfinHelper_1 = require("../Core/Helpers/OpenfinHelper");
 const _ = require("lodash");
 const iPushPullHelper_1 = require("../Core/Helpers/iPushPullHelper");
 const AdaptableBlotterLogger_1 = require("../Core/Helpers/AdaptableBlotterLogger");
+const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.ExportStrategyId, blotter);
@@ -20,22 +21,22 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
         OpenfinHelper_1.OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage("Excel closed stopping all Live Excel");
-            this.ExportState.CurrentLiveReports.forEach(cle => {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
+            this.CurrentLiveReports.forEach(cle => {
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
             });
         });
         OpenfinHelper_1.OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
-            let liveReport = this.ExportState.CurrentLiveReports.find(x => x.WorkbookName == workbook.name);
+            let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbook.name);
             if (liveReport) {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
             }
         });
         OpenfinHelper_1.OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage("Workbook Saved", workbookSavedEvent);
-            let liveReport = this.ExportState.CurrentLiveReports.find(x => x.WorkbookName == workbookSavedEvent.OldName);
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, Enums_1.ExportDestination.OpenfinExcel));
+            let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbookSavedEvent.OldName);
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, Enums_1.ExportDestination.OpenfinExcel));
         });
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, event) => {
             this.throttledRecomputeAndSendLiveExcelEvent();
@@ -44,8 +45,8 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.throttledRecomputeAndSendLiveExcelEvent();
         });
         this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
-            if (this.ExportState && this.ExportState.CurrentLiveReports.length > 0) {
-                let liveReport = this.ExportState.CurrentLiveReports.find(x => x.Report == ReportHelper_1.ReportHelper.SELECTED_CELLS_REPORT);
+            if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
+                let liveReport = this.CurrentLiveReports.find(x => x.Report == ReportHelper_1.ReportHelper.SELECTED_CELLS_REPORT);
                 if (liveReport) {
                     this.throttledRecomputeAndSendLiveExcelEvent();
                 }
@@ -61,11 +62,11 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.throttledRecomputeAndSendLiveExcelEvent();
             return;
         }
-        if (this.ExportState && this.ExportState.CurrentLiveReports.length > 0) {
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
             this.isSendingData = true;
             let ippStyle = this.blotter.getIPPStyle();
             let promises = [];
-            this.ExportState.CurrentLiveReports.forEach(cle => {
+            this.CurrentLiveReports.forEach(cle => {
                 if (cle.ExportDestination == Enums_1.ExportDestination.OpenfinExcel) {
                     promises.push(Promise.resolve().then(() => {
                         return new Promise((resolve, reject) => {
@@ -110,7 +111,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     })
                         .catch((reason) => {
                         AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
-                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
+                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
                         this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
@@ -134,7 +135,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     })
                         .catch((reason) => {
                         AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
-                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.iPushPull));
+                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.iPushPull));
                         this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
@@ -159,13 +160,13 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             case Enums_1.ExportDestination.OpenfinExcel:
                 OpenfinHelper_1.OpenfinHelper.initOpenFinExcel() //.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
                     .then((workbookName) => {
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStartLive(ReportName, workbookName, Enums_1.ExportDestination.OpenfinExcel));
+                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(ReportName, workbookName, Enums_1.ExportDestination.OpenfinExcel));
                     setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent(); }, 500);
                 });
                 break;
             case Enums_1.ExportDestination.iPushPull:
                 iPushPullHelper_1.iPushPullHelper.LoadPage(folder, page).then(() => {
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(ExportRedux.ReportStartLive(ReportName, page, Enums_1.ExportDestination.iPushPull));
+                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(ReportName, page, Enums_1.ExportDestination.iPushPull));
                     setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent(); }, 500);
                 });
                 break;
@@ -225,6 +226,9 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Export, this.ExportState);
             }
+        }
+        if (this.CurrentLiveReports != this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
+            this.CurrentLiveReports = this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
         }
     }
 }
