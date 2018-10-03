@@ -76,6 +76,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
+        this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor
@@ -167,7 +168,7 @@ class AdaptableBlotter {
         if (vendorGridState) {
             let columnState = JSON.parse(vendorGridState);
             if (columnState) {
-                this.tempSetColumnStateFixForBuild(this.gridOptions.columnApi, columnState, "api");
+                this.setColumnState(this.gridOptions.columnApi, columnState, "api");
             }
         }
     }
@@ -221,12 +222,12 @@ class AdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId);
             if (!col.isVisible()) {
-                this.tempSetColumnVisibleFixForBuild(this.gridOptions.columnApi, col, true, "api");
+                this.setColumnVisible(this.gridOptions.columnApi, col, true, "api");
             }
-            this.tempMoveColumnFixForBuild(this.gridOptions.columnApi, col, startIndex + index, "api");
+            this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, "api");
         });
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
-            this.tempSetColumnVisibleFixForBuild(this.gridOptions.columnApi, col, false, "api");
+            this.setColumnVisible(this.gridOptions.columnApi, col, false, "api");
         }));
         // we need to do this to make sure agGrid and Blotter column collections are in sync
         this.setColumnIntoStore();
@@ -284,22 +285,24 @@ class AdaptableBlotter {
                     || quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRowAndHighlightCell)) {
                 let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                 let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
-                let stringValueLowerCase = displayValue.toLowerCase();
-                switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
-                    case Enums_1.LeafExpressionOperator.Contains:
-                        {
-                            if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                return true;
+                if (displayValue) {
+                    let stringValueLowerCase = displayValue.toLowerCase();
+                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
+                        case Enums_1.LeafExpressionOperator.Contains:
+                            {
+                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                    return true;
+                                }
                             }
-                        }
-                        break;
-                    case Enums_1.LeafExpressionOperator.StartsWith:
-                        {
-                            if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                return true;
+                            break;
+                        case Enums_1.LeafExpressionOperator.StartsWith:
+                            {
+                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                    return true;
+                                }
                             }
-                        }
-                        break;
+                            break;
+                    }
                 }
             }
             return false;
@@ -640,9 +643,11 @@ class AdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue;
+        let foundRow = false;
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+            if (!foundRow && id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
+                foundRow = true;
             }
         });
         return returnValue;
@@ -650,6 +655,9 @@ class AdaptableBlotter {
     getDisplayValueFromRecord(row, columnId) {
         //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
+        if (row == null) {
+            return "";
+        }
         let rawValue = this.gridOptions.api.getValue(columnId, row);
         return this.getDisplayValueFromRawValue(columnId, rawValue);
     }
@@ -837,7 +845,7 @@ class AdaptableBlotter {
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridAddColumn(hiddenCol));
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
-        if (this.isFilterable()) {
+        if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn);
         }
         let conditionalStyleagGridStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId);
@@ -1103,23 +1111,25 @@ class AdaptableBlotter {
                     && quickSearchState.DisplayAction != Enums_1.DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                     for (let column of columns.filter(c => c.Visible)) {
-                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId).toLowerCase();
-                        let stringValueLowerCase = displayValue.toLowerCase();
-                        switch (quickSearchState.Operator) {
-                            case Enums_1.LeafExpressionOperator.Contains:
-                                {
-                                    if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                        return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
+                        if (displayValue != null) {
+                            let stringValueLowerCase = displayValue.toLowerCase();
+                            switch (quickSearchState.Operator) {
+                                case Enums_1.LeafExpressionOperator.Contains:
+                                    {
+                                        if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                        }
                                     }
-                                }
-                                break;
-                            case Enums_1.LeafExpressionOperator.StartsWith:
-                                {
-                                    if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                        return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                    break;
+                                case Enums_1.LeafExpressionOperator.StartsWith:
+                                    {
+                                        if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                        }
                                     }
-                                }
-                                break;
+                                    break;
+                            }
                         }
                     }
                     return false;
@@ -1128,11 +1138,13 @@ class AdaptableBlotter {
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
         // if (this.isFilterable()) {
-        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-            this.createFilterWrapper(col);
-        });
+        if (this.BlotterOptions.useAdaptableBlotterFilterForm) {
+            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+                this.createFilterWrapper(col);
+            });
+        }
         // }
-        if (this.gridOptions.floatingFilter) {
+        if (this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterQuickFilter) {
             //      if (this.isFilterable()) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
@@ -1259,13 +1271,15 @@ class AdaptableBlotter {
         }
         return null; // need this?
     }
-    tempSetColumnVisibleFixForBuild(columnApi, col, isVisible, columnEventType) {
+    // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to 
+    // not sure why as its not in the api
+    setColumnVisible(columnApi, col, isVisible, columnEventType) {
         columnApi.setColumnVisible(col, isVisible, columnEventType);
     }
-    tempMoveColumnFixForBuild(columnApi, col, index, columnEventType) {
+    moveColumn(columnApi, col, index, columnEventType) {
         columnApi.moveColumn(col, index, columnEventType);
     }
-    tempSetColumnStateFixForBuild(columnApi, columnState, columnEventType) {
+    setColumnState(columnApi, columnState, columnEventType) {
         columnApi.setColumnState(columnState, columnEventType);
     }
     isSelectable() {

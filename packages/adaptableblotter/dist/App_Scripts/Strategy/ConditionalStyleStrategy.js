@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const Enums_1 = require("../Core/Enums");
 class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.ConditionalStyleStrategyId, blotter);
@@ -16,6 +17,9 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
             this.InitStyles();
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.ConditionalStyle, this.ConditionalStyleState);
+            }
         }
     }
     addContextMenuItem(columnId) {

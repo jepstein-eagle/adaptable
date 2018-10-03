@@ -34,4 +34,8 @@ var StringExtensions;
         return stringToCheck.replace(/,\s*$/, "");
     }
     StringExtensions.RemoveTrailingComma = RemoveTrailingComma;
+    function ToLowerCase(stringToCheck) {
+        return (stringToCheck == null) ? stringToCheck : stringToCheck.toLowerCase();
+    }
+    StringExtensions.ToLowerCase = ToLowerCase;
 })(StringExtensions = exports.StringExtensions || (exports.StringExtensions = {}));

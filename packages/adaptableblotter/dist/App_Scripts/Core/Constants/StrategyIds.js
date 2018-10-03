@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Strategy Ids
 exports.AboutStrategyId = "About";
+exports.AdvancedSearchStrategyId = "AdvancedSearch";
 exports.AlertStrategyId = "Alert";
 exports.ApplicationStrategyId = "Application";
-exports.AdvancedSearchStrategyId = "AdvancedSearch";
 exports.BulkUpdateStrategyId = "BulkUpdate";
 exports.CalculatedColumnStrategyId = "CalculatedColumn";
 exports.CalendarStrategyId = "Calendar";
@@ -16,6 +16,7 @@ exports.ColumnInfoStrategyId = "ColumnInfo";
 exports.ConditionalStyleStrategyId = "ConditionalStyle";
 exports.CustomSortStrategyId = "CustomSort";
 exports.DashboardStrategyId = "Dashboard";
+exports.DataManagementStrategyId = "UserDataManagement";
 exports.DataSourceStrategyId = "DataSource";
 exports.ExportStrategyId = "Export";
 exports.FlashingCellsStrategyId = "FlashingCells";
@@ -24,19 +25,18 @@ exports.HomeStrategyId = "Home";
 exports.LayoutStrategyId = "Layout";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
-exports.ShortcutStrategyId = "Shortcut";
 exports.SelectColumnStrategyId = "SelectColumn";
 exports.SelectedCellsStrategyId = "SelectedCells";
+exports.ShortcutStrategyId = "Shortcut";
 exports.SmartEditStrategyId = "SmartEdit";
 exports.TeamSharingStrategyId = "TeamSharing";
 exports.ThemeStrategyId = "Theme";
-exports.DataManagementStrategyId = "UserDataManagement";
 exports.UserFilterStrategyId = "UserFilter";
 // Strategy Names
 exports.AboutStrategyName = "About";
 exports.AlertStrategyName = "Alert";
-exports.ApplicationStrategyName = "Application";
 exports.AdvancedSearchStrategyName = "Advanced Search";
+exports.ApplicationStrategyName = "Application";
 exports.BulkUpdateStrategyName = "Bulk Update";
 exports.CalculatedColumnStrategyName = "Calculated Column";
 exports.CalendarStrategyName = "Calendar";
@@ -56,9 +56,9 @@ exports.FormatColumnStrategyName = "Format Column";
 exports.LayoutStrategyName = "Layout";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
-exports.ShortcutStrategyName = "Shortcut";
 exports.SelectColumnStrategyName = "Select Column";
 exports.SelectedCellsStrategyName = "Selected Cells";
+exports.ShortcutStrategyName = "Shortcut";
 exports.SmartEditStrategyName = "Smart Edit";
 exports.TeamSharingStrategyName = "Team Sharing";
 exports.ThemeStrategyName = "Theme";
@@ -79,8 +79,8 @@ exports.ColumnInfoGlyph = "italic";
 exports.ConditionalStyleGlyph = "tint";
 exports.CustomSortGlyph = "sort-by-attributes";
 exports.DashboardGlyph = "dashboard";
-exports.DataSourceGlyph = "book";
 exports.DataManagementGlyph = "folder-close";
+exports.DataSourceGlyph = "book";
 exports.ExportGlyph = "export";
 exports.FlashingCellGlyph = "flash";
 exports.FormatColumnGlyph = "picture";
@@ -88,9 +88,9 @@ exports.FunctionsGlyph = "home";
 exports.LayoutGlyph = "th";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
-exports.ShortcutGlyph = "road";
 exports.SelectColumnGlyph = "compressed";
 exports.SelectedCellsGlyph = "th-large";
+exports.ShortcutGlyph = "road";
 exports.SmartEditGlyph = "pencil";
 exports.TeamSharingGlyph = "share";
 exports.ThemeGlyph = "leaf";
@@ -99,10 +99,12 @@ function getIdForStrategyName(strategyName) {
     switch (strategyName) {
         case exports.AboutStrategyName:
             return exports.AboutStrategyId;
-        case exports.ApplicationStrategyName:
-            return exports.ApplicationStrategyId;
+        case exports.AlertStrategyName:
+            return exports.AlertStrategyId;
         case exports.AdvancedSearchStrategyName:
             return exports.AdvancedSearchStrategyId;
+        case exports.ApplicationStrategyName:
+            return exports.ApplicationStrategyId;
         case exports.BulkUpdateStrategyName:
             return exports.BulkUpdateStrategyId;
         case exports.CalculatedColumnStrategyName:
@@ -115,6 +117,8 @@ function getIdForStrategyName(strategyName) {
             return exports.ChartStrategyId;
         case exports.ColumnChooserStrategyName:
             return exports.ColumnChooserStrategyId;
+        case exports.ColumnFilterStrategyName:
+            return exports.ColumnFilterStrategyId;
         case exports.ColumnInfoStrategyName:
             return exports.ColumnInfoStrategyId;
         case exports.ConditionalStyleStrategyName:
@@ -123,14 +127,12 @@ function getIdForStrategyName(strategyName) {
             return exports.CustomSortStrategyId;
         case exports.DashboardStrategyName:
             return exports.DashboardStrategyId;
+        case exports.DataManagementStrategyName:
+            return exports.DataManagementStrategyId;
         case exports.DataSourceStrategyName:
             return exports.DataSourceStrategyId;
         case exports.ExportStrategyName:
             return exports.ExportStrategyId;
-        case exports.UserFilterStrategyName:
-            return exports.UserFilterStrategyId;
-        case exports.ColumnFilterStrategyName:
-            return exports.ColumnFilterStrategyId;
         case exports.FlashingCellsStrategyName:
             return exports.FlashingCellsStrategyId;
         case exports.FormatColumnStrategyName:
@@ -141,20 +143,20 @@ function getIdForStrategyName(strategyName) {
             return exports.PlusMinusStrategyId;
         case exports.QuickSearchStrategyName:
             return exports.QuickSearchStrategyId;
-        case exports.ShortcutStrategyName:
-            return exports.ShortcutStrategyId;
         case exports.SelectColumnStrategyName:
             return exports.SelectColumnStrategyId;
         case exports.SelectedCellsStrategyName:
             return exports.SelectedCellsStrategyId;
+        case exports.ShortcutStrategyName:
+            return exports.ShortcutStrategyId;
         case exports.SmartEditStrategyName:
             return exports.SmartEditStrategyId;
         case exports.TeamSharingStrategyName:
             return exports.TeamSharingStrategyId;
         case exports.ThemeStrategyName:
             return exports.ThemeStrategyId;
-        case exports.DataManagementStrategyName:
-            return exports.DataManagementStrategyId;
+        case exports.UserFilterStrategyName:
+            return exports.UserFilterStrategyId;
     }
 }
 exports.getIdForStrategyName = getIdForStrategyName;
@@ -164,10 +166,10 @@ function getNameForStrategyId(strategyID) {
             return exports.AboutStrategyName;
         case exports.AlertStrategyId:
             return exports.AlertStrategyName;
-        case exports.ApplicationStrategyId:
-            return exports.ApplicationStrategyName;
         case exports.AdvancedSearchStrategyId:
             return exports.AdvancedSearchStrategyName;
+        case exports.ApplicationStrategyId:
+            return exports.ApplicationStrategyName;
         case exports.BulkUpdateStrategyId:
             return exports.BulkUpdateStrategyName;
         case exports.CalculatedColumnStrategyId:
@@ -180,10 +182,10 @@ function getNameForStrategyId(strategyID) {
             return exports.ChartStrategyName;
         case exports.ColumnChooserStrategyId:
             return exports.ColumnChooserStrategyName;
-        case exports.ColumnInfoStrategyId:
-            return exports.ColumnInfoStrategyName;
         case exports.ColumnFilterStrategyId:
             return exports.ColumnFilterStrategyName;
+        case exports.ColumnInfoStrategyId:
+            return exports.ColumnInfoStrategyName;
         case exports.ConditionalStyleStrategyId:
             return exports.ConditionalStyleStrategyName;
         case exports.CustomSortStrategyId:
@@ -206,12 +208,12 @@ function getNameForStrategyId(strategyID) {
             return exports.PlusMinusStrategyName;
         case exports.QuickSearchStrategyId:
             return exports.QuickSearchStrategyName;
-        case exports.ShortcutStrategyId:
-            return exports.ShortcutStrategyName;
         case exports.SelectColumnStrategyId:
             return exports.SelectColumnStrategyName;
         case exports.SelectedCellsStrategyId:
             return exports.SelectedCellsStrategyName;
+        case exports.ShortcutStrategyId:
+            return exports.ShortcutStrategyName;
         case exports.SmartEditStrategyId:
             return exports.SmartEditStrategyName;
         case exports.TeamSharingStrategyId:
@@ -227,6 +229,8 @@ function getGhyphiconForStrategyId(strategyID) {
     switch (strategyID) {
         case exports.AboutStrategyId:
             return exports.AboutGlyph;
+        case exports.AlertStrategyId:
+            return exports.AlertGlyph;
         case exports.AdvancedSearchStrategyId:
             return exports.AdvancedSearchGlyph;
         case exports.ApplicationStrategyId:

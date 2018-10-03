@@ -12,6 +12,14 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyIds.SmartEditGlyph);
     }
+    InitState() {
+        if (this.SmartEditState != this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit) {
+            this.SmartEditState = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.SmartEdit, this.SmartEditState);
+            }
+        }
+    }
     ApplySmartEdit(newValues) {
         this.blotter.setValueBatch(newValues);
     }

@@ -18,5 +18,7 @@ exports.DefaultAdaptableBlotterOptions = {
     autoSaveLayouts: false,
     getColumnValues: null,
     ignoreCaseInQueries: true,
-    useDefaultVendorGridThemes: true
+    useDefaultVendorGridThemes: true,
+    useAdaptableBlotterFilterForm: true,
+    useAdaptableBlotterQuickFilter: true
 };

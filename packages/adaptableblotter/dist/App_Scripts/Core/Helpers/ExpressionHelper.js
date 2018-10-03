@@ -468,19 +468,19 @@ var ExpressionHelper;
             case Enums_2.DataType.Object:
             case Enums_2.DataType.String:
                 if (blotter.BlotterOptions.ignoreCaseInQueries) {
-                    rangeEvaluation.newValue = rangeEvaluation.newValue.toLowerCase();
+                    rangeEvaluation.newValue = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     (rangeExpression.Operand1 == null) ? null :
                         (blotter.BlotterOptions.ignoreCaseInQueries) ?
-                            rangeExpression.Operand1.toLowerCase() :
+                            StringExtensions_1.StringExtensions.ToLowerCase(rangeExpression.Operand1) :
                             rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     (rangeExpression.Operand2 == null) ? null :
                         (blotter.BlotterOptions.ignoreCaseInQueries) ?
-                            rangeExpression.Operand2.toLowerCase() :
+                            StringExtensions_1.StringExtensions.ToLowerCase(rangeExpression.Operand2) :
                             rangeExpression.Operand2;
                 break;
         }
@@ -488,6 +488,9 @@ var ExpressionHelper;
     }
     ExpressionHelper.GetRangeEvaluation = GetRangeEvaluation;
     function TestRangeEvaluation(rangeEvaluation) {
+        if (rangeEvaluation.newValue == null) {
+            return false;
+        }
         switch (rangeEvaluation.operator) {
             case Enums_1.LeafExpressionOperator.Equals:
                 return rangeEvaluation.newValue == rangeEvaluation.operand1;

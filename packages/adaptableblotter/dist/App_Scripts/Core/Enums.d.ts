@@ -136,6 +136,30 @@ export declare enum SearchChangedTrigger {
     DataChange = "DataChange",
     Sort = "Sort"
 }
+export declare enum StateChangedTrigger {
+    AdvancedSearch = "AdvancedSearch",
+    Alert = "Alert",
+    BulkUpdate = "BulkUpdate",
+    CalculatedColumn = "CalculatedColumn",
+    Calendar = "Calendar",
+    CellValidation = "CellValidation",
+    Chart = "Chart",
+    ColumnFilter = "ColumnFilter",
+    ConditionalStyle = "ConditionalStyle",
+    CustomSort = "CustomSort",
+    Dashboard = "Dashboard",
+    DataSource = "DataSource",
+    Export = "Export",
+    FlashingCell = "FlashingCell",
+    FormatColumn = "FormatColumn",
+    Layout = "Layout",
+    PlusMinus = "PlusMinus",
+    QuickSearch = "QuickSearch",
+    Shortcut = "Shortcut",
+    SmartEdit = "SmartEdit",
+    Theme = "Theme",
+    UserFilter = "UserFilter"
+}
 export declare enum Visibility {
     Minimised = "Minimised",
     Visible = "Visible",

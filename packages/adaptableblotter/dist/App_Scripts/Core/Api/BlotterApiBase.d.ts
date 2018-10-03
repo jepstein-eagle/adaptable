@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { IEvent } from "../Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from "./Interface/ServerSearch";
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport } from "./Interface/AdaptableBlotterObjects";
 import { IEntitlement } from "../Interface/Interfaces";
 import { ExportDestination } from "../Enums";
@@ -120,6 +120,7 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     exportReportsGetAll(): IReport[];
     exportLiveReportsGetAll(): ILiveReport[];
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
+    onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;
     onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     private dispatchAction;
     private checkItemExists;

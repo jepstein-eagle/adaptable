@@ -5,6 +5,7 @@ const StrategyIds = require("../Core/Constants/StrategyIds");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const themes_1 = require("../Styles/themes");
 const GeneralConstants = require("../Core/Constants/GeneralConstants");
+const Enums_1 = require("../Core/Enums");
 class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.ThemeStrategyId, blotter);
@@ -24,6 +25,9 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {
             this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.Theme, this.ThemeState);
+            }
             this.style.innerHTML = "";
             this.theme.href = "";
             switch (this.ThemeState.CurrentTheme) {

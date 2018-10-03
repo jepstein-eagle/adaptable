@@ -1,6 +1,6 @@
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from "./ServerSearch";
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
@@ -178,6 +178,11 @@ export interface IBlotterApi {
     * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
     */
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
+    /**
+    * Event fired whenever the state in the Blotter changes, providing full coverage of what triggered the change and what the new state for that function is.
+    * @returns IEvent<IAdaptableBlotter, IStateChangedEventArgs>
+    */
+    onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;
     /**
    * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.
    * Only fires when in a user layout and currently just passes the name of the layout.

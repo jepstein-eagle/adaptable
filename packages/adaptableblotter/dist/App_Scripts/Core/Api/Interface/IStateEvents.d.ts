@@ -2,19 +2,33 @@ import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./Adapta
 export interface IColumnStateChangedEventArgs {
     currentLayout: string;
 }
-/**
- * EventArgs sent as part of the onSearchedChanged Event
- */
-export interface ISearchChangedEventArgs {
+export interface IFDC3Schema {
     object: string;
     definition: string;
     version: string;
-    data: ISearchChangedData[];
 }
-export interface ISearchChangedData {
+export interface IStateChangedEventArgs extends IFDC3Schema {
+    data: IStateEventData[];
+}
+/**
+ * EventArgs sent as part of the onSearchedChanged Event
+ */
+export interface ISearchChangedEventArgs extends IFDC3Schema {
+    data: ISearchEventData[];
+}
+export interface IEventData {
     name: string;
     type: string;
+}
+export interface IStateEventData extends IEventData {
+    id: IStateChangedInfo;
+}
+export interface ISearchEventData extends IEventData {
     id: ISearchChangedInfo;
+}
+export interface IStateChangedInfo {
+    stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
+    state: any;
 }
 export interface ISearchChangedInfo {
     /**

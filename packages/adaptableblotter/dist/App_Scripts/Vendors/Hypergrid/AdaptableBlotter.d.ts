@@ -16,7 +16,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { ICalculatedColumn, IStyle } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
 import * as _ from 'lodash';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
@@ -55,6 +55,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private _onRefresh;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
+    StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     createMenu(): void;
     getPrimaryKeyValueFromRecord(record: any): any;

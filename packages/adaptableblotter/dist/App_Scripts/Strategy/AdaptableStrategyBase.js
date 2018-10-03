@@ -100,7 +100,7 @@ class AdaptableStrategyBase {
         }
         return true;
     }
-    publishServerSearch(searchChangedTrigger) {
+    publishSearchChanged(searchChangedTrigger) {
         let state = this.blotter.AdaptableBlotterStore.TheStore.getState();
         let dataSource = state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource);
         let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
@@ -121,7 +121,7 @@ class AdaptableStrategyBase {
             blotterSortState: blotterSortState,
             searchAsAtDate: new Date()
         };
-        let searchChangedData = {
+        let searchEventData = {
             name: "Adaptable Blotter",
             type: "Search Args",
             id: searchChangedInfo
@@ -130,10 +130,27 @@ class AdaptableStrategyBase {
             object: "fdc3-context",
             definition: "https://fdc3.org/context/1.0.0/",
             version: "1.0.0",
-            data: [searchChangedData]
+            data: [searchEventData]
         };
-        console.log(searchChangedArgs);
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
+    }
+    publishStateChanged(stateChangedTrigger, state) {
+        let stateChangedInfo = {
+            stateChangedTrigger: stateChangedTrigger,
+            state: state
+        };
+        let stateEventData = {
+            name: "Adaptable Blotter",
+            type: "State Args",
+            id: stateChangedInfo
+        };
+        let stateChangedArgs = {
+            object: "fdc3-context",
+            definition: "https://fdc3.org/context/1.0.0/",
+            version: "1.0.0",
+            data: [stateEventData]
+        };
+        //    this.blotter.StateChanged.Dispatch(this.blotter, stateChangedArgs);
     }
 }
 exports.AdaptableStrategyBase = AdaptableStrategyBase;

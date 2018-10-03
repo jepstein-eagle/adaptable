@@ -19,12 +19,15 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyIds.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyIds.ShortcutGlyph);
     }
     InitState() {
-        if (this.Shortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts) {
-            this.Shortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
+        if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {
+            this.ShortcutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.Shortcut, this.ShortcutState);
+            }
         }
     }
     handleKeyDown(keyEvent) {
-        if (this.Shortcuts && ArrayExtensions_1.ArrayExtensions.IsEmpty(this.Shortcuts)) {
+        if (this.ShortcutState.Shortcuts && ArrayExtensions_1.ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) {
             return;
         }
         let activeCell = this.blotter.getActiveCell();
@@ -39,7 +42,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             let valueToReplace;
             switch (columnDataType) {
                 case Enums_1.DataType.Number: {
-                    activeShortcut = this.Shortcuts.filter(s => s.ColumnType == Enums_1.DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase());
+                    activeShortcut = this.ShortcutState.Shortcuts.filter(s => s.ColumnType == Enums_1.DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase());
                     if (activeShortcut) {
                         let currentCellValue;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -55,7 +58,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     break;
                 }
                 case Enums_1.DataType.Date: {
-                    activeShortcut = this.Shortcuts.filter(s => s.ColumnType == Enums_1.DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase());
+                    activeShortcut = this.ShortcutState.Shortcuts.filter(s => s.ColumnType == Enums_1.DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase());
                     if (activeShortcut) {
                         // Date we ONLY replace so dont need to worry about replacing values
                         if (activeShortcut.IsDynamic) {

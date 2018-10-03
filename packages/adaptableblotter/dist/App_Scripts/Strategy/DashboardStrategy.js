@@ -24,11 +24,17 @@ class DashboardStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     InitState() {
+        if (this.DashboardState != this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard) {
+            this.DashboardState = this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.Dashboard, this.DashboardState);
+            }
+        }
         // none of this should be here - should be in a GridStrategy that cannot be hidden
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts;
             if (this.blotter.BlotterOptions.serverSearchOption == "AllSearchandSort") {
-                this.publishServerSearch(Enums_1.SearchChangedTrigger.Sort);
+                this.publishSearchChanged(Enums_1.SearchChangedTrigger.Sort);
             }
         }
         if (this.GridState != this.GetGridState()) {

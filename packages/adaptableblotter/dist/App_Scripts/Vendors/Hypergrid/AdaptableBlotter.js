@@ -82,6 +82,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
+        this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor

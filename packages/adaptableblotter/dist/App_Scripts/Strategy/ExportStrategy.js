@@ -222,6 +222,9 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.ExportState != this.blotter.AdaptableBlotterStore.TheStore.getState().Export) {
             this.ExportState = this.blotter.AdaptableBlotterStore.TheStore.getState().Export;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.Export, this.ExportState);
+            }
         }
     }
 }

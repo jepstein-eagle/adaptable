@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 export declare class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
-    private Shortcuts;
+    private ShortcutState;
     constructor(blotter: IAdaptableBlotter);
     protected addPopupMenuItem(): void;
     protected InitState(): void;

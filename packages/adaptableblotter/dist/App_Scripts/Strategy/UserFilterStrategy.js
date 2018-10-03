@@ -26,8 +26,11 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
                     || this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0) {
-                    this.publishServerSearch(Enums_1.SearchChangedTrigger.UserFilter);
+                    this.publishSearchChanged(Enums_1.SearchChangedTrigger.UserFilter);
                 }
+            }
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.UserFilter, this.userFilters);
             }
         }
     }

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyIds = require("../Core/Constants/StrategyIds");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const Enums_1 = require("../Core/Enums");
 class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.CustomSortStrategyId, blotter);
@@ -12,6 +13,9 @@ class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.removeCustomSorts();
             this.CustomSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
             this.applyCustomSorts();
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.CustomSort, this.CustomSorts);
+            }
         }
     }
     addPopupMenuItem() {

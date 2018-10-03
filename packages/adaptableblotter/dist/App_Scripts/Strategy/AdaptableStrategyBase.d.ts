@@ -3,7 +3,7 @@ import { IStrategy } from './Interface/IStrategy';
 import { IMenuItem } from '../Core/Interface/IMenu';
 import { Action } from 'redux';
 import { IEntitlement } from '../Core/Interface/Interfaces';
-import { SearchChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 export declare abstract class AdaptableStrategyBase implements IStrategy {
     Id: string;
     protected blotter: IAdaptableBlotter;
@@ -23,5 +23,6 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     createContextMenuItemShowPopup(Label: string, ComponentName: string, GlyphIcon: string, PopupParams?: string): void;
     addContextMenuItemToStore(menuItem: IMenuItem): void;
     canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType?: string): boolean;
-    publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void;
+    publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void;
+    publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: any): void;
 }

@@ -7,4 +7,5 @@ export declare module StringExtensions {
     function IsNotNullOrEmpty(stringToCheck: string): boolean;
     function PlaceSpaceBetweenCapitalisedWords(stringToCheck: string): string;
     function RemoveTrailingComma(stringToCheck: string): string;
+    function ToLowerCase(stringToCheck: string): string;
 }

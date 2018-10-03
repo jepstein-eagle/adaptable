@@ -13,7 +13,7 @@ import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { ICalculatedColumn, IGridSort } from '../Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { IChartService } from '../Services/Interface/IChartService';
 export interface IAdaptableBlotter {
@@ -38,6 +38,7 @@ export interface IAdaptableBlotter {
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
+    StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     createMenu(): void;
     getPrimaryKeyValueFromRecord(record: any): any;

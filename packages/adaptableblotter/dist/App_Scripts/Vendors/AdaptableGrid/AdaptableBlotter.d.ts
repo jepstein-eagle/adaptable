@@ -17,7 +17,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     private grid;
@@ -47,6 +47,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private _onSelectedCellsChanged;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
+    StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     private _onRefresh;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;

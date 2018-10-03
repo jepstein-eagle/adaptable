@@ -15,6 +15,9 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.AlertState != this.blotter.AdaptableBlotterStore.TheStore.getState().Alert) {
             this.AlertState = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.Alert, this.AlertState);
+            }
         }
     }
     addPopupMenuItem() {

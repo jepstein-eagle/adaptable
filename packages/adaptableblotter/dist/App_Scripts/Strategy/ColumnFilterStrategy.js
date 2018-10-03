@@ -29,7 +29,10 @@ class ColumnFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
             this.columnFilterState = this.GetColumnFilterState();
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
             if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
-                this.publishServerSearch(Enums_1.SearchChangedTrigger.ColumnFilter);
+                this.publishSearchChanged(Enums_1.SearchChangedTrigger.ColumnFilter);
+            }
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.ColumnFilter, this.columnFilterState);
             }
         }
     }

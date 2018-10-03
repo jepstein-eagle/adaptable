@@ -19,7 +19,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
 import { RowNode } from "ag-grid";
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
@@ -55,6 +55,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private _onRefresh;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
+    StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     applyGridFiltering(): void;
     hideFilterFormPopup: Function;
@@ -114,9 +115,9 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setData(dataSource: any): void;
     private checkColumnsDataTypeSet;
     getVendorGridState(visibleCols: string[], forceFetch: boolean): any;
-    private tempSetColumnVisibleFixForBuild;
-    private tempMoveColumnFixForBuild;
-    private tempSetColumnStateFixForBuild;
+    private setColumnVisible;
+    private moveColumn;
+    private setColumnState;
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;

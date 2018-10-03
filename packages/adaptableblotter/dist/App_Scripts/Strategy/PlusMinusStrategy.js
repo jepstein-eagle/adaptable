@@ -19,6 +19,9 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
             this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.PlusMinus, this.PlusMinusState);
+            }
         }
     }
     addPopupMenuItem() {

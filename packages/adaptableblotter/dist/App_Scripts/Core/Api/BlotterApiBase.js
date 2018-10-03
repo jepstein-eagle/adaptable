@@ -452,6 +452,9 @@ class BlotterApiBase {
     onSearchedChanged() {
         return this.blotter.SearchedChanged;
     }
+    onStateChanged() {
+        return this.blotter.StateChanged;
+    }
     onColumnStateChanged() {
         return this.blotter.ColumnStateChanged;
     }

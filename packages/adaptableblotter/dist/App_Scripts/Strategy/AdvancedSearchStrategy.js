@@ -18,7 +18,10 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
             //  probably not an issue but might be worth revisiting ...
             this.blotter.applyGridFiltering();
             if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
-                this.publishServerSearch(Enums_1.SearchChangedTrigger.AdvancedSearch);
+                this.publishSearchChanged(Enums_1.SearchChangedTrigger.AdvancedSearch);
+            }
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState);
             }
         }
     }
