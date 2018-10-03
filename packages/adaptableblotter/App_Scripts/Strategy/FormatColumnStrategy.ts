@@ -5,9 +5,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy'
 import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-
+import { StateChangedTrigger } from '../Core/Enums';
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase implements IFormatColumnStrategy {
     protected FormatColumnState: FormatColumnState
@@ -38,6 +36,10 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
             this.FormatColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn;
 
             this.InitStyles();
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.FormatColumn, this.FormatColumnState)
+            }
         }
     }
 

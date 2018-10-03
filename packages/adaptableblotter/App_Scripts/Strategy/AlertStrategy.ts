@@ -8,7 +8,7 @@ import { IAlertDefinition } from '../Core/Api/Interface/AdaptableBlotterObjects'
 import { IColumn } from '../Core/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Core/Helpers/ExpressionHelper';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
-import { LeafExpressionOperator } from '../Core/Enums';
+import { LeafExpressionOperator, StateChangedTrigger } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
@@ -24,8 +24,14 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     protected InitState() {
         if (this.AlertState != this.blotter.AdaptableBlotterStore.TheStore.getState().Alert) {
             this.AlertState = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert;
+          
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.Alert, this.AlertState)
+            }
+       
         }
     }
+    
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.AlertStrategyName, ScreenPopups.AlertPopup, StrategyIds.AlertGlyph);
     }

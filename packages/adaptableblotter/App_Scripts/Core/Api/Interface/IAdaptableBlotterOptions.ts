@@ -93,6 +93,18 @@ export interface IAdaptableBlotterOptions {
      */
     useDefaultVendorGridThemes?: boolean;
     /**
+     * Use the Adaptable Blotter filter form in column menu
+     * If false, the one supplied by the vendor grid will be used
+     * Only applicable in grids where the vendor offers a filter form
+     */
+    useAdaptableBlotterFilterForm?: boolean;
+    /**
+    * Use the Adaptable Blotter quick filter row
+    * If false, the one supplied by the vendor grid will be used
+    * Only applicable in grids where the vendor offers a filter row
+    */
+    useAdaptableBlotterQuickFilter?: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

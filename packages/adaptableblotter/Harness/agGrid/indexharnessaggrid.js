@@ -5,7 +5,7 @@ var trades
 
 function InitTradeBlotter() {
     let dataGen = new harness.DataGenerator();
-    trades = dataGen.getTrades(1000);
+    trades = dataGen.getTrades(100);
 
     // Create a GridOptions object.  This is used to create the ag-Grid
     // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -15,7 +15,7 @@ function InitTradeBlotter() {
         enableSorting: true,
         enableRangeSelection: true,
         enableFilter: true,
-        //  floatingFilter: true,
+      //  floatingFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
         columnTypes: {                  // not required but helpful for column data type identification
@@ -52,7 +52,9 @@ function InitTradeBlotter() {
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
         useDefaultVendorGridThemes: true,
-        // getColumnValues: retrieveValues,
+        useAdaptableBlotterFilterForm: false,
+       // useAdaptableBlotterQuickFilter: false
+       //  getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -63,6 +65,7 @@ function InitTradeBlotter() {
 
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
+    adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
     setTimeout(() => {
         if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout == "Ab_Default_Layout") {
             gridOptions.columnApi.autoSizeAllColumns(), 2;
@@ -80,6 +83,10 @@ function retrieveValues(columnName) {
 
 function listenToColumnStateChange(columnChangedArgs) {
     //console.log("event received")
+}
+
+function listenToStateChange(stateChangedArgs) {
+  //  console.log(stateChangedArgs)
 }
 
 function getValuesForColumn(columnName) {
@@ -103,24 +110,24 @@ function getValuesForColumn(columnName) {
 
 function getTradeSchema() {
     var schema = []
-    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, type: "abColDefNumber", sortable: false });
+    schema.push({ headerName: "Trade Id", field: "tradeId", editable: true, type: "abColDefNumber", suppressSorting: true });
     schema.push({ headerName: "Notional", field: "notional", editable: true, valueFormatter: notionalFormatter, cellClass: 'number-cell' });
     schema.push({ headerName: "Desk No.", field: "deskId", editable: true, enableRowGroup: true, suppressSorting: false, suppressFilter: true });
-    schema.push({ headerName: "Hello World", field: "counterparty", editable: true, enableRowGroup: true });
+    schema.push({ headerName: "Counterparty", field: "counterparty", editable: true, enableRowGroup: true });
     schema.push({ headerName: "Country", field: "country", editable: true, enableRowGroup: true });
-    schema.push({ headerName: "Currency", field: "currency", editable: false, enableRowGroup: true });
+    schema.push({ headerName: "Currency", field: "currency", editable: false, enableRowGroup: true, filter: 'agTextColumnFilter' });
     schema.push({ headerName: "Change On Year", field: "changeOnYear", editable: true });
 
     schema.push({ headerName: "B/O Spread", field: "bidOfferSpread", columnGroupShow: 'open', editable: true, cellClass: 'number-cell' });
     schema.push({ headerName: "Status", field: "status", editable: true, enableRowGroup: true });
-    schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true });
+    schema.push({ headerName: "Price", field: "price", columnGroupShow: 'open', editable: true, cellClass: 'number-cell', enableRowGroup: true, filter: 'agNumberColumnFilter' });
     schema.push({ headerName: "Ask", field: "ask", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bid", field: "bid", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bbg Ask", field: "bloombergAsk", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Bbg Bid", field: "bloombergBid", columnGroupShow: 'closed', cellClass: 'number-cell' });
     schema.push({ headerName: "Moodys", field: "moodysRating", editable: true, filter: 'text' });
     schema.push({ headerName: "SandP", field: "sandpRating", editable: true, filter: 'text' });
-    schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
+    schema.push({ headerName: "Trade Date", field: "tradeDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid, filter: 'agDateColumnFilter' });
     schema.push({ headerName: "Settlement Date", field: "settlementDate", editable: true, cellEditorParams: { useFormatter: true }, valueParser: dateParseragGrid, valueFormatter: shortDateFormatteragGrid });
     schema.push({ headerName: "Pct Change", field: "percentChange", filter: 'text' });
     schema.push({ headerName: "Last Updated By", field: "lastUpdatedBy", enableRowGroup: true });

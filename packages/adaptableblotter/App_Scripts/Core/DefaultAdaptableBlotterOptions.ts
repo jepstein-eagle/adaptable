@@ -18,6 +18,8 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     autoSaveLayouts: false,
     getColumnValues: null,
     ignoreCaseInQueries: true,
-    useDefaultVendorGridThemes: true
+    useDefaultVendorGridThemes: true,
+    useAdaptableBlotterFilterForm: true,
+    useAdaptableBlotterQuickFilter: true
 }
 

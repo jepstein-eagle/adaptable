@@ -512,19 +512,19 @@ export module ExpressionHelper {
             case DataType.Object:
             case DataType.String:
                 if (blotter.BlotterOptions.ignoreCaseInQueries) {
-                    rangeEvaluation.newValue = rangeEvaluation.newValue.toLowerCase();
+                    rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     (rangeExpression.Operand1 == null) ? null :
                         (blotter.BlotterOptions.ignoreCaseInQueries) ?
-                            rangeExpression.Operand1.toLowerCase() :
+                            StringExtensions.ToLowerCase(rangeExpression.Operand1) :
                             rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     (rangeExpression.Operand2 == null) ? null :
                         (blotter.BlotterOptions.ignoreCaseInQueries) ?
-                            rangeExpression.Operand2.toLowerCase() :
+                            StringExtensions.ToLowerCase(rangeExpression.Operand2) :
                             rangeExpression.Operand2;
                 break;
         }
@@ -532,7 +532,9 @@ export module ExpressionHelper {
     }
 
     export function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation): boolean {
-
+        if (rangeEvaluation.newValue == null) {
+            return false;
+        }
         switch (rangeEvaluation.operator) {
             case LeafExpressionOperator.Equals:
                 return rangeEvaluation.newValue == rangeEvaluation.operand1;

@@ -71,7 +71,7 @@ import { IEvent } from '../../Core/Interface/IEvent';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EventDispatcher } from '../../Core/EventDispatcher'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, PinnedColumnDirection } from '../../Core/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../../Core/Enums'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
@@ -82,7 +82,7 @@ import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from '../../Core/Api/Interface/ServerSearch';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
 import { ArrayExtensions } from '../../Core/Extensions/ArrayExtensions';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
@@ -98,6 +98,7 @@ import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, Log
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+import { raw } from 'body-parser';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -223,7 +224,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (vendorGridState) {
             let columnState: any = JSON.parse(vendorGridState);
             if (columnState) {
-                this.tempSetColumnStateFixForBuild(this.gridOptions.columnApi, columnState, "api");
+                this.setColumnState(this.gridOptions.columnApi, columnState, "api");
             }
         }
     }
@@ -267,6 +268,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
+    public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
 
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
 
@@ -300,12 +302,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
             if (!col.isVisible()) {
-                this.tempSetColumnVisibleFixForBuild(this.gridOptions.columnApi, col, true, "api")
+                this.setColumnVisible(this.gridOptions.columnApi, col, true, "api")
             }
-            this.tempMoveColumnFixForBuild(this.gridOptions.columnApi, col, startIndex + index, "api");
+            this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, "api");
         })
         allColumns.filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0).forEach((col => {
-            this.tempSetColumnVisibleFixForBuild(this.gridOptions.columnApi, col, false, "api")
+            this.setColumnVisible(this.gridOptions.columnApi, col, false, "api")
         }))
         // we need to do this to make sure agGrid and Blotter column collections are in sync
         this.setColumnIntoStore();
@@ -770,9 +772,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue: string
+        let foundRow: boolean = false;
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-                returnValue = this.getDisplayValueFromRecord(rowNode, columnId)
+            if (!foundRow && id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
+                foundRow = true;
             }
         })
         return returnValue
@@ -781,7 +785,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
         //TODO : this method needs optimizing since getting the column everytime seems costly
         //we do not handle yet if the column uses a template... we handle only if it's using a renderer
+        if (row == null) {
+            return ""
+        }
         let rawValue = this.gridOptions.api.getValue(columnId, row)
+
         return this.getDisplayValueFromRawValue(columnId, rawValue);
     }
 
@@ -987,7 +995,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
 
-        if (this.isFilterable()) {
+        if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn)
         }
         let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
@@ -1264,23 +1272,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
                     for (let column of columns.filter(c => c.Visible)) {
-                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId).toLowerCase();
-                        let stringValueLowerCase = displayValue.toLowerCase();
-                        switch (quickSearchState.Operator) {
-                            case LeafExpressionOperator.Contains:
-                                {
-                                    if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                        return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
+                        if (displayValue != null) {
+                            let stringValueLowerCase = displayValue.toLowerCase();
+                            switch (quickSearchState.Operator) {
+                                case LeafExpressionOperator.Contains:
+                                    {
+                                        if (stringValueLowerCase.includes(quickSearchLowerCase)) {
+                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                        }
                                     }
-                                }
-                                break;
-                            case LeafExpressionOperator.StartsWith:
-                                {
-                                    if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                        return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                    break;
+                                case LeafExpressionOperator.StartsWith:
+                                    {
+                                        if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
+                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                        }
                                     }
-                                }
-                                break;
+                                    break;
+                            }
                         }
                     }
                     return false;
@@ -1290,11 +1300,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
 
         // if (this.isFilterable()) {
-        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-            this.createFilterWrapper(col);
-        });
+        if (this.BlotterOptions.useAdaptableBlotterFilterForm){
+            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+                this.createFilterWrapper(col);
+            });
+        }
         // }
-        if (this.gridOptions.floatingFilter) {
+        if ( this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterQuickFilter) {
             //      if (this.isFilterable()) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
@@ -1440,16 +1452,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-
-    private tempSetColumnVisibleFixForBuild(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
+    // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to 
+    // not sure why as its not in the api
+    private setColumnVisible(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
         columnApi.setColumnVisible(col, isVisible, columnEventType)
     }
 
-    private tempMoveColumnFixForBuild(columnApi: any, col: any, index: number, columnEventType: string) {
+    private moveColumn(columnApi: any, col: any, index: number, columnEventType: string) {
         columnApi.moveColumn(col, index, columnEventType)
     }
 
-    private tempSetColumnStateFixForBuild(columnApi: any, columnState: any, columnEventType: string) {
+    private setColumnState(columnApi: any, columnState: any, columnEventType: string) {
         columnApi.setColumnState(columnState, columnEventType)
     }
 

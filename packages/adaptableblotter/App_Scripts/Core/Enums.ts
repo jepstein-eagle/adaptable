@@ -170,19 +170,44 @@ export enum SearchChangedTrigger {
     Sort = "Sort",
 }
 
+export enum StateChangedTrigger {
+    AdvancedSearch = "AdvancedSearch",
+    Alert = "Alert",
+    BulkUpdate = "BulkUpdate",
+    CalculatedColumn = "CalculatedColumn",
+    Calendar = "Calendar",
+    CellValidation = "CellValidation",
+    Chart = "Chart",
+    ColumnFilter = "ColumnFilter",
+    ConditionalStyle = "ConditionalStyle",
+    CustomSort = "CustomSort",
+    Dashboard = "Dashboard",
+    DataSource = "DataSource",
+    Export = "Export",
+    FlashingCell = "FlashingCell",
+    FormatColumn = "FormatColumn",
+    Layout = "Layout",
+    PlusMinus = "PlusMinus",
+    QuickSearch = "QuickSearch",
+    Shortcut = "Shortcut",
+    SmartEdit = "SmartEdit",
+    Theme = "Theme",
+    UserFilter = "UserFilter"
+}
+
 export enum Visibility {
     Minimised = "Minimised",
     Visible = "Visible",
     Hidden = "Hidden",
 }
 
-export enum QueryTab  {
+export enum QueryTab {
     ColumnValue = "ColumnValue",
     Filter = "Filter",
     Range = "Range",
 }
 
-export enum ContextMenuTab  {
+export enum ContextMenuTab {
     Menu = "Menu",
     Filter = "Filter",
 }
@@ -201,13 +226,13 @@ export enum MessageType {
     Error = 'Error'
 }
 
-export enum SelectedCellOperation{
-    Sum='Sum',
-    Average='Average',
-    Median ='Median',
-    Distinct='Distinct',
-    Max='Max',
-    Min='Min',
+export enum SelectedCellOperation {
+    Sum = 'Sum',
+    Average = 'Average',
+    Median = 'Median',
+    Distinct = 'Distinct',
+    Max = 'Max',
+    Min = 'Min',
     Count = 'Count',
     Only = 'Only',
     VWAP = 'VWAP'

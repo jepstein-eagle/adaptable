@@ -6,13 +6,14 @@ import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchChangedData } from '../Core/Api/Interface/ServerSearch';
-import { SearchChangedTrigger } from '../Core/Enums';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Core/Api/Interface/IStateEvents';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdvancedSearch } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+
 
 export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
@@ -161,7 +162,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         return true;
     }
 
-    publishServerSearch(searchChangedTrigger: SearchChangedTrigger): void {
+    publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
 
         let dataSource: string = state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource)
@@ -187,7 +188,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             searchAsAtDate: new Date()
         }
 
-        let searchChangedData: ISearchChangedData = {
+        let searchEventData: ISearchEventData = {
             name: "Adaptable Blotter",
             type: "Search Args",
             id: searchChangedInfo
@@ -197,9 +198,30 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             object: "fdc3-context",
             definition: "https://fdc3.org/context/1.0.0/",
             version: "1.0.0",
-            data: [searchChangedData]
+            data: [searchEventData]
         }
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
+    }
+
+    publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: any): void {
+        let stateChangedInfo: IStateChangedInfo = {
+            stateChangedTrigger: stateChangedTrigger,
+            state: state
+        }
+
+        let stateEventData: IStateEventData = {
+            name: "Adaptable Blotter",
+            type: "State Args",
+            id: stateChangedInfo
+        }
+
+        let stateChangedArgs: IStateChangedEventArgs = {
+            object: "fdc3-context",
+            definition: "https://fdc3.org/context/1.0.0/",
+            version: "1.0.0",
+            data: [stateEventData]
+        }
+    //    this.blotter.StateChanged.Dispatch(this.blotter, stateChangedArgs);
     }
 
 }

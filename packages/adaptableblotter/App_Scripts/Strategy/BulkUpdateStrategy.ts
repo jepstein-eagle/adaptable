@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { MathOperation, DataType, MessageType } from '../Core/Enums'
+import { DataType, MessageType, StateChangedTrigger } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
@@ -9,12 +9,12 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
-import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import { ISelectedCell } from './Interface/ISelectedCellsStrategy';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
+    protected BulkUpdateState: BulkUpdateState
+
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.BulkUpdateStrategyId, blotter)
     }
@@ -23,6 +23,17 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         this.createMenuItemShowPopup(StrategyIds.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyIds.BulkUpdateGlyph);
     }
 
+    protected InitState() {
+        if (this.BulkUpdateState != this.GetBulkUpdateState()) {
+            this.BulkUpdateState = this.GetBulkUpdateState();
+          
+            // we dont store bulk update so nothing to save
+          //  if (this.blotter.isInitialised) {
+          //      this.publishStateChanged(StateChangedTrigger.BulkUpdate, this.BulkUpdateState)
+          //  }
+       
+        }
+    }
     public ApplyBulkUpdate(newValues: ICellInfo[]): void {
 
         // this.AuditFunctionAction("ApplyBulkUpdate", "", { BulkUpdateValue: this.GetBulkUpdateState().BulkUpdateValue, NewValues: newValues })

@@ -3,9 +3,12 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
+import { StateChangedTrigger } from '../Core/Enums';
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
+
+    private CellValidationState: CellValidationState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.CellValidationStrategyId, blotter)
@@ -13,6 +16,16 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyIds.CellValidationGlyph);
+    }
+
+    protected InitState() {
+        if (this.CellValidationState != this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation) {
+            this.CellValidationState = this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
+       
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.CellValidation, this.CellValidationState)
+            }
+        }
     }
 
     public addContextMenuItem(columnId: string): void {

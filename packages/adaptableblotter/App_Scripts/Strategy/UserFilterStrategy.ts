@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
-import { SearchChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]
@@ -38,8 +38,12 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
                     || this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0) {
-                    this.publishServerSearch(SearchChangedTrigger.UserFilter)
+                    this.publishSearchChanged(SearchChangedTrigger.UserFilter)
                 }
+            }
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.UserFilter, this.userFilters)
             }
         }
     }

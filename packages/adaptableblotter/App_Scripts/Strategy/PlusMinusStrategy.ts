@@ -6,7 +6,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIConfirmation } from '../Core/Interface/IMessage';
-import { DataType } from '../Core/Enums'
+import { DataType, StateChangedTrigger } from '../Core/Enums'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { Helper } from '../Core/Helpers/Helper';
@@ -28,7 +28,11 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     protected InitState() {
         if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
             this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
-        }
+       
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.PlusMinus, this.PlusMinusState)
+            }
+         }
     }
 
     protected addPopupMenuItem() {

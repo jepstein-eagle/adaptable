@@ -10,7 +10,7 @@ import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Inte
 import { KeyValuePair } from '../../../View/UIInterfaces';
 
 /*
-Created by the system  at run-time and not part of predefined or user config and not saved
+Created by the system  at run-time and NOT ONE of predefined or user config and not saved
 */
 
 export interface GridState {

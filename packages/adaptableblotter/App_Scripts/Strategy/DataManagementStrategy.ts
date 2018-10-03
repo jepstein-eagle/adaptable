@@ -1,12 +1,8 @@
-import { ResetUserData } from '../Redux/Store/AdaptableBlotterStore';
 import { IDataManagementStrategy } from './Interface/IDataManagementStrategy';
-import { MenuItemDoReduxAction } from '../Core/MenuItem';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IMenuItem } from '../Core/Interface/IMenu';;
-
 
 export class DataManagementStrategy extends AdaptableStrategyBase implements IDataManagementStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -21,6 +17,4 @@ export class DataManagementStrategy extends AdaptableStrategyBase implements IDa
  
     }
     
-
-
 }

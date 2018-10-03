@@ -4,7 +4,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { SearchChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
     private AdvancedSearchState: AdvancedSearchState
@@ -26,7 +26,11 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
             this.blotter.applyGridFiltering()
 
             if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
-                this.publishServerSearch(SearchChangedTrigger.AdvancedSearch)
+                this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch)
+            }
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState)
             }
         }
     }

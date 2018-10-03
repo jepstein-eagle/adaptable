@@ -6,6 +6,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ThemesContent } from '../Styles/themes'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import * as GeneralConstants from '../Core/Constants/GeneralConstants'
+import { StateChangedTrigger } from '../Core/Enums';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     private ThemeState: ThemeState
@@ -35,6 +36,11 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     protected InitState() {
         if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {
             this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme
+           
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState)
+            }
+           
             this.style.innerHTML = ""
             this.theme.href = ""
             switch (this.ThemeState.CurrentTheme) {

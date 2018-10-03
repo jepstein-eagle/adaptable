@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { IEvent } from "../Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs } from "./Interface/ServerSearch";
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux'
@@ -581,6 +581,10 @@ export abstract class BlotterApiBase implements IBlotterApi {
         return this.blotter.SearchedChanged;
     }
 
+    public onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs> {
+        return this.blotter.StateChanged;
+    }
+
     public onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs> {
         return this.blotter.ColumnStateChanged;
     }
@@ -588,7 +592,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // Helper Methods
     private dispatchAction(action: Action): void {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(action)
-
     }
 
     private checkItemExists(item: any, name: string, type: string): boolean {

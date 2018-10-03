@@ -6,6 +6,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICustomSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { StateChangedTrigger } from '../Core/Enums';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
@@ -18,6 +19,10 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
             this.removeCustomSorts();
             this.CustomSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
             this.applyCustomSorts();
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.CustomSort, this.CustomSorts)
+            }
         }
     }
 

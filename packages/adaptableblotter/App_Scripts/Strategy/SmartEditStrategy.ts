@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { MathOperation, DataType, MessageType } from '../Core/Enums'
+import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
@@ -15,12 +15,25 @@ import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjec
 import { ISelectedCell } from './Interface/ISelectedCellsStrategy';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
+    
+    private SmartEditState: SmartEditState
+
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.SmartEditStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyIds.SmartEditGlyph);
+    }
+
+    protected InitState() {
+        if (this.SmartEditState != this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit) {
+            this.SmartEditState = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit;
+       
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.SmartEdit, this.SmartEditState)
+            }
+        }
     }
 
     public ApplySmartEdit(newValues: ICellInfo[]): void {

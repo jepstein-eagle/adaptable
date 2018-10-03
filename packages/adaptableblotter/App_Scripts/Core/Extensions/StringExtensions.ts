@@ -33,4 +33,8 @@ export module StringExtensions {
         return  stringToCheck.replace(/,\s*$/, "")
     }
 
+    export function ToLowerCase(stringToCheck: string) {
+        return  (stringToCheck==null) ? stringToCheck: stringToCheck.toLowerCase()
+    }
+
 }

@@ -6,6 +6,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
+import { StateChangedTrigger } from '../Core/Enums';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState
@@ -24,6 +25,10 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
             this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
 
             this.InitStyles();
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.ConditionalStyle, this.ConditionalStyleState)
+            }
         }
     }
 

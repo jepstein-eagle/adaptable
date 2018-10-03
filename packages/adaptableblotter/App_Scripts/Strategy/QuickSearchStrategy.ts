@@ -4,7 +4,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
-import { SearchChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
     protected quickSearchState: QuickSearchState
@@ -25,7 +25,11 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
             this.postSearch();
 
             if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
-                this.publishServerSearch(SearchChangedTrigger.QuickSearch)
+                this.publishSearchChanged(SearchChangedTrigger.QuickSearch)
+            }
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.QuickSearch, this.quickSearchState)
             }
 
         }

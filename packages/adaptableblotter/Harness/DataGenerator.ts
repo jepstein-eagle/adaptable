@@ -505,10 +505,11 @@ export class DataGenerator {
 
     protected getCountries(): string[] {
         let countries = [
+           "+2502+S",
             "Argentina",
             "Australia",
             "Belgium",
-            "Brazil",
+          /*  "Brazil",
             "Canada",
             "China",
             "Denmark",
@@ -527,7 +528,7 @@ export class DataGenerator {
             "Qatar",
             "Russia",
             "Spain",
-            "Thailand"
+            "Thailand"*/
         ];
         return countries;
     }

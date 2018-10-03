@@ -6,7 +6,7 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAlert, IUIConfirmation } from '../Core/Interface/IMessage';
 import { Helper } from '../Core/Helpers/Helper';
-import { DataType, ActionMode, MessageType } from '../Core/Enums'
+import { DataType, ActionMode, MessageType, StateChangedTrigger } from '../Core/Enums'
 import { MathOperation } from '../Core/Enums'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
@@ -15,11 +15,12 @@ import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
 import { IShortcut, ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
 
-    private Shortcuts: IShortcut[]
+    private ShortcutState: ShortcutState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyIds.ShortcutStrategyId, blotter)
@@ -31,13 +32,17 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     protected InitState() {
-        if (this.Shortcuts != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts) {
-            this.Shortcuts = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
+        if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {
+            this.ShortcutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut;
+       
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)
+            }
         }
     }
 
     private handleKeyDown(keyEvent: KeyboardEvent | any) {
-        if (this.Shortcuts && ArrayExtensions.IsEmpty(this.Shortcuts)) { return; }
+        if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
         let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);
@@ -48,7 +53,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             let valueToReplace: any;
             switch (columnDataType) {
                 case DataType.Number: {
-                    activeShortcut = this.Shortcuts.filter(s => s.ColumnType == DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.ShortcutState.Shortcuts.filter(s => s.ColumnType == DataType.Number).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         let currentCellValue: any;
                         // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -63,7 +68,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     break;
                 }
                 case DataType.Date: {
-                    activeShortcut = this.Shortcuts.filter(s => s.ColumnType == DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase())
+                    activeShortcut = this.ShortcutState.Shortcuts.filter(s => s.ColumnType == DataType.Date).find(x => keyEventString == x.ShortcutKey.toLowerCase())
                     if (activeShortcut) {
                         // Date we ONLY replace so dont need to worry about replacing values
                         if (activeShortcut.IsDynamic) {

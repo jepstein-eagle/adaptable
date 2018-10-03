@@ -7,7 +7,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { DataType } from '../Core/Enums';
+import { DataType, StateChangedTrigger } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IFlashingCell } from '../Core/Api/Interface/AdaptableBlotterObjects';
@@ -62,7 +62,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
     protected InitState() {
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
+
+
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(StateChangedTrigger.FlashingCell, this.FlashingCellState)
+            }
         }
+
     }
 
     protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
