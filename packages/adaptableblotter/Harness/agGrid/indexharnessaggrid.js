@@ -52,7 +52,7 @@ function InitTradeBlotter() {
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
         useDefaultVendorGridThemes: true,
-        useAdaptableBlotterFilterForm: false,
+       // useAdaptableBlotterFilterForm: false,
        // useAdaptableBlotterQuickFilter: false
        //  getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
@@ -82,11 +82,13 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-    console.log("column event received" + columnChangedArgs)
+    console.log("column event received")
+    console.log( columnChangedArgs)
 }
 
 function listenToStateChange(stateChangedArgs) {
-    console.log("state event received" + stateChangedArgs)
+    console.log("state event received" )
+    console.log(stateChangedArgs)
 }
 
 function getValuesForColumn(columnName) {
