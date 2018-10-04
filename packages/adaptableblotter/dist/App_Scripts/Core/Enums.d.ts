@@ -155,6 +155,7 @@ export declare enum StateChangedTrigger {
     Layout = "Layout",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
+    SelectedCells = "SelectedCells",
     Shortcut = "Shortcut",
     SmartEdit = "SmartEdit",
     Theme = "Theme",

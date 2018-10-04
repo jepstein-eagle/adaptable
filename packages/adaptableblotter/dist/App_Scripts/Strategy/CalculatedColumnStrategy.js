@@ -10,7 +10,6 @@ class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
     }
     InitState() {
         if (this.CalculatedColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn) {
-            //All the logic is managed in the redux store middleware
             this.CalculatedColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn;
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CalculatedColumn, this.CalculatedColumnState);

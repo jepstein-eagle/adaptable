@@ -186,6 +186,7 @@ var StateChangedTrigger;
     StateChangedTrigger["Layout"] = "Layout";
     StateChangedTrigger["PlusMinus"] = "PlusMinus";
     StateChangedTrigger["QuickSearch"] = "QuickSearch";
+    StateChangedTrigger["SelectedCells"] = "SelectedCells";
     StateChangedTrigger["Shortcut"] = "Shortcut";
     StateChangedTrigger["SmartEdit"] = "SmartEdit";
     StateChangedTrigger["Theme"] = "Theme";

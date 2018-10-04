@@ -12,6 +12,14 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyIds.SelectedCellsGlyph);
     }
+    InitState() {
+        if (this.SelectedCellsState != this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells) {
+            this.SelectedCellsState = this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells;
+            if (this.blotter.isInitialised) {
+                this.publishStateChanged(Enums_1.StateChangedTrigger.SelectedCells, this.SelectedCellsState);
+            }
+        }
+    }
     CreateSelectedCellSummary(selectedCellInfo) {
         let selectedCellSummary;
         if (selectedCellInfo && selectedCellInfo.Selection.size > 0) {

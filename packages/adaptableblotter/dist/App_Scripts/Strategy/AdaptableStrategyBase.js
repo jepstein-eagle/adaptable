@@ -150,7 +150,7 @@ class AdaptableStrategyBase {
             version: "1.0.0",
             data: [stateEventData]
         };
-        //    this.blotter.StateChanged.Dispatch(this.blotter, stateChangedArgs);
+        this.blotter.StateChanged.Dispatch(this.blotter, stateChangedArgs);
     }
 }
 exports.AdaptableStrategyBase = AdaptableStrategyBase;
