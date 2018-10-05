@@ -11,7 +11,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter, IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter, IRange } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 

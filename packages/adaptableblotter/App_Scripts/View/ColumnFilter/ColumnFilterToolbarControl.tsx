@@ -12,26 +12,28 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
-import { MessageType } from '../../Core/Enums';
+import { MessageType, AccessLevel } from '../../Core/Enums';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Core/Helpers/ColumnFilterHelper";
 import { KeyValuePair } from "../UIInterfaces";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
-    IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
     Columns: IColumn[],
     UserFilters: IUserFilter[]
+    Entitlements: IEntitlement[];
 }
 class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterToolbarControlComponentProps, {}> {
 
     render(): any {
 
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
-        let collapsedText = this.props.ColumnFilters.length == 0 ?
+         let collapsedText = this.props.ColumnFilters.length == 0 ?
             "No Filters" :
             this.props.ColumnFilters.length == 1 ?
                 "1 Column" :
@@ -46,7 +48,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         })
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <FormControl bsSize="small" style={{ width: "80px" }} value={collapsedText} disabled={true} type="string" />
                 {' '}
                 {infoBody.length > 0 &&
@@ -61,13 +63,14 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                             overrideTooltip="Clear Column Filters"
                             DisplayMode="Text+Glyph"
                             overrideDisableButton={this.props.ColumnFilters.length == 0}
+                            AccessLevel={this.props.AccessLevel}
                         />
                     </span>
                 }
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ColumnFilterStrategyName} glyphicon={StrategyIds.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ColumnFilterStrategyName} glyphicon={StrategyIds.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyIds.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -76,6 +79,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ColumnFilters: state.ColumnFilter.ColumnFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 
@@ -83,7 +87,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ColumnFilterPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ColumnFilterStrategyId, ScreenPopups.ColumnFilterPopup))
     };
 }
 

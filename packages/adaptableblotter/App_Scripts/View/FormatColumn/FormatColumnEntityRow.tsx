@@ -6,7 +6,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IFormatColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IFormatColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export class FormatColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FormatColumnEntityRow>, {}> {
@@ -23,8 +23,7 @@ export class FormatColumnEntityRow extends React.Component<SharedEntityExpressio
             editClick={() => this.props.onEdit(this.props.Index, formatColumn)}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
-            ConfigEntity={formatColumn}
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
+             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyIds.FormatColumnStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

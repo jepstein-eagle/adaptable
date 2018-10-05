@@ -7,7 +7,6 @@ export class ButtonMinimise extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Minimise"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="chevron-up"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

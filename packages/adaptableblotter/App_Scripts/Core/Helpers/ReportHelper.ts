@@ -2,7 +2,7 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { ReportColumnScope, ReportRowScope, MessageType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
-import { IReport, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IReport, IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../Api/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
@@ -12,7 +12,7 @@ export module ReportHelper {
     export const VISIBLE_DATA_REPORT = 'Visible Data'
     export const SELECTED_CELLS_REPORT = 'Selected Cells'
 
-    function IsSystemReport(Report: IReport): boolean {
+   export  function IsSystemReport(Report: IReport): boolean {
         return Report == null || Report.Name == ALL_DATA_REPORT || Report.Name == VISIBLE_DATA_REPORT || Report.Name == SELECTED_CELLS_REPORT;
     }
 
@@ -146,8 +146,7 @@ export module ReportHelper {
             ReportColumnScope: ReportColumnScope.AllColumns,
             ReportRowScope: ReportRowScope.AllRows,
             Columns: [],
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: true
+            Expression: ExpressionHelper.CreateEmptyExpression()
         });
 
         _systemReports.push({
@@ -155,8 +154,7 @@ export module ReportHelper {
             ReportColumnScope: ReportColumnScope.VisibleColumns,
             ReportRowScope: ReportRowScope.VisibleRows,
             Columns: [],
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: true
+            Expression: ExpressionHelper.CreateEmptyExpression()
          });
 
         _systemReports.push({
@@ -164,8 +162,7 @@ export module ReportHelper {
             ReportColumnScope: ReportColumnScope.SelectedColumns,
             ReportRowScope: ReportRowScope.SelectedRows,
             Columns: [],
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: true
+            Expression: ExpressionHelper.CreateEmptyExpression()
         });
         return _systemReports;
     }

@@ -17,7 +17,9 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusRules: IPlusMinusRule[]
@@ -34,7 +36,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
     }
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__plusminus";
-        let strategySummaries: any = []
+         let strategySummaries: any = []
 
         // title row
         let titleRow = <StrategyHeader
@@ -44,6 +46,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
             StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
             NewButtonTooltip={"Plus / Minus Rule"}
+            AccessLevel={this.props.AccessLevel}
         />
 
         strategySummaries.push(titleRow);
@@ -129,6 +132,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         PlusMinusRules: state.PlusMinus.PlusMinusRules,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
         };
 }
 

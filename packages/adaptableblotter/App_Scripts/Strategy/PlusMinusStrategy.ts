@@ -14,7 +14,7 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
-import { ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 

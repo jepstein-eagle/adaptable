@@ -24,7 +24,7 @@
 			},
 			{
 				"FunctionName": "SmartEdit",
-				"AccessLevel": "Hidden"
+				"AccessLevel": "ReadOnly"
 			}
 		]
 	},

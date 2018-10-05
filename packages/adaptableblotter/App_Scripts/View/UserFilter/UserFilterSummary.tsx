@@ -16,7 +16,9 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
@@ -34,8 +36,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__userfilter";
-
-        let strategySummaries: any = []
+         let strategySummaries: any = []
 
 
 
@@ -48,6 +49,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
             onNew={() => this.onNew()}
             NewButtonDisabled={!this.isFilterable()}
             NewButtonTooltip={StrategyIds.UserFilterStrategyName}
+            AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
 
@@ -96,7 +98,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     getSummary(): string {
-       if (!this.isGridFilterable()) {
+        if (!this.isGridFilterable()) {
             return "Grid is not filterable"
         }
 
@@ -171,7 +173,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
-          };
+        Entitlements: state.Entitlements.FunctionEntitlements
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

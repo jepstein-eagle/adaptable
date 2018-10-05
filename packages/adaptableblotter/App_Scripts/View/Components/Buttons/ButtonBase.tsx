@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IEntitlement } from "../../../Core/Interface/Interfaces";
+import { AccessLevel } from "../../../Core/Enums";
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     onClick?: () => void
@@ -10,7 +12,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     //Override normal tooltip i.e. Edit
     overrideTooltip?: string
     //The entity we pass in to check normal disabled status
-    ConfigEntity?: IAdaptableBlotterObject
+  //  ConfigEntity?: IAdaptableBlotterObject
     style?: React.CSSProperties;
     size?: ReactBootstrap.Sizes;
     //Override normal Text i.e. Edit
@@ -21,7 +23,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     cssClassName: string
     glyph?: string
     hideToolTip?: boolean
-    
+    AccessLevel?: AccessLevel
 }
 
 export interface ButtonBaseProps extends ButtonProps {
@@ -35,7 +37,6 @@ export interface ButtonBaseProps extends ButtonProps {
 export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
     public static defaultProps: ButtonBaseProps = {
         overrideDisableButton: false,
-        ConfigEntity: null,
         ToolTipAndText: "",
         bsStyle: "",
         bsSize: null,
@@ -43,13 +44,12 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         DisplayMode: "Glyph+Text",
         transformGlyph: false,
         cssClassName: "btn",
-        
+        AccessLevel: AccessLevel.Full
     };
     render() {
         let isDisabled: boolean
-        if (this.props.ConfigEntity) {
-            isDisabled = this.props.ConfigEntity.IsReadOnly == true
-        }
+        isDisabled = this.props.AccessLevel == AccessLevel.Hidden
+
         if (this.props.overrideDisableButton) {
             isDisabled = true
         }
@@ -93,7 +93,7 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
             onClick={() => this.props.onClick()}
             onMouseDown={e => e.preventDefault()}>
             {content}</Button>
-        let buttonwithtooltip = <OverlayTrigger  overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>
+        let buttonwithtooltip = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {tooltip}</Tooltip >}>
             {button}
         </OverlayTrigger >
         return isDisabled || hideToolTip ? button : buttonwithtooltip

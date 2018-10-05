@@ -26,19 +26,21 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType, StatusColour } from "../../Core/Enums";
+import { MessageType, StatusColour, AccessLevel } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { fail } from "assert";
 import { UIHelper } from "../UIHelper";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-    onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
+   onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
     onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
     onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
@@ -73,7 +75,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
 
 
     render() {
-
         let statusColour: StatusColour = this.getStatusColour()
         // missing datatype validation for time being
 
@@ -101,7 +102,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             />
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
                     <InputGroup.Button>
                         {activeButton}
@@ -129,7 +130,9 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Bulk Update"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
-                        DisplayMode="Glyph" />
+                        DisplayMode="Glyph" 
+                        AccessLevel={this.props.AccessLevel}
+                        />
                 }
 
                 {this.props.IsValidSelection && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
@@ -141,7 +144,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.BulkUpdateStrategyName} glyphicon={StrategyIds.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.BulkUpdateStrategyName} glyphicon={StrategyIds.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -223,7 +226,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.BulkUpdatePopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.BulkUpdateStrategyId, ScreenPopups.BulkUpdatePopup))
     };
 }
 

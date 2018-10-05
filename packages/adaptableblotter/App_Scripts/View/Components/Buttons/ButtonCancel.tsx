@@ -7,8 +7,7 @@ export class ButtonCancel extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Close Wizard"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
-            glyph="remove"
+             glyph="remove"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}

@@ -16,8 +16,10 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
@@ -47,6 +49,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 NewButtonDisabled={true}
                 onNew={() => this.onNew()}
                 NewButtonTooltip={StrategyIds.CustomSortStrategyName}
+                AccessLevel={this.props.AccessLevel}
             />
         }
         else if (noCustomSort) {
@@ -57,6 +60,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 StrategyId={StrategyIds.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort Set"}
                 onNew={() => this.onNew()}
+                AccessLevel={this.props.AccessLevel}
                 NewButtonTooltip={StrategyIds.CustomSortStrategyName}
             />
         } else {
@@ -132,7 +136,9 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        CustomSorts: state.CustomSort.CustomSorts
+        CustomSorts: state.CustomSort.CustomSorts,
+        Entitlements: state.Entitlements.FunctionEntitlements
+      
     };
 }
 

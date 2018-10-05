@@ -1,18 +1,19 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition } from './Api/Interface/AdaptableBlotterObjects';
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType } from './Enums';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter } from './Api/Interface/IAdaptableBlotterObjects';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { KeyValuePair } from '../View/UIInterfaces';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import * as GeneralConstants from './Constants/GeneralConstants';
+import { Expression } from './Api/Expression';
 
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: "", SortedValues: [], IsReadOnly: false }
+        return { ColumnId: "", SortedValues: [] }
     }
 
     export function CreateEmptyChartDefinition(): IChartDefinition {
@@ -21,13 +22,12 @@ export module ObjectFactory {
             Type: ChartType.BarChart,
             YAxisColumn: "",
             XAxisColumn: "",
-            XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
-            IsReadOnly: false
+            XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]
         }
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
-        return { ColumnId: "", ColumnExpression: "", IsReadOnly: false }
+        return { ColumnId: "", ColumnExpression: "" }
     }
 
     export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
@@ -35,8 +35,7 @@ export module ObjectFactory {
             ColumnId: "",
             IsDefaultNudge: false,
             NudgeValue: 1,
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: false
+            Expression: ExpressionHelper.CreateEmptyExpression()
         }
     }
 
@@ -52,16 +51,14 @@ export module ObjectFactory {
             },
             Expression: ExpressionHelper.CreateEmptyExpression(),
             MessageType: MessageType.Error,
-            ShowAsPopup: true,
-            IsReadOnly: false
+            ShowAsPopup: true
         }
     }
 
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
         return {
             Name: "",
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: false
+            Expression: ExpressionHelper.CreateEmptyExpression()
         }
     }
 
@@ -94,8 +91,7 @@ export module ObjectFactory {
                 Operand2Type: RangeOperandType.Column,
             },
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            Description: "",
-            IsReadOnly: false
+            Description: ""
         }
     }
 
@@ -103,8 +99,7 @@ export module ObjectFactory {
         return {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            ColumnId: "",
-            IsReadOnly: false
+            ColumnId: ""
         };
     }
 
@@ -114,8 +109,7 @@ export module ObjectFactory {
             Expression: ExpressionHelper.CreateEmptyExpression(),
             Columns: [],
             ReportColumnScope: ReportColumnScope.AllColumns,
-            ReportRowScope: ReportRowScope.ExpressionRows,
-            IsReadOnly: true
+            ReportRowScope: ReportRowScope.ExpressionRows
         };
     }
 
@@ -124,8 +118,7 @@ export module ObjectFactory {
             IsLive: false,
             ColumnId: column.ColumnId,
             FlashingCellDuration: 500,
-            UpColor: '#008000', DownColor: '#FF0000',
-            IsReadOnly: false
+            UpColor: '#008000', DownColor: '#FF0000'
         };
     }
 
@@ -136,7 +129,6 @@ export module ObjectFactory {
             ShortcutResult: null,
             ColumnType: DataType.Number,
             ShortcutOperation: MathOperation.Multiply,
-            IsReadOnly: false,
             IsDynamic: false
         }
     }
@@ -156,16 +148,14 @@ export module ObjectFactory {
             ColumnId: "",
             Style: CreateEmptyStyle(),
             ConditionalStyleScope: ConditionalStyleScope.Row,
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: false
+            Expression: ExpressionHelper.CreateEmptyExpression()
         }
     }
 
     export function CreateEmptyFormatColumn(): IFormatColumn {
         return {
             ColumnId: "",
-            Style: CreateEmptyStyle(),
-            IsReadOnly: false
+            Style: CreateEmptyStyle()
         }
     }
 
@@ -174,10 +164,41 @@ export module ObjectFactory {
             Columns: (columns) ? columns.map(x => x.ColumnId) : [],
             GridSorts: gridSorts,
             Name: name,
-            VendorGridInfo: vendorGridInfo,
-            IsReadOnly: false
+            VendorGridInfo: vendorGridInfo
         }
     }
+
+    export function CreateColumnFilter(columnId: string, expression: Expression): IColumnFilter {
+        return {
+            ColumnId: columnId,
+            Filter: expression
+        }
+    }
+
+    export function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter {
+        return {
+            ColumnId: userFilter.ColumnId,
+            Filter: ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [], [userFilter.Name], []),
+        }
+    }
+
+    export function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter {
+        return {
+            Name: name,
+            ColumnId: columnFilter.ColumnId,
+            Expression: columnFilter.Filter,
+         }
+    }
+
+    export function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, description: string, expression: Expression): ICellValidationRule {
+        return {
+        ColumnId: columnId,
+        Range: range,
+        ActionMode: actionMode,
+        Description: description,
+        Expression: expression,
+     }
+}
 
     export function CreateEmptyStyle(): IStyle {
         return {

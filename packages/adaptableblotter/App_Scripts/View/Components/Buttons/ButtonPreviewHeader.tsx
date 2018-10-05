@@ -7,8 +7,7 @@ export class ButtonPrev extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText=""
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
-            glyph={this.props.glyph}
+             glyph={this.props.glyph}
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}

@@ -6,7 +6,7 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
-import { IRange, IUserFilter, IColumnValueExpression, IRangeExpression } from '../Api/Interface/AdaptableBlotterObjects';
+import { IRange, IUserFilter, IColumnValueExpression, IRangeExpression } from '../Api/Interface/IAdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';
 import { ColumnHelper } from './ColumnHelper';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';

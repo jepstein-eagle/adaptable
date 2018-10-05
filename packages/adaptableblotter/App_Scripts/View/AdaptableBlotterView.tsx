@@ -18,7 +18,7 @@ import { AdaptableBlotterLoadingScreen } from "./Components/Popups/AdaptableBlot
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
     Blotter: IAdaptableBlotter;
-    showPopup: (ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowScreenAction;
+    showPopup: (ComponentStrategy: string, ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowScreenAction;
     onCloseScreenPopup: () => PopupRedux.PopupHideScreenAction;
     onCloseAlertPopup: () => PopupRedux.PopupHideAlertAction;
     onConfirmPromptPopup: () => PopupRedux.PopupConfirmPromptAction;
@@ -80,9 +80,9 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                 <AdaptableBlotterPopup
                     showModal={this.props.PopupState.ScreenPopup.ShowScreenPopup}
                     ComponentName={this.props.PopupState.ScreenPopup.ComponentName}
+                    ComponentStrategy={this.props.PopupState.ScreenPopup.ComponentStrategy}
                     onHide={this.props.onCloseScreenPopup}
-                    IsReadOnly={this.props.PopupState.ScreenPopup.IsReadOnly}
-                    Blotter={this.props.Blotter}
+                     Blotter={this.props.Blotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
                     PopupParams={this.props.PopupState.ScreenPopup.Params}
                 />
@@ -108,7 +108,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
-        showPopup: (componentName: string, isReadOnly: boolean, params?: any) => dispatch(PopupRedux.PopupShowScreen(componentName, isReadOnly, params)),
+        showPopup: (componentStrategy: string, componentName: string, params?: any) => dispatch(PopupRedux.PopupShowScreen(componentStrategy, componentName, params)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
     };
 }

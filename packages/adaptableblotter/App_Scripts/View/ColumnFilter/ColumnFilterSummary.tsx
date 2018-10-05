@@ -14,12 +14,16 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
     onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
+    Entitlements: IEntitlement[]
 }
 
 export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSummaryProps, EditableConfigEntityState> {
@@ -33,8 +37,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__columnfilter";
         let columnFilter: IColumnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let description: string = this.getDescription(columnFilter);
-
-        let summaryItems: any[] = []
+         let summaryItems: any[] = []
         summaryItems.push(<b>{<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.ColumnFilterStrategyId} />}</b>)
         summaryItems.push(description);
         summaryItems.push(
@@ -43,7 +46,8 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
                 size={"small"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
                 overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
-                overrideDisableButton={columnFilter == null} />)
+                overrideDisableButton={columnFilter == null}
+                AccessLevel={this.props.AccessLevel} />)
 
         return <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />
     }
@@ -68,6 +72,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         ColumnFilters: state.ColumnFilter.ColumnFilters,
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 

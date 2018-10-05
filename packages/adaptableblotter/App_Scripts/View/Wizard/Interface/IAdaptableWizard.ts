@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { BlotterApi } from '../../../Vendors/agGrid/BlotterApi';
 import { IBlotterApi } from '../../../Core/Api/Interface/IBlotterApi';

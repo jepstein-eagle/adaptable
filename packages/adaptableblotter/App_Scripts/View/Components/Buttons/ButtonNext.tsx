@@ -7,7 +7,6 @@ export class ButtonNext extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Next"
             bsStyle='info'
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="plus"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

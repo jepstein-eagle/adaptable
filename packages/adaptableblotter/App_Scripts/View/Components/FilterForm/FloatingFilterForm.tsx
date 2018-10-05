@@ -8,13 +8,14 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
-import { IColumnFilter, IUserFilter, IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IColumnFilter, IUserFilter, IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../../Core/Api/Expression";
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Core/Enums';
 import { KeyValuePair } from '../../UIInterfaces';
+import { ObjectFactory } from '../../../Core/ObjectFactory';
 
 
 interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterFormComponent> {
@@ -60,7 +61,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
                 { Key: "=", Value: LeafExpressionOperator.Equals },
             ],
             dateOperatorPairs: [
-              //   { Key: "=", Value: LeafExpressionOperator.Equals },
+                //   { Key: "=", Value: LeafExpressionOperator.Equals },
             ],
             placeholder: ""
         }
@@ -107,7 +108,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         let controlType: string = (this.props.CurrentColumn.DataType == DataType.Date) ? "date" : "text"
 
         return <span>
-            {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable 
+            {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable
                 && (this.props.CurrentColumn.DataType != DataType.Boolean) &&
                 <FormControl
                     style={{ padding: '1px', marginTop: '5px', minHeight: '20px', maxHeight: '20px', fontSize: "x-small", fontWeight: "lighter" }}
@@ -147,7 +148,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
     }
 
     createColumnFilter(expression: Expression, searchText: string): void {
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
+        let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, expression);
         this.setState({ floatingFilterFormText: searchText, filterExpression: expression, placeholder: "" })
         this.props.onAddEditColumnFilter(columnFilter)
     }
@@ -247,7 +248,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
-           ColumnFilters: state.ColumnFilter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 

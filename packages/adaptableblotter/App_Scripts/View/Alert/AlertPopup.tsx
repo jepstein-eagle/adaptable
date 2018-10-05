@@ -20,8 +20,9 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAlertDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
-import { MessageType } from "../../Core/Enums";
+import { IAlertDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { MessageType, AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
@@ -50,7 +51,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     render() {
         let cssClassName: string = this.props.cssClassName + "__Alert";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Alert";
-
+   
         let infoBody: any[] = ["Alert Definitions define which changes to the source data will trigger an Alert.", <br />, <br />,
             "An Alert will appear either as a popup or in the alerts container."]
 
@@ -85,7 +86,9 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createAlert()}
             overrideTooltip="Create Alert"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyIds.AlertStrategyName} bsStyle="primary" cssClassName={cssClassName}

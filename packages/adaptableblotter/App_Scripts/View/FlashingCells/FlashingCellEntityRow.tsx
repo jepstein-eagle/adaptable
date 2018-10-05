@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
-import { IFlashingCell } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IFlashingCell } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
@@ -30,7 +30,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
             durations.push(<option key={flashingCell.FlashingCellDuration} value={flashingCell.FlashingCellDuration}>{this.getFriendlyFlashingDuration(flashingCell.FlashingCellDuration)}</option>)
         }
 
-        let isDisabled = flashingCell.IsReadOnly
+        let isDisabled = false; // TODO:  need to get from Entitlements !  flashingCell.IsReadOnly
         let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnId)
         if (!column) {
             return null

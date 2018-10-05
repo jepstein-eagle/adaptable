@@ -13,18 +13,20 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { SortOrder } from '../../Core/Enums';
+import { SortOrder, AccessLevel } from '../../Core/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IChartDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartName: string
-    onSelectChartDefinition: (chartDefinitionName: string) => ChartRedux.ChartDefinitionSelectAction;
+     onSelectChartDefinition: (chartDefinitionName: string) => ChartRedux.ChartDefinitionSelectAction;
     onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onShowChart: () => PopupRedux.PopupShowChartAction;
@@ -42,7 +44,6 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     render() {
         const selectSearchString: string = "Select a Chart"
         let cssClassName: string = this.props.cssClassName + "__Chart";
-
         let savedSearch: IChartDefinition = this.props.ChartDefinitions.find(s => s.Name == this.props.CurrentChartName);
 
         let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentChartName) ?
@@ -69,26 +70,31 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                             size={"small"}
                             overrideTooltip="Clear Chart"
                             overrideDisableButton={currentSearchName == selectSearchString}
-                            ConfigEntity={null}
-                            DisplayMode="Glyph" />
+                             DisplayMode="Glyph" 
+                            AccessLevel={this.props.AccessLevel}
+                            />
                     </InputGroup.Button>
                 }
             </InputGroup>
 
-            <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <span className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonShowChart
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.onShowChart()}
                     size={"small"}
                     overrideTooltip="Show Chart"
                     overrideDisableButton={currentSearchName == selectSearchString}
-                    DisplayMode="Glyph" />
+                    DisplayMode="Glyph" 
+                    AccessLevel={this.props.AccessLevel}
+                    />
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onNewChartDefinition()}
                     size={"small"}
                     overrideTooltip="Create New Chart Definition"
-                    DisplayMode="Glyph" />
+                    DisplayMode="Glyph" 
+                    AccessLevel={this.props.AccessLevel}
+                    />
 
                 <ButtonEdit
                     style={{ marginLeft: "2px" }}
@@ -96,12 +102,14 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     size={"small"}
                     overrideTooltip="Edit Chart Definition"
                     overrideDisableButton={currentSearchName == selectSearchString}
-                    DisplayMode="Glyph" />
+                    DisplayMode="Glyph" 
+                    AccessLevel={this.props.AccessLevel}
+                    />
             </span>
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} glyphicon={StrategyIds.ChartGlyph} onClose={() => this.props.onClose(StrategyIds.ChartStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} glyphicon={StrategyIds.ChartGlyph} onClose={() => this.props.onClose(StrategyIds.ChartStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -127,11 +135,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectChartDefinition: (ChartName: string) => dispatch(ChartRedux.ChartDefinitionSelect(ChartName)),
-         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ChartPopup, false, "New")),
-        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ChartPopup, false, "Edit")),
+         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId,ScreenPopups.ChartPopup,  "New")),
+        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId,ScreenPopups.ChartPopup,  "Edit")),
         onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ChartPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId,ScreenPopups.ChartPopup))
     };
 }
 

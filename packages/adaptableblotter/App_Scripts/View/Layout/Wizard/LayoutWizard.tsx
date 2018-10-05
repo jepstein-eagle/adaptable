@@ -8,7 +8,7 @@ import { LayoutGridSortWizard } from './LayoutGridSortWizard'
 import { LayoutSummaryWizard } from './LayoutSummaryWizard'
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
-import { IGridSort, ILayout } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IGridSort, ILayout } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {

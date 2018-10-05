@@ -8,7 +8,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
-import { ICustomSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICustomSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 

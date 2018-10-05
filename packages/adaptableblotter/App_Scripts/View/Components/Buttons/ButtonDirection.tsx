@@ -7,7 +7,6 @@ export class ButtonDirection extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText=""
             bsStyle={"default"}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph={this.props.glyph}
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

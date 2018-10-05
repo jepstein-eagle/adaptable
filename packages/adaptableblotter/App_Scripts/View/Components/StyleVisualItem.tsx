@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
 import { FontWeight, FontStyle } from '../../Core/Enums';
-import { IStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface StyleVisualItemProps extends React.ClassAttributes<StyleVisualItem> {
     Style: IStyle

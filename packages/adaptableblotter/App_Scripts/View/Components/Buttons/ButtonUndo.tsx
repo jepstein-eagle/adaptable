@@ -7,7 +7,6 @@ export class ButtonUndo extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Undo"
             bsStyle='success'
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="share-alt"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

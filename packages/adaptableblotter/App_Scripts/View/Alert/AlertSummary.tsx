@@ -16,8 +16,10 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterObject, IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { AlertHelper } from "../../Core/Helpers/AlertHelper";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
     Alerts: IAlertDefinition[]
@@ -35,7 +37,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Alert";
         let strategySummaries: any = []
-
+       
         // title row
         let titleRow = <StrategyHeader
             key={StrategyIds.AlertStrategyName}
@@ -44,6 +46,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
             StrategySummary={Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.AlertStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyIds.AlertStrategyName}
+            AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
 
@@ -118,7 +121,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         Alerts: state.Alert.AlertDefinitions,
         UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
        };
 }
 

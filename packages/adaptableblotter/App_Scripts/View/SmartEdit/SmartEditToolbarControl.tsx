@@ -18,18 +18,20 @@ import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { StatusColour, MathOperation } from "../../Core/Enums";
+import { StatusColour, MathOperation, AccessLevel } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;
     MathOperation: MathOperation;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-    onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
+     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SystemRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
@@ -67,7 +69,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
     render() {
 
         let statusColour: StatusColour = this.getStatusColour()
-      
+       
         let cssClassName: string = this.props.cssClassName + "__SmartEdit";
 
         let selctedColumn = ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns);
@@ -88,7 +90,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
         })
 
         let content = <span>
-            <div className={this.props.IsReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel==AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
 
                     <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.MathOperation} id="SmartEdit_Operation" bsSize="small" componentClass={InputGroup.Button}>
@@ -107,7 +109,9 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                         bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Smart Edit"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
-                        DisplayMode="Glyph" />
+                        DisplayMode="Glyph" 
+                        AccessLevel={this.props.AccessLevel}
+                        />
                 }
 
                 {this.props.IsValidSelection &&
@@ -119,7 +123,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SmartEditStrategyName} glyphicon={StrategyIds.SmartEditGlyph} onClose={() => this.props.onClose(StrategyIds.SmartEditStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SmartEditStrategyName} glyphicon={StrategyIds.SmartEditGlyph} onClose={() => this.props.onClose(StrategyIds.SmartEditStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -201,7 +205,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SmartEditPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SmartEditStrategyId, ScreenPopups.SmartEditPopup))
     };
 }
 

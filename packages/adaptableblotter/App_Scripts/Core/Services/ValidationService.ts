@@ -6,10 +6,11 @@ import { LeafExpressionOperator, DistinctCriteriaPairValue, ActionMode } from '.
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import * as StrategyIds from '../Constants/StrategyIds'
 import { IColumn } from '../Interface/IColumn';
-import { ICellValidationRule } from '../Api/Interface/AdaptableBlotterObjects';
+import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import { ObjectFactory } from '../ObjectFactory';
 
 export class ValidationService implements IValidationService {
 
@@ -24,14 +25,7 @@ export class ValidationService implements IValidationService {
             let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue)
             let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
             if (existingItem) {
-                let cellValidationRule: ICellValidationRule = {
-                    ColumnId: dataChangedEvent.ColumnId,
-                    Range: null,
-                    ActionMode: ActionMode.StopEdit,
-                    Description: "Primary Key column cannot contain duplicate values",
-                    Expression: ExpressionHelper.CreateEmptyExpression(),
-                    IsReadOnly: true
-                }
+                let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, null, ActionMode.StopEdit, "Primary Key column cannot contain duplicate values", ExpressionHelper.CreateEmptyExpression());
                 failedWarningRules.push(cellValidationRule);
             }
         }

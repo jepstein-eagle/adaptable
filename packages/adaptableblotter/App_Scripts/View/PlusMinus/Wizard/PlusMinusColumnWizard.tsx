@@ -5,7 +5,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { SelectionMode } from '../../../Core/Enums';
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IPlusMinusRule } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: Array<IColumn>

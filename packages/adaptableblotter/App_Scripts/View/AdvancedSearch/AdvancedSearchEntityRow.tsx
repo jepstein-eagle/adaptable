@@ -6,7 +6,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { IColItem } from "../UIInterfaces";
-import { IAdvancedSearch } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;
@@ -31,7 +31,6 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
             editClick={() => this.props.onEdit(this.props.Index, advancedSearch)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={null}
-            ConfigEntity={advancedSearch}
             EntityName={StrategyIds.AdvancedSearchStrategyName} />
 
         colItems[3].Content = buttons;

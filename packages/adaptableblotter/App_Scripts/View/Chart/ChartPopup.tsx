@@ -22,7 +22,9 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IChartDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
@@ -58,7 +60,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     render() {
         let cssClassName: string = this.props.cssClassName + "__Chart";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Chart";
-
+       
         let infoBody: any[] = ["Use Charts to see youyr grid data visually."]
 
         let colItems: IColItem[] = [
@@ -80,13 +82,16 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 onShare={() => this.props.onShare(Chart)}
                 onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
                 onShowChart={(chartName) => this.onShowChart(chartName)}
+                AccessLevel={this.props.AccessLevel}
             />
         });
 
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Chart Definition"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}

@@ -7,7 +7,7 @@ import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { DataType } from '../../Core/Enums'
+import { DataType, AccessLevel } from '../../Core/Enums'
 import { MathOperation } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
 import { ShortcutWizard } from './Wizard/ShortcutWizard'
@@ -20,7 +20,8 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IShortcut, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IShortcut, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
@@ -41,7 +42,7 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
     render() {
         let cssClassName: string = this.props.cssClassName + "__shortcut";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__shortcut";
-
+      
         let infoBody: any[] = ["Use shortcuts to replace frequently entered text (in numeric or date columns) with a single keystroke.", <br />, <br />,
             "Numeric shortcuts update the existing cell value based on a 'calculation'.", <br />, <br />,
             "Date shortcuts replace the contents of the cell with a new date value."]
@@ -74,10 +75,13 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
             </ShortcutEntityRow>
         });
 
-        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.CreateShortcut()}
+        let newButton = <ButtonNew cssClassName={cssClassName} 
+        onClick={() => this.CreateShortcut()}
             overrideTooltip="Create New Shortcut"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel = {this.props.AccessLevel}
+            />
 
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 

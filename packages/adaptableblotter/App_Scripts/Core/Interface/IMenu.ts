@@ -4,8 +4,7 @@ export interface IMenuItem {
     Label: string;
     StrategyId: string;
     Action: Redux.Action;
-    IsReadOnly: boolean;
-    IsVisible: boolean;
+     IsVisible: boolean;
     GlyphIcon: string
 }
 

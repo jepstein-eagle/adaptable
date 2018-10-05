@@ -7,7 +7,6 @@ export class ButtonConfigure extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Configure"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="wrench"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

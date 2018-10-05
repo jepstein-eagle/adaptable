@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IDashboardStrategy } from './Interface/IDashboardStrategy'
 import { GridState, DashboardState } from '../Redux/ActionsReducers/Interface/IState';
-import { IGridSort } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IGridSort } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { SearchChangedTrigger, Visibility, StateChangedTrigger } from '../Core/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'

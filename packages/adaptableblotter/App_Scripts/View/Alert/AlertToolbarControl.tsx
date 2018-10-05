@@ -11,11 +11,12 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { IAlert } from "../../Core/Interface/IMessage";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType } from "../../Core/Enums";
+import { MessageType, AccessLevel } from "../../Core/Enums";
 import { AlertsPanel } from "../Components/AlertsPanel";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];
@@ -82,7 +83,7 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AlertStrategyName} glyphicon={StrategyIds.AlertGlyph} onClose={() => this.props.onClose(StrategyIds.AlertStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AlertStrategyName} glyphicon={StrategyIds.AlertGlyph} onClose={() => this.props.onClose(StrategyIds.AlertStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -113,7 +114,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onDeleteAlert: (index: number) => dispatch(SystemRedux.SystemAlertDelete(index)),
         onDeleteAllAlert: () => dispatch(SystemRedux.SystemAlertDeleteAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AlertPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AlertStrategyId,ScreenPopups.AlertPopup))
     };
 }
 

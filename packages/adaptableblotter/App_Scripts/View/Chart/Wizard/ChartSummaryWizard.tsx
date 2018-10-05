@@ -4,7 +4,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
-import { IChartDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 

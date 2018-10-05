@@ -2,7 +2,7 @@ import * as React from "react";
 import { ButtonToolbar, Button,  Checkbox, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
-import { ICalendar } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICalendar } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
     Calendar: ICalendar;

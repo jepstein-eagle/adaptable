@@ -14,12 +14,13 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { SortOrder } from '../../Core/Enums';
+import { SortOrder, AccessLevel } from '../../Core/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IAdvancedSearch } from "../../Core/Api/Interface/AdaptableBlotterObjects";
-
+import { IAdvancedSearch } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchName: string;
@@ -30,12 +31,12 @@ interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyView
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSearchToolbarControlComponentProps, {}> {
-   
-   
+
+
     render() {
         const selectSearchString: string = "Select a Search"
         let cssClassName: string = this.props.cssClassName + "__advancedsearch";
-
+      
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Name == this.props.CurrentAdvancedSearchName);
 
         let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
@@ -49,8 +50,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         let content = <span>
 
             <InputGroup>
-                <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }} 
-                  className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
+                <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }}
+                    className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
                     {availableSearches}
                 </DropdownButton>
                 {currentSearchName != selectSearchString &&
@@ -62,13 +63,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                             size={"small"}
                             overrideTooltip="Clear Search"
                             overrideDisableButton={currentSearchName == selectSearchString}
-                            ConfigEntity={null}
-                            DisplayMode="Glyph" />
+                            DisplayMode="Glyph"
+                            AccessLevel={this.props.AccessLevel}
+                        />
                     </InputGroup.Button>
                 }
             </InputGroup>
 
-            <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <span className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit
                     style={{ marginLeft: "5px" }}
                     onClick={() => this.props.onEditAdvancedSearch()}
@@ -76,30 +78,34 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     size={"small"}
                     overrideTooltip="Edit Current Advanced Search"
                     overrideDisableButton={currentSearchName == selectSearchString}
-                    ConfigEntity={savedSearch}
-                    DisplayMode="Glyph" />
+                     DisplayMode="Glyph"
+                    AccessLevel={this.props.AccessLevel}
+                />
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onNewAdvancedSearch()}
                     size={"small"}
                     overrideTooltip="Create New Advanced Search"
-                    DisplayMode="Glyph" />
+                    DisplayMode="Glyph"
+                    AccessLevel={this.props.AccessLevel}
+                />
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName}
                     size={"small"}
                     overrideTooltip="Delete Advanced Search"
                     overrideDisableButton={currentSearchName == selectSearchString}
-                    ConfigEntity={savedSearch}
-                    DisplayMode="Glyph"
+                     DisplayMode="Glyph"
                     ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?"}
-                    ConfirmationTitle={"Delete Advanced Search"} />
+                    ConfirmationTitle={"Delete Advanced Search"}
+                    AccessLevel={this.props.AccessLevel}
+                />
             </span>
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AdvancedSearchStrategyName} glyphicon={StrategyIds.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AdvancedSearchStrategyName} glyphicon={StrategyIds.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -121,10 +127,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, false, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup,  "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup))
     };
 }
 

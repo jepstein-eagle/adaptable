@@ -5,7 +5,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';
@@ -42,7 +42,6 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
             editClick={() => this.props.onEdit(this.props.Index, alert)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={!this.props.Column}
-            ConfigEntity={alert}
             EntityName={StrategyIds.AlertStrategyName} />
 
 

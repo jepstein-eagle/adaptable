@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, Col, Panel, Well, Row } from 'react-bootstrap'
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Core/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";

@@ -7,7 +7,6 @@ export class ButtonPreviewDelete extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText=""
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph={"trash"}
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

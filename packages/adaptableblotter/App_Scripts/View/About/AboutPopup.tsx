@@ -13,7 +13,7 @@ import { Helper } from "../../Core/Helpers/Helper";
 import { AdaptableObjectCollection } from "../Components/AdaptableObjectCollection";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { ColumnFilterHelper } from "../../Core/Helpers/ColumnFilterHelper";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
@@ -85,12 +85,12 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
         let sorts = this.props.GridSorts.map(gs => {
             return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, this.props.Columns) + ": " + gs.SortOrder
         })
-        let clearSortsButton = <ButtonClear onClick={() => this.props.onClearAllSorts()} bsStyle={"primary"} cssClassName={cssClassName} size={"small"} overrideTooltip="Clear Grid Sorts" DisplayMode="Text+Glyph" overrideDisableButton={ArrayExtensions.IsNullOrEmpty(this.props.GridSorts)} />
+     //   let clearSortsButton = <ButtonClear onClick={() => this.props.onClearAllSorts()} bsStyle={"primary"} cssClassName={cssClassName} size={"small"} overrideTooltip="Clear Grid Sorts" DisplayMode="Text+Glyph" overrideDisableButton={ArrayExtensions.IsNullOrEmpty(this.props.GridSorts)} />
        
         returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
         returnRows.push(this.createColItem(colItems, "Can Filter", this.props.Blotter.isFilterable() ? "True" : "False"));
 
-         let clearFilterButton = <ButtonClear onClick={() => this.clearColumnFilters()} bsStyle={"primary"} cssClassName={cssClassName} size={"small"} overrideTooltip="Clear Column Filters" DisplayMode="Text+Glyph" overrideDisableButton={ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters)} />
+     //    let clearFilterButton = <ButtonClear onClick={() => this.clearColumnFilters()} bsStyle={"primary"} cssClassName={cssClassName} size={"small"} overrideTooltip="Clear Column Filters" DisplayMode="Text+Glyph" overrideDisableButton={ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters)} />
         
         returnRows.push(this.createColItem(colItems, "Column Filters", ColumnFilterHelper.getColumnFiltersDescription(this.props.ColumnFilters, this.props.Columns, this.props.Blotter)));
         returnRows.push(this.createColItem(colItems, "All Rows", this.props.Blotter.getRowCount()));

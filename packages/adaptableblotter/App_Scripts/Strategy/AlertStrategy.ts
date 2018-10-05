@@ -4,7 +4,7 @@ import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent, IDataChangingEvent } from '../Core/Services/Interface/IAuditService';
-import { IAlertDefinition } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAlertDefinition } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Core/Helpers/ExpressionHelper';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';

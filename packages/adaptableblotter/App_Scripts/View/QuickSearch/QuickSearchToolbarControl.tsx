@@ -14,11 +14,13 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
     onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
-    QuickSearchText: string
+     QuickSearchText: string
 }
 
 interface QuickSearchToolbarControlComponentState {
@@ -39,7 +41,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__quicksearch";
-
+    
         let content = <span>
 
             <AdaptableBlotterFormControlTextClear
@@ -51,15 +53,16 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                 value={this.state.EditedQuickSearchText}
                 OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
             {' '}
-            <span className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <span className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit cssClassName={cssClassName} onClick={() => this.props.onShowQuickSearchPopup()}
                     size={"small"}
                     overrideTooltip="Edit Quick Search"
-                    DisplayMode="Glyph" />
+                    DisplayMode="Glyph" 
+                    AccessLevel={this.props.AccessLevel}/>
             </span>
         </span>
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.QuickSearchStrategyName} glyphicon={StrategyIds.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyIds.QuickSearchStrategyId)}
-            onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+            onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -74,15 +77,15 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-    };
+      };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
-        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.QuickSearchPopup)),
+        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.QuickSearchPopup, isReadOnly)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
     };
 }
 

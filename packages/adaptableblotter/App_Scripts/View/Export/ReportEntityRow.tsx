@@ -9,7 +9,7 @@ import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IReport } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IReport } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
@@ -64,7 +64,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
             editClick={() => this.props.onEdit(this.props.Index, report)}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
-            ConfigEntity={report}
             EntityName="Report" />
 
         colItems[4].Content = buttons

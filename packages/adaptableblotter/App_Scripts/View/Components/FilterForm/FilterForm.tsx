@@ -10,8 +10,8 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
-import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab } from '../../../Core/Enums';
-import { IUserFilter, IColumnFilter, IRange } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Core/Enums';
+import { IUserFilter, IColumnFilter, IRange } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
@@ -33,6 +33,7 @@ import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
 import { IUIPrompt } from "../../../Core/Interface/IMessage";
+import { ObjectFactory } from "../../../Core/ObjectFactory";
 
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
@@ -142,6 +143,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             size={"xsmall"}
             DisplayMode="Glyph"
             hideToolTip={true}
+            AccessLevel={AccessLevel.Full}
         />
 
         let clearFilterButton = <ButtonClear
@@ -154,6 +156,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             overrideText={"Clear"}
             DisplayMode="Text"
             hideToolTip={true}
+            AccessLevel={AccessLevel.Full}
         />
 
         let saveButton = <ButtonSave
@@ -167,6 +170,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             overrideText={"Save as User Filter"}
             DisplayMode="Glyph"
             hideToolTip={true}
+            AccessLevel={AccessLevel.Full}
         />
 
 
@@ -296,7 +300,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let expression: Expression
         expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnDisplayValues, columnRawValues, userFilters, rangeExpressions)
 
-        let columnFilter: IColumnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
+        let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, expression);
 
         //delete if empty
         if (columnDisplayValues.length == 0 && columnRawValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {

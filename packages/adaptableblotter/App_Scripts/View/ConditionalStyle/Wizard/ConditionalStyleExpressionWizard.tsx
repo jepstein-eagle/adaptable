@@ -2,7 +2,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { IConditionalStyle } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IConditionalStyle } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../UIHelper';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

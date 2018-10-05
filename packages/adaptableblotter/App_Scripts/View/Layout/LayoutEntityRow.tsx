@@ -10,7 +10,7 @@ import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SortOrder } from "../../Core/Enums";
 import { LayoutHelper } from "../../Core/Helpers/LayoutHelper";
-import { ILayout } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ILayout } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {
@@ -38,8 +38,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={false}
             overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}
-            ConfigEntity={layout}
-            EntityName={StrategyIds.LayoutStrategyName} />
+             EntityName={StrategyIds.LayoutStrategyName} />
 
         colItems[3].Content = buttons;
 

@@ -12,7 +12,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from "../../../Core/ObjectFactory";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
-import { ILayout, IGridSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ILayout, IGridSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {

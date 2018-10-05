@@ -10,7 +10,7 @@ import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearc
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { IAdvancedSearch } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdvancedSearch } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
@@ -89,7 +89,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.Id,
             ComponentName,
             GlyphIcon,
-            this.isReadOnlyStrategy(),
+          //  this.isReadOnlyStrategy(),
             this.isVisibleStrategy(),
             PopupParams)
         this.popupMenuItem = menuItemShowPopup;
@@ -107,7 +107,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                 this.Id,
                 Action,
                 GlyphIcon,
-                false,
                 true)
             this.addContextMenuItemToStore(menuItemShowPopup);
         }
@@ -126,7 +125,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                 this.Id,
                 ComponentName,
                 GlyphIcon,
-                false,
                 true,
                 PopupParams)
             this.addContextMenuItemToStore(menuItemShowPopup);

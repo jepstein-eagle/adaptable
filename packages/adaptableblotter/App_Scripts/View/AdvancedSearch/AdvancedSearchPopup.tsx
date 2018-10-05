@@ -20,7 +20,9 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
@@ -53,7 +55,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
     render() {
         let cssClassName: string = this.props.cssClassName + "__advancedsearch";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__advancedsearch";
-
+     
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
@@ -89,7 +91,9 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let newSearchButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyIds.AdvancedSearchStrategyName} infoBody={infoBody}

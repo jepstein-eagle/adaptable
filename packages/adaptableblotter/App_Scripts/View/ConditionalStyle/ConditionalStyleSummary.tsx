@@ -9,7 +9,7 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
-import { ConditionalStyleScope } from '../../Core/Enums'
+import { ConditionalStyleScope, AccessLevel } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
@@ -19,7 +19,8 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IConditionalStyle, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IConditionalStyle, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -49,6 +50,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
             StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyIds.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyIds.ConditionalStyleStrategyName}
+            AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
 
@@ -131,6 +133,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements,
         ColorPalette: state.UserInterface.ColorPalette,
         StyleClassNames: state.UserInterface.StyleClassNames
     };

@@ -7,7 +7,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { IShortcut } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IShortcut } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
@@ -63,7 +63,6 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 showEdit={false}
                 shareClick={() => this.props.onShare()}
                 showShare={this.props.TeamSharingActivated}
-                ConfigEntity={shortcut}
                 ConfirmDeleteAction={this.props.onDeleteConfirm}
                 EntityName="Shortcut">
             </EntityListActionButtons>

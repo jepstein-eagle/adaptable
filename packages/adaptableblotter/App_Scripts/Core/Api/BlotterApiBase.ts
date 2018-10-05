@@ -25,7 +25,7 @@ import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/AdaptableBlotterObjects";
+import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyIds from '../Constants/StrategyIds'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
@@ -296,7 +296,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     public columnFilterSetUserFilter(userFilter: string): void {
         let existingUserFilter: IUserFilter = this.getState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
-            let columnFilter: IColumnFilter = ColumnFilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter)
+            let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(existingUserFilter)
             this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter));
         }
     }
@@ -411,7 +411,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         return this.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
     }
 
-    public entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Default"): void {
+    public entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
         let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel }
         this.dispatchAction(EntitlementsRedux.EntitlementAddUpdate(-1, entitlement))
     }
@@ -430,12 +430,12 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public customSortAdd(column: string, values: string[]): void {
-        let customSort: ICustomSort = { ColumnId: column, SortedValues: values, IsReadOnly: false }
+        let customSort: ICustomSort = { ColumnId: column, SortedValues: values}
         this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort))
     }
 
     public customSortEdit(column: string, values: string[]): void {
-        let customSort: ICustomSort = { ColumnId: column, SortedValues: values, IsReadOnly: false }
+        let customSort: ICustomSort = { ColumnId: column, SortedValues: values}
         this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort))
     }
 
@@ -485,12 +485,12 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public formatColumnnAdd(column: string, style: IStyle): void {
-        let formatColumn: IFormatColumn = { ColumnId: column, Style: style, IsReadOnly: false }
+        let formatColumn: IFormatColumn = { ColumnId: column, Style: style }
         this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn))
     }
 
     public formatColumnnUpdate(column: string, style: IStyle): void {
-        let formatColumn: IFormatColumn = { ColumnId: column, Style: style, IsReadOnly: false }
+        let formatColumn: IFormatColumn = { ColumnId: column, Style: style}
         this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn))
     }
 

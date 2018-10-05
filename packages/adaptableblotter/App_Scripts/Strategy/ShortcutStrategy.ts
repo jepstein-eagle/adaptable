@@ -13,7 +13,7 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../Core/ObjectFactory';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
-import { IShortcut, ICellValidationRule } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IShortcut, ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 

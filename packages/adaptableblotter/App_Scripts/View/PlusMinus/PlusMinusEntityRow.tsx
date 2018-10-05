@@ -8,7 +8,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
-import { IPlusMinusRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
@@ -32,8 +32,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={false}
-            ConfigEntity={x}
-            EntityName="Plus/Minus">
+             EntityName="Plus/Minus">
         </EntityListActionButtons>
         colItems[3].Content = buttons
 

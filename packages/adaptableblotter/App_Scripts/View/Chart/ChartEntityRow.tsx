@@ -1,21 +1,22 @@
 import * as React from "react";
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IChartDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
+import { AccessLevel } from "../../Core/Enums";
 
 export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow> {
     onShowChart: (chart: string) => void;
+    AccessLevel: AccessLevel
 }
 
 export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
     render(): any {
         let Chart: IChartDefinition = this.props.AdaptableBlotterObject as IChartDefinition;
         let colItems: IColItem[] = [].concat(this.props.colItems);
-
+       
         colItems[0].Content = Chart.Name
         colItems[1].Content = Chart.Type
         colItems[2].Content = <ButtonShowChart
@@ -25,7 +26,9 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
             onClick={() => this.props.onShowChart(Chart.Name)}
             size={"small"}
             overrideTooltip="Show Chart"
-            DisplayMode="Glyph" />
+            DisplayMode="Glyph" 
+            AccessLevel={this.props.AccessLevel}
+            />
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
@@ -33,7 +36,6 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={null}
-            ConfigEntity={Chart}
             EntityName="Chart">
         </EntityListActionButtons>
 

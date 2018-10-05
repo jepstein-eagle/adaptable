@@ -6,6 +6,7 @@ import { UIHelper } from "../UIHelper";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
 import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
+import { AccessLevel } from "../../Core/Enums";
 
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
@@ -82,10 +83,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                         </div>
                     </Modal.Body>
                     <Modal.Footer className={cssClassName + StyleConstants.WIZARD_FOOTER}>
-                        <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} />
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" />
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} />
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="primary" overrideDisableButton={!this.canFinishWizard()} onClick={() => this.handleClickFinish()} overrideText="Finish" glyph={"ok"} />
+                        <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} AccessLevel={AccessLevel.Full}/>
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" AccessLevel={AccessLevel.Full}/>
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} AccessLevel={AccessLevel.Full}/>
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="primary" overrideDisableButton={!this.canFinishWizard()} onClick={() => this.handleClickFinish()} overrideText="Finish" glyph={"ok"} AccessLevel={AccessLevel.Full} />
                     </Modal.Footer>
                 </div>
             </Modal>

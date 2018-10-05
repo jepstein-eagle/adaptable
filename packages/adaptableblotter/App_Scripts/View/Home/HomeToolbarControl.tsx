@@ -19,8 +19,8 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { Visibility, StatusColour, MessageType } from "../../Core/Enums";
-import { ISystemStatus } from "../../Core/Interface/Interfaces";
+import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Core/Enums";
+import { ISystemStatus, IEntitlement } from "../../Core/Interface/Interfaces";
 import { IAlert, } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
@@ -53,7 +53,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let menuItems = this.props.MenuState.MenuItems.filter(x =>
             x.IsVisible && x.StrategyId != StrategyIds.AboutStrategyId
         ).map((menuItem: IMenuItem) => {
-            return <MenuItem disabled={this.props.IsReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
+            return <MenuItem disabled={this.props.AccessLevel==AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
                 <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
             </MenuItem>
         });
@@ -67,7 +67,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // status button
         let statusButton = <OverlayTrigger key={"systemstatus"} overlay={<Tooltip id="tooltipButton" > {"System Status"}</Tooltip >}>
-            <ButtonDashboard glyph={this.getGlyphForSystemStatusButton()} cssClassName={cssClassName} bsStyle={this.getStyleForSystemStatusButton()} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()} />
+            <ButtonDashboard glyph={this.getGlyphForSystemStatusButton()} cssClassName={cssClassName} bsStyle={this.getStyleForSystemStatusButton()} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()}  AccessLevel={AccessLevel.Full}/>
         </OverlayTrigger >
 
         // shortcuts
@@ -78,7 +78,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible &&  y.StrategyId == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
-                        <ButtonDashboard glyph={menuItem.GlyphIcon} cssClassName={cssClassName} bsStyle={"default"} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={menuItem.Label} overrideDisableButton={this.props.IsReadOnly} onClick={() => this.onClick(menuItem)} />
+                        <ButtonDashboard glyph={menuItem.GlyphIcon} cssClassName={cssClassName} bsStyle={"default"} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={menuItem.Label} overrideDisableButton={this.props.AccessLevel==AccessLevel.ReadOnly} onClick={() => this.onClick(menuItem)} AccessLevel={AccessLevel.Full} />
                     </OverlayTrigger >
                 }
             })
@@ -101,7 +101,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         return <PanelDashboard cssClassName={cssClassName} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
             headerText={toolbarTitle} glyphicon={"home"} showGlyphIcon={false}
-            onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+            onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure()}>
 
             {this.props.DashboardState.ShowFunctionsDropdown &&
                 <DropdownButton bsStyle={"default"}
@@ -213,15 +213,15 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         MenuState: state.Menu,
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
-        SystemStatus: state.System.SystemStatus
-    };
+        SystemStatus: state.System.SystemStatus,
+     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.HomeButtonsPopup, isReadOnly)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onShowStatusMessage: (alert: IAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),

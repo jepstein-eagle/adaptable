@@ -8,8 +8,7 @@ export class MenuItemDoReduxAction implements IMenuItem {
         public StrategyId: string,
         public Action: Redux.Action,
         public GlyphIcon: string,
-        public IsReadOnly: boolean,
-        public IsVisible: boolean ) {
+         public IsVisible: boolean ) {
     }
 
     ; 
@@ -20,14 +19,13 @@ export class MenuItemShowPopup implements IMenuItem {
         public StrategyId: string,
         private ComponentName: string,
         public GlyphIcon: string,
-        public IsReadOnly: boolean,
         public IsVisible: boolean,
         private PopupParams?: string,
       ) {
         this.Action = PopupRedux.PopupShowScreen(
+           StrategyId,
             ComponentName,
-            this.IsReadOnly,
-            this.PopupParams)
+             this.PopupParams)
     }
     public Action: Redux.Action;
 }

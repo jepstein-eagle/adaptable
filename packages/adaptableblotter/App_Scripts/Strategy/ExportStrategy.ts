@@ -12,7 +12,7 @@ import { OpenfinHelper } from '../Core/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Core/Helpers/iPushPullHelper';
-import { IReport } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IReport } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { AdaptableBlotterLogger } from '../Core/Helpers/AdaptableBlotterLogger';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 

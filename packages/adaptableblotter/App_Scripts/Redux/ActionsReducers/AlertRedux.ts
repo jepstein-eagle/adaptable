@@ -1,6 +1,6 @@
 import { AlertState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IAlertDefinition } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAlertDefinition } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { MessageType } from '../../Core/Enums';
 import { IAlert } from '../../Core/Interface/IMessage';
 

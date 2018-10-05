@@ -24,7 +24,7 @@ import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { ICalculatedColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnChooserSummary } from "../ColumnChooser/ColumnChooserSummary";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 

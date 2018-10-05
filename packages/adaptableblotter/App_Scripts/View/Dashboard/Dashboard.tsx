@@ -10,11 +10,12 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import { DistinctCriteriaPairValue, Visibility } from "../../Core/Enums";
+import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogger";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
@@ -38,16 +39,16 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             //we'll need to use the name or something else
             let dashboardControl = AdaptableDashboardViewFactory.get(control);
             if (dashboardControl) {
-                let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control && x.AccessLevel == "ReadOnly") > -1
+                let accessLevel: AccessLevel = EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
                 let dashboardElememt = React.createElement(dashboardControl, {
                     Blotter: this.props.Blotter,
-                    IsReadOnly: isReadOnly,
                     Columns: this.props.Columns,
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
                     ColorPalette: this.props.ColorPalette,
                     GridSorts: this.props.GridSorts,
-                    cssClassName: cssClassName
+                    cssClassName: cssClassName,
+                    AccessLevel: accessLevel
                 });
                 return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                     {dashboardElememt}
@@ -97,7 +98,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
-         ColorPalette: state.UserInterface.ColorPalette,
+        ColorPalette: state.UserInterface.ColorPalette,
         GridSorts: state.Grid.GridSorts
     };
 }

@@ -5,7 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { ICustomSort } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICustomSort } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSortEntityRow> {
     ColumnLabel: string
@@ -25,7 +25,6 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)}
-            ConfigEntity={customSort}
             EntityName="Custom Sort">
         </EntityListActionButtons>
 

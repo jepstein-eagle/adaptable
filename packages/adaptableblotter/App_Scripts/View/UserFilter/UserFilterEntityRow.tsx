@@ -6,7 +6,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export class UserFilterEntityRow extends React.Component<SharedEntityExpressionRowProps<UserFilterEntityRow>, {}> {
@@ -24,7 +24,6 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
             editClick={() => this.props.onEdit(this.props.Index, userFilter)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
-            ConfigEntity={userFilter}
             overrideDisableEdit={false}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyIds.UserFilterStrategyName} />

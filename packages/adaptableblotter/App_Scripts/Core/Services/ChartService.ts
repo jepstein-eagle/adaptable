@@ -1,7 +1,7 @@
 
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IChartService } from './Interface/IChartService';
-import { IChartDefinition, IColumnValueExpression } from '../Api/Interface/AdaptableBlotterObjects';
+import { IChartDefinition, IColumnValueExpression } from '../Api/Interface/IAdaptableBlotterObjects';
 import { DistinctCriteriaPairValue } from '../Enums';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { Expression } from '../Api/Expression';

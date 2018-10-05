@@ -1,22 +1,14 @@
 import { ExpressionHelper } from './ExpressionHelper'
-import { IUserFilter, IColumnFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { KeyValuePair } from '../../View/UIInterfaces';
-import { Key } from 'igniteui-react-core/ES2015/Key';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
 
 export module ColumnFilterHelper {
 
-    export function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter {
-        return {
-            ColumnId: userFilter.ColumnId,
-            Filter: ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [], [userFilter.Name], []),
-            IsReadOnly: false
-        }
-    }
 
     export function ConvertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): KeyValuePair[] {
         let infoBody: KeyValuePair[] = []

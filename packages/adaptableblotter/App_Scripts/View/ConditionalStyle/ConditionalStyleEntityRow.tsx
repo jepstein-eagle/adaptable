@@ -10,7 +10,7 @@ import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
-import { IConditionalStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
@@ -34,7 +34,6 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
             editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
-            ConfigEntity={conditionalStyle}
             overrideDisableEdit={(!column && conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column)}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyIds.ConditionalStyleStrategyName} />

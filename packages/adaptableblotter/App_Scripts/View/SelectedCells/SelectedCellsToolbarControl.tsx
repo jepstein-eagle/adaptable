@@ -12,10 +12,11 @@ import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
-import { SelectedCellOperation } from "../../Core/Enums";
+import { SelectedCellOperation, AccessLevel } from "../../Core/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SelectedCellsToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo
@@ -23,6 +24,7 @@ interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewP
     onSelectedCellsOperationChange: (SelectedCellOperation: SelectedCellOperation) => SelectedCellsRedux.SelectedCellsChangeOperationAction;
     onSelectedCellsCreateSummary: () => GridRedux.GridCreateSelectedCellSummaryAction;
     SelectedCellSummary: ISelectedCellSummmary
+   
 }
 
 interface SelectedCellsToolbarControlComponentState {
@@ -60,7 +62,7 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
         })
 
         let content = <span>
-            <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
                     <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.SelectedCellOperation} id="SelectedCells_Operation" bsSize="small" componentClass={InputGroup.Button}>
                         {operationMenuItems}
@@ -74,7 +76,7 @@ class SelectedCellsToolbarControlComponent extends React.Component<SelectedCells
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SelectedCellsStrategyName} glyphicon={StrategyIds.SelectedCellsGlyph} onClose={() => this.props.onClose(StrategyIds.SelectedCellsStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SelectedCellsStrategyName} glyphicon={StrategyIds.SelectedCellsGlyph} onClose={() => this.props.onClose(StrategyIds.SelectedCellsStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
 
         </PanelDashboard>
@@ -117,7 +119,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SelectedCellInfo: state.Grid.SelectedCellInfo,
         SelectedCellOperation: state.SelectedCells.SelectedCellOperation,
-        SelectedCellSummary: state.Grid.SelectedCellSummary
+        SelectedCellSummary: state.Grid.SelectedCellSummary,
     };
 }
 
@@ -126,7 +128,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectedCellsOperationChange: (SelectedCellOperation: SelectedCellOperation) => dispatch(SelectedCellsRedux.SelectedCellsChangeOperation(SelectedCellOperation)),
         onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SelectedCellsPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SelectedCellsStrategyId, ScreenPopups.SelectedCellsPopup))
     };
 }
 

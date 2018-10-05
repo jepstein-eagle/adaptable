@@ -8,7 +8,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { Well } from 'react-bootstrap';
-import { ConditionalStyleScope } from '../../Core/Enums'
+import { ConditionalStyleScope, AccessLevel } from '../../Core/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import { Helper } from '../../Core/Helpers/Helper';
@@ -22,7 +22,8 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
@@ -54,7 +55,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
     render() {
         let cssClassName: string = this.props.cssClassName + "__conditionalstyle";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
-
+    
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
             "Styles include selection of fore and back colours, and font properties."]
 
@@ -82,7 +83,9 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Conditional Style"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyIds.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyIds.ConditionalStyleGlyph} infoBody={infoBody}>

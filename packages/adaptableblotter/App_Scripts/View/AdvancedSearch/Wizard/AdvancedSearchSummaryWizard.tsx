@@ -14,7 +14,7 @@ import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
-import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     Columns: IColumn[]

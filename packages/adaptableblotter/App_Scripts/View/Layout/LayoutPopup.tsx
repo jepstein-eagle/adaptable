@@ -21,9 +21,10 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { SortOrder } from "../../Core/Enums";
-import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { SortOrder, AccessLevel } from "../../Core/Enums";
+import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
@@ -55,7 +56,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     render() {
         let cssClassName: string = this.props.cssClassName + "__layout";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__layout";
-
+       
 
         let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
 
@@ -91,7 +92,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         let newSearchButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}/>
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyIds.LayoutStrategyName} infoBody={infoBody}

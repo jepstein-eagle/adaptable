@@ -15,6 +15,8 @@ import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
@@ -31,7 +33,7 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
     render() {
         const selectDataSourceString: string = "Select Data Source"
         let cssClassName: string = this.props.cssClassName + "__dataSource";
-
+      
         let infoBody :any[] = [ "Select a datasource from the dropdown to be evaluated on the server."]
 
         let currentDataSource = StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource) ?
@@ -59,8 +61,9 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
                                 onClick={() => this.onSelectedDataSourceChanged("")}
                                 overrideTooltip="Clear Data Source"
                                 overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource)}
-                                ConfigEntity={null}
-                                DisplayMode="Text+Glyph" />
+                                DisplayMode="Text+Glyph" 
+                                AccessLevel={this.props.AccessLevel}
+                                />
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>

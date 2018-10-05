@@ -7,7 +7,6 @@ export class ButtonShowChart extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Show Chart"
             bsStyle='primary'
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="stats"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

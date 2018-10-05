@@ -6,6 +6,7 @@ import { UIHelper } from "../UIHelper";
 import { ButtonClear } from "./Buttons/ButtonClear";
 import { ButtonPreviewDelete } from "./Buttons/ButtonPreviewDelete";
 import { PanelWithButton } from "./Panels/PanelWithButton";
+import { AccessLevel } from "../../Core/Enums";
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
     Alerts: IAlert[];
@@ -18,7 +19,7 @@ export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
 }
 
 export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
-      componentWillUnmount() {
+    componentWillUnmount() {
         this.props.onRender();
     }
 
@@ -47,7 +48,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
                                 size={"xsmall"}
                                 overrideDisableButton={false}
                                 style={{ float: 'left' }}
-
+                                AccessLevel={AccessLevel.Full}
                             />
                         </InputGroup.Button>
                     </InputGroup>
@@ -59,10 +60,10 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
 
             </div>
 
-     return <ListGroupItem key={index}>
-                     {alertText}
-             </ListGroupItem>
-       
+            return <ListGroupItem key={index}>
+                {alertText}
+            </ListGroupItem>
+
         });
 
         let clearAllButton = <ButtonClear cssClassName={this.props.cssClassName + " pull-right "} onClick={() => this.props.onClearAllAlerts()}
@@ -72,15 +73,16 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
             overrideText={"Clear All"}
             DisplayMode="Text"
             hideToolTip={true}
+            AccessLevel={AccessLevel.Full}
         />
 
 
-        return  <PanelWithButton cssClassName={cssClassName} headerText={"Alerts"} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" button={clearAllButton} >
-           
-          <ListGroup style={{ overflowY: "hidden" }}>
+        return <PanelWithButton cssClassName={cssClassName} headerText={"Alerts"} className="ab_no-padding-except-top-panel ab_small-padding-panel" bsStyle="default" button={clearAllButton} >
+
+            <ListGroup style={{ overflowY: "hidden" }}>
                 {alerts}
             </ListGroup>
-           </PanelWithButton>
+        </PanelWithButton>
     }
 
 }

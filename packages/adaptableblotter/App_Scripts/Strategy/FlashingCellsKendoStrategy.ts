@@ -3,7 +3,7 @@ import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
-import { IFlashingCell } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IFlashingCell } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 
 export class FlashingCellsKendoStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {

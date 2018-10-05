@@ -2,7 +2,7 @@ import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
 import { IColumn  } from '../../../Core/Interface/IColumn';
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IColItem } from "../../UIInterfaces";
 
 

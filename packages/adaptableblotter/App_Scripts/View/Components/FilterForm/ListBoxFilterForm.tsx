@@ -12,7 +12,7 @@ import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
 import { ColumnSelector } from "../Selectors/ColumnSelector";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
-import { IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 

@@ -7,7 +7,7 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
-import { IChartDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { IChartService } from "../../Core/Services/Interface/IChartService";
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {

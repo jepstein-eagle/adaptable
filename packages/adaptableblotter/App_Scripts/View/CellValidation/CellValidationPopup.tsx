@@ -21,7 +21,9 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -50,7 +52,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     render() {
         let cssClassName: string = this.props.cssClassName + "__cellValidation";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
-
+       
         let infoBody: any[] = ["Cell Validation Rules determine whether an edit is valid.", <br />, <br />,
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
@@ -85,7 +87,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyIds.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}

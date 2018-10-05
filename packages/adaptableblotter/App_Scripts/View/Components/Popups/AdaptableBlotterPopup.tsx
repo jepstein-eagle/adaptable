@@ -1,19 +1,20 @@
 import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { DistinctCriteriaPairValue, AccessLevel } from '../../../Core/Enums'
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Core/Constants/GeneralConstants'
+import { EntitlementHelper } from '../../../Core/Helpers/EntitlementHelper';
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
   ComponentName: string;
-  IsReadOnly: boolean
-  onHide?: Function;
+  ComponentStrategy: string;
+   onHide?: Function;
   Blotter: IAdaptableBlotter;
   PopupParams: string
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
@@ -25,6 +26,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.Blotter.BlotterOptions, document);
+    let accessLevel: AccessLevel =  EntitlementHelper.getEntitlementAccessLevelForStrategy(  this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy );
+     
     if (this.props.ComponentName) {
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
@@ -40,6 +43,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         ColorPalette: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         GridSorts: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
         cssClassName: cssClassName + StyleConstants.MODAL_BODY,
+        AccessLevel: accessLevel,
         Blotter: this.props.Blotter
       }
 
@@ -56,7 +60,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         <div className={cssClassName + StyleConstants.MODAL_BASE}>
           <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
             <div className="ab_main_popup">
-              <div className={this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+              <div className={accessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 {body}
               </div>
             </div>

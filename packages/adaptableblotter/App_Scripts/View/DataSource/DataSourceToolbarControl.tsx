@@ -12,12 +12,15 @@ import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 
 interface DataSourceToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
     CurrentDataSource: string;
     DataSources: string[];
-    onSelectDataSource: (DataSourceName: string) => DataSourceRedux.DataSourceSelectAction;
+     onSelectDataSource: (DataSourceName: string) => DataSourceRedux.DataSourceSelectAction;
   }
 
 class DataSourceToolbarControlComponent extends React.Component<DataSourceToolbarControlComponentProps, {}> {
@@ -26,7 +29,7 @@ class DataSourceToolbarControlComponent extends React.Component<DataSourceToolba
     render() {
         const selectDataSourceString: string = "Select Data Source"
         let cssClassName: string = this.props.cssClassName + "__DataSource";
-
+   
         let currentDataSource = StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource) ?
         selectDataSourceString : this.props.CurrentDataSource
 
@@ -48,15 +51,16 @@ class DataSourceToolbarControlComponent extends React.Component<DataSourceToolba
                             size={"small"}
                             overrideTooltip="Clear Search"
                             overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource)}
-                            ConfigEntity={null}
-                            DisplayMode="Glyph" />
+                            DisplayMode="Glyph" 
+                            AccessLevel={this.props.AccessLevel}
+                            />
                     </InputGroup.Button>
              </InputGroup>
 
            </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.DataSourceStrategyName} glyphicon={StrategyIds.DataSourceGlyph} onClose={() => this.props.onClose(StrategyIds.DataSourceStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.DataSourceStrategyName} glyphicon={StrategyIds.DataSourceGlyph} onClose={() => this.props.onClose(StrategyIds.DataSourceStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -79,7 +83,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectDataSource: (DataSourceName: string) => dispatch(DataSourceRedux.DataSourceSelect(DataSourceName)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.DataSourcePopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.DataSourceStrategyId, ScreenPopups.DataSourcePopup))
     };
 }
 

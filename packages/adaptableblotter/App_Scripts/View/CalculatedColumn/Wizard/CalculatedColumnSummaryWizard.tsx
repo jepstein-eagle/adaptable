@@ -7,7 +7,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
-import { ICalculatedColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface CalculatedColumnSummaryWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {

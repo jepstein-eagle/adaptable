@@ -9,6 +9,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { AccessLevel } from "../../Core/Enums";
 
 interface ApplicationToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
     ApplicationToolbarTitle: string;
@@ -23,7 +24,7 @@ class ApplicationToolbarControlComponent extends React.Component<ApplicationTool
             this.props.ApplicationToolbarTitle :
             StrategyIds.ApplicationStrategyName
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={headerText} glyphicon={StrategyIds.ApplicationGlyph} onClose={() => this.props.onClose(StrategyIds.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure(this.props.IsReadOnly)}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={headerText} glyphicon={StrategyIds.ApplicationGlyph} onClose={() => this.props.onClose(StrategyIds.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure()}>
             <div className="ApplicationToolBarContents" style={{ minHeight: 30 }}>
 
             </div>
@@ -41,7 +42,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ApplicationPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ApplicationStrategyId,ScreenPopups.ApplicationPopup))
     };
 }
 

@@ -14,14 +14,15 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
-import { SortOrder } from "../../Core/Enums";
+import { SortOrder, AccessLevel } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -54,7 +55,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
     render() {
         let cssClassName: string = this.props.cssClassName + "__calculatedcolumn";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__calculatedcolumn";
-
+       
         let infoBody: any[] = ["Use Calculated Columns to create your own bespoke columns; the value of the column is an Expression which will update automatically in line with any columns it refers to.", <br />, <br />, "Once created, Calculated Columns are treated like any other column in the Grid."]
 
         let colItems: IColItem[] = [
@@ -83,7 +84,9 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             cssClassName={cssClassName}
             overrideTooltip="Create Calculated Column"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}

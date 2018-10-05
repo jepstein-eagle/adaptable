@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { EntityListActionButtons } from '../Buttons/EntityListActionButtons';
 import { SummaryRowItem } from './SummaryRowItem';
-import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetail> {
@@ -37,8 +37,7 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
             showShare={this.props.showShare}
-            ConfigEntity={this.props.ConfigEnity}
-            EntityName={this.props.EntityName} />)
+             EntityName={this.props.EntityName} />)
 
 
         return <SummaryRowItem cssClassName={this.props.cssClassName} SummaryItems={summaryItems} />

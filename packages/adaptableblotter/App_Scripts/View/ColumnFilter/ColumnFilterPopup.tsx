@@ -14,9 +14,11 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
-import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { FilterHelper } from "../../Core/Helpers/FilterHelper";
 import { IUIPrompt } from "../../Core/Interface/IMessage";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]
@@ -34,7 +36,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
-
+     
         let infoBody: any[] = ["Column Filters are set using the filter dropdown in the column header menu.", <br />, <br />,
             "This popup allows you to see which columns have filters applied with an option to clear them."]
 
@@ -57,6 +59,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
                 onDeleteConfirm={null}
                 onClear={() => this.props.onClearColumnFilter(columnFilter.ColumnId)}
                 onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
+                AccessLevel={this.props.AccessLevel}
             />
 
         })

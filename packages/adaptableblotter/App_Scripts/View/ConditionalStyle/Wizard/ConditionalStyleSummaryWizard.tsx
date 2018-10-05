@@ -12,7 +12,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Core/Enums";
-import { IConditionalStyle, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IConditionalStyle, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {

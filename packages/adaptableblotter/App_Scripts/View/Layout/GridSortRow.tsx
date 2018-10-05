@@ -4,11 +4,11 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { SelectionMode, SortOrder } from "../../Core/Enums";
+import { SelectionMode, SortOrder, AccessLevel } from "../../Core/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IGridSort } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IGridSort } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
     GridSort: IGridSort
@@ -43,14 +43,15 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
             cssClassName={this.props.cssClassName}
             style={{ marginLeft: "1px", marginTop: "2px", marginBottom: "2px", marginRight: "1px" }}
             overrideDisableButton={false}
-            ConfigEntity={null}
-            overrideTooltip={"Delete Sort"}
+             overrideTooltip={"Delete Sort"}
             DisplayMode="Glyph"
             ConfirmAction={null}
             ConfirmationMsg={""}
             ConfirmationTitle={""}
             onClickAction={() => this.props.onDeleteGridSort()}
-            size="small" />
+            size="small" 
+            AccessLevel={AccessLevel.Full} // only here if in wizard...
+            />
 
         colItems[2].Content = deleteButton;
 

@@ -20,7 +20,9 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
-import { IFormatColumn, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IFormatColumn, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
@@ -56,7 +58,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
     render() {
         let cssClassName: string = this.props.cssClassName + "__formatcolumn";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";
-
+       
         let infoBody: any[] = ["Format a column so it styles with the colours and font properties that you provide.", <br />, <br />, "Unlike Conditional Styles the column is ", <b>always</b>, " formatted as set and is not dependent on a rule being met."]
 
         let colItems: IColItem[] = [
@@ -82,7 +84,9 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
         let newButton = <ButtonNew cssClassName={cssClassName}onClick={() => this.onNew()}
             overrideTooltip="Create Format Column"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
             return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName}  headerText={StrategyIds.FormatColumnStrategyName}

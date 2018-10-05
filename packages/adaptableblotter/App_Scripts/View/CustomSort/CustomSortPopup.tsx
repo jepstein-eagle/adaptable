@@ -22,9 +22,11 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction
@@ -57,7 +59,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
     render() {
         let cssClassName: string = this.props.cssClassName + "__customsort";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__customsort";
-
+       
         let infoBody: any[] = ["Custom Sorts enable you to create your own sort orders for columns where the default (alphabetical ascending or descending) is insufficient.", <br />, <br />,
             "Use the Wizard to specify and order the column values in the Sort.", <br />, <br />,
             "A Custom Sort can contain as many column values as required; any values not contained in the Custom Sort will be sorted alphabetically ", <strong>after</strong>, " the sort order has been applied."]
@@ -86,7 +88,9 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Custom Sort"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"}
+            AccessLevel={this.props.AccessLevel}
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.CustomSortStrategyName} className="ab_main_popup" infoBody={infoBody}
@@ -105,7 +109,7 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
                         ConfigEntities={this.props.CustomSorts}
-                         ModalContainer={this.props.ModalContainer}
+                        ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}

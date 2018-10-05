@@ -21,7 +21,9 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     onAddUpdateUserFilter: (index: number, userFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
@@ -50,8 +52,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
     render() {
         let cssClassName: string = this.props.cssClassName + "__userfilter";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__userfilter";
-
-
+        
         let infoBody: any[] = ["User Filters are named, reusable Column Queries.", <br />, <br />,
             "Once created, User Filters are available in the column's filter dropdown as if a single colum value.", <br />, <br />,
             "Additionally they are available when creating other Queries (e.g. for Advanced Search)", <br />, <br />,
@@ -97,7 +98,9 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create User Filter"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyIds.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}

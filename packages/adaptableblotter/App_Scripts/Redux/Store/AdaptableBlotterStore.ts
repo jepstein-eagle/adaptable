@@ -56,7 +56,7 @@ import { GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
@@ -176,22 +176,18 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         else {
             engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
         }
-        // const someExampleMigration = {
-        //     version: 1,
-        //     migration: (state: AdaptableBlotterState) => {
-        //         state.SmartEdit.SmartEditValue = "2"; return { ...state }
-        //     }
-        // }
-
+      
         // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
         // perhaps would be better to have 2 stores - persistence store and in-memory store
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
         engineWithFilter = filter(engineWithMigrate, [], [
+            // Used ONLY Internally so no need to save
             ConfigConstants.SYSTEM,
             ConfigConstants.GRID,
             ConfigConstants.MENU,
             ConfigConstants.POPUP,
             ConfigConstants.TEAMSHARING,
+            // Set ONLY at DesignTime in PredefinedConfig and never changed at runtime
             ConfigConstants.USER_INTERFACE,
             ConfigConstants.ENTITLEMENTS,
             ConfigConstants.APPLICATION,
@@ -359,11 +355,11 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                 case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
                     let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action
                     // first create a new user filter based on the column filter and input name
-                    let userFilter: IUserFilter = FilterHelper.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
+                    let userFilter: IUserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
                     middlewareAPI.dispatch(UserFilterRedux.UserFilterAddUpdate(-1, userFilter));
 
                     // then create a new column filter from the user filter - so that it will display the user filter name
-                    let newColumnFilter: IColumnFilter = ColumnFilterHelper.CreateColumnFilterFromUserFilter(userFilter);
+                    let newColumnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(userFilter);
                     middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(newColumnFilter));
 
                     return next(action);
@@ -576,11 +572,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
 
                     blotter.addCalculatedColumnToGrid(calculatedColumn)
-                    let newCalculatedColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn.ColumnId)
-                    if (newCalculatedColumn) {
-                        //      columnsLocalLayout.push(newCalculatedColumn)
-                    }
-                    //otherwise it will show hidden columns in AgGrid as we are recreating the column collection
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
                     return returnAction;
                 }
@@ -704,10 +695,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     }
                     return next(action);
                 }
-
-                /*  *********
-                SELECTED CELL ACTIONS
-                ************ */
                 case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
                     let SelectedCellsStrategy = <ISelectedCellsStrategy>(blotter.Strategies.get(StrategyIds.SelectedCellsStrategyId));
                     let returnAction = next(action);
@@ -839,7 +826,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let exportStrategy = <IExportStrategy>(blotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = <ExportRedux.ExportApplyAction>action;
                     if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullLogin", false, actionTyped.Report))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, "IPushPullLogin", actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
                         iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
@@ -848,7 +835,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         }).catch((err: any) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err))
                         })
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullDomainPageSelector", false, actionTyped.Report))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report))
                     }
                     else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
                         exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
@@ -873,7 +860,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                         }).catch((error: any) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
                         })
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullDomainPageSelector", false, report))
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, "IPushPullDomainPageSelector",  report))
                     }).catch((error: string) => {
                         AdaptableBlotterLogger.LogError("Login failed", error);
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
@@ -936,5 +923,3 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         }
     }
 }
-
-

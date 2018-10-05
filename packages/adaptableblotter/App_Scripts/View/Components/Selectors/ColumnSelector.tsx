@@ -64,8 +64,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
                         onClick={() => this.onClearButton()}
                         overrideTooltip="Clear Column"
                         overrideDisableButton={isEmptySelectedColumnIds}
-                        ConfigEntity={null}
-                        DisplayMode="Glyph" />
+                         DisplayMode="Glyph" />
                 </InputGroup.Button>
             </InputGroup>
 

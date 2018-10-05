@@ -8,6 +8,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
+import { AccessLevel } from "../../Core/Enums";
 
 interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagementPopupComponent> {
 }
@@ -30,7 +31,9 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
             overrideText={"Clear User Data"}
             overrideTooltip="Clear User Data"
             DisplayMode="Text"
-            size={"large"} />
+            size={"large"} 
+            AccessLevel={AccessLevel.Full}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyIds.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyIds.DataManagementGlyph} infoBody={infoBody}>

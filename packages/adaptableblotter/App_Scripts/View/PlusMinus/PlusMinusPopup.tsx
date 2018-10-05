@@ -23,7 +23,9 @@ import { UIHelper } from '../UIHelper';
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { AccessLevel } from "../../Core/Enums";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -54,7 +56,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
     render() {
         let cssClassName: string = this.props.cssClassName + "__plusminus";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__plusminus";
-
+     
         let infoBody: any[] = ["Enables the creation of Plus/Minus 'Nudge' Rules (i.e. how much to increment numeric cells when ", <i>'+'</i>, " or ", <i>'-'</i>, " keys are pressed on the keyboard).", <br />, <br />,
             "Plus/Minus 'Nudge' Rules can be set for any numeric column, with option to specify whether a nudge is always applied or only when a particular condition is met."]
 
@@ -86,7 +88,9 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createColumnNudgeValue()}
             overrideTooltip="Create Plus / Minus Rule"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"}
+            AccessLevel={this.props.AccessLevel}
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyIds.PlusMinusStrategyName} bsStyle="primary" cssClassName={cssClassName}

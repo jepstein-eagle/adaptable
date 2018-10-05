@@ -1,7 +1,7 @@
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IUserFilter } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
-import { IAdvancedSearch } from '../../../Core/Api/Interface/AdaptableBlotterObjects';
+import { IUserFilter } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { Expression } from '../../../Core/Api/Expression';
 import { UIHelper } from "../../UIHelper";
 

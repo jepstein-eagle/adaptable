@@ -168,7 +168,9 @@ function FilterPredefinedItems(state: AdaptableBlotterState) {
             for (let property in substate) {
                 if (substate.hasOwnProperty(property)) {
                     if (Array.isArray(substate[property])) {
-                        substate[property] = substate[property].filter(x => !x.IsReadOnly)
+                  // this line is dead! as we dont have readonly
+                  // so dont think we need teh whole method - get rid?
+                       substate[property] = substate[property].filter(x => !x.IsReadOnly)
                     }
                 }
 
@@ -177,30 +179,6 @@ function FilterPredefinedItems(state: AdaptableBlotterState) {
     }
 }
 
-//We force the IsReadOnly of the predefinedState to be true
-// I've commented this out 29/4/18 as Im not sure what hte point of it is.  why not let devs decide if something is predefined?
-function ForcePredefinedItems(state: AdaptableBlotterState) {
-    // we iterating substate here
-    for (let substateName in state) {
-        if (state.hasOwnProperty(substateName)) {
-            let substate = state[substateName]
-            //we look for arrays of entities and will set predefined Items
-            //works only if array is at rootlevel. Will need enhancement if that was to change
-            for (let property in substate) {
-                if (substate.hasOwnProperty(property)) {
-                    if (Array.isArray(substate[property])) {
-                        let arrayItems = substate[property]
-                        arrayItems.forEach(element => {
-                            element.IsReadOnly = true;
-                        });
-                    }
-                }
-
-            }
-        }
-    }
-    return state
-}
 
 function customizer(objValue, srcValue) {
     if (_.isArray(objValue)) {

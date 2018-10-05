@@ -7,7 +7,6 @@ export class ButtonClear extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Clear"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="remove"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

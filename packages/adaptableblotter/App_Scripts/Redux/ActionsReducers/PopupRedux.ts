@@ -20,8 +20,8 @@ export const POPUP_CANCEL_CONFIRMATION = 'POPUP_CANCEL_CONFIRMATION';
 export const POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
 
 export interface PopupShowScreenAction extends Redux.Action {
+    ComponentStrategy: string,
     ComponentName: string,
-    IsReadOnly: boolean,
     Params?: string
 }
 
@@ -58,11 +58,11 @@ export interface PopupClearParamAction extends Redux.Action { }
 export interface PopupChartClearParamAction extends Redux.Action { }
 
 
-export const PopupShowScreen = (ComponentName: string, IsReadOnly?: boolean, Params?: string): PopupShowScreenAction => ({
+export const PopupShowScreen = (ComponentStrategy: string, ComponentName: string,  Params?: string): PopupShowScreenAction => ({
     type: POPUP_SHOW_SCREEN,
+    ComponentStrategy, 
     ComponentName,
-    IsReadOnly,
-    Params
+     Params
 })
 
 export const PopupHideScreen = (): PopupHideScreenAction => ({
@@ -129,9 +129,9 @@ export const PopupClearParam = (): PopupClearParamAction => ({
 const initialPopupState: PopupState = {
     ScreenPopup: {
         ShowScreenPopup: false,
+        ComponentStrategy: "",
         ComponentName: "",
-        IsReadOnly: false,
-        Params: null
+         Params: null
     },
     ChartPopup: {
         ShowChartPopup: false,
@@ -169,11 +169,11 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
     switch (action.type) {
         case POPUP_SHOW_SCREEN: {
             let actionTypedShowPopup = (<PopupShowScreenAction>action)
-            let newScreenPopup: IScreenPopup = { ShowScreenPopup: true, IsReadOnly: actionTypedShowPopup.IsReadOnly, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params }
+            let newScreenPopup: IScreenPopup = { ShowScreenPopup: true, ComponentStrategy: actionTypedShowPopup.ComponentStrategy, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params }
             return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
         case POPUP_HIDE_SCREEN: {
-            let newScreenPopup: IScreenPopup = { ShowScreenPopup: false, IsReadOnly: false, ComponentName: "", Params: null }
+            let newScreenPopup: IScreenPopup = { ShowScreenPopup: false, ComponentStrategy:"", ComponentName: "", Params: null }
             return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
         case POPUP_SHOW_PROMPT: {
@@ -267,7 +267,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
             return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
         }
         case POPUP_CLEAR_PARAM: {
-            let newScreenPopup: IScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, IsReadOnly: state.ScreenPopup.IsReadOnly, ComponentName: state.ScreenPopup.ComponentName, Params: null }
+            let newScreenPopup: IScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup,ComponentStrategy:state.ScreenPopup.ComponentStrategy, ComponentName: state.ScreenPopup.ComponentName, Params: null }
             return Object.assign({}, state, { ScreenPopup: newScreenPopup })
         }
 

@@ -19,7 +19,9 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IAdaptableBlotterObject, IFormatColumn } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IFormatColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 
 export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {
@@ -40,7 +42,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";
-
+      
         let formatColumn: IFormatColumn = this.props.FormatColumns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
         let noFormatColumn: boolean = formatColumn == null;
 
@@ -54,6 +56,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                 StrategySummary={"No Format Column Set"}
                 onNew={() => this.onNew()}
                 NewButtonTooltip={StrategyIds.FormatColumnStrategyName}
+                AccessLevel={this.props.AccessLevel}
             />
         } else {
             formatColumnRow = <StrategyDetail
@@ -133,6 +136,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         FormatColumns: state.FormatColumn.FormatColumns,
         ColorPalette: state.UserInterface.ColorPalette,
+        Entitlements: state.Entitlements.FunctionEntitlements,
         StyleClassNames: state.UserInterface.StyleClassNames
     };
 }

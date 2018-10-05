@@ -6,7 +6,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import { ExportDestination, ReportColumnScope } from '../../Core/Enums'
+import { ExportDestination, ReportColumnScope, AccessLevel } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -25,8 +25,9 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { IReport, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IReport, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -59,7 +60,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     render() {
         let cssClassName: string = this.props.cssClassName + "__export";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__export";
-
+     
         let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
 
         let colItems: IColItem[] = [
@@ -93,7 +94,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Report"
             DisplayMode="Glyph+Text"
-            size={"small"} />
+            size={"small"} 
+            AccessLevel={this.props.AccessLevel}
+            />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ExportStrategyName} bsStyle="primary" glyphicon={StrategyIds.ExportGlyph} infoBody={infoBody} button={newButton} >

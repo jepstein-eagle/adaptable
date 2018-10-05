@@ -36,9 +36,8 @@
 					],
 					"FilterExpressions": [],
 					"RangeExpressions": []
-				},
-				"IsReadOnly": false
-			}
+				}
+					}
 		],
 		"CurrentAdvancedSearch": ""
 	},
@@ -68,8 +67,7 @@
 					"Rabobank",
 					"RBS",
 					"Societe Generale"
-				],
-				"IsReadOnly": false
+				]
 			}
 		]
 	},
@@ -88,7 +86,6 @@
 				"ShortcutResult": "Previous Work Day",
 				"DataType": "Date",
 				"ShortcutOperation": "Replace",
-				"IsReadOnly": true,
 				"IsDynamic": true
 			}
 		]

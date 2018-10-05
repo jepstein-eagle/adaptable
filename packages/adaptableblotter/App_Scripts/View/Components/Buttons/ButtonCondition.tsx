@@ -7,7 +7,6 @@ export class ButtonCondition extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Add Column Condition"
             bsStyle='info'
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="plus"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

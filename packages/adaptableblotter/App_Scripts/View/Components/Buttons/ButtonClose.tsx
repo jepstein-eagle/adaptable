@@ -7,7 +7,6 @@ export class ButtonClose extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Close"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="remove"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

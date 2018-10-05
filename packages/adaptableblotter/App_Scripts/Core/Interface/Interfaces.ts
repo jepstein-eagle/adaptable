@@ -5,7 +5,7 @@ export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
 
 export interface IEntitlement {
     FunctionName: string;
-    AccessLevel: "ReadOnly" | "Hidden" | "Default";
+    AccessLevel: "ReadOnly" | "Hidden" | "Full";
 }
 
 export interface ISystemStatus {

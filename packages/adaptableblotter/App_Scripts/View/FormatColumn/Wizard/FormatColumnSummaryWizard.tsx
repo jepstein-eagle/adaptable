@@ -8,7 +8,7 @@ import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IFormatColumn } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IFormatColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 

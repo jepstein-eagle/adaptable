@@ -1,7 +1,7 @@
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState } from "../../../Redux/ActionsReducers/Interface/IState";
@@ -157,7 +157,7 @@ export interface IBlotterApi {
   entitlementGetAll(): IEntitlement[]
   entitlementGetByFunction(functionName: string): IEntitlement
   entitlementGetAccessLevelForFunction(functionName: string): string
-  entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Default"): void
+  entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void
   entitlementDelete(functionName: string): void
 
   // Custom Sort Methods

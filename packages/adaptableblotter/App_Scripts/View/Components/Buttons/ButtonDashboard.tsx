@@ -1,6 +1,7 @@
 import * as React from "react";
 import { ButtonBase, ButtonProps, ButtonBaseProps } from './ButtonBase'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { AccessLevel } from "../../../Core/Enums";
 
 export class ButtonDashboard extends React.Component<ButtonBaseProps, {}> {
     render() {
@@ -16,6 +17,7 @@ export class ButtonDashboard extends React.Component<ButtonBaseProps, {}> {
             overrideText={this.props.overrideText}
             ToolTipAndText={this.props.ToolTipAndText}
             cssClassName={this.props.cssClassName + StyleConstants.DASHBOARD_BUTTON}
+            AccessLevel={AccessLevel.Full}
         />;
     }
 }

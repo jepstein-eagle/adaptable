@@ -16,7 +16,9 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterObject, ICellValidationRule } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdaptableBlotterObject, ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { AccessLevel } from "../../Core/Enums";
+import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]
@@ -33,7 +35,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
-        let strategySummaries: any = []
+         let strategySummaries: any = []
 
         // title row
         let titleRow = <StrategyHeader
@@ -43,6 +45,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
             StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName)}
             onNew={() => this.onNew()}
             NewButtonTooltip={StrategyIds.CellValidationStrategyName}
+            AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
 
@@ -116,7 +119,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Columns: state.Grid.Columns,
         CellValidations: state.CellValidation.CellValidations,
         UserFilters: state.UserFilter.UserFilters,
-        SystemFilters: state.SystemFilter.SystemFilters
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
+      
     };
 }
 

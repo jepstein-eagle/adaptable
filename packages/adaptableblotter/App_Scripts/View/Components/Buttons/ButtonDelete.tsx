@@ -21,7 +21,6 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Delete"
             bsStyle='danger'
             bsSize={this.props.size}
-            ConfigEntity={this.props.ConfigEntity}
             glyph="trash"
             onClick={() => this.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

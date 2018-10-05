@@ -5,13 +5,13 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
-import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus, QueryTab } from '../../Core/Enums'
+import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus, QueryTab, AccessLevel } from '../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../Core/Api/Interface/IBlotterApi";
@@ -47,6 +47,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
             style={{ width: "230px" }}
             DisplayMode="Glyph+Text"
             size={"small"}
+            AccessLevel={AccessLevel.Full}
         />
 
         return <div className={cssClassName}>

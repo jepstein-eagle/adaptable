@@ -3,6 +3,7 @@ import * as React from "react";
 import { ButtonNew } from '../Buttons/ButtonNew';
 import { SummaryRowItem } from './SummaryRowItem';
 import { StrategyProfile } from '../StrategyProfile'
+import { AccessLevel } from "../../../Core/Enums";
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
     key: string
@@ -12,6 +13,7 @@ export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeade
     NewButtonTooltip: string
     cssClassName: string
     NewButtonDisabled?: boolean
+    AccessLevel: AccessLevel
 }
 
 export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
@@ -20,7 +22,14 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
         let summaryItems: any[] = []
         let newButton = this.props.NewButtonDisabled ?
             null :
-            <ButtonNew cssClassName={this.props.cssClassName} size={"small"} onClick={() => this.props.onNew()} overrideTooltip={"Create " + this.props.NewButtonTooltip} DisplayMode="Glyph" />
+            <ButtonNew
+                cssClassName={this.props.cssClassName}
+                size={"small"}
+                onClick={() => this.props.onNew()}
+                overrideTooltip={"Create " + this.props.NewButtonTooltip}
+                DisplayMode="Glyph"
+                AccessLevel={this.props.AccessLevel}
+            />
 
         summaryItems.push(<b>{<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={this.props.StrategyId} />}</b>)
         summaryItems.push(this.props.StrategySummary);
@@ -28,4 +37,3 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
         return <SummaryRowItem cssClassName={this.props.cssClassName} SummaryItems={summaryItems} />
     }
 }
-    

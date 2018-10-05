@@ -7,7 +7,6 @@ export class ButtonSave extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Save"
             bsStyle='primary'
             bsSize={this.props.size}
-             ConfigEntity={this.props.ConfigEntity}
             glyph="floppy-save"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}

@@ -4,7 +4,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter, IColumnFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 
 
 export module FilterHelper {
@@ -55,15 +55,6 @@ export module FilterHelper {
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null)
     }
 
-
-    export function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter {
-        return {
-            Name: name,
-            ColumnId: columnFilter.ColumnId,
-            Expression: columnFilter.Filter,
-            IsReadOnly: false
-        }
-    }
 
     export function GetSystemFiltersForColumn(column: IColumn, systemFilters: string[]): string[] {
         let appropriateSystemFilters: string[] = []
