@@ -2,11 +2,9 @@ import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType,
 import { Expression } from '../Expression';
 
 /**
- * The base Adaptable Blotter Object interface 
- * @property {boolean} IsReadOnly - whether the object can be edited for users.  Set to true if you dont want the objects you ship with the blotter to be edited / deleted by users.
+ * The base empty Adaptable Blotter Object interface 
  */
 export interface IAdaptableBlotterObject {
-//  IsReadOnly: boolean
 }
 
 /**

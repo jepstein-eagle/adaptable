@@ -27,5 +27,5 @@ export const SmartEditPopup :string = "SmartEditPopup"
 export const TeamSharingPopup :string = "TeamSharingPopup"
 export const ThemePopup :string = "ThemePopup"
 export const QuickSearchPopup :string = "QuickSearchPopup"
-export const UserFilterPopupPopup :string = "UserFilterPopup"
+export const UserFilterPopup :string = "UserFilterPopup"
 

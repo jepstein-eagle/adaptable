@@ -36,7 +36,9 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
          let strategySummaries: any = []
-
+         alert("AccessLevel for cv: " + this.props.AccessLevel)
+    
+     
         // title row
         let titleRow = <StrategyHeader
             key={StrategyIds.CellValidationStrategyName}

@@ -3,7 +3,6 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IUserFilter, IGridSort, IColumnFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
-import { IEntitlement } from "../../../Core/Interface/Interfaces";
 import { AccessLevel } from "../../../Core/Enums";
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface

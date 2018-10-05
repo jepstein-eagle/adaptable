@@ -43,7 +43,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|")
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
-                let userFilter: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
+                 let userFilter: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
                 userFilter.ColumnId = arrayParams[1]
                 this.setState({ EditedAdaptableBlotterObject: userFilter, WizardStartIndex: 1 });
             }

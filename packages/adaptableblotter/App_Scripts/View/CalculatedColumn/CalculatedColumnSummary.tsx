@@ -33,7 +33,6 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__calculatedcolumn";
          let detailRow;
-
         let sharing = this.props.TeamSharingActivated;
 
         this.props.CalculatedColumns.map((item, index) => {

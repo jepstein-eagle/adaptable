@@ -37,7 +37,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Alert";
         let strategySummaries: any = []
-       
+        
         // title row
         let titleRow = <StrategyHeader
             key={StrategyIds.AlertStrategyName}

@@ -15,15 +15,16 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopupPopup, StrategyIds.UserFilterGlyph);
+        this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyIds.UserFilterGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
             this.createContextMenuItemShowPopup(
                 "Create User Filter",
-                ScreenPopups.UserFilterPopupPopup,
+                ScreenPopups.UserFilterPopup,
                 StrategyIds.UserFilterGlyph,
+                "New|" + columnId
             )
         }
     }

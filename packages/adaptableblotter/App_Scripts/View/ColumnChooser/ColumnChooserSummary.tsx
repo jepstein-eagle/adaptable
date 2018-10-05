@@ -1,13 +1,10 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { Button } from 'react-bootstrap';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { ObjectFactory } from '../../Core/ObjectFactory';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
@@ -19,8 +16,8 @@ export interface ColumnChooserSummaryProps extends StrategySummaryProps<ColumnCh
 export class ColumnChooserSummaryComponent extends React.Component<ColumnChooserSummaryProps, EditableConfigEntityState> {
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__ColumnChoosers";
-       // let ColumnChooser: IColumnChooser = this.props.ColumnChoosers.find(fc => fc.ColumnId == this.props.SummarisedColumn.ColumnId);
-
+        alert("AccessLevel for chooser: " + this.props.AccessLevel)
+    
        
         let colItems: IColItem[] = []
         colItems.push({ Size: 3, Content: <b>{'Column Category'}</b> });
