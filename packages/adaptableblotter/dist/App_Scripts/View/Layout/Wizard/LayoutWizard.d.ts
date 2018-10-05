@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
-import { IGridSort } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IGridSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
     GridSorts: IGridSort[];
 }

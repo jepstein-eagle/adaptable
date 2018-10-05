@@ -24,8 +24,8 @@ export interface IUIPrompt {
 }
 export interface IScreenPopup {
     ShowScreenPopup: boolean;
+    ComponentStrategy: string;
     ComponentName: string;
-    IsReadOnly: boolean;
     Params: string;
 }
 export interface IChartPopup {

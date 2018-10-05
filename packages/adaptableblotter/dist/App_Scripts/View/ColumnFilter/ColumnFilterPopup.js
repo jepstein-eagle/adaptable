@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
+const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
@@ -25,7 +26,7 @@ class ColumnFilterPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
-            return React.createElement(ColumnFilterEntityRow_1.ColumnFilterEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: null, ColumnFilter: columnFilter, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: null, onDeleteConfirm: null, onClear: () => this.props.onClearColumnFilter(columnFilter.ColumnId), onSaveColumnFilterasUserFilter: () => this.onSaveColumnFilterasUserFilter(columnFilter) });
+            return React.createElement(ColumnFilterEntityRow_1.ColumnFilterEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: null, ColumnFilter: columnFilter, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: null, onDeleteConfirm: null, onClear: () => this.props.onClearColumnFilter(columnFilter.ColumnId), onSaveColumnFilterasUserFilter: () => this.onSaveColumnFilterasUserFilter(columnFilter), AccessLevel: this.props.AccessLevel });
         });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.ColumnFilterStrategyName, bsStyle: "primary", className: "ab_main_popup", infoBody: infoBody, glyphicon: StrategyIds.ColumnFilterGlyph },
@@ -38,19 +39,19 @@ class ColumnFilterPopupComponent extends React.Component {
         let prompt = {
             PromptTitle: "Enter name for User Filter",
             PromptMsg: "Please enter a user filter name",
-            ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
+            ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
         };
         this.props.onShowPrompt(prompt);
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onClearColumnFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
+        onClearColumnFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };

@@ -2,12 +2,14 @@ import * as React from "react";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
+import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[];
-    onClearFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction;
+    onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+    Entitlements: IEntitlement[];
 }
 export declare class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSummaryProps, EditableConfigEntityState> {
     constructor(props: ColumnFilterSummaryProps);

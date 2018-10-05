@@ -1,9 +1,10 @@
 import { IEvent } from "../../Interface/IEvent";
 import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../../Redux/ActionsReducers/Interface/IState";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  */
@@ -125,7 +126,7 @@ export interface IBlotterApi {
     entitlementGetAll(): IEntitlement[];
     entitlementGetByFunction(functionName: string): IEntitlement;
     entitlementGetAccessLevelForFunction(functionName: string): string;
-    entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Default"): void;
+    entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void;
     entitlementDelete(functionName: string): void;
     customSortGetAll(): ICustomSort[];
     customSortGetByColumn(columnn: string): ICustomSort;
@@ -172,7 +173,32 @@ export interface IBlotterApi {
      * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
      *  */
     configClear(): void;
-    configGet(): AdaptableBlotterState;
+    configGetAllState(): AdaptableBlotterState;
+    configGetAllUserState(): IUserState[];
+    configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): IUserState;
+    configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
+    configGetAlertSearchState(returnJson: boolean): AlertState;
+    configGetBulkUpdateState(returnJson: boolean): BulkUpdateState;
+    configGetCalculatedColumnState(returnJson: boolean): CalculatedColumnState;
+    configGetCalendarState(returnJson: boolean): CalendarState;
+    configGetCellValidationState(returnJson: boolean): CellValidationState;
+    configGetChartState(returnJson: boolean): ChartState;
+    configGetColumnFilterState(returnJson: boolean): ColumnFilterState;
+    configGetConditionalStyleState(returnJson: boolean): ConditionalStyleState;
+    configGetCustomSortState(returnJson: boolean): CustomSortState;
+    configGetDashboardState(returnJson: boolean): DashboardState;
+    configGetDataSourceState(returnJson: boolean): DataSourceState;
+    configGetExportState(returnJson: boolean): ExportState;
+    configGetFlashingCellState(returnJson: boolean): FlashingCellState;
+    configGetFormatColumnState(returnJson: boolean): FormatColumnState;
+    configGetLayoutState(returnJson: boolean): LayoutState;
+    configGetPlusMinusState(returnJson: boolean): PlusMinusState;
+    configGetQuickSearchState(returnJson: boolean): QuickSearchState;
+    configGetSelectedCellsState(returnJson: boolean): SelectedCellsState;
+    configGetShortcutState(returnJson: boolean): ShortcutState;
+    configGetSmartEditState(returnJson: boolean): SmartEditState;
+    configGetThemeState(returnJson: boolean): ThemeState;
+    configGetUserFilterState(returnJson: boolean): UserFilterState;
     /**
     * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
     * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
@@ -184,9 +210,9 @@ export interface IBlotterApi {
     */
     onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;
     /**
-   * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.
-   * Only fires when in a user layout and currently just passes the name of the layout.
-   * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
-   */
+    * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.
+    * Only fires when in a user layout and currently just passes the name of the layout.
+    * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
+    */
     onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
 }

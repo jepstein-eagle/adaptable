@@ -48,7 +48,7 @@ class PlusMinusPopupComponent extends React.Component {
             let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId);
             return React.createElement(PlusMinusEntityRow_1.PlusMinusEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, key: index, Index: index, UserFilters: this.props.UserFilters, Columns: this.props.Columns, onEdit: (index, customSort) => this.onEdit(index, x), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(x), onDeleteConfirm: PlusMinusRedux.PlusMinusDeleteCondition(index), Column: column, onColumnDefaultNudgeValueChange: (index, event) => this.onColumnDefaultNudgeValueChange(index, event) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createColumnNudgeValue(), overrideTooltip: "Create Plus / Minus Rule", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createColumnNudgeValue(), overrideTooltip: "Create Plus / Minus Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.PlusMinusStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.PlusMinusGlyph, infoBody: infoBody },
                 PlusMinusRules.length > 0 &&

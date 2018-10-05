@@ -52,7 +52,7 @@ class CustomSortPopupComponent extends React.Component {
         let customSorts = this.props.CustomSorts.map((customSort, index) => {
             return React.createElement(CustomSortEntityRow_1.CustomSortEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: customSort, key: customSort.ColumnId, Index: index, onEdit: (index, customSort) => this.onEdit(customSort), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(customSort), onDeleteConfirm: CustomSortRedux.CustomSortDelete(customSort), ColumnLabel: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Custom Sort", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Custom Sort", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.CustomSortStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyIds.CustomSortGlyph },
                 customSorts.length > 0 &&

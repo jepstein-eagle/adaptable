@@ -10,7 +10,7 @@ class CalculatedColumnEntityRow extends React.Component {
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = calculatedColumn.ColumnId;
         colItems[1].Content = calculatedColumn.ColumnExpression;
-        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, calculatedColumn), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, ConfigEntity: calculatedColumn, EntityName: StrategyIds.CalculatedColumnStrategyName });
+        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, calculatedColumn), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.CalculatedColumnStrategyName });
         colItems[2].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

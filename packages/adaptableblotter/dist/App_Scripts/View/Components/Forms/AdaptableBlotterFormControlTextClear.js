@@ -14,7 +14,7 @@ class AdaptableBlotterFormControlTextClear extends React.Component {
                 React.createElement(react_bootstrap_1.FormControl, { className: cssClassName, autoFocus: this.props.autoFocus, bsSize: size, style: this.props.style, type: "text", placeholder: this.props.placeholder, value: this.props.value, onChange: (x) => this.props.OnTextChange(x.target.value) }),
                 StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.value.toString()) &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.props.OnTextChange(""), size: size, overrideTooltip: "Clear", ConfigEntity: null, DisplayMode: "Glyph" }))));
+                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.props.OnTextChange(""), size: size, overrideTooltip: "Clear", DisplayMode: "Glyph" }))));
     }
 }
 exports.AdaptableBlotterFormControlTextClear = AdaptableBlotterFormControlTextClear;

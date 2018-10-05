@@ -38,14 +38,14 @@ class SelectedCellsToolbarControlComponent extends React.Component {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onSelectedCellsOperationChange(selectedCellOperation) }, selectedCellOperation);
         });
         let content = React.createElement("span", null,
-            React.createElement("div", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+            React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
                     React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.SelectedCellOperation, id: "SelectedCells_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button }, operationMenuItems),
                     this.props.SelectedCellSummary != null &&
                         React.createElement(react_bootstrap_1.ControlLabel, { style: { marginTop: "5px", marginLeft: "3px" } },
                             this.getOperationValue(),
                             " "))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SelectedCellsStrategyName, glyphicon: StrategyIds.SelectedCellsGlyph, onClose: () => this.props.onClose(StrategyIds.SelectedCellsStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SelectedCellsStrategyName, glyphicon: StrategyIds.SelectedCellsGlyph, onClose: () => this.props.onClose(StrategyIds.SelectedCellsStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectionChanged() {
         this.props.onSelectedCellsCreateSummary();
@@ -78,7 +78,7 @@ function mapStateToProps(state, ownProps) {
     return {
         SelectedCellInfo: state.Grid.SelectedCellInfo,
         SelectedCellOperation: state.SelectedCells.SelectedCellOperation,
-        SelectedCellSummary: state.Grid.SelectedCellSummary
+        SelectedCellSummary: state.Grid.SelectedCellSummary,
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -86,7 +86,7 @@ function mapDispatchToProps(dispatch) {
         onSelectedCellsOperationChange: (SelectedCellOperation) => dispatch(SelectedCellsRedux.SelectedCellsChangeOperation(SelectedCellOperation)),
         onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SelectedCellsPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SelectedCellsStrategyId, ScreenPopups.SelectedCellsPopup))
     };
 }
 exports.SelectedCellsToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(SelectedCellsToolbarControlComponent);

@@ -48,7 +48,7 @@ class CellValidationPopupComponent extends React.Component {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
             return React.createElement(CellValidationEntityRow_1.CellValidationEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: CellValidationRedux.CellValidationDelete(index), onChangeActionMode: (index, x) => this.onActionModeChanged(index, x) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createCellValidation(), overrideTooltip: "Create Cell Validation Rule", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createCellValidation(), overrideTooltip: "Create Cell Validation Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.CellValidationStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.CellValidationGlyph, infoBody: infoBody },
                 CellValidationItems.length > 0 &&

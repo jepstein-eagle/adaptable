@@ -2,12 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const DeepDiff = require("deep-diff");
 const React = require("react");
-const FilterRedux = require("../../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRedux");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../../../Core/Enums");
+const ObjectFactory_1 = require("../../../Core/ObjectFactory");
 class FloatingFilterFormComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -95,7 +96,7 @@ class FloatingFilterFormComponent extends React.Component {
         }
     }
     createColumnFilter(expression, searchText) {
-        let columnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
+        let columnFilter = ObjectFactory_1.ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, expression);
         this.setState({ floatingFilterFormText: searchText, filterExpression: expression, placeholder: "" });
         this.props.onAddEditColumnFilter(columnFilter);
     }
@@ -185,15 +186,15 @@ function mapStateToProps(state, ownProps) {
         CurrentColumn: ownProps.CurrentColumn,
         Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
-        ColumnFilters: state.Filter.ColumnFilters,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onAddEditColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
-        onClearColumnFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
+        onAddEditColumnFilter: (columnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onClearColumnFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
     };
 }
 exports.FloatingFilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FloatingFilterFormComponent);

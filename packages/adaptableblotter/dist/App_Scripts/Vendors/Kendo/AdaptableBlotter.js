@@ -573,7 +573,7 @@ class AdaptableBlotter {
                     }
                 }
                 //we then assess filters
-                let columnFilters = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+                let columnFilters = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, record, columns, this)) {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { LeafExpressionOperator } from '../../../Core/Enums';
-import { IAlertDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
     Columns: Array<IColumn>;
 }
@@ -22,8 +22,6 @@ export declare class AlertRulesWizard extends React.Component<AlertRulesWizardPr
     private checkOperator;
     private isBetweenOperator;
     private getAvailableOperators;
-    createAlertDescription(Alert: IAlertDefinition): string;
-    private operatorRequiresValue;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

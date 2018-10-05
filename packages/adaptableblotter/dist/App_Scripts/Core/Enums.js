@@ -16,6 +16,12 @@ var ExpressionMode;
     ExpressionMode["SingleColumn"] = "SingleColumn";
     ExpressionMode["MultiColumn"] = "MultiColumn";
 })(ExpressionMode = exports.ExpressionMode || (exports.ExpressionMode = {}));
+var AccessLevel;
+(function (AccessLevel) {
+    AccessLevel["ReadOnly"] = "ReadOnly";
+    AccessLevel["Hidden"] = "Hidden";
+    AccessLevel["Full"] = "Full";
+})(AccessLevel = exports.AccessLevel || (exports.AccessLevel = {}));
 var LeafExpressionOperator;
 (function (LeafExpressionOperator) {
     LeafExpressionOperator["Unknown"] = "Unknown";

@@ -6,6 +6,7 @@ const WizardLegend_1 = require("./WizardLegend");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const ButtonCancel_1 = require("../Components/Buttons/ButtonCancel");
 const ButtonWizardAction_1 = require("../Components/Buttons/ButtonWizardAction");
+const Enums_1 = require("../../Core/Enums");
 class DummyActiveStep {
     constructor() {
         this.StepName = "";
@@ -52,10 +53,10 @@ class AdaptableWizard extends React.Component {
                 React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.WIZARD_BODY },
                     React.createElement("div", { className: "ab_main_wizard" }, this.state.ActiveState)),
                 React.createElement(react_bootstrap_1.Modal.Footer, { className: cssClassName + StyleConstants.WIZARD_FOOTER },
-                    React.createElement(ButtonCancel_1.ButtonCancel, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "default", style: { float: "left", marginRight: "5px" }, onClick: () => this.props.onHide(), hideToolTip: true }),
-                    React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "default", overrideDisableButton: !this.ActiveStep.canBack() || this.isFirstStep(), onClick: () => this.handleClickBack(), glyph: "chevron-left", overrideText: "Back" }),
-                    React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "info", overrideDisableButton: !this.ActiveStep.canNext() || this.isLastStep(), onClick: () => this.handleClickNext(), overrideText: "Next", glyph: "chevron-right" }),
-                    React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "primary", overrideDisableButton: !this.canFinishWizard(), onClick: () => this.handleClickFinish(), overrideText: "Finish", glyph: "ok" })))));
+                    React.createElement(ButtonCancel_1.ButtonCancel, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "default", style: { float: "left", marginRight: "5px" }, onClick: () => this.props.onHide(), hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full }),
+                    React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "default", overrideDisableButton: !this.ActiveStep.canBack() || this.isFirstStep(), onClick: () => this.handleClickBack(), glyph: "chevron-left", overrideText: "Back", AccessLevel: Enums_1.AccessLevel.Full }),
+                    React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "info", overrideDisableButton: !this.ActiveStep.canNext() || this.isLastStep(), onClick: () => this.handleClickNext(), overrideText: "Next", glyph: "chevron-right", AccessLevel: Enums_1.AccessLevel.Full }),
+                    React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "primary", overrideDisableButton: !this.canFinishWizard(), onClick: () => this.handleClickFinish(), overrideText: "Finish", glyph: "ok", AccessLevel: Enums_1.AccessLevel.Full })))));
     }
     ForceUpdateGoBackState() {
         //to force back/next. We'll see if that needs to be optimised'

@@ -13,7 +13,7 @@ class PlusMinusEntityRow extends React.Component {
         colItems[0].Content = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, this.props.Column);
         colItems[1].Content = React.createElement(react_bootstrap_1.FormControl, { value: x.NudgeValue.toString(), type: "number", placeholder: "Enter a Number", onChange: (e) => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e) });
         colItems[2].Content = this.wrapExpressionDescription(x);
-        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, x), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: false, ConfigEntity: x, EntityName: "Plus/Minus" });
+        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, x), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: false, EntityName: "Plus/Minus" });
         colItems[3].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

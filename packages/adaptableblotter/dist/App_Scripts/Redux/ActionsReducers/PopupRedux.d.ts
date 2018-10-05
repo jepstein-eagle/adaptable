@@ -17,8 +17,8 @@ export declare const POPUP_CONFIRM_CONFIRMATION = "POPUP_CONFIRM_CONFIRMATION";
 export declare const POPUP_CANCEL_CONFIRMATION = "POPUP_CANCEL_CONFIRMATION";
 export declare const POPUP_CLEAR_PARAM = "POPUP_CLEAR_PARAM";
 export interface PopupShowScreenAction extends Redux.Action {
+    ComponentStrategy: string;
     ComponentName: string;
-    IsReadOnly: boolean;
     Params?: string;
 }
 export interface PopupHideScreenAction extends Redux.Action {
@@ -55,7 +55,7 @@ export interface PopupClearParamAction extends Redux.Action {
 }
 export interface PopupChartClearParamAction extends Redux.Action {
 }
-export declare const PopupShowScreen: (ComponentName: string, IsReadOnly?: boolean, Params?: string) => PopupShowScreenAction;
+export declare const PopupShowScreen: (ComponentStrategy: string, ComponentName: string, Params?: string) => PopupShowScreenAction;
 export declare const PopupHideScreen: () => PopupHideScreenAction;
 export declare const PopupShowAlert: (Alert: IAlert) => PopupShowAlertAction;
 export declare const PopupHideAlert: () => PopupHideAlertAction;

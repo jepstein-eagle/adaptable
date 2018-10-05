@@ -1,11 +1,10 @@
 /// <reference types="react-bootstrap" />
 import * as React from "react";
-import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { AccessLevel } from "../../../Core/Enums";
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     onClick?: () => void;
     overrideDisableButton?: boolean;
     overrideTooltip?: string;
-    ConfigEntity?: IAdaptableBlotterObject;
     style?: React.CSSProperties;
     size?: ReactBootstrap.Sizes;
     overrideText?: string;
@@ -15,6 +14,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     cssClassName: string;
     glyph?: string;
     hideToolTip?: boolean;
+    AccessLevel?: AccessLevel;
 }
 export interface ButtonBaseProps extends ButtonProps {
     ToolTipAndText: string;

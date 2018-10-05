@@ -10,6 +10,7 @@ var ReportHelper;
     function IsSystemReport(Report) {
         return Report == null || Report.Name == ReportHelper.ALL_DATA_REPORT || Report.Name == ReportHelper.VISIBLE_DATA_REPORT || Report.Name == ReportHelper.SELECTED_CELLS_REPORT;
     }
+    ReportHelper.IsSystemReport = IsSystemReport;
     function GetReportColumnsDescription(Report, cols) {
         switch (Report.ReportColumnScope) {
             case Enums_1.ReportColumnScope.AllColumns:
@@ -127,24 +128,21 @@ var ReportHelper;
             ReportColumnScope: Enums_1.ReportColumnScope.AllColumns,
             ReportRowScope: Enums_1.ReportRowScope.AllRows,
             Columns: [],
-            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: true
+            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         _systemReports.push({
             Name: ReportHelper.VISIBLE_DATA_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.VisibleColumns,
             ReportRowScope: Enums_1.ReportRowScope.VisibleRows,
             Columns: [],
-            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: true
+            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         _systemReports.push({
             Name: ReportHelper.SELECTED_CELLS_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.SelectedColumns,
             ReportRowScope: Enums_1.ReportRowScope.SelectedRows,
             Columns: [],
-            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            IsReadOnly: true
+            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         return _systemReports;
     }

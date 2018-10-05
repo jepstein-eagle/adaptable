@@ -11,6 +11,7 @@ const Enums_1 = require("../../Core/Enums");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const EntitlementHelper_1 = require("../../Core/Helpers/EntitlementHelper");
 class DashboardComponent extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
@@ -25,16 +26,16 @@ class DashboardComponent extends React.Component {
             //we'll need to use the name or something else
             let dashboardControl = AdaptableViewFactory_1.AdaptableDashboardViewFactory.get(control);
             if (dashboardControl) {
-                let isReadOnly = this.props.EntitlementsState.FunctionEntitlements.findIndex(x => x.FunctionName == control && x.AccessLevel == "ReadOnly") > -1;
+                let accessLevel = EntitlementHelper_1.EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
                 let dashboardElememt = React.createElement(dashboardControl, {
                     Blotter: this.props.Blotter,
-                    IsReadOnly: isReadOnly,
                     Columns: this.props.Columns,
                     UserFilters: this.props.UserFilters,
                     SystemFilters: this.props.SystemFilters,
                     ColorPalette: this.props.ColorPalette,
                     GridSorts: this.props.GridSorts,
-                    cssClassName: cssClassName
+                    cssClassName: cssClassName,
+                    AccessLevel: accessLevel
                 });
                 return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
             }
@@ -67,8 +68,8 @@ function mapStateToProps(state, ownProps) {
         EntitlementsState: state.Entitlements,
         // need to get these props so we can 'feed' the toolbars...
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
         ColorPalette: state.UserInterface.ColorPalette,
         GridSorts: state.Grid.GridSorts
     };

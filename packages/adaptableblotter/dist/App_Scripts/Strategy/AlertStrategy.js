@@ -7,6 +7,7 @@ const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../Core/Enums");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
+const AlertHelper_1 = require("../Core/Helpers/AlertHelper");
 class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyIds.AlertStrategyId, blotter);
@@ -24,10 +25,13 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyIds.AlertStrategyName, ScreenPopups.AlertPopup, StrategyIds.AlertGlyph);
     }
     handleDataSourceChanged(dataChangedEvent) {
-        let failedRules = this.CheckDataChanged(dataChangedEvent);
-        failedRules.forEach(fr => {
-            this.blotter.api.alertShow(ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns), fr.Description, fr.MessageType, fr.ShowAsPopup);
-        });
+        let alertDefinitions = this.CheckDataChanged(dataChangedEvent);
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
+            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            alertDefinitions.forEach(fr => {
+                this.blotter.api.alertShow(ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper_1.AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup);
+            });
+        }
     }
     CheckDataChanged(dataChangedEvent) {
         let editingRules = this.AlertState.AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);

@@ -39,7 +39,7 @@ class ShortcutPopupComponent extends React.Component {
         let shortcuts = this.props.Shortcuts.map((shortcut, index) => {
             return React.createElement(ShortcutEntityRow_1.ShortcutEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: shortcut, key: "ns" + index, Index: index, onEdit: null, colItems: colItems, AvailableActions: shortcutOperationList, AvailableKeys: this.getAvailableKeys(shortcut), onShare: () => this.props.onShare(shortcut), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: ShortcutRedux.ShortcutDelete(shortcut), onChangeKey: (shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey), onChangeOperation: (shortcut, newOperation) => this.props.onChangeOperationShortcut(shortcut, newOperation), onChangeResult: (shortcut, newResult) => this.props.onChangeResultShortcut(shortcut, newResult) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.CreateShortcut(), overrideTooltip: "Create New Shortcut", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.CreateShortcut(), overrideTooltip: "Create New Shortcut", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         let shortcut = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyIds.ShortcutGlyph, infoBody: infoBody },

@@ -52,16 +52,16 @@ class BulkUpdateToolbarControlComponent extends React.Component {
             null;
         let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.BulkUpdateValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selectedColumn, ShowPanel: true, ShowHeader: false });
         let content = React.createElement("span", null,
-            React.createElement("div", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+            React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
                     React.createElement(react_bootstrap_1.InputGroup.Button, null, activeButton),
                     React.createElement(ColumnValueSelector_1.ColumnValueSelector, { style: { width: "120px" }, cssClassName: cssClassName, disabled: !this.props.IsValidSelection, bsSize: "small", SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: selectedColumn, Blotter: this.props.Blotter, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
-                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Bulk Update", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph" }),
+                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Bulk Update", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.BulkUpdateStrategyName, glyphicon: StrategyIds.BulkUpdateGlyph, onClose: () => this.props.onClose(StrategyIds.BulkUpdateStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.BulkUpdateStrategyName, glyphicon: StrategyIds.BulkUpdateGlyph, onClose: () => this.props.onClose(StrategyIds.BulkUpdateStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onColumnValueSelectedChanged(selectedColumnValue) {
         this.props.onBulkUpdateValueChange(selectedColumnValue);
@@ -129,7 +129,7 @@ function mapDispatchToProps(dispatch) {
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.BulkUpdatePopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.BulkUpdateStrategyId, ScreenPopups.BulkUpdatePopup))
     };
 }
 exports.BulkUpdateToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(BulkUpdateToolbarControlComponent);

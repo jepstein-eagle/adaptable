@@ -15,8 +15,7 @@ var CalendarHelper;
                     { HolidayName: "Summer Bank Holiday", HolidayDate: new Date("August 27, 2018").toJSON() },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                     { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2018").toJSON() },
-                ],
-                IsReadOnly: true
+                ]
             },
             {
                 Name: "Germany",
@@ -30,8 +29,7 @@ var CalendarHelper;
                     { HolidayName: "German Unity Day", HolidayDate: new Date("October 03, 2018").toJSON() },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                     { HolidayName: "St Stephen's Day", HolidayDate: new Date("December 26, 2018").toJSON() },
-                ],
-                IsReadOnly: true
+                ]
             },
             {
                 Name: "France",
@@ -47,8 +45,7 @@ var CalendarHelper;
                     { HolidayName: "All Saints Day", HolidayDate: new Date("November 01, 2018").toJSON() },
                     { HolidayName: "Armistice Day", HolidayDate: new Date("November 11, 2018").toJSON() },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
-                ],
-                IsReadOnly: true
+                ]
             },
             {
                 Name: "United States",
@@ -63,8 +60,7 @@ var CalendarHelper;
                     { HolidayName: "Veterans Day", HolidayDate: new Date("November 12, 2018").toJSON() },
                     { HolidayName: "Thanksgiving Day", HolidayDate: new Date("November 22, 2018").toJSON() },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
-                ],
-                IsReadOnly: true
+                ]
             },
             {
                 Name: "Canada",
@@ -78,8 +74,7 @@ var CalendarHelper;
                     { HolidayName: "Rememberance Day", HolidayDate: new Date("November 11, 2018").toJSON() },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
                     { HolidayName: "Boxing Day", HolidayDate: new Date("December 26, 2018").toJSON() },
-                ],
-                IsReadOnly: true
+                ]
             },
             {
                 Name: "Singapore",
@@ -94,8 +89,7 @@ var CalendarHelper;
                     { HolidayName: "Hari Raya Haji", HolidayDate: new Date("August 22, 2018").toJSON() },
                     { HolidayName: "Deepavali", HolidayDate: new Date("November 06, 2018").toJSON() },
                     { HolidayName: "Christmas Day", HolidayDate: new Date("December 25, 2018").toJSON() },
-                ],
-                IsReadOnly: true
+                ]
             }
         ];
     }

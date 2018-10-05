@@ -14,7 +14,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/AdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';

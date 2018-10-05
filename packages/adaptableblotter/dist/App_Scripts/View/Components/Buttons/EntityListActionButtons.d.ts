@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { AccessLevel } from "../../../Core/Enums";
 export interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;
     shareClick?: () => void;
@@ -13,10 +13,10 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     overrideTooltipEdit?: string;
     overrideTooltipDelete?: string;
     overrideTooltipShare?: string;
-    ConfigEntity?: IAdaptableBlotterObject;
     ConfirmDeleteAction: Redux.Action;
     EntityName: string;
     cssClassName: string;
+    AccessLevel: AccessLevel;
 }
 export declare class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
     static defaultProps: EntityListActionButtonsProps;

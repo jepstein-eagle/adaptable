@@ -11,6 +11,10 @@ var ColumnHelper;
         return columnId == "ag-Grid-AutoColumn";
     }
     ColumnHelper.isSpecialColumn = isSpecialColumn;
+    function getColumnDataTypeFromColumnId(columnId, columns) {
+        return columns.find(c => c.ColumnId == columnId).DataType;
+    }
+    ColumnHelper.getColumnDataTypeFromColumnId = getColumnDataTypeFromColumnId;
     function getFriendlyNameFromColumn(columnId, column) {
         if (columnId.includes(GeneralConstants.MISSING_COLUMN)) {
             return columnId;

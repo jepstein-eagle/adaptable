@@ -23,7 +23,7 @@ class HomeToolbarControlComponent extends React.Component {
         let cssDropdownClassName = this.props.cssClassName + "__home__dropdown";
         // dropdown menu items
         let menuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible && x.StrategyId != StrategyIds.AboutStrategyId).map((menuItem) => {
-            return React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, key: menuItem.Label, onClick: () => this.onClick(menuItem) },
+            return React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, key: menuItem.Label, onClick: () => this.onClick(menuItem) },
                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: menuItem.GlyphIcon }),
                 " ",
                 menuItem.Label);
@@ -39,7 +39,7 @@ class HomeToolbarControlComponent extends React.Component {
         let statusButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "systemstatus", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "System Status") },
-            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: this.getGlyphForSystemStatusButton(), cssClassName: cssClassName, bsStyle: this.getStyleForSystemStatusButton(), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus() }));
+            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: this.getGlyphForSystemStatusButton(), cssClassName: cssClassName, bsStyle: this.getStyleForSystemStatusButton(), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
         // shortcuts
         let shortcutsArray = this.props.DashboardState.VisibleButtons;
         let shortcuts;
@@ -50,7 +50,7 @@ class HomeToolbarControlComponent extends React.Component {
                     return React.createElement(react_bootstrap_1.OverlayTrigger, { key: x, overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                             " ",
                             menuItem.Label) },
-                        React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: menuItem.GlyphIcon, cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: menuItem.Label, overrideDisableButton: this.props.IsReadOnly, onClick: () => this.onClick(menuItem) }));
+                        React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: menuItem.GlyphIcon, cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: menuItem.Label, overrideDisableButton: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.onClick(menuItem), AccessLevel: Enums_1.AccessLevel.Full }));
                 }
             });
         }
@@ -69,7 +69,7 @@ class HomeToolbarControlComponent extends React.Component {
                 " ",
                 "Columns") },
             React.createElement(react_bootstrap_1.Glyphicon, { glyph: "list" }));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyIds.HomeStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) },
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyIds.HomeStrategyId), onConfigure: () => this.props.onConfigure() },
             this.props.DashboardState.ShowFunctionsDropdown &&
                 React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: functionsGlyph, key: "dropdown-functions", id: "dropdown-functions" }, menuItems),
             this.props.DashboardState.ShowSystemStatusButton &&
@@ -151,14 +151,14 @@ function mapStateToProps(state, ownProps) {
         MenuState: state.Menu,
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
-        SystemStatus: state.System.SystemStatus
+        SystemStatus: state.System.SystemStatus,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onClick: (action) => dispatch(action),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.HomeButtonsPopup, isReadOnly)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onShowStatusMessage: (alert) => dispatch(PopupRedux.PopupShowAlert(alert)),

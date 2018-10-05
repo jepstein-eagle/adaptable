@@ -1,8 +1,10 @@
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition } from './Api/Interface/AdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter } from './Api/Interface/IAdaptableBlotterObjects';
+import { ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { KeyValuePair } from '../View/UIInterfaces';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
+import { Expression } from './Api/Expression';
 export declare module ObjectFactory {
     function CreateEmptyCustomSort(): ICustomSort;
     function CreateEmptyChartDefinition(): IChartDefinition;
@@ -21,6 +23,10 @@ export declare module ObjectFactory {
     function CreateEmptyConditionalStyle(): IConditionalStyle;
     function CreateEmptyFormatColumn(): IFormatColumn;
     function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], vendorGridInfo: KeyValuePair[], name: string): ILayout;
+    function CreateColumnFilter(columnId: string, expression: Expression): IColumnFilter;
+    function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter;
+    function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter;
+    function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, description: string, expression: Expression): ICellValidationRule;
     function CreateEmptyStyle(): IStyle;
     function CreateEmptySelectedCellSummmary(): ISelectedCellSummmary;
 }

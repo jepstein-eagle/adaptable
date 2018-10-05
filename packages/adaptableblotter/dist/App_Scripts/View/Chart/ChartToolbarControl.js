@@ -33,12 +33,12 @@ class ChartToolbarControlComponent extends React.Component {
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availablechartDefinitions.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentSearchName, id: "Chart", componentClass: react_bootstrap_1.InputGroup.Button }, availablechartDefinitions),
                 currentSearchName != selectSearchString &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedChartDefinitionChanged(""), size: "small", overrideTooltip: "Clear Chart", overrideDisableButton: currentSearchName == selectSearchString, ConfigEntity: null, DisplayMode: "Glyph" }))),
-            React.createElement("span", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph" }),
-                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewChartDefinition(), size: "small", overrideTooltip: "Create New Chart Definition", DisplayMode: "Glyph" }),
-                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ChartStrategyName, glyphicon: StrategyIds.ChartGlyph, onClose: () => this.props.onClose(StrategyIds.ChartStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedChartDefinitionChanged(""), size: "small", overrideTooltip: "Clear Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))),
+            React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewChartDefinition(), size: "small", overrideTooltip: "Create New Chart Definition", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel })));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ChartStrategyName, glyphicon: StrategyIds.ChartGlyph, onClose: () => this.props.onClose(StrategyIds.ChartStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedChartDefinitionChanged(chartDefinitionName) {
         this.props.onSelectChartDefinition(chartDefinitionName);
@@ -56,11 +56,11 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onSelectChartDefinition: (ChartName) => dispatch(ChartRedux.ChartDefinitionSelect(ChartName)),
-        onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ChartPopup, false, "New")),
-        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ChartPopup, false, "Edit")),
+        onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
+        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
         onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ChartPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId, ScreenPopups.ChartPopup))
     };
 }
 exports.ChartToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ChartToolbarControlComponent);

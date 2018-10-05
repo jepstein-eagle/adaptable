@@ -47,7 +47,7 @@ class CalculatedColumnPopupComponent extends React.Component {
             let index = this.props.CalculatedColumns.indexOf(calculatedColumn);
             return React.createElement(CalculatedColumnEntityRow_1.CalculatedColumnEntityRow, { cssClassName: cssClassName, Index: index, colItems: colItems, onShare: () => this.props.onShare(calculatedColumn), TeamSharingActivated: this.props.TeamSharingActivated, AdaptableBlotterObject: calculatedColumn, key: calculatedColumn.ColumnId, onEdit: (index, calculatedColumn) => this.onEdit(index, calculatedColumn), onDeleteConfirm: CalculatedColumnRedux.CalculatedColumnDelete(index) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.CalculatedColumnStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyIds.CalculatedColumnGlyph },
                 this.props.CalculatedColumns.length > 0 &&

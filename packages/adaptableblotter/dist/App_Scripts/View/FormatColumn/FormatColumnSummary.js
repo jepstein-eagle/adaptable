@@ -26,7 +26,7 @@ class FormatColumnSummaryComponent extends React.Component {
         let noFormatColumn = formatColumn == null;
         let formatColumnRow;
         if (noFormatColumn) {
-            formatColumnRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.FormatColumnStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId, StrategySummary: "No Format Column Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.FormatColumnStrategyName });
+            formatColumnRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.FormatColumnStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId, StrategySummary: "No Format Column Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.FormatColumnStrategyName, AccessLevel: this.props.AccessLevel });
         }
         else {
             formatColumnRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: StrategyIds.FormatColumnStrategyName, cssClassName: this.props.cssClassName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.FormatColumnStrategyId }), Item2: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: formatColumn.Style }), ConfigEnity: formatColumn, showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.FormatColumnStrategyName, onEdit: () => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), onDelete: FormatColumnRedux.FormatColumnDelete(formatColumn), showBold: true });
@@ -70,6 +70,7 @@ function mapStateToProps(state, ownProps) {
         Columns: state.Grid.Columns,
         FormatColumns: state.FormatColumn.FormatColumns,
         ColorPalette: state.UserInterface.ColorPalette,
+        Entitlements: state.Entitlements.FunctionEntitlements,
         StyleClassNames: state.UserInterface.StyleClassNames
     };
 }

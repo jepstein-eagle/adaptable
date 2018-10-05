@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
@@ -32,27 +32,28 @@ class ColumnFilterToolbarControlComponent extends React.Component {
             infoBody.push(fs.Value, React.createElement("br", null));
         });
         let content = React.createElement("span", null,
-            React.createElement("div", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+            React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", style: { width: "80px" }, value: collapsedText, disabled: true, type: "string" }),
                 ' ',
                 infoBody.length > 0 &&
                     React.createElement("span", null,
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Active Filters", bodyText: infoBody, tooltipText: "Show Filter Details", MessageType: Enums_1.MessageType.Info, useButton: true, triggerAction: "click" }),
                         ' ',
-                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0 }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ColumnFilterStrategyName, glyphicon: StrategyIds.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyIds.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0, AccessLevel: this.props.AccessLevel }))));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ColumnFilterStrategyName, glyphicon: StrategyIds.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyIds.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onClearAllFilters: () => dispatch(FilterRedux.ColumnFilterClearAll()),
+        onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ColumnFilterPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ColumnFilterStrategyId, ScreenPopups.ColumnFilterPopup))
     };
 }
 exports.ColumnFilterToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ColumnFilterToolbarControlComponent);

@@ -26,11 +26,11 @@ class CustomSortSummaryComponent extends React.Component {
         let noCustomSort = customSort == null;
         let customSortRow;
         if (!this.props.SummarisedColumn.Sortable) {
-            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "Column is not sortable", NewButtonDisabled: true, onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CustomSortStrategyName });
+            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "Column is not sortable", NewButtonDisabled: true, onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CustomSortStrategyName, AccessLevel: this.props.AccessLevel });
         }
         else if (noCustomSort) {
             // title row
-            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "No Custom Sort Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CustomSortStrategyName });
+            customSortRow = React.createElement(StrategyHeader_1.StrategyHeader, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, StrategyId: StrategyIds.CustomSortStrategyId, StrategySummary: "No Custom Sort Set", onNew: () => this.onNew(), AccessLevel: this.props.AccessLevel, NewButtonTooltip: StrategyIds.CustomSortStrategyName });
         }
         else {
             customSortRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: StrategyIds.CustomSortStrategyName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CustomSortStrategyId }), Item2: customSort.SortedValues.join(', '), ConfigEnity: customSort, EntityName: StrategyIds.CustomSortStrategyName, onEdit: () => this.onEdit(customSort), onShare: () => this.props.onShare(customSort), showShare: this.props.TeamSharingActivated, onDelete: CustomSortRedux.CustomSortDelete(customSort), showBold: true });
@@ -70,7 +70,8 @@ exports.CustomSortSummaryComponent = CustomSortSummaryComponent;
 function mapStateToProps(state, ownProps) {
     return {
         Columns: state.Grid.Columns,
-        CustomSorts: state.CustomSort.CustomSorts
+        CustomSorts: state.CustomSort.CustomSorts,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {

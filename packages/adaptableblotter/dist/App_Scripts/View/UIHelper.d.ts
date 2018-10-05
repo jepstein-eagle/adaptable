@@ -1,7 +1,7 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState';
 import { DataType, StatusColour, MessageType } from '../Core/Enums';
 import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
-import { IStyle } from '../Core/Api/Interface/AdaptableBlotterObjects';
+import { IStyle } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Core/Api/Expression';
 export declare module UIHelper {

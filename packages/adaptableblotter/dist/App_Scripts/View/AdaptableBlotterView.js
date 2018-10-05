@@ -21,7 +21,7 @@ class AdaptableBlotterView extends React.Component {
             React.createElement(AdaptableBlotterPopupAlert_1.AdaptableBlotterPopupAlert, { Header: this.props.PopupState.AlertPopup.Header, Msg: this.props.PopupState.AlertPopup.Msg, onClose: this.props.onCloseAlertPopup, ShowPopup: this.props.PopupState.AlertPopup.ShowAlertPopup, MessageType: this.props.PopupState.AlertPopup.MessageType }),
             React.createElement(AdaptableBlotterPopupPrompt_1.AdaptableBlotterPopupPrompt, { Msg: this.props.PopupState.PromptPopup.PromptMsg, Title: this.props.PopupState.PromptPopup.PromptTitle, onClose: this.props.onClosePromptPopup, onConfirm: this.props.onConfirmPromptPopup, ShowPopup: this.props.PopupState.PromptPopup.ShowPromptPopup }),
             React.createElement(AdaptableBlotterPopupConfirmation_1.AdaptableBlotterPopupConfirmation, { Title: this.props.PopupState.ConfirmationPopup.ConfirmationTitle, Msg: this.props.PopupState.ConfirmationPopup.ConfirmationMsg, ShowPopup: this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup, CancelText: this.props.PopupState.ConfirmationPopup.CancelText, ConfirmText: this.props.PopupState.ConfirmationPopup.ConfirmationText, onCancel: this.props.onCancelConfirmationPopup, onConfirm: this.props.onConfirmConfirmationPopup, ShowCommentBox: this.props.PopupState.ConfirmationPopup.ShowCommentBox }),
-            React.createElement(AdaptableBlotterPopup_1.AdaptableBlotterPopup, { showModal: this.props.PopupState.ScreenPopup.ShowScreenPopup, ComponentName: this.props.PopupState.ScreenPopup.ComponentName, onHide: this.props.onCloseScreenPopup, IsReadOnly: this.props.PopupState.ScreenPopup.IsReadOnly, Blotter: this.props.Blotter, onClearPopupParams: () => this.props.onClearPopupParams(), PopupParams: this.props.PopupState.ScreenPopup.Params })));
+            React.createElement(AdaptableBlotterPopup_1.AdaptableBlotterPopup, { showModal: this.props.PopupState.ScreenPopup.ShowScreenPopup, ComponentName: this.props.PopupState.ScreenPopup.ComponentName, ComponentStrategy: this.props.PopupState.ScreenPopup.ComponentStrategy, onHide: this.props.onCloseScreenPopup, Blotter: this.props.Blotter, onClearPopupParams: () => this.props.onClearPopupParams(), PopupParams: this.props.PopupState.ScreenPopup.Params })));
     }
 }
 function mapStateToProps(state, ownProps) {
@@ -39,7 +39,7 @@ function mapDispatchToProps(dispatch) {
         onConfirmPromptPopup: (inputText) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),
         onCancelConfirmationPopup: () => dispatch(PopupRedux.PopupCancelConfirmation()),
-        showPopup: (componentName, isReadOnly, params) => dispatch(PopupRedux.PopupShowScreen(componentName, isReadOnly, params)),
+        showPopup: (componentStrategy, componentName, params) => dispatch(PopupRedux.PopupShowScreen(componentStrategy, componentName, params)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam())
     };
 }

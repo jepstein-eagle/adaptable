@@ -1,4 +1,4 @@
-import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./AdaptableBlotterObjects";
+import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./IAdaptableBlotterObjects";
 export interface IColumnStateChangedEventArgs {
     currentLayout: string;
 }

@@ -24,7 +24,7 @@ class PlusMinusSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__plusminus";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.PlusMinusStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.PlusMinusStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition"), onNew: () => this.onNew(), NewButtonTooltip: "Plus / Minus Rule" });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.PlusMinusStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.PlusMinusStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition"), onNew: () => this.onNew(), NewButtonTooltip: "Plus / Minus Rule", AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.PlusMinusRules.map((item, index) => {
@@ -68,8 +68,9 @@ function mapStateToProps(state, ownProps) {
     return {
         Columns: state.Grid.Columns,
         PlusMinusRules: state.PlusMinus.PlusMinusRules,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {

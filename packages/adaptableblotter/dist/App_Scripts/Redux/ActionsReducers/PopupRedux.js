@@ -16,10 +16,10 @@ exports.POPUP_SHOW_CONFIRMATION = 'POPUP_SHOW_CONFIRMATION';
 exports.POPUP_CONFIRM_CONFIRMATION = 'POPUP_CONFIRM_CONFIRMATION';
 exports.POPUP_CANCEL_CONFIRMATION = 'POPUP_CANCEL_CONFIRMATION';
 exports.POPUP_CLEAR_PARAM = 'POPUP_CLEAR_PARAM';
-exports.PopupShowScreen = (ComponentName, IsReadOnly, Params) => ({
+exports.PopupShowScreen = (ComponentStrategy, ComponentName, Params) => ({
     type: exports.POPUP_SHOW_SCREEN,
+    ComponentStrategy,
     ComponentName,
-    IsReadOnly,
     Params
 });
 exports.PopupHideScreen = () => ({
@@ -72,8 +72,8 @@ exports.PopupClearParam = () => ({
 const initialPopupState = {
     ScreenPopup: {
         ShowScreenPopup: false,
+        ComponentStrategy: "",
         ComponentName: "",
-        IsReadOnly: false,
         Params: null
     },
     ChartPopup: {
@@ -110,11 +110,11 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
     switch (action.type) {
         case exports.POPUP_SHOW_SCREEN: {
             let actionTypedShowPopup = action;
-            let newScreenPopup = { ShowScreenPopup: true, IsReadOnly: actionTypedShowPopup.IsReadOnly, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params };
+            let newScreenPopup = { ShowScreenPopup: true, ComponentStrategy: actionTypedShowPopup.ComponentStrategy, ComponentName: actionTypedShowPopup.ComponentName, Params: actionTypedShowPopup.Params };
             return Object.assign({}, state, { ScreenPopup: newScreenPopup });
         }
         case exports.POPUP_HIDE_SCREEN: {
-            let newScreenPopup = { ShowScreenPopup: false, IsReadOnly: false, ComponentName: "", Params: null };
+            let newScreenPopup = { ShowScreenPopup: false, ComponentStrategy: "", ComponentName: "", Params: null };
             return Object.assign({}, state, { ScreenPopup: newScreenPopup });
         }
         case exports.POPUP_SHOW_PROMPT: {
@@ -208,7 +208,7 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
             return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
         }
         case exports.POPUP_CLEAR_PARAM: {
-            let newScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, IsReadOnly: state.ScreenPopup.IsReadOnly, ComponentName: state.ScreenPopup.ComponentName, Params: null };
+            let newScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, ComponentStrategy: state.ScreenPopup.ComponentStrategy, ComponentName: state.ScreenPopup.ComponentName, Params: null };
             return Object.assign({}, state, { ScreenPopup: newScreenPopup });
         }
         default:

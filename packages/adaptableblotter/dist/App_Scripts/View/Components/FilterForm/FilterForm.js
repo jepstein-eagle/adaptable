@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const FilterRedux = require("../../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRedux");
+const UserFilterRedux = require("../../../Redux/ActionsReducers/UserFilterRedux");
+const SystemFilterRedux = require("../../../Redux/ActionsReducers/SystemFilterRedux");
 const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const FilterHelper_1 = require("../../../Core/Helpers/FilterHelper");
@@ -19,6 +21,7 @@ const ListBoxMenu_1 = require("./ListBoxMenu");
 const react_bootstrap_1 = require("react-bootstrap");
 const FilterFormPanel_1 = require("../Panels/FilterFormPanel");
 const ButtonSave_1 = require("../Buttons/ButtonSave");
+const ObjectFactory_1 = require("../../../Core/ObjectFactory");
 class FilterFormComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -81,9 +84,9 @@ class FilterFormComponent extends React.Component {
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
         let isEmptyFilter = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ExpressionHelper_1.ExpressionHelper.IsEmptyRange(uiSelectedRangeExpression);
         let hasUserFilter = uiSelectedUserFilters.length > 0;
-        let closeButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onCloseForm(), bsStyle: "default", size: "xsmall", DisplayMode: "Glyph", hideToolTip: true });
-        let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onClearFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter, overrideText: "Clear", DisplayMode: "Text", hideToolTip: true });
-        let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true });
+        let closeButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onCloseForm(), bsStyle: "default", size: "xsmall", DisplayMode: "Glyph", hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full });
+        let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onClearFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter, overrideText: "Clear", DisplayMode: "Text", hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full });
+        let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full });
         return React.createElement("div", null, StringExtensions_1.StringExtensions.IsNullOrEmpty(isFilterable) ?
             React.createElement(FilterFormPanel_1.FilterFormPanel, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, saveButton: saveButton, closeButton: closeButton, showCloseButton: this.props.ShowCloseButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
                 React.createElement(ListBoxMenu_1.ListBoxMenu, { ContextMenuItems: this.props.ContextMenuItems, onContextMenuItemClick: (action) => this.onContextMenuItemClick(action) })
@@ -150,7 +153,7 @@ class FilterFormComponent extends React.Component {
     persistFilter(columnDisplayValues, columnRawValues, userFilters, rangeExpressions) {
         let expression;
         expression = ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, columnDisplayValues, columnRawValues, userFilters, rangeExpressions);
-        let columnFilter = { ColumnId: this.props.CurrentColumn.ColumnId, Filter: expression, IsReadOnly: false };
+        let columnFilter = ObjectFactory_1.ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, expression);
         //delete if empty
         if (columnDisplayValues.length == 0 && columnRawValues.length == 0 && userFilters.length == 0 && rangeExpressions.length == 0) {
             this.props.onClearColumnFilter(columnFilter.ColumnId);
@@ -164,7 +167,7 @@ class FilterFormComponent extends React.Component {
         let prompt = {
             PromptTitle: "Enter name for User Filter",
             PromptMsg: "Please enter a user filter name",
-            ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
+            ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         };
         this.props.onShowPrompt(prompt);
     }
@@ -184,9 +187,9 @@ function mapStateToProps(state, ownProps) {
         CurrentColumn: ownProps.CurrentColumn,
         Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
-        ColumnFilters: state.Filter.ColumnFilters,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
         ShowCloseButton: ownProps.ShowCloseButton
     };
@@ -194,10 +197,10 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onContextMenuItemClick: (action) => dispatch(action),
-        onClearColumnFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
-        onAddEditColumnFilter: (columnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onClearColumnFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+        onAddEditColumnFilter: (columnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(SystemFilterRedux.HideFilterForm()),
     };
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);

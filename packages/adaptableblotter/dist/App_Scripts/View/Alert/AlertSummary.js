@@ -12,6 +12,7 @@ const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail")
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
+const AlertHelper_1 = require("../../Core/Helpers/AlertHelper");
 class AlertSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -21,12 +22,12 @@ class AlertSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Alert";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.AlertStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.AlertStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.AlertStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.AlertStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.AlertStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.AlertStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.AlertStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.AlertStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.Alerts.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: "something here?", Item2: item.Description, ConfigEnity: item, EntityName: StrategyIds.AlertStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: AlertRedux.AlertDefinitionDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: "something here?", Item2: AlertHelper_1.AlertHelper.createAlertDescription(item, this.props.Columns), ConfigEnity: item, EntityName: StrategyIds.AlertStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: AlertRedux.AlertDefinitionDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });
@@ -60,8 +61,9 @@ function mapStateToProps(state, ownProps) {
     return {
         Columns: state.Grid.Columns,
         Alerts: state.Alert.AlertDefinitions,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {

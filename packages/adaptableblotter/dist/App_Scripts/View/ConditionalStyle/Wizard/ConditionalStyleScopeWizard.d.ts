@@ -2,7 +2,7 @@ import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ConditionalStyleScope } from '../../../Core/Enums';
-import { IConditionalStyle } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IConditionalStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: Array<IColumn>;
 }

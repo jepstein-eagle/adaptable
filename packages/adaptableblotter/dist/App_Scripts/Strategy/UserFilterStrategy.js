@@ -10,11 +10,11 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyIds.UserFilterStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopupPopup, StrategyIds.UserFilterGlyph);
+        this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyIds.UserFilterGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
-            this.createContextMenuItemShowPopup("Create User Filter", ScreenPopups.UserFilterPopupPopup, StrategyIds.UserFilterGlyph);
+            this.createContextMenuItemShowPopup("Create User Filter", ScreenPopups.UserFilterPopup, StrategyIds.UserFilterGlyph, "New|" + columnId);
         }
     }
     InitState() {
@@ -25,7 +25,7 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
-                    || this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0) {
+                    || this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0) {
                     this.publishSearchChanged(Enums_1.SearchChangedTrigger.UserFilter);
                 }
             }
@@ -35,7 +35,7 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     GetUserFilterState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
     }
 }
 exports.UserFilterStrategy = UserFilterStrategy;

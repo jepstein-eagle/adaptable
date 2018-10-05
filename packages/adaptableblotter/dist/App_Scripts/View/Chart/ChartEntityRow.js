@@ -10,8 +10,8 @@ class ChartEntityRow extends React.Component {
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = Chart.Name;
         colItems[1].Content = Chart.Type;
-        colItems[2].Content = React.createElement(ButtonShowChart_1.ButtonShowChart, { key: "key:" + Chart.Name, style: { marginLeft: "2px" }, cssClassName: this.props.cssClassName, onClick: () => this.props.onShowChart(Chart.Name), size: "small", overrideTooltip: "Show Chart", DisplayMode: "Glyph" });
-        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, Chart), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: null, ConfigEntity: Chart, EntityName: "Chart" });
+        colItems[2].Content = React.createElement(ButtonShowChart_1.ButtonShowChart, { key: "key:" + Chart.Name, style: { marginLeft: "2px" }, cssClassName: this.props.cssClassName, onClick: () => this.props.onShowChart(Chart.Name), size: "small", overrideTooltip: "Show Chart", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel });
+        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, Chart), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: null, EntityName: "Chart" });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
 }

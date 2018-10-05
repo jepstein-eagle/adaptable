@@ -17,17 +17,17 @@ class AlertSelectQueryWizard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "-selectquery";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { header: "Cell Validation Query", bsStyle: "primary" },
+            React.createElement(react_bootstrap_1.Panel, { header: "Alert Query", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                     React.createElement(react_bootstrap_1.Col, { xs: 12 },
                         React.createElement(react_bootstrap_1.HelpBlock, null,
-                            "A Query is used if the rule is dependent on other values in the row.",
+                            "A Query is used if the alert is dependent on other values in the row.",
                             React.createElement("br", null),
-                            "The rule will only be activated and checked if the Query passes.")),
+                            "The alert will only be triggered if the Query passes.")),
                     React.createElement(react_bootstrap_1.Col, { xs: 12 },
-                        React.createElement(react_bootstrap_1.Checkbox, { inline: true, onChange: (e) => this.onOtherExpressionOptionChanged(e), checked: this.state.HasExpression }, "Use Validation Query"),
+                        React.createElement(react_bootstrap_1.Checkbox, { inline: true, onChange: (e) => this.onOtherExpressionOptionChanged(e), checked: this.state.HasExpression }, "Use Query"),
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Validation Rule: Query", bodyText: ["Create a query (in next step) which will stipulate other cell values required for the Rule."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert: Query", bodyText: ["Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered."], MessageType: Enums_1.MessageType.Info })))));
     }
     onOtherExpressionOptionChanged(event) {
         let e = event.target;

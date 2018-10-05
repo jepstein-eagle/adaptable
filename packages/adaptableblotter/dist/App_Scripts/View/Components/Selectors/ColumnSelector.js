@@ -31,7 +31,7 @@ class ColumnSelector extends React.Component {
             React.createElement(react_bootstrap_1.InputGroup, null,
                 React.createElement(react_bootstrap_typeahead_1.Typeahead, { ref: "typeahead", emptyLabel: "No Column", placeholder: placeHolder, labelKey: "FriendlyName", filterBy: ["FriendlyName", "ColumnId"], multiple: this.props.SelectionMode == Enums_1.SelectionMode.Multi, selected: selectedColums, onChange: (selected) => { this.onColumnChange(selected, isEmptySelectedColumnIds); }, options: sortedColumns, disabled: this.props.disabled }),
                 React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                    React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onClearButton(), overrideTooltip: "Clear Column", overrideDisableButton: isEmptySelectedColumnIds, ConfigEntity: null, DisplayMode: "Glyph" }))));
+                    React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onClearButton(), overrideTooltip: "Clear Column", overrideDisableButton: isEmptySelectedColumnIds, DisplayMode: "Glyph" }))));
     }
     onClearButton() {
         this.props.onColumnChange([]);

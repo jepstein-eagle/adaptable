@@ -17,6 +17,7 @@ const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const Enums_1 = require("../../Core/Enums");
 class LayoutToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__layout";
@@ -36,13 +37,13 @@ class LayoutToolbarControlComponent extends React.Component {
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableLayouts.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentLayoutTitle, id: "layout" }, availableLayouts),
                 this.props.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT), size: "small", overrideTooltip: "Clear layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, ConfigEntity: null, DisplayMode: "Glyph" }))),
-            React.createElement("span", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ButtonSave_1.ButtonSave, { style: { marginLeft: "5px" }, cssClassName: cssClassName, onClick: () => this.onSave(), size: "small", overrideTooltip: "Save Changes to Current Layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, ConfigEntity: layoutEntity, DisplayMode: "Glyph" }),
-                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewLayout(), size: "small", overrideTooltip: "Create a new Layout", DisplayMode: "Glyph" }),
-                React.createElement(ButtonUndo_1.ButtonUndo, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onSelectLayout(this.props.CurrentLayout), size: "small", overrideTooltip: "Undo Layout Changes", overrideDisableButton: !currentLayoutTitle.endsWith(("(Modified)")), ConfigEntity: layoutEntity, DisplayMode: "Glyph" }),
-                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, ConfigEntity: layoutEntity, DisplayMode: "Glyph", ConfirmAction: LayoutRedux.LayoutDelete(this.props.CurrentLayout), ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?", ConfirmationTitle: "Delete Layout" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.LayoutStrategyName, glyphicon: StrategyIds.LayoutGlyph, onClose: () => this.props.onClose(StrategyIds.LayoutStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT), size: "small", overrideTooltip: "Clear layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))),
+            React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(ButtonSave_1.ButtonSave, { style: { marginLeft: "5px" }, cssClassName: cssClassName, onClick: () => this.onSave(), size: "small", overrideTooltip: "Save Changes to Current Layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewLayout(), size: "small", overrideTooltip: "Create a new Layout", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonUndo_1.ButtonUndo, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onSelectLayout(this.props.CurrentLayout), size: "small", overrideTooltip: "Undo Layout Changes", overrideDisableButton: !currentLayoutTitle.endsWith(("(Modified)")), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Layout", overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT, DisplayMode: "Glyph", ConfirmAction: LayoutRedux.LayoutDelete(this.props.CurrentLayout), ConfirmationMsg: "Are you sure you want to delete '" + this.props.CurrentLayout + "'?", ConfirmationTitle: "Delete Layout", AccessLevel: this.props.AccessLevel })));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.LayoutStrategyName, glyphicon: StrategyIds.LayoutGlyph, onClose: () => this.props.onClose(StrategyIds.LayoutStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     isLayoutModified(layoutEntity) {
         if (layoutEntity) {
@@ -85,9 +86,9 @@ function mapDispatchToProps(dispatch) {
     return {
         onSelectLayout: (layoutName) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onPreSaveLayout: (index, layout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
-        onNewLayout: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.LayoutPopup, false, "New")),
+        onNewLayout: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.LayoutStrategyId, ScreenPopups.LayoutPopup, "New")),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadonly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.LayoutPopup, isReadonly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.LayoutStrategyId, ScreenPopups.LayoutPopup))
     };
 }
 exports.LayoutToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(LayoutToolbarControlComponent);

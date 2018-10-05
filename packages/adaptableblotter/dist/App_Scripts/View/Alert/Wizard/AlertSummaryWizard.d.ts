@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IAlertDefinition, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAlertDefinition, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
     Columns: IColumn[];
     UserFilters: IUserFilter[];

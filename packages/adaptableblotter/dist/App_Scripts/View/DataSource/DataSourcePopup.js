@@ -28,7 +28,7 @@ class DataSourcePopupComponent extends React.Component {
                     React.createElement(react_bootstrap_1.InputGroup, null,
                         React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableSearches.length == 0, style: { minWidth: "500px" }, className: cssClassName, bsStyle: "default", title: currentDataSource, id: "DataSource", componentClass: react_bootstrap_1.InputGroup.Button }, availableSearches),
                         React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                            React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), overrideTooltip: "Clear Data Source", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), ConfigEntity: null, DisplayMode: "Text+Glyph" }))))));
+                            React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), overrideTooltip: "Clear Data Source", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), DisplayMode: "Text+Glyph", AccessLevel: this.props.AccessLevel }))))));
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.DataSourceStrategyName, bsStyle: "primary", infoBody: infoBody, glyphicon: StrategyIds.DataSourceGlyph }, content));
     }

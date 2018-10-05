@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -60,9 +60,9 @@ class UserFilterPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
-            return React.createElement(UserFilterEntityRow_1.UserFilterEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: userFilter, colItems: colItems, key: "CS" + index, Index: index, onShare: () => this.props.onShare(userFilter), TeamSharingActivated: this.props.TeamSharingActivated, UserFilters: this.props.UserFilters, Columns: this.props.Columns, onEdit: (index, userFilter) => this.onEdit(index, userFilter), onDeleteConfirm: FilterRedux.UserFilterDelete(userFilter) });
+            return React.createElement(UserFilterEntityRow_1.UserFilterEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: userFilter, colItems: colItems, key: "CS" + index, Index: index, onShare: () => this.props.onShare(userFilter), TeamSharingActivated: this.props.TeamSharingActivated, UserFilters: this.props.UserFilters, Columns: this.props.Columns, onEdit: (index, userFilter) => this.onEdit(index, userFilter), onDeleteConfirm: UserFilterRedux.UserFilterDelete(userFilter) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create User Filter", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create User Filter", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.UserFilterStrategyName, bsStyle: "primary", cssClassName: cssClassName, infoBody: infoBody, button: newButton, glyphicon: StrategyIds.UserFilterGlyph },
                 UserFilterItems.length > 0 &&
@@ -101,7 +101,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onAddUpdateUserFilter: (index, userFilter) => dispatch(FilterRedux.UserFilterAddUpdate(index, userFilter)),
+        onAddUpdateUserFilter: (index, userFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index, userFilter)),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

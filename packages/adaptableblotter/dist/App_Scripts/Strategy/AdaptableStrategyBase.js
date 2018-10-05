@@ -60,20 +60,22 @@ class AdaptableStrategyBase {
     }
     // creates the menu items in the main dropdown
     createMenuItemShowPopup(Label, ComponentName, GlyphIcon, PopupParams) {
-        let menuItemShowPopup = new MenuItem_1.MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, this.isReadOnlyStrategy(), this.isVisibleStrategy(), PopupParams);
+        let menuItemShowPopup = new MenuItem_1.MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, 
+        //  this.isReadOnlyStrategy(),
+        this.isVisibleStrategy(), PopupParams);
         this.popupMenuItem = menuItemShowPopup;
     }
     // direct actions called by the context menu - invisible if strategy is hidden or readonly
     createContextMenuItemReduxAction(Label, GlyphIcon, Action) {
         if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
-            let menuItemShowPopup = new MenuItem_1.MenuItemDoReduxAction(Label, this.Id, Action, GlyphIcon, false, true);
+            let menuItemShowPopup = new MenuItem_1.MenuItemDoReduxAction(Label, this.Id, Action, GlyphIcon, true);
             this.addContextMenuItemToStore(menuItemShowPopup);
         }
     }
     // popups called by the context menu - invisible if strategy is hidden or readonly
     createContextMenuItemShowPopup(Label, ComponentName, GlyphIcon, PopupParams) {
         if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
-            let menuItemShowPopup = new MenuItem_1.MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, false, true, PopupParams);
+            let menuItemShowPopup = new MenuItem_1.MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, true, PopupParams);
             this.addContextMenuItemToStore(menuItemShowPopup);
         }
     }
@@ -109,7 +111,7 @@ class AdaptableStrategyBase {
             dataSource: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(dataSource) ? dataSource : "",
             advancedSearch: advancedSearch == null ? null : advancedSearch,
             quickSearch: state.QuickSearch.QuickSearchText,
-            columnFilters: state.Filter.ColumnFilters
+            columnFilters: state.ColumnFilter.ColumnFilters
         };
         let blotterSortState = {
             gridSorts: state.Grid.GridSorts,

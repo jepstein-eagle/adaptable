@@ -7,6 +7,7 @@ const StrategyIds = require("../../Core/Constants/StrategyIds");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const UIHelper_1 = require("../UIHelper");
+const Enums_1 = require("../../Core/Enums");
 class DataManagementPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +16,7 @@ class DataManagementPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__userDataManagement";
         let infoBody = ["Function that clears user config - for development use only."];
-        let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: cssClassName, onClick: () => this.onClear(), bsStyle: "default", overrideText: "Clear User Data", overrideTooltip: "Clear User Data", DisplayMode: "Text", size: "large" });
+        let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: cssClassName, onClick: () => this.onClear(), bsStyle: "default", overrideText: "Clear User Data", overrideTooltip: "Clear User Data", DisplayMode: "Text", size: "large", AccessLevel: Enums_1.AccessLevel.Full });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.DataManagementStrategyName, button: null, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyIds.DataManagementGlyph, infoBody: infoBody },
                 React.createElement(react_bootstrap_1.Well, { bsSize: "small" },

@@ -47,7 +47,7 @@ class AlertPopupComponent extends React.Component {
             let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
             return React.createElement(AlertEntityRow_1.AlertEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: AlertRedux.AlertDefinitionDelete(index), onChangeMessageType: (index, x) => this.onMessageTypeChanged(index, x) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createAlert(), overrideTooltip: "Create Alert", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createAlert(), overrideTooltip: "Create Alert", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.AlertStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.AlertGlyph, infoBody: infoBody },
                 AlertItems.length > 0 &&
@@ -79,8 +79,7 @@ class AlertPopupComponent extends React.Component {
     canFinishWizard() {
         let AlertRule = this.state.EditedAdaptableBlotterObject;
         return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId) &&
-            (ExpressionHelper_1.ExpressionHelper.IsEmptyOrValidExpression(AlertRule.Expression)) &&
-            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(AlertRule.Description);
+            ExpressionHelper_1.ExpressionHelper.IsEmptyOrValidExpression(AlertRule.Expression);
     }
 }
 function mapStateToProps(state, ownProps) {

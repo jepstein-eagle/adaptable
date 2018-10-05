@@ -14,7 +14,7 @@ class ApplicationToolbarControlComponent extends React.Component {
         let headerText = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle) ?
             this.props.ApplicationToolbarTitle :
             StrategyIds.ApplicationStrategyName;
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: headerText, glyphicon: StrategyIds.ApplicationGlyph, onClose: () => this.props.onClose(StrategyIds.ApplicationStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) },
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: headerText, glyphicon: StrategyIds.ApplicationGlyph, onClose: () => this.props.onClose(StrategyIds.ApplicationStrategyId), onConfigure: () => this.props.onConfigure() },
             React.createElement("div", { className: "ApplicationToolBarContents", style: { minHeight: 30 } }));
     }
 }
@@ -26,7 +26,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ApplicationPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ApplicationStrategyId, ScreenPopups.ApplicationPopup))
     };
 }
 exports.ApplicationToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ApplicationToolbarControlComponent);

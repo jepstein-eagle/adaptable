@@ -2,7 +2,7 @@ import * as React from "react";
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SortOrder } from "../../Core/Enums";
-import { IGridSort } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IGridSort } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
     GridSort: IGridSort;
     onGridSortColumnChanged: (column: IColumn) => void;

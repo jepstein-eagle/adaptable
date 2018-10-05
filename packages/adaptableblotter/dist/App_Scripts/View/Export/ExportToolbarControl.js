@@ -21,6 +21,7 @@ const Enums_1 = require("../../Core/Enums");
 const OpenfinHelper_1 = require("../../Core/Helpers/OpenfinHelper");
 const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const ReportHelper_1 = require("../../Core/Helpers/ReportHelper");
 class ExportToolbarControlComponent extends React.Component {
     render() {
         const selectReportString = "Select a Report";
@@ -33,29 +34,29 @@ class ExportToolbarControlComponent extends React.Component {
         let availableReports = this.props.Reports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedReportChanged(report.Name) }, report.Name);
         });
-        let csvMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.CSV), key: "csv" }, "CSV");
-        let clipboardMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.Clipboard), key: "clipboard" },
+        let csvMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.CSV), key: "csv" }, "CSV");
+        let clipboardMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.Clipboard), key: "clipboard" },
             " ",
             "Clipboard");
         let openfinExcelMenuItem;
         if (this.props.LiveReports.find(x => x.Report == currentReportId && x.ExportDestination == Enums_1.ExportDestination.OpenfinExcel)) {
-            openfinExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, onClick: () => this.props.onReportStopLive(currentReportId, Enums_1.ExportDestination.OpenfinExcel), key: "OpenfinExcel" },
+            openfinExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onReportStopLive(currentReportId, Enums_1.ExportDestination.OpenfinExcel), key: "OpenfinExcel" },
                 " ",
                 "Stop Live Openfin Excel");
         }
         else {
-            openfinExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.OpenfinExcel), key: "OpenfinExcel" },
+            openfinExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.OpenfinExcel), key: "OpenfinExcel" },
                 " ",
                 "Start Live Openfin Excel");
         }
         let iPushPullExcelMenuItem;
         if (this.props.LiveReports.find(x => x.Report == currentReportId && x.ExportDestination == Enums_1.ExportDestination.iPushPull)) {
-            iPushPullExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, onClick: () => this.props.onReportStopLive(currentReportId, Enums_1.ExportDestination.iPushPull), key: "IPPExcel" },
+            iPushPullExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onReportStopLive(currentReportId, Enums_1.ExportDestination.iPushPull), key: "IPPExcel" },
                 " ",
                 "Stop Sync with iPushPull");
         }
         else {
-            iPushPullExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.IsReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.iPushPull), key: "IPPExcel" },
+            iPushPullExcelMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.iPushPull), key: "IPPExcel" },
                 " ",
                 "Start Sync with iPushPull");
         }
@@ -68,8 +69,8 @@ class ExportToolbarControlComponent extends React.Component {
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableReports.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentReportId, id: "report" }, availableReports),
                 currentReportId != selectReportString &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedReportChanged(""), size: "small", overrideTooltip: "Clear Report", overrideDisableButton: currentReportId == selectReportString, ConfigEntity: null, DisplayMode: "Glyph" }))),
-            React.createElement("span", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedReportChanged(""), size: "small", overrideTooltip: "Clear Report", overrideDisableButton: currentReportId == selectReportString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))),
+            React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.DropdownButton, { style: { marginLeft: "5px" }, bsSize: "small", bsStyle: "primary", title: exportGlyph, id: "exportDropdown", disabled: currentReportId == selectReportString },
                     csvMenuItem,
                     clipboardMenuItem,
@@ -77,10 +78,10 @@ class ExportToolbarControlComponent extends React.Component {
                     OpenfinHelper_1.OpenfinHelper.isRunningInOpenfin() && OpenfinHelper_1.OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem,
                     " ",
                     iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem),
-                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, onClick: () => this.props.onEditReport(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Report", overrideDisableButton: savedReport == null || savedReport.IsReadOnly, ConfigEntity: savedReport, DisplayMode: "Glyph" }),
-                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewReport(), size: "small", overrideTooltip: "Create New Report", DisplayMode: "Glyph" }),
-                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || savedReport.IsReadOnly, ConfigEntity: savedReport, DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: "Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?", ConfirmationTitle: "Delete Report" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ExportStrategyName, glyphicon: StrategyIds.ExportGlyph, onClose: () => this.props.onClose(StrategyIds.ExportStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, onClick: () => this.props.onEditReport(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewReport(), size: "small", overrideTooltip: "Create New Report", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: "Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?", ConfirmationTitle: "Delete Report", AccessLevel: this.props.AccessLevel })));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ExportStrategyName, glyphicon: StrategyIds.ExportGlyph, onClose: () => this.props.onClose(StrategyIds.ExportStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedReportChanged(reportName) {
         this.props.onSelectReport(reportName);
@@ -98,10 +99,10 @@ function mapDispatchToProps(dispatch) {
         onApplyExport: (Report, exportDestination) => dispatch(ExportRedux.ExportApply(Report, exportDestination)),
         onSelectReport: (Report) => dispatch(ExportRedux.ReportSelect(Report)),
         onReportStopLive: (Report, exportDestination) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
-        onNewReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "New")),
-        onEditReport: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, false, "Edit")),
+        onNewReport: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, ScreenPopups.ExportPopup, "New")),
+        onEditReport: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, ScreenPopups.ExportPopup, "Edit")),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ExportPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, ScreenPopups.ExportPopup))
     };
 }
 exports.ExportToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ExportToolbarControlComponent);

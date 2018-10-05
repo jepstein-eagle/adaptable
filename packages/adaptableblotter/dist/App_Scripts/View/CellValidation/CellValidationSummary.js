@@ -21,8 +21,9 @@ class CellValidationSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
         let strategySummaries = [];
+        alert("AccessLevel for cv: " + this.props.AccessLevel);
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CellValidationStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CellValidationStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.CellValidations.map((item, index) => {
@@ -61,8 +62,9 @@ function mapStateToProps(state, ownProps) {
     return {
         Columns: state.Grid.Columns,
         CellValidations: state.CellValidation.CellValidations,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {

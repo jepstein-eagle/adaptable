@@ -47,7 +47,7 @@ class FormatColumnPopupComponent extends React.Component {
         let FormatColumns = this.props.FormatColumns.map((formatColumn, index) => {
             return React.createElement(FormatColumnEntityRow_1.FormatColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: formatColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: (index, x) => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FormatColumnRedux.FormatColumnDelete(formatColumn) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.FormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyIds.FormatColumnGlyph, infoBody: infoBody },
                 this.props.FormatColumns.length == 0 &&

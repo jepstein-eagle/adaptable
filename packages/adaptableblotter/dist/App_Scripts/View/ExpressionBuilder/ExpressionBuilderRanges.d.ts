@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { IRange } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IRange } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends React.ClassAttributes<ExpressionBuilderRanges> {
     SelectedColumn: IColumn;
     Ranges: Array<IRange>;

@@ -4,7 +4,7 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
     showModal: boolean;
     ComponentName: string;
-    IsReadOnly: boolean;
+    ComponentStrategy: string;
     onHide?: Function;
     Blotter: IAdaptableBlotter;
     PopupParams: string;

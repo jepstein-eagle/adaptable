@@ -75,7 +75,7 @@ class AlertRulesWizard extends React.Component {
         this.setState({ Operator: operator }, () => this.props.UpdateGoBackState());
     }
     getColumnDataTypeFromState() {
-        return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).DataType;
+        return ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns);
     }
     checkOperator(operator) {
         return this.state.Operator == operator;
@@ -95,37 +95,8 @@ class AlertRulesWizard extends React.Component {
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.LessThan, Enums_1.LeafExpressionOperator.GreaterThan, Enums_1.LeafExpressionOperator.Between, Enums_1.LeafExpressionOperator.NotBetween, Enums_1.LeafExpressionOperator.IsPositive, Enums_1.LeafExpressionOperator.IsNegative, Enums_1.LeafExpressionOperator.ValueChange, Enums_1.LeafExpressionOperator.PercentChange, Enums_1.LeafExpressionOperator.IsNotNumber];
         }
     }
-    createAlertDescription(Alert) {
-        let valueDescription = ExpressionHelper_1.ExpressionHelper.OperatorToLongFriendlyString(Alert.Range.Operator, this.getColumnDataTypeFromState());
-        if (!this.operatorRequiresValue(Alert.Range.Operator)) {
-            return valueDescription;
-        }
-        let dataType = this.props.Columns.find(c => c.ColumnId == Alert.ColumnId).DataType;
-        let operand1Text = (dataType == Enums_1.DataType.Boolean || dataType == Enums_1.DataType.Number) ?
-            Alert.Range.Operand1 :
-            "'" + Alert.Range.Operand1 + "'";
-        valueDescription = valueDescription + operand1Text;
-        if (Alert.Range.Operator == Enums_1.LeafExpressionOperator.PercentChange) {
-            valueDescription = valueDescription + '%';
-        }
-        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(Alert.Range.Operand2)) {
-            let operand2Text = (dataType == Enums_1.DataType.Number) ?
-                " and " + Alert.Range.Operand2 :
-                " and '" + Alert.Range.Operand2 + "'";
-            valueDescription = valueDescription + operand2Text;
-        }
-        return valueDescription;
-    }
-    operatorRequiresValue(operator) {
-        return operator != Enums_1.LeafExpressionOperator.None
-            && operator != Enums_1.LeafExpressionOperator.IsPositive
-            && operator != Enums_1.LeafExpressionOperator.IsNegative
-            && operator != Enums_1.LeafExpressionOperator.IsNotNumber
-            && operator != Enums_1.LeafExpressionOperator.IsTrue
-            && operator != Enums_1.LeafExpressionOperator.IsFalse;
-    }
     canNext() {
-        if (!this.operatorRequiresValue(this.state.Operator)) {
+        if (!ExpressionHelper_1.ExpressionHelper.OperatorRequiresValue(this.state.Operator)) {
             return true;
         }
         if (this.checkOperator(Enums_1.LeafExpressionOperator.Unknown)) {
@@ -146,7 +117,6 @@ class AlertRulesWizard extends React.Component {
             Operand2Type: Enums_1.RangeOperandType.Value
         };
         this.props.Data.Range = rangeExpression;
-        this.props.Data.Description = this.createAlertDescription(this.props.Data);
     }
     Back() {
         //todo

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
 const react_redux_1 = require("react-redux");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
@@ -11,7 +11,6 @@ const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollec
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
-const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 class AboutPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -55,10 +54,10 @@ class AboutPopupComponent extends React.Component {
         let sorts = this.props.GridSorts.map(gs => {
             return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(gs.Column, this.props.Columns) + ": " + gs.SortOrder;
         });
-        let clearSortsButton = React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllSorts(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Grid Sorts", DisplayMode: "Text+Glyph", overrideDisableButton: ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.props.GridSorts) });
+        //   let clearSortsButton = <ButtonClear onClick={() => this.props.onClearAllSorts()} bsStyle={"primary"} cssClassName={cssClassName} size={"small"} overrideTooltip="Clear Grid Sorts" DisplayMode="Text+Glyph" overrideDisableButton={ArrayExtensions.IsNullOrEmpty(this.props.GridSorts)} />
         returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
         returnRows.push(this.createColItem(colItems, "Can Filter", this.props.Blotter.isFilterable() ? "True" : "False"));
-        let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.clearColumnFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters) });
+        //    let clearFilterButton = <ButtonClear onClick={() => this.clearColumnFilters()} bsStyle={"primary"} cssClassName={cssClassName} size={"small"} overrideTooltip="Clear Column Filters" DisplayMode="Text+Glyph" overrideDisableButton={ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters)} />
         returnRows.push(this.createColItem(colItems, "Column Filters", ColumnFilterHelper_1.ColumnFilterHelper.getColumnFiltersDescription(this.props.ColumnFilters, this.props.Columns, this.props.Blotter)));
         returnRows.push(this.createColItem(colItems, "All Rows", this.props.Blotter.getRowCount()));
         returnRows.push(this.createColItem(colItems, "Visible Rows", this.props.Blotter.getVisibleRowCount()));
@@ -84,13 +83,13 @@ class AboutPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
         GridSorts: state.Grid.GridSorts
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onClearColumnFilters: () => dispatch(FilterRedux.ColumnFilterClearAll()),
+        onClearColumnFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     };
 }
 exports.AboutPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AboutPopupComponent);

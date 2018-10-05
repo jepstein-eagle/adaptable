@@ -12,6 +12,7 @@ const AdaptableBlotterFormControlTextClear_1 = require("../Components/Forms/Adap
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const Enums_1 = require("../../Core/Enums");
 class QuickSearchToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -28,9 +29,9 @@ class QuickSearchToolbarControlComponent extends React.Component {
         let content = React.createElement("span", null,
             React.createElement(AdaptableBlotterFormControlTextClear_1.AdaptableBlotterFormControlTextClear, { cssClassName: cssClassName, style: { width: "120px" }, bsSize: "small", type: "text", placeholder: "Search Text", value: this.state.EditedQuickSearchText, OnTextChange: (x) => this.onUpdateQuickSearchText(x) }),
             ' ',
-            React.createElement("span", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ButtonEdit_1.ButtonEdit, { cssClassName: cssClassName, onClick: () => this.props.onShowQuickSearchPopup(), size: "small", overrideTooltip: "Edit Quick Search", DisplayMode: "Glyph" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.QuickSearchStrategyName, glyphicon: StrategyIds.QuickSearchGlyph, onClose: () => this.props.onClose(StrategyIds.QuickSearchStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+            React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(ButtonEdit_1.ButtonEdit, { cssClassName: cssClassName, onClick: () => this.props.onShowQuickSearchPopup(), size: "small", overrideTooltip: "Edit Quick Search", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel })));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.QuickSearchStrategyName, glyphicon: StrategyIds.QuickSearchGlyph, onClose: () => this.props.onClose(StrategyIds.QuickSearchStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onUpdateQuickSearchText(searchText) {
         this.setState({ EditedQuickSearchText: searchText });
@@ -45,9 +46,9 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onRunQuickSearch: (newQuickSearchText) => dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
-        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.QuickSearchPopup)),
+        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.QuickSearchPopup, isReadOnly)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
     };
 }
 exports.QuickSearchToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(QuickSearchToolbarControlComponent);

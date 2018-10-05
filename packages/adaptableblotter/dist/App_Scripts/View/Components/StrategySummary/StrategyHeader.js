@@ -10,7 +10,7 @@ class StrategyHeader extends React.Component {
         let summaryItems = [];
         let newButton = this.props.NewButtonDisabled ?
             null :
-            React.createElement(ButtonNew_1.ButtonNew, { cssClassName: this.props.cssClassName, size: "small", onClick: () => this.props.onNew(), overrideTooltip: "Create " + this.props.NewButtonTooltip, DisplayMode: "Glyph" });
+            React.createElement(ButtonNew_1.ButtonNew, { cssClassName: this.props.cssClassName, size: "small", onClick: () => this.props.onNew(), overrideTooltip: "Create " + this.props.NewButtonTooltip, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel });
         summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: this.props.StrategyId })));
         summaryItems.push(this.props.StrategySummary);
         summaryItems.push(newButton);

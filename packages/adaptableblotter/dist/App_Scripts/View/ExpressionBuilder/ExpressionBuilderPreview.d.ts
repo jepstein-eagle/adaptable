@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IColumn } from '../../Core/Interface/IColumn';
 import { QueryTab } from '../../Core/Enums';
-import { IUserFilter } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Core/Api/Expression";
 export interface ExpressionBuilderPreviewProps extends React.ClassAttributes<ExpressionBuilderPreview> {
     Expression: Expression;

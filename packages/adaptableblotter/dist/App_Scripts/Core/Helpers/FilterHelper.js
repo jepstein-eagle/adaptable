@@ -47,15 +47,6 @@ var FilterHelper;
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null);
     }
     FilterHelper.GetUserFilters = GetUserFilters;
-    function CreateUserFilterFromColumnFilter(columnFilter, name) {
-        return {
-            Name: name,
-            ColumnId: columnFilter.ColumnId,
-            Expression: columnFilter.Filter,
-            IsReadOnly: false
-        };
-    }
-    FilterHelper.CreateUserFilterFromColumnFilter = CreateUserFilterFromColumnFilter;
     function GetSystemFiltersForColumn(column, systemFilters) {
         let appropriateSystemFilters = [];
         if (column != null) {

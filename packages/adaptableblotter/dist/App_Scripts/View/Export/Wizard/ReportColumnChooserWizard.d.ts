@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IReport } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IReport } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
     Columns: Array<IColumn>;
 }

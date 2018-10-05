@@ -33,12 +33,12 @@ class AdvancedSearchToolbarControlComponent extends React.Component {
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableSearches.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentSearchName, id: "advancedSearch", componentClass: react_bootstrap_1.InputGroup.Button }, availableSearches),
                 currentSearchName != selectSearchString &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedSearchChanged(""), size: "small", overrideTooltip: "Clear Search", overrideDisableButton: currentSearchName == selectSearchString, ConfigEntity: null, DisplayMode: "Glyph" }))),
-            React.createElement("span", { className: this.props.IsReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "5px" }, onClick: () => this.props.onEditAdvancedSearch(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Current Advanced Search", overrideDisableButton: currentSearchName == selectSearchString, ConfigEntity: savedSearch, DisplayMode: "Glyph" }),
-                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewAdvancedSearch(), size: "small", overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph" }),
-                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Advanced Search", overrideDisableButton: currentSearchName == selectSearchString, ConfigEntity: savedSearch, DisplayMode: "Glyph", ConfirmAction: AdvancedSearchRedux.AdvancedSearchDelete(savedSearch), ConfirmationMsg: "Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?", ConfirmationTitle: "Delete Advanced Search" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.AdvancedSearchStrategyName, glyphicon: StrategyIds.AdvancedSearchGlyph, onClose: () => this.props.onClose(StrategyIds.AdvancedSearchStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedSearchChanged(""), size: "small", overrideTooltip: "Clear Search", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))),
+            React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "5px" }, onClick: () => this.props.onEditAdvancedSearch(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Current Advanced Search", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewAdvancedSearch(), size: "small", overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Advanced Search", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", ConfirmAction: AdvancedSearchRedux.AdvancedSearchDelete(savedSearch), ConfirmationMsg: "Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?", ConfirmationTitle: "Delete Advanced Search", AccessLevel: this.props.AccessLevel })));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.AdvancedSearchStrategyName, glyphicon: StrategyIds.AdvancedSearchGlyph, onClose: () => this.props.onClose(StrategyIds.AdvancedSearchStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedSearchChanged(searchName) {
         this.props.onSelectAdvancedSearch(searchName);
@@ -53,10 +53,10 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onSelectAdvancedSearch: (advancedSearchName) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, false, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, false, "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "Edit")),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.AdvancedSearchPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup))
     };
 }
 exports.AdvancedSearchToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchToolbarControlComponent);

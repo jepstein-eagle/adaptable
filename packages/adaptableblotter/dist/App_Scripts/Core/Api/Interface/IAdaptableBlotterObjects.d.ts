@@ -1,11 +1,9 @@
 import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Enums';
 import { Expression } from '../Expression';
 /**
- * The base Adaptable Blotter Object interface
- * @property {boolean} IsReadOnly - whether the object can be edited for users.  Set to true if you dont want the objects you ship with the blotter to be edited / deleted by users.
+ * The base empty Adaptable Blotter Object interface
  */
 export interface IAdaptableBlotterObject {
-    IsReadOnly: boolean;
 }
 /**
  * Any column display (and optionally raw) values contained in the expression, grouped by column
@@ -57,7 +55,6 @@ export interface IRange {
 export interface IAlertDefinition extends IAdaptableBlotterObject {
     ColumnId: string;
     Range: IRange;
-    Description: string;
     Expression: Expression;
     MessageType: MessageType;
     ShowAsPopup: boolean;

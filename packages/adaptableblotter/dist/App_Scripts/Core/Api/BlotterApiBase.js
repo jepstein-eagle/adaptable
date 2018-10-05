@@ -14,7 +14,9 @@ const CalculatedColumnRedux = require("../../Redux/ActionsReducers/CalculatedCol
 const CalendarRedux = require("../../Redux/ActionsReducers/CalendarRedux");
 const ThemeRedux = require("../../Redux/ActionsReducers/ThemeRedux");
 const CustomSortRedux = require("../../Redux/ActionsReducers/CustomSortRedux");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
+const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
+const SystemFilterRedux = require("../../Redux/ActionsReducers/SystemFilterRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
@@ -26,7 +28,7 @@ const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore
 const AdaptableBlotterLogger_1 = require("../Helpers/AdaptableBlotterLogger");
 const FilterHelper_1 = require("../Helpers/FilterHelper");
 const ObjectFactory_1 = require("../ObjectFactory");
-const ColumnFilterHelper_1 = require("../Helpers/ColumnFilterHelper");
+const StringExtensions_1 = require("../Extensions/StringExtensions");
 class BlotterApiBase {
     constructor(blotter) {
         this.blotter = blotter;
@@ -36,7 +38,7 @@ class BlotterApiBase {
     }
     // Layout api methods
     layoutSet(layoutName) {
-        let layout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        let layout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyIds.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
         }
@@ -45,21 +47,21 @@ class BlotterApiBase {
         this.dispatchAction(LayoutRedux.LayoutSelect(GeneralConstants_1.DEFAULT_LAYOUT));
     }
     layoutGetCurrent() {
-        let layoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        let layoutName = this.getState().Layout.CurrentLayout;
+        return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
     }
     layoutgetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts;
+        return this.getState().Layout.Layouts;
     }
     layoutSave() {
-        let currentLayoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
+        let currentLayoutName = this.getState().Layout.CurrentLayout;
         if (currentLayoutName != GeneralConstants_1.DEFAULT_LAYOUT) {
-            let currentLayoutObject = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == currentLayoutName);
-            let currentLayoutIndex = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName);
+            let currentLayoutObject = this.getState().Layout.Layouts.find(l => l.Name == currentLayoutName);
+            let currentLayoutIndex = this.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName);
             if (currentLayoutIndex != -1) {
                 let gridState = (currentLayoutObject) ? currentLayoutObject.VendorGridInfo : null;
-                let visibleColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
-                let gridSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+                let visibleColumns = this.getState().Grid.Columns.filter(c => c.Visible);
+                let gridSorts = this.getState().Grid.GridSorts;
                 let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName);
                 this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave));
             }
@@ -130,7 +132,7 @@ class BlotterApiBase {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(""));
     }
     quickSearchGetValue() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+        return this.getState().QuickSearch.QuickSearchText;
     }
     quickSearchSetOperator(operator) {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetOperator(operator));
@@ -146,14 +148,14 @@ class BlotterApiBase {
         this.dispatchAction(CalendarRedux.CalendarSelect(calendar));
     }
     calendarGetCurrent() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar.CurrentCalendar;
+        return this.getState().Calendar.CurrentCalendar;
     }
     // Theme State
     themeSetCurrent(theme) {
         this.dispatchAction(ThemeRedux.ThemeSelect(theme));
     }
     themeGetCurrent() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme;
+        return this.getState().Theme.CurrentTheme;
     }
     themeSetSystemThemes(systemThemes) {
         this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes));
@@ -162,14 +164,14 @@ class BlotterApiBase {
         this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes));
     }
     themeSystemThemeGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.SystemThemes;
+        return this.getState().Theme.SystemThemes;
     }
     themeUserThemeGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.UserThemes;
+        return this.getState().Theme.UserThemes;
     }
     // Shortuct State
     shortcutGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
+        return this.getState().Shortcut.Shortcuts;
     }
     shortcutAdd(shortcut) {
         this.dispatchAction(ShortcutRedux.ShortcutAdd(shortcut));
@@ -187,13 +189,13 @@ class BlotterApiBase {
         this.dispatchAction(SmartEditRedux.SmartEditChangeOperation(mathOperation));
     }
     smartEditGetMathOperation() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.MathOperation;
+        return this.getState().SmartEdit.MathOperation;
     }
     smartEditSetValue(smartEditValue) {
         this.dispatchAction(SmartEditRedux.SmartEditChangeValue(smartEditValue));
     }
     smartEditGetValue() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.SmartEditValue;
+        return this.getState().SmartEdit.SmartEditValue;
     }
     // user interface api methods
     uiSetColorPalette(colorPalette) {
@@ -215,18 +217,18 @@ class BlotterApiBase {
     // filter api methods
     columnFilterSet(columnFilters) {
         columnFilters.forEach(cf => {
-            this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(cf));
+            this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf));
         });
     }
     columnFilterSetUserFilter(userFilter) {
-        let existingUserFilter = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters.find(uf => uf.Name == userFilter);
+        let existingUserFilter = this.getState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
-            let columnFilter = ColumnFilterHelper_1.ColumnFilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter);
-            this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(columnFilter));
+            let columnFilter = ObjectFactory_1.ObjectFactory.CreateColumnFilterFromUserFilter(existingUserFilter);
+            this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter));
         }
     }
     columnFilterClear(columnFilter) {
-        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter.ColumnId));
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter.ColumnId));
     }
     columnFilterClearByColumns(columns) {
         columns.forEach(c => {
@@ -234,34 +236,34 @@ class BlotterApiBase {
         });
     }
     columnFilterClearByColumn(column) {
-        this.dispatchAction(FilterRedux.ColumnFilterClear(column));
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(column));
     }
     columnFilterClearAll() {
-        this.dispatchAction(FilterRedux.ColumnFilterClearAll());
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
     }
     columnFiltersGetCurrent() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+        return this.getState().ColumnFilter.ColumnFilters;
     }
     userFilterSet(userFilters) {
         userFilters.forEach(uf => {
-            this.dispatchAction(FilterRedux.UserFilterAddUpdate(-1, uf));
+            this.dispatchAction(UserFilterRedux.UserFilterAddUpdate(-1, uf));
         });
     }
     systemFilterSet(systemFilters) {
-        this.dispatchAction(FilterRedux.SystemFilterSet(systemFilters));
+        this.dispatchAction(SystemFilterRedux.SystemFilterSet(systemFilters));
     }
     systemFilterClear() {
-        this.dispatchAction(FilterRedux.SystemFilterSet([]));
+        this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
     }
     systemFilterGetCurrent() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters;
+        return this.getState().SystemFilter.SystemFilters;
     }
     systemFilterGetAll() {
         return FilterHelper_1.FilterHelper.GetAllSystemFilters();
     }
     // Data Source api methods
     dataSourceSet(dataSourceName) {
-        let dataSource = this.blotter.AdaptableBlotterStore.TheStore.getState().DataSource.DataSources.find(a => a == dataSourceName);
+        let dataSource = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
         if (this.checkItemExists(dataSource, dataSourceName, StrategyIds.DataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource));
         }
@@ -271,7 +273,7 @@ class BlotterApiBase {
     }
     // Advanced Search api methods
     advancedSearchSet(advancedSearchName) {
-        let advancedSearch = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
+        let advancedSearch = this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
         if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyIds.AdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));
         }
@@ -283,7 +285,7 @@ class BlotterApiBase {
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(-1, advancedSearch));
     }
     advancedSearchEdit(advancedSearchName, advancedSearch) {
-        let searchIndex = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.findIndex(a => a.Name == advancedSearchName);
+        let searchIndex = this.getState().AdvancedSearch.AdvancedSearches.findIndex(a => a.Name == advancedSearchName);
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(searchIndex, advancedSearch));
     }
     advancedSearchDelete(advancedSearchName) {
@@ -291,24 +293,24 @@ class BlotterApiBase {
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete));
     }
     advancedSearchGetCurrent() {
-        let currentAdvancedSearchName = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
+        let currentAdvancedSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
         return this.advancedSearchGetByName(currentAdvancedSearchName);
     }
     advancedSearchGetByName(advancedSearchName) {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
+        return this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
     }
     advancedSearchGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches;
+        return this.getState().AdvancedSearch.AdvancedSearches;
     }
     // Entitlement Methods
     entitlementGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
+        return this.getState().Entitlements.FunctionEntitlements;
     }
     entitlementGetByFunction(functionName) {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
+        return this.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
     }
     entitlementGetAccessLevelForFunction(functionName) {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
+        return this.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
     }
     entitlementAddOrUpdate(functionName, accessLevel) {
         let entitlement = { FunctionName: functionName, AccessLevel: accessLevel };
@@ -319,17 +321,17 @@ class BlotterApiBase {
     }
     // Custom Sort Methods
     customSortGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
+        return this.getState().CustomSort.CustomSorts;
     }
     customSortGetByColumn(columnn) {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
+        return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
     }
     customSortAdd(column, values) {
-        let customSort = { ColumnId: column, SortedValues: values, IsReadOnly: false };
+        let customSort = { ColumnId: column, SortedValues: values };
         this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort));
     }
     customSortEdit(column, values) {
-        let customSort = { ColumnId: column, SortedValues: values, IsReadOnly: false };
+        let customSort = { ColumnId: column, SortedValues: values };
         this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort));
     }
     customSortDelete(column) {
@@ -338,7 +340,7 @@ class BlotterApiBase {
     }
     // Calculated Column State
     calculatedColumnGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;
+        return this.getState().CalculatedColumn.CalculatedColumns;
     }
     calculatedColumnAdd(calculatedColumn) {
         this.dispatchAction(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn));
@@ -355,7 +357,7 @@ class BlotterApiBase {
     }
     // CellValidation State
     cellValidationGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation.CellValidations;
+        return this.getState().CellValidation.CellValidations;
     }
     cellValidationAdd(cellValidationRule) {
         this.dispatchAction(CellValidationRedux.CellValidationAddUpdate(-1, cellValidationRule));
@@ -366,14 +368,14 @@ class BlotterApiBase {
     }
     // Format Column api methods
     formatColumnGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn.FormatColumns;
+        return this.getState().FormatColumn.FormatColumns;
     }
     formatColumnnAdd(column, style) {
-        let formatColumn = { ColumnId: column, Style: style, IsReadOnly: false };
+        let formatColumn = { ColumnId: column, Style: style };
         this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));
     }
     formatColumnnUpdate(column, style) {
-        let formatColumn = { ColumnId: column, Style: style, IsReadOnly: false };
+        let formatColumn = { ColumnId: column, Style: style };
         this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
     }
     formatColumnDelete(formatColumn) {
@@ -383,13 +385,6 @@ class BlotterApiBase {
         this.formatColumnGetAll().forEach(fc => {
             this.formatColumnDelete(fc);
         });
-    }
-    // General Config
-    configClear() {
-        this.dispatchAction(AdaptableBlotterStore_1.ResetUserData());
-    }
-    configGet() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState();
     }
     // System Status api Methods
     systemStatusSet(statusMessage, statusColour) {
@@ -413,16 +408,25 @@ class BlotterApiBase {
     }
     // Alerts api Methods
     alertShow(alertHeader, alertMessage, MessageType, showAsPopup) {
-        let maxAlerts = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert.MaxAlertsInStore;
+        let maxAlerts = this.getState().Alert.MaxAlertsInStore;
         let MessageTypeEnum = MessageType;
-        let alert = {
+        let alertToShow = {
             Header: alertHeader,
             Msg: alertMessage,
             MessageType: MessageTypeEnum
         };
-        this.dispatchAction(SystemRedux.SystemAlertAdd(alert, maxAlerts));
+        this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts));
         if (showAsPopup) {
-            this.dispatchAction(PopupRedux.PopupShowAlert(alert));
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
+                let alertString = alertToShow.Header + ": " + alertToShow.Msg;
+                let alertDiv = document.getElementById(this.getState().Alert.AlertPopupDiv);
+                if (alertDiv) {
+                    alertDiv.innerHTML = alertString;
+                }
+            }
+            else {
+                this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow));
+            }
         }
         AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum);
     }
@@ -443,10 +447,163 @@ class BlotterApiBase {
         }
     }
     exportReportsGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports;
+        return this.getState().Export.Reports;
     }
     exportLiveReportsGetAll() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
+        return this.getState().System.CurrentLiveReports;
+    }
+    // General Config
+    configClear() {
+        this.dispatchAction(AdaptableBlotterStore_1.ResetUserData());
+    }
+    configGetAllState() {
+        return this.getState();
+    }
+    configGetAllUserState() {
+        return [
+            this.getState().AdvancedSearch,
+            this.getState().Alert,
+            this.getState().BulkUpdate,
+            this.getState().CalculatedColumn,
+            this.getState().Calendar,
+            this.getState().CellValidation,
+            this.getState().Chart,
+            this.getState().ColumnFilter,
+            this.getState().ConditionalStyle,
+            this.getState().CustomSort,
+            this.getState().Dashboard,
+            this.getState().DataSource,
+            this.getState().Export,
+            this.getState().FlashingCell,
+            this.getState().FormatColumn,
+            this.getState().Layout,
+            this.getState().PlusMinus,
+            this.getState().QuickSearch,
+            this.getState().SelectedCells,
+            this.getState().Shortcut,
+            this.getState().SmartEdit,
+            this.getState().Theme,
+            this.getState().UserFilter
+        ];
+    }
+    configGetUserStateByFunction(stateChangedTrigger, returnJson = false) {
+        switch (stateChangedTrigger) {
+            case Enums_1.StateChangedTrigger.AdvancedSearch:
+                return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch;
+            case Enums_1.StateChangedTrigger.Alert:
+                return (returnJson) ? JSON.stringify(this.getState().Alert) : this.getState().Alert;
+            case Enums_1.StateChangedTrigger.BulkUpdate:
+                return (returnJson) ? JSON.stringify(this.getState().BulkUpdate) : this.getState().BulkUpdate;
+            case Enums_1.StateChangedTrigger.CalculatedColumn:
+                return (returnJson) ? JSON.stringify(this.getState().CalculatedColumn) : this.getState().CalculatedColumn;
+            case Enums_1.StateChangedTrigger.Calendar:
+                return (returnJson) ? JSON.stringify(this.getState().Calendar) : this.getState().Calendar;
+            case Enums_1.StateChangedTrigger.CellValidation:
+                return (returnJson) ? JSON.stringify(this.getState().CellValidation) : this.getState().CellValidation;
+            case Enums_1.StateChangedTrigger.Chart:
+                return (returnJson) ? JSON.stringify(this.getState().Chart) : this.getState().Chart;
+            case Enums_1.StateChangedTrigger.ColumnFilter:
+                return (returnJson) ? JSON.stringify(this.getState().ColumnFilter) : this.getState().ColumnFilter;
+            case Enums_1.StateChangedTrigger.ConditionalStyle:
+                return (returnJson) ? JSON.stringify(this.getState().ConditionalStyle) : this.getState().ConditionalStyle;
+            case Enums_1.StateChangedTrigger.CustomSort:
+                return (returnJson) ? JSON.stringify(this.getState().CustomSort) : this.getState().CustomSort;
+            case Enums_1.StateChangedTrigger.Dashboard:
+                return (returnJson) ? JSON.stringify(this.getState().Dashboard) : this.getState().Dashboard;
+            case Enums_1.StateChangedTrigger.DataSource:
+                return (returnJson) ? JSON.stringify(this.getState().DataSource) : this.getState().DataSource;
+            case Enums_1.StateChangedTrigger.Export:
+                return (returnJson) ? JSON.stringify(this.getState().Export) : this.getState().Export;
+            case Enums_1.StateChangedTrigger.FlashingCell:
+                return (returnJson) ? JSON.stringify(this.getState().FlashingCell) : this.getState().FlashingCell;
+            case Enums_1.StateChangedTrigger.FormatColumn:
+                return (returnJson) ? JSON.stringify(this.getState().FormatColumn) : this.getState().FormatColumn;
+            case Enums_1.StateChangedTrigger.Layout:
+                return (returnJson) ? JSON.stringify(this.getState().Layout) : this.getState().Layout;
+            case Enums_1.StateChangedTrigger.PlusMinus:
+                return (returnJson) ? JSON.stringify(this.getState().PlusMinus) : this.getState().PlusMinus;
+            case Enums_1.StateChangedTrigger.QuickSearch:
+                return (returnJson) ? JSON.stringify(this.getState().QuickSearch) : this.getState().QuickSearch;
+            case Enums_1.StateChangedTrigger.SelectedCells:
+                return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().SelectedCells;
+            case Enums_1.StateChangedTrigger.Shortcut:
+                return (returnJson) ? JSON.stringify(this.getState().Shortcut) : this.getState().Shortcut;
+            case Enums_1.StateChangedTrigger.SmartEdit:
+                return (returnJson) ? JSON.stringify(this.getState().SmartEdit) : this.getState().SmartEdit;
+            case Enums_1.StateChangedTrigger.Theme:
+                return (returnJson) ? JSON.stringify(this.getState().Theme) : this.getState().Theme;
+            case Enums_1.StateChangedTrigger.UserFilter:
+                return (returnJson) ? JSON.stringify(this.getState().UserFilter) : this.getState().UserFilter;
+        }
+    }
+    configGetAdvancedSearchState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.AdvancedSearch, returnJson);
+    }
+    configGetAlertSearchState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Alert, returnJson);
+    }
+    configGetBulkUpdateState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.BulkUpdate, returnJson);
+    }
+    configGetCalculatedColumnState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.CalculatedColumn, returnJson);
+    }
+    configGetCalendarState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Calendar, returnJson);
+    }
+    configGetCellValidationState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.CellValidation, returnJson);
+    }
+    configGetChartState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Chart, returnJson);
+    }
+    configGetColumnFilterState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.ColumnFilter, returnJson);
+    }
+    configGetConditionalStyleState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.ConditionalStyle, returnJson);
+    }
+    configGetCustomSortState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.CustomSort, returnJson);
+    }
+    configGetDashboardState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Dashboard, returnJson);
+    }
+    configGetDataSourceState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.DataSource, returnJson);
+    }
+    configGetExportState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Export, returnJson);
+    }
+    configGetFlashingCellState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.FlashingCell, returnJson);
+    }
+    configGetFormatColumnState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.FormatColumn, returnJson);
+    }
+    configGetLayoutState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Layout, returnJson);
+    }
+    configGetPlusMinusState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.PlusMinus, returnJson);
+    }
+    configGetQuickSearchState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.QuickSearch, returnJson);
+    }
+    configGetSelectedCellsState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.SelectedCells, returnJson);
+    }
+    configGetShortcutState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Shortcut, returnJson);
+    }
+    configGetSmartEditState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.SmartEdit, returnJson);
+    }
+    configGetThemeState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Theme, returnJson);
+    }
+    configGetUserFilterState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.UserFilter, returnJson);
     }
     // Events
     onSearchedChanged() {
@@ -468,6 +625,9 @@ class BlotterApiBase {
             return false;
         }
         return true;
+    }
+    getState() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState();
     }
 }
 exports.BlotterApiBase = BlotterApiBase;

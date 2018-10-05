@@ -17,7 +17,7 @@ class ExpressionBuilderPage extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__querybuilder";
         let queryBuildStatus = this.getQueryBuildStatus();
-        let newButton = React.createElement(ButtonCondition_1.ButtonCondition, { cssClassName: cssClassName, onClick: () => this.onSelectedColumnChanged(), overrideDisableButton: this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SingleConditionsAdded, overrideTooltip: "Add Condition", style: { width: "230px" }, DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonCondition_1.ButtonCondition, { cssClassName: cssClassName, onClick: () => this.onSelectedColumnChanged(), overrideDisableButton: this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == Enums_1.QueryBuildStatus.SingleConditionsAdded, overrideTooltip: "Add Condition", style: { width: "230px" }, DisplayMode: "Glyph+Text", size: "small", AccessLevel: Enums_1.AccessLevel.Full });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Query Builder", button: newButton, bsStyle: "primary", style: { height: '520px' } },
                 React.createElement(react_bootstrap_1.Row, null,
@@ -53,6 +53,7 @@ class ExpressionBuilderPage extends React.Component {
         let columnValues = this.state.Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
         let index = columnValues.ColumnDisplayValues.indexOf(value);
         columnValues.ColumnDisplayValues.splice(index, 1);
+        columnValues.ColumnRawValues.splice(index, 1);
         if (columnValues.ColumnDisplayValues.length == 0) {
             let columnValuesIndex = this.state.Expression.ColumnValueExpressions.findIndex(x => x.ColumnId == columnId);
             this.state.Expression.ColumnValueExpressions.splice(columnValuesIndex, 1);

@@ -24,8 +24,8 @@ class DataSourceToolbarControlComponent extends React.Component {
             React.createElement(react_bootstrap_1.InputGroup, null,
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableSearches.length == 0, style: { minWidth: "140px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentDataSource, id: "DataSource", componentClass: react_bootstrap_1.InputGroup.Button }, availableSearches),
                 React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                    React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), size: "small", overrideTooltip: "Clear Search", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), ConfigEntity: null, DisplayMode: "Glyph" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.DataSourceStrategyName, glyphicon: StrategyIds.DataSourceGlyph, onClose: () => this.props.onClose(StrategyIds.DataSourceStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+                    React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), size: "small", overrideTooltip: "Clear Search", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))));
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.DataSourceStrategyName, glyphicon: StrategyIds.DataSourceGlyph, onClose: () => this.props.onClose(StrategyIds.DataSourceStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedDataSourceChanged(searchName) {
         this.props.onSelectDataSource(searchName);
@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onSelectDataSource: (DataSourceName) => dispatch(DataSourceRedux.DataSourceSelect(DataSourceName)),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.DataSourcePopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.DataSourceStrategyId, ScreenPopups.DataSourcePopup))
     };
 }
 exports.DataSourceToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(DataSourceToolbarControlComponent);

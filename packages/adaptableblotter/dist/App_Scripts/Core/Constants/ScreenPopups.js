@@ -29,4 +29,4 @@ exports.SmartEditPopup = "SmartEditPopup";
 exports.TeamSharingPopup = "TeamSharingPopup";
 exports.ThemePopup = "ThemePopup";
 exports.QuickSearchPopup = "QuickSearchPopup";
-exports.UserFilterPopupPopup = "UserFilterPopup";
+exports.UserFilterPopup = "UserFilterPopup";

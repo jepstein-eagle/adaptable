@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IFormatColumn, IStyle } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IFormatColumn, IStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     ColorPalette: string[];
     StyleClassNames: string[];

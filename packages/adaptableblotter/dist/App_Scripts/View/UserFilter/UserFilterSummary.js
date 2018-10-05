@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
@@ -23,12 +23,12 @@ class UserFilterSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__userfilter";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.UserFilterStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.UserFilterStrategyId, StrategySummary: this.getSummary(), onNew: () => this.onNew(), NewButtonDisabled: !this.isFilterable(), NewButtonTooltip: StrategyIds.UserFilterStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.UserFilterStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.UserFilterStrategyId, StrategySummary: this.getSummary(), onNew: () => this.onNew(), NewButtonDisabled: !this.isFilterable(), NewButtonTooltip: StrategyIds.UserFilterStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.UserFilters.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: this.getDescription(item), ConfigEnity: item, showShare: this.props.TeamSharingActivated, showEdit: this.isFilterable(), EntityName: StrategyIds.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: FilterRedux.UserFilterDelete(item) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: this.getDescription(item), ConfigEnity: item, showShare: this.props.TeamSharingActivated, showEdit: this.isFilterable(), EntityName: StrategyIds.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: UserFilterRedux.UserFilterDelete(item) });
                 strategySummaries.push(detailRow);
             }
         });
@@ -98,13 +98,14 @@ exports.UserFilterSummaryComponent = UserFilterSummaryComponent;
 function mapStateToProps(state, ownProps) {
     return {
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onAddUpdateUserFilter: (index, UserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(index, UserFilter)),
+        onAddUpdateUserFilter: (index, UserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index, UserFilter)),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

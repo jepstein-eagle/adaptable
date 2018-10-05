@@ -50,7 +50,7 @@ class AdvancedSearchPopupComponent extends React.Component {
         let advancedSearchRows = this.props.AdvancedSearches.map((advancedSearch, index) => {
             return React.createElement(AdvancedSearchEntityRow_1.AdvancedSearchEntityRow, { cssClassName: cssClassName, key: index, colItems: colItems, IsCurrentAdvancedSearch: advancedSearch.Name == this.props.CurrentAdvancedSearchName, AdaptableBlotterObject: advancedSearch, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, advancedSearch) => this.onEdit(index, advancedSearch), onShare: () => this.props.onShare(advancedSearch), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch), onSelect: () => this.props.onSelectAdvancedSearch(advancedSearch.Name) });
         });
-        let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small" });
+        let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyIds.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyIds.AdvancedSearchGlyph, className: "ab_main_popup" },
                 advancedSearchRows.length > 0 &&

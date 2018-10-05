@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IChartDefinition } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     Columns: IColumn[];
 }

@@ -49,7 +49,7 @@ class ExportPopupComponent extends React.Component {
         let Reports = this.props.Reports.map((Report, index) => {
             return React.createElement(ReportEntityRow_1.ReportEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: Report, key: index, colItems: colItems, Index: index, Columns: this.props.Columns, IsLast: index == this.props.Reports.length - 1, UserFilters: this.props.UserFilters, LiveReports: this.props.LiveReports, onShare: () => this.props.onShare(Report), TeamSharingActivated: this.props.TeamSharingActivated, onExport: (exportDestination) => this.onApplyExport(Report.Name, exportDestination), onReportStopLive: (exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination), onEdit: (index, Report) => this.onEdit(index, Report), onDeleteConfirm: ExportRedux.ReportDelete(index) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Report", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Report", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ExportStrategyName, bsStyle: "primary", glyphicon: StrategyIds.ExportGlyph, infoBody: infoBody, button: newButton },
                 Reports.length > 0 &&

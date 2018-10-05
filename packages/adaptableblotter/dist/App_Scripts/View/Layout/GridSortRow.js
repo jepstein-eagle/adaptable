@@ -15,7 +15,7 @@ class GridSortRow extends React.Component {
         });
         colItems[0].Content = React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: this.props.cssClassName, SelectedColumnIds: [this.props.GridSort.Column], ColumnList: this.props.Columns.filter(c => c.Sortable), onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single });
         colItems[1].Content = React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: this.props.GridSort.SortOrder, onChange: (x) => this.onSortOrderChanged(x) }, sortOrders);
-        let deleteButton = React.createElement(ButtonDelete_1.ButtonDelete, { cssClassName: this.props.cssClassName, style: { marginLeft: "1px", marginTop: "2px", marginBottom: "2px", marginRight: "1px" }, overrideDisableButton: false, ConfigEntity: null, overrideTooltip: "Delete Sort", DisplayMode: "Glyph", ConfirmAction: null, ConfirmationMsg: "", ConfirmationTitle: "", onClickAction: () => this.props.onDeleteGridSort(), size: "small" });
+        let deleteButton = React.createElement(ButtonDelete_1.ButtonDelete, { cssClassName: this.props.cssClassName, style: { marginLeft: "1px", marginTop: "2px", marginBottom: "2px", marginRight: "1px" }, overrideDisableButton: false, overrideTooltip: "Delete Sort", DisplayMode: "Glyph", ConfirmAction: null, ConfirmationMsg: "", ConfirmationTitle: "", onClickAction: () => this.props.onDeleteGridSort(), size: "small", AccessLevel: Enums_1.AccessLevel.Full });
         colItems[2].Content = deleteButton;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

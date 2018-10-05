@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     Columns: IColumn[];
     UserFilters: IUserFilter[];

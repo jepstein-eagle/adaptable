@@ -4,6 +4,7 @@ const Enums_1 = require("../Enums");
 const StrategyIds = require("../Constants/StrategyIds");
 const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
+const ObjectFactory_1 = require("../ObjectFactory");
 class ValidationService {
     constructor(blotter) {
         this.blotter = blotter;
@@ -16,14 +17,7 @@ class ValidationService {
             let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
             let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
             if (existingItem) {
-                let cellValidationRule = {
-                    ColumnId: dataChangedEvent.ColumnId,
-                    Range: null,
-                    ActionMode: Enums_1.ActionMode.StopEdit,
-                    Description: "Primary Key column cannot contain duplicate values",
-                    Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-                    IsReadOnly: true
-                };
+                let cellValidationRule = ObjectFactory_1.ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, null, Enums_1.ActionMode.StopEdit, "Primary Key column cannot contain duplicate values", ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression());
                 failedWarningRules.push(cellValidationRule);
             }
         }

@@ -5,14 +5,6 @@ const ColumnHelper_1 = require("./ColumnHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 var ColumnFilterHelper;
 (function (ColumnFilterHelper) {
-    function CreateColumnFilterFromUserFilter(userFilter) {
-        return {
-            ColumnId: userFilter.ColumnId,
-            Filter: ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(userFilter.ColumnId, [], [], [userFilter.Name], []),
-            IsReadOnly: false
-        };
-    }
-    ColumnFilterHelper.CreateColumnFilterFromUserFilter = CreateColumnFilterFromUserFilter;
     function ConvertColumnFiltersToKVPArray(columnFilters, columns) {
         let infoBody = [];
         columnFilters.forEach(x => {

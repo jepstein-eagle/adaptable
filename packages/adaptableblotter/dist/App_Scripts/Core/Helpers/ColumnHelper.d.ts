@@ -1,7 +1,9 @@
 import { IColumn } from '../Interface/IColumn';
+import { DataType } from '../Enums';
 import { IColumnCategory } from '../Interface/Interfaces';
 export declare module ColumnHelper {
     function isSpecialColumn(columnId: string): boolean;
+    function getColumnDataTypeFromColumnId(columnId: string, columns: IColumn[]): DataType;
     function getFriendlyNameFromColumn(columnId: string, column: IColumn): string;
     function getFriendlyNameFromColumnId(columnId: string, columns: IColumn[]): string;
     function getFriendlyNamesFromColumnIds(columnIds: string[], columns: IColumn[]): string[];

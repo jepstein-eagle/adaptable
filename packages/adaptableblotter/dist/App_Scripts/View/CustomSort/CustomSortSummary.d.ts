@@ -2,7 +2,7 @@ import * as React from "react";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux';
-import { ICustomSort } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { ICustomSort } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[];
     onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction;

@@ -61,6 +61,8 @@ function FilterPredefinedItems(state) {
             for (let property in substate) {
                 if (substate.hasOwnProperty(property)) {
                     if (Array.isArray(substate[property])) {
+                        // this line is dead! as we dont have readonly
+                        // so dont think we need teh whole method - get rid?
                         substate[property] = substate[property].filter((x) => !x.IsReadOnly);
                     }
                 }

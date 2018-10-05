@@ -3,7 +3,7 @@ import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../
 import { ListGroupProps } from 'react-bootstrap';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IRange } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export interface ListBoxFilterFormProps extends ListGroupProps {
     CurrentColumn: IColumn;
     Columns: IColumn[];

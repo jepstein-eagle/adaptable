@@ -398,14 +398,14 @@ var ExpressionHelper;
         return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"), // this value
         blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"), // this value
         blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"), // other column value
-        columns, blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters, blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters, blotter);
+        columns, blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters, blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters, blotter);
     }
     ExpressionHelper.checkForExpression = checkForExpression;
     function checkForExpressionFromRecord(Expression, record, columns, blotter) {
         return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // this value
         blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"), // this value
         blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
-        columns, blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters, blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters, blotter);
+        columns, blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters, blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters, blotter);
     }
     ExpressionHelper.checkForExpressionFromRecord = checkForExpressionFromRecord;
     function CreateEmptyExpression() {
@@ -553,4 +553,13 @@ var ExpressionHelper;
         return hasFilter;
     }
     ExpressionHelper.ExpressionContainsFilter = ExpressionContainsFilter;
+    function OperatorRequiresValue(operator) {
+        return operator != Enums_1.LeafExpressionOperator.None
+            && operator != Enums_1.LeafExpressionOperator.IsPositive
+            && operator != Enums_1.LeafExpressionOperator.IsNegative
+            && operator != Enums_1.LeafExpressionOperator.IsNotNumber
+            && operator != Enums_1.LeafExpressionOperator.IsTrue
+            && operator != Enums_1.LeafExpressionOperator.IsFalse;
+    }
+    ExpressionHelper.OperatorRequiresValue = OperatorRequiresValue;
 })(ExpressionHelper = exports.ExpressionHelper || (exports.ExpressionHelper = {}));

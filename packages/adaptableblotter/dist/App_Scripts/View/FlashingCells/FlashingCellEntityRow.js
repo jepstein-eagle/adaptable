@@ -16,7 +16,7 @@ class FlashingCellEntityRow extends React.Component {
         if (!this.props.FlashingCellDurations.find(x => x == flashingCell.FlashingCellDuration)) {
             durations.push(React.createElement("option", { key: flashingCell.FlashingCellDuration, value: flashingCell.FlashingCellDuration }, this.getFriendlyFlashingDuration(flashingCell.FlashingCellDuration)));
         }
-        let isDisabled = flashingCell.IsReadOnly;
+        let isDisabled = false; // TODO:  need to get from Entitlements !  flashingCell.IsReadOnly
         let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnId);
         if (!column) {
             return null;

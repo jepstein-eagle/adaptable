@@ -30,7 +30,7 @@ class ShortcutEntityRow extends React.Component {
                 shortcut.ShortcutResult :
                 React.createElement(react_bootstrap_1.FormControl, { type: shortcut.ColumnType == Enums_1.DataType.Date ? "date" : "number", placeholder: "Shortcut Result", onChange: (e) => this.onResultChange(e), value: shortcut.ShortcutResult });
         colItems[4].Content =
-            React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, showEdit: false, shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, ConfigEntity: shortcut, ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: "Shortcut" });
+            React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, showEdit: false, shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: "Shortcut" });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     onResultChange(event) {

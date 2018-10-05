@@ -51,7 +51,7 @@ class LayoutPopupComponent extends React.Component {
         let LayoutRows = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT).map((x, index) => {
             return React.createElement(LayoutEntityRow_1.LayoutEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, IsCurrentLayout: x.Name == this.props.CurrentLayoutName, AdaptableBlotterObject: x, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: LayoutRedux.LayoutDelete(x.Name), onSelect: () => this.props.onSelectLayout(x.Name) });
         });
-        let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small" });
+        let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyIds.LayoutStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyIds.LayoutGlyph, className: "ab_main_popup" },
                 LayoutRows.length > 0 &&

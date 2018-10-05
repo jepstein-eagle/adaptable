@@ -11,6 +11,11 @@ export declare enum ExpressionMode {
     SingleColumn = "SingleColumn",
     MultiColumn = "MultiColumn"
 }
+export declare enum AccessLevel {
+    ReadOnly = "ReadOnly",
+    Hidden = "Hidden",
+    Full = "Full"
+}
 export declare enum LeafExpressionOperator {
     Unknown = "Unknown",
     GreaterThan = "GreaterThan",

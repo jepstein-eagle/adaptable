@@ -7,6 +7,7 @@ export interface AdaptableBlotterState {
     System: AdaptableBlotterStates.SystemState;
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     UserInterface: AdaptableBlotterStates.UserInterfaceState;
+    SystemFilter: AdaptableBlotterStates.SystemFilterState;
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
     Alert: AdaptableBlotterStates.AlertState;
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
@@ -14,12 +15,12 @@ export interface AdaptableBlotterState {
     Calendar: AdaptableBlotterStates.CalendarState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
     Chart: AdaptableBlotterStates.ChartState;
+    ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
     ConditionalStyle: AdaptableBlotterStates.ConditionalStyleState;
     CustomSort: AdaptableBlotterStates.CustomSortState;
     Dashboard: AdaptableBlotterStates.DashboardState;
     DataSource: AdaptableBlotterStates.DataSourceState;
     Export: AdaptableBlotterStates.ExportState;
-    Filter: AdaptableBlotterStates.FilterState;
     FlashingCell: AdaptableBlotterStates.FlashingCellState;
     FormatColumn: AdaptableBlotterStates.FormatColumnState;
     Layout: AdaptableBlotterStates.LayoutState;
@@ -30,6 +31,7 @@ export interface AdaptableBlotterState {
     SmartEdit: AdaptableBlotterStates.SmartEditState;
     TeamSharing: AdaptableBlotterStates.TeamSharingState;
     Theme: AdaptableBlotterStates.ThemeState;
+    UserFilter: AdaptableBlotterStates.UserFilterState;
 }
 export interface IAdaptableBlotterStore {
     TheStore: Redux.Store<AdaptableBlotterState>;

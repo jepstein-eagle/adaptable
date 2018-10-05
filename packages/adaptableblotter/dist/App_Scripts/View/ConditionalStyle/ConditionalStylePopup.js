@@ -48,7 +48,7 @@ class ConditionalStylePopupComponent extends React.Component {
         let conditionalStyles = this.props.ConditionalStyles.map((conditionalStyle, index) => {
             return React.createElement(ConditionalStyleEntityRow_1.ConditionalStyleEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: conditionalStyle, colItems: colItems, key: "CS" + index, Index: index, onShare: () => this.props.onShare(conditionalStyle), TeamSharingActivated: this.props.TeamSharingActivated, UserFilters: this.props.UserFilters, Columns: this.props.Columns, onEdit: (index, conditionalStyle) => this.onEdit(index, conditionalStyle), onDeleteConfirm: ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyle) });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Conditional Style", DisplayMode: "Glyph+Text", size: "small" });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Conditional Style", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.ConditionalStyleStrategyName, button: newButton, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyIds.ConditionalStyleGlyph, infoBody: infoBody },
                 this.props.ConditionalStyles.length == 0 &&

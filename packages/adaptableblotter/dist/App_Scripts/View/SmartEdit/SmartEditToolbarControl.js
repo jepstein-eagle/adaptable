@@ -48,16 +48,16 @@ class SmartEditToolbarControlComponent extends React.Component {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onSmartEditOperationChange(mathOperation) }, mathOperation);
         });
         let content = React.createElement("span", null,
-            React.createElement("div", { className: this.props.IsReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : "" },
+            React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
                     React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.MathOperation, id: "SmartEdit_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button }, operationMenuItems),
                     React.createElement(react_bootstrap_1.FormControl, { value: this.props.SmartEditValue.toString(), style: { width: "70px" }, type: "number", placeholder: "Enter a Number", bsSize: "small", step: "any", onChange: (e) => this.onSmartEditValueChange(e) })),
                 this.props.IsValidSelection &&
-                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Smart Edit", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph" }),
+                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Smart Edit", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 this.props.IsValidSelection &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Preview Results", tooltipText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SmartEditStrategyName, glyphicon: StrategyIds.SmartEditGlyph, onClose: () => this.props.onClose(StrategyIds.SmartEditStrategyId), onConfigure: () => this.props.onConfigure(this.props.IsReadOnly) }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SmartEditStrategyName, glyphicon: StrategyIds.SmartEditGlyph, onClose: () => this.props.onClose(StrategyIds.SmartEditStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSmartEditValueChange(event) {
         const e = event.target;
@@ -126,7 +126,7 @@ function mapDispatchToProps(dispatch) {
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: (isReadOnly) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.SmartEditPopup, isReadOnly))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SmartEditStrategyId, ScreenPopups.SmartEditPopup))
     };
 }
 exports.SmartEditToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(SmartEditToolbarControlComponent);

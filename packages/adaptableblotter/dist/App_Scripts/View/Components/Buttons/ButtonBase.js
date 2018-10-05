@@ -2,12 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
+const Enums_1 = require("../../../Core/Enums");
 class ButtonBase extends React.Component {
     render() {
         let isDisabled;
-        if (this.props.ConfigEntity) {
-            isDisabled = this.props.ConfigEntity.IsReadOnly == true;
-        }
+        isDisabled = this.props.AccessLevel == Enums_1.AccessLevel.Hidden;
         if (this.props.overrideDisableButton) {
             isDisabled = true;
         }
@@ -53,7 +52,6 @@ class ButtonBase extends React.Component {
 }
 ButtonBase.defaultProps = {
     overrideDisableButton: false,
-    ConfigEntity: null,
     ToolTipAndText: "",
     bsStyle: "",
     bsSize: null,
@@ -61,5 +59,6 @@ ButtonBase.defaultProps = {
     DisplayMode: "Glyph+Text",
     transformGlyph: false,
     cssClassName: "btn",
+    AccessLevel: Enums_1.AccessLevel.Full
 };
 exports.ButtonBase = ButtonBase;

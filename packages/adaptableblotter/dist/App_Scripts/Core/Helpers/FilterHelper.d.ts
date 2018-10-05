@@ -1,6 +1,6 @@
 import { DataType } from '../Enums';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter, IColumnFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 export declare module FilterHelper {
     const BLANKS_SYSTEM_FILTER = "Blanks";
     const NON_BLANKS_SYSTEM_FILTER = "Non Blanks";
@@ -19,7 +19,6 @@ export declare module FilterHelper {
     const FALSE_SYSTEM_FILTER = "False";
     function GetAllSystemFilters(): string[];
     function GetUserFilters(userFilters: IUserFilter[], userFilterNames: string[]): IUserFilter[];
-    function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter;
     function GetSystemFiltersForColumn(column: IColumn, systemFilters: string[]): string[];
     function GetUserFiltersForColumn(column: IColumn, userFilters: IUserFilter[]): IUserFilter[];
     function ShowUserFilterForColumn(UserFilters: IUserFilter[], name: string, column: IColumn): boolean;

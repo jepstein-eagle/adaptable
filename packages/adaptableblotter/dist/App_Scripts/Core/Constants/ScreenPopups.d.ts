@@ -27,4 +27,4 @@ export declare const SmartEditPopup: string;
 export declare const TeamSharingPopup: string;
 export declare const ThemePopup: string;
 export declare const QuickSearchPopup: string;
-export declare const UserFilterPopupPopup: string;
+export declare const UserFilterPopup: string;

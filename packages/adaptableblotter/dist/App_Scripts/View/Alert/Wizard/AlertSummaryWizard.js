@@ -5,6 +5,7 @@ const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
 const StrategyIds = require("../../../Core/Constants/StrategyIds");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const AlertHelper_1 = require("../../../Core/Helpers/AlertHelper");
 class AlertSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +15,7 @@ class AlertSummaryWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-summary";
         let keyValuePairs = [
             { Key: "Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Rule", Value: this.props.Data.Description },
+            { Key: "Rule", Value: AlertHelper_1.AlertHelper.createAlertDescription(this.props.Data, this.props.Columns) },
             { Key: "Alert Type", Value: this.props.Data.MessageType },
             {
                 Key: "Query", Value: ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression) ?

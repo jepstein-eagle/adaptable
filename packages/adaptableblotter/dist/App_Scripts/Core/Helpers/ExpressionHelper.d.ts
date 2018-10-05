@@ -2,7 +2,7 @@ import { LeafExpressionOperator } from '../Enums';
 import { DataType } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
-import { IRange, IUserFilter } from '../Api/Interface/AdaptableBlotterObjects';
+import { IRange, IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { Expression } from '../Api/Expression';
 export interface IRangeEvaluation {
     operand1: any;
@@ -34,4 +34,5 @@ export declare module ExpressionHelper {
     function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any): IRangeEvaluation;
     function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation): boolean;
     function ExpressionContainsFilter(expression: Expression, filter: IUserFilter): boolean;
+    function OperatorRequiresValue(operator: LeafExpressionOperator): boolean;
 }

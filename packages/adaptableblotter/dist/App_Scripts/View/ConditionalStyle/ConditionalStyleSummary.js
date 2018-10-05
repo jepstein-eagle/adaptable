@@ -25,7 +25,7 @@ class ConditionalStyleSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.ConditionalStyleStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ConditionalStyleStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), StrategyIds.ConditionalStyleStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.ConditionalStyleStrategyName });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.ConditionalStyleStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ConditionalStyleStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), StrategyIds.ConditionalStyleStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.ConditionalStyleStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.ConditionalStyles.map((item, index) => {
@@ -67,8 +67,9 @@ function mapStateToProps(state, ownProps) {
     return {
         Columns: state.Grid.Columns,
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements,
         ColorPalette: state.UserInterface.ColorPalette,
         StyleClassNames: state.UserInterface.StyleClassNames
     };

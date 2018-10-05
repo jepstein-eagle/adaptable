@@ -6,7 +6,7 @@ const StrategyIds = require("../../Core/Constants/StrategyIds");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const FilterRedux = require("../../Redux/ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
 const SummaryRowItem_1 = require("../Components/StrategySummary/SummaryRowItem");
 const StrategyProfile_1 = require("../Components/StrategyProfile");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
@@ -24,7 +24,7 @@ class ColumnFilterSummaryComponent extends React.Component {
         let summaryItems = [];
         summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ColumnFilterStrategyId })));
         summaryItems.push(description);
-        summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: "primary", size: "small", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null }));
+        summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: "primary", size: "small", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null, AccessLevel: this.props.AccessLevel }));
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: cssWizardClassName, SummaryItems: summaryItems });
     }
     getDescription(columnFilter) {
@@ -43,14 +43,15 @@ class ColumnFilterSummaryComponent extends React.Component {
 exports.ColumnFilterSummaryComponent = ColumnFilterSummaryComponent;
 function mapStateToProps(state, ownProps) {
     return {
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        Entitlements: state.Entitlements.FunctionEntitlements
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onClearFilter: (columnId) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
+        onClearFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
     };

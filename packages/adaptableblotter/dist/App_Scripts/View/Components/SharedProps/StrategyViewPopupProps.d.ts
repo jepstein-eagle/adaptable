@@ -1,13 +1,15 @@
 import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IUserFilter, IGridSort, IColumnFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
+import { IUserFilter, IGridSort, IColumnFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { AccessLevel } from "../../../Core/Enums";
 export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View> {
     PopupParams: string;
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
     TeamSharingActivated: boolean;
     cssClassName: string;
+    AccessLevel: AccessLevel;
     Columns: IColumn[];
     UserFilters: IUserFilter[];
     SystemFilters: string[];

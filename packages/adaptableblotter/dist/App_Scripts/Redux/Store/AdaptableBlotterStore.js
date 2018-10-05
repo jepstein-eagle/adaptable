@@ -30,7 +30,9 @@ const ConditionalStyleRedux = require("../ActionsReducers/ConditionalStyleRedux"
 const QuickSearchRedux = require("../ActionsReducers/QuickSearchRedux");
 const AdvancedSearchRedux = require("../ActionsReducers/AdvancedSearchRedux");
 const DataSourceRedux = require("../ActionsReducers/DataSourceRedux");
-const FilterRedux = require("../ActionsReducers/FilterRedux");
+const ColumnFilterRedux = require("../ActionsReducers/ColumnFilterRedux");
+const UserFilterRedux = require("../ActionsReducers/UserFilterRedux");
+const SystemFilterRedux = require("../ActionsReducers/SystemFilterRedux");
 const ThemeRedux = require("../ActionsReducers/ThemeRedux");
 const FormatColumnRedux = require("../ActionsReducers/FormatColumnRedux");
 const LayoutRedux = require("../ActionsReducers/LayoutRedux");
@@ -49,8 +51,6 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const ConfigConstants = require("../../Core/Constants/ConfigConstants");
-const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
-const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
@@ -70,7 +70,9 @@ const rootReducer = Redux.combineReducers({
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     DataSource: DataSourceRedux.DataSourceReducer,
-    Filter: FilterRedux.FilterReducer,
+    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
+    UserFilter: UserFilterRedux.UserFilterReducer,
+    SystemFilter: SystemFilterRedux.SystemFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
@@ -111,10 +113,9 @@ const rootReducerWithResetManagement = (state, action) => {
         state.Export = undefined;
         state.FlashingCell = undefined;
         state.FormatColumn = undefined;
-        state.Filter.ColumnFilters = [];
-        state.Filter.UserFilters = [];
-        state.Filter.SystemFilters = [];
-        state.Filter = undefined;
+        state.ColumnFilter.ColumnFilters = [];
+        state.UserFilter.UserFilters = [];
+        state.SystemFilter.SystemFilters = [];
         state.Grid = undefined;
         state.System = undefined;
         state.Layout = undefined;
@@ -148,21 +149,17 @@ class AdaptableBlotterStore {
         else {
             engineReduxStorage = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
         }
-        // const someExampleMigration = {
-        //     version: 1,
-        //     migration: (state: AdaptableBlotterState) => {
-        //         state.SmartEdit.SmartEditValue = "2"; return { ...state }
-        //     }
-        // }
         // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
         // perhaps would be better to have 2 stores - persistence store and in-memory store
         engineWithMigrate = redux_storage_decorator_migrate_1.default(engineReduxStorage, 0, "AdaptableStoreVersion", [] /*[someExampleMigration]*/);
         engineWithFilter = redux_storage_decorator_filter_1.default(engineWithMigrate, [], [
+            // Used ONLY Internally so no need to save
             ConfigConstants.SYSTEM,
             ConfigConstants.GRID,
             ConfigConstants.MENU,
             ConfigConstants.POPUP,
             ConfigConstants.TEAMSHARING,
+            // Set ONLY at DesignTime in PredefinedConfig and never changed at runtime
             ConfigConstants.USER_INTERFACE,
             ConfigConstants.ENTITLEMENTS,
             ConfigConstants.APPLICATION,
@@ -260,26 +257,26 @@ var functionLogMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ShortcutStrategyId, "apply shortcut", "KeyPressed:" + actionTyped.KeyEventString, { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId });
                     return next(action);
                 }
-                case FilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+                case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
                     // this is basically select as we immediately set filters and just audit them all for now
                     let actionTyped = action;
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId, "apply column filters", "filters applied", state.Filter.ColumnFilters);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId, "apply column filters", "filters applied", state.ColumnFilter.ColumnFilters);
                     return next(action);
                 }
-                case FilterRedux.USER_FILTER_ADD_UPDATE: {
+                case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
                     let actionTyped = action;
                     let userFilter = actionTyped.UserFilter;
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId, "user filters changed", "filters applied", state.Filter.UserFilters);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId, "user filters changed", "filters applied", state.UserFilter.UserFilters);
                     return next(action);
                 }
-                case FilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+                case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
                     let actionTyped = action;
                     // first create a new user filter based on the column filter and input name
-                    let userFilter = FilterHelper_1.FilterHelper.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText);
-                    middlewareAPI.dispatch(FilterRedux.UserFilterAddUpdate(-1, userFilter));
+                    let userFilter = ObjectFactory_1.ObjectFactory.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText);
+                    middlewareAPI.dispatch(UserFilterRedux.UserFilterAddUpdate(-1, userFilter));
                     // then create a new column filter from the user filter - so that it will display the user filter name
-                    let newColumnFilter = ColumnFilterHelper_1.ColumnFilterHelper.CreateColumnFilterFromUserFilter(userFilter);
-                    middlewareAPI.dispatch(FilterRedux.ColumnFilterAddUpdate(newColumnFilter));
+                    let newColumnFilter = ObjectFactory_1.ObjectFactory.CreateColumnFilterFromUserFilter(userFilter);
+                    middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(newColumnFilter));
                     return next(action);
                 }
                 default:
@@ -415,10 +412,10 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             let filter = actionTyped.Entity;
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
-                            if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Name == filter.Name)) {
+                            if (middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Name == filter.Name)) {
                                 overwriteConfirmation = true;
                             }
-                            importAction = FilterRedux.UserFilterAddUpdate(1, filter);
+                            importAction = UserFilterRedux.UserFilterAddUpdate(1, filter);
                             // } 
                             break;
                         }
@@ -486,11 +483,6 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let calculatedColumn = action.CalculatedColumn;
                     let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible);
                     blotter.addCalculatedColumnToGrid(calculatedColumn);
-                    let newCalculatedColumn = middlewareAPI.getState().Grid.Columns.find(x => x.ColumnId == action.CalculatedColumn.ColumnId);
-                    if (newCalculatedColumn) {
-                        //      columnsLocalLayout.push(newCalculatedColumn)
-                    }
-                    //otherwise it will show hidden columns in AgGrid as we are recreating the column collection
                     middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout));
                     return returnAction;
                 }
@@ -526,7 +518,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     return returnAction;
                 }
-                case FilterRedux.HIDE_FILTER_FORM: {
+                case SystemFilterRedux.HIDE_FILTER_FORM: {
                     blotter.hideFilterForm();
                     return next(action);
                 }
@@ -615,9 +607,6 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     }
                     return next(action);
                 }
-                /*  *********
-                SELECTED CELL ACTIONS
-                ************ */
                 case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
                     let SelectedCellsStrategy = (blotter.Strategies.get(StrategyIds.SelectedCellsStrategyId));
                     let returnAction = next(action);
@@ -736,7 +725,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let exportStrategy = (blotter.Strategies.get(StrategyIds.ExportStrategyId));
                     let actionTyped = action;
                     if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && iPushPullHelper_1.iPushPullHelper.IPPStatus != iPushPullHelper_1.iPushPullHelper.ServiceStatus.Connected) {
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullLogin", false, actionTyped.Report));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, "IPushPullLogin", actionTyped.Report));
                     }
                     else if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && !actionTyped.Folder) {
                         iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages) => {
@@ -745,7 +734,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         }).catch((err) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err));
                         });
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullDomainPageSelector", false, actionTyped.Report));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report));
                     }
                     else if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull) {
                         exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
@@ -769,7 +758,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         }).catch((error) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));
                         });
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen("IPushPullDomainPageSelector", false, report));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, "IPushPullDomainPageSelector", report));
                     }).catch((error) => {
                         AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Login failed", error);
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));
