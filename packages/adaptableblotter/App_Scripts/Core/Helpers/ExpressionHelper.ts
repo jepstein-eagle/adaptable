@@ -437,8 +437,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"), // this value
             blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),  // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -450,8 +450,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),  // this value
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -596,5 +596,16 @@ export module ExpressionHelper {
         }
         return hasFilter;
     }
+
+
+    export function OperatorRequiresValue(operator: LeafExpressionOperator): boolean {
+        return operator != LeafExpressionOperator.None
+            && operator != LeafExpressionOperator.IsPositive
+            && operator != LeafExpressionOperator.IsNegative
+            && operator != LeafExpressionOperator.IsNotNumber
+            && operator != LeafExpressionOperator.IsTrue
+            && operator != LeafExpressionOperator.IsFalse;
+    }
+
 
 } 

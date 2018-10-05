@@ -8,7 +8,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -18,7 +18,7 @@ import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
-    onClearFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction,
+    onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction,
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -65,15 +65,15 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
+        UserFilters: state.UserFilter.UserFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClearFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
+        onClearFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
     };

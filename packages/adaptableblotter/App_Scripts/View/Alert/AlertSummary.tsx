@@ -17,6 +17,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterObject, IAlertDefinition } from "../../Core/Api/Interface/AdaptableBlotterObjects";
+import { AlertHelper } from "../../Core/Helpers/AlertHelper";
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
     Alerts: IAlertDefinition[]
@@ -54,7 +55,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
                         cssClassName={this.props.cssClassName}
                         key={"CV" + index}
                         Item1={"something here?"}
-                        Item2={item.Description}
+                        Item2={AlertHelper.createAlertDescription( item, this.props.Columns)}
                         ConfigEnity={item}
                         EntityName={StrategyIds.AlertStrategyName}
                         showShare={this.props.TeamSharingActivated}
@@ -116,9 +117,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         Alerts: state.Alert.AlertDefinitions,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters
-    };
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters
+       };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

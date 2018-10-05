@@ -5,14 +5,13 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
@@ -21,7 +20,7 @@ import { IUserFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/A
 
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
-    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => FilterRedux.UserFilterAddUpdateAction
+    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -67,7 +66,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         EntityName={StrategyIds.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
-                        onDelete={FilterRedux.UserFilterDelete(item)}
+                        onDelete={UserFilterRedux.UserFilterDelete(item)}
                     />
                 strategySummaries.push(detailRow);
             }
@@ -170,14 +169,14 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
-    };
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+          };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(FilterRedux.UserFilterAddUpdate(index, UserFilter)),
+        onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index, UserFilter)),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
     };
 }

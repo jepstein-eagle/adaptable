@@ -124,7 +124,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
     }
 
     private getColumnDataTypeFromState(): DataType {
-        return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).DataType;
+        return ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
     }
 
     private checkOperator(operator: LeafExpressionOperator): boolean {
@@ -149,45 +149,8 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
     }
 
 
-
-    createAlertDescription(Alert: IAlertDefinition): string {
-
-        let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(Alert.Range.Operator, this.getColumnDataTypeFromState());
-
-        if (!this.operatorRequiresValue(Alert.Range.Operator)) {
-            return valueDescription;
-        }
-        let dataType: DataType = this.props.Columns.find(c => c.ColumnId == Alert.ColumnId).DataType;
-        let operand1Text: string = (dataType == DataType.Boolean || dataType == DataType.Number) ?
-            Alert.Range.Operand1 :
-            "'" + Alert.Range.Operand1 + "'"
-
-        valueDescription = valueDescription + operand1Text;
-
-        if (Alert.Range.Operator == LeafExpressionOperator.PercentChange) {
-            valueDescription = valueDescription + '%';
-        }
-
-        if (StringExtensions.IsNotNullOrEmpty(Alert.Range.Operand2)) {
-            let operand2Text: string = (dataType == DataType.Number) ?
-                " and " + Alert.Range.Operand2 :
-                " and '" + Alert.Range.Operand2 + "'";
-            valueDescription = valueDescription + operand2Text;
-        }
-        return valueDescription;
-    }
-
-    private operatorRequiresValue(operator: LeafExpressionOperator): boolean {
-        return operator != LeafExpressionOperator.None
-            && operator != LeafExpressionOperator.IsPositive
-            && operator != LeafExpressionOperator.IsNegative
-            && operator != LeafExpressionOperator.IsNotNumber
-            && operator != LeafExpressionOperator.IsTrue
-            && operator != LeafExpressionOperator.IsFalse;
-    }
-
     public canNext(): boolean {
-        if (!this.operatorRequiresValue(this.state.Operator)) {
+        if (!ExpressionHelper.OperatorRequiresValue(this.state.Operator)) {
             return true;
         }
 
@@ -211,8 +174,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
             Operand2Type: RangeOperandType.Value
         }
         this.props.Data.Range = rangeExpression;
-        this.props.Data.Description = this.createAlertDescription(this.props.Data);
-    }
+     }
 
     public Back(): void {
         //todo

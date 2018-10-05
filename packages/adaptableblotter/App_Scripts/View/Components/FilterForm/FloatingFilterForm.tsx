@@ -1,7 +1,7 @@
 import * as DeepDiff from 'deep-diff'
 import * as React from "react";
 import * as Redux from "redux";
-import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
@@ -24,8 +24,8 @@ interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterF
     UserFilters: IUserFilter[];
     SystemFilters: string[];
     ColumnFilters: IColumnFilter[];
-    onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
-    onClearColumnFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction,
+    onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
+    onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction,
 }
 
 export interface FloatingFilterFormState {
@@ -245,16 +245,16 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentColumn: ownProps.CurrentColumn,
         Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
-        ColumnFilters: state.Filter.ColumnFilters,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+           ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
-        onClearColumnFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
+        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
     };
 }
 

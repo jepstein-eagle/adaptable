@@ -7,6 +7,7 @@ import * as StrategyIds from '../../../Core/Constants/StrategyIds'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IAlertDefinition, IUserFilter } from "../../../Core/Api/Interface/AdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { AlertHelper } from "../../../Core/Helpers/AlertHelper";
 
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
@@ -25,7 +26,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
 
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Rule", Value: this.props.Data.Description },
+            { Key: "Rule", Value: AlertHelper.createAlertDescription(this.props.Data, this.props.Columns) },
             { Key: "Alert Type", Value: this.props.Data.MessageType },
             {
                 Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression) ?

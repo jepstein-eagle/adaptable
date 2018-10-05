@@ -127,9 +127,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         PlusMinusRules: state.PlusMinus.PlusMinusRules,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters
-    };
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+        };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

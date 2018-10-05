@@ -13,7 +13,9 @@ export module ColumnHelper {
         return columnId == "ag-Grid-AutoColumn"
     }
 
-
+    export function getColumnDataTypeFromColumnId(columnId: string, columns: IColumn[]): DataType {
+        return columns.find(c => c.ColumnId == columnId).DataType;
+    }
 
     export function getFriendlyNameFromColumn(columnId: string, column: IColumn): string {
         if (columnId.includes(GeneralConstants.MISSING_COLUMN)) {

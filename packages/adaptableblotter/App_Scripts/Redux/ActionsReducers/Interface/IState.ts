@@ -68,6 +68,10 @@ export interface UserInterfaceState {
     ColumnCategories: IColumnCategory[];
 }
 
+export interface SystemFilterState {
+    SystemFilters: string[];
+}
+
 export interface ApplicationState {
 }
 
@@ -84,6 +88,7 @@ export interface AdvancedSearchState {
 export interface AlertState {
     AlertDefinitions: IAlertDefinition[];
     MaxAlertsInStore: number;
+    AlertPopupDiv: string
 }
 
 export interface BulkUpdateState {
@@ -142,11 +147,12 @@ export interface ExportState {
     ErrorMsg: string;
 }
 
-export interface FilterState {
+export interface ColumnFilterState {
     ColumnFilters: IColumnFilter[];
-    SavedColumnFilters: IColumnFilter[];
+}
+
+export interface UserFilterState {
     UserFilters: IUserFilter[];
-    SystemFilters: string[];
 }
 
 export interface FlashingCellState {

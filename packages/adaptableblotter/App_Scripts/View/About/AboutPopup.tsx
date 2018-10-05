@@ -1,6 +1,6 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import { connect } from 'react-redux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -21,7 +21,7 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 
 interface AboutPopupComponentProps extends StrategyViewPopupProps<AboutPopupComponent> {
     CalculatedColumns: ICalculatedColumn[]
-    onClearColumnFilters: () => FilterRedux.ColumnFilterClearAllAction,
+    onClearColumnFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
     onClearAllSorts: () => GridRedux.GridSetSortAction,
 
 }
@@ -122,14 +122,14 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
         GridSorts: state.Grid.GridSorts
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClearColumnFilters: () => dispatch(FilterRedux.ColumnFilterClearAll()),
+        onClearColumnFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     };
 }
 

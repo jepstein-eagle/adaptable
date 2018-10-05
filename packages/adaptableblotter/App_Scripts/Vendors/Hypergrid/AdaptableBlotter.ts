@@ -1054,7 +1054,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let headerBounds = this.hyperGrid.getBoundsOfCell({ x: scrolledX, y: y });
                 let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse;
                 let iconPadding = this.hyperGrid.properties.iconPadding;
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
+                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
                 let filterIconWidth = getFilterIcon(filterIndex >= 0).width;
                 if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
                     let filterContext: IColumnFilterContext = {
@@ -1164,7 +1164,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     originalGetCellReturn = originGetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName)
                 }
                 if (config.isHeaderRow && !config.isHandleColumn) {
-                    let filterIndex = this.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
+                    let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
                 if (config.isDataRow && config.dataRow) {

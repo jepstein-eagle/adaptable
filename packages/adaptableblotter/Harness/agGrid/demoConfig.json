@@ -28,7 +28,7 @@
 			}
 		]
 	},
-	"Filter": {
+	"SystemFilter": {
 		"SystemFilters": [
 			"Zero"
 		]

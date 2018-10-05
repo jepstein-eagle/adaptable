@@ -95,9 +95,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         EntitlementsState: state.Entitlements,
         // need to get these props so we can 'feed' the toolbars...
         Columns: state.Grid.Columns,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
-        ColorPalette: state.UserInterface.ColorPalette,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
+         ColorPalette: state.UserInterface.ColorPalette,
         GridSorts: state.Grid.GridSorts
     };
 }

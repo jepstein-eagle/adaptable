@@ -117,13 +117,13 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         let columnValues = this.state.Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId)
         let index = columnValues.ColumnDisplayValues.indexOf(value)
         columnValues.ColumnDisplayValues.splice(index, 1)
+        columnValues.ColumnRawValues.splice(index, 1)
         if (columnValues.ColumnDisplayValues.length == 0) {
             let columnValuesIndex = this.state.Expression.ColumnValueExpressions.findIndex(x => x.ColumnId == columnId)
             this.state.Expression.ColumnValueExpressions.splice(columnValuesIndex, 1)
         }
         let newExpression: Expression = Object.assign({}, this.state.Expression)
         this.setState({ Expression: newExpression } as ExpressionBuilderPageState, () => this.props.UpdateGoBackState())
-
     }
 
     DeleteUserFilterExpression(columnId: string, index: number) {

@@ -16,7 +16,9 @@ import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedCo
 import * as CalendarRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
+import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
+import * as SystemFilterRedux from '../../Redux/ActionsReducers/SystemFilterRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
@@ -27,7 +29,7 @@ import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilt
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyIds from '../Constants/StrategyIds'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination } from "../Enums";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Enums";
 import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
@@ -41,6 +43,7 @@ import { ExpressionHelper } from "../Helpers/ExpressionHelper";
 import { ObjectFactory } from "../ObjectFactory";
 import { IColumn } from "../Interface/IColumn";
 import { ColumnFilterHelper } from "../Helpers/ColumnFilterHelper";
+import { StringExtensions } from "../Extensions/StringExtensions";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -53,7 +56,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Layout api methods
     public layoutSet(layoutName: string): void {
-        let layout: ILayout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        let layout: ILayout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyIds.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName))
         }
@@ -64,23 +67,23 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public layoutGetCurrent(): ILayout {
-        let layoutName = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        let layoutName = this.getState().Layout.CurrentLayout;
+        return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
     }
 
     public layoutgetAll(): ILayout[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts;
+        return this.getState().Layout.Layouts;
     }
 
     public layoutSave(): void {
-        let currentLayoutName: string = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+        let currentLayoutName: string = this.getState().Layout.CurrentLayout
         if (currentLayoutName != DEFAULT_LAYOUT) {
-            let currentLayoutObject: ILayout = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.find(l => l.Name == currentLayoutName)
-            let currentLayoutIndex: number = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName)
+            let currentLayoutObject: ILayout = this.getState().Layout.Layouts.find(l => l.Name == currentLayoutName)
+            let currentLayoutIndex: number = this.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName)
             if (currentLayoutIndex != -1) {
                 let gridState: any = (currentLayoutObject) ? currentLayoutObject.VendorGridInfo : null
-                let visibleColumns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c => c.Visible);
-                let gridSorts: IGridSort[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+                let visibleColumns: IColumn[] = this.getState().Grid.Columns.filter(c => c.Visible);
+                let gridSorts: IGridSort[] = this.getState().Grid.GridSorts;
                 let layoutToSave = ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName)
                 this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave))
             }
@@ -171,7 +174,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public quickSearchGetValue(): string {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+        return this.getState().QuickSearch.QuickSearchText;
     }
 
     public quickSearchSetOperator(operator: 'Contains' | 'StartsWith'): void {
@@ -192,7 +195,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public calendarGetCurrent(): string {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar.CurrentCalendar;
+        return this.getState().Calendar.CurrentCalendar;
     }
 
 
@@ -202,7 +205,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public themeGetCurrent(): string {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.CurrentTheme;
+        return this.getState().Theme.CurrentTheme;
     }
 
     public themeSetSystemThemes(systemThemes: string[]): void {
@@ -214,16 +217,16 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public themeSystemThemeGetAll(): string[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.SystemThemes;
+        return this.getState().Theme.SystemThemes;
     }
 
     public themeUserThemeGetAll(): IUserTheme[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Theme.UserThemes;
+        return this.getState().Theme.UserThemes;
     }
 
     // Shortuct State
     public shortcutGetAll(): IShortcut[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut.Shortcuts;
+        return this.getState().Shortcut.Shortcuts;
     }
 
     public shortcutAdd(shortcut: IShortcut): void {
@@ -247,7 +250,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public smartEditGetMathOperation(): string {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.MathOperation;
+        return this.getState().SmartEdit.MathOperation;
     }
 
     public smartEditSetValue(smartEditValue: number): void {
@@ -255,7 +258,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public smartEditGetValue(): number {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit.SmartEditValue;
+        return this.getState().SmartEdit.SmartEditValue;
     }
 
 
@@ -285,20 +288,20 @@ export abstract class BlotterApiBase implements IBlotterApi {
     // filter api methods
     public columnFilterSet(columnFilters: IColumnFilter[]): void {
         columnFilters.forEach(cf => {
-            this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(cf))
+            this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf))
         })
     }
 
     public columnFilterSetUserFilter(userFilter: string): void {
-        let existingUserFilter: IUserFilter = this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters.find(uf => uf.Name == userFilter);
+        let existingUserFilter: IUserFilter = this.getState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
             let columnFilter: IColumnFilter = ColumnFilterHelper.CreateColumnFilterFromUserFilter(existingUserFilter)
-            this.dispatchAction(FilterRedux.ColumnFilterAddUpdate(columnFilter));
+            this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter));
         }
     }
 
     public columnFilterClear(columnFilter: IColumnFilter): void {
-        this.dispatchAction(FilterRedux.ColumnFilterClear(columnFilter.ColumnId));
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter.ColumnId));
     }
 
     public columnFilterClearByColumns(columns: string[]): void {
@@ -308,33 +311,33 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public columnFilterClearByColumn(column: string): void {
-           this.dispatchAction(FilterRedux.ColumnFilterClear(column));
-     }
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(column));
+    }
 
     public columnFilterClearAll(): void {
-        this.dispatchAction(FilterRedux.ColumnFilterClearAll());
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
     }
 
     public columnFiltersGetCurrent(): IColumnFilter[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+        return this.getState().ColumnFilter.ColumnFilters;
     }
 
     public userFilterSet(userFilters: IUserFilter[]): void {
         userFilters.forEach(uf => {
-            this.dispatchAction(FilterRedux.UserFilterAddUpdate(-1, uf))
+            this.dispatchAction(UserFilterRedux.UserFilterAddUpdate(-1, uf))
         })
     }
 
     public systemFilterSet(systemFilters: string[]): void {
-        this.dispatchAction(FilterRedux.SystemFilterSet(systemFilters));
+        this.dispatchAction(SystemFilterRedux.SystemFilterSet(systemFilters));
     }
 
     public systemFilterClear(): void {
-        this.dispatchAction(FilterRedux.SystemFilterSet([]));
+        this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
     }
 
     public systemFilterGetCurrent(): string[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.SystemFilters;
+        return this.getState().SystemFilter.SystemFilters;
     }
 
     public systemFilterGetAll(): string[] {
@@ -344,7 +347,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Data Source api methods
     public dataSourceSet(dataSourceName: string): void {
-        let dataSource: string = this.blotter.AdaptableBlotterStore.TheStore.getState().DataSource.DataSources.find(a => a == dataSourceName);
+        let dataSource: string = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
         if (this.checkItemExists(dataSource, dataSourceName, StrategyIds.DataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource))
         }
@@ -357,7 +360,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Advanced Search api methods
     public advancedSearchSet(advancedSearchName: string): void {
-        let advancedSearch: IAdvancedSearch = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
+        let advancedSearch: IAdvancedSearch = this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
         if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyIds.AdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName))
         }
@@ -372,7 +375,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public advancedSearchEdit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void {
-        let searchIndex: number = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.findIndex(a => a.Name == advancedSearchName);
+        let searchIndex: number = this.getState().AdvancedSearch.AdvancedSearches.findIndex(a => a.Name == advancedSearchName);
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(searchIndex, advancedSearch))
     }
 
@@ -382,29 +385,29 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public advancedSearchGetCurrent(): IAdvancedSearch {
-        let currentAdvancedSearchName: string = this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch
+        let currentAdvancedSearchName: string = this.getState().AdvancedSearch.CurrentAdvancedSearch
         return this.advancedSearchGetByName(currentAdvancedSearchName)
     }
 
     public advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
+        return this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
     }
 
     public advancedSearchGetAll(): IAdvancedSearch[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches;
+        return this.getState().AdvancedSearch.AdvancedSearches;
     }
 
     // Entitlement Methods
     public entitlementGetAll(): IEntitlement[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
+        return this.getState().Entitlements.FunctionEntitlements;
     }
 
     public entitlementGetByFunction(functionName: string): IEntitlement {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
+        return this.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
     }
 
     public entitlementGetAccessLevelForFunction(functionName: string): string {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
+        return this.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
     }
 
     public entitlementAddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Default"): void {
@@ -418,11 +421,11 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Custom Sort Methods
     public customSortGetAll(): ICustomSort[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
+        return this.getState().CustomSort.CustomSorts;
     }
 
     public customSortGetByColumn(columnn: string): ICustomSort {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
+        return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
     }
 
     public customSortAdd(column: string, values: string[]): void {
@@ -442,7 +445,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Calculated Column State
     public calculatedColumnGetAll(): ICalculatedColumn[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns;
+        return this.getState().CalculatedColumn.CalculatedColumns;
     }
 
     public calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void {
@@ -463,7 +466,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // CellValidation State
     public cellValidationGetAll(): ICellValidationRule[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation.CellValidations;
+        return this.getState().CellValidation.CellValidations;
     }
 
     public cellValidationAdd(cellValidationRule: ICellValidationRule): void {
@@ -477,7 +480,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Format Column api methods
     public formatColumnGetAll(): IFormatColumn[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn.FormatColumns;
+        return this.getState().FormatColumn.FormatColumns;
     }
 
     public formatColumnnAdd(column: string, style: IStyle): void {
@@ -500,14 +503,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
         })
     }
 
-    // General Config
-    public configClear(): void {
-        this.dispatchAction(ResetUserData())
-    }
-
-    public configGet(): AdaptableBlotterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState()
-    }
 
     // System Status api Methods
     public systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
@@ -533,16 +528,24 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // Alerts api Methods
     public alertShow(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void {
-        let maxAlerts: number = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert.MaxAlertsInStore;
+        let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
         let MessageTypeEnum = MessageType as MessageType;
-        let alert: IAlert = {
+        let alertToShow: IAlert = {
             Header: alertHeader,
             Msg: alertMessage,
             MessageType: MessageTypeEnum
         }
-        this.dispatchAction(SystemRedux.SystemAlertAdd(alert, maxAlerts))
+        this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts))
         if (showAsPopup) {
-            this.dispatchAction(PopupRedux.PopupShowAlert(alert))
+            if (StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
+                let alertString: string = alertToShow.Header + ": " + alertToShow.Msg
+                let alertDiv = document.getElementById(this.getState().Alert.AlertPopupDiv);
+                 if (alertDiv) {
+                    alertDiv.innerHTML = alertString;
+                }
+            } else {
+                this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow))
+            }
         }
         AdaptableBlotterLogger.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
     }
@@ -568,15 +571,105 @@ export abstract class BlotterApiBase implements IBlotterApi {
     }
 
     public exportReportsGetAll(): IReport[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports;
+        return this.getState().Export.Reports;
     }
 
     public exportLiveReportsGetAll(): ILiveReport[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
+        return this.getState().System.CurrentLiveReports;
 
     }
 
 
+    // General Config
+    public configClear(): void {
+        this.dispatchAction(ResetUserData())
+    }
+
+    public configGetAll(): AdaptableBlotterState {
+        return this.getState()
+    }
+
+    public configGetAllUserState(): any[] {
+        return [
+            this.getState().AdvancedSearch,
+            this.getState().Alert,
+            this.getState().BulkUpdate,
+            this.getState().CalculatedColumn,
+            this.getState().Calendar,
+            this.getState().CellValidation,
+            this.getState().Chart,
+            this.getState().ColumnFilter,
+            this.getState().ConditionalStyle,
+            this.getState().CustomSort,
+            this.getState().Dashboard,
+            this.getState().DataSource,
+            this.getState().Export,
+            this.getState().FlashingCell,
+            this.getState().FormatColumn,
+            this.getState().Layout,
+            this.getState().PlusMinus,
+            this.getState().QuickSearch,
+            this.getState().SelectedCells,
+            this.getState().Shortcut,
+            this.getState().SmartEdit,
+            this.getState().Theme,
+            this.getState().UserFilter
+        ]
+    }
+
+    public configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
+        'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
+        'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
+        'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): any {
+        switch (stateChangedTrigger as StateChangedTrigger) {
+            case StateChangedTrigger.AdvancedSearch:
+                return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch
+            case StateChangedTrigger.Alert:
+                return (returnJson) ? JSON.stringify(this.getState().Alert) : this.getState().Alert
+            case StateChangedTrigger.BulkUpdate:
+                return (returnJson) ? JSON.stringify(this.getState().BulkUpdate) : this.getState().BulkUpdate
+            case StateChangedTrigger.CalculatedColumn:
+                return (returnJson) ? JSON.stringify(this.getState().CalculatedColumn) : this.getState().CalculatedColumn
+            case StateChangedTrigger.Calendar:
+                return (returnJson) ? JSON.stringify(this.getState().Calendar) : this.getState().Calendar
+            case StateChangedTrigger.CellValidation:
+                return (returnJson) ? JSON.stringify(this.getState().CellValidation) : this.getState().CellValidation
+            case StateChangedTrigger.Chart:
+                return (returnJson) ? JSON.stringify(this.getState().Chart) : this.getState().Chart
+            case StateChangedTrigger.ColumnFilter:
+                return (returnJson) ? JSON.stringify(this.getState().ColumnFilter) : this.getState().ColumnFilter
+            case StateChangedTrigger.ConditionalStyle:
+                return (returnJson) ? JSON.stringify(this.getState().ConditionalStyle) : this.getState().ConditionalStyle
+            case StateChangedTrigger.CustomSort:
+                return (returnJson) ? JSON.stringify(this.getState().CustomSort) : this.getState().CustomSort
+            case StateChangedTrigger.Dashboard:
+                return (returnJson) ? JSON.stringify(this.getState().Dashboard) : this.getState().Dashboard
+            case StateChangedTrigger.DataSource:
+                return (returnJson) ? JSON.stringify(this.getState().DataSource) : this.getState().DataSource
+            case StateChangedTrigger.Export:
+                return (returnJson) ? JSON.stringify(this.getState().Export) : this.getState().Export
+            case StateChangedTrigger.FlashingCell:
+                return (returnJson) ? JSON.stringify(this.getState().FlashingCell) : this.getState().FlashingCell
+            case StateChangedTrigger.FormatColumn:
+                return (returnJson) ? JSON.stringify(this.getState().FormatColumn) : this.getState().FormatColumn
+            case StateChangedTrigger.Layout:
+                return (returnJson) ? JSON.stringify(this.getState().Layout) : this.getState().Layout
+            case StateChangedTrigger.PlusMinus:
+                return (returnJson) ? JSON.stringify(this.getState().PlusMinus) : this.getState().PlusMinus
+            case StateChangedTrigger.QuickSearch:
+                return (returnJson) ? JSON.stringify(this.getState().QuickSearch) : this.getState().QuickSearch
+            case StateChangedTrigger.SelectedCells:
+                return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().SelectedCells
+            case StateChangedTrigger.Shortcut:
+                return (returnJson) ? JSON.stringify(this.getState().Shortcut) : this.getState().Shortcut
+            case StateChangedTrigger.SmartEdit:
+                return (returnJson) ? JSON.stringify(this.getState().SmartEdit) : this.getState().SmartEdit
+            case StateChangedTrigger.Theme:
+                return (returnJson) ? JSON.stringify(this.getState().Theme) : this.getState().Theme
+            case StateChangedTrigger.UserFilter:
+                return (returnJson) ? JSON.stringify(this.getState().UserFilter) : this.getState().UserFilter
+        }
+    }
 
     // Events
     public onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs> {
@@ -602,6 +695,10 @@ export abstract class BlotterApiBase implements IBlotterApi {
             return false;
         }
         return true;
+    }
+
+    private getState(): AdaptableBlotterState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState()
     }
 
 }

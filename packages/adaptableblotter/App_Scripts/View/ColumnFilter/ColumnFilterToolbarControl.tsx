@@ -6,7 +6,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
@@ -20,7 +20,7 @@ import { ColumnFilterHelper } from "../../Core/Helpers/ColumnFilterHelper";
 import { KeyValuePair } from "../UIInterfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
-    onClearAllFilters: () => FilterRedux.ColumnFilterClearAllAction,
+    onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
     IsReadOnly: boolean,
     ColumnFilters: IColumnFilter[],
     Columns: IColumn[],
@@ -75,13 +75,13 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        ColumnFilters: state.Filter.ColumnFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onClearAllFilters: () => dispatch(FilterRedux.ColumnFilterClearAll()),
+        onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: (isReadOnly: boolean) => dispatch(PopupRedux.PopupShowScreen(ScreenPopups.ColumnFilterPopup, isReadOnly))
     };

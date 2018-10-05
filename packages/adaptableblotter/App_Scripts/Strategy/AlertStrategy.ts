@@ -11,6 +11,7 @@ import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 import { LeafExpressionOperator, StateChangedTrigger } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { AlertHelper } from '../Core/Helpers/AlertHelper';
 
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
@@ -24,24 +25,25 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     protected InitState() {
         if (this.AlertState != this.blotter.AdaptableBlotterStore.TheStore.getState().Alert) {
             this.AlertState = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert;
-          
+
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Alert, this.AlertState)
             }
-       
         }
     }
-    
+
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyIds.AlertStrategyName, ScreenPopups.AlertPopup, StrategyIds.AlertGlyph);
     }
 
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
-        let failedRules: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
-
-        failedRules.forEach(fr => { // might be better to do a single alert with all the messages?
-            this.blotter.api.alertShow(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns), fr.Description, fr.MessageType, fr.ShowAsPopup)
-        })
+        let alertDefinitions: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
+        if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
+            let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            alertDefinitions.forEach(fr => { // might be better to do a single alert with all the messages?
+                this.blotter.api.alertShow(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup)
+            })
+        }
     }
 
     public CheckDataChanged(dataChangedEvent: IDataChangedEvent): IAlertDefinition[] {

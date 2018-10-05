@@ -51,7 +51,6 @@ export module ObjectFactory {
                 Operand2Type: RangeOperandType.Column,
             },
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            Description: "",
             MessageType: MessageType.Error,
             ShowAsPopup: true,
             IsReadOnly: false
@@ -144,7 +143,7 @@ export module ObjectFactory {
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
+        let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :

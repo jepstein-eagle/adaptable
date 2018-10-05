@@ -15,7 +15,7 @@ function InitTradeBlotter() {
         enableSorting: true,
         enableRangeSelection: true,
         enableFilter: true,
-      //  floatingFilter: true,
+        //  floatingFilter: true,
         enableColResize: true,
         suppressColumnVirtualisation: false,
         columnTypes: {                  // not required but helpful for column data type identification
@@ -52,9 +52,9 @@ function InitTradeBlotter() {
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
         useDefaultVendorGridThemes: true,
-       // useAdaptableBlotterFilterForm: false,
-       // useAdaptableBlotterQuickFilter: false
-       //  getColumnValues: retrieveValues,
+        // useAdaptableBlotterFilterForm: false,
+        // useAdaptableBlotterQuickFilter: false
+       // getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -82,13 +82,13 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-    console.log("column event received")
-    console.log( columnChangedArgs)
+    //  console.log("column event received")
+    //   console.log(columnChangedArgs)
 }
 
 function listenToStateChange(stateChangedArgs) {
-    console.log("state event received" )
-    console.log(stateChangedArgs)
+ //   console.log("state event received")
+ //   console.log(stateChangedArgs)
 }
 
 function getValuesForColumn(columnName) {
@@ -150,7 +150,17 @@ function dataChangeHack(state, gridOptions) {
 function apiTester(state, gridOptions) {
     if (state.QuickSearch.QuickSearchText != quickSearchText) {
         quickSearchText = state.QuickSearch.QuickSearchText
-        if (quickSearchText == "#permies") {
+        if (quickSearchText == "#advanced") {
+            let test = adaptableblotter.api.configGetUserStateByFunction('AdvancedSearch')
+            console.log("object");
+            console.log(test);
+            let test2 = adaptableblotter.api.configGetUserStateByFunction('AdvancedSearch', true)
+            console.log("string version");
+            console.log(test2);
+            let test3 = adaptableblotter.api.configGetAllUserState()
+            console.log("all version");
+            console.log(test3);
+        } else if (quickSearchText == "#permies") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
         } else if (quickSearchText == "#systemfilters") {
             adaptableblotter.api.filterClearSystemFilters()

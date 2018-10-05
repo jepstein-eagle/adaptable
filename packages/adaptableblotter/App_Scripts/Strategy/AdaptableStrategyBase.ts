@@ -173,7 +173,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             dataSource: StringExtensions.IsNotNullOrEmpty(dataSource) ? dataSource : "",
             advancedSearch: advancedSearch == null ? null : advancedSearch,
             quickSearch: state.QuickSearch.QuickSearchText,
-            columnFilters: state.Filter.ColumnFilters
+            columnFilters: state.ColumnFilter.ColumnFilters
         }
 
         let blotterSortState: IBlotterSortState = {

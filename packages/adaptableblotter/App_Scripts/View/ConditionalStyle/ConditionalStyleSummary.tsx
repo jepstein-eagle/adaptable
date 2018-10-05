@@ -81,7 +81,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     cssClassName={cssWizardClassName}
                     EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IConditionalStyle}
                     ConfigEntities={null}
-                     ModalContainer={this.props.ModalContainer}
+                    ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
@@ -129,8 +129,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
         ColorPalette: state.UserInterface.ColorPalette,
         StyleClassNames: state.UserInterface.StyleClassNames
     };

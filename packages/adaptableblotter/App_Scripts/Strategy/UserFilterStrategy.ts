@@ -37,7 +37,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
-                    || this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters.length > 0) {
+                    || this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0) {
                     this.publishSearchChanged(SearchChangedTrigger.UserFilter)
                 }
             }
@@ -49,7 +49,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     private GetUserFilterState(): IUserFilter[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.UserFilters;
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
     }
 }
 

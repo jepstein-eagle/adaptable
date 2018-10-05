@@ -27,15 +27,15 @@ export class AlertSelectQueryWizard extends React.Component<AlertSelectQueryWiza
         let cssClassName: string = this.props.cssClassName + "-selectquery"
        
         return <div className={cssClassName}>
-        <Panel header="Cell Validation Query" bsStyle="primary">
+        <Panel header="Alert Query" bsStyle="primary">
 
                 <AdaptableBlotterForm inline >
                     <Col xs={12}>
-                        <HelpBlock>A Query is used if the rule is dependent on other values in the row.<br />The rule will only be activated and checked if the Query passes.</HelpBlock>
+                        <HelpBlock>A Query is used if the alert is dependent on other values in the row.<br />The alert will only be triggered if the Query passes.</HelpBlock>
                     </Col>
                     <Col xs={12}>
-                        <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Query</Checkbox>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} MessageType={MessageType.Info} />
+                        <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Query</Checkbox>
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Alert: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered."]} MessageType={MessageType.Info} />
                     </Col>
                 </AdaptableBlotterForm>
 

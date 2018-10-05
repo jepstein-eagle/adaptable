@@ -67,7 +67,6 @@ export interface IRange {
 export interface IAlertDefinition extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange;
-  Description: string;
   Expression: Expression;
   MessageType: MessageType;
   ShowAsPopup: boolean

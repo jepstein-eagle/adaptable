@@ -227,6 +227,7 @@ export enum MessageType {
     Error = 'Error'
 }
 
+
 export enum SelectedCellOperation {
     Sum = 'Sum',
     Average = 'Average',

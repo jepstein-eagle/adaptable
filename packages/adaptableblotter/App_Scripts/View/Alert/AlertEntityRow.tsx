@@ -11,6 +11,7 @@ import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
 import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import { AlertHelper } from "../../Core/Helpers/AlertHelper";
 
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
@@ -58,7 +59,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
     private getColumnandRule(Alert: IAlertDefinition): string {
         let columnInfo: string = ColumnHelper.getFriendlyNameFromColumn(Alert.ColumnId, this.props.Column)
-        columnInfo += ": " + Alert.Description
+        columnInfo += ": " + AlertHelper.createAlertDescription(Alert, this.props.Columns)
         return columnInfo
     }
 

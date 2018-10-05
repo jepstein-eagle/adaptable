@@ -29,7 +29,9 @@ import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux'
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux'
 import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux'
-import * as FilterRedux from '../ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
+import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
+import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
@@ -84,7 +86,9 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
     DataSource: DataSourceRedux.DataSourceReducer,
-    Filter: FilterRedux.FilterReducer,
+    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
+    UserFilter: UserFilterRedux.UserFilterReducer,
+    SystemFilter: SystemFilterRedux.SystemFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
@@ -130,10 +134,9 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.Export = undefined
         state.FlashingCell = undefined
         state.FormatColumn = undefined
-        state.Filter.ColumnFilters = []
-        state.Filter.UserFilters = []
-        state.Filter.SystemFilters = []
-        state.Filter = undefined
+        state.ColumnFilter.ColumnFilters = []
+        state.UserFilter.UserFilters = []
+        state.SystemFilter.SystemFilters = []
         state.Grid = undefined
         state.System = undefined
         state.Layout = undefined
@@ -331,37 +334,37 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                         { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId })
                     return next(action);
                 }
-                case FilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+                case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
                     // this is basically select as we immediately set filters and just audit them all for now
-                    let actionTyped = <FilterRedux.ColumnFilterAddUpdateAction>action
+                    let actionTyped = <ColumnFilterRedux.ColumnFilterAddUpdateAction>action
 
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId,
                         "apply column filters",
                         "filters applied",
-                        state.Filter.ColumnFilters)
+                        state.ColumnFilter.ColumnFilters)
 
                     return next(action);
                 }
-                case FilterRedux.USER_FILTER_ADD_UPDATE: {
-                    let actionTyped = <FilterRedux.UserFilterAddUpdateAction>action
+                case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
+                    let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
                     let userFilter = actionTyped.UserFilter;
 
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId,
                         "user filters changed",
                         "filters applied",
-                        state.Filter.UserFilters)
+                        state.UserFilter.UserFilters)
 
                     return next(action);
                 }
-                case FilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
-                    let actionTyped = <FilterRedux.CreateUserFilterFromColumnFilterAction>action
+                case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+                    let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action
                     // first create a new user filter based on the column filter and input name
                     let userFilter: IUserFilter = FilterHelper.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
-                    middlewareAPI.dispatch(FilterRedux.UserFilterAddUpdate(-1, userFilter));
+                    middlewareAPI.dispatch(UserFilterRedux.UserFilterAddUpdate(-1, userFilter));
 
                     // then create a new column filter from the user filter - so that it will display the user filter name
                     let newColumnFilter: IColumnFilter = ColumnFilterHelper.CreateColumnFilterFromUserFilter(userFilter);
-                    middlewareAPI.dispatch(FilterRedux.ColumnFilterAddUpdate(newColumnFilter));
+                    middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(newColumnFilter));
 
                     return next(action);
                 }
@@ -501,10 +504,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                             let filter = actionTyped.Entity as IUserFilter
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
-                            if (middlewareAPI.getState().Filter.UserFilters.find(x => x.Name == filter.Name)) {
+                            if (middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Name == filter.Name)) {
                                 overwriteConfirmation = true
                             }
-                            importAction = FilterRedux.UserFilterAddUpdate(1, filter)
+                            importAction = UserFilterRedux.UserFilterAddUpdate(1, filter)
                             // } 
                             break;
                         }
@@ -612,7 +615,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     return returnAction;
                 }
-                case FilterRedux.HIDE_FILTER_FORM: {
+                case SystemFilterRedux.HIDE_FILTER_FORM: {
                     blotter.hideFilterForm()
                     return next(action);
                 }

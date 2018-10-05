@@ -2,7 +2,9 @@ import * as React from "react";
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
-import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
+import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux'
+import * as SystemFilterRedux from '../../../Redux/ActionsReducers/SystemFilterRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
@@ -43,9 +45,9 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
     ShowCloseButton: boolean;
-    onClearColumnFilter: (columnId: string) => FilterRedux.ColumnFilterClearAction
-    onAddEditColumnFilter: (columnFilter: IColumnFilter) => FilterRedux.ColumnFilterAddUpdateAction
-    onHideFilterForm: () => FilterRedux.HideFilterFormAction
+    onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
+    onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
+    onHideFilterForm: () => SystemFilterRedux.HideFilterFormAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
 
@@ -310,7 +312,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let prompt: IUIPrompt = {
             PromptTitle: "Enter name for User Filter",
             PromptMsg: "Please enter a user filter name",
-            ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
+            ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         }
         this.props.onShowPrompt(prompt)
     }
@@ -335,9 +337,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentColumn: ownProps.CurrentColumn,
         Blotter: ownProps.Blotter,
         Columns: state.Grid.Columns,
-        ColumnFilters: state.Filter.ColumnFilters,
-        UserFilters: state.Filter.UserFilters,
-        SystemFilters: state.Filter.SystemFilters,
+        ColumnFilters: state.ColumnFilter.ColumnFilters,
+        UserFilters: state.UserFilter.UserFilters,
+        SystemFilters: state.SystemFilter.SystemFilters,
         ContextMenuItems: state.Menu.ContextMenu.Items,
         ShowCloseButton: ownProps.ShowCloseButton
     };
@@ -346,10 +348,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
-        onClearColumnFilter: (columnId: string) => dispatch(FilterRedux.ColumnFilterClear(columnId)),
-        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(FilterRedux.ColumnFilterAddUpdate(columnFilter)),
+        onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+        onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(FilterRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(SystemFilterRedux.HideFilterForm()),
     };
 }
 

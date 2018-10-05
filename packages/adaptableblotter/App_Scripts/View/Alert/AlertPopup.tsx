@@ -108,7 +108,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IAlertDefinition}
                         ConfigEntities={null}
-                         ModalContainer={this.props.ModalContainer}
+                        ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
@@ -149,8 +149,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     canFinishWizard() {
         let AlertRule = this.state.EditedAdaptableBlotterObject as IAlertDefinition
         return StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId) &&
-            (ExpressionHelper.IsEmptyOrValidExpression(AlertRule.Expression)) &&
-            StringExtensions.IsNotNullOrEmpty(AlertRule.Description)
+            ExpressionHelper.IsEmptyOrValidExpression(AlertRule.Expression)
     }
 }
 

@@ -2,7 +2,7 @@ import { IColumnFilterStrategy } from './Interface/IColumnFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyIds from '../Core/Constants/StrategyIds'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import * as FilterRedux from '../Redux/ActionsReducers/FilterRedux'
+import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../Core/Api/Interface/AdaptableBlotterObjects';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
@@ -30,7 +30,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
                     this.createContextMenuItemReduxAction(
                         "Clear Column Filter",
                         StrategyIds.ColumnFilterGlyph,
-                        FilterRedux.ColumnFilterClear(columnId))
+                        ColumnFilterRedux.ColumnFilterClear(columnId))
                 }
             }
         }
@@ -53,6 +53,6 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     }
 
     private GetColumnFilterState(): IColumnFilter[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Filter.ColumnFilters;
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
     }
 }
