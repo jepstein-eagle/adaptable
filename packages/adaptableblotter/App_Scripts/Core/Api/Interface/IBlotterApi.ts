@@ -4,7 +4,7 @@ import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEve
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState } from "../../../Redux/ActionsReducers/Interface/IState";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../../Redux/ActionsReducers/Interface/IState";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -224,12 +224,12 @@ export interface IBlotterApi {
    * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
    *  */
   configClear(): void
-  configGetAll(): AdaptableBlotterState
-  configGetAllUserState(): any[]
+  configGetAllState(): AdaptableBlotterState
+  configGetAllUserState(): IUserState[]
   configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
     'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
     'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
-    'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): any
+    'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): IUserState
 
   configGetAdvancedSearchState(returnJson: boolean ): AdvancedSearchState
   configGetAlertSearchState(returnJson: boolean): AlertState

@@ -160,6 +160,12 @@ function apiTester(state, gridOptions) {
             let test3 = adaptableblotter.api.configGetAllUserState()
             console.log("all version");
             console.log(test3);
+            let test4 = adaptableblotter.api.configGetAdvancedSearchState()
+            console.log("advanced search");
+            console.log(test4);
+            let test5 = adaptableblotter.api.configGetAdvancedSearchState( true)
+            console.log("advanced search string");
+            console.log(test5);
         } else if (quickSearchText == "#permies") {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
         } else if (quickSearchText == "#systemfilters") {
