@@ -4,6 +4,7 @@ import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEve
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./AdaptableBlotterObjects";
 import { IEntitlement } from "../../Interface/Interfaces";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState } from "../../../Redux/ActionsReducers/Interface/IState";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -228,7 +229,31 @@ export interface IBlotterApi {
   configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
     'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
     'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
-    'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean ): any
+    'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): any
+
+  configGetAdvancedSearchState(returnJson: boolean ): AdvancedSearchState
+  configGetAlertSearchState(returnJson: boolean): AlertState
+  configGetBulkUpdateState(returnJson: boolean): BulkUpdateState
+  configGetCalculatedColumnState(returnJson: boolean): CalculatedColumnState
+  configGetCalendarState(returnJson: boolean): CalendarState
+  configGetCellValidationState(returnJson: boolean): CellValidationState
+  configGetChartState(returnJson: boolean): ChartState
+  configGetColumnFilterState(returnJson: boolean): ColumnFilterState
+  configGetConditionalStyleState(returnJson: boolean): ConditionalStyleState
+  configGetCustomSortState(returnJson: boolean): CustomSortState
+  configGetDashboardState(returnJson: boolean): DashboardState
+  configGetDataSourceState(returnJson: boolean): DataSourceState
+  configGetExportState(returnJson: boolean): ExportState
+  configGetFlashingCellState(returnJson: boolean): FlashingCellState
+  configGetFormatColumnState(returnJson: boolean): FormatColumnState
+  configGetLayoutState(returnJson: boolean): LayoutState
+  configGetPlusMinusState(returnJson: boolean): PlusMinusState
+  configGetQuickSearchState(returnJson: boolean): QuickSearchState
+  configGetSelectedCellsState(returnJson: boolean): SelectedCellsState
+  configGetShortcutState(returnJson: boolean): ShortcutState
+  configGetSmartEditState(returnJson: boolean): SmartEditState
+  configGetThemeState(returnJson: boolean): ThemeState
+  configGetUserFilterState(returnJson: boolean): UserFilterState
 
   /**
   * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.

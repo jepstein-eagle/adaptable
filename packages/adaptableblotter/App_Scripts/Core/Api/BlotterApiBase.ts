@@ -44,6 +44,7 @@ import { ObjectFactory } from "../ObjectFactory";
 import { IColumn } from "../Interface/IColumn";
 import { ColumnFilterHelper } from "../Helpers/ColumnFilterHelper";
 import { StringExtensions } from "../Extensions/StringExtensions";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -669,6 +670,76 @@ export abstract class BlotterApiBase implements IBlotterApi {
             case StateChangedTrigger.UserFilter:
                 return (returnJson) ? JSON.stringify(this.getState().UserFilter) : this.getState().UserFilter
         }
+    }
+
+    public configGetAdvancedSearchState(returnJson: boolean = false): AdvancedSearchState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.AdvancedSearch, returnJson)
+    }
+    public configGetAlertSearchState(returnJson: boolean = false): AlertState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Alert, returnJson)
+    }
+    public configGetBulkUpdateState(returnJson: boolean = false): BulkUpdateState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.BulkUpdate, returnJson)
+    }
+    public configGetCalculatedColumnState(returnJson: boolean = false): CalculatedColumnState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.CalculatedColumn, returnJson)
+    }
+    public configGetCalendarState(returnJson: boolean = false): CalendarState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Calendar, returnJson)
+    }
+    public configGetCellValidationState(returnJson: boolean = false): CellValidationState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.CellValidation, returnJson)
+    }
+    public configGetChartState(returnJson: boolean = false): ChartState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Chart, returnJson)
+    }
+    public configGetColumnFilterState(returnJson: boolean = false): ColumnFilterState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.ColumnFilter, returnJson)
+     }
+    public configGetConditionalStyleState(returnJson: boolean = false): ConditionalStyleState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.ConditionalStyle, returnJson)
+    }
+    public configGetCustomSortState(returnJson: boolean = false): CustomSortState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.CustomSort, returnJson)
+    }
+    public configGetDashboardState(returnJson: boolean = false): DashboardState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Dashboard, returnJson)
+    }
+    public configGetDataSourceState(returnJson: boolean = false): DataSourceState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.DataSource, returnJson)
+    }
+    public configGetExportState(returnJson: boolean = false): ExportState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Export, returnJson)
+    }
+    public configGetFlashingCellState(returnJson: boolean = false): FlashingCellState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.FlashingCell, returnJson)
+    }
+    public configGetFormatColumnState(returnJson: boolean = false): FormatColumnState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.FormatColumn, returnJson)
+    }
+    public configGetLayoutState(returnJson: boolean = false): LayoutState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Layout, returnJson)
+    }
+    public configGetPlusMinusState(returnJson: boolean = false): PlusMinusState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.PlusMinus, returnJson)
+     }
+    public configGetQuickSearchState(returnJson: boolean = false): QuickSearchState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.QuickSearch, returnJson)
+    }
+    public configGetSelectedCellsState(returnJson: boolean = false): SelectedCellsState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.SelectedCells, returnJson)
+    }
+    public configGetShortcutState(returnJson: boolean = false): ShortcutState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Shortcut, returnJson)
+    }
+    public configGetSmartEditState(returnJson: boolean = false): SmartEditState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.SmartEdit, returnJson)
+    }
+    public configGetThemeState(returnJson: boolean = false): ThemeState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.Theme, returnJson)
+    }
+    public configGetUserFilterState(returnJson: boolean = false): UserFilterState {
+        return this.configGetUserStateByFunction(StateChangedTrigger.UserFilter, returnJson)
     }
 
     // Events
