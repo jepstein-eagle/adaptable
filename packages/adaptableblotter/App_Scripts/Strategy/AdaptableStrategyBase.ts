@@ -13,7 +13,7 @@ import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdvancedSearch } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
+import { IRunTimeState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 export abstract class AdaptableStrategyBase implements IStrategy {
@@ -202,7 +202,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
 
-    publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IUserState): void {
+    publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IRunTimeState): void {
         let stateChangedInfo: IStateChangedInfo = {
             stateChangedTrigger: stateChangedTrigger,
             userState: state

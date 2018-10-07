@@ -38,7 +38,7 @@ import { IAlert } from "../Interface/IMessage";
 import { ObjectFactory } from "../ObjectFactory";
 import { IColumn } from "../Interface/IColumn";
 import { StringExtensions } from "../Extensions/StringExtensions";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IRunTimeState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -591,7 +591,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         return this.getState()
     }
 
-    public configGetAllUserState(): IUserState[] {
+    public configGetAllUserState(): IRunTimeState[] {
         return [
             this.getState().AdvancedSearch,
             this.getState().Alert,
@@ -622,7 +622,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
     public configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
         'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
         'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
-        'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): IUserState {
+        'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): IRunTimeState {
         switch (stateChangedTrigger as StateChangedTrigger) {
             case StateChangedTrigger.AdvancedSearch:
                 return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch

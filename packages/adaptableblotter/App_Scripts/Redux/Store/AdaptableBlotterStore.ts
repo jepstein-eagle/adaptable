@@ -182,13 +182,13 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         // perhaps would be better to have 2 stores - persistence store and in-memory store
         engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
         engineWithFilter = filter(engineWithMigrate, [], [
-            // Used ONLY Internally so no need to save
+            // System State - Used ONLY Internally so no need to save
             ConfigConstants.SYSTEM,
             ConfigConstants.GRID,
             ConfigConstants.MENU,
             ConfigConstants.POPUP,
             ConfigConstants.TEAMSHARING,
-            // Set ONLY at DesignTime in PredefinedConfig and never changed at runtime
+            // Design Time State - set ONLY in PredefinedConfig and never changed at runtime
             ConfigConstants.USER_INTERFACE,
             ConfigConstants.ENTITLEMENTS,
             ConfigConstants.APPLICATION,

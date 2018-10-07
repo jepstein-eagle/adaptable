@@ -20,7 +20,7 @@
 				"AccessLevel": "ReadOnly"
 			},
 			{
-				"FunctionName": "Layout",
+				"FunctionName": "PlusMinus",
 				"AccessLevel": "Hidden"
 			},
 			{

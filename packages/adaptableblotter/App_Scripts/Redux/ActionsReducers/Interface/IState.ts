@@ -13,11 +13,12 @@ export interface IState{
 }
 
 export interface ISystemState extends IState {
-
 }
 
-export interface IUserState extends IState {
+export interface IDesignTimeState extends IState {
+}
 
+export interface IRunTimeState extends IState {
 }
 
 /*
@@ -69,22 +70,22 @@ Predefined Config Only
 This can be set by users in Predefined Config at design-time but never editable by users at runtime
 Therefore it is not saved nor included in State events
 */
-export interface EntitlementsState extends ISystemState {
+export interface EntitlementsState extends IDesignTimeState {
     FunctionEntitlements: IEntitlement[];
 }
 
-export interface UserInterfaceState extends ISystemState {
+export interface UserInterfaceState extends IDesignTimeState {
     ColorPalette: string[];
     StyleClassNames: string[];
     PermittedColumnValues: IPermittedColumnValues[];
     ColumnCategories: IColumnCategory[];
 }
 
-export interface SystemFilterState extends ISystemState {
+export interface SystemFilterState extends IDesignTimeState {
     SystemFilters: string[];
 }
 
-export interface ApplicationState extends ISystemState {
+export interface ApplicationState extends IDesignTimeState {
 }
 
 
@@ -92,49 +93,49 @@ export interface ApplicationState extends ISystemState {
 Full Config 
 Can bet set at design time and also editable at run time by users 
 */
-export interface AdvancedSearchState extends IUserState {
+export interface AdvancedSearchState extends IRunTimeState {
     AdvancedSearches: IAdvancedSearch[];
     CurrentAdvancedSearch: string;
 }
 
-export interface AlertState extends IUserState {
+export interface AlertState extends IRunTimeState {
     AlertDefinitions: IAlertDefinition[];
     MaxAlertsInStore: number;
     AlertPopupDiv: string
 }
 
-export interface BulkUpdateState extends IUserState {
+export interface BulkUpdateState extends IRunTimeState {
     BulkUpdateValue: string;
 }
 
-export interface CalculatedColumnState extends IUserState {
+export interface CalculatedColumnState extends IRunTimeState {
     CalculatedColumns: ICalculatedColumn[];
     CalculatedColumnErrorMessage: string;
 }
 
-export interface CalendarState extends IUserState {
+export interface CalendarState extends IRunTimeState {
     CurrentCalendar: string;
 }
 
-export interface CellValidationState extends IUserState {
+export interface CellValidationState extends IRunTimeState {
     CellValidations: ICellValidationRule[];
 }
 
-export interface ChartState extends IUserState {
+export interface ChartState extends IRunTimeState {
     ChartDefinitions: IChartDefinition[];
     CurrentChartName: string;
     ChartData: any;
 }
 
-export interface ConditionalStyleState extends IUserState {
+export interface ConditionalStyleState extends IRunTimeState {
     ConditionalStyles: IConditionalStyle[];
 }
 
-export interface CustomSortState extends IUserState {
+export interface CustomSortState extends IRunTimeState {
     CustomSorts: ICustomSort[];
 }
 
-export interface DashboardState extends IUserState {
+export interface DashboardState extends IRunTimeState {
     AvailableToolbars: string[];
     VisibleToolbars: string[];
     VisibleButtons: string[];
@@ -147,64 +148,64 @@ export interface DashboardState extends IUserState {
     ApplicationToolbarTitle: string;
 }
 
-export interface DataSourceState extends IUserState {
+export interface DataSourceState extends IRunTimeState {
     DataSources: string[];
     CurrentDataSource: string;
 }
 
-export interface ExportState extends IUserState {
+export interface ExportState extends IRunTimeState {
     IPPDomainsPages: IPPDomain[];  // should we persist this???
     CurrentReport: string;
     Reports: IReport[];
     ErrorMsg: string;
 }
 
-export interface ColumnFilterState extends IUserState {
+export interface ColumnFilterState extends IRunTimeState {
     ColumnFilters: IColumnFilter[];
 }
 
-export interface UserFilterState extends IUserState {
+export interface UserFilterState extends IRunTimeState {
     UserFilters: IUserFilter[];
 }
 
-export interface FlashingCellState extends IUserState {
+export interface FlashingCellState extends IRunTimeState {
     FlashingCells: IFlashingCell[];
 }
 
-export interface FormatColumnState extends IUserState {
+export interface FormatColumnState extends IRunTimeState {
     FormatColumns: IFormatColumn[];
 }
 
-export interface LayoutState extends IUserState {
+export interface LayoutState extends IRunTimeState {
     CurrentLayout: string;
     Layouts: ILayout[];
 }
 
-export interface PlusMinusState extends IUserState {
+export interface PlusMinusState extends IRunTimeState {
     PlusMinusRules: IPlusMinusRule[];
 }
 
-export interface QuickSearchState extends IUserState {
+export interface QuickSearchState extends IRunTimeState {
     QuickSearchText: string;
     Operator: 'Contains' | 'StartsWith';
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
 }
 
-export interface SelectedCellsState extends IUserState {
+export interface SelectedCellsState extends IRunTimeState {
     SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
 }
 
-export interface ShortcutState extends IUserState {
+export interface ShortcutState extends IRunTimeState {
     Shortcuts: IShortcut[];
 }
 
-export interface SmartEditState extends IUserState {
+export interface SmartEditState extends IRunTimeState {
     SmartEditValue: number;
     MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
 }
 
-export interface ThemeState extends IUserState {
+export interface ThemeState extends IRunTimeState {
     CurrentTheme: string;
     SystemThemes: string[];
     UserThemes: IUserTheme[];
