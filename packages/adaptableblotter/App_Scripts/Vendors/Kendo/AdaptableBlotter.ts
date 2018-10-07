@@ -75,6 +75,7 @@ import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
 import { ChartService } from '../../Core/Services/ChartService';
+import { HomeStrategy } from '../../Strategy/HomeStrategy';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -138,6 +139,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsKendoStrategy(this))
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy(this))  
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnKendoStrategy(this))
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))

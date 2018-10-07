@@ -41,8 +41,8 @@ function InitTradeBlotter() {
         blotterId: "demo blotter",              // id for blotter 
         enableAuditLog: false,                  // not running audit log
         enableRemoteConfigServer: false,        // not running remote config
-         predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
-        //    serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
+        predefinedConfig: "demoConfig.json",    // passing in predefined config with a file    
+        serverSearchOption: "AdvancedSearch",             // performing AdvancedSearch on the server, not the client
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -54,7 +54,7 @@ function InitTradeBlotter() {
         useDefaultVendorGridThemes: true,
         // useAdaptableBlotterFilterForm: false,
         // useAdaptableBlotterQuickFilter: false
-       // getColumnValues: retrieveValues,
+        getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
     }
 
@@ -66,14 +66,13 @@ function InitTradeBlotter() {
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => { apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions); });
     adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs))
     adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
+    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs))
     setTimeout(() => {
         if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout == "Ab_Default_Layout") {
             gridOptions.columnApi.autoSizeAllColumns(), 2;
         }
     })
 }
-
-
 
 function retrieveValues(columnName) {
     return new Promise((resolve, reject) => {
@@ -89,6 +88,11 @@ function listenToColumnStateChange(columnChangedArgs) {
 function listenToStateChange(stateChangedArgs) {
     console.log("state event received")
     console.log(stateChangedArgs)
+}
+
+function listenToSearchChange(searchChangedArgs) {
+    console.log("search changed event received")
+    console.log(searchChangedArgs)
 }
 
 function getValuesForColumn(columnName) {
@@ -163,7 +167,7 @@ function apiTester(state, gridOptions) {
             let test4 = adaptableblotter.api.configGetAdvancedSearchState()
             console.log("advanced search");
             console.log(test4);
-            let test5 = adaptableblotter.api.configGetAdvancedSearchState( true)
+            let test5 = adaptableblotter.api.configGetAdvancedSearchState(true)
             console.log("advanced search string");
             console.log(test5);
         } else if (quickSearchText == "#permies") {
@@ -171,8 +175,8 @@ function apiTester(state, gridOptions) {
         } else if (quickSearchText == "#systemfilters") {
             adaptableblotter.api.filterClearSystemFilters()
         } else if (quickSearchText == "#reset") {
-       //     adaptableblotter.api.configDeleteLocalStorage()
-            
+            //     adaptableblotter.api.configDeleteLocalStorage()
+
         } else if (quickSearchText == "#miguel") {
             setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues("deskId", ["5555555", "8888888"]), 20000);
         } else if (quickSearchText == "#allsf") {

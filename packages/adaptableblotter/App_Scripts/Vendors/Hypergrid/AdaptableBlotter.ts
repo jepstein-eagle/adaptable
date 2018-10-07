@@ -76,6 +76,7 @@ import { IChartService } from '../../Core/Services/Interface/IChartService';
 import { ChartService } from '../../Core/Services/ChartService';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { HypergridThemes } from './HypergridThemes';
+import { HomeStrategy } from '../../Strategy/HomeStrategy';
 
 
 //icon to indicate toggle state
@@ -162,6 +163,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))

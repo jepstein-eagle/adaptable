@@ -56,6 +56,7 @@ import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogge
 import { ISelectedCellInfo } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
 import { ChartService } from '../../Core/Services/ChartService';
+import { HomeStrategy } from '../../Strategy/HomeStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
@@ -115,6 +116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
 
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy(this))
         // this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
