@@ -77,6 +77,7 @@ import { ChartService } from '../../Core/Services/ChartService';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { HypergridThemes } from './HypergridThemes';
 import { HomeStrategy } from '../../Strategy/HomeStrategy';
+import { AlertStrategy } from '../../Strategy/AlertStrategy';
 
 
 //icon to indicate toggle state
@@ -151,6 +152,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies = new Map<string, IStrategy>();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
