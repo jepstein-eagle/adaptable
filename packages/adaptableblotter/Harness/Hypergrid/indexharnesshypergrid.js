@@ -117,8 +117,15 @@ function InitBlotter() {
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
+    adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
+  
  //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
   //  vendorGrid.addProperties(lightTheme);
+}
+
+function listenToStateChange(stateChangedArgs) {
+    console.log("state event received")
+    console.log(stateChangedArgs)
 }
 
 function retrieveValues(columnName) {

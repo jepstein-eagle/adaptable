@@ -207,27 +207,31 @@ class AdaptableBlotter {
     setColumnIntoStore() {
         // let columns: IColumn[] = this.hyperGrid.behavior.columns.map((x: any) => {
         let activeColumns = this.hyperGrid.behavior.getActiveColumns().map((x, index) => {
+            let existingColumn = this.getState().Grid.Columns.find(c => c.ColumnId == x.name);
             return {
-                ColumnId: x.name ? x.name : "Unknown Column",
-                FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                DataType: this.getColumnDataType(x),
+                ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : "Unknown Column",
+                FriendlyName: existingColumn ? existingColumn.FriendlyName :
+                    x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
                 Visible: true,
                 Index: index,
-                ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name),
-                Filterable: this.isFilterable() // TODO: can we manage by column
+                ReadOnly: this.isColumnReadonly(x.name, index),
+                Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
+                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
             };
         });
         let hiddenColumns = this.hyperGrid.behavior.getHiddenColumns().map((x) => {
+            let existingColumn = this.getState().Grid.Columns.find(c => c.ColumnId == x.name);
             return {
-                ColumnId: x.name ? x.name : "Unknown Column",
-                FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                DataType: this.getColumnDataType(x),
+                ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : "Unknown Column",
+                FriendlyName: existingColumn ? existingColumn.FriendlyName :
+                    x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
                 Visible: false,
                 Index: -1,
-                ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name),
-                Filterable: this.isFilterable() // TODO: can we manage by column
+                ReadOnly: false,
+                Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
+                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
             };
         });
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -496,15 +500,10 @@ class AdaptableBlotter {
     getColumnIndex(columnId) {
         //this returns the index of the column in the collection which is as well the index y of the cell in the grid
         // it doesnt return the index from the schema
-        return this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.findIndex(x => x.ColumnId == columnId);
-        //  if (column) {
-        //      return 14;//column.Index
-        //  }
-        //  else {
-        //      return -1;
-        //  }
+        let hgindex = this.hyperGrid.behavior.getActiveColumns().findIndex((x) => x.name == columnId);
+        return hgindex;
     }
-    isColumnReadonly(columnId) {
+    isColumnReadonly(columnId, index) {
         if (this.hyperGrid.cellEditor) {
             if (this.hyperGrid.cellEditor.column.name == columnId) {
                 //we are already editing that column so that's an easy answer
@@ -521,7 +520,7 @@ class AdaptableBlotter {
             //for that column directly
             let cellEvent = new this.hyperGrid.behavior.CellEvent;
             //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
-            cellEvent.resetGridCY(this.getColumnIndex(columnId), 1);
+            cellEvent.resetGridCY(index, 1);
             let editor = this.hyperGrid.behavior.getCellEditorAt(cellEvent);
             if (editor) {
                 editor.cancelEditing();
