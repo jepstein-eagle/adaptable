@@ -1,5 +1,6 @@
 
 var adaptableblotter
+var trades
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -33,7 +34,7 @@ function getSchema(data) {
 
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    var trades = dataGen.getTrades(15000);
+     trades = dataGen.getTrades(15000);
 
     var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
     //  dataGen.startTickingDataHypergrid(vendorGrid)
@@ -112,7 +113,7 @@ function InitBlotter() {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-      //  getColumnValues: retrieveValues,
+        getColumnValues: retrieveValues,
         maxColumnValueItemsDisplayed: 1000
     }
 
@@ -130,22 +131,27 @@ function listenToStateChange(stateChangedArgs) {
 
 function retrieveValues(columnName) {
     return new Promise((resolve, reject) => {
-        setTimeout(() => resolve(getValuesForColumn(columnName)), 1500);
+        setTimeout(() => resolve(getValuesForColumn(columnName)), 500);
     });
 }
 
 function getValuesForColumn(columnName) {
-    var random_boolean = Math.random() >= 0.5;
-    if(random_boolean){
-        return null
+    let vals;
+    if (columnName == "notional") {
+        vals = [1000000, 5000000, 10000000];
     }
-    let columnValues = []
-    var i;
-    columnValues.push(new Date().toTimeString())
-    for (i = 1; i < 2000; i++) {
-        columnValues.push(columnName + " item " + i)
+    else if (columnName == "settlementDate") {
+        vals = [
+            trades[0]["settlementDate"],
+            trades[1]["settlementDate"],
+            trades[2]["settlementDate"],
+            trades[3]["settlementDate"],
+            trades[4]["settlementDate"],
+        ];
+    } else {
+        vals = ["val1", "val2", "val3"]
     }
-    return columnValues
+    return { DistinctCriteriaPairValue: "DisplayValue", ColumnValues: vals }
 }
 
 function getTradesForSearch(searchArgs, dataGen) {

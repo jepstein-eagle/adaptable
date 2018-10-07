@@ -727,7 +727,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
-        return null
+        let formatter = this.getColumnFormatter(colId);
+        if(formatter){
+            return formatter(rawValue)
+        }else{
+            return rawValue;
+        }
     }
 
     public getRawValueFromRecord(row: any, columnId: string): any {

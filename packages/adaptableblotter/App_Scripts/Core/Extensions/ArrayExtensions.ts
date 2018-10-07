@@ -4,40 +4,40 @@ export module ArrayExtensions {
     export function ContainsItem(array: any[], itemToCheck: any): boolean {
         return array.indexOf(itemToCheck) > -1;
     }
-    
+
     export function NotContainsItem(array: any[], itemToCheck: any): boolean {
         return !ContainsItem(array, itemToCheck)
     }
 
     export function RetrieveDistinct(array: any[]): any[] {
-        return  Array.from(new Set(array.map(item => item)));
+        return Array.from(new Set(array.map(item => item)));
     }
 
-    export function IsNull(arrayToCheck: any[]) : boolean {
+    export function IsNull(arrayToCheck: any[]): boolean {
         return arrayToCheck == null;
     }
 
-    export function IsNotNull(arrayToCheck: any[]) : boolean {
+    export function IsNotNull(arrayToCheck: any[]): boolean {
         return !ArrayExtensions.IsNull(arrayToCheck);
     }
 
-    export function IsEmpty(arrayToCheck: any[]) : boolean {
-        return arrayToCheck.length==0;
+    export function IsEmpty(arrayToCheck: any[]): boolean {
+        return arrayToCheck.length == 0;
     }
 
-     export function IsNotEmpty(arrayToCheck: any[]) : boolean {
+    export function IsNotEmpty(arrayToCheck: any[]): boolean {
         return !ArrayExtensions.IsEmpty(arrayToCheck);
     }
 
-    export function IsNullOrEmpty(arrayToCheck: any[]) : boolean {
+    export function IsNullOrEmpty(arrayToCheck: any[]): boolean {
         return ArrayExtensions.IsNull(arrayToCheck) || ArrayExtensions.IsEmpty(arrayToCheck);
     }
 
-    export function IsNotNullOrEmpty(arrayToCheck: any[]) : boolean {
+    export function IsNotNullOrEmpty(arrayToCheck: any[]): boolean {
         return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
     }
 
-    export function moveArray(array: any[], from: number, to: number) : void {
+    export function moveArray(array: any[], from: number, to: number): void {
         array.splice(to, 0, array.splice(from, 1)[0]);
     }
 
@@ -49,7 +49,7 @@ export module ArrayExtensions {
         return arr1.every(x => arr2.indexOf(x) != -1)
     }
 
-    export function areArraysEqualWithOrder(arr1: any[], arr2: any[]) : boolean {
+    export function areArraysEqualWithOrder(arr1: any[], arr2: any[]): boolean {
         if (arr1 == null) {
             return true
         }
@@ -60,7 +60,7 @@ export module ArrayExtensions {
         return arr1.every((x, index) => arr2.indexOf(x) == index)
     }
 
-    export function areArraysEqualWithOrderandProperties(value: any[], other: any[]) : boolean {
+    export function areArraysEqualWithOrderandProperties(value: any[], other: any[]): boolean {
         var type = Object.prototype.toString.call(value);
 
         // If the two objects are not the same type, return false
