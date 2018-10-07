@@ -70,8 +70,6 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 }
             }
         }
-alert("column:" + selectedCellInfo.Columns[0].ColumnId)
-alert("column readonky:" + selectedCellInfo.Columns[0].ReadOnly)
         if (selectedCellInfo.Columns[0].ReadOnly) {
             return {
                 Alert: {
