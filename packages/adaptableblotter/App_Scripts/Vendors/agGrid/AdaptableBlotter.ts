@@ -180,7 +180,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load
-            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+        .then(() => this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowLoading()))
+        .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
                     AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
@@ -201,7 +202,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.gridOptions.api.refreshHeader();
                 }
                 this.isInitialised = true
-                this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
+               this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
 
         if (renderGrid) {
@@ -216,11 +217,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public Initialise(){
-
-    }
-    
-    private getState(): AdaptableBlotterState {
+       private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
 

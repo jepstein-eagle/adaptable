@@ -880,8 +880,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 case INIT_STATE:
                 case RESET_STATE: {
                      let returnAction = next(action);
-                    //we set the column list from the datasource
+                 
+                     //we set the column list from the datasource
                     blotter.setColumnIntoStore();
+
                     let gridState: GridState = middlewareAPI.getState().Grid
                     let layoutState: LayoutState = middlewareAPI.getState().Layout
                     let visibleColumnNames = gridState.Columns.filter(c => c.Visible).map(c => c.ColumnId)
