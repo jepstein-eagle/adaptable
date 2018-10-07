@@ -615,7 +615,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     private isColumnReadonly(columnId: string, index: number): boolean {
-       console.log("geting readonly for:" + columnId)
         if (this.hyperGrid.cellEditor) {
             if (this.hyperGrid.cellEditor.column.name == columnId) {
                 //we are already editing that column so that's an easy answer
