@@ -577,15 +577,14 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // General Config
     public configClear(): void {
-      //this doesnt work but should!
+        //this doesnt work but should!
         this.dispatchAction(ResetUserData())
-        }
+    }
 
     public configDeleteLocalStorage(): void {
-      
-     //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
+        //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
         localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
-   //      window.location.reload();
+        window.location.reload();
     }
 
     public configGetAllState(): AdaptableBlotterState {
