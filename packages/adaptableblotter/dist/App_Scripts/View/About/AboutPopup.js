@@ -34,7 +34,7 @@ class AboutPopupComponent extends React.Component {
         let options = this.props.Blotter.BlotterOptions;
         let returnRows = [];
         returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.Blotter.VendorGridName));
-        returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "2.4"));
+        returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "2.5"));
         if (options.blotterId != undefined) {
             returnRows.push(this.createColItem(colItems, "Blotter Id", options.blotterId));
         }

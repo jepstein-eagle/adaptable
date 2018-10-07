@@ -94,6 +94,7 @@ exports.InitState = () => ({
 });
 const rootReducerWithResetManagement = (state, action) => {
     if (action.type === RESET_STATE) {
+        alert("in top");
         //This trigger the persist of the state with nothing
         state.AdvancedSearch = undefined;
         state.Alert = undefined;
@@ -117,19 +118,20 @@ const rootReducerWithResetManagement = (state, action) => {
         state.UserFilter.UserFilters = [];
         state.SystemFilter.SystemFilters = [];
         state.Grid = undefined;
-        state.System = undefined;
+        //     state.System = undefined
         state.Layout = undefined;
-        state.Menu.ContextMenu = undefined;
-        state.Menu.MenuItems = [];
-        state.Menu = undefined;
+        //      state.Menu.ContextMenu = undefined
+        //      state.Menu.MenuItems = []
+        //      state.Menu = undefined
         state.PlusMinus = undefined;
         state.QuickSearch = undefined;
         state.Shortcut = undefined;
         state.SmartEdit = undefined;
         state.SelectedCells = undefined;
-        state.TeamSharing = undefined;
+        //   state.TeamSharing = undefined
         state.Theme = undefined;
-        state.UserInterface = undefined;
+        //   state.UserInterface = undefined
+        //  state = undefined
     }
     return rootReducer(state, action);
 };
@@ -258,14 +260,11 @@ var functionLogMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                     return next(action);
                 }
                 case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
-                    // this is basically select as we immediately set filters and just audit them all for now
-                    let actionTyped = action;
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId, "apply column filters", "filters applied", state.ColumnFilter.ColumnFilters);
                     return next(action);
                 }
                 case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
                     let actionTyped = action;
-                    let userFilter = actionTyped.UserFilter;
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId, "user filters changed", "filters applied", state.UserFilter.UserFilters);
                     return next(action);
                 }
@@ -294,8 +293,8 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
                     xhr.onerror = (ev) => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity);
-                    xhr.ontimeout = (ev) => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity);
-                    xhr.onload = (ev) => {
+                    xhr.ontimeout = () => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity);
+                    xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
@@ -323,8 +322,8 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
                     xhr.onerror = (ev) => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message);
-                    xhr.ontimeout = (ev) => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("TeamSharing get timeout");
-                    xhr.onload = (ev) => {
+                    xhr.ontimeout = () => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("TeamSharing get timeout");
+                    xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing get error : " + xhr.statusText);

@@ -119,6 +119,7 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     exportReportsGetAll(): IReport[];
     exportLiveReportsGetAll(): ILiveReport[];
     configClear(): void;
+    configDeleteLocalStorage(): void;
     configGetAllState(): AdaptableBlotterState;
     configGetAllUserState(): IUserState[];
     configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson?: boolean): IUserState;

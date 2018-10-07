@@ -20,5 +20,5 @@ exports.DefaultAdaptableBlotterOptions = {
     ignoreCaseInQueries: true,
     useDefaultVendorGridThemes: true,
     useAdaptableBlotterFilterForm: true,
-    useAdaptableBlotterQuickFilter: true
+    useAdaptableBlotterFloatingFilter: true
 };

@@ -101,7 +101,7 @@ export interface IAdaptableBlotterOptions {
     * If false, the one supplied by the vendor grid will be used
     * Only applicable in grids where the vendor offers a filter row
     */
-    useAdaptableBlotterQuickFilter?: boolean;
+    useAdaptableBlotterFloatingFilter?: boolean;
     /**
     * Required if using iPushPull to display / send live report data
     */

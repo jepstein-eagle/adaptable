@@ -454,7 +454,13 @@ class BlotterApiBase {
     }
     // General Config
     configClear() {
+        //this doesnt work but should!
         this.dispatchAction(AdaptableBlotterStore_1.ResetUserData());
+    }
+    configDeleteLocalStorage() {
+        //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
+        localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
+        window.location.reload();
     }
     configGetAllState() {
         return this.getState();

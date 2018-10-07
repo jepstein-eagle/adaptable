@@ -173,6 +173,7 @@ export interface IBlotterApi {
      * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
      *  */
     configClear(): void;
+    configDeleteLocalStorage(): void;
     configGetAllState(): AdaptableBlotterState;
     configGetAllUserState(): IUserState[];
     configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): IUserState;
