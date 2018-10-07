@@ -1311,7 +1311,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
         }
         // }
-        if ( this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterQuickFilter) {
+        if ( this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterFloatingFilter) {
             //      if (this.isFilterable()) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);

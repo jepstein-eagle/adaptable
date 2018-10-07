@@ -20,6 +20,6 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     ignoreCaseInQueries: true,
     useDefaultVendorGridThemes: true,
     useAdaptableBlotterFilterForm: true,
-    useAdaptableBlotterQuickFilter: true
+    useAdaptableBlotterFloatingFilter: true
 }
 
