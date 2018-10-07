@@ -2,14 +2,18 @@ import * as AdaptableBlotterStates from '../../ActionsReducers/Interface/IState'
 import * as Redux from 'redux';
 
 export interface AdaptableBlotterState {
+    // internal state
     Popup: AdaptableBlotterStates.PopupState;
     Menu: AdaptableBlotterStates.MenuState;
     Grid: AdaptableBlotterStates.GridState;
     System: AdaptableBlotterStates.SystemState;
+
+    // Set at design time only
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     UserInterface: AdaptableBlotterStates.UserInterfaceState;
     SystemFilter: AdaptableBlotterStates.SystemFilterState;
-  
+
+    // Set at design time and / or run time => only state is persisted
     AdvancedSearch: AdaptableBlotterStates.AdvancedSearchState;
     Alert: AdaptableBlotterStates.AlertState;
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
@@ -23,7 +27,7 @@ export interface AdaptableBlotterState {
     Dashboard: AdaptableBlotterStates.DashboardState;
     DataSource: AdaptableBlotterStates.DataSourceState;
     Export: AdaptableBlotterStates.ExportState;
-     FlashingCell: AdaptableBlotterStates.FlashingCellState;
+    FlashingCell: AdaptableBlotterStates.FlashingCellState;
     FormatColumn: AdaptableBlotterStates.FormatColumnState;
     Layout: AdaptableBlotterStates.LayoutState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;

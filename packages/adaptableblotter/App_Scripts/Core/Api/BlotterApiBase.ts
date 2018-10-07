@@ -19,13 +19,11 @@ import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as SystemFilterRedux from '../../Redux/ActionsReducers/SystemFilterRedux'
-import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IConditionalStyle, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
+import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
 import * as StrategyIds from '../Constants/StrategyIds'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
@@ -34,15 +32,11 @@ import { ResetUserData } from '../../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";
-import { ExportApplyAction } from "../../Redux/ActionsReducers/ExportRedux";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { FilterHelper } from "../Helpers/FilterHelper";
 import { IAlert } from "../Interface/IMessage";
-import { Alert } from "react-bootstrap";
-import { ExpressionHelper } from "../Helpers/ExpressionHelper";
 import { ObjectFactory } from "../ObjectFactory";
 import { IColumn } from "../Interface/IColumn";
-import { ColumnFilterHelper } from "../Helpers/ColumnFilterHelper";
 import { StringExtensions } from "../Extensions/StringExtensions";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
 
@@ -583,7 +577,15 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     // General Config
     public configClear(): void {
+      //this doesnt work but should!
         this.dispatchAction(ResetUserData())
+        }
+
+    public configDeleteLocalStorage(): void {
+      
+     //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
+        localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
+   //      window.location.reload();
     }
 
     public configGetAllState(): AdaptableBlotterState {

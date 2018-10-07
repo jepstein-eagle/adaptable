@@ -170,6 +170,9 @@ function apiTester(state, gridOptions) {
             adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
         } else if (quickSearchText == "#systemfilters") {
             adaptableblotter.api.filterClearSystemFilters()
+        } else if (quickSearchText == "#reset") {
+       //     adaptableblotter.api.configDeleteLocalStorage()
+            
         } else if (quickSearchText == "#miguel") {
             setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues("deskId", ["5555555", "8888888"]), 20000);
         } else if (quickSearchText == "#allsf") {

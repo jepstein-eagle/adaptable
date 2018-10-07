@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, DataType, MessageType } from '../../Core/Enums';
+import { ExportDestination, MathOperation, MessageType } from '../../Core/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -63,8 +63,6 @@ import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogge
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { ColumnFilterHelper } from '../../Core/Helpers/ColumnFilterHelper';
-import { FilterHelper } from '../../Core/Helpers/FilterHelper';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -115,6 +113,7 @@ export const InitState = (): ResetUserDataAction => ({
 })
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
     if (action.type === RESET_STATE) {
+        alert("in top")
         //This trigger the persist of the state with nothing
         state.AdvancedSearch = undefined
         state.Alert = undefined
@@ -138,19 +137,21 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
         state.UserFilter.UserFilters = []
         state.SystemFilter.SystemFilters = []
         state.Grid = undefined
-        state.System = undefined
+   //     state.System = undefined
         state.Layout = undefined
-        state.Menu.ContextMenu = undefined
-        state.Menu.MenuItems = []
-        state.Menu = undefined
+  //      state.Menu.ContextMenu = undefined
+  //      state.Menu.MenuItems = []
+  //      state.Menu = undefined
         state.PlusMinus = undefined
         state.QuickSearch = undefined
         state.Shortcut = undefined
         state.SmartEdit = undefined
         state.SelectedCells = undefined
-        state.TeamSharing = undefined
+     //   state.TeamSharing = undefined
         state.Theme = undefined
-        state.UserInterface = undefined
+     //   state.UserInterface = undefined
+
+      //  state = undefined
     }
 
     return rootReducer(state, action)
@@ -331,8 +332,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                     return next(action);
                 }
                 case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
-                    // this is basically select as we immediately set filters and just audit them all for now
-                    let actionTyped = <ColumnFilterRedux.ColumnFilterAddUpdateAction>action
 
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.ColumnFilterStrategyId,
                         "apply column filters",
@@ -343,7 +342,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
                 }
                 case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
                     let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
-                    let userFilter = actionTyped.UserFilter;
 
                     adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.UserFilterStrategyId,
                         "user filters changed",
@@ -384,15 +382,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
                     xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
-                    xhr.ontimeout = (ev: ProgressEvent) => AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity)
-                    xhr.onload = (ev: ProgressEvent) => {
+                    xhr.ontimeout = () => AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity)
+                    xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error }));
                             }
                             else {
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info }))
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info }));
                             }
                         }
                     }
@@ -413,8 +411,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
                     xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message)
-                    xhr.ontimeout = (ev: ProgressEvent) => AdaptableBlotterLogger.LogWarning("TeamSharing get timeout")
-                    xhr.onload = (ev: ProgressEvent) => {
+                    xhr.ontimeout = () => AdaptableBlotterLogger.LogWarning("TeamSharing get timeout")
+                    xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 AdaptableBlotterLogger.LogError("TeamSharing get error : " + xhr.statusText);
@@ -424,8 +422,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                                     if (key == "timestamp") {
                                         return new Date(value);
                                     }
-                                    return value
-                                })))
+                                    return value;
+                                })));
                             }
                         }
                     }
@@ -881,7 +879,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:
                 case RESET_STATE: {
-                    let returnAction = next(action);
+                     let returnAction = next(action);
                     //we set the column list from the datasource
                     blotter.setColumnIntoStore();
                     let gridState: GridState = middlewareAPI.getState().Grid

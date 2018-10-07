@@ -4,7 +4,8 @@
 		"Layouts": [
 			{
 				"Columns": [
-					"ask"
+					"ask",
+					"bid"
 				],
 				"GridSorts": [],
 				"Name": "Help",

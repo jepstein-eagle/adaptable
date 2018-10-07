@@ -1,8 +1,6 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import * as PopupRedux from '../ActionsReducers/PopupRedux'
-import { MessageType } from '../../Core/Enums';
 
 interface IAdaptableBlotterReduxStorageClientEngine extends ReduxStorage.StorageEngine { }
 

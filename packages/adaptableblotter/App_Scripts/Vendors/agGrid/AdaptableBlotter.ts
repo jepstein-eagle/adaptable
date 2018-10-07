@@ -216,6 +216,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
+    public Initialise(){
+
+    }
+    
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
