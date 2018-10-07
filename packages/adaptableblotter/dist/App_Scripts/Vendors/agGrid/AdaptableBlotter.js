@@ -68,6 +68,7 @@ const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 const LayoutHelper_1 = require("../../Core/Helpers/LayoutHelper");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
+const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this.calculatedColumnPathMap = new Map();
@@ -120,6 +121,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy_1.FlashingCellsagGridStrategy(this));
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnagGridStrategy_1.FormatColumnagGridStrategy(this));
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
@@ -132,6 +134,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
+            .then(() => this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowLoading()))
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
@@ -160,8 +163,6 @@ class AdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterView_1.AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
-    }
-    Initialise() {
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();

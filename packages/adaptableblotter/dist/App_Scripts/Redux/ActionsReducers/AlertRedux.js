@@ -21,7 +21,7 @@ exports.AlertDefinitionChangeMessageType = (Index, MessageType) => ({
 const initialAlertState = {
     AlertDefinitions: [],
     MaxAlertsInStore: 5,
-    AlertPopupDiv: "alertshere"
+    AlertPopupDiv: ""
 };
 exports.AlertReducer = (state = initialAlertState, action) => {
     let alertDefinitions;

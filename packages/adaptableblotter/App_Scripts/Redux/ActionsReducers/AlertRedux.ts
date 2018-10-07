@@ -47,7 +47,7 @@ export const AlertDefinitionChangeMessageType = (Index: number, MessageType: Mes
 const initialAlertState: AlertState = {
     AlertDefinitions: [],
     MaxAlertsInStore: 5,
-    AlertPopupDiv : "alertshere"
+    AlertPopupDiv : ""
 }
 
 export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = initialAlertState, action: Redux.Action): AlertState => {

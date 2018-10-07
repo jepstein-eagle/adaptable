@@ -39,6 +39,7 @@ const BulkUpdateStrategy_1 = require("../../Strategy/BulkUpdateStrategy");
 const BlotterApi_1 = require("./BlotterApi");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ChartService_1 = require("../../Core/Services/ChartService");
+const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
 class AdaptableBlotter {
     constructor(grid, container, options) {
         this.grid = grid;
@@ -79,6 +80,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         // this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));

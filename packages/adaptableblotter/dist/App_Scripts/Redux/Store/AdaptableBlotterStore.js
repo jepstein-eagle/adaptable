@@ -155,13 +155,13 @@ class AdaptableBlotterStore {
         // perhaps would be better to have 2 stores - persistence store and in-memory store
         engineWithMigrate = redux_storage_decorator_migrate_1.default(engineReduxStorage, 0, "AdaptableStoreVersion", [] /*[someExampleMigration]*/);
         engineWithFilter = redux_storage_decorator_filter_1.default(engineWithMigrate, [], [
-            // Used ONLY Internally so no need to save
+            // System State - Used ONLY Internally so no need to save
             ConfigConstants.SYSTEM,
             ConfigConstants.GRID,
             ConfigConstants.MENU,
             ConfigConstants.POPUP,
             ConfigConstants.TEAMSHARING,
-            // Set ONLY at DesignTime in PredefinedConfig and never changed at runtime
+            // Design Time State - set ONLY in PredefinedConfig and never changed at runtime
             ConfigConstants.USER_INTERFACE,
             ConfigConstants.ENTITLEMENTS,
             ConfigConstants.APPLICATION,

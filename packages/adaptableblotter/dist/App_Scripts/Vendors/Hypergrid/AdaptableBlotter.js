@@ -55,6 +55,7 @@ const _ = require("lodash");
 const SelectedCellsStrategy_1 = require("../../Strategy/SelectedCellsStrategy");
 const ChartService_1 = require("../../Core/Services/ChartService");
 const HypergridThemes_1 = require("./HypergridThemes");
+const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -118,6 +119,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
         this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy_1.FlashingCellsHypergridStrategy(this));
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy_1.FormatColumnHypergridStrategy(this));

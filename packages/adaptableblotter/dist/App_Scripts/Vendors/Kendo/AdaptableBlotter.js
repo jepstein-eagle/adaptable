@@ -52,6 +52,7 @@ const BlotterApi_1 = require("./BlotterApi");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const SelectedCellsStrategy_1 = require("../../Strategy/SelectedCellsStrategy");
 const ChartService_1 = require("../../Core/Services/ChartService");
+const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._onKeyDown = new EventDispatcher_1.EventDispatcher();
@@ -94,6 +95,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
         this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
         this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsKendoStrategy_1.FlashingCellsKendoStrategy(this));
+        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnKendoStrategy_1.FormatColumnKendoStrategy(this));
         this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));

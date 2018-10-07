@@ -40,7 +40,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     EmbedColumnMenu: boolean;
     isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
-    Initialise(): void;
     private getState;
     setVendorGridState(vendorGridState: any): void;
     private createFilterWrapper;

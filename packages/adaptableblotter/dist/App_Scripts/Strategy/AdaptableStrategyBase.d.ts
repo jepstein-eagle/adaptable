@@ -4,6 +4,7 @@ import { IMenuItem } from '../Core/Interface/IMenu';
 import { Action } from 'redux';
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { IRunTimeState } from '../Redux/ActionsReducers/Interface/IState';
 export declare abstract class AdaptableStrategyBase implements IStrategy {
     Id: string;
     protected blotter: IAdaptableBlotter;
@@ -24,5 +25,5 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     addContextMenuItemToStore(menuItem: IMenuItem): void;
     canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType?: string): boolean;
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void;
-    publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: any): void;
+    publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IRunTimeState): void;
 }

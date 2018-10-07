@@ -139,7 +139,7 @@ class AdaptableStrategyBase {
     publishStateChanged(stateChangedTrigger, state) {
         let stateChangedInfo = {
             stateChangedTrigger: stateChangedTrigger,
-            state: state
+            userState: state
         };
         let stateEventData = {
             name: "Adaptable Blotter",

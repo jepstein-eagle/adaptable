@@ -1,4 +1,5 @@
 import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./IAdaptableBlotterObjects";
+import { IRunTimeState } from "../../../Redux/ActionsReducers/Interface/IState";
 export interface IColumnStateChangedEventArgs {
     currentLayout: string;
 }
@@ -28,7 +29,7 @@ export interface ISearchEventData extends IEventData {
 }
 export interface IStateChangedInfo {
     stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
-    state: any;
+    userState: IRunTimeState;
 }
 export interface ISearchChangedInfo {
     /**
