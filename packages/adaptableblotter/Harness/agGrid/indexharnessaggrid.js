@@ -87,8 +87,8 @@ function listenToColumnStateChange(columnChangedArgs) {
 }
 
 function listenToStateChange(stateChangedArgs) {
- //   console.log("state event received")
- //   console.log(stateChangedArgs)
+    console.log("state event received")
+    console.log(stateChangedArgs)
 }
 
 function getValuesForColumn(columnName) {

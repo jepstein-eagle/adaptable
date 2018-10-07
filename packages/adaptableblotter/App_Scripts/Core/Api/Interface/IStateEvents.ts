@@ -1,4 +1,5 @@
 import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./IAdaptableBlotterObjects";
+import { IUserState } from "../../../Redux/ActionsReducers/Interface/IState";
 
 export interface IColumnStateChangedEventArgs {
   currentLayout: string
@@ -39,7 +40,7 @@ export interface IStateChangedInfo {
   'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
   'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 
   'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
-  state: any;
+  userState: IUserState;
 }
 
 export interface ISearchChangedInfo {
