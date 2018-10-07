@@ -9,10 +9,9 @@ import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
 import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
-import { IColumn } from '../Core/Interface/IColumn';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ISelectedCell } from './Interface/ISelectedCellsStrategy';
+import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     
@@ -41,7 +40,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCellInfo: ISelectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Alert: {
@@ -71,7 +70,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 }
             }
         }
-
+alert("column:" + selectedCellInfo.Columns[0].ColumnId)
+alert("column readonky:" + selectedCellInfo.Columns[0].ReadOnly)
         if (selectedCellInfo.Columns[0].ReadOnly) {
             return {
                 Alert: {

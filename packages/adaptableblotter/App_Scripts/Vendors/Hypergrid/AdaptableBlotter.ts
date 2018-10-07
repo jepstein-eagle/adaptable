@@ -215,12 +215,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //we may revisit that later
                     this.initInternalGridLogic()
                 })
-                .then(() => {
-                    let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
-                    this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
-                    this.isInitialised = true
-                    this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())    
-                })
+            .then(() => {
+                let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+                this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+                this.isInitialised = true
+                this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
+            })
 
         // get the api ready
         this.api = new BlotterApi(this);
@@ -266,27 +266,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         // let columns: IColumn[] = this.hyperGrid.behavior.columns.map((x: any) => {
         let activeColumns: IColumn[] = this.hyperGrid.behavior.getActiveColumns().map((x: any, index: number) => {
+            let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == x.name);
             return {
-                ColumnId: x.name ? x.name : "Unknown Column",
-                FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                DataType: this.getColumnDataType(x),
+                ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : "Unknown Column",
+                FriendlyName: existingColumn ? existingColumn.FriendlyName :
+                    x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
                 Visible: true,
                 Index: index,
-                ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name),
-                Filterable: this.isFilterable() // TODO: can we manage by column
+                ReadOnly:  this.isColumnReadonly(x.name, index),
+                Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
+                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
             }
         });
         let hiddenColumns: IColumn[] = this.hyperGrid.behavior.getHiddenColumns().map((x: any) => {
+            let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == x.name);
             return {
-                ColumnId: x.name ? x.name : "Unknown Column",
-                FriendlyName: x.header ? x.header : (x.name ? x.name : "Unknown Column"),
-                DataType: this.getColumnDataType(x),
+                ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : "Unknown Column",
+                FriendlyName: existingColumn ? existingColumn.FriendlyName :
+                    x.header ? x.header : (x.name ? x.name : "Unknown Column"),
+                DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
                 Visible: false,
                 Index: -1,
-                ReadOnly: this.isColumnReadonly(x.name),
-                Sortable: this.isColumnSortable(x.name),
-                Filterable: this.isFilterable() // TODO: can we manage by column
+                ReadOnly: false, // not great but doesnt matter as it will update when made visible....this.isColumnReadonly(x.name),
+                Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
+                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -605,17 +609,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnIndex(columnId: string): number {
         //this returns the index of the column in the collection which is as well the index y of the cell in the grid
         // it doesnt return the index from the schema
-        return this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.findIndex(x => x.ColumnId == columnId)
-        //  if (column) {
-        //      return 14;//column.Index
-        //  }
-        //  else {
-        //      return -1;
-        //  }
+    let hgindex: any =    this.hyperGrid.behavior.getActiveColumns().findIndex((x:any) => x.name==columnId);
+    return hgindex;
     }
 
 
-    private isColumnReadonly(columnId: string): boolean {
+    private isColumnReadonly(columnId: string, index: number): boolean {
+       console.log("geting readonly for:" + columnId)
         if (this.hyperGrid.cellEditor) {
             if (this.hyperGrid.cellEditor.column.name == columnId) {
                 //we are already editing that column so that's an easy answer
@@ -631,8 +631,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //now instead of checking if editor was defined at design time on the column we try to instantiate the editor
             //for that column directly
             let cellEvent = new this.hyperGrid.behavior.CellEvent
-            //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
-            cellEvent.resetGridCY(this.getColumnIndex(columnId), 1);
+             //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
+            cellEvent.resetGridCY(index, 1);
             let editor = this.hyperGrid.behavior.getCellEditorAt(cellEvent);
             if (editor) {
                 editor.cancelEditing()
@@ -1277,7 +1277,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hyperGrid.addEventListener("fin-column-changed-event", () => {
             setTimeout(() => this.setColumnIntoStore(), 5);
         });
-      }
+    }
 
 
     public getRowCount(): number {
@@ -1378,7 +1378,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyLightTheme(): void {
-         if (this.BlotterOptions.useDefaultVendorGridThemes) {
+        if (this.BlotterOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getLightTheme());
             this.applyAlternateRowStyle();
         }
