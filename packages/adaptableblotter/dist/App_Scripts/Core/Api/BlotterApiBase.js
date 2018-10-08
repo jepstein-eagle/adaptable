@@ -462,6 +462,9 @@ class BlotterApiBase {
         localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
         window.location.reload();
     }
+    configSetAdvancedSearch(state) {
+        // todo
+    }
     configGetAllState() {
         return this.getState();
     }

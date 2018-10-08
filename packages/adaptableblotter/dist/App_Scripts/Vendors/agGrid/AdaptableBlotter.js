@@ -173,6 +173,12 @@ class AdaptableBlotter {
             if (columnState) {
                 this.setColumnState(this.gridOptions.columnApi, columnState, "api");
             }
+            // let column: Column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn")
+            // if (column) {
+            //  alert("have a special column")
+            //     this.gridOptions.columnApi.setColumnWidth(column, 500, true);
+            //   }
+            //   this.gridOptions.api.refreshHeader();
         }
     }
     createFilterWrapper(col) {
@@ -1258,7 +1264,18 @@ class AdaptableBlotter {
             return JSON.stringify(this.gridOptions.columnApi.getColumnState());
         }
         if (this.BlotterOptions.includeVendorStateInLayouts) {
+            let test = this.gridOptions.columnApi.getAllDisplayedColumns();
+            console.log("dispalyed state");
+            console.log(test);
             let columnState = this.gridOptions.columnApi.getColumnState();
+            console.log("column state");
+            console.log(columnState);
+            let groupState = this.gridOptions.columnApi.getColumnGroupState();
+            console.log("group state");
+            console.log(groupState);
+            let allState = this.gridOptions.columnApi.getState();
+            console.log("alll state");
+            console.log(allState);
             // Dont like this but not sure we have a choice to avoid other issues...
             // Going to update the state to make sure that visibility matches those given here
             columnState.forEach(c => {

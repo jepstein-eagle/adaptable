@@ -174,6 +174,7 @@ export interface IBlotterApi {
      *  */
     configClear(): void;
     configDeleteLocalStorage(): void;
+    configSetAdvancedSearch(state: AdvancedSearchState): void;
     configGetAllState(): AdaptableBlotterState;
     configGetAllUserState(): IRunTimeState[];
     configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): IRunTimeState;

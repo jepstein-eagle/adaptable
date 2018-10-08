@@ -56,6 +56,7 @@ const SelectedCellsStrategy_1 = require("../../Strategy/SelectedCellsStrategy");
 const ChartService_1 = require("../../Core/Services/ChartService");
 const HypergridThemes_1 = require("./HypergridThemes");
 const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
+const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -107,6 +108,7 @@ class AdaptableBlotter {
         this.Strategies = new Map();
         this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
         this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
+        this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
         this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
         this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
@@ -606,7 +608,13 @@ class AdaptableBlotter {
         return "";
     }
     getDisplayValueFromRawValue(colId, rawValue) {
-        return null;
+        let formatter = this.getColumnFormatter(colId);
+        if (formatter) {
+            return formatter(rawValue);
+        }
+        else {
+            return rawValue;
+        }
     }
     getRawValueFromRecord(row, columnId) {
         let column = this.getHypergridColumn(columnId);
