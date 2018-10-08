@@ -122,7 +122,11 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     configDeleteLocalStorage(): void;
     configSetAdvancedSearch(state: AdvancedSearchState): void;
     configGetAllState(): AdaptableBlotterState;
+    private getUserStateKeys;
     configGetAllUserState(): IRunTimeState[];
+    loadUserState(state: {
+        [s: string]: IRunTimeState;
+    }): void;
     configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson?: boolean): IRunTimeState;
     configGetAdvancedSearchState(returnJson?: boolean): AdvancedSearchState;
     configGetAlertSearchState(returnJson?: boolean): AlertState;

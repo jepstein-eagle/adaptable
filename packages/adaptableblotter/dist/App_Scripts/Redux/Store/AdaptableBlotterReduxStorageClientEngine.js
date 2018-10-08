@@ -31,8 +31,7 @@ class AdaptableBlotterReduxStorageClientEngine {
     }
     save(state) {
         let saveOptions = {
-            method: 'PUT',
-            // body: JSON.stringify({state}),
+            method: 'POST',
             body: JSON.stringify(state),
             headers: {
                 Accept: 'application/json',

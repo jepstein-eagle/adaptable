@@ -86,56 +86,69 @@ const rootReducer = Redux.combineReducers({
 });
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
+const LOAD_STATE = 'LOAD_STATE';
 exports.ResetUserData = () => ({
     type: RESET_STATE
 });
 exports.InitState = () => ({
     type: INIT_STATE
 });
+exports.LoadState = (State) => ({
+    type: LOAD_STATE,
+    State,
+});
 const rootReducerWithResetManagement = (state, action) => {
-    if (action.type === RESET_STATE) {
-        alert("in top");
-        //This trigger the persist of the state with nothing
-        state.AdvancedSearch = undefined;
-        state.Alert = undefined;
-        state.BulkUpdate = undefined;
-        state.CalculatedColumn = undefined;
-        state.Calendar = undefined;
-        state.CellValidation = undefined;
-        state.ConditionalStyle = undefined;
-        state.Chart = undefined;
-        state.CustomSort = undefined;
-        state.Dashboard.AvailableToolbars = [];
-        state.Dashboard.VisibleButtons = [];
-        state.Dashboard.VisibleToolbars = [];
-        state.Dashboard = undefined;
-        state.DataSource = undefined;
-        state.Entitlements = undefined;
-        state.Export = undefined;
-        state.FlashingCell = undefined;
-        state.FormatColumn = undefined;
-        state.ColumnFilter.ColumnFilters = [];
-        state.UserFilter.UserFilters = [];
-        state.SystemFilter.SystemFilters = [];
-        state.Grid = undefined;
-        //     state.System = undefined
-        state.Layout = undefined;
-        //      state.Menu.ContextMenu = undefined
-        //      state.Menu.MenuItems = []
-        //      state.Menu = undefined
-        state.PlusMinus = undefined;
-        state.QuickSearch = undefined;
-        state.Shortcut = undefined;
-        state.SmartEdit = undefined;
-        state.SelectedCells = undefined;
-        //   state.TeamSharing = undefined
-        state.Theme = undefined;
-        //   state.UserInterface = undefined
-        //  state = undefined
+    switch (action.type) {
+        case RESET_STATE:
+            alert("in top");
+            //This trigger the persist of the state with nothing
+            state.AdvancedSearch = undefined;
+            state.Alert = undefined;
+            state.BulkUpdate = undefined;
+            state.CalculatedColumn = undefined;
+            state.Calendar = undefined;
+            state.CellValidation = undefined;
+            state.ConditionalStyle = undefined;
+            state.Chart = undefined;
+            state.CustomSort = undefined;
+            state.Dashboard.AvailableToolbars = [];
+            state.Dashboard.VisibleButtons = [];
+            state.Dashboard.VisibleToolbars = [];
+            state.Dashboard = undefined;
+            state.DataSource = undefined;
+            state.Entitlements = undefined;
+            state.Export = undefined;
+            state.FlashingCell = undefined;
+            state.FormatColumn = undefined;
+            state.ColumnFilter.ColumnFilters = [];
+            state.UserFilter.UserFilters = [];
+            state.SystemFilter.SystemFilters = [];
+            state.Grid = undefined;
+            //     state.System = undefined
+            state.Layout = undefined;
+            //      state.Menu.ContextMenu = undefined
+            //      state.Menu.MenuItems = []
+            //      state.Menu = undefined
+            state.PlusMinus = undefined;
+            state.QuickSearch = undefined;
+            state.Shortcut = undefined;
+            state.SmartEdit = undefined;
+            state.SelectedCells = undefined;
+            //   state.TeamSharing = undefined
+            state.Theme = undefined;
+            //   state.UserInterface = undefined
+            //  state = undefined
+            break;
+        case LOAD_STATE:
+            const { State } = action;
+            Object.keys(State).forEach(key => {
+                state[key] = State[key];
+            });
+            break;
     }
     return rootReducer(state, action);
 };
-const configServerUrl = "/adaptableblotter-config";
+// const configServerUrl = "/adaptableblotter-config"
 const configServerTeamSharingUrl = "/adaptableblotter-teamsharing";
 class AdaptableBlotterStore {
     constructor(blotter) {
@@ -146,7 +159,7 @@ class AdaptableBlotterStore {
         let engineWithMigrate;
         let engineReduxStorage;
         if (blotter.BlotterOptions.enableRemoteConfigServer) {
-            engineReduxStorage = AdaptableBlotterReduxStorageClientEngine_1.createEngine(configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+            engineReduxStorage = AdaptableBlotterReduxStorageClientEngine_1.createEngine(blotter.BlotterOptions.remoteConfigServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
             engineReduxStorage = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
@@ -189,7 +202,7 @@ class AdaptableBlotterStore {
         else {
             composeEnhancers = (x) => x;
         }
-        //TODO: need to check if we want the storage to be done before or after 
+        //TODO: need to check if we want the storage to be done before or after
         //we enrich the state with the AB middleware
         this.TheStore = Redux.createStore(reducerWithStorage, composeEnhancers(Redux.applyMiddleware(diffStateAuditMiddleware(blotter), adaptableBlotterMiddleware(blotter), middlewareReduxStorage, functionLogMiddleware(blotter))));
         //We start to build the state once everything is instantiated... I dont like that. Need to change
@@ -198,7 +211,7 @@ class AdaptableBlotterStore {
             loadStorage(this.TheStore)
                 .then(() => this.TheStore.dispatch(exports.InitState()), (e) => {
                 AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to load previous adaptable blotter state : ', e);
-                //for now i'm still initializing the AB even if loading state has failed.... 
+                //for now i'm still initializing the AB even if loading state has failed....
                 //we may revisit that later
                 this.TheStore.dispatch(exports.InitState());
                 this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configurtion", Msg: "Error loading your configuration:" + e, MessageType: Enums_1.MessageType.Error }));
@@ -415,7 +428,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                                 overwriteConfirmation = true;
                             }
                             importAction = UserFilterRedux.UserFilterAddUpdate(1, filter);
-                            // } 
+                            // }
                             break;
                         }
                         case StrategyIds.AdvancedSearchStrategyId: {
@@ -539,7 +552,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             }
                         });
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns));
-                        // set sort 
+                        // set sort
                         middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts));
                         blotter.setGridSort(currentLayout.GridSorts);
                         // set vendor specific info
@@ -627,7 +640,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         let popup = state.Popup.ScreenPopup;
                         if (popup.ComponentName == ScreenPopups.SmartEditPopup) { //We close the SmartEditPopup
                             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-                            //We show the alert Popup 
+                            //We show the alert Popup
                             middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
                         }
                         middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(false));
@@ -643,7 +656,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
                 case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
                 case SystemRedux.SMARTEDIT_FETCH_PREVIEW: {
-                    //all our logic needs to be executed AFTER the main reducers 
+                    //all our logic needs to be executed AFTER the main reducers
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
                     let SmartEditStrategy = (blotter.Strategies.get(StrategyIds.SmartEditStrategyId));
@@ -689,7 +702,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 }
                 // Here we have all actions that triggers a refresh of the BulkUpdatePreview
                 case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE: {
-                    //all our logic needs to be executed AFTER the main reducers 
+                    //all our logic needs to be executed AFTER the main reducers
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
                     let BulkUpdateStrategy = (blotter.Strategies.get(StrategyIds.BulkUpdateStrategyId));

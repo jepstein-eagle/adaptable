@@ -1,7 +1,7 @@
 import { DistinctCriteriaPairValue } from "../../Enums";
 
 /**
- * The class injected into the Adaptable Blotter at startup 
+ * The class injected into the Adaptable Blotter at startup
  * providing all the user, grid and config information required
  */
 export interface IAdaptableBlotterOptions {
@@ -40,6 +40,22 @@ export interface IAdaptableBlotterOptions {
      */
     predefinedConfig?: any;
     /**
+     * Remote config server that'll persist the application state and give it back on demand.
+     * Only used if enableRemoteConfigServer is true.
+     *
+     * AdaptableBlotter will send a POST request to this URL to persist the state with the follower parameters:
+     * Headers: { ab_username: string, ab_id: string }
+     * Body: Stringified application state
+     *
+     * Each ab_username & ab_id combination is unique, so your server should persist the state and use that combination as a key.
+     *
+     * AdaptableBlotter will send a GET request to this URL to get the persisted state with the follower parameters:
+     * Headers: { ab_username: string, ab_id: string }
+     *
+     * Your server should return the application state related to the given ab_username and ab_id combination as a JSON object.
+     */
+    remoteConfigServerUrl?: string;
+    /**
      * How many items to dispay in column value listboxes when building queries
      * Useful when datasource is very large
      */
@@ -56,7 +72,7 @@ export interface IAdaptableBlotterOptions {
     serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort';
     /**
      * Whether the query builder will include just ColumnValues
-     * Or should also include Filters and Ranges (the default) 
+     * Or should also include Filters and Ranges (the default)
      * Used primarily if running search on Server
      */
     columnValuesOnlyInQueries?: boolean;
@@ -82,7 +98,7 @@ export interface IAdaptableBlotterOptions {
     autoSaveLayouts?: boolean;
     /**
      * When running queries on text columns to ignore case
-     * Defaults to true - case is ignored by default 
+     * Defaults to true - case is ignored by default
      * (e.g. [StartsWith 'c'] will return true for the value 'Canada')
      */
     ignoreCaseInQueries?: boolean;

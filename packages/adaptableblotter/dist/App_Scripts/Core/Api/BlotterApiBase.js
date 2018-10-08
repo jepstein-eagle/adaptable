@@ -468,32 +468,22 @@ class BlotterApiBase {
     configGetAllState() {
         return this.getState();
     }
+    getUserStateKeys() {
+        return ['AdvancedSearch', 'Alert', 'BulkUpdate', 'CalculatedColumn',
+            'Calendar', 'CellValidation', 'Chart', 'ColumnFilter', 'ConditionalStyle',
+            'CustomSort', 'Dashboard', 'DataSource', 'Export', 'FlashingCell',
+            'FormatColumn', 'Layout', 'PlusMinus', 'QuickSearch', 'SelectedCells',
+            'Shortcut', 'SmartEdit', 'Theme', 'UserFilter'];
+    }
     configGetAllUserState() {
-        return [
-            this.getState().AdvancedSearch,
-            this.getState().Alert,
-            this.getState().BulkUpdate,
-            this.getState().CalculatedColumn,
-            this.getState().Calendar,
-            this.getState().CellValidation,
-            this.getState().Chart,
-            this.getState().ColumnFilter,
-            this.getState().ConditionalStyle,
-            this.getState().CustomSort,
-            this.getState().Dashboard,
-            this.getState().DataSource,
-            this.getState().Export,
-            this.getState().FlashingCell,
-            this.getState().FormatColumn,
-            this.getState().Layout,
-            this.getState().PlusMinus,
-            this.getState().QuickSearch,
-            this.getState().SelectedCells,
-            this.getState().Shortcut,
-            this.getState().SmartEdit,
-            this.getState().Theme,
-            this.getState().UserFilter
-        ];
+        const userStateKeys = this.getUserStateKeys();
+        const allState = this.configGetAllState();
+        return userStateKeys.map(k => allState[k]);
+    }
+    loadUserState(state) {
+        const userStateKeys = this.getUserStateKeys();
+        const userState = Object.keys(state).reduce((xs, x) => userStateKeys.indexOf(x) !== -1 ? Object.assign({}, xs, { [x]: state[x] }) : xs, {});
+        this.dispatchAction(AdaptableBlotterStore_1.LoadState(userState));
     }
     configGetUserStateByFunction(stateChangedTrigger, returnJson = false) {
         switch (stateChangedTrigger) {
