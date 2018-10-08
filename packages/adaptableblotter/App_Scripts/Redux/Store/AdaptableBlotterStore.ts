@@ -205,7 +205,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.MENU,
       ConfigConstants.POPUP,
       ConfigConstants.TEAMSHARING,
-      // Design Time State - set ONLY in PredefinedConfig and never changed at runtime
+      // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.APPLICATION,

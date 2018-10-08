@@ -18,7 +18,7 @@ export interface ISystemState extends IState {
 export interface IDesignTimeState extends IState {
 }
 
-export interface IRunTimeState extends IState {
+export interface IUserState extends IState {
 }
 
 /*
@@ -93,49 +93,49 @@ export interface ApplicationState extends IDesignTimeState {
 Full Config 
 Can bet set at design time and also editable at run time by users 
 */
-export interface AdvancedSearchState extends IRunTimeState {
+export interface AdvancedSearchState extends IUserState {
     AdvancedSearches: IAdvancedSearch[];
     CurrentAdvancedSearch: string;
 }
 
-export interface AlertState extends IRunTimeState {
+export interface AlertState extends IUserState {
     AlertDefinitions: IAlertDefinition[];
     MaxAlertsInStore: number;
     AlertPopupDiv: string
 }
 
-export interface BulkUpdateState extends IRunTimeState {
+export interface BulkUpdateState extends IUserState {
     BulkUpdateValue: string;
 }
 
-export interface CalculatedColumnState extends IRunTimeState {
+export interface CalculatedColumnState extends IUserState {
     CalculatedColumns: ICalculatedColumn[];
     CalculatedColumnErrorMessage: string;
 }
 
-export interface CalendarState extends IRunTimeState {
+export interface CalendarState extends IUserState {
     CurrentCalendar: string;
 }
 
-export interface CellValidationState extends IRunTimeState {
+export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];
 }
 
-export interface ChartState extends IRunTimeState {
+export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
     CurrentChartName: string;
     ChartData: any;
 }
 
-export interface ConditionalStyleState extends IRunTimeState {
+export interface ConditionalStyleState extends IUserState {
     ConditionalStyles: IConditionalStyle[];
 }
 
-export interface CustomSortState extends IRunTimeState {
+export interface CustomSortState extends IUserState {
     CustomSorts: ICustomSort[];
 }
 
-export interface DashboardState extends IRunTimeState {
+export interface DashboardState extends IUserState {
     AvailableToolbars: string[];
     VisibleToolbars: string[];
     VisibleButtons: string[];
@@ -148,64 +148,64 @@ export interface DashboardState extends IRunTimeState {
     ApplicationToolbarTitle: string;
 }
 
-export interface DataSourceState extends IRunTimeState {
+export interface DataSourceState extends IUserState {
     DataSources: string[];
     CurrentDataSource: string;
 }
 
-export interface ExportState extends IRunTimeState {
+export interface ExportState extends IUserState {
     IPPDomainsPages: IPPDomain[];  // should we persist this???
     CurrentReport: string;
     Reports: IReport[];
     ErrorMsg: string;
 }
 
-export interface ColumnFilterState extends IRunTimeState {
+export interface ColumnFilterState extends IUserState {
     ColumnFilters: IColumnFilter[];
 }
 
-export interface UserFilterState extends IRunTimeState {
+export interface UserFilterState extends IUserState {
     UserFilters: IUserFilter[];
 }
 
-export interface FlashingCellState extends IRunTimeState {
+export interface FlashingCellState extends IUserState {
     FlashingCells: IFlashingCell[];
 }
 
-export interface FormatColumnState extends IRunTimeState {
+export interface FormatColumnState extends IUserState {
     FormatColumns: IFormatColumn[];
 }
 
-export interface LayoutState extends IRunTimeState {
+export interface LayoutState extends IUserState {
     CurrentLayout: string;
     Layouts: ILayout[];
 }
 
-export interface PlusMinusState extends IRunTimeState {
+export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];
 }
 
-export interface QuickSearchState extends IRunTimeState {
+export interface QuickSearchState extends IUserState {
     QuickSearchText: string;
     Operator: 'Contains' | 'StartsWith';
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
 }
 
-export interface SelectedCellsState extends IRunTimeState {
+export interface SelectedCellsState extends IUserState {
     SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
 }
 
-export interface ShortcutState extends IRunTimeState {
+export interface ShortcutState extends IUserState {
     Shortcuts: IShortcut[];
 }
 
-export interface SmartEditState extends IRunTimeState {
+export interface SmartEditState extends IUserState {
     SmartEditValue: number;
     MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
 }
 
-export interface ThemeState extends IRunTimeState {
+export interface ThemeState extends IUserState {
     CurrentTheme: string;
     SystemThemes: string[];
     UserThemes: IUserTheme[];

@@ -38,7 +38,7 @@ import { IAlert } from "../Interface/IMessage";
 import { ObjectFactory } from "../ObjectFactory";
 import { IColumn } from "../Interface/IColumn";
 import { StringExtensions } from "../Extensions/StringExtensions";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IRunTimeState, IState } from "../../Redux/ActionsReducers/Interface/IState";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState, IState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -586,10 +586,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
     window.location.reload();
   }
 
-  public configSetAdvancedSearch(state: AdvancedSearchState): void {
-    // todo
-  }
-
   public configGetAllState(): AdaptableBlotterState {
     return this.getState()
   }
@@ -602,23 +598,23 @@ export abstract class BlotterApiBase implements IBlotterApi {
       'Shortcut', 'SmartEdit', 'Theme', 'UserFilter'];
   }
 
-  public configGetAllUserState(): IRunTimeState[] {
+  public configGetAllUserState(): IUserState[] {
     const userStateKeys = this.getUserStateKeys();
     const allState = this.configGetAllState();
     return userStateKeys.map(k => allState[k]);
   }
 
-  public loadUserState(state: { [s: string]: IRunTimeState }): void {
+  public loadUserState(state: { [s: string]: IUserState }): void {
     const userStateKeys = this.getUserStateKeys();
     const userState = Object.keys(state).reduce((xs, x) => userStateKeys.indexOf(x) !== -1 ? { ...xs, [x]: state[x] } : xs, {});
     this.dispatchAction(LoadState(userState));
   }
 
-  public configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
+  public configGetUserStateByFunction(functionName: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
     'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
     'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
-    'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): IRunTimeState {
-    switch (stateChangedTrigger as StateChangedTrigger) {
+    'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): IUserState {
+    switch (functionName as StateChangedTrigger) {
       case StateChangedTrigger.AdvancedSearch:
         return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch
       case StateChangedTrigger.Alert:

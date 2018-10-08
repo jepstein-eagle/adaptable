@@ -6,6 +6,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     primaryKey: "",
     enableAuditLog: false,
     enableRemoteConfigServer: false,
+    remoteConfigServerUrl: "",
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfig: null,

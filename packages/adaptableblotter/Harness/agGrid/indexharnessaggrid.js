@@ -39,7 +39,7 @@ function InitTradeBlotter() {
     userName: "demo user", // name of current user
     blotterId: "demo blotter", // id for blotter
     enableAuditLog: false, // not running audit log
-    enableRemoteConfigServer: true, // not running remote config
+    enableRemoteConfigServer: false, // not running remote config
     remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
     // predefinedConfig: "demoConfig.json", // passing in predefined config with a file
     serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
@@ -311,6 +311,8 @@ function apiTester(state, gridOptions) {
       adaptableblotter.api.filterClearSystemFilters()
     } else if (quickSearchText == "#reset") {
       //     adaptableblotter.api.configDeleteLocalStorage()
+    } else if (quickSearchText == "#loadUserState") {
+      adaptableblotter.api.loadUserState(oldjson)
 
     } else if (quickSearchText == "#miguel") {
       setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues("deskId", ["5555555",
@@ -610,21 +612,21 @@ let oldjson = {
       "styleForeYellow"
     ],
     "PermittedColumnValues": [{
-        "ColumnId": "country",
-        "PermittedValues": [
-          "France",
-          "Russia",
-          "Israel"
-        ]
-      },
-      {
-        "ColumnId": "currency",
-        "PermittedValues": [
-          "EUR",
-          "USD",
-          "NIS"
-        ]
-      },
+      "ColumnId": "country",
+      "PermittedValues": [
+        "France",
+        "Russia",
+        "Israel"
+      ]
+    },
+    {
+      "ColumnId": "currency",
+      "PermittedValues": [
+        "EUR",
+        "USD",
+        "NIS"
+      ]
+    },
     ]
   },
   "Theme": {
@@ -643,37 +645,21 @@ let oldjson = {
     }],
 
   },
-  "AdvancedSearch": {
-    "AdvancedSearches": [{
-      "Name": 'test',
-      "Expression": {
-        "ColumnValueExpressions": [{
-          "ColumnId": 'bid',
-          "ColumnValues": [
-            '14.3971'
-          ]
-        }],
-        "FilterExpressions": [],
-        "RangeExpressions": []
-      },
-      "IsReadOnly": false
-    }],
-  },
   "Dashboard": {
     "VisibleToolbars": [
-      "AdvancedSearch",
+      "SmartEdit",
       "Layout",
-      "QuickSearch"
+      "BulkUpdate"
     ],
     "VisibleButtons": [
       "About",
       "Dashboard",
-      "QuickSearch",
       "SmartEdit",
       "ColumnChooser",
       "BulkUpdate"
     ],
-    "Zoom": "1",
+    "Zoom": "0.5",
+    "DashboardVisibility": "Minimised",
     "ShowSystemStatusButton": true
   }
 }
