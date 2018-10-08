@@ -8,7 +8,7 @@ import * as bunyan from 'bunyan'
 
 /**********
  * Enhancements:
- * Ideally all filesystem access should be async....... 
+ * Ideally all filesystem access should be async.......
  * Load up App config only one time at startup
  * use Path everywhere instead of building manually paths
  * create app config if doesnt exist
@@ -100,7 +100,7 @@ app.get('/adaptableblotter-config', function (req, res) {
     }
 })
 
-app.put('/adaptableblotter-config', function (req, res) {
+app.post('/adaptableblotter-config', function (req, res) {
     var username = req.headers["ab_username"]
     var adaptableblotter_id = req.headers["ab_id"]
     if (username) {

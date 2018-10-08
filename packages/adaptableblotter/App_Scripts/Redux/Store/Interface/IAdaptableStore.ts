@@ -2,6 +2,8 @@ import * as AdaptableBlotterStates from '../../ActionsReducers/Interface/IState'
 import * as Redux from 'redux';
 
 export interface AdaptableBlotterState {
+    [s: string]: AdaptableBlotterStates.IState;
+
     // internal state
     Popup: AdaptableBlotterStates.PopupState;
     Menu: AdaptableBlotterStates.MenuState;

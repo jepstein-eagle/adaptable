@@ -16,9 +16,8 @@ const checkStatus = (response: Response) => {
 };
 
 class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxStorageClientEngine {
-  constructor(private url: string, private userName: string, private blotterId: string, private blotter: IAdaptableBlotter) {
+  constructor(private url: string, private userName: string, private blotterId: string, private blotter: IAdaptableBlotter) {}
 
-  }
   load(): Promise<any> {
     let loadOptions = {
       headers: {
@@ -32,10 +31,10 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
       //.then(json => json.state)
       .catch(error => Promise.reject(error.message));
   }
+
   save(state: any): Promise<any> {
     let saveOptions = {
-      method: 'PUT',
-      // body: JSON.stringify({state}),
+      method: 'POST',
       body: JSON.stringify(state),
       headers: {
         Accept: 'application/json',

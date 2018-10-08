@@ -23,7 +23,7 @@ var StringExtensions;
     }
     StringExtensions.IsNullOrEmpty = IsNullOrEmpty;
     function IsNotNullOrEmpty(stringToCheck) {
-        return StringExtensions.IsNotNull(stringToCheck) && StringExtensions.IsNotEmpty(stringToCheck);
+        return !this.IsNullOrEmpty(stringToCheck);
     }
     StringExtensions.IsNotNullOrEmpty = IsNotNullOrEmpty;
     function PlaceSpaceBetweenCapitalisedWords(stringToCheck) {
