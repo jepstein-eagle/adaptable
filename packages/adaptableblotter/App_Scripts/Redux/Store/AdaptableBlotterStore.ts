@@ -659,7 +659,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 }
                 case GridRedux.GRID_HIDE_COLUMN: {
                     let actionTyped = <GridRedux.GridHideColumnAction>action
-                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns)
+                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns.filter(c=>c.Visible))
                     let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId)
                     columnList.splice(columnIndex, 1)
                     blotter.setNewColumnListOrder(columnList)
