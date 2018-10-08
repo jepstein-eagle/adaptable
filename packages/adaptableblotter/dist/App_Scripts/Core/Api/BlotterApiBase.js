@@ -462,9 +462,6 @@ class BlotterApiBase {
         localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
         window.location.reload();
     }
-    configSetAdvancedSearch(state) {
-        // todo
-    }
     configGetAllState() {
         return this.getState();
     }
@@ -485,8 +482,8 @@ class BlotterApiBase {
         const userState = Object.keys(state).reduce((xs, x) => userStateKeys.indexOf(x) !== -1 ? Object.assign({}, xs, { [x]: state[x] }) : xs, {});
         this.dispatchAction(AdaptableBlotterStore_1.LoadState(userState));
     }
-    configGetUserStateByFunction(stateChangedTrigger, returnJson = false) {
-        switch (stateChangedTrigger) {
+    configGetUserStateByFunction(functionName, returnJson = false) {
+        switch (functionName) {
             case Enums_1.StateChangedTrigger.AdvancedSearch:
                 return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch;
             case Enums_1.StateChangedTrigger.Alert:

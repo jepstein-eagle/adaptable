@@ -7,7 +7,7 @@ import { IEntitlement } from "../Interface/Interfaces";
 import { ExportDestination } from "../Enums";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IRunTimeState } from "../../Redux/ActionsReducers/Interface/IState";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
 export declare abstract class BlotterApiBase implements IBlotterApi {
     protected blotter: IAdaptableBlotter;
     constructor(blotter: IAdaptableBlotter);
@@ -120,14 +120,13 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     exportLiveReportsGetAll(): ILiveReport[];
     configClear(): void;
     configDeleteLocalStorage(): void;
-    configSetAdvancedSearch(state: AdvancedSearchState): void;
     configGetAllState(): AdaptableBlotterState;
     private getUserStateKeys;
-    configGetAllUserState(): IRunTimeState[];
+    configGetAllUserState(): IUserState[];
     loadUserState(state: {
-        [s: string]: IRunTimeState;
+        [s: string]: IUserState;
     }): void;
-    configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson?: boolean): IRunTimeState;
+    configGetUserStateByFunction(functionName: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson?: boolean): IUserState;
     configGetAdvancedSearchState(returnJson?: boolean): AdvancedSearchState;
     configGetAlertSearchState(returnJson?: boolean): AlertState;
     configGetBulkUpdateState(returnJson?: boolean): BulkUpdateState;
