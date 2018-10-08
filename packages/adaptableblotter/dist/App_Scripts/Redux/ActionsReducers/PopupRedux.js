@@ -80,7 +80,7 @@ const initialPopupState = {
         ShowChartPopup: false,
     },
     LoadingPopup: {
-        ShowLoadingPopup: false,
+        ShowLoadingPopup: true,
     },
     AlertPopup: {
         ShowAlertPopup: false,

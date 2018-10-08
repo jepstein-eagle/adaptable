@@ -572,7 +572,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 }
                 case GridRedux.GRID_HIDE_COLUMN: {
                     let actionTyped = action;
-                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns);
+                    let columnList = [].concat(middlewareAPI.getState().Grid.Columns.filter(c => c.Visible));
                     let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId);
                     columnList.splice(columnIndex, 1);
                     blotter.setNewColumnListOrder(columnList);

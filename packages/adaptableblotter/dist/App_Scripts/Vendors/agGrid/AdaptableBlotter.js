@@ -134,7 +134,6 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
-            .then(() => this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowLoading()))
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
@@ -144,8 +143,9 @@ class AdaptableBlotter {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
             this.initInternalGridLogic();
-        }).then(() => {
-            // at the end so load the current layout and refresh the toolbar 
+        })
+            .then(() => {
+            // at the end so load the current layout, refresh the toolbar and turn off the loading message
             let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
             this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
             if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
@@ -1264,18 +1264,18 @@ class AdaptableBlotter {
             return JSON.stringify(this.gridOptions.columnApi.getColumnState());
         }
         if (this.BlotterOptions.includeVendorStateInLayouts) {
-            let test = this.gridOptions.columnApi.getAllDisplayedColumns();
-            console.log("dispalyed state");
-            console.log(test);
+            //      let test = this.gridOptions.columnApi.getAllDisplayedColumns();
+            //      console.log("dispalyed state")
+            //      console.log(test)
             let columnState = this.gridOptions.columnApi.getColumnState();
-            console.log("column state");
-            console.log(columnState);
-            let groupState = this.gridOptions.columnApi.getColumnGroupState();
-            console.log("group state");
-            console.log(groupState);
-            let allState = this.gridOptions.columnApi.getState();
-            console.log("alll state");
-            console.log(allState);
+            //      console.log("column state")
+            //       console.log(columnState)
+            //       let groupState = this.gridOptions.columnApi.getColumnGroupState();
+            //       console.log("group state")
+            //       console.log(groupState)
+            //       let allState = this.gridOptions.columnApi.getState();
+            //       console.log("alll state")
+            //       console.log(allState)
             // Dont like this but not sure we have a choice to avoid other issues...
             // Going to update the state to make sure that visibility matches those given here
             columnState.forEach(c => {

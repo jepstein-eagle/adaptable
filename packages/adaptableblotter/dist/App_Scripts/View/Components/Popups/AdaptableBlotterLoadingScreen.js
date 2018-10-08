@@ -10,10 +10,10 @@ class AdaptableBlotterLoadingScreen extends React.Component {
         let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
         return (React.createElement(react_bootstrap_1.Modal, { show: this.props.showLoadingScreen, onHide: this.props.onClose, className: cssClassName + StyleConstants.BASE, container: modalContainer },
             React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
-                React.createElement(react_bootstrap_1.Modal.Title, null, "\u00A0\u00A0\u00A0Loading the Grid"),
+                React.createElement(react_bootstrap_1.Modal.Title, null, "\u00A0\u00A0\u00A0Initialising Grid"),
                 React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.MODAL_BODY },
                     React.createElement("div", { className: "ab_loading_screen" },
-                        React.createElement("span", null, "Please wait while we initialise your settings..."),
+                        React.createElement("span", null, "Retrieving your settings and setting up the grid..."),
                         React.createElement("br", null),
                         React.createElement("br", null))))));
     }
