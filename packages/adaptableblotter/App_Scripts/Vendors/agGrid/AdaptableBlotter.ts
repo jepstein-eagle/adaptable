@@ -182,8 +182,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load
-        .then(() => this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowLoading()))
-        .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+            .then(() => this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowLoading()))
+            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
                     AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
@@ -204,7 +204,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.gridOptions.api.refreshHeader();
                 }
                 this.isInitialised = true
-               this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
+                this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
 
         if (renderGrid) {
@@ -219,17 +219,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-       private getState(): AdaptableBlotterState {
+    private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
 
     public setVendorGridState(vendorGridState: any): void {
         if (vendorGridState) {
+
             let columnState: any = JSON.parse(vendorGridState);
             if (columnState) {
                 this.setColumnState(this.gridOptions.columnApi, columnState, "api");
             }
+
+           // let column: Column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn")
+           // if (column) {
+              //  alert("have a special column")
+           //     this.gridOptions.columnApi.setColumnWidth(column, 500, true);
+         //   }
+            //   this.gridOptions.api.refreshHeader();
         }
+
     }
 
     private createFilterWrapper(col: Column) {
@@ -1225,7 +1234,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
         this.gridOptions.isExternalFilterPresent = () => {
-            let columnFilters : IColumnFilter[]=this.getState().ColumnFilter.ColumnFilters;
+            let columnFilters: IColumnFilter[] = this.getState().ColumnFilter.ColumnFilters;
             let isFilterActive = ArrayExtensions.IsNotNullOrEmpty(columnFilters);
             if (isFilterActive) {
                 //used in particular at init time to show the filter icon correctly
@@ -1304,13 +1313,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
 
         // if (this.isFilterable()) {
-        if (this.BlotterOptions.useAdaptableBlotterFilterForm){
+        if (this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFilterWrapper(col);
             });
         }
         // }
-        if ( this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterFloatingFilter) {
+        if (this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterFloatingFilter) {
             //      if (this.isFilterable()) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
@@ -1436,7 +1445,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         if (this.BlotterOptions.includeVendorStateInLayouts) {
+            let test = this.gridOptions.columnApi.getAllDisplayedColumns();
+            console.log("dispalyed state")
+            console.log(test)
+
             let columnState = this.gridOptions.columnApi.getColumnState();
+            console.log("column state")
+            console.log(columnState)
+            let groupState = this.gridOptions.columnApi.getColumnGroupState();
+            console.log("group state")
+            console.log(groupState)
+            let allState = this.gridOptions.columnApi.getState();
+            console.log("alll state")
+            console.log(allState)
+
+
             // Dont like this but not sure we have a choice to avoid other issues...
             // Going to update the state to make sure that visibility matches those given here
 

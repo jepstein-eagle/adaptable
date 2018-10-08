@@ -86,13 +86,13 @@ function listenToColumnStateChange(columnChangedArgs) {
 }
 
 function listenToStateChange(stateChangedArgs) {
-    console.log("state event received")
-    console.log(stateChangedArgs)
+ //   console.log("state event received")
+ //   console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
-    console.log("search changed event received")
-    console.log(searchChangedArgs)
+ //   console.log("search changed event received")
+ //   console.log(searchChangedArgs)
 }
 
 function getValuesForColumn(columnName) {

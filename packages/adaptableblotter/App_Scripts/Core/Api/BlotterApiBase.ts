@@ -571,7 +571,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
     public exportLiveReportsGetAll(): ILiveReport[] {
         return this.getState().System.CurrentLiveReports;
-
     }
 
 
@@ -585,6 +584,10 @@ export abstract class BlotterApiBase implements IBlotterApi {
         //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
         localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
         window.location.reload();
+    }
+
+    public configSetAdvancedSearch(state: AdvancedSearchState):void{
+        // todo
     }
 
     public configGetAllState(): AdaptableBlotterState {

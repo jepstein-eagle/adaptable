@@ -27,16 +27,16 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
     load(): Promise<any> {
         const jsonState = localStorage.getItem(this.key);
         let parsedJsonState = JSON.parse(jsonState/*, this.reviver*/) || {}
-        if (typeof this.predefinedConfig== 'string' && StringExtensions.IsNotNullOrEmpty(this.predefinedConfig)) {
+        if (typeof this.predefinedConfig == 'string' && StringExtensions.IsNotNullOrEmpty(this.predefinedConfig)) {
             return fetch(this.predefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
-           //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
+                //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => AdaptableBlotterLogger.LogError(err));
         } else if (this.predefinedConfig != null) {
-            return new Promise (( resolve )=> resolve(this.predefinedConfig))
-          //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
+            return new Promise((resolve) => resolve(this.predefinedConfig))
+                //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
                 .catch(err => AdaptableBlotterLogger.LogError(err));
         }
@@ -67,8 +67,8 @@ function FilterPredefinedItems(state: any) {
             for (let property in substate) {
                 if (substate.hasOwnProperty(property)) {
                     if (Array.isArray(substate[property])) {
-                         // this line is dead! as we dont have readonly
-                  // so dont think we need teh whole method - get rid?
+                        // this line is dead! as we dont have readonly
+                        // so dont think we need teh whole method - get rid?
                         substate[property] = substate[property].filter((x: any) => !x.IsReadOnly)
                     }
                 }
@@ -92,7 +92,7 @@ function ForcePredefinedItems(state: any) {
                         let arrayItems = substate[property]
                         arrayItems.forEach((element: any) => {
                             if (element.hasOwnProperty("IsReadOnly")) {
-                          //      element.IsReadOnly = true;
+                                //      element.IsReadOnly = true;
                             }
                         });
                     }

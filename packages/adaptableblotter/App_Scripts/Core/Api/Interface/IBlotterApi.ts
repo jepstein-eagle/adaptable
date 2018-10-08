@@ -225,6 +225,9 @@ export interface IBlotterApi {
    *  */
   configClear(): void
   configDeleteLocalStorage(): void
+
+  configSetAdvancedSearch(state: AdvancedSearchState): void
+
   configGetAllState(): AdaptableBlotterState
   configGetAllUserState(): IRunTimeState[]
   configGetUserStateByFunction(stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
