@@ -52,7 +52,7 @@ function InitTradeBlotter() {
         vendorGrid: gridOptions,               // the ag-Grid grid options object - MANDATORY
         ignoreCaseInQueries: true,
         useDefaultVendorGridThemes: true,
-        // useAdaptableBlotterFilterForm: false,
+         useAdaptableBlotterFilterForm: false,
         // useAdaptableBlotterQuickFilter: false
         getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5

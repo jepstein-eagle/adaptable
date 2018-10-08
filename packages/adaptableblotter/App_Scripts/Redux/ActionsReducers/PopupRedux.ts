@@ -137,7 +137,7 @@ const initialPopupState: PopupState = {
         ShowChartPopup: false,
     },
     LoadingPopup: {
-        ShowLoadingPopup: false,
+        ShowLoadingPopup: true,
     },
     AlertPopup: {
         ShowAlertPopup: false,
