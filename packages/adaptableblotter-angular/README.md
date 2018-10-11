@@ -24,8 +24,13 @@ Note: The Adaptable Blotter licence does not include the licence for the underly
 
 Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
+## Demo
+To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids. 
+
 ## Help
-Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  
+
+There is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
 For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 
