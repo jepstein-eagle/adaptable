@@ -15,7 +15,7 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { IColumn } from "../../Core/Interface/IColumn";

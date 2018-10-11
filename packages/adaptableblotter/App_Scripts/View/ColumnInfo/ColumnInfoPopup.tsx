@@ -5,7 +5,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'

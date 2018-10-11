@@ -3,7 +3,7 @@ import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIConfirmation } from '../Core/Interface/IMessage';
 import { DataType, StateChangedTrigger } from '../Core/Enums'

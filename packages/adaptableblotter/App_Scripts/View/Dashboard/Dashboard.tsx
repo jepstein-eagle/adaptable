@@ -7,7 +7,7 @@ import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/I
 import { AdaptableDashboardViewFactory, AdaptableDashboardPermanentToolbarFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Core/Enums";

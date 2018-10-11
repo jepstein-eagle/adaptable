@@ -20,7 +20,7 @@ import { ValidationService } from '../../Core/Services/ValidationService'
 //import { ThemeService } from '../../Core/Services/ThemeService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -60,7 +60,7 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -1001,11 +1001,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
+    public getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo {
         return null;
     }
 
-    public setVendorGridState(vendorGridState: any): void {
+    public setVendorGridState(vendorGridState: IVendorGridInfo): void {
         // todo
     }
 

@@ -6,7 +6,7 @@ import { ReportExpressionWizard } from './ReportExpressionWizard'
 import { ReportSettingsWizard } from './ReportSettingsWizard'
 import { ReportSummaryWizard } from './ReportSummaryWizard'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
-import * as StrategyIds from '../../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IReport } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {

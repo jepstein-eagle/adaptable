@@ -5,7 +5,7 @@ import { EnumExtensions } from '../Extensions/EnumExtensions';
 import * as StyleConstants from '../Constants/StyleConstants'
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { StyleHelper } from '../Helpers/StyleHelper';
-import * as StrategyIds from '../Constants/StrategyIds'
+import * as StrategyConstants from '../Constants/StrategyConstants'
 
 
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......

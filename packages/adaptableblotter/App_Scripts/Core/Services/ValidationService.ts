@@ -4,7 +4,7 @@ import { IValidationService } from './Interface/IValidationService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { LeafExpressionOperator, DistinctCriteriaPairValue, ActionMode } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
-import * as StrategyIds from '../Constants/StrategyIds'
+import * as StrategyConstants from '../Constants/StrategyConstants'
 import { IColumn } from '../Interface/IColumn';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';

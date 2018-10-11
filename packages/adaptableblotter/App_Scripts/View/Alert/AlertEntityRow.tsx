@@ -10,7 +10,7 @@ import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { AlertHelper } from "../../Core/Helpers/AlertHelper";
 
 

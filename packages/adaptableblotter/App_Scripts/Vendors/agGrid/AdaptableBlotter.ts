@@ -6,7 +6,7 @@ import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../../View/AdaptableBlotterView';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { DefaultAdaptableBlotterOptions } from '../../Core/DefaultAdaptableBlotterOptions';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 // redux / store
@@ -76,7 +76,7 @@ import { ObjectFactory } from '../../Core/ObjectFactory';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
@@ -222,24 +222,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this.AdaptableBlotterStore.TheStore.getState()
     }
 
-    public setVendorGridState(vendorGridState: any): void {
-        if (vendorGridState) {
-
-            let columnState: any = JSON.parse(vendorGridState);
-            if (columnState) {
-                this.setColumnState(this.gridOptions.columnApi, columnState, "api");
-            }
-
-            // let column: Column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn")
-            // if (column) {
-            //  alert("have a special column")
-            //     this.gridOptions.columnApi.setColumnWidth(column, 500, true);
-            //   }
-            //   this.gridOptions.api.refreshHeader();
-        }
-
-    }
-
     private createFilterWrapper(col: Column) {
         this.gridOptions.api.destroyFilter(col)
         this.gridOptions.api.getColumnDef(col).filter = FilterWrapperFactory(this)
@@ -324,6 +306,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.setColumnIntoStore();
     }
 
+    debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), 500);
     public setColumnIntoStore() {
         let allColumns: IColumn[] = []
         let existingColumns: IColumn[] = this.getState().Grid.Columns;
@@ -456,8 +439,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
+    debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), 500);
+    public saveGridLayout() {
+        if (this.BlotterOptions.includeVendorStateInLayouts) {
+            LayoutHelper.autoSaveLayout(this);
+        }
+    }
 
+    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
@@ -971,6 +960,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.setColumnIntoStore();
     }
+
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         let venderCols = this.gridOptions.columnApi.getAllColumns()
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
@@ -1098,14 +1088,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // });
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
-        let columnEventsThatTriggersStateChange = [Events.EVENT_COLUMN_MOVED,
-        Events.EVENT_GRID_COLUMNS_CHANGED,
-        Events.EVENT_COLUMN_EVERYTHING_CHANGED,
-        Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
-        //   Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
-        Events.EVENT_COLUMN_VISIBLE,
-        //   Events.EVENT_COLUMN_PINNED,
-        Events.EVENT_NEW_COLUMNS_LOADED];
+        let columnEventsThatTriggersStateChange = [
+            Events.EVENT_COLUMN_MOVED,
+            Events.EVENT_GRID_COLUMNS_CHANGED,
+            Events.EVENT_COLUMN_EVERYTHING_CHANGED,
+            Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
+            //   Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
+            Events.EVENT_COLUMN_VISIBLE,
+            //   Events.EVENT_COLUMN_PINNED,
+            Events.EVENT_NEW_COLUMNS_LOADED
+        ];
         this.gridOptions.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
@@ -1113,18 +1105,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (popupState.ShowScreenPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
                     // ignore
                 } else {
-                    this.setColumnIntoStore();
+                   this.debouncedSetColumnIntoStore() // was: this.setColumnIntoStore();
                 }
             }
         });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
-        let columnEventsThatTriggersAutoLayoutSave = [Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED, Events.EVENT_COLUMN_PINNED];
+        let columnEventsThatTriggersAutoLayoutSave = [
+            Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
+            Events.EVENT_COLUMN_PINNED
+        ];
         this.gridOptions.api.addGlobalListener((type: string, event: any) => {
             if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
-                if (this.BlotterOptions.includeVendorStateInLayouts) {
-                    LayoutHelper.autoSaveLayout(this);
-                }
+                this.debouncedSaveGridLayout();
             }
+
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
@@ -1437,31 +1431,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
+    public getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo {
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
-            return JSON.stringify(this.gridOptions.columnApi.getColumnState())
+            return {
+                GroupState: null,
+                ColumnState: JSON.stringify(this.gridOptions.columnApi.getColumnState())
+            }
         }
 
         if (this.BlotterOptions.includeVendorStateInLayouts) {
-      //      let test = this.gridOptions.columnApi.getAllDisplayedColumns();
-      //      console.log("dispalyed state")
-      //      console.log(test)
+            let groupedState: any = null
+            let test = this.gridOptions.columnApi.getAllDisplayedColumns();
+            let groupedCol = test.find(c => ColumnHelper.isSpecialColumn(c.getColId()));
+            if (groupedCol) {
+                console.log("special col width: " + groupedCol.getActualWidth())
+                groupedState = groupedCol.getActualWidth();
+            }
 
             let columnState = this.gridOptions.columnApi.getColumnState();
-      //      console.log("column state")
-     //       console.log(columnState)
-     //       let groupState = this.gridOptions.columnApi.getColumnGroupState();
-     //       console.log("group state")
-     //       console.log(groupState)
-     //       let allState = this.gridOptions.columnApi.getState();
-     //       console.log("alll state")
-     //       console.log(allState)
-
 
             // Dont like this but not sure we have a choice to avoid other issues...
             // Going to update the state to make sure that visibility matches those given here
-
             columnState.forEach(c => {
                 // to do
                 let colId: string = c.colId;
@@ -1471,10 +1462,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     c.hide = true;
                 }
             })
+            return {
+                GroupState: groupedState,
+                ColumnState: JSON.stringify(columnState)
+            }
 
-            return JSON.stringify(columnState)
         }
         return null; // need this?
+    }
+
+    public setVendorGridState(vendorGridState: IVendorGridInfo): void {
+        if (vendorGridState) {
+
+            let columnState: any = JSON.parse(vendorGridState.ColumnState);
+            if (columnState) {
+                this.setColumnState(this.gridOptions.columnApi, columnState, "api");
+            }
+
+            let groupedState: any = vendorGridState.GroupState;
+            if (groupedState) {
+                // assume for now its just a number
+                let column: Column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn")
+                if (column) {
+                    //  alert("have a special column")
+                    this.gridOptions.columnApi.setColumnWidth(column, groupedState, true);
+                }
+                //   this.gridOptions.api.refreshHeader();
+            }
+        }
     }
 
 

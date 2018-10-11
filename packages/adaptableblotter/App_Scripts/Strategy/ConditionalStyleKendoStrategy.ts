@@ -7,7 +7,7 @@ import { Helper } from '../Core/Helpers/Helper';
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import { StyleHelper } from '../Core/Helpers/StyleHelper';
 
 

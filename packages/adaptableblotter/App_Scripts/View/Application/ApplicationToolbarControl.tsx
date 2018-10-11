@@ -6,7 +6,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { AccessLevel } from "../../Core/Enums";

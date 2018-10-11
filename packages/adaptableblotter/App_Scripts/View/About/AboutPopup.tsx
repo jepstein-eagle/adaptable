@@ -5,7 +5,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import { connect } from 'react-redux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
 import { IColItem, KeyValuePair } from "../UIInterfaces";

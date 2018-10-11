@@ -4,7 +4,7 @@ import { EntityListActionButtons } from './Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from './AdaptableObjectRow';
 import { SharedEntityExpressionRowProps, BaseRowProps } from './SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 
 export interface WizardSummaryRowProps<WizardSummaryRow> extends BaseRowProps<WizardSummaryRow> {

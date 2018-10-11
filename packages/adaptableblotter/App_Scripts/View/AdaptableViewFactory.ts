@@ -32,7 +32,7 @@ import { ApplicationPopup } from './Application/ApplicationPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { DataManagementPopup } from './DataManagement/DataManagementPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as React from "react";
 import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';

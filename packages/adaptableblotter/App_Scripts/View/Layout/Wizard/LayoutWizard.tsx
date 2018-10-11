@@ -6,7 +6,7 @@ import { LayoutColumnWizard } from './LayoutColumnWizard'
 import { LayoutSettingsWizard } from './LayoutSettingsWizard'
 import { LayoutGridSortWizard } from './LayoutGridSortWizard'
 import { LayoutSummaryWizard } from './LayoutSummaryWizard'
-import * as StrategyIds from '../../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
 import { IGridSort, ILayout } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 

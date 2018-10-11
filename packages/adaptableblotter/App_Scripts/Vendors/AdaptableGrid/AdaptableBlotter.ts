@@ -19,7 +19,7 @@ import { ValidationService } from '../../Core/Services/ValidationService'
 import { StyleService } from '../../Core/Services/StyleService'
 import { CalculatedColumnExpressionService } from '../../Core/Services/CalculatedColumnExpressionService'
 import { AuditLogService } from '../../Core/Services/AuditLogService'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
@@ -45,7 +45,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ILayout } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
@@ -566,11 +566,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //todo
     }
 
-    public getVendorGridState(visibleCols: string[], forceFetch: boolean): any {
+    public getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo {
         return null;
     }
 
-    public setVendorGridState(vendorGridState: any): void {
+    public setVendorGridState(vendorGridState: IVendorGridInfo): void {
         // todo
     }
 

@@ -13,7 +13,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyIds from '../../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {

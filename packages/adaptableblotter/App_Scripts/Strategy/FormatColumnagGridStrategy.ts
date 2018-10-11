@@ -4,7 +4,7 @@ import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { StyleHelper } from '../Core/Helpers/StyleHelper';
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {

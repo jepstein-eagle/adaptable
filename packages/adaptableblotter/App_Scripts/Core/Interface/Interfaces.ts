@@ -29,3 +29,7 @@ export interface ICellInfo {
     Value: any;
 }
 
+export interface IVendorGridInfo{
+    GroupState: any
+    ColumnState: any
+}

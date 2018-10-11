@@ -15,7 +15,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonUndo } from '../Components/Buttons/ButtonUndo';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ObjectFactory } from "../../Core/ObjectFactory";

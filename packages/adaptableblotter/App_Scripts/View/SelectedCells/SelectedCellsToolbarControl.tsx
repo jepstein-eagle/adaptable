@@ -5,7 +5,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/SelectedCellsRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/ToolbarStrategyViewPopupProps";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";

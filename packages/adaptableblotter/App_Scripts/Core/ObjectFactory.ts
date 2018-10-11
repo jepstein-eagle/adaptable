@@ -9,6 +9,7 @@ import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import * as GeneralConstants from './Constants/GeneralConstants';
 import { Expression } from './Api/Expression';
+import { IVendorGridInfo } from './Interface/Interfaces';
 
 export module ObjectFactory {
 
@@ -159,7 +160,7 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], vendorGridInfo: KeyValuePair[], name: string): ILayout {
+    export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], vendorGridInfo: IVendorGridInfo, name: string): ILayout {
         return {
             Columns: (columns) ? columns.map(x => x.ColumnId) : [],
             GridSorts: gridSorts,

@@ -5,7 +5,7 @@ import {  ControlLabel } from 'react-bootstrap';
 import { StrategyViewPopupProps } from "../Components/SharedProps/StrategyViewPopupProps";
 import { EditableConfigEntityState } from "../Components/SharedProps/EditableConfigEntityState";
 import { IColItem } from "../UIInterfaces";
-import * as StrategyIds from '../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'

@@ -2,7 +2,7 @@ import * as React from "react";
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
-import * as StrategyIds from '../../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";

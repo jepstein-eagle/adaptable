@@ -1,5 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Core/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';

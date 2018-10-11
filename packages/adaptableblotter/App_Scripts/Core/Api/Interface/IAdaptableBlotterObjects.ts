@@ -1,5 +1,6 @@
 import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType, ChartType } from '../../Enums';
 import { Expression } from '../Expression';
+import { IVendorGridInfo } from '../../Interface/Interfaces';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -154,7 +155,7 @@ export interface ILayout extends IAdaptableBlotterObject {
   Name: string;
   Columns: string[];
   GridSorts: IGridSort[]
-  VendorGridInfo?: any
+  VendorGridInfo?: IVendorGridInfo
 }
 
 export interface IPlusMinusRule extends IAdaptableBlotterObject {

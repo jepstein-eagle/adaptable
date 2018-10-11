@@ -4,7 +4,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { FormatColumnScopeWizard } from './FormatColumnScopeWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'
 import { FormatColumnSummaryWizard } from './FormatColumnSummaryWizard'
-import * as StrategyIds from '../../../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FormatColumnWizard> {

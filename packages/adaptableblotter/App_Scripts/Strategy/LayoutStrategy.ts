@@ -1,6 +1,6 @@
 import { ILayoutStrategy } from './Interface/ILayoutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 ;
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';

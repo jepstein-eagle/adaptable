@@ -4,7 +4,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from '../Vendors/Kendo/AdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { StyleHelper } from '../Core/Helpers/StyleHelper';
-import * as StrategyIds from '../Core/Constants/StrategyIds'
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 
 export class FormatColumnKendoStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(blotter: IAdaptableBlotter) {
