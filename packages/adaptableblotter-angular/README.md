@@ -18,12 +18,19 @@ There are 3 licence types available (all sold on an annual basis):
 * *End User* - licences are sold in bands depending on the number of end users
 * *Universal* - unlimited users and usage.
 
-(The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support).  Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
+The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
 
 Note: The Adaptable Blotter licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
+Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
+
+## Demo
+To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids. 
+
 ## Help
-Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.  
+
+There is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
 
 For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 
