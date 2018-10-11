@@ -44,12 +44,12 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyIds.ConditionalStyleStrategyName}
+            key={StrategyConstants.ConditionalStyleStrategyName}
             cssClassName={this.props.cssClassName}
-            StrategyId={StrategyIds.ConditionalStyleStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyIds.ConditionalStyleStrategyName)}
+            StrategyId={StrategyConstants.ConditionalStyleStrategyId}
+            StrategySummary={Helper.ReturnItemCount(this.props.ConditionalStyles.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId && item.ConditionalStyleScope == ConditionalStyleScope.Column), StrategyConstants.ConditionalStyleStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyIds.ConditionalStyleStrategyName}
+            NewButtonTooltip={StrategyConstants.ConditionalStyleStrategyName}
             AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
@@ -64,7 +64,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                         Item1={<StyleVisualItem Style={item.Style} />}
                         Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
                         ConfigEnity={item}
-                        EntityName={StrategyIds.ConditionalStyleStrategyName}
+                        EntityName={StrategyConstants.ConditionalStyleStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
@@ -142,7 +142,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) => dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyle)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ConditionalStyleStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId))
     };
 }
 

@@ -38,7 +38,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let cssClassName: string = this.props.cssClassName + "__Charts";
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.ChartStrategyName} bsStyle="primary" glyphicon={StrategyIds.ChartGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.ChartStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ChartGlyph}>
             {this.state.chartData != null &&
                     <IgrCategoryChart
                         yAxisMinimumValue={0}

@@ -10,11 +10,11 @@ import { StateChangedTrigger } from '../Core/Enums';
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase implements IFormatColumnStrategy {
     protected FormatColumnState: FormatColumnState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.FormatColumnStrategyId, blotter)
+        super(StrategyConstants.FormatColumnStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyIds.FormatColumnGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.FormatColumnStrategyName, ScreenPopups.FormatColumnPopup, StrategyConstants.FormatColumnGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -24,9 +24,9 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
             let popupParam = formatExists ? "Edit|" : "New|"
 
             this.createContextMenuItemShowPopup(
-                label + StrategyIds.FormatColumnStrategyName,
+                label + StrategyConstants.FormatColumnStrategyName,
                 ScreenPopups.FormatColumnPopup,
-                StrategyIds.FormatColumnGlyph,
+                StrategyConstants.FormatColumnGlyph,
                 popupParam + columnId)
         }
     }

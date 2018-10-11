@@ -41,12 +41,12 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
      
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyIds.CellValidationStrategyName}
+            key={StrategyConstants.CellValidationStrategyName}
             cssClassName={this.props.cssClassName}
-            StrategyId={StrategyIds.CellValidationStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName)}
+            StrategyId={StrategyConstants.CellValidationStrategyId}
+            StrategySummary={Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.CellValidationStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyIds.CellValidationStrategyName}
+            NewButtonTooltip={StrategyConstants.CellValidationStrategyName}
             AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
@@ -61,7 +61,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
                         Item2={item.Description}
                         ConfigEnity={item}
-                        EntityName={StrategyIds.CellValidationStrategyName}
+                        EntityName={StrategyConstants.CellValidationStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
@@ -130,7 +130,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
     };
 }
 

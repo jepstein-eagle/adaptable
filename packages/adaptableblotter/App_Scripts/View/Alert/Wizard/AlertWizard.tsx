@@ -18,7 +18,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
         let stepNames: string[] = ["Select Column", "Alert Rules",  "Type","Add Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.AlertStrategyName}
+                FriendlyName={StrategyConstants.AlertStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

@@ -28,7 +28,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
             { Key: "Grid Sorts", Value: LayoutHelper.getGridSort(this.props.Data.GridSorts, this.props.Columns) },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.LayoutStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.LayoutStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

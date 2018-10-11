@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
 const Enums_1 = require("../Core/Enums");
 class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.UserFilterStrategyId, blotter);
+        super(StrategyConstants.UserFilterStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyIds.UserFilterGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyConstants.UserFilterGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
-            this.createContextMenuItemShowPopup("Create User Filter", ScreenPopups.UserFilterPopup, StrategyIds.UserFilterGlyph, "New|" + columnId);
+            this.createContextMenuItemShowPopup("Create User Filter", ScreenPopups.UserFilterPopup, StrategyConstants.UserFilterGlyph, "New|" + columnId);
         }
     }
     InitState() {

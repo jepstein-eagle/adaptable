@@ -27,7 +27,7 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
             { Key: "Values", Value: this.props.Data.SortedValues.join(', ') }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.CustomSortStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CustomSortStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

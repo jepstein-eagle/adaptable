@@ -24,7 +24,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
             "All changes made while using the Column Chooser are implemented in the Blotter immediately."]
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyIds.ColumnChooserGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ColumnChooserGlyph} infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))}
                     cssClassName={cssClassName}
                     SelectedValues={this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))}

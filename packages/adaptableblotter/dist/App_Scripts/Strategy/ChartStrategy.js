@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.ChartStrategyId, blotter);
+        super(StrategyConstants.ChartStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ChartStrategyName, ScreenPopups.ChartPopup, StrategyIds.ChartGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ChartStrategyName, ScreenPopups.ChartPopup, StrategyConstants.ChartGlyph);
     }
     InitState() {
         if (this.ChartState != this.blotter.AdaptableBlotterStore.TheStore.getState().Chart) {

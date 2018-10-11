@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class LayoutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.LayoutStrategyId, blotter);
+        super(StrategyConstantsLayoutStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.LayoutStrategyName, ScreenPopups.LayoutPopup, StrategyIds.LayoutGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsLayoutStrategyName, ScreenPopups.LayoutPopup, StrategyConstantsLayoutGlyph);
     }
     InitState() {
         if (this.LayoutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Layout) {

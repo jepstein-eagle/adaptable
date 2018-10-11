@@ -11,11 +11,11 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     private userFilters: IUserFilter[]
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.UserFilterStrategyId, blotter)
+        super(StrategyConstants.UserFilterStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyIds.UserFilterGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyConstants.UserFilterGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -23,7 +23,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             this.createContextMenuItemShowPopup(
                 "Create User Filter",
                 ScreenPopups.UserFilterPopup,
-                StrategyIds.UserFilterGlyph,
+                StrategyConstants.UserFilterGlyph,
                 "New|" + columnId
             )
         }

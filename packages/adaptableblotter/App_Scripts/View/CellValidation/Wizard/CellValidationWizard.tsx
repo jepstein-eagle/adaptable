@@ -21,7 +21,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
         let stepNames: string[] = ["Select Column", "Choose Action", "Create Rule", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.CellValidationStrategyName}
+                FriendlyName={StrategyConstants.CellValidationStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

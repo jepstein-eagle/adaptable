@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FormatColumnStrategy_1 = require("./FormatColumnStrategy");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
 const StyleHelper_1 = require("../Core/Helpers/StyleHelper");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 class FormatColumnagGridStrategy extends FormatColumnStrategy_1.FormatColumnStrategy {
     constructor(blotterBypass) {
         super(blotterBypass);
@@ -19,7 +19,7 @@ class FormatColumnagGridStrategy extends FormatColumnStrategy_1.FormatColumnStra
                 this.FormatColumnState.FormatColumns.forEach((fc, index) => {
                     if (fc.ColumnId == column.ColumnId) {
                         let styleName = (StringExtensions_1.StringExtensions.IsNullOrEmpty(fc.Style.ClassName)) ?
-                            StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, index, this.blotter) :
+                            StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, index, this.blotter) :
                             fc.Style.ClassName;
                         cellClassRules[styleName] = function (params) {
                             return true;

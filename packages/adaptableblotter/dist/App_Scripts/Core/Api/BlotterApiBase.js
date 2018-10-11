@@ -22,7 +22,7 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const FormatColumnRedux = require("../../Redux/ActionsReducers/FormatColumnRedux");
 const GeneralConstants_1 = require("../Constants/GeneralConstants");
-const StrategyIds = require("../Constants/StrategyIds");
+const StrategyConstants = require("../Constants/StrategyConstants");
 const Enums_1 = require("../Enums");
 const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore");
 const AdaptableBlotterLogger_1 = require("../Helpers/AdaptableBlotterLogger");
@@ -39,7 +39,7 @@ class BlotterApiBase {
     // Layout api methods
     layoutSet(layoutName) {
         let layout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
-        if (this.checkItemExists(layout, layoutName, StrategyIds.LayoutStrategyName)) {
+        if (this.checkItemExists(layout, layoutName, StrategyConstantsLayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
         }
     }
@@ -264,7 +264,7 @@ class BlotterApiBase {
     // Data Source api methods
     dataSourceSet(dataSourceName) {
         let dataSource = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
-        if (this.checkItemExists(dataSource, dataSourceName, StrategyIds.DataSourceStrategyName)) {
+        if (this.checkItemExists(dataSource, dataSourceName, StrategyConstantsDataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource));
         }
     }
@@ -274,7 +274,7 @@ class BlotterApiBase {
     // Advanced Search api methods
     advancedSearchSet(advancedSearchName) {
         let advancedSearch = this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
-        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyIds.AdvancedSearchStrategyName)) {
+        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyConstantsAdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));
         }
     }

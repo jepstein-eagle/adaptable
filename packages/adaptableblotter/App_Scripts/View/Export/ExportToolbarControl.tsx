@@ -77,7 +77,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         }
 
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
-            <Glyphicon glyph={StrategyIds.ExportGlyph} />
+            <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         </OverlayTrigger>
 
         let content = <span>
@@ -164,7 +164,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </span>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ExportStrategyName} glyphicon={StrategyIds.ExportGlyph} onClose={() => this.props.onClose(StrategyIds.ExportStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} glyphicon={StrategyConstants.ExportGlyph} onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -187,10 +187,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (Report: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(Report, exportDestination)),
         onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
         onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
-        onNewReport: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, ScreenPopups.ExportPopup, "New")),
-        onEditReport: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, ScreenPopups.ExportPopup, "Edit")),
+        onNewReport: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, "New")),
+        onEditReport: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ExportStrategyId, ScreenPopups.ExportPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup))
     };
 }
 

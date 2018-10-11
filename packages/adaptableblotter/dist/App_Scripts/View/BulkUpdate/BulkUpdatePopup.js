@@ -6,7 +6,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const BulkUpdateRedux = require("../../Redux/ActionsReducers/BulkUpdateRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Enums_1 = require("../../Core/Enums");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const AdaptablePopover_1 = require("../AdaptablePopover");
@@ -53,7 +53,7 @@ class BulkUpdatePopupComponent extends React.Component {
             null;
         return (React.createElement("div", { className: cssClassName }, col &&
             React.createElement("div", null,
-                React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.BulkUpdateStrategyName, bsStyle: "primary", glyphicon: StrategyIds.BulkUpdateGlyph, infoBody: infoBody },
+                React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.BulkUpdateStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.BulkUpdateGlyph, infoBody: infoBody },
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { onSubmit: () => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate() },
                         React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineKey" }, col.DataType == Enums_1.DataType.Date ?
                             React.createElement("div", null,

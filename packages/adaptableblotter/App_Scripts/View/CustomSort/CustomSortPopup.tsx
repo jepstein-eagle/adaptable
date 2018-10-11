@@ -93,8 +93,8 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
         />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.CustomSortStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyIds.CustomSortGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.CustomSortStrategyName} className="ab_main_popup" infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyConstants.CustomSortGlyph}>
 
                 {customSorts.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={customSorts} />
@@ -168,7 +168,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CustomSortStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId))
     };
 }
 

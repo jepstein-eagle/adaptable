@@ -11,7 +11,7 @@ const AdvancedSearchEntityRow_1 = require("./AdvancedSearchEntityRow");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -52,7 +52,7 @@ class AdvancedSearchPopupComponent extends React.Component {
         });
         let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyIds.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyIds.AdvancedSearchGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyConstants.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyConstants.AdvancedSearchGlyph, className: "ab_main_popup" },
                 advancedSearchRows.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: advancedSearchRows }),
                 advancedSearchRows.length == 0 &&
@@ -97,7 +97,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateAdvancedSearch: (index, advancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(index, advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AdvancedSearchStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId))
     };
 }
 exports.AdvancedSearchPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchPopupComponent);

@@ -98,7 +98,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
         return (<div className={cssClassName}>
             {col &&
                 <div>
-                    <PanelWithImage cssClassName={cssClassName} header={StrategyIds.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyIds.BulkUpdateGlyph} infoBody={infoBody}>
+                    <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.BulkUpdateStrategyName} bsStyle="primary" glyphicon={StrategyConstants.BulkUpdateGlyph} infoBody={infoBody}>
                         <AdaptableBlotterForm onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplyBulkUpdate()}>
                             <FormGroup controlId="formInlineKey">
                                 {col.DataType == DataType.Date ?

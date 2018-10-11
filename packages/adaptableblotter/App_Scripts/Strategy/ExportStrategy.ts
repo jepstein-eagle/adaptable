@@ -26,7 +26,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     private throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ExportStrategyId, blotter)
+        super(StrategyConstants.ExportStrategyId, blotter)
 
 
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
@@ -69,7 +69,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ExportStrategyName, ScreenPopups.ExportPopup, StrategyIds.ExportGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ExportStrategyName, ScreenPopups.ExportPopup, StrategyConstants.ExportGlyph);
     }
 
     private sendNewDataToLiveExcel() {

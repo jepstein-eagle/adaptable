@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -49,7 +49,7 @@ class AlertPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createAlert(), overrideTooltip: "Create Alert", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.AlertStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.AlertGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.AlertStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyConstants.AlertGlyph, infoBody: infoBody },
                 AlertItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: AlertItems }),
                 AlertItems.length == 0 &&
@@ -91,7 +91,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onAddEditAlert: (index, Alert) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
         onChangeMessageType: (index, MessageType) => dispatch(AlertRedux.AlertDefinitionChangeMessageType(index, MessageType)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId))
     };
 }
 exports.AlertPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AlertPopupComponent);

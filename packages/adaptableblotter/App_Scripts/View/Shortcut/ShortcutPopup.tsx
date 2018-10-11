@@ -86,9 +86,9 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
         let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ShortcutStrategyName} className="ab_main_popup"
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ShortcutStrategyName} className="ab_main_popup"
                 button={newButton}
-                bsStyle="primary" glyphicon={StrategyIds.ShortcutGlyph}
+                bsStyle="primary" glyphicon={StrategyConstants.ShortcutGlyph}
                 infoBody={infoBody}>
 
                 {shortcuts.length > 0 &&
@@ -166,7 +166,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
         onChangeOperationShortcut: (shortcut: IShortcut, NewshortcutOperation: MathOperation) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewshortcutOperation)),
         onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ShortcutStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId))
     };
 }
 

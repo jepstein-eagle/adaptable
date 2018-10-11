@@ -5,7 +5,7 @@ const Enums_1 = require("../Core/Enums");
 const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
 const StyleHelper_1 = require("../Core/Helpers/StyleHelper");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
         super(blotter);
@@ -44,7 +44,7 @@ class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.Conditio
                 let cellClassRules = {};
                 this.ConditionalStyleState.ConditionalStyles.forEach((cs, index) => {
                     let styleName = (StringExtensions_1.StringExtensions.IsNullOrEmpty(cs.Style.ClassName)) ?
-                        StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.ConditionalStyleStrategyId, index, this.blotter) :
+                        StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstantsConditionalStyleStrategyId, index, this.blotter) :
                         cs.Style.ClassName;
                     if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column && cs.ColumnId == column.ColumnId) {
                         cellClassRules[styleName] = function (params) {

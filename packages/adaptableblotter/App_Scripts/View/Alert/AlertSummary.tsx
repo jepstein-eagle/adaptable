@@ -40,12 +40,12 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
         
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyIds.AlertStrategyName}
+            key={StrategyConstants.AlertStrategyName}
             cssClassName={this.props.cssClassName}
-            StrategyId={StrategyIds.AlertStrategyId}
-            StrategySummary={Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.AlertStrategyName)}
+            StrategyId={StrategyConstants.AlertStrategyId}
+            StrategySummary={Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.AlertStrategyName)}
             onNew={() => this.onNew()}
-            NewButtonTooltip={StrategyIds.AlertStrategyName}
+            NewButtonTooltip={StrategyConstants.AlertStrategyName}
             AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
@@ -60,7 +60,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
                         Item1={"something here?"}
                         Item2={AlertHelper.createAlertDescription( item, this.props.Columns)}
                         ConfigEnity={item}
-                        EntityName={StrategyIds.AlertStrategyName}
+                        EntityName={StrategyConstants.AlertStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
@@ -129,7 +129,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId))
     };
 }
 

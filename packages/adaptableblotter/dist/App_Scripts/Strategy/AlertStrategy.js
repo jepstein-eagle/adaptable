@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../Core/Enums");
@@ -10,7 +10,7 @@ const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 const AlertHelper_1 = require("../Core/Helpers/AlertHelper");
 class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.AlertStrategyId, blotter);
+        super(StrategyConstantsAlertStrategyId, blotter);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
     }
     InitState() {
@@ -22,7 +22,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.AlertStrategyName, ScreenPopups.AlertPopup, StrategyIds.AlertGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsAlertStrategyName, ScreenPopups.AlertPopup, StrategyConstantsAlertGlyph);
     }
     handleDataSourceChanged(dataChangedEvent) {
         let alertDefinitions = this.CheckDataChanged(dataChangedEvent);
@@ -58,10 +58,10 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
         let dataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue };
         if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.AlertStrategyId, "CheckingAudit", "AlertsTriggered", { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent });
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsAlertStrategyId, "CheckingAudit", "AlertsTriggered", { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent });
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.AlertStrategyId, "CheckingAudit", "Ok", { DataChangingEvent: dataChangingEvent });
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsAlertStrategyId, "CheckingAudit", "Ok", { DataChangingEvent: dataChangingEvent });
         }
         return triggeredAlerts;
     }

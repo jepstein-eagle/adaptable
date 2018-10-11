@@ -33,7 +33,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
             : <MenuItem onClick={() => this.props.onExport(ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
 
 
-        let exportGlyph: any = <Glyphicon glyph={StrategyIds.ExportGlyph} />
+        let exportGlyph: any = <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
 
         let colItems: IColItem[] = [].concat(this.props.colItems);

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ShortcutRedux = require("../Redux/ActionsReducers/ShortcutRedux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
@@ -12,11 +12,11 @@ const ObjectFactory_1 = require("../Core/ObjectFactory");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.ShortcutStrategyId, blotter);
+        super(StrategyConstantsShortcutStrategyId, blotter);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyIds.ShortcutGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyConstantsShortcutGlyph);
     }
     InitState() {
         if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {

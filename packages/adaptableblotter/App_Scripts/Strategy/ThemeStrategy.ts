@@ -14,7 +14,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     private theme: HTMLLinkElement
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ThemeStrategyId, blotter)
+        super(StrategyConstants.ThemeStrategyId, blotter)
 
 
         // Create the <style> tag for shipped themes
@@ -30,7 +30,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyIds.ThemeGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyConstants.ThemeGlyph);
     }
 
     protected InitState() {

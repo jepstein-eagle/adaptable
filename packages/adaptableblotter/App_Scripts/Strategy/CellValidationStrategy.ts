@@ -11,11 +11,11 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
     private CellValidationState: CellValidationState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CellValidationStrategyId, blotter)
+        super(StrategyConstants.CellValidationStrategyId, blotter)
       }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyIds.CellValidationGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyConstants.CellValidationGlyph);
     }
 
     protected InitState() {
@@ -33,7 +33,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
             this.createContextMenuItemShowPopup(
                 "Create Cell Validation Rule",
                 ScreenPopups.CellValidationPopup,
-                StrategyIds.CellValidationGlyph,
+                StrategyConstants.CellValidationGlyph,
                 "New|" + columnId)
             }
     }

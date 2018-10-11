@@ -75,7 +75,7 @@ class CalendarsPopupComponent extends React.Component<CalendarsPopupProps, Calen
 
 
 
-        return <PanelWithImage cssClassName={cssClassName}  header={StrategyIds.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyIds.CalendarGlyph} infoBody={infoBody}>
+        return <PanelWithImage cssClassName={cssClassName}  header={StrategyConstants.CalendarStrategyName} bsStyle="primary" glyphicon={StrategyConstants.CalendarGlyph} infoBody={infoBody}>
 
             <PanelWithRow cssClassName={cssClassName} colItems ={allCalenderColItems} bsStyle="info" className="ab_preview_panel" />
             <ListGroup >

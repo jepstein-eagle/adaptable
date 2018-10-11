@@ -24,11 +24,11 @@ const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLB
 
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
-    StrategyIds: string[];
+    StrategyConstants: string[];
 }
 
 export interface DashboardSetToolbarsAction extends Redux.Action {
-    StrategyIds: string[];
+    StrategyConstants: string[];
 }
 
 export interface DashboardShowToolbarAction extends Redux.Action {
@@ -49,7 +49,7 @@ export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Act
 }
 
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
-    StrategyIds: string[];
+    StrategyConstants: string[];
 }
 
 export interface DashboardSetZoomAction extends Redux.Action {
@@ -90,14 +90,14 @@ export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action 
     Title: string
 }
 
-export const DashboardSetAvailableToolbars = (StrategyIds: string[]): DashboardSetAvailableToolbarsAction => ({
+export const DashboardSetAvailableToolbars = (StrategyConstants: string[]): DashboardSetAvailableToolbarsAction => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
-    StrategyIds
+    StrategyConstants
 })
 
-export const DashboardSetToolbars = (StrategyIds: string[]): DashboardSetToolbarsAction => ({
+export const DashboardSetToolbars = (StrategyConstants: string[]): DashboardSetToolbarsAction => ({
     type: DASHBOARD_SET_TOOLBARS,
-    StrategyIds
+    StrategyConstants
 })
 
 export const DashboardShowToolbar = (StrategyId: string): DashboardShowToolbarAction => ({
@@ -116,9 +116,9 @@ export const DashboardMoveItem = (StrategyId: string, NewIndex: number): Dashboa
     NewIndex
 })
 
-export const DashboardSetFunctionButtons = (StrategyIds: string[]): DashboardSetFunctionButtonsAction => ({
+export const DashboardSetFunctionButtons = (StrategyConstants: string[]): DashboardSetFunctionButtonsAction => ({
     type: DASHBOARD_SET_FUNCTION_BUTTONS,
-    StrategyIds,
+    StrategyConstants,
 
 })
 
@@ -168,37 +168,37 @@ export const DashboardSetApplicationToolbarTitle = (Title: string): DashboardSet
 
 const initialDashboardState: DashboardState = {
     AvailableToolbars: [
-        StrategyIds.AdvancedSearchStrategyId,
-        StrategyIds.QuickSearchStrategyId,
-        StrategyIds.LayoutStrategyId,
-        StrategyIds.ExportStrategyId,
-        StrategyIds.ColumnFilterStrategyId,
-        StrategyIds.DataSourceStrategyId,
-        StrategyIds.BulkUpdateStrategyId,
-        StrategyIds.SmartEditStrategyId,
-        StrategyIds.SelectedCellsStrategyId,
-        StrategyIds.ApplicationStrategyId,
-        StrategyIds.AlertStrategyId,
-      //  StrategyIds.ChartStrategyId,
+        StrategyConstants.AdvancedSearchStrategyId,
+        StrategyConstants.QuickSearchStrategyId,
+        StrategyConstants.LayoutStrategyId,
+        StrategyConstants.ExportStrategyId,
+        StrategyConstants.ColumnFilterStrategyId,
+        StrategyConstants.DataSourceStrategyId,
+        StrategyConstants.BulkUpdateStrategyId,
+        StrategyConstants.SmartEditStrategyId,
+        StrategyConstants.SelectedCellsStrategyId,
+        StrategyConstants.ApplicationStrategyId,
+        StrategyConstants.AlertStrategyId,
+      //  StrategyConstants.ChartStrategyId,
     ],
     VisibleToolbars: [
-        StrategyIds.AdvancedSearchStrategyId,
-        StrategyIds.QuickSearchStrategyId,
-        StrategyIds.LayoutStrategyId,
-        StrategyIds.ExportStrategyId,
-        StrategyIds.ColumnFilterStrategyId,
-        // StrategyIds.ChartStrategyId,
-        //   StrategyIds.AlertStrategyId,
-        // StrategyIds.SelectedCellsStrategyId,
-        // StrategyIds.BulkUpdateStrategyId
+        StrategyConstants.AdvancedSearchStrategyId,
+        StrategyConstants.QuickSearchStrategyId,
+        StrategyConstants.LayoutStrategyId,
+        StrategyConstants.ExportStrategyId,
+        StrategyConstants.ColumnFilterStrategyId,
+        // StrategyConstants.ChartStrategyId,
+        //   StrategyConstants.AlertStrategyId,
+        // StrategyConstants.SelectedCellsStrategyId,
+        // StrategyConstants.BulkUpdateStrategyId
     ],
     VisibleButtons: [
-        StrategyIds.AboutStrategyId,
-        StrategyIds.DashboardStrategyId,
-        StrategyIds.SmartEditStrategyId,
-        StrategyIds.ColumnChooserStrategyId,
-        StrategyIds.ConditionalStyleStrategyId,
-        StrategyIds.TeamSharingStrategyId
+        StrategyConstants.AboutStrategyId,
+        StrategyConstants.DashboardStrategyId,
+        StrategyConstants.SmartEditStrategyId,
+        StrategyConstants.ColumnChooserStrategyId,
+        StrategyConstants.ConditionalStyleStrategyId,
+        StrategyConstants.TeamSharingStrategyId
     ],
     Zoom: 1,
     DashboardVisibility: Visibility.Visible,
@@ -215,10 +215,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
 
     switch (action.type) {
         case DASHBOARD_SET_AVAILABLE_TOOLBARS:
-            return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyIds })
+            return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyConstants })
         case DASHBOARD_SET_TOOLBARS: {
             let actionTyped = <DashboardSetToolbarsAction>action;
-            let dashboardToolbars = actionTyped.StrategyIds
+            let dashboardToolbars = actionTyped.StrategyConstants
             return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
         }
         case DASHBOARD_MOVE_ITEM: {
@@ -243,7 +243,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
         }
         case DASHBOARD_SET_FUNCTION_BUTTONS: {
             let actionTyped = <DashboardSetFunctionButtonsAction>action;
-            let dashboardFunctionButtons = actionTyped.StrategyIds
+            let dashboardFunctionButtons = actionTyped.StrategyConstants
             return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
         }
         case DASHBOARD_SET_ZOOM: {

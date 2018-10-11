@@ -18,11 +18,11 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     private SmartEditState: SmartEditState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.SmartEditStrategyId, blotter)
+        super(StrategyConstants.SmartEditStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyIds.SmartEditGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyConstants.SmartEditGlyph);
     }
 
     protected InitState() {

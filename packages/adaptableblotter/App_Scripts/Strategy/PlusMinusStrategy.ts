@@ -21,7 +21,7 @@ import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.PlusMinusStrategyId, blotter)
+        super(StrategyConstants.PlusMinusStrategyId, blotter)
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
@@ -36,7 +36,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyIds.PlusMinusGlyph)
+        this.createMenuItemShowPopup(StrategyConstants.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyConstants.PlusMinusGlyph)
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -47,7 +47,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 this.createContextMenuItemShowPopup(
                     "Create Plus/Minus Rule",
                     ScreenPopups.PlusMinusPopup,
-                    StrategyIds.PlusMinusGlyph,
+                    StrategyConstants.PlusMinusGlyph,
                     "New|" + columnId)
             }
         }

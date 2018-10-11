@@ -150,35 +150,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
-        this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy(this))
-        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
-        this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy(this))
-        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
-        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy(this))
-        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
-        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
-        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        //   this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
-        this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
-        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
+        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy(this))
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
+        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
+        this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
+        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
+        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
 
         this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
@@ -1100,7 +1100,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
-                // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyIds.CellValidationStrategyId) as ICellValidationStrategy;
+                // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyConstants.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);

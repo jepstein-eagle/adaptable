@@ -46,6 +46,7 @@ import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { ChartPopup } from './Chart/ChartPopup';
 import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
+import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AboutPopup: AboutPopup,
@@ -68,6 +69,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ExportPopup: ExportPopup,
   FlashingCellsPopup: FlashingCellsPopup,
   FormatColumnPopup: FormatColumnPopup,
+  FreeTextColumnPopup: FreeTextColumnPopup,
   HomeButtonsPopup: HomeButtonsPopup,
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector: IPushPullDomainPageSelector,
@@ -85,22 +87,22 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
 
 //here we put the dashboard control for each strategy
 export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClass<any>>([
-  [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
-  [StrategyIds.DataSourceStrategyId, DataSourceToolbarControl],
-  [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl],
-  [StrategyIds.LayoutStrategyId, LayoutToolbarControl],
-  [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl],
-  [StrategyIds.ApplicationStrategyId, ApplicationToolbarControl],
-  [StrategyIds.ExportStrategyId, ExportToolbarControl],
-  [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl],
-  [StrategyIds.SmartEditStrategyId, SmartEditToolbarControl],
-  [StrategyIds.SelectedCellsStrategyId, SelectedCellsToolbarControl],
-  [StrategyIds.AlertStrategyId, AlertToolbarControl],
-  [StrategyIds.ChartStrategyId, ChartToolbarControl],
+  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
+  [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl],
+  [StrategyConstants.LayoutStrategyId, LayoutToolbarControl],
+  [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolbarControl],
+  [StrategyConstants.ApplicationStrategyId, ApplicationToolbarControl],
+  [StrategyConstants.ExportStrategyId, ExportToolbarControl],
+  [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
+  [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
+  [StrategyConstants.SelectedCellsStrategyId, SelectedCellsToolbarControl],
+  [StrategyConstants.AlertStrategyId, AlertToolbarControl],
+  [StrategyConstants.ChartStrategyId, ChartToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([
-  [StrategyIds.HomeStrategyId, HomeToolbarControl],
+  [StrategyConstants.HomeStrategyId, HomeToolbarControl],
 ]);
 
 export interface IAdaptableViewFactory {

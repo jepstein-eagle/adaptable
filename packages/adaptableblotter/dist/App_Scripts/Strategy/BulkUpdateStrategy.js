@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 const PreviewHelper_1 = require("../Core/Helpers/PreviewHelper");
 class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.BulkUpdateStrategyId, blotter);
+        super(StrategyConstantsBulkUpdateStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyIds.BulkUpdateGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsBulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyConstantsBulkUpdateGlyph);
     }
     InitState() {
         if (this.BulkUpdateState != this.GetBulkUpdateState()) {

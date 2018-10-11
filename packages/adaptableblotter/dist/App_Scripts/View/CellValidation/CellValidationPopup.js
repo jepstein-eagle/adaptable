@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const Helper_1 = require("../../Core/Helpers/Helper");
@@ -50,7 +50,7 @@ class CellValidationPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createCellValidation(), overrideTooltip: "Create Cell Validation Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.CellValidationStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.CellValidationGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.CellValidationStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyConstants.CellValidationGlyph, infoBody: infoBody },
                 CellValidationItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: CellValidationItems }),
                 CellValidationItems.length == 0 &&
@@ -93,7 +93,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onAddEditCellValidation: (index, CellValidation) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
         onChangeActionMode: (index, ActionMode) => dispatch(CellValidationRedux.CellValidationChangeMode(index, ActionMode)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
     };
 }
 exports.CellValidationPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(CellValidationPopupComponent);

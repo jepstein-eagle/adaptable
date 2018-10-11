@@ -11,7 +11,7 @@ const LayoutEntityRow_1 = require("./LayoutEntityRow");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
@@ -53,7 +53,7 @@ class LayoutPopupComponent extends React.Component {
         });
         let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyIds.LayoutStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyIds.LayoutGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyConstants.LayoutStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyConstants.LayoutGlyph, className: "ab_main_popup" },
                 LayoutRows.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: LayoutRows }),
                 LayoutRows.length == 0 &&
@@ -115,7 +115,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onPreSaveLayout: (index, layout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
         onSelectLayout: (selectedSearchName) => dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId))
     };
 }
 exports.LayoutPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(LayoutPopupComponent);

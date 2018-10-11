@@ -29,7 +29,7 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
             : <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="success" bsSize="small">Flashing On</Button>
 
         let colItems: IColItem[] = []
-        colItems.push({ Size: 3, Content: <b>{StrategyIds.FlashingCellsStrategyName}</b> });
+        colItems.push({ Size: 3, Content: <b>{StrategyConstants.FlashingCellsStrategyName}</b> });
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
         

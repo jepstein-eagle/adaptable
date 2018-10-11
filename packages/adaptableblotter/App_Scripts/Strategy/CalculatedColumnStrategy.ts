@@ -10,7 +10,7 @@ import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState
 export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy {
     private CalculatedColumnState: CalculatedColumnState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CalculatedColumnStrategyId, blotter)
+        super(StrategyConstants.CalculatedColumnStrategyId, blotter)
     }
 
     protected InitState() {
@@ -24,16 +24,16 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyIds.CalculatedColumnGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyConstants.CalculatedColumnGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             if (this.CalculatedColumnState.CalculatedColumns.find(cc => cc.ColumnId == columnId)) {
                 this.createContextMenuItemShowPopup(
-                    "Edit " + StrategyIds.CalculatedColumnStrategyName,
+                    "Edit " + StrategyConstants.CalculatedColumnStrategyName,
                     ScreenPopups.CalculatedColumnPopup,
-                    StrategyIds.CalculatedColumnGlyph,
+                    StrategyConstants.CalculatedColumnGlyph,
                     "Edit|" + columnId)
             }
         }

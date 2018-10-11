@@ -7,7 +7,7 @@ import { ISelectColumnStrategy } from "./Interface/ISelectColumnStrategy";
 export class SelectColumnStrategy extends AdaptableStrategyBase implements ISelectColumnStrategy {
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.SelectColumnStrategyId, blotter)
+        super(StrategyConstants.SelectColumnStrategyId, blotter)
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -15,8 +15,8 @@ export class SelectColumnStrategy extends AdaptableStrategyBase implements ISele
             if (this.canCreateContextMenuItem(columnId, this.blotter)) {
        
                 this.createContextMenuItemReduxAction(
-                    StrategyIds.SelectColumnStrategyName,
-                    StrategyIds.SelectColumnGlyph,
+                    StrategyConstants.SelectColumnStrategyName,
+                    StrategyConstants.SelectColumnGlyph,
                     GridRedux.GridSelectColumn(columnId)
                 )
             }

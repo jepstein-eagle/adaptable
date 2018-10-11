@@ -144,7 +144,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.BulkUpdateStrategyName} glyphicon={StrategyIds.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyIds.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.BulkUpdateStrategyName} glyphicon={StrategyConstants.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyConstants.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -226,7 +226,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyBulkUpdate: () => dispatch(BulkUpdateRedux.BulkUpdateApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.BulkUpdateStrategyId, ScreenPopups.BulkUpdatePopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.BulkUpdateStrategyId, ScreenPopups.BulkUpdatePopup))
     };
 }
 

@@ -14,7 +14,7 @@ const ValidationService_1 = require("../../Core/Services/ValidationService");
 //import { ThemeService } from '../../Core/Services/ThemeService'
 const AuditLogService_1 = require("../../Core/Services/AuditLogService");
 const CalculatedColumnExpressionService_1 = require("../../Core/Services/CalculatedColumnExpressionService");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const CustomSortStrategy_1 = require("../../Strategy/CustomSortStrategy");
 const SmartEditStrategy_1 = require("../../Strategy/SmartEditStrategy");
 const ShortcutStrategy_1 = require("../../Strategy/ShortcutStrategy");
@@ -81,34 +81,34 @@ class AdaptableBlotter {
         // store the options in state - and also later anything else that we need...
         //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
         this.Strategies = new Map();
-        this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
-        this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
-        // this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
-        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
-        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleKendoStrategy_1.ConditionalStyleKendoStrategy(this));
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
-        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
-        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsKendoStrategy_1.FlashingCellsKendoStrategy(this));
-        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
-        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnKendoStrategy_1.FormatColumnKendoStrategy(this));
-        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
-        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
-        this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
-        this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
-        this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
+        this.Strategies.set(StrategyConstantsAboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
+        this.Strategies.set(StrategyConstantsAdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
+        this.Strategies.set(StrategyConstantsBulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
+        // this.Strategies.set(StrategyConstantsCalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.Strategies.set(StrategyConstantsCalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
+        this.Strategies.set(StrategyConstantsCellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
+        this.Strategies.set(StrategyConstantsColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
+        this.Strategies.set(StrategyConstantsColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
+        this.Strategies.set(StrategyConstantsConditionalStyleStrategyId, new ConditionalStyleKendoStrategy_1.ConditionalStyleKendoStrategy(this));
+        this.Strategies.set(StrategyConstantsCustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
+        this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
+        this.Strategies.set(StrategyConstantsExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
+        this.Strategies.set(StrategyConstantsFlashingCellsStrategyId, new FlashingCellsKendoStrategy_1.FlashingCellsKendoStrategy(this));
+        this.Strategies.set(StrategyConstantsHomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnKendoStrategy_1.FormatColumnKendoStrategy(this));
+        this.Strategies.set(StrategyConstantsLayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstantsPlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
+        this.Strategies.set(StrategyConstantsQuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
+        this.Strategies.set(StrategyConstantsSmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
+        this.Strategies.set(StrategyConstantsShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
+        this.Strategies.set(StrategyConstantsTeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
+        this.Strategies.set(StrategyConstantsSelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
+        this.Strategies.set(StrategyConstantsSelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
         // removing theme from kendo until we can get the table issue working properly
-        // this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
-        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
+        // this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyConstantsDataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
+        this.Strategies.set(StrategyConstantsUserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");

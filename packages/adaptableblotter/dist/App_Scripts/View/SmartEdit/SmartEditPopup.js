@@ -6,7 +6,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const SmartEditRedux = require("../../Redux/ActionsReducers/SmartEditRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Enums_1 = require("../../Core/Enums");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const AdaptablePopover_1 = require("../AdaptablePopover");
@@ -44,7 +44,7 @@ class SmartEditPopupComponent extends React.Component {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onSmartEditOperationChange(mathOperation) }, mathOperation);
         });
         return (React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.SmartEditStrategyName, bsStyle: "primary", glyphicon: StrategyIds.SmartEditGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.SmartEditStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.SmartEditGlyph, infoBody: infoBody },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true, onSubmit: () => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit() },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName" },
                         React.createElement(react_bootstrap_1.InputGroup, null,

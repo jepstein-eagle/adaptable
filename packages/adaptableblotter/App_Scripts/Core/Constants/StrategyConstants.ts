@@ -20,6 +20,7 @@ export const DataSourceStrategyId: string = "DataSource"
 export const ExportStrategyId: string = "Export"
 export const FlashingCellsStrategyId: string = "FlashingCells"
 export const FormatColumnStrategyId: string = "FormatColumn"
+export const FreeTextColumnStrategyId: string = "FreeTextColumn"
 export const HomeStrategyId: string = "Home"
 export const LayoutStrategyId: string = "Layout"
 export const PlusMinusStrategyId: string = "PlusMinus"
@@ -53,6 +54,7 @@ export const DataSourceStrategyName: string = "Data Source"
 export const ExportStrategyName: string = "Export"
 export const FlashingCellsStrategyName: string = "Flashing Cells"
 export const FormatColumnStrategyName: string = "Format Column"
+export const FreeTextColumnStrategyName: string = "Free Text Column"
 export const LayoutStrategyName: string = "Layout"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
@@ -85,6 +87,7 @@ export const DataSourceGlyph: string = "book"
 export const ExportGlyph: string = "export"
 export const FlashingCellGlyph: string = "flash"
 export const FormatColumnGlyph: string = "picture"
+export const FreeTextColumnGlyph: string = "picture"
 export const FunctionsGlyph: string = "home"
 export const LayoutGlyph: string = "th"
 export const PlusMinusGlyph: string = "plus-sign"
@@ -139,6 +142,8 @@ export function getIdForStrategyName(strategyName: string) {
             return FlashingCellsStrategyId
         case FormatColumnStrategyName:
             return FormatColumnStrategyId
+        case FreeTextColumnStrategyName:
+            return FreeTextColumnStrategyId
         case LayoutStrategyName:
             return LayoutStrategyId
         case PlusMinusStrategyName:
@@ -205,6 +210,8 @@ export function getNameForStrategyId(strategyID: string) {
             return FlashingCellsStrategyName
         case FormatColumnStrategyId:
             return FormatColumnStrategyName
+        case FreeTextColumnStrategyId:
+            return FreeTextColumnStrategyName
         case LayoutStrategyId:
             return LayoutStrategyName
         case PlusMinusStrategyId:
@@ -266,6 +273,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return FlashingCellGlyph
         case FormatColumnStrategyId:
             return FormatColumnGlyph
+        case FreeTextColumnStrategyId:
+            return FreeTextColumnGlyph
         case LayoutStrategyId:
             return LayoutGlyph
         case PlusMinusStrategyId:

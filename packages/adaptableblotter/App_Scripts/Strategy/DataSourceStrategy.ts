@@ -13,11 +13,11 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
     private DataSourceState: DataSourceState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.DataSourceStrategyId, blotter)
+        super(StrategyConstants.DataSourceStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.DataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyIds.DataSourceGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.DataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyConstants.DataSourceGlyph);
     }
 
     protected InitState() {

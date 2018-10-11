@@ -24,7 +24,7 @@ export class FormatColumnKendoStrategy extends FormatColumnStrategy implements I
                     theBlotter.forAllRecordsDo((row: any) => {
                         let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row)
                         let styleName: string = (StringExtensions.IsNullOrEmpty(fc.Style.ClassName)) ?
-                            StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(fc), this.blotter) :
+                            StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(fc), this.blotter) :
                             fc.Style.ClassName;
 
                         theBlotter.addCellStyle(primaryKey, columnIndex, styleName)

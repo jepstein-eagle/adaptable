@@ -7,7 +7,7 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const ColumnChooserRedux = require("../../Redux/ActionsReducers/ColumnChooserRedux");
 const react_bootstrap_1 = require("react-bootstrap");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const ButtonDashboard_1 = require("../Components/Buttons/ButtonDashboard");
@@ -22,7 +22,7 @@ class HomeToolbarControlComponent extends React.Component {
         let cssClassName = this.props.cssClassName + "__home";
         let cssDropdownClassName = this.props.cssClassName + "__home__dropdown";
         // dropdown menu items
-        let menuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible && x.StrategyId != StrategyIds.AboutStrategyId).map((menuItem) => {
+        let menuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible && x.StrategyId != StrategyConstantsAboutStrategyId).map((menuItem) => {
             return React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, key: menuItem.Label, onClick: () => this.onClick(menuItem) },
                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: menuItem.GlyphIcon }),
                 " ",
@@ -69,7 +69,7 @@ class HomeToolbarControlComponent extends React.Component {
                 " ",
                 "Columns") },
             React.createElement(react_bootstrap_1.Glyphicon, { glyph: "list" }));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyIds.HomeStrategyId), onConfigure: () => this.props.onConfigure() },
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyConstantsHomeStrategyId), onConfigure: () => this.props.onConfigure() },
             this.props.DashboardState.ShowFunctionsDropdown &&
                 React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: functionsGlyph, key: "dropdown-functions", id: "dropdown-functions" }, menuItems),
             this.props.DashboardState.ShowSystemStatusButton &&
@@ -158,7 +158,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onClick: (action) => dispatch(action),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstantsHomeStrategyId, ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onShowStatusMessage: (alert) => dispatch(PopupRedux.PopupShowAlert(alert)),

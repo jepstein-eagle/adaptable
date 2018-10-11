@@ -99,7 +99,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ExportStrategyName} bsStyle="primary" glyphicon={StrategyIds.ExportGlyph} infoBody={infoBody} button={newButton} >
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ExportGlyph} infoBody={infoBody} button={newButton} >
 
                 {Reports.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={false} />
@@ -174,7 +174,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplyExport: (value: string, exportDestination: ExportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
         onAddUpdateReport: (Index: number, Report: IReport) => dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
         onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId))
     };
 }
 

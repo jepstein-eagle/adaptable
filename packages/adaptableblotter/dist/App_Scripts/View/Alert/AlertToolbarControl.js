@@ -7,7 +7,7 @@ const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Core/Enums");
@@ -42,7 +42,7 @@ class AlertToolbarControlComponent extends React.Component {
             this.props.Alerts.length > 0 &&
                 React.createElement("span", { style: { marginLeft: "3px" } },
                     React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "", tooltipText: "Alerts", bodyText: [alertsPanel], MessageType: this.getMessageType(), useButton: true, triggerAction: "click" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.AlertStrategyName, glyphicon: StrategyIds.AlertGlyph, onClose: () => this.props.onClose(StrategyIds.AlertStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.AlertStrategyName, glyphicon: StrategyConstants.AlertGlyph, onClose: () => this.props.onClose(StrategyConstants.AlertStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     getMessageType() {
         if (this.props.Alerts.find(a => a.MessageType == Enums_1.MessageType.Error) != null) {
@@ -65,7 +65,7 @@ function mapDispatchToProps(dispatch) {
         onDeleteAlert: (index) => dispatch(SystemRedux.SystemAlertDelete(index)),
         onDeleteAllAlert: () => dispatch(SystemRedux.SystemAlertDeleteAll()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AlertStrategyId, ScreenPopups.AlertPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId, ScreenPopups.AlertPopup))
     };
 }
 exports.AlertToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AlertToolbarControlComponent);

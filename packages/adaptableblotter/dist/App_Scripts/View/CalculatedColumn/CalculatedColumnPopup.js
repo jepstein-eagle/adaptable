@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const CalculatedColumnRedux = require("../../Redux/ActionsReducers/CalculatedColumnRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
@@ -49,7 +49,7 @@ class CalculatedColumnPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.CalculatedColumnStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyIds.CalculatedColumnGlyph },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.CalculatedColumnStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyConstants.CalculatedColumnGlyph },
                 this.props.CalculatedColumns.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: calculatedColumns }),
                 this.props.CalculatedColumns.length == 0 &&
@@ -95,7 +95,7 @@ function mapDispatchToProps(dispatch) {
         onAddCalculatedColumn: (calculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),
         onEditCalculatedColumn: (index, calculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
         IsExpressionValid: (expression) => dispatch(CalculatedColumnRedux.CalculatedColumnIsExpressionValid(expression)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CalculatedColumnStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId))
     };
 }
 exports.CalculatedColumnPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(CalculatedColumnPopupComponent);

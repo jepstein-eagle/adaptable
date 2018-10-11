@@ -6,7 +6,7 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const AlertWizard_1 = require("./Wizard/AlertWizard");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
@@ -22,12 +22,12 @@ class AlertSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Alert";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.AlertStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.AlertStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.AlertStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.AlertStrategyName, AccessLevel: this.props.AccessLevel });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.AlertStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.AlertStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.AlertStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.AlertStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.Alerts.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: "something here?", Item2: AlertHelper_1.AlertHelper.createAlertDescription(item, this.props.Columns), ConfigEnity: item, EntityName: StrategyIds.AlertStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: AlertRedux.AlertDefinitionDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: "something here?", Item2: AlertHelper_1.AlertHelper.createAlertDescription(item, this.props.Columns), ConfigEnity: item, EntityName: StrategyConstants.AlertStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: AlertRedux.AlertDefinitionDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });
@@ -69,7 +69,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateAlert: (index, Alert) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId))
     };
 }
 exports.AlertSummary = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AlertSummaryComponent);

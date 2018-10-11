@@ -22,7 +22,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
         let layouts: ILayout[] = this.props.ConfigEntities as ILayout[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.LayoutStrategyName}
+                FriendlyName={StrategyConstants.LayoutStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

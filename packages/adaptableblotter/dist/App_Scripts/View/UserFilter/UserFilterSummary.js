@@ -6,7 +6,7 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
 const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
@@ -23,12 +23,12 @@ class UserFilterSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__userfilter";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.UserFilterStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.UserFilterStrategyId, StrategySummary: this.getSummary(), onNew: () => this.onNew(), NewButtonDisabled: !this.isFilterable(), NewButtonTooltip: StrategyIds.UserFilterStrategyName, AccessLevel: this.props.AccessLevel });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.UserFilterStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.UserFilterStrategyId, StrategySummary: this.getSummary(), onNew: () => this.onNew(), NewButtonDisabled: !this.isFilterable(), NewButtonTooltip: StrategyConstants.UserFilterStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.UserFilters.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: this.getDescription(item), ConfigEnity: item, showShare: this.props.TeamSharingActivated, showEdit: this.isFilterable(), EntityName: StrategyIds.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: UserFilterRedux.UserFilterDelete(item) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: this.getDescription(item), ConfigEnity: item, showShare: this.props.TeamSharingActivated, showEdit: this.isFilterable(), EntityName: StrategyConstants.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: UserFilterRedux.UserFilterDelete(item) });
                 strategySummaries.push(detailRow);
             }
         });
@@ -44,7 +44,7 @@ class UserFilterSummaryComponent extends React.Component {
         if (!this.isColumnFilterable()) {
             return "Column is not filterable";
         }
-        return Helper_1.Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.UserFilterStrategyName);
+        return Helper_1.Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.UserFilterStrategyName);
     }
     getDescription(userFilter) {
         if (!this.isGridFilterable()) {
@@ -106,7 +106,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateUserFilter: (index, UserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index, UserFilter)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId))
     };
 }
 exports.UserFilterSummary = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(UserFilterSummaryComponent);

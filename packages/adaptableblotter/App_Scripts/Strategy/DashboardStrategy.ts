@@ -11,11 +11,11 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
      private DashboardState: DashboardState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.DashboardStrategyId, blotter)
+        super(StrategyConstants.DashboardStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.DashboardStrategyName, ScreenPopups.DashboardPopup, StrategyIds.DashboardGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.DashboardStrategyName, ScreenPopups.DashboardPopup, StrategyConstants.DashboardGlyph);
     }
 
     public addContextMenuItem(): void {
@@ -23,12 +23,12 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         if (this.GetDashboardState().DashboardVisibility == Visibility.Hidden) {
             this.createContextMenuItemReduxAction(
                 "Show Dashboard",
-                StrategyIds.DashboardGlyph,
+                StrategyConstants.DashboardGlyph,
                 DashboardRedux.DashboardSetVisibility(Visibility.Visible))
         } else {
             this.createContextMenuItemReduxAction(
                 "Hide Dashboard",
-                StrategyIds.DashboardGlyph,
+                StrategyConstants.DashboardGlyph,
                 DashboardRedux.DashboardSetVisibility(Visibility.Hidden))
         }
     }

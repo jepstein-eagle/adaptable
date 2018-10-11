@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyIds = require("../../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
 class PlusMinusSummaryWizard extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ class PlusMinusSummaryWizard extends React.Component {
                     "None" : ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns)
             },
         ];
-        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.PlusMinusStrategyName });
+        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.PlusMinusStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     canNext() {

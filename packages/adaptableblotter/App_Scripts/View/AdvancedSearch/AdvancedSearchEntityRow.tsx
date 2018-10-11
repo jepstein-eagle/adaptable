@@ -31,7 +31,7 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
             editClick={() => this.props.onEdit(this.props.Index, advancedSearch)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={null}
-            EntityName={StrategyIds.AdvancedSearchStrategyName} />
+            EntityName={StrategyConstants.AdvancedSearchStrategyName} />
 
         colItems[3].Content = buttons;
 

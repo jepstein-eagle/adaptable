@@ -7,7 +7,7 @@ const PlusMinusWizard_1 = require("./Wizard/PlusMinusWizard");
 const PlusMinusRedux = require("../../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
@@ -24,12 +24,12 @@ class PlusMinusSummaryComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__plusminus";
         let strategySummaries = [];
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.PlusMinusStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.PlusMinusStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition"), onNew: () => this.onNew(), NewButtonTooltip: "Plus / Minus Rule", AccessLevel: this.props.AccessLevel });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.PlusMinusStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.PlusMinusStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition"), onNew: () => this.onNew(), NewButtonTooltip: "Plus / Minus Rule", AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.PlusMinusRules.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "PM" + index, cssClassName: this.props.cssClassName, Item1: "Nudge Value: " + item.NudgeValue, Item2: this.wrapExpressionDescription(ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyIds.PlusMinusStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: PlusMinusRedux.PlusMinusDeleteCondition(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "PM" + index, cssClassName: this.props.cssClassName, Item1: "Nudge Value: " + item.NudgeValue, Item2: this.wrapExpressionDescription(ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyConstants.PlusMinusStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: PlusMinusRedux.PlusMinusDeleteCondition(index) });
                 strategySummaries.push(detailRow);
             }
         });
@@ -77,7 +77,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onAddUpdatePlusMinus: (index, PlusMinus) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId))
     };
 }
 exports.PlusMinusSummary = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(PlusMinusSummaryComponent);

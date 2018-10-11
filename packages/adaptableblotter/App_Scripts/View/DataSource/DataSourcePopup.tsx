@@ -72,7 +72,7 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
 
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.DataSourceStrategyName} bsStyle="primary" infoBody={infoBody} glyphicon={StrategyIds.DataSourceGlyph} >
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.DataSourceStrategyName} bsStyle="primary" infoBody={infoBody} glyphicon={StrategyConstants.DataSourceGlyph} >
                 {content}
             </PanelWithImage>
         </div>

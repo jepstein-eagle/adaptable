@@ -11,13 +11,13 @@ import { StateChangedTrigger } from '../Core/Enums';
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ConditionalStyleStrategyId, blotter)
+        super(StrategyConstants.ConditionalStyleStrategyId, blotter)
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter))
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyIds.ConditionalStyleGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyConstants.ConditionalStyleGlyph);
     }
 
     protected InitState() {
@@ -35,9 +35,9 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             this.createContextMenuItemShowPopup(
-                "Create " + StrategyIds.ConditionalStyleStrategyName,
+                "Create " + StrategyConstants.ConditionalStyleStrategyName,
                 ScreenPopups.ConditionalStylePopup,
-                StrategyIds.ConditionalStyleGlyph,
+                StrategyConstants.ConditionalStyleGlyph,
                 "New|" + columnId)
         }
     }

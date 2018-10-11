@@ -5,7 +5,7 @@ const EnumExtensions_1 = require("../Extensions/EnumExtensions");
 const StyleConstants = require("../Constants/StyleConstants");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 const StyleHelper_1 = require("../Helpers/StyleHelper");
-const StrategyIds = require("../Constants/StrategyIds");
+const StrategyConstants = require("../Constants/StrategyConstants");
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 class StyleService {
     constructor(blotter) {
@@ -32,21 +32,21 @@ class StyleService {
             this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
             this.clearCSSRules();
             this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
-                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(formatColumn), this.blotter);
+                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(formatColumn), this.blotter);
                 this.addCSSRule("." + styleName, 'background-color: ' + formatColumn.Style.BackColor + ' !important;color: ' + formatColumn.Style.ForeColor + ' !important;font-weight: ' + formatColumn.Style.FontWeight + ' !important;font-style: ' + formatColumn.Style.FontStyle + ' !important;' + (formatColumn.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(formatColumn.Style.FontSize) + ' !important') : ''));
             });
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row).forEach((element, index) => {
-                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter);
+                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstantsConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter);
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''));
             });
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column).forEach((element, index) => {
-                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter);
+                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstantsConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter);
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''));
             });
             // quick search
             if (StringExtensions_1.StringExtensions.IsNullOrEmpty(this.QuickSearchState.Style.ClassName)) {
-                let styleName = StyleHelper_1.StyleHelper.CreateStyleName(StrategyIds.QuickSearchStrategyId, this.blotter);
+                let styleName = StyleHelper_1.StyleHelper.CreateStyleName(StrategyConstantsQuickSearchStrategyId, this.blotter);
                 this.addCSSRule("." + styleName, 'background-color: ' + this.QuickSearchState.Style.BackColor + ' !important;color: ' + this.QuickSearchState.Style.ForeColor + ' !important;font-weight: ' + this.QuickSearchState.Style.FontWeight + ' !important;font-style: ' + this.QuickSearchState.Style.FontStyle + ' !important;' + (this.QuickSearchState.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(this.QuickSearchState.Style.FontSize) + ' !important') : ''));
             }
             //we define last Flash since it has the highest priority

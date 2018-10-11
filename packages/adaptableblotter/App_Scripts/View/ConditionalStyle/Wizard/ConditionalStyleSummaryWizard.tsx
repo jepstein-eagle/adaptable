@@ -38,7 +38,7 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.ConditionalStyleStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ConditionalStyleStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

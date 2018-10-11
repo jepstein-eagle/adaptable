@@ -94,8 +94,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyIds.ChartGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyConstants.ChartGlyph}>
 
                 {Charts.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Charts} />
@@ -177,7 +177,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectChartDefinition: (selectedChartDefinitionName: string) => dispatch(ChartRedux.ChartDefinitionSelect(selectedChartDefinitionName)),
         onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ChartStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))
     };
 }
 

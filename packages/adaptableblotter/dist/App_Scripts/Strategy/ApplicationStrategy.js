@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 class ApplicationStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.ApplicationStrategyId, blotter);
+        super(StrategyConstantsApplicationStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ApplicationStrategyName, ScreenPopups.ApplicationPopup, StrategyIds.ApplicationGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsApplicationStrategyName, ScreenPopups.ApplicationPopup, StrategyConstantsApplicationGlyph);
     }
 }
 exports.ApplicationStrategy = ApplicationStrategy;

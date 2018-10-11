@@ -14,7 +14,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     private GridState: GridState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.HomeStrategyId, blotter)
+        super(StrategyConstants.HomeStrategyId, blotter)
     }
 
 

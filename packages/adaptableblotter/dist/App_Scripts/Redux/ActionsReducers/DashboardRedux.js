@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 const Enums_1 = require("../../Core/Enums");
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
@@ -19,13 +19,13 @@ const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
 const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
-exports.DashboardSetAvailableToolbars = (StrategyIds) => ({
+exports.DashboardSetAvailableToolbars = (StrategyConstants) => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
-    StrategyIds
+    StrategyConstants
 });
-exports.DashboardSetToolbars = (StrategyIds) => ({
+exports.DashboardSetToolbars = (StrategyConstants) => ({
     type: DASHBOARD_SET_TOOLBARS,
-    StrategyIds
+    StrategyConstants
 });
 exports.DashboardShowToolbar = (StrategyId) => ({
     type: DASHBOARD_SHOW_TOOLBAR,
@@ -40,9 +40,9 @@ exports.DashboardMoveItem = (StrategyId, NewIndex) => ({
     StrategyId,
     NewIndex
 });
-exports.DashboardSetFunctionButtons = (StrategyIds) => ({
+exports.DashboardSetFunctionButtons = (StrategyConstants) => ({
     type: DASHBOARD_SET_FUNCTION_BUTTONS,
-    StrategyIds,
+    StrategyConstants,
 });
 exports.DashboardSetZoom = (Zoom) => ({
     type: DASHBOARD_SET_ZOOM,
@@ -80,32 +80,32 @@ exports.DashboardSetApplicationToolbarTitle = (Title) => ({
 });
 const initialDashboardState = {
     AvailableToolbars: [
-        StrategyIds.AdvancedSearchStrategyId,
-        StrategyIds.QuickSearchStrategyId,
-        StrategyIds.LayoutStrategyId,
-        StrategyIds.ExportStrategyId,
-        StrategyIds.ColumnFilterStrategyId,
-        StrategyIds.DataSourceStrategyId,
-        StrategyIds.BulkUpdateStrategyId,
-        StrategyIds.SmartEditStrategyId,
-        StrategyIds.SelectedCellsStrategyId,
-        StrategyIds.ApplicationStrategyId,
-        StrategyIds.AlertStrategyId,
+        StrategyConstantsAdvancedSearchStrategyId,
+        StrategyConstantsQuickSearchStrategyId,
+        StrategyConstantsLayoutStrategyId,
+        StrategyConstantsExportStrategyId,
+        StrategyConstantsColumnFilterStrategyId,
+        StrategyConstantsDataSourceStrategyId,
+        StrategyConstantsBulkUpdateStrategyId,
+        StrategyConstantsSmartEditStrategyId,
+        StrategyConstantsSelectedCellsStrategyId,
+        StrategyConstantsApplicationStrategyId,
+        StrategyConstantsAlertStrategyId,
     ],
     VisibleToolbars: [
-        StrategyIds.AdvancedSearchStrategyId,
-        StrategyIds.QuickSearchStrategyId,
-        StrategyIds.LayoutStrategyId,
-        StrategyIds.ExportStrategyId,
-        StrategyIds.ColumnFilterStrategyId,
+        StrategyConstantsAdvancedSearchStrategyId,
+        StrategyConstantsQuickSearchStrategyId,
+        StrategyConstantsLayoutStrategyId,
+        StrategyConstantsExportStrategyId,
+        StrategyConstantsColumnFilterStrategyId,
     ],
     VisibleButtons: [
-        StrategyIds.AboutStrategyId,
-        StrategyIds.DashboardStrategyId,
-        StrategyIds.SmartEditStrategyId,
-        StrategyIds.ColumnChooserStrategyId,
-        StrategyIds.ConditionalStyleStrategyId,
-        StrategyIds.TeamSharingStrategyId
+        StrategyConstantsAboutStrategyId,
+        StrategyConstants.DashboardStrategyId,
+        StrategyConstantsSmartEditStrategyId,
+        StrategyConstantsColumnChooserStrategyId,
+        StrategyConstantsConditionalStyleStrategyId,
+        StrategyConstantsTeamSharingStrategyId
     ],
     Zoom: 1,
     DashboardVisibility: Enums_1.Visibility.Visible,
@@ -120,10 +120,10 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
     let dashboardControls;
     switch (action.type) {
         case DASHBOARD_SET_AVAILABLE_TOOLBARS:
-            return Object.assign({}, state, { AvailableToolbars: action.StrategyIds });
+            return Object.assign({}, state, { AvailableToolbars: action.StrategyConstants });
         case DASHBOARD_SET_TOOLBARS: {
             let actionTyped = action;
-            let dashboardToolbars = actionTyped.StrategyIds;
+            let dashboardToolbars = actionTyped.StrategyConstants;
             return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
         }
         case DASHBOARD_MOVE_ITEM: {
@@ -148,7 +148,7 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
         }
         case DASHBOARD_SET_FUNCTION_BUTTONS: {
             let actionTyped = action;
-            let dashboardFunctionButtons = actionTyped.StrategyIds;
+            let dashboardFunctionButtons = actionTyped.StrategyConstants;
             return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
         }
         case DASHBOARD_SET_ZOOM: {

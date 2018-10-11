@@ -52,7 +52,7 @@ class AboutPopupComponent extends React.Component<AboutPopupComponentProps, Abou
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.AboutStrategyName} bsStyle="primary" glyphicon={StrategyIds.AboutGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.AboutStrategyName} bsStyle="primary" glyphicon={StrategyConstants.AboutGlyph}>
                 <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={aboutItems} />
              </PanelWithImage>
         </div>

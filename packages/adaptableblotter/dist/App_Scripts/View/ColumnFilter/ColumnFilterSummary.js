@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
@@ -22,7 +22,7 @@ class ColumnFilterSummaryComponent extends React.Component {
         let columnFilter = this.props.ColumnFilters.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
         let description = this.getDescription(columnFilter);
         let summaryItems = [];
-        summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyIds.ColumnFilterStrategyId })));
+        summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.ColumnFilterStrategyId })));
         summaryItems.push(description);
         summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: "primary", size: "small", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null, AccessLevel: this.props.AccessLevel }));
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: cssWizardClassName, SummaryItems: summaryItems });
@@ -53,7 +53,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onClearFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ColumnFilterStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnFilterStrategyId))
     };
 }
 exports.ColumnFilterSummary = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ColumnFilterSummaryComponent);

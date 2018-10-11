@@ -34,7 +34,7 @@ export class AdvancedSearchSummaryWizard extends React.Component<AdvancedSearchS
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString( this.props.Data.Expression, this.props.Columns) }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.AdvancedSearchStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.AdvancedSearchStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

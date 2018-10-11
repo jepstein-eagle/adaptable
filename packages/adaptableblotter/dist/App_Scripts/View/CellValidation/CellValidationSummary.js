@@ -6,7 +6,7 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const CellValidationWizard_1 = require("./Wizard/CellValidationWizard");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
@@ -23,12 +23,12 @@ class CellValidationSummaryComponent extends React.Component {
         let strategySummaries = [];
         alert("AccessLevel for cv: " + this.props.AccessLevel);
         // title row
-        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyIds.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyIds.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyIds.CellValidationStrategyName, AccessLevel: this.props.AccessLevel });
+        let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.CellValidationStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.CellValidations.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: item.Description, ConfigEnity: item, EntityName: StrategyIds.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: item.Description, ConfigEnity: item, EntityName: StrategyConstants.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });
@@ -70,7 +70,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateCellValidation: (index, CellValidation) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
     };
 }
 exports.CellValidationSummary = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(CellValidationSummaryComponent);

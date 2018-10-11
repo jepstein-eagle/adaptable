@@ -35,7 +35,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
             },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.PlusMinusStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.PlusMinusStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

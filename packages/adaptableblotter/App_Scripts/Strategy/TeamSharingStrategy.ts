@@ -6,12 +6,12 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.TeamSharingStrategyId, blotter)
+        super(StrategyConstants.TeamSharingStrategyId, blotter)
 
     }
 
     protected addPopupMenuItem() {
-            this.createMenuItemShowPopup(StrategyIds.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyIds.TeamSharingGlyph);
+            this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
      }
 
     protected hasPopupMenu(): boolean{

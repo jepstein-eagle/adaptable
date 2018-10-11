@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const ShortcutRedux = require("../../Redux/ActionsReducers/ShortcutRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Enums_1 = require("../../Core/Enums");
 const Enums_2 = require("../../Core/Enums");
 const ShortcutEntityRow_1 = require("./ShortcutEntityRow");
@@ -42,7 +42,7 @@ class ShortcutPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.CreateShortcut(), overrideTooltip: "Create New Shortcut", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         let shortcut = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyIds.ShortcutGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstantsShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyConstantsShortcutGlyph, infoBody: infoBody },
                 shortcuts.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: shortcuts }),
                 shortcuts.length == 0 &&
@@ -88,7 +88,7 @@ function mapDispatchToProps(dispatch) {
         onChangeKeyShortcut: (shortcut, NewShortcutKey) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
         onChangeOperationShortcut: (shortcut, NewshortcutOperation) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewshortcutOperation)),
         onChangeResultShortcut: (shortcut, NewShortcutResult) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ShortcutStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstantsShortcutStrategyId))
     };
 }
 exports.ShortcutPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ShortcutPopupComponent);

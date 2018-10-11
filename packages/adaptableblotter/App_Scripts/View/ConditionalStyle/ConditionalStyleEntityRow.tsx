@@ -36,7 +36,7 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={(!column && conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column)}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyIds.ConditionalStyleStrategyName} />
+            EntityName={StrategyConstants.ConditionalStyleStrategyName} />
         colItems[3].Content = buttons;
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

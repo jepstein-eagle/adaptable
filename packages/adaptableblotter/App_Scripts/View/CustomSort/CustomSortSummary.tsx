@@ -43,12 +43,12 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
         if (!this.props.SummarisedColumn.Sortable) {
             customSortRow = <StrategyHeader
                 cssClassName={this.props.cssClassName}
-                key={StrategyIds.CustomSortStrategyName}
-                StrategyId={StrategyIds.CustomSortStrategyId}
+                key={StrategyConstants.CustomSortStrategyName}
+                StrategyId={StrategyConstants.CustomSortStrategyId}
                 StrategySummary={"Column is not sortable"}
                 NewButtonDisabled={true}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyIds.CustomSortStrategyName}
+                NewButtonTooltip={StrategyConstants.CustomSortStrategyName}
                 AccessLevel={this.props.AccessLevel}
             />
         }
@@ -56,21 +56,21 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             // title row
             customSortRow = <StrategyHeader
                 cssClassName={this.props.cssClassName}
-                key={StrategyIds.CustomSortStrategyName}
-                StrategyId={StrategyIds.CustomSortStrategyId}
+                key={StrategyConstants.CustomSortStrategyName}
+                StrategyId={StrategyConstants.CustomSortStrategyId}
                 StrategySummary={"No Custom Sort Set"}
                 onNew={() => this.onNew()}
                 AccessLevel={this.props.AccessLevel}
-                NewButtonTooltip={StrategyIds.CustomSortStrategyName}
+                NewButtonTooltip={StrategyConstants.CustomSortStrategyName}
             />
         } else {
             customSortRow = <StrategyDetail
                 cssClassName={this.props.cssClassName}
-                key={StrategyIds.CustomSortStrategyName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.CustomSortStrategyId} />}
+                key={StrategyConstants.CustomSortStrategyName}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.CustomSortStrategyId} />}
                 Item2={customSort.SortedValues.join(', ')}
                 ConfigEnity={customSort}
-                EntityName={StrategyIds.CustomSortStrategyName}
+                EntityName={StrategyConstants.CustomSortStrategyName}
                 onEdit={() => this.onEdit(customSort)}
                 onShare={() => this.props.onShare(customSort)}
                 showShare={this.props.TeamSharingActivated}
@@ -147,7 +147,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
         onAddCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortAdd(customSort)),
         onEditCustomSort: (customSort: ICustomSort) => dispatch(CustomSortRedux.CustomSortEdit(customSort)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CustomSortStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId))
 
     };
 }

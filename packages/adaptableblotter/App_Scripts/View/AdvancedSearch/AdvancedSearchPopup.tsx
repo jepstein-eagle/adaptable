@@ -96,8 +96,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyIds.AdvancedSearchStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyIds.AdvancedSearchGlyph} className="ab_main_popup" >
+            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.AdvancedSearchStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyConstants.AdvancedSearchGlyph} className="ab_main_popup" >
 
                 {advancedSearchRows.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={advancedSearchRows} />
@@ -172,7 +172,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateAdvancedSearch: (index: number,advancedSearch: IAdvancedSearch) => dispatch(AdvancedSearchRedux.AdvancedSearchAddUpdate(index, advancedSearch)),
         onSelectAdvancedSearch: (selectedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AdvancedSearchStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId))
     };
 }
 

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ObjectFactory_1 = require("../Core/ObjectFactory");
 const Enums_1 = require("../Core/Enums");
@@ -9,11 +9,11 @@ const FlashingCellsRedux = require("../Redux/ActionsReducers/FlashingCellsRedux"
 const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.FlashingCellsStrategyId, blotter);
+        super(StrategyConstantsFlashingCellsStrategyId, blotter);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyIds.FlashingCellGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsFlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyConstantsFlashingCellGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
@@ -22,14 +22,14 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
                 if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
                     let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId);
                     if (flashingCell && flashingCell.IsLive) {
-                        this.createContextMenuItemReduxAction("Turn Flashing Cell Off", StrategyIds.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
+                        this.createContextMenuItemReduxAction("Turn Flashing Cell Off", StrategyConstantsFlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
                     }
                     else {
                         if (!flashingCell) {
                             let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId);
                             flashingCell = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(column);
                         }
-                        this.createContextMenuItemReduxAction("Turn Flashing Cell On", StrategyIds.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
+                        this.createContextMenuItemReduxAction("Turn Flashing Cell On", StrategyConstantsFlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
                     }
                 }
             }

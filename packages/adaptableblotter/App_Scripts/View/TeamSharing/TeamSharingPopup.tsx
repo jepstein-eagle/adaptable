@@ -69,8 +69,8 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.TeamSharingStrategyName} infoBody={infoBody}
-                bsStyle="primary" glyphicon={StrategyIds.TeamSharingGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.TeamSharingStrategyName} infoBody={infoBody}
+                bsStyle="primary" glyphicon={StrategyConstants.TeamSharingGlyph}>
                 {this.props.Entities.length == 0 ?
                     <Well bsSize="small">Shared Items will appear here when available.</Well>
                     : <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
@@ -84,7 +84,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
     getSharedItemDetails(sharedEntity: ISharedEntity) {
         switch (sharedEntity.strategy) {
-            case StrategyIds.CustomSortStrategyId: {
+            case StrategyConstants.CustomSortStrategyId: {
                 let customSort = sharedEntity.entity as ICustomSort
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}</Col>
@@ -93,7 +93,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.CalculatedColumnStrategyId: {
+            case StrategyConstants.CalculatedColumnStrategyId: {
                 let calcCol = sharedEntity.entity as ICalculatedColumn
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
@@ -104,7 +104,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.CellValidationStrategyId: {
+            case StrategyConstants.CellValidationStrategyId: {
                 let cellVal = sharedEntity.entity as ICellValidationRule
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
@@ -119,7 +119,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.ConditionalStyleStrategyId: {
+            case StrategyConstants.ConditionalStyleStrategyId: {
                 let cs = sharedEntity.entity as IConditionalStyle
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
@@ -136,7 +136,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.PlusMinusStrategyId: {
+            case StrategyConstants.PlusMinusStrategyId: {
                 let plusMinus = sharedEntity.entity as IPlusMinusRule
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
@@ -150,7 +150,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.ShortcutStrategyId: {
+            case StrategyConstants.ShortcutStrategyId: {
                 let shortcut = sharedEntity.entity as IShortcut
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col md={4} >
@@ -164,7 +164,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.UserFilterStrategyId: {
+            case StrategyConstants.UserFilterStrategyId: {
                 let filter = sharedEntity.entity as IUserFilter
                 let expressionString = ExpressionHelper.ConvertExpressionToString(filter.Expression, this.props.Columns)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
@@ -176,7 +176,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.AdvancedSearchStrategyId: {
+            case StrategyConstants.AdvancedSearchStrategyId: {
                 let search = sharedEntity.entity as IAdvancedSearch
                 let expressionString = ExpressionHelper.ConvertExpressionToString(search.Expression, this.props.Columns)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
@@ -188,7 +188,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.LayoutStrategyId: {
+            case StrategyConstants.LayoutStrategyId: {
                 let layout = sharedEntity.entity as ILayout
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>
@@ -199,7 +199,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.FormatColumnStrategyId: {
+            case StrategyConstants.FormatColumnStrategyId: {
                 let fc = sharedEntity.entity as IFormatColumn
                 return <Row style={{ display: "flex", alignItems: "center" }}>
                     <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(fc.ColumnId, this.props.Columns)}</Col>
@@ -208,7 +208,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.ExportStrategyId: {
+            case StrategyConstants.ExportStrategyId: {
                 let range = sharedEntity.entity as IReport
                 let expressionString = ExpressionHelper.ConvertExpressionToString(range.Expression, this.props.Columns)
                 return <Row style={{ display: "flex", alignItems: "center" }}>
@@ -220,7 +220,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     </Col>
                 </Row>
             }
-            case StrategyIds.ColumnFilterStrategyId: {
+            case StrategyConstants.ColumnFilterStrategyId: {
                 return "NEED TO DO  COLUMN FILTER" // not sure actually
             }
             default:

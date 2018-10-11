@@ -91,9 +91,9 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyIds.AlertStrategyName} bsStyle="primary" cssClassName={cssClassName}
+            <PanelWithButton headerText={StrategyConstants.AlertStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
-                glyphicon={StrategyIds.AlertGlyph}
+                glyphicon={StrategyConstants.AlertGlyph}
                 infoBody={infoBody}>
                 {AlertItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={AlertItems} />
@@ -166,7 +166,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditAlert: (index: number, Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
         onChangeMessageType: (index: number, MessageType: MessageType) => dispatch(AlertRedux.AlertDefinitionChangeMessageType(index, MessageType)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.AlertStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId))
     };
 }
 

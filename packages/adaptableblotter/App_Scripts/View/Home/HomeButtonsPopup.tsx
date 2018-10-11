@@ -14,7 +14,7 @@ interface HomeButtonsPopupComponentProps extends StrategyViewPopupProps<HomeButt
     IsReadOnly: boolean,
     DashboardState: DashboardState,
     MenuState: MenuState,
-    onDashboardSetFunctionButtons: (strategyIds: string[]) => DashboardRedux.DashboardSetFunctionButtonsAction
+    onDashboardSetFunctionButtons: (StrategyConstants: string[]) => DashboardRedux.DashboardSetFunctionButtonsAction
 }
 
 class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponentProps, {}> {
@@ -25,14 +25,14 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
         this.props.DashboardState.VisibleButtons.forEach(x => {
             let menuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == x)
             if (menuItem != null && menuItem.IsVisible) {
-                selectedValues.push(StrategyIds.getNameForStrategyId(x))
+                selectedValues.push(StrategyConstants.getNameForStrategyId(x))
             }
         })
 
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label)
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyIds.FunctionsGlyph} className="ab_main_popup">
+            <PanelWithButton cssClassName={cssClassName} headerText="Function Buttons Configuration" bsStyle="primary" glyphicon={StrategyConstants.FunctionsGlyph} className="ab_main_popup">
                 <DualListBoxEditor AvailableValues={availableValues}
                     cssClassName={cssClassName}
                     SelectedValues={selectedValues}
@@ -44,7 +44,7 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
     }
 
     ListChange(selectedValues: string[]) {
-        let buttonNames = selectedValues.map(sv => StrategyIds.getIdForStrategyName(sv))
+        let buttonNames = selectedValues.map(sv => StrategyConstants.getIdForStrategyName(sv))
         this.props.onDashboardSetFunctionButtons(buttonNames)
     }
 
@@ -59,7 +59,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDashboardSetFunctionButtons: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetFunctionButtons(strategyIds))
+        onDashboardSetFunctionButtons: (StrategyConstants: string[]) => dispatch(DashboardRedux.DashboardSetFunctionButtons(StrategyConstants))
     };
 }
 

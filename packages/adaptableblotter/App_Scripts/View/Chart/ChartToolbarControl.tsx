@@ -109,7 +109,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.ChartStrategyName} glyphicon={StrategyIds.ChartGlyph} onClose={() => this.props.onClose(StrategyIds.ChartStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} glyphicon={StrategyConstants.ChartGlyph} onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -135,11 +135,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectChartDefinition: (ChartName: string) => dispatch(ChartRedux.ChartDefinitionSelect(ChartName)),
-         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId,ScreenPopups.ChartPopup,  "New")),
-        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId,ScreenPopups.ChartPopup,  "Edit")),
+         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId,ScreenPopups.ChartPopup,  "New")),
+        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId,ScreenPopups.ChartPopup,  "Edit")),
         onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId,ScreenPopups.ChartPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId,ScreenPopups.ChartPopup))
     };
 }
 

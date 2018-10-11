@@ -16,11 +16,11 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     protected BulkUpdateState: BulkUpdateState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.BulkUpdateStrategyId, blotter)
+        super(StrategyConstants.BulkUpdateStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyIds.BulkUpdateGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyConstants.BulkUpdateGlyph);
     }
 
     protected InitState() {
@@ -125,3 +125,4 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
 }
+ 

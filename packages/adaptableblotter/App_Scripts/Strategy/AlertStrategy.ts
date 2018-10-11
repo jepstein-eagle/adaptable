@@ -18,7 +18,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     protected AlertState: AlertState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.AlertStrategyId, blotter)
+        super(StrategyConstants.AlertStrategyId, blotter)
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
@@ -33,7 +33,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.AlertStrategyName, ScreenPopups.AlertPopup, StrategyIds.AlertGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.AlertStrategyName, ScreenPopups.AlertPopup, StrategyConstants.AlertGlyph);
     }
 
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
@@ -74,12 +74,12 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         }
         let dataChangingEvent: IDataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue }
         if (ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.AlertStrategyId,
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,
                 "CheckingAudit",
                 "AlertsTriggered",
                 { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent })
         } else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.AlertStrategyId,
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,
                 "CheckingAudit",
                 "Ok",
                 { DataChangingEvent: dataChangingEvent })

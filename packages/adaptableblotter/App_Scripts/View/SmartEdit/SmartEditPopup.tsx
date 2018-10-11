@@ -80,7 +80,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         })
 
         return (<div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyIds.SmartEditGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.SmartEditStrategyName} bsStyle="primary" glyphicon={StrategyConstants.SmartEditGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm inline onSubmit={() => this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning ? this.onConfirmWarningCellValidation() : this.onApplySmartEdit()}>
                     <FormGroup controlId="formInlineName">
                         <InputGroup>

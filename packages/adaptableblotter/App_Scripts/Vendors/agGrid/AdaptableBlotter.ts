@@ -100,6 +100,7 @@ import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from 
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { raw } from 'body-parser';
 import { HomeStrategy } from '../../Strategy/HomeStrategy';
+import { FreeTextColumnStrategy } from '../../Strategy/FreeTextColumnStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -147,37 +148,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyIds.AboutStrategyId, new AboutStrategy(this))
-        this.Strategies.set(StrategyIds.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyIds.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyIds.ApplicationStrategyId, new ApplicationStrategy(this))
-        this.Strategies.set(StrategyIds.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
-        this.Strategies.set(StrategyIds.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyIds.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyIds.CellValidationStrategyId, new CellValidationStrategy(this))
-        //   this.Strategies.set(StrategyIds.ChartStrategyId, new ChartStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
-        this.Strategies.set(StrategyIds.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
-        this.Strategies.set(StrategyIds.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
-        this.Strategies.set(StrategyIds.CustomSortStrategyId, new CustomSortagGridStrategy(this))
-        this.Strategies.set(StrategyIds.DashboardStrategyId, new DashboardStrategy(this))
-        this.Strategies.set(StrategyIds.DataManagementStrategyId, new DataManagementStrategy(this))
-        this.Strategies.set(StrategyIds.DataSourceStrategyId, new DataSourceStrategy(this))
-        this.Strategies.set(StrategyIds.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyIds.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
-        this.Strategies.set(StrategyIds.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
-        this.Strategies.set(StrategyIds.HomeStrategyId, new HomeStrategy(this))
-        this.Strategies.set(StrategyIds.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyIds.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyIds.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
-        this.Strategies.set(StrategyIds.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyIds.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyIds.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyIds.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyIds.SelectColumnStrategyId, new SelectColumnStrategy(this))
-        this.Strategies.set(StrategyIds.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
-        this.Strategies.set(StrategyIds.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy(this))
+        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(this))
+        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
+        this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
+        //   this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
+        this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
+        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
+        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
+        this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
@@ -350,7 +352,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let blotter = this
         let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ?
             blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName :
-            StyleHelper.CreateStyleName(StrategyIds.QuickSearchStrategyId, this)
+            StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this)
         return quickSearchClassName;
     }
 
@@ -852,7 +854,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             if (type == "FormatColumn") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StrategyIds.FormatColumnStrategyId)) {
+                    if (prop.includes(StrategyConstants.FormatColumnStrategyId)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -860,7 +862,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             else if (type == "ConditionalStyle") {
                 let cssStyles: string[] = this.getState().ConditionalStyle.ConditionalStyles.map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StrategyIds.ConditionalStyleStrategyId) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
+                    if (prop.includes(StrategyConstants.ConditionalStyleStrategyId) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -868,7 +870,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //Is initialized in setColumnIntoStore
             else if (type == "QuickSearch") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StrategyIds.QuickSearchStrategyId)) {
+                    if (prop.includes(StrategyConstants.QuickSearchStrategyId)) {
                         delete localCellClassRules[prop]
                     }
                 }
@@ -999,7 +1001,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn)
         }
-        let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyIds.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
+        let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
         conditionalStyleagGridStrategy.InitStyles();
     }
 

@@ -10,7 +10,7 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const ButtonApply_1 = require("../Components/Buttons/ButtonApply");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const AdaptablePopover_1 = require("../AdaptablePopover");
@@ -57,7 +57,7 @@ class SmartEditToolbarControlComponent extends React.Component {
                 this.props.IsValidSelection &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Preview Results", tooltipText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SmartEditStrategyName, glyphicon: StrategyIds.SmartEditGlyph, onClose: () => this.props.onClose(StrategyIds.SmartEditStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.SmartEditStrategyName, glyphicon: StrategyConstants.SmartEditGlyph, onClose: () => this.props.onClose(StrategyConstants.SmartEditStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSmartEditValueChange(event) {
         const e = event.target;
@@ -126,7 +126,7 @@ function mapDispatchToProps(dispatch) {
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SmartEditStrategyId, ScreenPopups.SmartEditPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.SmartEditStrategyId, ScreenPopups.SmartEditPopup))
     };
 }
 exports.SmartEditToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(SmartEditToolbarControlComponent);

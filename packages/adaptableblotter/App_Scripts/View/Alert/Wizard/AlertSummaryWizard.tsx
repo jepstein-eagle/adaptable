@@ -35,7 +35,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
             }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.AlertStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.AlertStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

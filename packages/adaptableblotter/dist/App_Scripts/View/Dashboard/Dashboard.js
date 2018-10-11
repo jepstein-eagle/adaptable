@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableViewFactory_1 = require("../AdaptableViewFactory");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const Enums_1 = require("../../Core/Enums");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -43,7 +43,7 @@ class DashboardComponent extends React.Component {
                 AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Cannot find Dashboard Control for " + control);
             }
         });
-        let homeToolbar = AdaptableViewFactory_1.AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId);
+        let homeToolbar = AdaptableViewFactory_1.AdaptableDashboardPermanentToolbarFactory.get(StrategyConstants.HomeStrategyId);
         let homeToolbarElement = React.createElement(react_bootstrap_1.Nav, { key: "home", style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, React.createElement(homeToolbar, { cssClassName: cssClassName, Blotter: this.props.Blotter }));
         return React.createElement("div", { className: cssBaseClassName }, this.props.DashboardState.DashboardVisibility != Enums_1.Visibility.Hidden &&
             React.createElement("div", { className: "ab_no_margin" }, this.props.DashboardState.DashboardVisibility == Enums_1.Visibility.Minimised ?

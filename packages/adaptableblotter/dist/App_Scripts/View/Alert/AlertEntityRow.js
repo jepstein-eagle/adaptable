@@ -8,7 +8,7 @@ const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 const Enums_1 = require("../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
 const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AlertHelper_1 = require("../../Core/Helpers/AlertHelper");
 class AlertEntityRow extends React.Component {
     render() {
@@ -21,7 +21,7 @@ class AlertEntityRow extends React.Component {
         colItems[1].Content =
             React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: alert.MessageType, onChange: (x) => this.onMessageTypeChanged(this.props.Index, x) }, MessageTypes);
         colItems[2].Content = this.setExpressionDescription(alert);
-        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, alert), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityName: StrategyIds.AlertStrategyName });
+        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, alert), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityName: StrategyConstants.AlertStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     setExpressionDescription(Alert) {

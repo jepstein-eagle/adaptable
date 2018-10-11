@@ -96,8 +96,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             AccessLevel={this.props.AccessLevel}/>
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyIds.LayoutStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyIds.LayoutGlyph} className="ab_main_popup" >
+            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.LayoutStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyConstants.LayoutGlyph} className="ab_main_popup" >
 
                 {LayoutRows.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={LayoutRows} />
@@ -194,7 +194,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onPreSaveLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
         onSelectLayout: (selectedSearchName: string) => dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.LayoutStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId))
     };
 }
 

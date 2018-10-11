@@ -11,11 +11,11 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
     protected CalendarState: CalendarState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CalendarStrategyId, blotter)
+        super(StrategyConstants.CalendarStrategyId, blotter)
          }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.CalendarStrategyName, ScreenPopups.CalendarsPopup, StrategyIds.CalendarGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.CalendarStrategyName, ScreenPopups.CalendarsPopup, StrategyConstants.CalendarGlyph);
     }
    
     protected InitState() {

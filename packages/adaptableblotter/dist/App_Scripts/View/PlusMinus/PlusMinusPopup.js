@@ -6,7 +6,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const PlusMinusRedux = require("../../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const PlusMinusWizard_1 = require("./Wizard/PlusMinusWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
@@ -50,7 +50,7 @@ class PlusMinusPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createColumnNudgeValue(), overrideTooltip: "Create Plus / Minus Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.PlusMinusStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyIds.PlusMinusGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.PlusMinusStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyConstants.PlusMinusGlyph, infoBody: infoBody },
                 PlusMinusRules.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: PlusMinusRules }),
                 PlusMinusRules.length == 0 &&
@@ -127,7 +127,7 @@ function mapDispatchToProps(dispatch) {
         onEditColumnDefaultNudgeValue: (Index, ColumnDefaultNudge) => dispatch(PlusMinusRedux.PlusMinusEditCondition(Index, ColumnDefaultNudge)),
         onAddColumnDefaultNudgeValue: (Index, ColumnsDefaultNudge) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge)),
         onConfirmWarningCellValidation: (confirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId))
     };
 }
 exports.PlusMinusPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(PlusMinusPopupComponent);

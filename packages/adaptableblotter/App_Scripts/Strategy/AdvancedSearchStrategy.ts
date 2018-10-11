@@ -10,11 +10,11 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
     private AdvancedSearchState: AdvancedSearchState
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.AdvancedSearchStrategyId, blotter)
+        super(StrategyConstants.AdvancedSearchStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyIds.AdvancedSearchGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyConstants.AdvancedSearchGlyph);
     }
 
     protected InitState() {

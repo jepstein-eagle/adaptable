@@ -18,7 +18,7 @@ interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupCompo
     VisibleToolbars: string[];
     Entitlements: IEntitlement[];
     Zoom: Number;
-    onDashboardSetToolbars: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction
+    onDashboardSetToolbars: (StrategyConstants: string[]) => DashboardRedux.DashboardSetToolbarsAction
     onSetDashboardZoom: (zoom: number) => DashboardRedux.DashboardSetZoomAction,
     onMoveControl: (strategyName: string, newIndex: number) => DashboardRedux.DashboardMoveItemAction
 }
@@ -36,15 +36,15 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         let cssClassName: string = this.props.cssClassName + "__dashboard";
 
         let availableToolbarNames: string[] = this.props.AvailableToolbars.filter(at=>this.isVisibleStrategy(at)).map(at => {
-            return StrategyIds.getNameForStrategyId(at)
+            return StrategyConstants.getNameForStrategyId(at)
         })
 
         let visibleToolbarNames: string[] = this.props.VisibleToolbars.filter(at=>this.isVisibleStrategy(at)).map(vt => {
-            return StrategyIds.getNameForStrategyId(vt)
+            return StrategyConstants.getNameForStrategyId(vt)
         })
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText="Dashboard Toolbars" bsStyle="primary" glyphicon={StrategyIds.FunctionsGlyph} className="ab_main_popup">
+            <PanelWithButton cssClassName={cssClassName} headerText="Dashboard Toolbars" bsStyle="primary" glyphicon={StrategyConstants.FunctionsGlyph} className="ab_main_popup">
 
                 <AdaptableBlotterForm inline >
                     <ControlLabel>Dashboard Zoom Factor : </ControlLabel>
@@ -76,7 +76,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     
     private ListChange(selectedValues: string[]) {
         let selectedColumnIds: string[] = selectedValues.map(sv => {
-            return StrategyIds.getIdForStrategyName(sv)
+            return StrategyConstants.getIdForStrategyName(sv)
         })
         this.props.onDashboardSetToolbars(selectedColumnIds)
     }
@@ -109,7 +109,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onDashboardSetToolbars: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
+        onDashboardSetToolbars: (StrategyConstants: string[]) => dispatch(DashboardRedux.DashboardSetToolbars(StrategyConstants)),
         onSetDashboardZoom: (zoom: number) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),
         onMoveControl: (controlName: string, NewIndex: number) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex)),
     };

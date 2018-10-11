@@ -50,23 +50,23 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
         if (noFormatColumn) {
             formatColumnRow = <StrategyHeader
-                key={StrategyIds.FormatColumnStrategyName}
+                key={StrategyConstants.FormatColumnStrategyName}
                 cssClassName={this.props.cssClassName}
-                StrategyId={StrategyIds.FormatColumnStrategyId}
+                StrategyId={StrategyConstants.FormatColumnStrategyId}
                 StrategySummary={"No Format Column Set"}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyIds.FormatColumnStrategyName}
+                NewButtonTooltip={StrategyConstants.FormatColumnStrategyName}
                 AccessLevel={this.props.AccessLevel}
             />
         } else {
             formatColumnRow = <StrategyDetail
-                key={StrategyIds.FormatColumnStrategyName}
+                key={StrategyConstants.FormatColumnStrategyName}
                 cssClassName={this.props.cssClassName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyIds.FormatColumnStrategyId} />}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.FormatColumnStrategyId} />}
                 Item2={<StyleVisualItem Style={formatColumn.Style} />}
                 ConfigEnity={formatColumn}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyIds.FormatColumnStrategyName}
+                EntityName={StrategyConstants.FormatColumnStrategyName}
                 onEdit={() => this.onEdit(formatColumn)}
                 onShare={() => this.props.onShare(formatColumn)}
                 onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}
@@ -145,7 +145,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
         onEditFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
     };
 }
 

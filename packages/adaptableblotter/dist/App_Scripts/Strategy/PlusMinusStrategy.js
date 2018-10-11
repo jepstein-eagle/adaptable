@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const PlusMinusRedux = require("../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
@@ -13,7 +13,7 @@ const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.PlusMinusStrategyId, blotter);
+        super(StrategyConstantsPlusMinusStrategyId, blotter);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
     }
     InitState() {
@@ -25,13 +25,13 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyIds.PlusMinusGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsPlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyConstantsPlusMinusGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
             if (column && column.DataType == Enums_1.DataType.Number) {
-                this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyIds.PlusMinusGlyph, "New|" + columnId);
+                this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyConstantsPlusMinusGlyph, "New|" + columnId);
             }
         }
     }

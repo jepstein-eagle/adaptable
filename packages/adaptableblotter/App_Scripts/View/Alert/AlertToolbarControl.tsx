@@ -83,7 +83,7 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AlertStrategyName} glyphicon={StrategyIds.AlertGlyph} onClose={() => this.props.onClose(StrategyIds.AlertStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.AlertStrategyName} glyphicon={StrategyConstants.AlertGlyph} onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -114,7 +114,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onDeleteAlert: (index: number) => dispatch(SystemRedux.SystemAlertDelete(index)),
         onDeleteAllAlert: () => dispatch(SystemRedux.SystemAlertDeleteAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AlertStrategyId,ScreenPopups.AlertPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId,ScreenPopups.AlertPopup))
     };
 }
 

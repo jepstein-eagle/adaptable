@@ -93,8 +93,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
         />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyIds.PlusMinusStrategyName} bsStyle="primary" cssClassName={cssClassName}
-                button={newButton} glyphicon={StrategyIds.PlusMinusGlyph}
+            <PanelWithButton headerText={StrategyConstants.PlusMinusStrategyName} bsStyle="primary" cssClassName={cssClassName}
+                button={newButton} glyphicon={StrategyConstants.PlusMinusGlyph}
                 infoBody={infoBody}>
 
                 {PlusMinusRules.length > 0 &&
@@ -204,7 +204,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onEditColumnDefaultNudgeValue: (Index: number, ColumnDefaultNudge: { ColumnId: string, DefaultNudge: number }) => dispatch(PlusMinusRedux.PlusMinusEditCondition(Index, ColumnDefaultNudge)),
         onAddColumnDefaultNudgeValue: (Index: number, ColumnsDefaultNudge: IPlusMinusRule) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(Index, ColumnsDefaultNudge)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId))
     };
 }
 

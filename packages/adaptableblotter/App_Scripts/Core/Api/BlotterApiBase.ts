@@ -52,7 +52,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   // Layout api methods
   public layoutSet(layoutName: string): void {
     let layout: ILayout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
-    if (this.checkItemExists(layout, layoutName, StrategyIds.LayoutStrategyName)) {
+    if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
       this.dispatchAction(LayoutRedux.LayoutSelect(layoutName))
     }
   }
@@ -343,7 +343,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   // Data Source api methods
   public dataSourceSet(dataSourceName: string): void {
     let dataSource: string = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
-    if (this.checkItemExists(dataSource, dataSourceName, StrategyIds.DataSourceStrategyName)) {
+    if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {
       this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource))
     }
   }
@@ -356,7 +356,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   // Advanced Search api methods
   public advancedSearchSet(advancedSearchName: string): void {
     let advancedSearch: IAdvancedSearch = this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
-    if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyIds.AdvancedSearchStrategyName)) {
+    if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyConstants.AdvancedSearchStrategyName)) {
       this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName))
     }
   }

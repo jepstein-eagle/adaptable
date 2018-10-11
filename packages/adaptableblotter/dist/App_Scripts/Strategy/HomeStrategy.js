@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 const Enums_1 = require("../Core/Enums");
 const LayoutHelper_1 = require("../Core/Helpers/LayoutHelper");
 // This is a special strategy that the user can never remove but which is useful to us 
 class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.HomeStrategyId, blotter);
+        super(StrategyConstantsHomeStrategyId, blotter);
     }
     InitState() {
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {

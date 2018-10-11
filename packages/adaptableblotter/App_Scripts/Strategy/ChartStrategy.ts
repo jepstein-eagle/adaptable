@@ -13,11 +13,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ChartStrategyId, blotter)
+        super(StrategyConstants.ChartStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ChartStrategyName, ScreenPopups.ChartPopup, StrategyIds.ChartGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ChartStrategyName, ScreenPopups.ChartPopup, StrategyConstants.ChartGlyph);
     }
 
     protected InitState() {

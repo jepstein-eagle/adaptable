@@ -15,7 +15,7 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
         let stepNames: string[] = ["Select Columns", "Build Query", "Choose Name", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.ExportStrategyName}
+                FriendlyName={StrategyConstants.ExportStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

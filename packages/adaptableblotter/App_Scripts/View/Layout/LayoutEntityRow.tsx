@@ -38,7 +38,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={false}
             overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}
-             EntityName={StrategyIds.LayoutStrategyName} />
+             EntityName={StrategyConstants.LayoutStrategyName} />
 
         colItems[3].Content = buttons;
 

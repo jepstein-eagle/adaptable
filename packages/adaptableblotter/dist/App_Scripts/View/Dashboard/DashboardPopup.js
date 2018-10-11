@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const DualListBoxEditor_1 = require("../Components/ListBox/DualListBoxEditor");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
@@ -16,13 +16,13 @@ class DashboardPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__dashboard";
         let availableToolbarNames = this.props.AvailableToolbars.filter(at => this.isVisibleStrategy(at)).map(at => {
-            return StrategyIds.getNameForStrategyId(at);
+            return StrategyConstants.getNameForStrategyId(at);
         });
         let visibleToolbarNames = this.props.VisibleToolbars.filter(at => this.isVisibleStrategy(at)).map(vt => {
-            return StrategyIds.getNameForStrategyId(vt);
+            return StrategyConstants.getNameForStrategyId(vt);
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Dashboard Toolbars", bsStyle: "primary", glyphicon: StrategyIds.FunctionsGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Dashboard Toolbars", bsStyle: "primary", glyphicon: StrategyConstants.FunctionsGlyph, className: "ab_main_popup" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                     React.createElement(react_bootstrap_1.ControlLabel, null, "Dashboard Zoom Factor : "),
                     ' ',
@@ -41,7 +41,7 @@ class DashboardPopupComponent extends React.Component {
     }
     ListChange(selectedValues) {
         let selectedColumnIds = selectedValues.map(sv => {
-            return StrategyIds.getIdForStrategyName(sv);
+            return StrategyConstants.getIdForStrategyName(sv);
         });
         this.props.onDashboardSetToolbars(selectedColumnIds);
     }
@@ -70,7 +70,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onDashboardSetToolbars: (strategyIds) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
+        onDashboardSetToolbars: (StrategyConstants) => dispatch(DashboardRedux.DashboardSetToolbars(StrategyConstants)),
         onSetDashboardZoom: (zoom) => dispatch(DashboardRedux.DashboardSetZoom(zoom)),
         onMoveControl: (controlName, NewIndex) => dispatch(DashboardRedux.DashboardMoveItem(controlName, NewIndex)),
     };

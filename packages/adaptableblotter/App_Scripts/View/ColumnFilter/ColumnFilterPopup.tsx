@@ -65,8 +65,8 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
-                glyphicon={StrategyIds.ColumnFilterGlyph}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
+                glyphicon={StrategyConstants.ColumnFilterGlyph}>
 
                 {columnFilterItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={columnFilterItems} />
@@ -100,7 +100,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId))
     };
 }
 

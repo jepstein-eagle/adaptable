@@ -12,7 +12,7 @@ const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const ColorPicker_1 = require("../ColorPicker");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const AdaptableBlotterFormControlTextClear_1 = require("../Components/Forms/AdaptableBlotterFormControlTextClear");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
 class QuickSearchPopupComponent extends React.Component {
@@ -81,7 +81,7 @@ class QuickSearchPopupComponent extends React.Component {
             return React.createElement("option", { key: enumName, value: enumName }, this.getTextForDisplayAction(enumName));
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyIds.QuickSearchStrategyName, bsStyle: "primary", glyphicon: StrategyIds.QuickSearchGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.QuickSearchStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.QuickSearchGlyph, infoBody: infoBody },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                     React.createElement(react_bootstrap_1.Panel, { header: "Search For", bsStyle: "info" },
                         React.createElement(AdaptableBlotterFormControlTextClear_1.AdaptableBlotterFormControlTextClear, { cssClassName: cssClassName, type: "text", placeholder: "Quick Search Text", value: this.state.EditedQuickSearchText, OnTextChange: (x) => this.handleQuickSearchTextChange(x) }))),

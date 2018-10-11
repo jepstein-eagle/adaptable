@@ -20,12 +20,12 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.FlashingCellsStrategyId, blotter)
+        super(StrategyConstants.FlashingCellsStrategyId, blotter)
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyIds.FlashingCellGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyConstants.FlashingCellGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -39,7 +39,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                     if (flashingCell && flashingCell.IsLive) {
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell Off",
-                            StrategyIds.FlashingCellGlyph,
+                            StrategyConstants.FlashingCellGlyph,
                             FlashingCellsRedux.FlashingCellSelect(flashingCell)
                         )
                     }
@@ -50,7 +50,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                         }
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell On",
-                            StrategyIds.FlashingCellGlyph,
+                            StrategyConstants.FlashingCellGlyph,
                             FlashingCellsRedux.FlashingCellSelect(flashingCell)
                         )
                     }

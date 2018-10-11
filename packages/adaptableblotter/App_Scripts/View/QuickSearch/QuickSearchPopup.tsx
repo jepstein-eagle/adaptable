@@ -118,7 +118,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
         })
 
         return <div className={cssClassName}>
-            <PanelWithImage cssClassName={cssClassName} header={StrategyIds.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyIds.QuickSearchGlyph} infoBody={infoBody}>
+            <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.QuickSearchStrategyName} bsStyle="primary" glyphicon={StrategyConstants.QuickSearchGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm inline>
                     <Panel header={"Search For"} bsStyle="info" >
                         <AdaptableBlotterFormControlTextClear

@@ -33,7 +33,7 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
             { Key: "Columns", Value: this.props.Data.ColumnType },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.ShortcutStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ShortcutStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

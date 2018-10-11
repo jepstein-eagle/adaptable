@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.QuickSearchStrategyId, blotter);
+        super(StrategyConstantsQuickSearchStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.QuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyIds.QuickSearchGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsQuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyConstantsQuickSearchGlyph);
     }
     InitState() {
         if (this.quickSearchState != this.GetQuickSearchState()) {

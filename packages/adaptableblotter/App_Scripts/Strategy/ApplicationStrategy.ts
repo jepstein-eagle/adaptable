@@ -8,11 +8,11 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 export class ApplicationStrategy extends AdaptableStrategyBase implements IApplicationStrategy {
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ApplicationStrategyId, blotter)
+        super(StrategyConstants.ApplicationStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ApplicationStrategyName, ScreenPopups.ApplicationPopup, StrategyIds.ApplicationGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ApplicationStrategyName, ScreenPopups.ApplicationPopup, StrategyConstants.ApplicationGlyph);
     }
 
     

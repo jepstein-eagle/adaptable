@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
 const SystemRedux = require("../Redux/ActionsReducers/SystemRedux");
@@ -15,7 +15,7 @@ const AdaptableBlotterLogger_1 = require("../Core/Helpers/AdaptableBlotterLogger
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyIds.ExportStrategyId, blotter);
+        super(StrategyConstantsExportStrategyId, blotter);
         this.isSendingData = false;
         this.workAroundOpenfinExcelDataDimension = new Map();
         this.throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
@@ -54,7 +54,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         });
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ExportStrategyName, ScreenPopups.ExportPopup, StrategyIds.ExportGlyph);
+        this.createMenuItemShowPopup(StrategyConstantsExportStrategyName, ScreenPopups.ExportPopup, StrategyConstantsExportGlyph);
     }
     sendNewDataToLiveExcel() {
         //we wait for the last sendNewDataToLiveExcel to finish

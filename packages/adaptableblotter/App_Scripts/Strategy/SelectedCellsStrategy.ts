@@ -12,11 +12,11 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
    
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.SelectedCellsStrategyId, blotter)
+        super(StrategyConstants.SelectedCellsStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyIds.SelectedCellsGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyConstants.SelectedCellsGlyph);
     }
 
     protected InitState() {

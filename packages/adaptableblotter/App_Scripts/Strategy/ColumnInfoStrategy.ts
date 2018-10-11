@@ -9,19 +9,19 @@ import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ColumnInfoStrategyId, blotter)
+        super(StrategyConstants.ColumnInfoStrategyId, blotter)
       }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyIds.ColumnInfoGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyConstants.ColumnInfoGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             this.createContextMenuItemShowPopup(
-            StrategyIds.ColumnInfoStrategyName,
+            StrategyConstants.ColumnInfoStrategyName,
             ScreenPopups.ColumnInfoPopup,
-            StrategyIds.ColumnInfoGlyph,
+            StrategyConstants.ColumnInfoGlyph,
             columnId)
     }
 }

@@ -26,7 +26,7 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
             { Key: "Expression", Value: this.props.Data.ColumnExpression }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.CalculatedColumnStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CalculatedColumnStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

@@ -34,7 +34,7 @@ const ApplicationPopup_1 = require("./Application/ApplicationPopup");
 const DashboardPopup_1 = require("./Dashboard/DashboardPopup");
 const DataManagementPopup_1 = require("./DataManagement/DataManagementPopup");
 const ColumnFilterPopup_1 = require("./ColumnFilter/ColumnFilterPopup");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const CalculatedColumnPopup_1 = require("./CalculatedColumn/CalculatedColumnPopup");
 const IPushPullDomainPageSelector_1 = require("./Export/IPushPullDomainPageSelector");
 const BulkUpdatePopup_1 = require("./BulkUpdate/BulkUpdatePopup");
@@ -84,19 +84,19 @@ exports.AdaptableViewFactory = {
 };
 //here we put the dashboard control for each strategy
 exports.AdaptableDashboardViewFactory = new Map([
-    [StrategyIds.AdvancedSearchStrategyId, AdvancedSearchToolbarControl_1.AdvancedSearchToolbarControl],
-    [StrategyIds.DataSourceStrategyId, DataSourceToolbarControl_1.DataSourceToolbarControl],
-    [StrategyIds.QuickSearchStrategyId, QuickSearchToolbarControl_1.QuickSearchToolbarControl],
-    [StrategyIds.LayoutStrategyId, LayoutToolbarControl_1.LayoutToolbarControl],
-    [StrategyIds.ColumnFilterStrategyId, ColumnFilterToolbarControl_1.ColumnFilterToolbarControl],
-    [StrategyIds.ApplicationStrategyId, ApplicationToolbarControl_1.ApplicationToolbarControl],
-    [StrategyIds.ExportStrategyId, ExportToolbarControl_1.ExportToolbarControl],
-    [StrategyIds.BulkUpdateStrategyId, BulkUpdateToolbarControl_1.BulkUpdateToolbarControl],
-    [StrategyIds.SmartEditStrategyId, SmartEditToolbarControl_1.SmartEditToolbarControl],
-    [StrategyIds.SelectedCellsStrategyId, SelectedCellsToolbarControl_1.SelectedCellsToolbarControl],
-    [StrategyIds.AlertStrategyId, AlertToolbarControl_1.AlertToolbarControl],
-    [StrategyIds.ChartStrategyId, ChartToolbarControl_1.ChartToolbarControl],
+    [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl_1.AdvancedSearchToolbarControl],
+    [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl_1.DataSourceToolbarControl],
+    [StrategyConstants.QuickSearchStrategyId, QuickSearchToolbarControl_1.QuickSearchToolbarControl],
+    [StrategyConstants.LayoutStrategyId, LayoutToolbarControl_1.LayoutToolbarControl],
+    [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolbarControl_1.ColumnFilterToolbarControl],
+    [StrategyConstants.ApplicationStrategyId, ApplicationToolbarControl_1.ApplicationToolbarControl],
+    [StrategyConstants.ExportStrategyId, ExportToolbarControl_1.ExportToolbarControl],
+    [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl_1.BulkUpdateToolbarControl],
+    [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl_1.SmartEditToolbarControl],
+    [StrategyConstants.SelectedCellsStrategyId, SelectedCellsToolbarControl_1.SelectedCellsToolbarControl],
+    [StrategyConstants.AlertStrategyId, AlertToolbarControl_1.AlertToolbarControl],
+    [StrategyConstants.ChartStrategyId, ChartToolbarControl_1.ChartToolbarControl],
 ]);
 exports.AdaptableDashboardPermanentToolbarFactory = new Map([
-    [StrategyIds.HomeStrategyId, HomeToolbarControl_1.HomeToolbarControl],
+    [StrategyConstants.HomeStrategyId, HomeToolbarControl_1.HomeToolbarControl],
 ]);

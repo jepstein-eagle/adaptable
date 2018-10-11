@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const StyleVisualItem_1 = require("../../Components/StyleVisualItem");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyIds = require("../../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../../../Core/Enums");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
@@ -22,7 +22,7 @@ class ConditionalStyleSummaryWizard extends React.Component {
             { Key: "Style", Value: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: this.props.Data.Style }) },
             { Key: "Query", Value: ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }
         ];
-        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.ConditionalStyleStrategyName });
+        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.ConditionalStyleStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     canNext() { return true; }

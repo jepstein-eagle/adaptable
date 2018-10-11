@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyIds = require("../../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
 class ChartSummaryWizard extends React.Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class ChartSummaryWizard extends React.Component {
             },
             { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.props.Data.AdditionalColumnValues.join(', ') : "n/a" },
         ];
-        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.ChartStrategyName });
+        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.ChartStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     canNext() { return true; }

@@ -65,8 +65,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
         ]
 
         let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
-        let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn) => {
-            let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
+        let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn, index) => {
+           // let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
 
             return <CalculatedColumnEntityRow
                 cssClassName={cssClassName}
@@ -89,8 +89,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyIds.CalculatedColumnGlyph}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
+                button={newButton} bsStyle="primary" glyphicon={StrategyConstants.CalculatedColumnGlyph}>
 
                 {this.props.CalculatedColumns.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={calculatedColumns} />
@@ -128,8 +128,8 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCalculatedColumn(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
-    onEdit(index: number, customColumn: ICalculatedColumn) {
-        let clonedObject = Helper.cloneObject(customColumn);
+    onEdit(index: number, calculatedColumn: ICalculatedColumn) {
+        let clonedObject = Helper.cloneObject(calculatedColumn);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
@@ -169,7 +169,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),
         onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) => dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
         IsExpressionValid: (expression: string) => dispatch(CalculatedColumnRedux.CalculatedColumnIsExpressionValid(expression)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CalculatedColumnStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId))
     };
 }
 

@@ -19,7 +19,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
         let stepNames: string[] = ["Select Scope", "Create Style", "Build Query"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.ConditionalStyleStrategyName}
+                FriendlyName={StrategyConstants.ConditionalStyleStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

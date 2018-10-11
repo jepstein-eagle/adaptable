@@ -7,11 +7,11 @@ import { IStrategy } from './Interface/IStrategy';
 export class AboutStrategy extends AdaptableStrategyBase implements IStrategy {
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.AboutStrategyId, blotter)
+        super(StrategyConstants.AboutStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.AboutStrategyName, ScreenPopups.AboutPopup, StrategyIds.AboutGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.AboutStrategyName, ScreenPopups.AboutPopup, StrategyConstants.AboutGlyph);
     }
    
 }

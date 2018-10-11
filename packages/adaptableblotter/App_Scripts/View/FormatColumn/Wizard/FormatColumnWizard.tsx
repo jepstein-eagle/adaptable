@@ -15,10 +15,10 @@ export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressi
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Column", "Create Style", "Settings"]
+        let stepNames: string[] = ["Select Column", "Create Style", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.FormatColumnStrategyName}
+                FriendlyName={StrategyConstants.FormatColumnStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

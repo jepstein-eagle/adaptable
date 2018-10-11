@@ -6,14 +6,14 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 
 export class DataManagementStrategy extends AdaptableStrategyBase implements IDataManagementStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.DataManagementStrategyId, blotter)
+        super(StrategyConstants.DataManagementStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
         if ("production" == process.env.NODE_ENV) {
             return;
         }
-        this.createMenuItemShowPopup(StrategyIds.DataManagementStrategyName, ScreenPopups.DataManagementPopup, StrategyIds.DataManagementGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.DataManagementStrategyName, ScreenPopups.DataManagementPopup, StrategyConstants.DataManagementGlyph);
  
     }
     

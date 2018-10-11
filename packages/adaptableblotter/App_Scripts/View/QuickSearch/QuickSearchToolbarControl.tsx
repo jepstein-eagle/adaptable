@@ -61,7 +61,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     AccessLevel={this.props.AccessLevel}/>
             </span>
         </span>
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.QuickSearchStrategyName} glyphicon={StrategyIds.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyIds.QuickSearchStrategyId)}
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.QuickSearchStrategyName} glyphicon={StrategyConstants.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
             onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
@@ -83,9 +83,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (newQuickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
-        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
+        onShowQuickSearchPopup: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.QuickSearchStrategyId, ScreenPopups.QuickSearchPopup)),
     };
 }
 

@@ -36,7 +36,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyIds.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyIds.DataManagementGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyConstants.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyConstants.DataManagementGlyph} infoBody={infoBody}>
                 <Well bsSize="small">Click below to clear all current state.<br /><br />
                     When you restart / refresh the Blotter any predefined config will be re-added.</Well>
 

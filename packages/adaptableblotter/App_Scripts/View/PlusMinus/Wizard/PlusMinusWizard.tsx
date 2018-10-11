@@ -21,7 +21,7 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
         let stepNames: string[] = ["Select Column", "Settings", "Build Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.PlusMinusStrategyName}
+                FriendlyName={StrategyConstants.PlusMinusStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

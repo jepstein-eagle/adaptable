@@ -103,8 +103,8 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyIds.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}
-                button={newButton} glyphicon={StrategyIds.UserFilterGlyph}>
+            <PanelWithButton headerText={StrategyConstants.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}
+                button={newButton} glyphicon={StrategyConstants.UserFilterGlyph}>
 
                 {UserFilterItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={UserFilterItems} />
@@ -171,7 +171,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (index: number,userFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index,userFilter)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId))
     };
 }
 

@@ -2,10 +2,10 @@ import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState';
 import { Visibility } from '../../Core/Enums';
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
-    StrategyIds: string[];
+    StrategyConstants: string[];
 }
 export interface DashboardSetToolbarsAction extends Redux.Action {
-    StrategyIds: string[];
+    StrategyConstants: string[];
 }
 export interface DashboardShowToolbarAction extends Redux.Action {
     StrategyId: string;
@@ -21,7 +21,7 @@ export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Act
     StrategyId: string;
 }
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
-    StrategyIds: string[];
+    StrategyConstants: string[];
 }
 export interface DashboardSetZoomAction extends Redux.Action {
     Zoom: Number;
@@ -47,12 +47,12 @@ export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
 export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
     Title: string;
 }
-export declare const DashboardSetAvailableToolbars: (StrategyIds: string[]) => DashboardSetAvailableToolbarsAction;
-export declare const DashboardSetToolbars: (StrategyIds: string[]) => DashboardSetToolbarsAction;
+export declare const DashboardSetAvailableToolbars: (StrategyConstants: string[]) => DashboardSetAvailableToolbarsAction;
+export declare const DashboardSetToolbars: (StrategyConstants: string[]) => DashboardSetToolbarsAction;
 export declare const DashboardShowToolbar: (StrategyId: string) => DashboardShowToolbarAction;
 export declare const DashboardHideToolbar: (StrategyId: string) => DashboardHideToolbarAction;
 export declare const DashboardMoveItem: (StrategyId: string, NewIndex: number) => DashboardMoveItemAction;
-export declare const DashboardSetFunctionButtons: (StrategyIds: string[]) => DashboardSetFunctionButtonsAction;
+export declare const DashboardSetFunctionButtons: (StrategyConstants: string[]) => DashboardSetFunctionButtonsAction;
 export declare const DashboardSetZoom: (Zoom: Number) => DashboardSetZoomAction;
 export declare const DashboardSetVisibility: (Visibility: Visibility) => DashboardSetVisibilityAction;
 export declare const DashboardShowSystemStatusButton: () => DashboardShowSystemStatusButtonAction;

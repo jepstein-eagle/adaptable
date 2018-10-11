@@ -19,7 +19,7 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
         let Charts: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.ChartStrategyName}
+                FriendlyName={StrategyConstants.ChartStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

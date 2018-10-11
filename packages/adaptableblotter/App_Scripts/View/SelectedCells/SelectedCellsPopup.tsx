@@ -50,8 +50,8 @@ class SelectedCellsPopupComponent extends React.Component<SelectedCellsPopupProp
         }
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.SelectedCellsStrategyName} className="ab_main_popup"
-                bsStyle="primary" glyphicon={StrategyIds.SelectedCellsGlyph}
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.SelectedCellsStrategyName} className="ab_main_popup"
+                bsStyle="primary" glyphicon={StrategyConstants.SelectedCellsGlyph}
                 infoBody={infoBody}>
 
                 <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>

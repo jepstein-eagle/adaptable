@@ -11,7 +11,7 @@ const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -49,7 +49,7 @@ class FormatColumnPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.FormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyIds.FormatColumnGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstantsFormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstantsFormatColumnGlyph, infoBody: infoBody },
                 this.props.FormatColumns.length == 0 &&
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new column format."),
                 FormatColumns.length > 0 &&
@@ -94,7 +94,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onAddFormatColumn: (formatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
         onEditFormatColumn: (formatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
     };
 }
 exports.FormatColumnPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FormatColumnPopupComponent);

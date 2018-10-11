@@ -51,7 +51,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // dropdown menu items
         let menuItems = this.props.MenuState.MenuItems.filter(x =>
-            x.IsVisible && x.StrategyId != StrategyIds.AboutStrategyId
+            x.IsVisible && x.StrategyId != StrategyConstants.AboutStrategyId
         ).map((menuItem: IMenuItem) => {
             return <MenuItem disabled={this.props.AccessLevel==AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
                 <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
@@ -101,7 +101,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         return <PanelDashboard cssClassName={cssClassName} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
             headerText={toolbarTitle} glyphicon={"home"} showGlyphIcon={false}
-            onClose={() => this.props.onClose(StrategyIds.HomeStrategyId)} onConfigure={() => this.props.onConfigure()}>
+            onClose={() => this.props.onClose(StrategyConstants.HomeStrategyId)} onConfigure={() => this.props.onConfigure()}>
 
             {this.props.DashboardState.ShowFunctionsDropdown &&
                 <DropdownButton bsStyle={"default"}
@@ -221,7 +221,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onShowStatusMessage: (alert: IAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),

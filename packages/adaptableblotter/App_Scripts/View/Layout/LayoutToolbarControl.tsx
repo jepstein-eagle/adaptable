@@ -121,7 +121,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </span>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.LayoutStrategyName} glyphicon={StrategyIds.LayoutGlyph} onClose={() => this.props.onClose(StrategyIds.LayoutStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.LayoutStrategyName} glyphicon={StrategyConstants.LayoutGlyph} onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -176,9 +176,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
         onPreSaveLayout: (index: number, layout: ILayout) => dispatch(LayoutRedux.LayoutPreSave(index, layout)),
-        onNewLayout: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.LayoutStrategyId, ScreenPopups.LayoutPopup, "New")),
+        onNewLayout: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, "New")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.LayoutStrategyId, ScreenPopups.LayoutPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup))
     };
 }
 

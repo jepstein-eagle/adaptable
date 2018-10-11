@@ -11,7 +11,7 @@ import { StateChangedTrigger } from '../Core/Enums';
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.CustomSortStrategyId, blotter)
+        super(StrategyConstants.CustomSortStrategyId, blotter)
     }
 
     protected InitState() {
@@ -27,7 +27,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyIds.CustomSortGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -36,9 +36,9 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
                 let label = (customSort) ? "Edit " : "Create "
                 let popupParam = (customSort) ? "Edit|" : "New|"
                 this.createContextMenuItemShowPopup(
-                    label + StrategyIds.CustomSortStrategyName,
+                    label + StrategyConstants.CustomSortStrategyName,
                     ScreenPopups.CustomSortPopup,
-                    StrategyIds.CustomSortGlyph,
+                    StrategyConstants.CustomSortGlyph,
                     popupParam + columnId)
                  }
     }

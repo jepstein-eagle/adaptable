@@ -48,7 +48,7 @@ export class ValidationService implements IValidationService {
                     if (isSatisfiedExpression && this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.ActionMode == 'Stop Edit') {
-                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
                                 "CheckCellChanging",
                                 "Failed",
                                 { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent })
@@ -65,7 +65,7 @@ export class ValidationService implements IValidationService {
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.ActionMode == 'Stop Edit') {
-                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
                             "CheckCellChanging",
                             "Failed",
                             { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent })
@@ -77,13 +77,13 @@ export class ValidationService implements IValidationService {
             }
         }
         if (failedWarningRules.length > 0) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
                 "CheckCellChanging",
                 "Warning",
                 { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent })
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId,
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
                 "CheckCellChanging",
                 "Ok",
                 { DataChangingEvent: dataChangedEvent })

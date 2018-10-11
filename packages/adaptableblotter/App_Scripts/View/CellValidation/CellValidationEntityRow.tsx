@@ -41,7 +41,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
             editClick={() => this.props.onEdit(this.props.Index, cellValidation)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={!this.props.Column}
-             EntityName={StrategyIds.CellValidationStrategyName} />
+             EntityName={StrategyConstants.CellValidationStrategyName} />
 
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

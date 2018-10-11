@@ -11,18 +11,18 @@ import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ColumnChooserStrategyId, blotter)
+        super(StrategyConstants.ColumnChooserStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyIds.ColumnChooserGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyConstants.ColumnChooserGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
             this.createContextMenuItemReduxAction(
                 "Hide Column",
-                StrategyIds.ColumnChooserGlyph,
+                StrategyConstants.ColumnChooserGlyph,
                 GridRedux.GridHideColumn(columnId))
         }
     }

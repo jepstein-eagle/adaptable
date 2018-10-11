@@ -34,7 +34,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
             return <option value={x} key={x}>{x}</option>
         })
         return (<div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} headerText={StrategyIds.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyIds.ThemeGlyph} infoBody={infoBody}>
+            <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ThemeStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ThemeGlyph} infoBody={infoBody}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="themepicker">
                         <Col xs={2} >

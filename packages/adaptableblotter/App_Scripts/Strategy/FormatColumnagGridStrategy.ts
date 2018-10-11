@@ -24,7 +24,7 @@ export class FormatColumnagGridStrategy extends FormatColumnStrategy implements 
                 this.FormatColumnState.FormatColumns.forEach((fc, index) => {
                     if (fc.ColumnId == column.ColumnId) {
                         let styleName: string = (StringExtensions.IsNullOrEmpty(fc.Style.ClassName)) ?
-                            StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, index, this.blotter) :
+                            StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, index, this.blotter) :
                             fc.Style.ClassName;
                         cellClassRules[styleName] = function (params: any) {
                             return true;

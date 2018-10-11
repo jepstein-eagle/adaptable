@@ -105,7 +105,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.AdvancedSearchStrategyName} glyphicon={StrategyIds.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyIds.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.AdvancedSearchStrategyName} glyphicon={StrategyConstants.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -127,10 +127,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup,  "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup,  "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup))
     };
 }
 

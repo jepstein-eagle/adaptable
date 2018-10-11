@@ -41,11 +41,11 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                     <StrategyDetail
                         cssClassName={this.props.cssClassName}
                         key={"UF" + index}
-                        Item1={StrategyIds.CalculatedColumnStrategyName}
+                        Item1={StrategyConstants.CalculatedColumnStrategyName}
                         Item2={item.ColumnExpression}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyIds.CalculatedColumnStrategyName}
+                        EntityName={StrategyConstants.CalculatedColumnStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}

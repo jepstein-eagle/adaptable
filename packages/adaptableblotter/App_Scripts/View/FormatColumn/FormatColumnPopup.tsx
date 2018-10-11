@@ -89,9 +89,9 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
             />
 
             return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyIds.FormatColumnStrategyName}
+            <PanelWithButton cssClassName={cssClassName}  headerText={StrategyConstants.FormatColumnStrategyName}
                 button={newButton}
-                bsStyle="primary" className="ab_main_popup" glyphicon={StrategyIds.FormatColumnGlyph} infoBody={infoBody}>
+                bsStyle="primary" className="ab_main_popup" glyphicon={StrategyConstants.FormatColumnGlyph} infoBody={infoBody}>
 
                 {this.props.FormatColumns.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new column format.</Well>
@@ -164,7 +164,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
         onEditFormatColumn: (formatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.FormatColumnStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
     };
 }
 

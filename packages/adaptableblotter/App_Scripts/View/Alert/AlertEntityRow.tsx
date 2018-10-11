@@ -42,7 +42,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
             editClick={() => this.props.onEdit(this.props.Index, alert)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={!this.props.Column}
-            EntityName={StrategyIds.AlertStrategyName} />
+            EntityName={StrategyConstants.AlertStrategyName} />
 
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

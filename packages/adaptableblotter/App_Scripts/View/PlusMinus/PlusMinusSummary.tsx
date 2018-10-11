@@ -40,9 +40,9 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyIds.PlusMinusStrategyName}
+            key={StrategyConstants.PlusMinusStrategyName}
             cssClassName={this.props.cssClassName}
-            StrategyId={StrategyIds.PlusMinusStrategyId}
+            StrategyId={StrategyConstants.PlusMinusStrategyId}
             StrategySummary={Helper.ReturnItemCount(this.props.PlusMinusRules.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), "Plus Minus Condition")}
             onNew={() => this.onNew()}
             NewButtonTooltip={"Plus / Minus Rule"}
@@ -62,7 +62,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns))}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyIds.PlusMinusStrategyName}
+                        EntityName={StrategyConstants.PlusMinusStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={PlusMinusRedux.PlusMinusDeleteCondition(index)}
@@ -140,7 +140,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusRule) => dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.PlusMinusStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId))
     };
 }
 

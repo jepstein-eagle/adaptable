@@ -10,7 +10,7 @@ const Helper_1 = require("../../Core/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const Enums_1 = require("../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
@@ -38,7 +38,7 @@ class ChartToolbarControlComponent extends React.Component {
                 React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewChartDefinition(), size: "small", overrideTooltip: "Create New Chart Definition", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.ChartStrategyName, glyphicon: StrategyIds.ChartGlyph, onClose: () => this.props.onClose(StrategyIds.ChartStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, glyphicon: StrategyConstants.ChartGlyph, onClose: () => this.props.onClose(StrategyConstants.ChartStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedChartDefinitionChanged(chartDefinitionName) {
         this.props.onSelectChartDefinition(chartDefinitionName);
@@ -56,11 +56,11 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onSelectChartDefinition: (ChartName) => dispatch(ChartRedux.ChartDefinitionSelect(ChartName)),
-        onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
-        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
+        onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
+        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
         onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.ChartStrategyId, ScreenPopups.ChartPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup))
     };
 }
 exports.ChartToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ChartToolbarControlComponent);

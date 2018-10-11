@@ -20,7 +20,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
 
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.UserFilterStrategyName}
+                FriendlyName={StrategyConstants.UserFilterStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

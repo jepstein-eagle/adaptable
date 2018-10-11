@@ -123,7 +123,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.SmartEditStrategyName} glyphicon={StrategyIds.SmartEditGlyph} onClose={() => this.props.onClose(StrategyIds.SmartEditStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.SmartEditStrategyName} glyphicon={StrategyConstants.SmartEditGlyph} onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -205,7 +205,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
         onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SmartEditStrategyId, ScreenPopups.SmartEditPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.SmartEditStrategyId, ScreenPopups.SmartEditPopup))
     };
 }
 

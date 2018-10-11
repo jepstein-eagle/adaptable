@@ -5,7 +5,7 @@ const React = require("react");
 const Enums_1 = require("../../Core/Enums");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const StyleVisualItem_1 = require("../Components/StyleVisualItem");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
@@ -20,7 +20,7 @@ class ConditionalStyleEntityRow extends React.Component {
                 "Whole Row";
         colItems[1].Content = React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: conditionalStyle.Style });
         colItems[2].Content = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns);
-        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, conditionalStyle), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: (!column && conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: StrategyIds.ConditionalStyleStrategyName });
+        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, conditionalStyle), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: (!column && conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: StrategyConstants.ConditionalStyleStrategyName });
         colItems[3].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

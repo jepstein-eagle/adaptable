@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyIds = require("../../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 class ShortcutSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +16,7 @@ class ShortcutSummaryWizard extends React.Component {
             { Key: "Operation", Value: this.props.Data.ShortcutOperation },
             { Key: "Columns", Value: this.props.Data.ColumnType },
         ];
-        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyIds.ShortcutStrategyName });
+        let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.ShortcutStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     canNext() {

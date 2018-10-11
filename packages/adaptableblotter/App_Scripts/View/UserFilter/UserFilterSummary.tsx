@@ -42,13 +42,13 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
         // title row
         let titleRow = <StrategyHeader
-            key={StrategyIds.UserFilterStrategyName}
+            key={StrategyConstants.UserFilterStrategyName}
             cssClassName={this.props.cssClassName}
-            StrategyId={StrategyIds.UserFilterStrategyId}
+            StrategyId={StrategyConstants.UserFilterStrategyId}
             StrategySummary={this.getSummary()}
             onNew={() => this.onNew()}
             NewButtonDisabled={!this.isFilterable()}
-            NewButtonTooltip={StrategyIds.UserFilterStrategyName}
+            NewButtonTooltip={StrategyConstants.UserFilterStrategyName}
             AccessLevel={this.props.AccessLevel}
         />
         strategySummaries.push(titleRow);
@@ -65,7 +65,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
                         showEdit={this.isFilterable()}
-                        EntityName={StrategyIds.UserFilterStrategyName}
+                        EntityName={StrategyConstants.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={UserFilterRedux.UserFilterDelete(item)}
@@ -106,7 +106,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
             return "Column is not filterable"
         }
 
-        return Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyIds.UserFilterStrategyName)
+        return Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.UserFilterStrategyName)
     }
 
     getDescription(userFilter: IUserFilter): string {
@@ -180,7 +180,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index, UserFilter)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId))
     };
 }
 

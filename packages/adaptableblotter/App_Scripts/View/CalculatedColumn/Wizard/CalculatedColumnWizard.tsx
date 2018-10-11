@@ -19,7 +19,7 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
         
         return <div className={this.props.cssClassName}>
         <AdaptableWizard
-                FriendlyName={StrategyIds.CalculatedColumnStrategyName}
+                FriendlyName={StrategyConstants.CalculatedColumnStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

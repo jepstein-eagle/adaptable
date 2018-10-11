@@ -13,7 +13,7 @@ export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjec
         let stepNames: string[] = ["Build Query", "Create Name", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyIds.AdvancedSearchStrategyName}
+                FriendlyName={StrategyConstants.AdvancedSearchStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}

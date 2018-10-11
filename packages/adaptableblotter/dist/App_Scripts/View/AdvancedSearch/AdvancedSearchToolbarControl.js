@@ -11,7 +11,7 @@ const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const Enums_1 = require("../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
@@ -38,7 +38,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component {
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "5px" }, onClick: () => this.props.onEditAdvancedSearch(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Current Advanced Search", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewAdvancedSearch(), size: "small", overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Advanced Search", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", ConfirmAction: AdvancedSearchRedux.AdvancedSearchDelete(savedSearch), ConfirmationMsg: "Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?", ConfirmationTitle: "Delete Advanced Search", AccessLevel: this.props.AccessLevel })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.AdvancedSearchStrategyName, glyphicon: StrategyIds.AdvancedSearchGlyph, onClose: () => this.props.onClose(StrategyIds.AdvancedSearchStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.AdvancedSearchStrategyName, glyphicon: StrategyConstants.AdvancedSearchGlyph, onClose: () => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedSearchChanged(searchName) {
         this.props.onSelectAdvancedSearch(searchName);
@@ -53,10 +53,10 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onSelectAdvancedSearch: (advancedSearchName) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "Edit")),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup))
     };
 }
 exports.AdvancedSearchToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchToolbarControlComponent);

@@ -92,9 +92,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyIds.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}
+            <PanelWithButton headerText={StrategyConstants.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
-                glyphicon={StrategyIds.CellValidationGlyph}
+                glyphicon={StrategyConstants.CellValidationGlyph}
                 infoBody={infoBody}>
                 {CellValidationItems.length > 0 &&
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={CellValidationItems} />
@@ -168,7 +168,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddEditCellValidation: (index: number, CellValidation: ICellValidationRule) => dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
         onChangeActionMode: (index: number, ActionMode: any) => dispatch(CellValidationRedux.CellValidationChangeMode(index, ActionMode)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.CellValidationStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId))
     };
 }
 

@@ -13,7 +13,7 @@ const ReportEntityRow_1 = require("./ReportEntityRow");
 const ReportWizard_1 = require("./Wizard/ReportWizard");
 const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
@@ -51,7 +51,7 @@ class ExportPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Report", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyIds.ExportStrategyName, bsStyle: "primary", glyphicon: StrategyIds.ExportGlyph, infoBody: infoBody, button: newButton },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ExportStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.ExportGlyph, infoBody: infoBody, button: newButton },
                 Reports.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: Reports, allowOverflow: false }),
                 Reports.length == 0 &&
@@ -97,7 +97,7 @@ function mapDispatchToProps(dispatch) {
         onApplyExport: (value, exportDestination) => dispatch(ExportRedux.ExportApply(value, exportDestination)),
         onAddUpdateReport: (Index, Report) => dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
         onReportStopLive: (Report, exportDestination) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.ExportStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId))
     };
 }
 exports.ExportPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ExportPopupComponent);

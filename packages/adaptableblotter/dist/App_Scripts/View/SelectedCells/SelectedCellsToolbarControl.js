@@ -6,7 +6,7 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const SelectedCellsRedux = require("../../Redux/ActionsReducers/SelectedCellsRedux");
 const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const Enums_1 = require("../../Core/Enums");
@@ -45,7 +45,7 @@ class SelectedCellsToolbarControlComponent extends React.Component {
                         React.createElement(react_bootstrap_1.ControlLabel, { style: { marginTop: "5px", marginLeft: "3px" } },
                             this.getOperationValue(),
                             " "))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyIds.SelectedCellsStrategyName, glyphicon: StrategyIds.SelectedCellsGlyph, onClose: () => this.props.onClose(StrategyIds.SelectedCellsStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.SelectedCellsStrategyName, glyphicon: StrategyConstants.SelectedCellsGlyph, onClose: () => this.props.onClose(StrategyConstants.SelectedCellsStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectionChanged() {
         this.props.onSelectedCellsCreateSummary();
@@ -86,7 +86,7 @@ function mapDispatchToProps(dispatch) {
         onSelectedCellsOperationChange: (SelectedCellOperation) => dispatch(SelectedCellsRedux.SelectedCellsChangeOperation(SelectedCellOperation)),
         onSelectedCellsCreateSummary: () => dispatch(GridRedux.GridCreateSelectedCellSummary()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.SelectedCellsStrategyId, ScreenPopups.SelectedCellsPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.SelectedCellsStrategyId, ScreenPopups.SelectedCellsPopup))
     };
 }
 exports.SelectedCellsToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(SelectedCellsToolbarControlComponent);

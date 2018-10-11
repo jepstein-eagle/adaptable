@@ -38,7 +38,7 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
             }
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyIds.CellValidationStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CellValidationStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../Enums");
-const StrategyIds = require("../Constants/StrategyIds");
+const StrategyConstants = require("../Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ObjectFactory_1 = require("../ObjectFactory");
@@ -35,7 +35,7 @@ class ValidationService {
                     if (isSatisfiedExpression && this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.ActionMode == 'Stop Edit') {
-                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId, "CheckCellChanging", "Failed", { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent });
+                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsCellValidationStrategyId, "CheckCellChanging", "Failed", { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent });
                             return [expressionRule];
                         }
                         else {
@@ -49,7 +49,7 @@ class ValidationService {
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.ActionMode == 'Stop Edit') {
-                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId, "CheckCellChanging", "Failed", { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent });
+                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsCellValidationStrategyId, "CheckCellChanging", "Failed", { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent });
                         return [noExpressionRule];
                     }
                     else {
@@ -59,10 +59,10 @@ class ValidationService {
             }
         }
         if (failedWarningRules.length > 0) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId, "CheckCellChanging", "Warning", { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent });
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsCellValidationStrategyId, "CheckCellChanging", "Warning", { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent });
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyIds.CellValidationStrategyId, "CheckCellChanging", "Ok", { DataChangingEvent: dataChangedEvent });
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsCellValidationStrategyId, "CheckCellChanging", "Ok", { DataChangingEvent: dataChangedEvent });
         }
         return failedWarningRules;
     }

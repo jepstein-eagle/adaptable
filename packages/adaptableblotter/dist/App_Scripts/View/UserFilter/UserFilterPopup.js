@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyIds = require("../../Core/Constants/StrategyIds");
+const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Helper_1 = require("../../Core/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
@@ -64,7 +64,7 @@ class UserFilterPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create User Filter", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyIds.UserFilterStrategyName, bsStyle: "primary", cssClassName: cssClassName, infoBody: infoBody, button: newButton, glyphicon: StrategyIds.UserFilterGlyph },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.UserFilterStrategyName, bsStyle: "primary", cssClassName: cssClassName, infoBody: infoBody, button: newButton, glyphicon: StrategyConstants.UserFilterGlyph },
                 UserFilterItems.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: UserFilterItems }),
                 UserFilterItems.length == 0 &&
@@ -102,7 +102,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateUserFilter: (index, userFilter) => dispatch(UserFilterRedux.UserFilterAddUpdate(index, userFilter)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyIds.UserFilterStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId))
     };
 }
 exports.UserFilterPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(UserFilterPopupComponent);

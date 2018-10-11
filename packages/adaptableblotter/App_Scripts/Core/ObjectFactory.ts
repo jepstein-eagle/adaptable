@@ -1,6 +1,6 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter } from './Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn } from './Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
@@ -160,6 +160,14 @@ export module ObjectFactory {
         }
     }
 
+    export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
+        return {
+            ColumnId: "",
+            DefaultValue: "",
+            StoredValues: null
+        }
+    }
+
     export function CreateLayout(columns: IColumn[], gridSorts: IGridSort[], vendorGridInfo: IVendorGridInfo, name: string): ILayout {
         return {
             Columns: (columns) ? columns.map(x => x.ColumnId) : [],
@@ -188,18 +196,18 @@ export module ObjectFactory {
             Name: name,
             ColumnId: columnFilter.ColumnId,
             Expression: columnFilter.Filter,
-         }
+        }
     }
 
     export function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, description: string, expression: Expression): ICellValidationRule {
         return {
-        ColumnId: columnId,
-        Range: range,
-        ActionMode: actionMode,
-        Description: description,
-        Expression: expression,
-     }
-}
+            ColumnId: columnId,
+            Range: range,
+            ActionMode: actionMode,
+            Description: description,
+            Expression: expression,
+        }
+    }
 
     export function CreateEmptyStyle(): IStyle {
         return {

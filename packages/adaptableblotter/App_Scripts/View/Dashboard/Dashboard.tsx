@@ -59,7 +59,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             }
         })
 
-        let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyIds.HomeStrategyId)
+        let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(StrategyConstants.HomeStrategyId)
         let homeToolbarElement = <Nav key={"home"} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
             {React.createElement(homeToolbar, { cssClassName: cssClassName, Blotter: this.props.Blotter })}
         </Nav>

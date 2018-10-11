@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FormatColumnStrategy_1 = require("./FormatColumnStrategy");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
 const StyleHelper_1 = require("../Core/Helpers/StyleHelper");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 class FormatColumnKendoStrategy extends FormatColumnStrategy_1.FormatColumnStrategy {
     constructor(blotter) {
         super(blotter);
@@ -19,7 +19,7 @@ class FormatColumnKendoStrategy extends FormatColumnStrategy_1.FormatColumnStrat
                     theBlotter.forAllRecordsDo((row) => {
                         let primaryKey = this.blotter.getPrimaryKeyValueFromRecord(row);
                         let styleName = (StringExtensions_1.StringExtensions.IsNullOrEmpty(fc.Style.ClassName)) ?
-                            StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(fc), this.blotter) :
+                            StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(fc), this.blotter) :
                             fc.Style.ClassName;
                         theBlotter.addCellStyle(primaryKey, columnIndex, styleName);
                     });

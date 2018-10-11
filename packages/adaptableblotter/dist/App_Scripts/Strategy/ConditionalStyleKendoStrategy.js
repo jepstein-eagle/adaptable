@@ -5,7 +5,7 @@ const Enums_1 = require("../Core/Enums");
 const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const Helper_1 = require("../Core/Helpers/Helper");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
-const StrategyIds = require("../Core/Constants/StrategyIds");
+const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const StyleHelper_1 = require("../Core/Helpers/StyleHelper");
 class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
@@ -18,7 +18,7 @@ class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy_1.Condition
         this.ConditionalStyleState.ConditionalStyles.forEach((cs, index) => {
             let columnIndex = this.blotter.getColumnIndex(cs.ColumnId);
             let styleName = (StringExtensions_1.StringExtensions.IsNullOrEmpty(cs.Style.ClassName)) ?
-                StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyIds.ConditionalStyleStrategyId, index, this.blotter) :
+                StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, index, this.blotter) :
                 cs.Style.ClassName;
             if (ExpressionHelper_1.ExpressionHelper.checkForExpression(cs.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                 if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row) {
@@ -40,8 +40,8 @@ class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy_1.Condition
     }
     InitStyles() {
         let theBlotter = this.blotter;
-        theBlotter.removeAllCellStylesWithRegex(new RegExp("^" + StrategyIds.ConditionalStyleStrategyId));
-        theBlotter.removeAllRowStylesWithRegex(new RegExp("^" + StrategyIds.ConditionalStyleStrategyId));
+        theBlotter.removeAllCellStylesWithRegex(new RegExp("^" + StrategyConstants.ConditionalStyleStrategyId));
+        theBlotter.removeAllRowStylesWithRegex(new RegExp("^" + StrategyConstants.ConditionalStyleStrategyId));
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyles.length > 0) {
@@ -60,7 +60,7 @@ class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy_1.Condition
                     //we just need to find one that match....
                     for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
                         if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(columnCS.Expression, row, columns, this.blotter)) {
-                            theBlotter.addCellStyle(primaryKey, columnCS.columnIndex, StrategyIds.ConditionalStyleStrategyId + columnCS.collectionIndex);
+                            theBlotter.addCellStyle(primaryKey, columnCS.columnIndex, StrategyConstants.ConditionalStyleStrategyId + columnCS.collectionIndex);
                             break;
                         }
                     }
@@ -68,7 +68,7 @@ class ConditionalStyleKendoStrategy extends ConditionalStyleStrategy_1.Condition
                 //we just need to find one that match....
                 for (let rowCS of rowConditionalStyles) {
                     if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(rowCS.Expression, row, columns, this.blotter)) {
-                        theBlotter.addRowStyle(primaryKey, StrategyIds.ConditionalStyleStrategyId + this.ConditionalStyleState.ConditionalStyles.indexOf(rowCS));
+                        theBlotter.addRowStyle(primaryKey, StrategyConstants.ConditionalStyleStrategyId + this.ConditionalStyleState.ConditionalStyles.indexOf(rowCS));
                         break;
                     }
                 }

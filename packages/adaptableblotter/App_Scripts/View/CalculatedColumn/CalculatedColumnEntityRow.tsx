@@ -23,7 +23,7 @@ export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowPr
             editClick={() => this.props.onEdit(this.props.Index, calculatedColumn)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
-            EntityName={StrategyIds.CalculatedColumnStrategyName}>
+            EntityName={StrategyConstants.CalculatedColumnStrategyName}>
         </EntityListActionButtons>
          colItems[2].Content = buttons
       

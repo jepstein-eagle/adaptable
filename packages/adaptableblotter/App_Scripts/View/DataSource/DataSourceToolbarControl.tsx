@@ -60,7 +60,7 @@ class DataSourceToolbarControlComponent extends React.Component<DataSourceToolba
            </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyIds.DataSourceStrategyName} glyphicon={StrategyIds.DataSourceGlyph} onClose={() => this.props.onClose(StrategyIds.DataSourceStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.DataSourceStrategyName} glyphicon={StrategyConstants.DataSourceGlyph} onClose={() => this.props.onClose(StrategyConstants.DataSourceStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
@@ -83,7 +83,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectDataSource: (DataSourceName: string) => dispatch(DataSourceRedux.DataSourceSelect(DataSourceName)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyIds.DataSourceStrategyId, ScreenPopups.DataSourcePopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.DataSourceStrategyId, ScreenPopups.DataSourcePopup))
     };
 }
 

@@ -13,11 +13,11 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     private columnFilterState: IColumnFilter[]
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyIds.ColumnFilterStrategyId, blotter)
+        super(StrategyConstants.ColumnFilterStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyIds.ColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyIds.ColumnFilterGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyConstants.ColumnFilterGlyph);
     }
 
     public addContextMenuItem(columnId: string): void {
@@ -29,7 +29,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
                 if (existingColumnFilter) {
                     this.createContextMenuItemReduxAction(
                         "Clear Column Filter",
-                        StrategyIds.ColumnFilterGlyph,
+                        StrategyConstants.ColumnFilterGlyph,
                         ColumnFilterRedux.ColumnFilterClear(columnId))
                 }
             }
