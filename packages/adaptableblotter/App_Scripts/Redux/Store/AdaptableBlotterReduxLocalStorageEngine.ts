@@ -48,59 +48,11 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
   save(state: any): Promise<any> {
     return new Promise((resolve) => {
       let clonedState = Helper.cloneObject(state)
-      FilterPredefinedItems(clonedState)
       const jsonState = JSON.stringify(clonedState/*, this.replacer*/);
       localStorage.setItem(this.key, jsonState);
       resolve();
     }).catch(rejectWithMessage);
   }
-}
-
-function FilterPredefinedItems(state: any) {
-  // we iterating substate here
-  for (let substateName in state) {
-    if (state.hasOwnProperty(substateName)) {
-      let substate = state[substateName]
-      //we look for arrays of entities and will filter predefined Items
-      //works only if array is at rootlevel. Will need enhancement if that was to change
-      for (let property in substate) {
-        if (substate.hasOwnProperty(property)) {
-          if (Array.isArray(substate[property])) {
-            // this line is dead! as we dont have readonly
-            // so dont think we need teh whole method - get rid?
-            substate[property] = substate[property].filter((x: any) => !x.IsReadOnly)
-          }
-        }
-      }
-    }
-  }
-}
-
-//We force the IsReadOnly of the predefinedState to be true
-// I've commented this out 29/4/18 as Im not sure what hte point of it is.  why not let devs decide if something is predefined?
-function ForcePredefinedItems(state: any) {
-  // we iterating substate here
-  for (let substateName in state) {
-    if (state.hasOwnProperty(substateName)) {
-      let substate = state[substateName]
-      //we look for arrays of entities and will set predefined Items
-      //works only if array is at rootlevel. Will need enhancement if that was to change
-      for (let property in substate) {
-        if (substate.hasOwnProperty(property)) {
-          if (Array.isArray(substate[property])) {
-            let arrayItems = substate[property]
-            arrayItems.forEach((element: any) => {
-              if (element.hasOwnProperty("IsReadOnly")) {
-                //      element.IsReadOnly = true;
-              }
-            });
-          }
-        }
-
-      }
-    }
-  }
-  return state
 }
 
 function rejectWithMessage(error: any) {

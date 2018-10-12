@@ -40,7 +40,7 @@ function InitTradeBlotter() {
     blotterId: "demo blotter", // id for blotter
     enableAuditLog: false, // not running audit log
     enableRemoteConfigServer: false, // not running remote config
-    remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
+    // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
     // predefinedConfig: "demoConfig.json", // passing in predefined config with a file
     serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     iPushPullConfig: {

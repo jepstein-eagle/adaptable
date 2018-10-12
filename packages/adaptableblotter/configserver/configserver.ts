@@ -17,200 +17,165 @@ import * as bunyan from 'bunyan'
 let log = bunyan.createLogger({ name: "AdaptableBlotterConfigServer", level: 'debug' })
 
 if (process.argv.length <= 2) {
-    log.error("Wrong number of arguments");
-    log.error("Usage: " + __filename + " --configfolder foldername");
-    log.error("ex: " + __filename + " --configfolder ./config");
-    process.exit(-1);
+  log.error("Wrong number of arguments");
+  log.error("Usage: " + __filename + " --configfolder foldername");
+  log.error("ex: " + __filename + " --configfolder ./config");
+  process.exit(-1);
 }
 
 const arg: { configfolder: string } = (argList => {
-   let arg = { configfolder: "" }, a, opt, thisOpt, curOpt;
-    for (a = 0; a < argList.length; a++) {
-        thisOpt = argList[a].trim();
-        opt = thisOpt.replace(/^\-+/, '');
-        if (opt === thisOpt) {
-            // argument value
-            if (curOpt) { arg[curOpt] = opt; }
-            curOpt = null;
-        }
-        else {
-            // argument name
-            curOpt = opt;
-            arg[curOpt] = true;
-        }
+  let arg = { configfolder: "" }, a, opt, thisOpt, curOpt;
+  for (a = 0; a < argList.length; a++) {
+    thisOpt = argList[a].trim();
+    opt = thisOpt.replace(/^\-+/, '');
+    if (opt === thisOpt) {
+      // argument value
+      if (curOpt) { arg[curOpt] = opt; }
+      curOpt = null;
     }
-    return arg;
+    else {
+      // argument name
+      curOpt = opt;
+      arg[curOpt] = true;
+    }
+  }
+  return arg;
 })(process.argv);
 
 /** Configuration **/
 let ABConfigFolder = arg.configfolder;
 if (!fs.existsSync(ABConfigFolder)) {
-    fs.mkdirSync(ABConfigFolder);
+  fs.mkdirSync(ABConfigFolder);
 }
 if (!ABConfigFolder.endsWith("/")) {
-    ABConfigFolder += "/"
+  ABConfigFolder += "/"
 }
 let ApplicationConfigFileName = ABConfigFolder + "Application.abjson"
 let TeamSharingFolder = ABConfigFolder + "TeamSharing/"
 if (!fs.existsSync(TeamSharingFolder)) {
-    fs.mkdirSync(TeamSharingFolder);
+  fs.mkdirSync(TeamSharingFolder);
 }
 let app = express()
 app.use(BodyParser.urlencoded({ extended: false }))
 app.use(BodyParser.json())
 
 app.get('/adaptableblotter-config', function (req, res) {
-    let username = req.headers["ab_username"]
-    let adaptableblotter_id = req.headers["ab_id"]
-    try {
-        if (username) {
-            let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
-            let ApplicationConfig: AdaptableBlotterState
-            let UserConfig: AdaptableBlotterState
-            if (fs.existsSync(ApplicationConfigFileName)) {
-                ApplicationConfig = JSON.parse(fs.readFileSync(ApplicationConfigFileName, { encoding: 'utf8' }))
-            }
+  let username = req.headers["ab_username"]
+  let adaptableblotter_id = req.headers["ab_id"]
+  try {
+    if (username) {
+      let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
+      let ApplicationConfig: AdaptableBlotterState
+      let UserConfig: AdaptableBlotterState
+      if (fs.existsSync(ApplicationConfigFileName)) {
+        ApplicationConfig = JSON.parse(fs.readFileSync(ApplicationConfigFileName, { encoding: 'utf8' }))
+      }
 
-            if (fs.existsSync(filename)) {
-                UserConfig = JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }))
-                log.debug("Sending config for : " + username);
-             //   ForcePredefinedItems(ApplicationConfig)
-                let mergedStates = MergePredefinedWithUser(ApplicationConfig, UserConfig)
-                res.status(200).send(JSON.stringify(mergedStates))
-            }
-            else {
-                //nothing yet in the user config
-                log.debug("No current config for : " + username);
-                if (ApplicationConfig) {
-                    res.status(200).send(JSON.stringify(ApplicationConfig))
-                }
-                else {
-                    res.status(200).send({})
-                }
-            }
+      if (fs.existsSync(filename)) {
+        UserConfig = JSON.parse(fs.readFileSync(filename, { encoding: 'utf8' }))
+        log.debug("Sending config for : " + username);
+        //   ForcePredefinedItems(ApplicationConfig)
+        let mergedStates = MergePredefinedWithUser(ApplicationConfig, UserConfig)
+        res.status(200).send(JSON.stringify(mergedStates))
+      }
+      else {
+        //nothing yet in the user config
+        log.debug("No current config for : " + username);
+        if (ApplicationConfig) {
+          res.status(200).send(JSON.stringify(ApplicationConfig))
         }
         else {
-            log.error("UserName not provided for load");
-            res.sendStatus(403)
+          res.status(200).send({})
         }
+      }
     }
-    catch (error) {
-        res.sendStatus(500);
-        log.error("Error Getting config for : " + username + "\n" + error);
+    else {
+      log.error("UserName not provided for load");
+      res.sendStatus(403)
     }
+  }
+  catch (error) {
+    res.sendStatus(500);
+    log.error("Error Getting config for : " + username + "\n" + error);
+  }
 })
 
 app.post('/adaptableblotter-config', function (req, res) {
-    var username = req.headers["ab_username"]
-    var adaptableblotter_id = req.headers["ab_id"]
-    if (username) {
-        let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
-        let state = req.body
-        FilterPredefinedItems(state)
-        fs.writeFile(filename, JSON.stringify(state, null, "\t"), { encoding: 'utf8' }, function (err) {
-            if (err) {
-                res.sendStatus(500);
-                log.error("Error saving config for : " + username + "\n" + err);
-            }
-            else {
-                log.debug("Config Saved for : " + username);
-                res.sendStatus(200)
-            }
-        })
-    }
-    else {
-        log.error("No current username for save : " + username);
-        res.sendStatus(403)
-    }
+  var username = req.headers["ab_username"]
+  var adaptableblotter_id = req.headers["ab_id"]
+  if (!username || !adaptableblotter_id) {
+    return res.sendStatus(403);
+  }
+  let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
+  fs.writeFileSync(filename, JSON.stringify(req.body));
 })
 
 app.post('/adaptableblotter-teamsharing', function (req, res) {
-    let filename = TeamSharingFolder + '_' + Math.random().toString(36).substr(2, 9) + ".abjson"
-    let sharedItem = req.body
-    fs.writeFile(filename, JSON.stringify(sharedItem, null, "\t"), { encoding: 'utf8' }, function (err) {
-        if (err) {
-            res.sendStatus(500);
-            log.error("Error saving shared item" + "\n" + err);
-        }
-        else {
-            log.debug("Shared item Saved : " + filename);
-            res.sendStatus(200)
-        }
-    })
+  let filename = TeamSharingFolder + '_' + Math.random().toString(36).substr(2, 9) + ".abjson"
+  let sharedItem = req.body
+  fs.writeFile(filename, JSON.stringify(sharedItem, null, "\t"), { encoding: 'utf8' }, function (err) {
+    if (err) {
+      res.sendStatus(500);
+      log.error("Error saving shared item" + "\n" + err);
+    }
+    else {
+      log.debug("Shared item Saved : " + filename);
+      res.sendStatus(200)
+    }
+  })
 })
 
 app.get('/adaptableblotter-teamsharing', function (req, res) {
-    var files = getFiles(TeamSharingFolder)
-    let entities = []
-    for (let file of files) {
-        entities.push(JSON.parse(fs.readFileSync(path.join(TeamSharingFolder, file), { encoding: 'utf8' })))
-    }
-    res.status(200).send(JSON.stringify(entities))
+  var files = getFiles(TeamSharingFolder)
+  let entities = []
+  for (let file of files) {
+    entities.push(JSON.parse(fs.readFileSync(path.join(TeamSharingFolder, file), { encoding: 'utf8' })))
+  }
+  res.status(200).send(JSON.stringify(entities))
 })
 
 function getFiles(srcpath) {
-    return fs.readdirSync(srcpath).filter(function (file) {
-        return fs.statSync(path.join(srcpath, file)).isFile();
-    });
+  return fs.readdirSync(srcpath).filter(function (file) {
+    return fs.statSync(path.join(srcpath, file)).isFile();
+  });
 }
 
 app.listen(3000, function () {
-    log.info('Adaptable Blotter Config Server listening on port 3000!')
+  log.info('Adaptable Blotter Config Server listening on port 3000!')
 })
-
-function FilterPredefinedItems(state: AdaptableBlotterState) {
-    // we iterating substate here
-    for (let substateName in state) {
-        if (state.hasOwnProperty(substateName)) {
-            let substate = state[substateName]
-            //we look for arrays of entities and will filter predefined Items
-            //works only if array is at rootlevel. Will need enhancement if that was to change
-            for (let property in substate) {
-                if (substate.hasOwnProperty(property)) {
-                    if (Array.isArray(substate[property])) {
-                  // this line is dead! as we dont have readonly
-                  // so dont think we need teh whole method - get rid?
-                       substate[property] = substate[property].filter(x => !x.IsReadOnly)
-                    }
-                }
-
-            }
-        }
-    }
-}
 
 
 function customizer(objValue, srcValue) {
-    if (_.isArray(objValue)) {
-        return objValue.concat(srcValue);
-    }
+  if (_.isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
 }
 
 function MergePredefinedWithUser(predefinedState, userState) {
-    const result = _.extend({}, predefinedState);
+  const result = _.extend({}, predefinedState);
 
-    for (const key in userState) {
-        if (!userState.hasOwnProperty(key)) {
-            continue;
-        }
-        const value = userState[key];
+  for (const key in userState) {
+    if (!userState.hasOwnProperty(key)) {
+      continue;
+    }
+    const value = userState[key];
 
-        // Assign if we don't need to merge at all
-        if (!result.hasOwnProperty(key)) {
-            result[key] = _.isObject(value) && !Array.isArray(value)
-                ? _.merge({}, value)
-                : value;
-            continue;
-        }
-
-        const oldValue = result[key];
-
-        if (_.isObject(value) && !Array.isArray(value)) {
-            result[key] = _.mergeWith({}, oldValue, value, customizer);
-        } else {
-            result[key] = value;
-        }
+    // Assign if we don't need to merge at all
+    if (!result.hasOwnProperty(key)) {
+      result[key] = _.isObject(value) && !Array.isArray(value)
+        ? _.merge({}, value)
+        : value;
+      continue;
     }
 
-    return result;
+    const oldValue = result[key];
+
+    if (_.isObject(value) && !Array.isArray(value)) {
+      result[key] = _.mergeWith({}, oldValue, value, customizer);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
 }
