@@ -4,7 +4,7 @@
   ],
   "packages": [
     "packages/*",
-    "packages/adaptableblotter-angular/projects/*"
+    "packages/adaptableblotter-angular/dist/adaptableblotter"
   ],
   "command": {
     "publish": {
