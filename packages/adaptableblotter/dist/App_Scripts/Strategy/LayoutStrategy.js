@@ -6,10 +6,10 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class LayoutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsLayoutStrategyId, blotter);
+        super(StrategyConstants.LayoutStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsLayoutStrategyName, ScreenPopups.LayoutPopup, StrategyConstantsLayoutGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.LayoutStrategyName, ScreenPopups.LayoutPopup, StrategyConstants.LayoutGlyph);
     }
     InitState() {
         if (this.LayoutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Layout) {

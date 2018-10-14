@@ -40,7 +40,7 @@ class ColumnFilterToolbarControlComponent extends React.Component {
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Active Filters", bodyText: infoBody, tooltipText: "Show Filter Details", MessageType: Enums_1.MessageType.Info, useButton: true, triggerAction: "click" }),
                         ' ',
                         React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0, AccessLevel: this.props.AccessLevel }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstantsColumnFilterStrategyName, glyphicon: StrategyConstantsColumnFilterGlyph, onClose: () => this.props.onClose(StrategyConstantsColumnFilterStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ColumnFilterStrategyName, glyphicon: StrategyConstants.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyConstants.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
 }
 function mapStateToProps(state, ownProps) {
@@ -53,7 +53,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstantsColumnFilterStrategyId, ScreenPopups.ColumnFilterPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ColumnFilterStrategyId, ScreenPopups.ColumnFilterPopup))
     };
 }
 exports.ColumnFilterToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ColumnFilterToolbarControlComponent);

@@ -44,7 +44,7 @@ class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.Conditio
                 let cellClassRules = {};
                 this.ConditionalStyleState.ConditionalStyles.forEach((cs, index) => {
                     let styleName = (StringExtensions_1.StringExtensions.IsNullOrEmpty(cs.Style.ClassName)) ?
-                        StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstantsConditionalStyleStrategyId, index, this.blotter) :
+                        StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, index, this.blotter) :
                         cs.Style.ClassName;
                     if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column && cs.ColumnId == column.ColumnId) {
                         cellClassRules[styleName] = function (params) {

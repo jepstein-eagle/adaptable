@@ -7,10 +7,10 @@ const Enums_1 = require("../Core/Enums");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsSelectedCellsStrategyId, blotter);
+        super(StrategyConstants.SelectedCellsStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsSelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyConstantsSelectedCellsGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyConstants.SelectedCellsGlyph);
     }
     InitState() {
         if (this.SelectedCellsState != this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells) {

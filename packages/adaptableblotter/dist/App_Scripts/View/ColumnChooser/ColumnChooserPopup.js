@@ -14,7 +14,7 @@ class ColumnChooserPopupComponent extends React.Component {
             "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.", React.createElement("br", null), React.createElement("br", null),
             "All changes made while using the Column Chooser are implemented in the Blotter immediately."];
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstantsColumnChooserStrategyName, bsStyle: "primary", glyphicon: StrategyConstantsColumnChooserGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.ColumnChooserStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.ColumnChooserGlyph, infoBody: infoBody },
                 React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x)), cssClassName: cssClassName, SelectedValues: this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x)), HeaderAvailable: "Hidden Columns", HeaderSelected: "Visible Columns", onChange: (SelectedValues) => this.ColumnListChange(SelectedValues) })));
     }
     ColumnListChange(columnList) {

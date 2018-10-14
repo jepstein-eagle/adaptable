@@ -15,7 +15,7 @@ const AdaptableBlotterLogger_1 = require("../Core/Helpers/AdaptableBlotterLogger
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsExportStrategyId, blotter);
+        super(StrategyConstants.ExportStrategyId, blotter);
         this.isSendingData = false;
         this.workAroundOpenfinExcelDataDimension = new Map();
         this.throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
@@ -54,7 +54,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         });
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsExportStrategyName, ScreenPopups.ExportPopup, StrategyConstantsExportGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ExportStrategyName, ScreenPopups.ExportPopup, StrategyConstants.ExportGlyph);
     }
     sendNewDataToLiveExcel() {
         //we wait for the last sendNewDataToLiveExcel to finish

@@ -49,7 +49,7 @@ class FormatColumnPopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstantsFormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstantsFormatColumnGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.FormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstants.FormatColumnGlyph, infoBody: infoBody },
                 this.props.FormatColumns.length == 0 &&
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new column format."),
                 FormatColumns.length > 0 &&

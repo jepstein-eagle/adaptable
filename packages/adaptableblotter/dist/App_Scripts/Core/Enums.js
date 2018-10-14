@@ -189,6 +189,7 @@ var StateChangedTrigger;
     StateChangedTrigger["Export"] = "Export";
     StateChangedTrigger["FlashingCell"] = "FlashingCell";
     StateChangedTrigger["FormatColumn"] = "FormatColumn";
+    StateChangedTrigger["FreeTextColumn"] = "FreeTextColumn";
     StateChangedTrigger["Layout"] = "Layout";
     StateChangedTrigger["PlusMinus"] = "PlusMinus";
     StateChangedTrigger["QuickSearch"] = "QuickSearch";

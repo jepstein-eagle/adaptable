@@ -13,16 +13,16 @@ class HomeButtonsPopupComponent extends React.Component {
         this.props.DashboardState.VisibleButtons.forEach(x => {
             let menuItem = this.props.MenuState.MenuItems.find(m => m.StrategyId == x);
             if (menuItem != null && menuItem.IsVisible) {
-                selectedValues.push(StrategyConstantsgetNameForStrategyId(x));
+                selectedValues.push(StrategyConstants.getNameForStrategyId(x));
             }
         });
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label);
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Function Buttons Configuration", bsStyle: "primary", glyphicon: StrategyConstantsFunctionsGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Function Buttons Configuration", bsStyle: "primary", glyphicon: StrategyConstants.FunctionsGlyph, className: "ab_main_popup" },
                 React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableValues, cssClassName: cssClassName, SelectedValues: selectedValues, HeaderAvailable: "Hidden Function Buttons", HeaderSelected: "Visible Function Buttons", onChange: (SelectedValues) => this.ListChange(SelectedValues) })));
     }
     ListChange(selectedValues) {
-        let buttonNames = selectedValues.map(sv => StrategyConstantsgetIdForStrategyName(sv));
+        let buttonNames = selectedValues.map(sv => StrategyConstants.getIdForStrategyName(sv));
         this.props.onDashboardSetFunctionButtons(buttonNames);
     }
 }

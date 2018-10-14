@@ -6,10 +6,10 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsAdvancedSearchStrategyId, blotter);
+        super(StrategyConstants.AdvancedSearchStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsAdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyConstantsAdvancedSearchGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyConstants.AdvancedSearchGlyph);
     }
     InitState() {
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {

@@ -8,7 +8,7 @@ const FormatColumnSummaryWizard_1 = require("./FormatColumnSummaryWizard");
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 class FormatColumnWizard extends React.Component {
     render() {
-        let stepNames = ["Select Column", "Create Style", "Settings"];
+        let stepNames = ["Select Column", "Create Style", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
             React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.FormatColumnStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(FormatColumnScopeWizard_1.FormatColumnScopeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),

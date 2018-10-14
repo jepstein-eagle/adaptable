@@ -42,7 +42,7 @@ class ShortcutPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.CreateShortcut(), overrideTooltip: "Create New Shortcut", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         let shortcut = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstantsShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyConstantsShortcutGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyConstants.ShortcutGlyph, infoBody: infoBody },
                 shortcuts.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: shortcuts }),
                 shortcuts.length == 0 &&
@@ -88,7 +88,7 @@ function mapDispatchToProps(dispatch) {
         onChangeKeyShortcut: (shortcut, NewShortcutKey) => dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
         onChangeOperationShortcut: (shortcut, NewshortcutOperation) => dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewshortcutOperation)),
         onChangeResultShortcut: (shortcut, NewShortcutResult) => dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
-        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstantsShortcutStrategyId))
+        onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId))
     };
 }
 exports.ShortcutPopup = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ShortcutPopupComponent);

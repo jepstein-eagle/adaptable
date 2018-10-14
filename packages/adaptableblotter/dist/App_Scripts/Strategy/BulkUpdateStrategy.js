@@ -7,10 +7,10 @@ const Enums_1 = require("../Core/Enums");
 const PreviewHelper_1 = require("../Core/Helpers/PreviewHelper");
 class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsBulkUpdateStrategyId, blotter);
+        super(StrategyConstants.BulkUpdateStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsBulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyConstantsBulkUpdateGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.BulkUpdateStrategyName, ScreenPopups.BulkUpdatePopup, StrategyConstants.BulkUpdateGlyph);
     }
     InitState() {
         if (this.BulkUpdateState != this.GetBulkUpdateState()) {

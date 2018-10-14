@@ -8,7 +8,7 @@ const LayoutHelper_1 = require("../Core/Helpers/LayoutHelper");
 // This is a special strategy that the user can never remove but which is useful to us 
 class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsHomeStrategyId, blotter);
+        super(StrategyConstants.HomeStrategyId, blotter);
     }
     InitState() {
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {

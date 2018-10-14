@@ -8,10 +8,10 @@ const Enums_1 = require("../Core/Enums");
 const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 class ColumnFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsColumnFilterStrategyId, blotter);
+        super(StrategyConstants.ColumnFilterStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyConstantsColumnFilterGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyConstants.ColumnFilterGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
@@ -19,7 +19,7 @@ class ColumnFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
             if (column) {
                 let existingColumnFilter = this.columnFilterState.find(x => x.ColumnId == columnId);
                 if (existingColumnFilter) {
-                    this.createContextMenuItemReduxAction("Clear Column Filter", StrategyConstantsColumnFilterGlyph, ColumnFilterRedux.ColumnFilterClear(columnId));
+                    this.createContextMenuItemReduxAction("Clear Column Filter", StrategyConstants.ColumnFilterGlyph, ColumnFilterRedux.ColumnFilterClear(columnId));
                 }
             }
         }

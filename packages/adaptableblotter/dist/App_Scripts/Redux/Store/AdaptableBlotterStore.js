@@ -35,6 +35,7 @@ const UserFilterRedux = require("../ActionsReducers/UserFilterRedux");
 const SystemFilterRedux = require("../ActionsReducers/SystemFilterRedux");
 const ThemeRedux = require("../ActionsReducers/ThemeRedux");
 const FormatColumnRedux = require("../ActionsReducers/FormatColumnRedux");
+const FreeTextColumnRedux = require("../ActionsReducers/FreeTextColumnRedux");
 const LayoutRedux = require("../ActionsReducers/LayoutRedux");
 const DashboardRedux = require("../ActionsReducers/DashboardRedux");
 const CellValidationRedux = require("../ActionsReducers/CellValidationRedux");
@@ -82,7 +83,8 @@ const rootReducer = Redux.combineReducers({
     UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
     SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
-    FormatColumn: FormatColumnRedux.FormatColumnReducer
+    FormatColumn: FormatColumnRedux.FormatColumnReducer,
+    FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer
 });
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
@@ -246,39 +248,39 @@ var functionLogMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                 case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
                     let actionTyped = action;
                     let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsAdvancedSearchStrategyId, "apply advanced search", actionTyped.SelectedSearchName, advancedSearch);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId, "apply advanced search", actionTyped.SelectedSearchName, advancedSearch);
                     return next(action);
                 }
                 case AdvancedSearchRedux.ADVANCED_SEARCH_ADD_UPDATE: {
                     let actionTyped = action;
                     let currentAdvancedSearch = state.AdvancedSearch.CurrentAdvancedSearch; // problem here if they have changed the name potentially...
                     if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
-                        adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsAdvancedSearchStrategyId, "apply advanced search", actionTyped.AdvancedSearch.Name, actionTyped.AdvancedSearch);
+                        adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId, "apply advanced search", actionTyped.AdvancedSearch.Name, actionTyped.AdvancedSearch);
                     }
                     return next(action);
                 }
                 case QuickSearchRedux.QUICK_SEARCH_APPLY: {
                     let actionTyped = action;
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsQuickSearchStrategyId, "apply quick search", actionTyped.quickSearchText, actionTyped.quickSearchText);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.QuickSearchStrategyId, "apply quick search", actionTyped.quickSearchText, actionTyped.quickSearchText);
                     return next(action);
                 }
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
                     let actionTyped = action;
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsPlusMinusStrategyId, "apply plus minus", "KeyPressed:" + actionTyped.KeyEventString, actionTyped.CellInfos);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.PlusMinusStrategyId, "apply plus minus", "KeyPressed:" + actionTyped.KeyEventString, actionTyped.CellInfos);
                     return next(action);
                 }
                 case ShortcutRedux.SHORTCUT_APPLY: {
                     let actionTyped = action;
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsShortcutStrategyId, "apply shortcut", "KeyPressed:" + actionTyped.KeyEventString, { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId });
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ShortcutStrategyId, "apply shortcut", "KeyPressed:" + actionTyped.KeyEventString, { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId });
                     return next(action);
                 }
                 case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsColumnFilterStrategyId, "apply column filters", "filters applied", state.ColumnFilter.ColumnFilters);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId, "apply column filters", "filters applied", state.ColumnFilter.ColumnFilters);
                     return next(action);
                 }
                 case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
                     let actionTyped = action;
-                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsUserFilterStrategyId, "user filters changed", "filters applied", state.UserFilter.UserFilters);
+                    adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.UserFilterStrategyId, "user filters changed", "filters applied", state.UserFilter.UserFilters);
                     return next(action);
                 }
                 case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
@@ -363,10 +365,10 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let importAction;
                     let overwriteConfirmation = false;
                     switch (actionTyped.Strategy) {
-                        case StrategyConstantsCellValidationStrategyId:
+                        case StrategyConstants.CellValidationStrategyId:
                             importAction = CellValidationRedux.CellValidationAddUpdate(-1, actionTyped.Entity);
                             break;
-                        case StrategyConstantsCalculatedColumnStrategyId: {
+                        case StrategyConstants.CalculatedColumnStrategyId: {
                             let calcCol = actionTyped.Entity;
                             let idx = middlewareAPI.getState().CalculatedColumn.CalculatedColumns.findIndex(x => x.ColumnId == calcCol.ColumnId);
                             if (idx > -1) {
@@ -378,10 +380,10 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             }
                             break;
                         }
-                        case StrategyConstantsConditionalStyleStrategyId:
+                        case StrategyConstants.ConditionalStyleStrategyId:
                             importAction = ConditionalStyleRedux.ConditionalStyleAddUpdate(-1, actionTyped.Entity);
                             break;
-                        case StrategyConstantsCustomSortStrategyId: {
+                        case StrategyConstants.CustomSortStrategyId: {
                             let customSort = actionTyped.Entity;
                             if (middlewareAPI.getState().CustomSort.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
                                 overwriteConfirmation = true;
@@ -403,12 +405,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             }
                             break;
                         }
-                        case StrategyConstantsPlusMinusStrategyId: {
+                        case StrategyConstants.PlusMinusStrategyId: {
                             let plusMinus = actionTyped.Entity;
                             importAction = PlusMinusRedux.PlusMinusAddUpdateCondition(-1, plusMinus);
                             break;
                         }
-                        case StrategyConstantsShortcutStrategyId: {
+                        case StrategyConstants.ShortcutStrategyId: {
                             let shortcut = actionTyped.Entity;
                             let shortcuts;
                             shortcuts = middlewareAPI.getState().Shortcut.Shortcuts;
@@ -420,7 +422,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             }
                             break;
                         }
-                        case StrategyConstantsUserFilterStrategyId: {
+                        case StrategyConstants.UserFilterStrategyId: {
                             let filter = actionTyped.Entity;
                             //For now not too worry about that but I think we'll need to check ofr filter that have same name
                             //currently the reducer checks for UID
@@ -431,7 +433,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             // }
                             break;
                         }
-                        case StrategyConstantsAdvancedSearchStrategyId: {
+                        case StrategyConstants.AdvancedSearchStrategyId: {
                             let search = actionTyped.Entity;
                             if (middlewareAPI.getState().AdvancedSearch.AdvancedSearches.find(x => x.Name == search.Name)) {
                                 overwriteConfirmation = true;
@@ -439,7 +441,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             importAction = AdvancedSearchRedux.AdvancedSearchAddUpdate(-1, search);
                             break;
                         }
-                        case StrategyConstantsLayoutStrategyId: {
+                        case StrategyConstants.LayoutStrategyId: {
                             let layout = actionTyped.Entity;
                             let layoutIndex = middlewareAPI.getState().Layout.Layouts.findIndex(x => x.Name == layout.Name);
                             if (layoutIndex != -1) {
@@ -448,7 +450,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             importAction = LayoutRedux.LayoutPreSave(layoutIndex, layout);
                             break;
                         }
-                        case StrategyConstantsExportStrategyId: {
+                        case StrategyConstants.ExportStrategyId: {
                             let report = actionTyped.Entity;
                             let idx = middlewareAPI.getState().Export.Reports.findIndex(x => x.Name == report.Name);
                             if (idx > -1) {
@@ -620,7 +622,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     return next(action);
                 }
                 case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
-                    let SelectedCellsStrategy = (blotter.Strategies.get(StrategyConstantsSelectedCellsStrategyId));
+                    let SelectedCellsStrategy = (blotter.Strategies.get(StrategyConstants.SelectedCellsStrategyId));
                     let returnAction = next(action);
                     let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo;
                     let apiSummaryReturn = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
@@ -631,7 +633,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 SMART EDIT ACTIONS
                 ************ */
                 case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
-                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstantsSmartEditStrategyId));
+                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
@@ -659,14 +661,14 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     //all our logic needs to be executed AFTER the main reducers
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
-                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstantsSmartEditStrategyId));
+                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation);
                     middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
                     return returnAction;
                 }
                 case SmartEditRedux.SMARTEDIT_APPLY: {
-                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstantsSmartEditStrategyId));
+                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
                     let actionTyped = action;
                     let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo;
                     let newValues = PreviewHelper_1.PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings);
@@ -678,7 +680,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 BULK UPDATE ACTIONS
                 ************ */
                 case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
-                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstantsBulkUpdateStrategyId));
+                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
@@ -705,14 +707,14 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     //all our logic needs to be executed AFTER the main reducers
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
-                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstantsBulkUpdateStrategyId));
+                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
                     middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
                     return returnAction;
                 }
                 case BulkUpdateRedux.BULK_UPDATE_APPLY: {
-                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstantsBulkUpdateStrategyId));
+                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
                     let actionTyped = action;
                     let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo;
                     let newValues = PreviewHelper_1.PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings);
@@ -721,23 +723,23 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     return next(action);
                 }
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
-                    let plusMinusStrategy = (blotter.Strategies.get(StrategyConstantsPlusMinusStrategyId));
+                    let plusMinusStrategy = (blotter.Strategies.get(StrategyConstants.PlusMinusStrategyId));
                     let actionTyped = action;
                     plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
                     middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                     return next(action);
                 }
                 case ShortcutRedux.SHORTCUT_APPLY: {
-                    let shortcutStrategy = (blotter.Strategies.get(StrategyConstantsShortcutStrategyId));
+                    let shortcutStrategy = (blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
                     let actionTyped = action;
                     shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
                     return next(action);
                 }
                 case ExportRedux.EXPORT_APPLY: {
-                    let exportStrategy = (blotter.Strategies.get(StrategyConstantsExportStrategyId));
+                    let exportStrategy = (blotter.Strategies.get(StrategyConstants.ExportStrategyId));
                     let actionTyped = action;
                     if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && iPushPullHelper_1.iPushPullHelper.IPPStatus != iPushPullHelper_1.iPushPullHelper.ServiceStatus.Connected) {
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstantsExportStrategyId, "IPushPullLogin", actionTyped.Report));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullLogin", actionTyped.Report));
                     }
                     else if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && !actionTyped.Folder) {
                         iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages) => {
@@ -746,7 +748,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         }).catch((err) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err));
                         });
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstantsExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report));
                     }
                     else if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull) {
                         exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
@@ -770,7 +772,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         }).catch((error) => {
                             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));
                         });
-                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstantsExportStrategyId, "IPushPullDomainPageSelector", report));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report));
                     }).catch((error) => {
                         AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Login failed", error);
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));

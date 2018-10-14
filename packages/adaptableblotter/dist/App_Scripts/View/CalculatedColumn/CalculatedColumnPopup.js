@@ -43,8 +43,8 @@ class CalculatedColumnPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let propCalculatedColumns = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
-        let calculatedColumns = propCalculatedColumns.map((calculatedColumn) => {
-            let index = this.props.CalculatedColumns.indexOf(calculatedColumn);
+        let calculatedColumns = propCalculatedColumns.map((calculatedColumn, index) => {
+            // let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
             return React.createElement(CalculatedColumnEntityRow_1.CalculatedColumnEntityRow, { cssClassName: cssClassName, Index: index, colItems: colItems, onShare: () => this.props.onShare(calculatedColumn), TeamSharingActivated: this.props.TeamSharingActivated, AdaptableBlotterObject: calculatedColumn, key: calculatedColumn.ColumnId, onEdit: (index, calculatedColumn) => this.onEdit(index, calculatedColumn), onDeleteConfirm: CalculatedColumnRedux.CalculatedColumnDelete(index) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
@@ -60,8 +60,8 @@ class CalculatedColumnPopupComponent extends React.Component {
     onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyCalculatedColumn(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
-    onEdit(index, customColumn) {
-        let clonedObject = Helper_1.Helper.cloneObject(customColumn);
+    onEdit(index, calculatedColumn) {
+        let clonedObject = Helper_1.Helper.cloneObject(calculatedColumn);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
     onCloseWizard() {

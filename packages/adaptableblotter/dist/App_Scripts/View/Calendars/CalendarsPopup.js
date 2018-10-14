@@ -35,7 +35,7 @@ class CalendarsPopupComponent extends React.Component {
             this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry) => {
                 return React.createElement(CalendarEntryItem_1.CalendarEntryItem, { cssClassName: cssClassName, CalendarEntry: calendarEntry, key: calendarEntry.HolidayName + calendarEntry.HolidayDate });
             });
-        return React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstantsCalendarStrategyName, bsStyle: "primary", glyphicon: StrategyConstantsCalendarGlyph, infoBody: infoBody },
+        return React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.CalendarStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.CalendarGlyph, infoBody: infoBody },
             React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: allCalenderColItems, bsStyle: "info", className: "ab_preview_panel" }),
             React.createElement(react_bootstrap_1.ListGroup, null, allCalendars),
             this.state.DisplayedCalendar &&

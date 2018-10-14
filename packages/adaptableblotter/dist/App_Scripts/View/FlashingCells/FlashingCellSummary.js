@@ -16,7 +16,7 @@ class FlashingCellSummaryComponent extends React.Component {
             React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "info", bsSize: "small" }, "Flashing Off")
             : React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "success", bsSize: "small" }, "Flashing On");
         let colItems = [];
-        colItems.push({ Size: 3, Content: React.createElement("b", null, StrategyConstantsFlashingCellsStrategyName) });
+        colItems.push({ Size: 3, Content: React.createElement("b", null, StrategyConstants.FlashingCellsStrategyName) });
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: cssWizardClassName, colItems: colItems });

@@ -22,3 +22,7 @@ export interface ICellInfo {
     ColumnId: string;
     Value: any;
 }
+export interface IVendorGridInfo {
+    GroupState: any;
+    ColumnState: any;
+}

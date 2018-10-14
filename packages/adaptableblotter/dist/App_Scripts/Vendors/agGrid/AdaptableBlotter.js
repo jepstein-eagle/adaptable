@@ -79,6 +79,8 @@ class AdaptableBlotter {
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
+        this.debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), 500);
+        this.debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), 500);
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
@@ -101,37 +103,38 @@ class AdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstantsAboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
-        this.Strategies.set(StrategyConstantsAlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
-        this.Strategies.set(StrategyConstantsAdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
-        this.Strategies.set(StrategyConstantsApplicationStrategyId, new ApplicationStrategy_1.ApplicationStrategy(this));
-        this.Strategies.set(StrategyConstantsBulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
-        this.Strategies.set(StrategyConstantsCalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
-        this.Strategies.set(StrategyConstantsCalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
-        this.Strategies.set(StrategyConstantsCellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        //   this.Strategies.set(StrategyConstantsChartStrategyId, new ChartStrategy(this))
-        this.Strategies.set(StrategyConstantsColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
+        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
+        this.Strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy_1.ApplicationStrategy(this));
+        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
+        this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
+        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
+        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
+        //   this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
-        this.Strategies.set(StrategyConstantsConditionalStyleStrategyId, new ConditionalStyleagGridStrategy_1.ConditionalStyleagGridStrategy(this));
-        this.Strategies.set(StrategyConstantsCustomSortStrategyId, new CustomSortagGridStrategy_1.CustomSortagGridStrategy(this));
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy_1.ConditionalStyleagGridStrategy(this));
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortagGridStrategy_1.CustomSortagGridStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
-        this.Strategies.set(StrategyConstantsDataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
-        this.Strategies.set(StrategyConstantsDataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
-        this.Strategies.set(StrategyConstantsExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyConstantsFlashingCellsStrategyId, new FlashingCellsagGridStrategy_1.FlashingCellsagGridStrategy(this));
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
+        this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
+        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy_1.FlashingCellsagGridStrategy(this));
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy_1.FormatColumnagGridStrategy(this));
-        this.Strategies.set(StrategyConstantsHomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
-        this.Strategies.set(StrategyConstantsLayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
-        this.Strategies.set(StrategyConstantsPlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyConstantsQuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
-        this.Strategies.set(StrategyConstantsSmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
-        this.Strategies.set(StrategyConstantsShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
-        this.Strategies.set(StrategyConstantsTeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
+        //  this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
+        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
+        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
+        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
-        this.Strategies.set(StrategyConstantsSelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
-        this.Strategies.set(StrategyConstantsSelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
-        this.Strategies.set(StrategyConstantsUserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
+        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
@@ -166,20 +169,6 @@ class AdaptableBlotter {
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();
-    }
-    setVendorGridState(vendorGridState) {
-        if (vendorGridState) {
-            let columnState = JSON.parse(vendorGridState);
-            if (columnState) {
-                this.setColumnState(this.gridOptions.columnApi, columnState, "api");
-            }
-            // let column: Column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn")
-            // if (column) {
-            //  alert("have a special column")
-            //     this.gridOptions.columnApi.setColumnWidth(column, 500, true);
-            //   }
-            //   this.gridOptions.api.refreshHeader();
-        }
     }
     createFilterWrapper(col) {
         this.gridOptions.api.destroyFilter(col);
@@ -280,7 +269,7 @@ class AdaptableBlotter {
         let blotter = this;
         let quickSearchClassName = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ?
             blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName :
-            StyleHelper_1.StyleHelper.CreateStyleName(StrategyConstantsQuickSearchStrategyId, this);
+            StyleHelper_1.StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this);
         return quickSearchClassName;
     }
     addQuickSearchStyleToColumn(col, quickSearchClassName) {
@@ -359,6 +348,11 @@ class AdaptableBlotter {
                     Value: this.gridOptions.api.getValue(activeCell.column, rowNode)
                 };
             }
+        }
+    }
+    saveGridLayout() {
+        if (this.BlotterOptions.includeVendorStateInLayouts) {
+            LayoutHelper_1.LayoutHelper.autoSaveLayout(this);
         }
     }
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
@@ -732,7 +726,7 @@ class AdaptableBlotter {
             else if (type == "ConditionalStyle") {
                 let cssStyles = this.getState().ConditionalStyle.ConditionalStyles.map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StrategyConstantsConditionalStyleStrategyId) || ArrayExtensions_1.ArrayExtensions.ContainsItem(cssStyles, prop)) {
+                    if (prop.includes(StrategyConstants.ConditionalStyleStrategyId) || ArrayExtensions_1.ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop];
                     }
                 }
@@ -740,7 +734,7 @@ class AdaptableBlotter {
             //Is initialized in setColumnIntoStore
             else if (type == "QuickSearch") {
                 for (let prop in localCellClassRules) {
-                    if (prop.includes(StrategyConstantsQuickSearchStrategyId)) {
+                    if (prop.includes(StrategyConstants.QuickSearchStrategyId)) {
                         delete localCellClassRules[prop];
                     }
                 }
@@ -857,7 +851,7 @@ class AdaptableBlotter {
         if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn);
         }
-        let conditionalStyleagGridStrategy = this.Strategies.get(StrategyConstantsConditionalStyleStrategyId);
+        let conditionalStyleagGridStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId);
         conditionalStyleagGridStrategy.InitStyles();
     }
     isGroupRecord(record) {
@@ -938,14 +932,16 @@ class AdaptableBlotter {
         // });
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
         //since there are many events and we want them to behave the same
-        let columnEventsThatTriggersStateChange = [eventKeys_1.Events.EVENT_COLUMN_MOVED,
+        let columnEventsThatTriggersStateChange = [
+            eventKeys_1.Events.EVENT_COLUMN_MOVED,
             eventKeys_1.Events.EVENT_GRID_COLUMNS_CHANGED,
             eventKeys_1.Events.EVENT_COLUMN_EVERYTHING_CHANGED,
             eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
             //   Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
             eventKeys_1.Events.EVENT_COLUMN_VISIBLE,
             //   Events.EVENT_COLUMN_PINNED,
-            eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED];
+            eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED
+        ];
         this.gridOptions.api.addGlobalListener((type, event) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
@@ -954,17 +950,18 @@ class AdaptableBlotter {
                     // ignore
                 }
                 else {
-                    this.setColumnIntoStore();
+                    this.debouncedSetColumnIntoStore(); // was: this.setColumnIntoStore();
                 }
             }
         });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
-        let columnEventsThatTriggersAutoLayoutSave = [eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED, eventKeys_1.Events.EVENT_COLUMN_PINNED];
+        let columnEventsThatTriggersAutoLayoutSave = [
+            eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
+            eventKeys_1.Events.EVENT_COLUMN_PINNED
+        ];
         this.gridOptions.api.addGlobalListener((type, event) => {
             if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
-                if (this.BlotterOptions.includeVendorStateInLayouts) {
-                    LayoutHelper_1.LayoutHelper.autoSaveLayout(this);
-                }
+                this.debouncedSaveGridLayout();
             }
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_EDITING_STARTED, (params) => {
@@ -1261,21 +1258,20 @@ class AdaptableBlotter {
     getVendorGridState(visibleCols, forceFetch) {
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
-            return JSON.stringify(this.gridOptions.columnApi.getColumnState());
+            return {
+                GroupState: null,
+                ColumnState: JSON.stringify(this.gridOptions.columnApi.getColumnState())
+            };
         }
         if (this.BlotterOptions.includeVendorStateInLayouts) {
-            //      let test = this.gridOptions.columnApi.getAllDisplayedColumns();
-            //      console.log("dispalyed state")
-            //      console.log(test)
+            let groupedState = null;
+            let test = this.gridOptions.columnApi.getAllDisplayedColumns();
+            let groupedCol = test.find(c => ColumnHelper_1.ColumnHelper.isSpecialColumn(c.getColId()));
+            if (groupedCol) {
+                console.log("special col width: " + groupedCol.getActualWidth());
+                groupedState = groupedCol.getActualWidth();
+            }
             let columnState = this.gridOptions.columnApi.getColumnState();
-            //      console.log("column state")
-            //       console.log(columnState)
-            //       let groupState = this.gridOptions.columnApi.getColumnGroupState();
-            //       console.log("group state")
-            //       console.log(groupState)
-            //       let allState = this.gridOptions.columnApi.getState();
-            //       console.log("alll state")
-            //       console.log(allState)
             // Dont like this but not sure we have a choice to avoid other issues...
             // Going to update the state to make sure that visibility matches those given here
             columnState.forEach(c => {
@@ -1288,9 +1284,30 @@ class AdaptableBlotter {
                     c.hide = true;
                 }
             });
-            return JSON.stringify(columnState);
+            return {
+                GroupState: groupedState,
+                ColumnState: JSON.stringify(columnState)
+            };
         }
         return null; // need this?
+    }
+    setVendorGridState(vendorGridState) {
+        if (vendorGridState) {
+            let columnState = JSON.parse(vendorGridState.ColumnState);
+            if (columnState) {
+                this.setColumnState(this.gridOptions.columnApi, columnState, "api");
+            }
+            let groupedState = vendorGridState.GroupState;
+            if (groupedState) {
+                // assume for now its just a number
+                let column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn");
+                if (column) {
+                    //  alert("have a special column")
+                    this.gridOptions.columnApi.setColumnWidth(column, groupedState, true);
+                }
+                //   this.gridOptions.api.refreshHeader();
+            }
+        }
     }
     // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to 
     // not sure why as its not in the api

@@ -39,7 +39,7 @@ class BlotterApiBase {
     // Layout api methods
     layoutSet(layoutName) {
         let layout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
-        if (this.checkItemExists(layout, layoutName, StrategyConstantsLayoutStrategyName)) {
+        if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
         }
     }
@@ -264,7 +264,7 @@ class BlotterApiBase {
     // Data Source api methods
     dataSourceSet(dataSourceName) {
         let dataSource = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
-        if (this.checkItemExists(dataSource, dataSourceName, StrategyConstantsDataSourceStrategyName)) {
+        if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource));
         }
     }
@@ -274,7 +274,7 @@ class BlotterApiBase {
     // Advanced Search api methods
     advancedSearchSet(advancedSearchName) {
         let advancedSearch = this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
-        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyConstantsAdvancedSearchStrategyName)) {
+        if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyConstants.AdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));
         }
     }

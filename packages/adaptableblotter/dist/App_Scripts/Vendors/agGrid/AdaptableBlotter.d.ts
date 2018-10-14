@@ -14,7 +14,7 @@ import { EventDispatcher } from '../../Core/EventDispatcher';
 import { DistinctCriteriaPairValue } from '../../Core/Enums';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { IAdaptableStrategyCollection, ICellInfo } from '../../Core/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
@@ -41,7 +41,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private getState;
-    setVendorGridState(vendorGridState: any): void;
     private createFilterWrapper;
     private createFloatingFilterWrapper;
     InitAuditService(): void;
@@ -61,6 +60,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     hideFilterFormPopup: Function;
     hideFilterForm(): void;
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void;
+    debouncedSetColumnIntoStore: (() => void) & _.Cancelable;
     setColumnIntoStore(): void;
     private createColumn;
     private getQuickSearchClassName;
@@ -70,6 +70,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     gridHasCurrentEditValue(): boolean;
     getCurrentCellEditValue(): any;
     getActiveCell(): ICellInfo;
+    debouncedSaveGridLayout: (() => void) & _.Cancelable;
+    saveGridLayout(): void;
     debouncedSetSelectedCells: (() => void) & _.Cancelable;
     setSelectedCells(): void;
     private getColumnDataType;
@@ -114,7 +116,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setGridSort(gridSorts: IGridSort[]): void;
     setData(dataSource: any): void;
     private checkColumnsDataTypeSet;
-    getVendorGridState(visibleCols: string[], forceFetch: boolean): any;
+    getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
+    setVendorGridState(vendorGridState: IVendorGridInfo): void;
     private setColumnVisible;
     private moveColumn;
     private setColumnState;

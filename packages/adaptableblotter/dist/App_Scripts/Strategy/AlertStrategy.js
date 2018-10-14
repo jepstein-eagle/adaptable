@@ -10,7 +10,7 @@ const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 const AlertHelper_1 = require("../Core/Helpers/AlertHelper");
 class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsAlertStrategyId, blotter);
+        super(StrategyConstants.AlertStrategyId, blotter);
         this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
     }
     InitState() {
@@ -22,7 +22,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsAlertStrategyName, ScreenPopups.AlertPopup, StrategyConstantsAlertGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.AlertStrategyName, ScreenPopups.AlertPopup, StrategyConstants.AlertGlyph);
     }
     handleDataSourceChanged(dataChangedEvent) {
         let alertDefinitions = this.CheckDataChanged(dataChangedEvent);
@@ -58,10 +58,10 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
         let dataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue };
         if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsAlertStrategyId, "CheckingAudit", "AlertsTriggered", { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent });
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId, "CheckingAudit", "AlertsTriggered", { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent });
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstantsAlertStrategyId, "CheckingAudit", "Ok", { DataChangingEvent: dataChangingEvent });
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId, "CheckingAudit", "Ok", { DataChangingEvent: dataChangingEvent });
         }
         return triggeredAlerts;
     }

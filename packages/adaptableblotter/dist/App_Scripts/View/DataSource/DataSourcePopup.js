@@ -30,7 +30,7 @@ class DataSourcePopupComponent extends React.Component {
                         React.createElement(react_bootstrap_1.InputGroup.Button, null,
                             React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), overrideTooltip: "Clear Data Source", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), DisplayMode: "Text+Glyph", AccessLevel: this.props.AccessLevel }))))));
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstantsDataSourceStrategyName, bsStyle: "primary", infoBody: infoBody, glyphicon: StrategyConstantsDataSourceGlyph }, content));
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.DataSourceStrategyName, bsStyle: "primary", infoBody: infoBody, glyphicon: StrategyConstants.DataSourceGlyph }, content));
     }
     onSelectedDataSourceChanged(dataSource) {
         this.props.onSelectDataSource(dataSource);

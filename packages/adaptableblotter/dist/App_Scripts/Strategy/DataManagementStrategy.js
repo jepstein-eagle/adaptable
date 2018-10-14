@@ -5,13 +5,13 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 class DataManagementStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsDataManagementStrategyId, blotter);
+        super(StrategyConstants.DataManagementStrategyId, blotter);
     }
     addPopupMenuItem() {
         if ("production" == process.env.NODE_ENV) {
             return;
         }
-        this.createMenuItemShowPopup(StrategyConstantsDataManagementStrategyName, ScreenPopups.DataManagementPopup, StrategyConstantsDataManagementGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.DataManagementStrategyName, ScreenPopups.DataManagementPopup, StrategyConstants.DataManagementGlyph);
     }
 }
 exports.DataManagementStrategy = DataManagementStrategy;

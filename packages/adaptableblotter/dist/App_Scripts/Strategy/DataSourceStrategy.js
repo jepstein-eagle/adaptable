@@ -6,10 +6,10 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class DataSourceStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsDataSourceStrategyId, blotter);
+        super(StrategyConstants.DataSourceStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsDataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyConstantsDataSourceGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.DataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyConstants.DataSourceGlyph);
     }
     InitState() {
         if (this.DataSourceState != this.GetDataSourceState()) {

@@ -5,10 +5,10 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 class AboutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsAboutStrategyId, blotter);
+        super(StrategyConstants.AboutStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsAboutStrategyName, ScreenPopups.AboutPopup, StrategyConstantsAboutGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.AboutStrategyName, ScreenPopups.AboutPopup, StrategyConstants.AboutGlyph);
     }
 }
 exports.AboutStrategy = AboutStrategy;

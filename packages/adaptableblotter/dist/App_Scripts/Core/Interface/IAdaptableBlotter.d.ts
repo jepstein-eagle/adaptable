@@ -1,5 +1,5 @@
 import { DistinctCriteriaPairValue } from '../Enums';
-import { ICellInfo, IAdaptableStrategyCollection } from './Interfaces';
+import { ICellInfo, IAdaptableStrategyCollection, IVendorGridInfo } from './Interfaces';
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
 import { IEvent } from './IEvent';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
@@ -76,8 +76,8 @@ export interface IAdaptableBlotter {
     getColumnCount(): number;
     getVisibleRowCount(): number;
     getVisibleColumnCount(): number;
-    getVendorGridState(visibleCols: string[], forceFetch: boolean): any;
-    setVendorGridState(vendorGridState: any): void;
+    getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
+    setVendorGridState(vendorGridState: IVendorGridInfo): void;
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;

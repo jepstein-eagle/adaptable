@@ -21,6 +21,7 @@ exports.DataSourceStrategyId = "DataSource";
 exports.ExportStrategyId = "Export";
 exports.FlashingCellsStrategyId = "FlashingCells";
 exports.FormatColumnStrategyId = "FormatColumn";
+exports.FreeTextColumnStrategyId = "FreeTextColumn";
 exports.HomeStrategyId = "Home";
 exports.LayoutStrategyId = "Layout";
 exports.PlusMinusStrategyId = "PlusMinus";
@@ -53,6 +54,7 @@ exports.DataSourceStrategyName = "Data Source";
 exports.ExportStrategyName = "Export";
 exports.FlashingCellsStrategyName = "Flashing Cells";
 exports.FormatColumnStrategyName = "Format Column";
+exports.FreeTextColumnStrategyName = "Free Text Column";
 exports.LayoutStrategyName = "Layout";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
@@ -84,6 +86,7 @@ exports.DataSourceGlyph = "book";
 exports.ExportGlyph = "export";
 exports.FlashingCellGlyph = "flash";
 exports.FormatColumnGlyph = "picture";
+exports.FreeTextColumnGlyph = "picture";
 exports.FunctionsGlyph = "home";
 exports.LayoutGlyph = "th";
 exports.PlusMinusGlyph = "plus-sign";
@@ -137,6 +140,8 @@ function getIdForStrategyName(strategyName) {
             return exports.FlashingCellsStrategyId;
         case exports.FormatColumnStrategyName:
             return exports.FormatColumnStrategyId;
+        case exports.FreeTextColumnStrategyName:
+            return exports.FreeTextColumnStrategyId;
         case exports.LayoutStrategyName:
             return exports.LayoutStrategyId;
         case exports.PlusMinusStrategyName:
@@ -202,6 +207,8 @@ function getNameForStrategyId(strategyID) {
             return exports.FlashingCellsStrategyName;
         case exports.FormatColumnStrategyId:
             return exports.FormatColumnStrategyName;
+        case exports.FreeTextColumnStrategyId:
+            return exports.FreeTextColumnStrategyName;
         case exports.LayoutStrategyId:
             return exports.LayoutStrategyName;
         case exports.PlusMinusStrategyId:
@@ -263,6 +270,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.FlashingCellGlyph;
         case exports.FormatColumnStrategyId:
             return exports.FormatColumnGlyph;
+        case exports.FreeTextColumnStrategyId:
+            return exports.FreeTextColumnGlyph;
         case exports.LayoutStrategyId:
             return exports.LayoutGlyph;
         case exports.PlusMinusStrategyId:

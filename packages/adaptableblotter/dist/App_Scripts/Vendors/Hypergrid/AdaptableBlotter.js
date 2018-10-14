@@ -106,35 +106,35 @@ class AdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstantsAboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
-        this.Strategies.set(StrategyConstantsAdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
-        this.Strategies.set(StrategyConstantsAlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
-        this.Strategies.set(StrategyConstantsBulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
-        this.Strategies.set(StrategyConstantsCalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
-        this.Strategies.set(StrategyConstantsCalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
-        this.Strategies.set(StrategyConstantsCellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
+        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
+        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
+        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
+        this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
+        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
+        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
-        this.Strategies.set(StrategyConstantsConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy_1.ConditionalStyleHypergridStrategy(this));
-        this.Strategies.set(StrategyConstantsCustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy_1.ConditionalStyleHypergridStrategy(this));
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
-        this.Strategies.set(StrategyConstantsDataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
-        this.Strategies.set(StrategyConstantsExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
-        this.Strategies.set(StrategyConstantsHomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
-        this.Strategies.set(StrategyConstantsUserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
-        this.Strategies.set(StrategyConstantsFlashingCellsStrategyId, new FlashingCellsHypergridStrategy_1.FlashingCellsHypergridStrategy(this));
+        this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
+        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy_1.FlashingCellsHypergridStrategy(this));
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnHypergridStrategy_1.FormatColumnHypergridStrategy(this));
-        this.Strategies.set(StrategyConstantsLayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
-        this.Strategies.set(StrategyConstantsPlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyConstantsQuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
-        //   this.Strategies.set(StrategyConstantsSelectColumnStrategyId, new SelectColumnStrategy(this))
-        this.Strategies.set(StrategyConstantsSelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
-        this.Strategies.set(StrategyConstantsSmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
-        this.Strategies.set(StrategyConstantsShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
-        this.Strategies.set(StrategyConstantsTeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
+        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
+        //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
+        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
+        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
-        this.Strategies.set(StrategyConstantsDataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
         this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
@@ -949,7 +949,7 @@ class AdaptableBlotter {
             dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
             let failedRules = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
-                // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyConstantsCellValidationStrategyId) as ICellValidationStrategy;
+                // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyConstants.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
@@ -1188,7 +1188,7 @@ class AdaptableBlotter {
     getVendorGridState() {
         return null;
     }
-    setVendorGridState() {
+    setVendorGridState(vendorGridState) {
         // todo - but we dont know how to ;(
     }
     isSelectable() {

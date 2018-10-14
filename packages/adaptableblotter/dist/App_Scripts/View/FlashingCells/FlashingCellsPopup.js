@@ -48,7 +48,7 @@ class FlashingCellsPopupComponent extends React.Component {
                 React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
                     React.createElement(react_bootstrap_1.Checkbox, { onChange: () => this.props.onSelectAllColumns(!areAllLive, allPotentialFlashingCells), checked: areAllLive }, " All Columns "))));
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstantsFlashingCellsStrategyName, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstantsFlashingCellGlyph, infoBody: infoBody },
+            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.FlashingCellsStrategyName, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstants.FlashingCellGlyph, infoBody: infoBody },
                 setAllOption,
                 React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: allFlashingCells, reducedPanel: true })));
     }

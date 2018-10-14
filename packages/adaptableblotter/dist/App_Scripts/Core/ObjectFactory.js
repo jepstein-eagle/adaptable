@@ -152,6 +152,14 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyFormatColumn = CreateEmptyFormatColumn;
+    function CreateEmptyFreeTextColumn() {
+        return {
+            ColumnId: "",
+            DefaultValue: "",
+            StoredValues: null
+        };
+    }
+    ObjectFactory.CreateEmptyFreeTextColumn = CreateEmptyFreeTextColumn;
     function CreateLayout(columns, gridSorts, vendorGridInfo, name) {
         return {
             Columns: (columns) ? columns.map(x => x.ColumnId) : [],

@@ -6,14 +6,14 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const GridRedux = require("../Redux/ActionsReducers/GridRedux");
 class ColumnChooserStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsColumnChooserStrategyId, blotter);
+        super(StrategyConstants.ColumnChooserStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyConstantsColumnChooserGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyConstants.ColumnChooserGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            this.createContextMenuItemReduxAction("Hide Column", StrategyConstantsColumnChooserGlyph, GridRedux.GridHideColumn(columnId));
+            this.createContextMenuItemReduxAction("Hide Column", StrategyConstants.ColumnChooserGlyph, GridRedux.GridHideColumn(columnId));
         }
     }
 }

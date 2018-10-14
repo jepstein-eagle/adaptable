@@ -5,12 +5,12 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const GridRedux = require("../Redux/ActionsReducers/GridRedux");
 class SelectColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsSelectColumnStrategyId, blotter);
+        super(StrategyConstants.SelectColumnStrategyId, blotter);
     }
     addContextMenuItem(columnId) {
         if (this.blotter.isSelectable()) {
             if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-                this.createContextMenuItemReduxAction(StrategyConstantsSelectColumnStrategyName, StrategyConstantsSelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
+                this.createContextMenuItemReduxAction(StrategyConstants.SelectColumnStrategyName, StrategyConstants.SelectColumnGlyph, GridRedux.GridSelectColumn(columnId));
             }
         }
     }

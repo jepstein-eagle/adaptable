@@ -7,10 +7,10 @@ const Enums_1 = require("../Core/Enums");
 const PreviewHelper_1 = require("../Core/Helpers/PreviewHelper");
 class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsSmartEditStrategyId, blotter);
+        super(StrategyConstants.SmartEditStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsSmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyConstantsSmartEditGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyConstants.SmartEditGlyph);
     }
     InitState() {
         if (this.SmartEditState != this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit) {

@@ -5,10 +5,10 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 class TeamSharingStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsTeamSharingStrategyId, blotter);
+        super(StrategyConstants.TeamSharingStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsTeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstantsTeamSharingGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
     }
     hasPopupMenu() {
         return this.blotter.BlotterOptions.enableRemoteConfigServer;

@@ -81,34 +81,34 @@ class AdaptableBlotter {
         // store the options in state - and also later anything else that we need...
         //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstantsAboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
-        this.Strategies.set(StrategyConstantsAdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
-        this.Strategies.set(StrategyConstantsBulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
-        // this.Strategies.set(StrategyConstantsCalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyConstantsCalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
-        this.Strategies.set(StrategyConstantsCellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
+        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
+        // this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
+        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
-        this.Strategies.set(StrategyConstantsConditionalStyleStrategyId, new ConditionalStyleKendoStrategy_1.ConditionalStyleKendoStrategy(this));
-        this.Strategies.set(StrategyConstantsCustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleKendoStrategy_1.ConditionalStyleKendoStrategy(this));
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
-        this.Strategies.set(StrategyConstantsExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyConstantsFlashingCellsStrategyId, new FlashingCellsKendoStrategy_1.FlashingCellsKendoStrategy(this));
-        this.Strategies.set(StrategyConstantsHomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
+        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsKendoStrategy_1.FlashingCellsKendoStrategy(this));
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnKendoStrategy_1.FormatColumnKendoStrategy(this));
-        this.Strategies.set(StrategyConstantsLayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
-        this.Strategies.set(StrategyConstantsPlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyConstantsQuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
-        this.Strategies.set(StrategyConstantsSmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
-        this.Strategies.set(StrategyConstantsShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
-        this.Strategies.set(StrategyConstantsTeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
-        this.Strategies.set(StrategyConstantsSelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
-        this.Strategies.set(StrategyConstantsSelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
+        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
+        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
+        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
+        this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
+        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
         // removing theme from kendo until we can get the table issue working properly
         // this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyConstantsDataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
-        this.Strategies.set(StrategyConstantsUserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");

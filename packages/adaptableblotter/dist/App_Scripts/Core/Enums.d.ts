@@ -157,6 +157,7 @@ export declare enum StateChangedTrigger {
     Export = "Export",
     FlashingCell = "FlashingCell",
     FormatColumn = "FormatColumn",
+    FreeTextColumn = "FreeTextColumn",
     Layout = "Layout",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",

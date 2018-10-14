@@ -6,7 +6,7 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsCustomSortStrategyId, blotter);
+        super(StrategyConstants.CustomSortStrategyId, blotter);
     }
     InitState() {
         if (this.CustomSorts != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {
@@ -19,14 +19,14 @@ class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsCustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstantsCustomSortGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph);
     }
     addContextMenuItem(columnId) {
         if (this.canCreateContextMenuItem(columnId, this.blotter, "sort")) {
             let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
             let label = (customSort) ? "Edit " : "Create ";
             let popupParam = (customSort) ? "Edit|" : "New|";
-            this.createContextMenuItemShowPopup(label + StrategyConstantsCustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstantsCustomSortGlyph, popupParam + columnId);
+            this.createContextMenuItemShowPopup(label + StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph, popupParam + columnId);
         }
     }
     removeCustomSorts() {

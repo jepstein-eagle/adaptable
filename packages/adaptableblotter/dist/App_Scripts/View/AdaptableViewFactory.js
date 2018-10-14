@@ -47,6 +47,7 @@ const AlertToolbarControl_1 = require("./Alert/AlertToolbarControl");
 const ChartPopup_1 = require("./Chart/ChartPopup");
 const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
+const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
 exports.AdaptableViewFactory = {
     AboutPopup: AboutPopup_1.AboutPopup,
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
@@ -68,6 +69,7 @@ exports.AdaptableViewFactory = {
     ExportPopup: ExportPopup_1.ExportPopup,
     FlashingCellsPopup: FlashingCellsPopup_1.FlashingCellsPopup,
     FormatColumnPopup: FormatColumnPopup_1.FormatColumnPopup,
+    FreeTextColumnPopup: FreeTextColumnPopup_1.FreeTextColumnPopup,
     HomeButtonsPopup: HomeButtonsPopup_1.HomeButtonsPopup,
     IPushPullLogin: IPushPullLogin_1.IPushPullLogin,
     IPushPullDomainPageSelector: IPushPullDomainPageSelector_1.IPushPullDomainPageSelector,

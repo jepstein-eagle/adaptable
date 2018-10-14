@@ -6,10 +6,10 @@ const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
 class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsQuickSearchStrategyId, blotter);
+        super(StrategyConstants.QuickSearchStrategyId, blotter);
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsQuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyConstantsQuickSearchGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.QuickSearchStrategyName, ScreenPopups.QuickSearchPopup, StrategyConstants.QuickSearchGlyph);
     }
     InitState() {
         if (this.quickSearchState != this.GetQuickSearchState()) {

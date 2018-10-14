@@ -12,11 +12,11 @@ const ObjectFactory_1 = require("../Core/ObjectFactory");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
-        super(StrategyConstantsShortcutStrategyId, blotter);
+        super(StrategyConstants.ShortcutStrategyId, blotter);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
     }
     addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstantsShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyConstantsShortcutGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyConstants.ShortcutGlyph);
     }
     InitState() {
         if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {

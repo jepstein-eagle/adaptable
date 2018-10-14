@@ -70,27 +70,27 @@ class AdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstantsAboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
-        this.Strategies.set(StrategyConstantsBulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
-        this.Strategies.set(StrategyConstantsCustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
-        this.Strategies.set(StrategyConstantsSmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
-        this.Strategies.set(StrategyConstantsShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
-        this.Strategies.set(StrategyConstantsDataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
-        this.Strategies.set(StrategyConstantsPlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
+        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
+        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
+        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
+        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
-        this.Strategies.set(StrategyConstantsExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyConstantsHomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
-        // this.Strategies.set(StrategyConstantsFlashingCellsStrategyId, new FlashingCellsStrategy(this))
-        this.Strategies.set(StrategyConstantsCalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
-        this.Strategies.set(StrategyConstantsAdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
-        // this.Strategies.set(StrategyConstantsConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
-        this.Strategies.set(StrategyConstantsQuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
-        this.Strategies.set(StrategyConstantsUserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
-        this.Strategies.set(StrategyConstantsColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
+        // this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategy(this))
+        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
+        // this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategy(this))
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
-        this.Strategies.set(StrategyConstantsCellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        this.Strategies.set(StrategyConstantsLayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
+        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.filterContainer = this.container.ownerDocument.createElement("div");
         this.filterContainer.id = "filterContainer";
         this.filterContainer.style.position = 'absolute';
