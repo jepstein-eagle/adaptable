@@ -19,13 +19,13 @@ const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
 const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
-exports.DashboardSetAvailableToolbars = (StrategyConstants) => ({
+exports.DashboardSetAvailableToolbars = (StrategyIds) => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
-    StrategyConstants
+    StrategyIds
 });
-exports.DashboardSetToolbars = (StrategyConstants) => ({
+exports.DashboardSetToolbars = (StrategyIds) => ({
     type: DASHBOARD_SET_TOOLBARS,
-    StrategyConstants
+    StrategyIds
 });
 exports.DashboardShowToolbar = (StrategyId) => ({
     type: DASHBOARD_SHOW_TOOLBAR,
@@ -40,9 +40,9 @@ exports.DashboardMoveItem = (StrategyId, NewIndex) => ({
     StrategyId,
     NewIndex
 });
-exports.DashboardSetFunctionButtons = (StrategyConstants) => ({
+exports.DashboardSetFunctionButtons = (StrategyIds) => ({
     type: DASHBOARD_SET_FUNCTION_BUTTONS,
-    StrategyConstants,
+    StrategyIds,
 });
 exports.DashboardSetZoom = (Zoom) => ({
     type: DASHBOARD_SET_ZOOM,
@@ -120,10 +120,10 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
     let dashboardControls;
     switch (action.type) {
         case DASHBOARD_SET_AVAILABLE_TOOLBARS:
-            return Object.assign({}, state, { AvailableToolbars: action.StrategyConstants });
+            return Object.assign({}, state, { AvailableToolbars: action.StrategyIds });
         case DASHBOARD_SET_TOOLBARS: {
             let actionTyped = action;
-            let dashboardToolbars = actionTyped.StrategyConstants;
+            let dashboardToolbars = actionTyped.StrategyIds;
             return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
         }
         case DASHBOARD_MOVE_ITEM: {
@@ -148,7 +148,7 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
         }
         case DASHBOARD_SET_FUNCTION_BUTTONS: {
             let actionTyped = action;
-            let dashboardFunctionButtons = actionTyped.StrategyConstants;
+            let dashboardFunctionButtons = actionTyped.StrategyIds;
             return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
         }
         case DASHBOARD_SET_ZOOM: {

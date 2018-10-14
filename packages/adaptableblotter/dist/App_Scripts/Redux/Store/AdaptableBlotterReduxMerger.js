@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
 function customizer(objValue, srcValue) {
     if (_.isArray(objValue)) {
-        return objValue.concat(srcValue);
+        if (srcValue) {
+            return srcValue;
+        }
     }
 }
 function MergeState(oldState, newState) {
