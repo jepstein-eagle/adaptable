@@ -168,7 +168,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
-        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+      //  this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
