@@ -1268,7 +1268,6 @@ class AdaptableBlotter {
             let test = this.gridOptions.columnApi.getAllDisplayedColumns();
             let groupedCol = test.find(c => ColumnHelper_1.ColumnHelper.isSpecialColumn(c.getColId()));
             if (groupedCol) {
-                console.log("special col width: " + groupedCol.getActualWidth());
                 groupedState = groupedCol.getActualWidth();
             }
             let columnState = this.gridOptions.columnApi.getColumnState();

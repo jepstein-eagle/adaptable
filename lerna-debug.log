@@ -1,8 +1,1432 @@
-0 silly argv { _: [ 'clean' ], lernaVersion: '3.2.1', '$0': 'lerna' }
+0 silly argv { _: [ 'publish' ],
+0 silly argv   composed: 'publish',
+0 silly argv   lernaVersion: '3.2.1',
+0 silly argv   '$0': 'lerna' }
 1 notice cli v3.2.1
 2 verbose rootPath /Users/adaptabletools/Code/lerna/adaptableblotter
 3 info versioning independent
-4 error JSONError: Unexpected token t in JSON at position 3458 while parsing near '...  "build-ts-watch: "tsc --outDir ./dist/...' in packages/adaptableblotter/package.json
-4 error     at module.exports (/usr/local/lib/node_modules/lerna/node_modules/parse-json/index.js:26:19)
-4 error     at parse (/usr/local/lib/node_modules/lerna/node_modules/load-json-file/index.js:8:29)
-4 error     at pify.then.data (/usr/local/lib/node_modules/lerna/node_modules/load-json-file/index.js:10:67)
+4 silly argv { _: [ 'publish' ],
+4 silly argv   composed: 'publish',
+4 silly argv   lernaVersion: '3.2.1',
+4 silly argv   '$0': 'lerna' }
+5 verbose rootPath /Users/adaptabletools/Code/lerna/adaptableblotter
+6 silly isAnythingCommitted
+7 verbose isAnythingCommitted 1
+8 silly currentBranch
+9 verbose currentBranch master
+10 silly isBehindUpstream
+11 silly isBehindUpstream master is behind origin/master by 0 commit(s) and ahead by 0
+12 silly hasTags
+13 verbose hasTags true
+14 silly git-describe.sync "adaptableblotter-angular-test@0.1.23-8-ge64781ef" => {"lastTagName":"adaptableblotter-angular-test@0.1.23","lastVersion":"0.1.23","refCount":"8","sha":"e64781ef","isDirty":false}
+15 info Looking for changed packages since adaptableblotter-angular-test@0.1.23
+16 silly diffSinceIn adaptableblotter-angular-test@0.1.23 packages/adaptableblotter-angular
+17 silly diff packages/adaptableblotter-angular/package-lock.json
+18 silly diffSinceIn adaptableblotter-angular-test@0.1.23 packages/adaptableblotter-react-test
+19 silly diff packages/adaptableblotter-react-test/package-lock.json
+20 silly diffSinceIn adaptableblotter-angular-test@0.1.23 packages/adaptableblotter-react
+21 silly diff packages/adaptableblotter-react/README.md
+21 silly diff packages/adaptableblotter-react/package-lock.json
+22 silly diffSinceIn adaptableblotter-angular-test@0.1.23 packages/adaptableblotter
+23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/DashboardRedux.ts
+23 silly diff packages/adaptableblotter/App_Scripts/Redux/Store/AdaptableBlotterReduxMerger.ts
+23 silly diff packages/adaptableblotter/App_Scripts/Vendors/agGrid/AdaptableBlotter.ts
+23 silly diff packages/adaptableblotter/App_Scripts/View/Dashboard/Dashboard.tsx
+23 silly diff packages/adaptableblotter/README.md
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Api/BlotterApiBase.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Api/Interface/IStateEvents.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/ScreenPopups.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/ScreenPopups.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/StrategyConstants.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/StrategyConstants.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/StrategyGlyphs.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/StrategyGlyphs.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/StrategyNames.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Constants/StrategyNames.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Enums.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Enums.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Interface/IAdaptableBlotter.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Interface/Interfaces.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/ObjectFactory.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/ObjectFactory.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Services/StyleService.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Core/Services/ValidationService.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/DashboardRedux.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/DashboardRedux.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/Interface/IState.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/Store/AdaptableBlotterReduxMerger.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/Store/AdaptableBlotterStore.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/Store/Interface/IAdaptableStore.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/AboutStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/AdvancedSearchStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/AlertStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ApplicationStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/BulkUpdateStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/CalculatedColumnStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ColumnChooserStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ColumnFilterStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ConditionalStyleStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ConditionalStyleagGridStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/CustomSortStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/DataManagementStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/DataSourceStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ExportStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/FlashingCellsStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/FreeTextColumnStrategy.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/FreeTextColumnStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/HomeStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IFreeTextColumnStrategy.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IFreeTextColumnStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/LayoutStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/PlusMinusStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/QuickSearchStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/SelectColumnStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/SelectedCellsStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ShortcutStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/SmartEditStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/TeamSharingStrategy.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/Hypergrid/AdaptableBlotter.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/Hypergrid/AdaptableBlotter.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/Kendo/AdaptableBlotter.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/Kendo/AdaptableBlotter.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/agGrid/AdaptableBlotter.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/Vendors/agGrid/AdaptableBlotter.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/AdaptableViewFactory.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CalculatedColumn/CalculatedColumnPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Calendars/CalendarsPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnChooser/ColumnChooserPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnFilter/ColumnFilterToolbarControl.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnInfo/ColumnInfoPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/DataSource/DataSourcePopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/DataSource/DataSourceToolbarControl.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FlashingCells/FlashingCellSummary.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FlashingCells/FlashingCellsPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/FormatColumnEntityRow.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/FormatColumnPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/FormatColumnSummary.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnWizard.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnEntityRow.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnEntityRow.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnPopup.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnSummary.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnSummary.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSettingsWizard.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSettingsWizard.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSummaryWizard.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSummaryWizard.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnWizard.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnWizard.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Home/HomeButtonsPopup.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Home/HomeToolbarControl.js
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Shortcut/ShortcutPopup.js
+23 silly diff packages/adaptableblotter/dist/adaptableblotteraggrid-bundle.min.js
+23 silly diff packages/adaptableblotter/dist/adaptableblotteraggrid-bundle.min.js.map
+23 silly diff packages/adaptableblotter/dist/adaptableblotterhypergrid-bundle.min.js
+23 silly diff packages/adaptableblotter/dist/adaptableblotterhypergrid-bundle.min.js.map
+23 silly diff packages/adaptableblotter/dist/adaptableblotterkendo-bundle.min.js
+23 silly diff packages/adaptableblotter/dist/adaptableblotterkendo-bundle.min.js.map
+23 silly diff packages/adaptableblotter/package-lock.json
+24 silly diffSinceIn adaptableblotter-angular-test@0.1.23 packages/adaptableblotter-angular/dist/adaptableblotter
+25 silly diff
+26 verbose updated adaptableblotter-angular-test
+27 verbose updated adaptableblotter-react-test
+28 verbose updated adaptableblotter-react
+29 verbose updated adaptableblotter
+30 verbose git-describe undefined => "adaptableblotter-angular-test@0.1.23-8-ge64781ef"
+31 silly git-describe parsed => {"lastTagName":"adaptableblotter-angular-test@0.1.23","lastVersion":"0.1.23","refCount":"8","sha":"e64781ef","isDirty":false}
+32 silly batched [ PackageGraphNode {
+32 silly batched     name: 'adaptableblotter',
+32 silly batched     externalDependencies:
+32 silly batched      Map {
+32 silly batched        'ag-grid' => [Object],
+32 silly batched        'ag-grid-enterprise' => [Object],
+32 silly batched        'ag-grid-react' => [Object],
+32 silly batched        'amdefine' => [Object],
+32 silly batched        'babel-core' => [Object],
+32 silly batched        'babel-loader' => [Object],
+32 silly batched        'babel-plugin-transform-runtime' => [Object],
+32 silly batched        'babel-preset-es2015' => [Object],
+32 silly batched        'babel-preset-es2015-loose' => [Object],
+32 silly batched        'bootstrap' => [Object],
+32 silly batched        'buffer-shims' => [Object],
+32 silly batched        'copy-webpack-plugin' => [Object],
+32 silly batched        'cross-env' => [Object],
+32 silly batched        'css-loader' => [Object],
+32 silly batched        'css-to-string-loader' => [Object],
+32 silly batched        'file-loader' => [Object],
+32 silly batched        'html-webpack-plugin' => [Object],
+32 silly batched        'igniteui-react-charts' => [Object],
+32 silly batched        'igniteui-react-core' => [Object],
+32 silly batched        'openfin-launcher' => [Object],
+32 silly batched        'postcss-scopify' => [Object],
+32 silly batched        'process-nextick-args' => [Object],
+32 silly batched        'react-dom-factories' => [Object],
+32 silly batched        'request' => [Object],
+32 silly batched        'rimraf' => [Object],
+32 silly batched        'style-loader' => [Object],
+32 silly batched        'ts-loader' => [Object],
+32 silly batched        'ts-node' => [Object],
+32 silly batched        'tslib' => [Object],
+32 silly batched        'typescript' => [Object],
+32 silly batched        'url-loader' => [Object],
+32 silly batched        'util-deprecate' => [Object],
+32 silly batched        'webpack' => [Object],
+32 silly batched        'webpack-dev-server' => [Object],
+32 silly batched        'webpack-fail-plugin' => [Object],
+32 silly batched        '@types/angular' => [Object],
+32 silly batched        '@types/body-parser' => [Object],
+32 silly batched        '@types/bunyan' => [Object],
+32 silly batched        '@types/deep-diff' => [Object],
+32 silly batched        '@types/express' => [Object],
+32 silly batched        '@types/isomorphic-fetch' => [Object],
+32 silly batched        '@types/jquery' => [Object],
+32 silly batched        '@types/kendo-ui' => [Object],
+32 silly batched        '@types/lodash' => [Object],
+32 silly batched        '@types/mathjs' => [Object],
+32 silly batched        '@types/node' => [Object],
+32 silly batched        '@types/react' => [Object],
+32 silly batched        '@types/react-bootstrap' => [Object],
+32 silly batched        '@types/react-bootstrap-typeahead' => [Object],
+32 silly batched        '@types/react-dom' => [Object],
+32 silly batched        '@types/react-redux' => [Object],
+32 silly batched        '@types/redux-storage' => [Object],
+32 silly batched        'babel-polyfill' => [Object],
+32 silly batched        'babel-runtime' => [Object],
+32 silly batched        'body-parser' => [Object],
+32 silly batched        'bootswatch' => [Object],
+32 silly batched        'bunyan' => [Object],
+32 silly batched        'create-react-class' => [Object],
+32 silly batched        'deep-diff' => [Object],
+32 silly batched        'es6-promise' => [Object],
+32 silly batched        'es6-promise-promise' => [Object],
+32 silly batched        'express' => [Object],
+32 silly batched        'fin-hypergrid-data-source-base' => [Object],
+32 silly batched        'isomorphic-fetch' => [Object],
+32 silly batched        'lodash' => [Object],
+32 silly batched        'mathjs' => [Object],
+32 silly batched        'prop-types' => [Object],
+32 silly batched        'react' => [Object],
+32 silly batched        'react-bootstrap' => [Object],
+32 silly batched        'react-bootstrap-sweetalert' => [Object],
+32 silly batched        'react-bootstrap-typeahead' => [Object],
+32 silly batched        'react-dom' => [Object],
+32 silly batched        'react-redux' => [Object],
+32 silly batched        'redux' => [Object],
+32 silly batched        'redux-devtools-extension' => [Object],
+32 silly batched        'redux-storage' => [Object],
+32 silly batched        'redux-storage-decorator-filter' => [Object],
+32 silly batched        'redux-storage-decorator-migrate' => [Object] },
+32 silly batched     localDependencies: Map {},
+32 silly batched     localDependents:
+32 silly batched      Map {
+32 silly batched        'adaptableblotter-angular-test' => [Object],
+32 silly batched        'adaptableblotter-react' => [Object] } } ]
+33 silly batched [ PackageGraphNode {
+33 silly batched     name: 'adaptableblotter-angular-test',
+33 silly batched     externalDependencies:
+33 silly batched      Map {
+33 silly batched        '@angular-devkit/build-angular' => [Object],
+33 silly batched        '@angular-devkit/build-ng-packagr' => [Object],
+33 silly batched        '@angular/cli' => [Object],
+33 silly batched        '@angular/compiler-cli' => [Object],
+33 silly batched        '@angular/language-service' => [Object],
+33 silly batched        '@types/jasmine' => [Object],
+33 silly batched        '@types/jasminewd2' => [Object],
+33 silly batched        '@types/node' => [Object],
+33 silly batched        'codelyzer' => [Object],
+33 silly batched        'copyfiles' => [Object],
+33 silly batched        'jasmine-core' => [Object],
+33 silly batched        'jasmine-spec-reporter' => [Object],
+33 silly batched        'karma' => [Object],
+33 silly batched        'karma-chrome-launcher' => [Object],
+33 silly batched        'karma-coverage-istanbul-reporter' => [Object],
+33 silly batched        'karma-jasmine' => [Object],
+33 silly batched        'karma-jasmine-html-reporter' => [Object],
+33 silly batched        'ng-packagr' => [Object],
+33 silly batched        'protractor' => [Object],
+33 silly batched        'rimraf' => [Object],
+33 silly batched        'ts-node' => [Object],
+33 silly batched        'tsickle' => [Object],
+33 silly batched        'tslib' => [Object],
+33 silly batched        'tslint' => [Object],
+33 silly batched        'typescript' => [Object],
+33 silly batched        '@angular/animations' => [Object],
+33 silly batched        '@angular/common' => [Object],
+33 silly batched        '@angular/compiler' => [Object],
+33 silly batched        '@angular/core' => [Object],
+33 silly batched        '@angular/forms' => [Object],
+33 silly batched        '@angular/http' => [Object],
+33 silly batched        '@angular/platform-browser' => [Object],
+33 silly batched        '@angular/platform-browser-dynamic' => [Object],
+33 silly batched        '@angular/router' => [Object],
+33 silly batched        'ag-grid' => [Object],
+33 silly batched        'ag-grid-angular' => [Object],
+33 silly batched        'ag-grid-enterprise' => [Object],
+33 silly batched        'core-js' => [Object],
+33 silly batched        'fin-hypergrid' => [Object],
+33 silly batched        'rxjs' => [Object],
+33 silly batched        'zone.js' => [Object] },
+33 silly batched     localDependencies: Map {},
+33 silly batched     localDependents: Map {} },
+33 silly batched   PackageGraphNode {
+33 silly batched     name: 'adaptableblotter-react',
+33 silly batched     externalDependencies:
+33 silly batched      Map {
+33 silly batched        '@commitlint/cli' => [Object],
+33 silly batched        '@commitlint/config-conventional' => [Object],
+33 silly batched        '@types/jest' => [Object],
+33 silly batched        '@types/node' => [Object],
+33 silly batched        '@types/react' => [Object],
+33 silly batched        'colors' => [Object],
+33 silly batched        'commitizen' => [Object],
+33 silly batched        'copyfiles' => [Object],
+33 silly batched        'coveralls' => [Object],
+33 silly batched        'cross-env' => [Object],
+33 silly batched        'cz-conventional-changelog' => [Object],
+33 silly batched        'gh-pages' => [Object],
+33 silly batched        'husky' => [Object],
+33 silly batched        'jest' => [Object],
+33 silly batched        'lint-staged' => [Object],
+33 silly batched        'lodash.camelcase' => [Object],
+33 silly batched        'postcss-url' => [Object],
+33 silly batched        'prettier' => [Object],
+33 silly batched        'prompt' => [Object],
+33 silly batched        'replace-in-file' => [Object],
+33 silly batched        'rimraf' => [Object],
+33 silly batched        'rollup' => [Object],
+33 silly batched        'rollup-plugin-commonjs' => [Object],
+33 silly batched        'rollup-plugin-copy' => [Object],
+33 silly batched        'rollup-plugin-json' => [Object],
+33 silly batched        'rollup-plugin-node-builtins' => [Object],
+33 silly batched        'rollup-plugin-node-resolve' => [Object],
+33 silly batched        'rollup-plugin-postcss' => [Object],
+33 silly batched        'rollup-plugin-sourcemaps' => [Object],
+33 silly batched        'rollup-plugin-typescript2' => [Object],
+33 silly batched        'ts-jest' => [Object],
+33 silly batched        'ts-node' => [Object],
+33 silly batched        'tslint' => [Object],
+33 silly batched        'tslint-config-prettier' => [Object],
+33 silly batched        'tslint-config-standard' => [Object],
+33 silly batched        'typedoc' => [Object],
+33 silly batched        'typescript' => [Object],
+33 silly batched        'ag-grid' => [Object],
+33 silly batched        'ag-grid-enterprise' => [Object],
+33 silly batched        'ag-grid-react' => [Object] },
+33 silly batched     localDependencies: Map {},
+33 silly batched     localDependents: Map { 'adaptableblotter-react-test' => [Object] } } ]
+34 silly batched [ PackageGraphNode {
+34 silly batched     name: 'adaptableblotter-react-test',
+34 silly batched     externalDependencies:
+34 silly batched      Map {
+34 silly batched        '@types/jest' => [Object],
+34 silly batched        '@types/node' => [Object],
+34 silly batched        '@types/react' => [Object],
+34 silly batched        '@types/react-dom' => [Object],
+34 silly batched        'typescript' => [Object],
+34 silly batched        'ag-grid' => [Object],
+34 silly batched        'ag-grid-react' => [Object],
+34 silly batched        'autoprefixer' => [Object],
+34 silly batched        'babel-jest' => [Object],
+34 silly batched        'babel-loader' => [Object],
+34 silly batched        'babel-preset-react-app' => [Object],
+34 silly batched        'case-sensitive-paths-webpack-plugin' => [Object],
+34 silly batched        'chalk' => [Object],
+34 silly batched        'css-loader' => [Object],
+34 silly batched        'dotenv' => [Object],
+34 silly batched        'dotenv-expand' => [Object],
+34 silly batched        'extract-text-webpack-plugin' => [Object],
+34 silly batched        'file-loader' => [Object],
+34 silly batched        'fork-ts-checker-webpack-plugin' => [Object],
+34 silly batched        'fs-extra' => [Object],
+34 silly batched        'html-webpack-plugin' => [Object],
+34 silly batched        'jest' => [Object],
+34 silly batched        'mathjs' => [Object],
+34 silly batched        'object-assign' => [Object],
+34 silly batched        'postcss-flexbugs-fixes' => [Object],
+34 silly batched        'postcss-loader' => [Object],
+34 silly batched        'promise' => [Object],
+34 silly batched        'raf' => [Object],
+34 silly batched        'react' => [Object],
+34 silly batched        'react-dev-utils' => [Object],
+34 silly batched        'react-dom' => [Object],
+34 silly batched        'resolve' => [Object],
+34 silly batched        'source-map-loader' => [Object],
+34 silly batched        'style-loader' => [Object],
+34 silly batched        'sw-precache-webpack-plugin' => [Object],
+34 silly batched        'ts-jest' => [Object],
+34 silly batched        'ts-loader' => [Object],
+34 silly batched        'tsconfig-paths-webpack-plugin' => [Object],
+34 silly batched        'tslint' => [Object],
+34 silly batched        'tslint-config-prettier' => [Object],
+34 silly batched        'tslint-react' => [Object],
+34 silly batched        'uglifyjs-webpack-plugin' => [Object],
+34 silly batched        'url-loader' => [Object],
+34 silly batched        'webpack' => [Object],
+34 silly batched        'webpack-dev-server' => [Object],
+34 silly batched        'webpack-manifest-plugin' => [Object],
+34 silly batched        'whatwg-fetch' => [Object] },
+34 silly batched     localDependencies: Map {},
+34 silly batched     localDependents: Map {} } ]
+35 silly gitAdd [ '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter/package.json',
+35 silly gitAdd   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-angular/package.json',
+35 silly gitAdd   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react/package.json',
+35 silly gitAdd   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react-test/package.json' ]
+36 silly gitCommit Publish
+36 silly gitCommit
+36 silly gitCommit  - adaptableblotter-angular-test@0.1.24
+36 silly gitCommit  - adaptableblotter-react-test@0.2.22
+36 silly gitCommit  - adaptableblotter-react@0.2.24
+36 silly gitCommit  - adaptableblotter@2.5.3
+37 verbose git [ 'commit',
+37 verbose git   '-F',
+37 verbose git   '/private/var/folders/sg/5_c_f9hx4pbgyszg17sp_5t80000gn/T/73657049-8c4a-4485-9d46-0d4e69738e51/lerna-commit.txt' ]
+38 silly gitTag adaptableblotter-angular-test@0.1.24
+39 verbose git [ 'tag',
+39 verbose git   'adaptableblotter-angular-test@0.1.24',
+39 verbose git   '-m',
+39 verbose git   'adaptableblotter-angular-test@0.1.24' ]
+40 silly gitTag adaptableblotter-react-test@0.2.22
+41 verbose git [ 'tag',
+41 verbose git   'adaptableblotter-react-test@0.2.22',
+41 verbose git   '-m',
+41 verbose git   'adaptableblotter-react-test@0.2.22' ]
+42 silly gitTag adaptableblotter-react@0.2.24
+43 verbose git [ 'tag',
+43 verbose git   'adaptableblotter-react@0.2.24',
+43 verbose git   '-m',
+43 verbose git   'adaptableblotter-react@0.2.24' ]
+44 silly gitTag adaptableblotter@2.5.3
+45 verbose git [ 'tag',
+45 verbose git   'adaptableblotter@2.5.3',
+45 verbose git   '-m',
+45 verbose git   'adaptableblotter@2.5.3' ]
+46 info git Pushing tags...
+47 silly gitPush origin master
+48 silly batched [ PackageGraphNode {
+48 silly batched     name: 'adaptableblotter',
+48 silly batched     externalDependencies:
+48 silly batched      Map {
+48 silly batched        '@types/angular' => [Object],
+48 silly batched        '@types/body-parser' => [Object],
+48 silly batched        '@types/bunyan' => [Object],
+48 silly batched        '@types/deep-diff' => [Object],
+48 silly batched        '@types/express' => [Object],
+48 silly batched        '@types/isomorphic-fetch' => [Object],
+48 silly batched        '@types/jquery' => [Object],
+48 silly batched        '@types/kendo-ui' => [Object],
+48 silly batched        '@types/lodash' => [Object],
+48 silly batched        '@types/mathjs' => [Object],
+48 silly batched        '@types/node' => [Object],
+48 silly batched        '@types/react' => [Object],
+48 silly batched        '@types/react-bootstrap' => [Object],
+48 silly batched        '@types/react-bootstrap-typeahead' => [Object],
+48 silly batched        '@types/react-dom' => [Object],
+48 silly batched        '@types/react-redux' => [Object],
+48 silly batched        '@types/redux-storage' => [Object],
+48 silly batched        'babel-polyfill' => [Object],
+48 silly batched        'babel-runtime' => [Object],
+48 silly batched        'body-parser' => [Object],
+48 silly batched        'bootswatch' => [Object],
+48 silly batched        'bunyan' => [Object],
+48 silly batched        'create-react-class' => [Object],
+48 silly batched        'deep-diff' => [Object],
+48 silly batched        'es6-promise' => [Object],
+48 silly batched        'es6-promise-promise' => [Object],
+48 silly batched        'express' => [Object],
+48 silly batched        'fin-hypergrid-data-source-base' => [Object],
+48 silly batched        'isomorphic-fetch' => [Object],
+48 silly batched        'lodash' => [Object],
+48 silly batched        'mathjs' => [Object],
+48 silly batched        'prop-types' => [Object],
+48 silly batched        'react' => [Object],
+48 silly batched        'react-bootstrap' => [Object],
+48 silly batched        'react-bootstrap-sweetalert' => [Object],
+48 silly batched        'react-bootstrap-typeahead' => [Object],
+48 silly batched        'react-dom' => [Object],
+48 silly batched        'react-redux' => [Object],
+48 silly batched        'redux' => [Object],
+48 silly batched        'redux-devtools-extension' => [Object],
+48 silly batched        'redux-storage' => [Object],
+48 silly batched        'redux-storage-decorator-filter' => [Object],
+48 silly batched        'redux-storage-decorator-migrate' => [Object] },
+48 silly batched     localDependencies: Map {},
+48 silly batched     localDependents: Map { 'adaptableblotter-react' => [Object] } } ]
+49 silly batched [ PackageGraphNode {
+49 silly batched     name: 'adaptableblotter-react',
+49 silly batched     externalDependencies:
+49 silly batched      Map {
+49 silly batched        'ag-grid' => [Object],
+49 silly batched        'ag-grid-enterprise' => [Object],
+49 silly batched        'ag-grid-react' => [Object] },
+49 silly batched     localDependencies: Map {},
+49 silly batched     localDependents: Map {} } ]
+50 info publish Publishing packages to npm...
+51 silly verifyNpmRegistry
+52 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter undefined
+53 silly verifyNpmPackageAccess
+54 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter undefined
+55 silly getCurrentSHA
+56 verbose getCurrentSHA 2f8a44cff91fe6417f8c7de5d8c53b8b1180d2a3
+57 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter undefined
+58 silly exec npm options { cwd: '/Users/adaptabletools/Code/lerna/adaptableblotter',
+58 silly exec   env: { npm_config_json: true },
+58 silly exec   stdio: [ 'ignore', 'pipe', 'inherit' ] }
+59 verbose pack [ 'adaptableblotter' ]
+60 silly exec npm [ 'pack',
+60 silly exec   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter' ]
+61 notice
+62 notice 📦  adaptableblotter@2.5.3
+63 notice === Tarball Contents ===
+64 notice 5.1kB   package.json
+64 notice 1.1kB   .travis.yml
+64 notice 435B    factory.js
+64 notice 446B    index.js
+64 notice 23.2kB  LICENSE.md
+64 notice 2.8kB   README.md
+64 notice 430B    tslint.json
+64 notice 195B    types.d.ts
+64 notice 381B    webpack.styles.js
+64 notice 2.4kB   webpack.vendor.js
+64 notice 182.5kB yarn.lock
+64 notice 5.5kB   configserver/configserver.ts
+64 notice 108.7kB dist/89889688147bd7575d6327160d64e760.svg
+64 notice 3.6MB   dist/adaptableblotteraggrid-bundle.min.js
+64 notice 22.9MB  dist/adaptableblotteraggrid-bundle.min.js.map
+64 notice 3.6MB   dist/adaptableblotterhypergrid-bundle.min.js
+64 notice 22.9MB  dist/adaptableblotterhypergrid-bundle.min.js.map
+64 notice 3.6MB   dist/adaptableblotterkendo-bundle.min.js
+64 notice 22.7MB  dist/adaptableblotterkendo-bundle.min.js.map
+64 notice 9.8kB   dist/App_Scripts/Core/Api/BlotterApiBase.d.ts
+64 notice 30.3kB  dist/App_Scripts/Core/Api/BlotterApiBase.js
+64 notice 844B    dist/App_Scripts/Core/Api/Expression.d.ts
+64 notice 787B    dist/App_Scripts/Core/Api/Expression.js
+64 notice 5.9kB   dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects.d.ts
+64 notice 77B     dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects.js
+64 notice 5.2kB   dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions.d.ts
+64 notice 77B     dist/App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions.js
+64 notice 12.2kB  dist/App_Scripts/Core/Api/Interface/IBlotterApi.d.ts
+64 notice 77B     dist/App_Scripts/Core/Api/Interface/IBlotterApi.js
+64 notice 2.8kB   dist/App_Scripts/Core/Api/Interface/IStateEvents.d.ts
+64 notice 77B     dist/App_Scripts/Core/Api/Interface/IStateEvents.js
+64 notice 368B    dist/App_Scripts/Core/BlotterFactory.d.ts
+64 notice 1.4kB   dist/App_Scripts/Core/BlotterFactory.js
+64 notice 359B    dist/App_Scripts/Core/color.d.ts
+64 notice 1.6kB   dist/App_Scripts/Core/color.js
+64 notice 244B    dist/App_Scripts/Core/Constants/CalendarConstants.d.ts
+64 notice 297B    dist/App_Scripts/Core/Constants/CalendarConstants.js
+64 notice 406B    dist/App_Scripts/Core/Constants/ConfigConstants.d.ts
+64 notice 394B    dist/App_Scripts/Core/Constants/ConfigConstants.js
+64 notice 572B    dist/App_Scripts/Core/Constants/GeneralConstants.d.ts
+64 notice 537B    dist/App_Scripts/Core/Constants/GeneralConstants.js
+64 notice 1.4kB   dist/App_Scripts/Core/Constants/ScreenPopups.d.ts
+64 notice 1.5kB   dist/App_Scripts/Core/Constants/ScreenPopups.js
+64 notice 5.0kB   dist/App_Scripts/Core/Constants/StrategyConstants.d.ts
+64 notice 13.1kB  dist/App_Scripts/Core/Constants/StrategyConstants.js
+64 notice 2.8kB   dist/App_Scripts/Core/Constants/StyleConstants.d.ts
+64 notice 3.2kB   dist/App_Scripts/Core/Constants/StyleConstants.js
+64 notice 164B    dist/App_Scripts/Core/DefaultAdaptableBlotterOptions.d.ts
+64 notice 879B    dist/App_Scripts/Core/DefaultAdaptableBlotterOptions.js
+64 notice 5.3kB   dist/App_Scripts/Core/Enums.d.ts
+64 notice 11.5kB  dist/App_Scripts/Core/Enums.js
+64 notice 346B    dist/App_Scripts/Core/EventDispatcher.d.ts
+64 notice 597B    dist/App_Scripts/Core/EventDispatcher.js
+64 notice 859B    dist/App_Scripts/Core/Extensions/ArrayExtensions.d.ts
+64 notice 5.1kB   dist/App_Scripts/Core/Extensions/ArrayExtensions.js
+64 notice 261B    dist/App_Scripts/Core/Extensions/EnumExtensions.d.ts
+64 notice 1.4kB   dist/App_Scripts/Core/Extensions/EnumExtensions.js
+64 notice 587B    dist/App_Scripts/Core/Extensions/StringExtensions.d.ts
+64 notice 1.7kB   dist/App_Scripts/Core/Extensions/StringExtensions.js
+64 notice 407B    dist/App_Scripts/Core/Helpers/AdaptableBlotterLogger.d.ts
+64 notice 2.0kB   dist/App_Scripts/Core/Helpers/AdaptableBlotterLogger.js
+64 notice 264B    dist/App_Scripts/Core/Helpers/AlertHelper.d.ts
+64 notice 1.8kB   dist/App_Scripts/Core/Helpers/AlertHelper.js
+64 notice 160B    dist/App_Scripts/Core/Helpers/CalendarHelper.d.ts
+64 notice 7.1kB   dist/App_Scripts/Core/Helpers/CalendarHelper.js
+64 notice 535B    dist/App_Scripts/Core/Helpers/ColumnFilterHelper.d.ts
+64 notice 1.6kB   dist/App_Scripts/Core/Helpers/ColumnFilterHelper.js
+64 notice 1.1kB   dist/App_Scripts/Core/Helpers/ColumnHelper.d.ts
+64 notice 4.1kB   dist/App_Scripts/Core/Helpers/ColumnHelper.js
+64 notice 254B    dist/App_Scripts/Core/Helpers/EntitlementHelper.d.ts
+64 notice 926B    dist/App_Scripts/Core/Helpers/EntitlementHelper.js
+64 notice 2.9kB   dist/App_Scripts/Core/Helpers/ExpressionHelper.d.ts
+64 notice 29.6kB  dist/App_Scripts/Core/Helpers/ExpressionHelper.js
+64 notice 1.6kB   dist/App_Scripts/Core/Helpers/FilterHelper.d.ts
+64 notice 10.8kB  dist/App_Scripts/Core/Helpers/FilterHelper.js
+64 notice 1.0kB   dist/App_Scripts/Core/Helpers/Helper.d.ts
+64 notice 9.3kB   dist/App_Scripts/Core/Helpers/Helper.js
+64 notice 705B    dist/App_Scripts/Core/Helpers/iPushPullHelper.d.ts
+64 notice 8.0kB   dist/App_Scripts/Core/Helpers/iPushPullHelper.js
+64 notice 542B    dist/App_Scripts/Core/Helpers/LayoutHelper.d.ts
+64 notice 2.7kB   dist/App_Scripts/Core/Helpers/LayoutHelper.js
+64 notice 600B    dist/App_Scripts/Core/Helpers/OpenfinHelper.d.ts
+64 notice 11.8kB  dist/App_Scripts/Core/Helpers/OpenfinHelper.js
+64 notice 504B    dist/App_Scripts/Core/Helpers/PreviewHelper.d.ts
+64 notice 3.7kB   dist/App_Scripts/Core/Helpers/PreviewHelper.js
+64 notice 881B    dist/App_Scripts/Core/Helpers/ReportHelper.d.ts
+64 notice 7.8kB   dist/App_Scripts/Core/Helpers/ReportHelper.js
+64 notice 126B    dist/App_Scripts/Core/Helpers/SortHelper.d.ts
+64 notice 2.2kB   dist/App_Scripts/Core/Helpers/SortHelper.js
+64 notice 300B    dist/App_Scripts/Core/Helpers/StyleHelper.d.ts
+64 notice 760B    dist/App_Scripts/Core/Helpers/StyleHelper.js
+64 notice 4.8kB   dist/App_Scripts/Core/Interface/IAdaptableBlotter.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IAdaptableBlotter.js
+64 notice 886B    dist/App_Scripts/Core/Interface/IAuditLogEntry.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IAuditLogEntry.js
+64 notice 254B    dist/App_Scripts/Core/Interface/IColumn.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IColumn.js
+64 notice 176B    dist/App_Scripts/Core/Interface/IEvent.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IEvent.js
+64 notice 259B    dist/App_Scripts/Core/Interface/IMenu.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IMenu.js
+64 notice 1.5kB   dist/App_Scripts/Core/Interface/IMessage.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IMessage.js
+64 notice 699B    dist/App_Scripts/Core/Interface/Interfaces.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/Interfaces.js
+64 notice 534B    dist/App_Scripts/Core/Interface/IPreviewResult.d.ts
+64 notice 77B     dist/App_Scripts/Core/Interface/IPreviewResult.js
+64 notice 745B    dist/App_Scripts/Core/MenuItem.d.ts
+64 notice 963B    dist/App_Scripts/Core/MenuItem.js
+64 notice 2.4kB   dist/App_Scripts/Core/ObjectFactory.d.ts
+64 notice 8.8kB   dist/App_Scripts/Core/ObjectFactory.js
+64 notice 901B    dist/App_Scripts/Core/Services/AuditLogService.d.ts
+64 notice 10.8kB  dist/App_Scripts/Core/Services/AuditLogService.js
+64 notice 856B    dist/App_Scripts/Core/Services/AuditService.d.ts
+64 notice 4.6kB   dist/App_Scripts/Core/Services/AuditService.js
+64 notice 662B    dist/App_Scripts/Core/Services/CalculatedColumnExpressionService.d.ts
+64 notice 2.1kB   dist/App_Scripts/Core/Services/CalculatedColumnExpressionService.js
+64 notice 440B    dist/App_Scripts/Core/Services/CalendarService.d.ts
+64 notice 3.6kB   dist/App_Scripts/Core/Services/CalendarService.js
+64 notice 532B    dist/App_Scripts/Core/Services/ChartService.d.ts
+64 notice 3.7kB   dist/App_Scripts/Core/Services/ChartService.js
+64 notice 796B    dist/App_Scripts/Core/Services/Interface/IAuditService.d.ts
+64 notice 77B     dist/App_Scripts/Core/Services/Interface/IAuditService.js
+64 notice 290B    dist/App_Scripts/Core/Services/Interface/ICalculatedColumnExpressionService.d.ts
+64 notice 77B     dist/App_Scripts/Core/Services/Interface/ICalculatedColumnExpressionService.js
+64 notice 181B    dist/App_Scripts/Core/Services/Interface/ICalendarService.d.ts
+64 notice 77B     dist/App_Scripts/Core/Services/Interface/ICalendarService.js
+64 notice 247B    dist/App_Scripts/Core/Services/Interface/IChartService.d.ts
+64 notice 77B     dist/App_Scripts/Core/Services/Interface/IChartService.js
+64 notice 266B    dist/App_Scripts/Core/Services/Interface/IValidationService.d.ts
+64 notice 77B     dist/App_Scripts/Core/Services/Interface/IValidationService.js
+64 notice 411B    dist/App_Scripts/Core/Services/StyleService.d.ts
+64 notice 6.6kB   dist/App_Scripts/Core/Services/StyleService.js
+64 notice 80B     dist/App_Scripts/Core/Services/ThemeService.d.ts
+64 notice 1.1kB   dist/App_Scripts/Core/Services/ThemeService.js
+64 notice 584B    dist/App_Scripts/Core/Services/ValidationService.d.ts
+64 notice 6.0kB   dist/App_Scripts/Core/Services/ValidationService.js
+64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/AdvancedSearchRedux.d.ts
+64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/AdvancedSearchRedux.js
+64 notice 1.3kB   dist/App_Scripts/Redux/ActionsReducers/AlertRedux.d.ts
+64 notice 2.4kB   dist/App_Scripts/Redux/ActionsReducers/AlertRedux.js
+64 notice 688B    dist/App_Scripts/Redux/ActionsReducers/BulkUpdateRedux.d.ts
+64 notice 949B    dist/App_Scripts/Redux/ActionsReducers/BulkUpdateRedux.js
+64 notice 1.8kB   dist/App_Scripts/Redux/ActionsReducers/CalculatedColumnRedux.d.ts
+64 notice 2.4kB   dist/App_Scripts/Redux/ActionsReducers/CalculatedColumnRedux.js
+64 notice 368B    dist/App_Scripts/Redux/ActionsReducers/CalendarRedux.d.ts
+64 notice 546B    dist/App_Scripts/Redux/ActionsReducers/CalendarRedux.js
+64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/CellValidationRedux.d.ts
+64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/CellValidationRedux.js
+64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/ChartRedux.d.ts
+64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/ChartRedux.js
+64 notice 382B    dist/App_Scripts/Redux/ActionsReducers/ColumnChooserRedux.d.ts
+64 notice 334B    dist/App_Scripts/Redux/ActionsReducers/ColumnChooserRedux.js
+64 notice 993B    dist/App_Scripts/Redux/ActionsReducers/ColumnFilterRedux.d.ts
+64 notice 1.9kB   dist/App_Scripts/Redux/ActionsReducers/ColumnFilterRedux.js
+64 notice 956B    dist/App_Scripts/Redux/ActionsReducers/ConditionalStyleRedux.d.ts
+64 notice 1.6kB   dist/App_Scripts/Redux/ActionsReducers/ConditionalStyleRedux.js
+64 notice 958B    dist/App_Scripts/Redux/ActionsReducers/CustomSortRedux.d.ts
+64 notice 1.7kB   dist/App_Scripts/Redux/ActionsReducers/CustomSortRedux.js
+64 notice 3.4kB   dist/App_Scripts/Redux/ActionsReducers/DashboardRedux.d.ts
+64 notice 8.0kB   dist/App_Scripts/Redux/ActionsReducers/DashboardRedux.js
+64 notice 414B    dist/App_Scripts/Redux/ActionsReducers/DataSourceRedux.d.ts
+64 notice 634B    dist/App_Scripts/Redux/ActionsReducers/DataSourceRedux.js
+64 notice 783B    dist/App_Scripts/Redux/ActionsReducers/EntitlementsRedux.d.ts
+64 notice 1.7kB   dist/App_Scripts/Redux/ActionsReducers/EntitlementsRedux.js
+64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/ExportRedux.d.ts
+64 notice 2.8kB   dist/App_Scripts/Redux/ActionsReducers/ExportRedux.js
+64 notice 1.9kB   dist/App_Scripts/Redux/ActionsReducers/FlashingCellsRedux.d.ts
+64 notice 5.1kB   dist/App_Scripts/Redux/ActionsReducers/FlashingCellsRedux.js
+64 notice 1.0kB   dist/App_Scripts/Redux/ActionsReducers/FormatColumnRedux.d.ts
+64 notice 1.7kB   dist/App_Scripts/Redux/ActionsReducers/FormatColumnRedux.js
+64 notice 1.1kB   dist/App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux.d.ts
+64 notice 1.7kB   dist/App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux.js
+64 notice 2.9kB   dist/App_Scripts/Redux/ActionsReducers/GridRedux.d.ts
+64 notice 2.6kB   dist/App_Scripts/Redux/ActionsReducers/GridRedux.js
+64 notice 5.9kB   dist/App_Scripts/Redux/ActionsReducers/Interface/IState.d.ts
+64 notice 77B     dist/App_Scripts/Redux/ActionsReducers/Interface/IState.js
+64 notice 1.4kB   dist/App_Scripts/Redux/ActionsReducers/LayoutRedux.d.ts
+64 notice 1.9kB   dist/App_Scripts/Redux/ActionsReducers/LayoutRedux.js
+64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/MenuRedux.d.ts
+64 notice 2.8kB   dist/App_Scripts/Redux/ActionsReducers/MenuRedux.js
+64 notice 1.6kB   dist/App_Scripts/Redux/ActionsReducers/PlusMinusRedux.d.ts
+64 notice 2.5kB   dist/App_Scripts/Redux/ActionsReducers/PlusMinusRedux.js
+64 notice 3.7kB   dist/App_Scripts/Redux/ActionsReducers/PopupRedux.d.ts
+64 notice 8.9kB   dist/App_Scripts/Redux/ActionsReducers/PopupRedux.js
+64 notice 1.5kB   dist/App_Scripts/Redux/ActionsReducers/QuickSearchRedux.d.ts
+64 notice 1.9kB   dist/App_Scripts/Redux/ActionsReducers/QuickSearchRedux.js
+64 notice 579B    dist/App_Scripts/Redux/ActionsReducers/SelectedCellsRedux.d.ts
+64 notice 765B    dist/App_Scripts/Redux/ActionsReducers/SelectedCellsRedux.js
+64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/ShortcutRedux.d.ts
+64 notice 3.6kB   dist/App_Scripts/Redux/ActionsReducers/ShortcutRedux.js
+64 notice 1.0kB   dist/App_Scripts/Redux/ActionsReducers/SmartEditRedux.d.ts
+64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/SmartEditRedux.js
+64 notice 597B    dist/App_Scripts/Redux/ActionsReducers/SystemFilterRedux.d.ts
+64 notice 800B    dist/App_Scripts/Redux/ActionsReducers/SystemFilterRedux.js
+64 notice 4.4kB   dist/App_Scripts/Redux/ActionsReducers/SystemRedux.d.ts
+64 notice 6.1kB   dist/App_Scripts/Redux/ActionsReducers/SystemRedux.js
+64 notice 1.4kB   dist/App_Scripts/Redux/ActionsReducers/TeamSharingRedux.d.ts
+64 notice 1.1kB   dist/App_Scripts/Redux/ActionsReducers/TeamSharingRedux.js
+64 notice 676B    dist/App_Scripts/Redux/ActionsReducers/ThemeRedux.d.ts
+64 notice 1.3kB   dist/App_Scripts/Redux/ActionsReducers/ThemeRedux.js
+64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/UserFilterRedux.d.ts
+64 notice 1.8kB   dist/App_Scripts/Redux/ActionsReducers/UserFilterRedux.js
+64 notice 1.6kB   dist/App_Scripts/Redux/ActionsReducers/UserInterfaceRedux.d.ts
+64 notice 4.0kB   dist/App_Scripts/Redux/ActionsReducers/UserInterfaceRedux.js
+64 notice 152B    dist/App_Scripts/Redux/Store/AdaptableBlotterReduxLocalStorageEngine.d.ts
+64 notice 2.8kB   dist/App_Scripts/Redux/Store/AdaptableBlotterReduxLocalStorageEngine.js
+64 notice 71B     dist/App_Scripts/Redux/Store/AdaptableBlotterReduxMerger.d.ts
+64 notice 1.0kB   dist/App_Scripts/Redux/Store/AdaptableBlotterReduxMerger.js
+64 notice 267B    dist/App_Scripts/Redux/Store/AdaptableBlotterReduxStorageClientEngine.d.ts
+64 notice 1.9kB   dist/App_Scripts/Redux/Store/AdaptableBlotterReduxStorageClientEngine.js
+64 notice 906B    dist/App_Scripts/Redux/Store/AdaptableBlotterStore.d.ts
+64 notice 52.1kB  dist/App_Scripts/Redux/Store/AdaptableBlotterStore.js
+64 notice 2.1kB   dist/App_Scripts/Redux/Store/Interface/IAdaptableStore.d.ts
+64 notice 77B     dist/App_Scripts/Redux/Store/Interface/IAdaptableStore.js
+64 notice 364B    dist/App_Scripts/Strategy/AboutStrategy.d.ts
+64 notice 653B    dist/App_Scripts/Strategy/AboutStrategy.js
+64 notice 1.6kB   dist/App_Scripts/Strategy/AdaptableStrategyBase.d.ts
+64 notice 6.5kB   dist/App_Scripts/Strategy/AdaptableStrategyBase.js
+64 notice 517B    dist/App_Scripts/Strategy/AdvancedSearchStrategy.d.ts
+64 notice 1.7kB   dist/App_Scripts/Strategy/AdvancedSearchStrategy.js
+64 notice 874B    dist/App_Scripts/Strategy/AlertStrategy.d.ts
+64 notice 4.9kB   dist/App_Scripts/Strategy/AlertStrategy.js
+64 notice 403B    dist/App_Scripts/Strategy/ApplicationStrategy.d.ts
+64 notice 695B    dist/App_Scripts/Strategy/ApplicationStrategy.js
+64 notice 963B    dist/App_Scripts/Strategy/BulkUpdateStrategy.d.ts
+64 notice 4.7kB   dist/App_Scripts/Strategy/BulkUpdateStrategy.js
+64 notice 539B    dist/App_Scripts/Strategy/CalculatedColumnStrategy.d.ts
+64 notice 1.7kB   dist/App_Scripts/Strategy/CalculatedColumnStrategy.js
+64 notice 543B    dist/App_Scripts/Strategy/CalendarStrategy.d.ts
+64 notice 1.1kB   dist/App_Scripts/Strategy/CalendarStrategy.js
+64 notice 529B    dist/App_Scripts/Strategy/CellValidationStrategy.d.ts
+64 notice 1.5kB   dist/App_Scripts/Strategy/CellValidationStrategy.js
+64 notice 436B    dist/App_Scripts/Strategy/ChartStrategy.d.ts
+64 notice 1.1kB   dist/App_Scripts/Strategy/ChartStrategy.js
+64 notice 459B    dist/App_Scripts/Strategy/ColumnChooserStrategy.d.ts
+64 notice 1.0kB   dist/App_Scripts/Strategy/ColumnChooserStrategy.js
+64 notice 553B    dist/App_Scripts/Strategy/ColumnFilterStrategy.d.ts
+64 notice 2.3kB   dist/App_Scripts/Strategy/ColumnFilterStrategy.js
+64 notice 447B    dist/App_Scripts/Strategy/ColumnInfoStrategy.d.ts
+64 notice 974B    dist/App_Scripts/Strategy/ColumnInfoStrategy.js
+64 notice 579B    dist/App_Scripts/Strategy/ConditionalStyleagGridStrategy.d.ts
+64 notice 3.8kB   dist/App_Scripts/Strategy/ConditionalStyleagGridStrategy.js
+64 notice 585B    dist/App_Scripts/Strategy/ConditionalStyleHypergridStrategy.d.ts
+64 notice 5.1kB   dist/App_Scripts/Strategy/ConditionalStyleHypergridStrategy.js
+64 notice 577B    dist/App_Scripts/Strategy/ConditionalStyleKendoStrategy.d.ts
+64 notice 5.3kB   dist/App_Scripts/Strategy/ConditionalStyleKendoStrategy.js
+64 notice 891B    dist/App_Scripts/Strategy/ConditionalStyleStrategy.d.ts
+64 notice 2.1kB   dist/App_Scripts/Strategy/ConditionalStyleStrategy.js
+64 notice 430B    dist/App_Scripts/Strategy/CustomSortagGridStrategy.d.ts
+64 notice 1.9kB   dist/App_Scripts/Strategy/CustomSortagGridStrategy.js
+64 notice 640B    dist/App_Scripts/Strategy/CustomSortStrategy.d.ts
+64 notice 3.8kB   dist/App_Scripts/Strategy/CustomSortStrategy.js
+64 notice 519B    dist/App_Scripts/Strategy/DashboardStrategy.d.ts
+64 notice 1.9kB   dist/App_Scripts/Strategy/DashboardStrategy.js
+64 notice 415B    dist/App_Scripts/Strategy/DataManagementStrategy.d.ts
+64 notice 798B    dist/App_Scripts/Strategy/DataManagementStrategy.js
+64 notice 493B    dist/App_Scripts/Strategy/DataSourceStrategy.d.ts
+64 notice 1.3kB   dist/App_Scripts/Strategy/DataSourceStrategy.js
+64 notice 979B    dist/App_Scripts/Strategy/ExportStrategy.d.ts
+64 notice 13.7kB  dist/App_Scripts/Strategy/ExportStrategy.js
+64 notice 788B    dist/App_Scripts/Strategy/FlashingCellsagGridStrategy.d.ts
+64 notice 3.9kB   dist/App_Scripts/Strategy/FlashingCellsagGridStrategy.js
+64 notice 650B    dist/App_Scripts/Strategy/FlashingCellsHypergridStrategy.d.ts
+64 notice 953B    dist/App_Scripts/Strategy/FlashingCellsHypergridStrategy.js
+64 notice 642B    dist/App_Scripts/Strategy/FlashingCellsKendoStrategy.d.ts
+64 notice 1.1kB   dist/App_Scripts/Strategy/FlashingCellsKendoStrategy.js
+64 notice 993B    dist/App_Scripts/Strategy/FlashingCellsStrategy.d.ts
+64 notice 3.4kB   dist/App_Scripts/Strategy/FlashingCellsStrategy.js
+64 notice 434B    dist/App_Scripts/Strategy/FormatColumnagGridStrategy.d.ts
+64 notice 1.8kB   dist/App_Scripts/Strategy/FormatColumnagGridStrategy.js
+64 notice 440B    dist/App_Scripts/Strategy/FormatColumnHypergridStrategy.d.ts
+64 notice 1.3kB   dist/App_Scripts/Strategy/FormatColumnHypergridStrategy.js
+64 notice 403B    dist/App_Scripts/Strategy/FormatColumnKendoStrategy.d.ts
+64 notice 1.7kB   dist/App_Scripts/Strategy/FormatColumnKendoStrategy.js
+64 notice 671B    dist/App_Scripts/Strategy/FormatColumnStrategy.d.ts
+64 notice 1.8kB   dist/App_Scripts/Strategy/FormatColumnStrategy.js
+64 notice 633B    dist/App_Scripts/Strategy/FreeTextColumnStrategy.d.ts
+64 notice 1.9kB   dist/App_Scripts/Strategy/FreeTextColumnStrategy.js
+64 notice 440B    dist/App_Scripts/Strategy/HomeStrategy.d.ts
+64 notice 1.7kB   dist/App_Scripts/Strategy/HomeStrategy.js
+64 notice 104B    dist/App_Scripts/Strategy/Interface/IAdvancedSearchStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IAdvancedSearchStrategy.js
+64 notice 95B     dist/App_Scripts/Strategy/Interface/IAlertStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IAlertStrategy.js
+64 notice 101B    dist/App_Scripts/Strategy/Interface/IApplicationStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IApplicationStrategy.js
+64 notice 470B    dist/App_Scripts/Strategy/Interface/IBulkUpdateStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IBulkUpdateStrategy.js
+64 notice 106B    dist/App_Scripts/Strategy/Interface/ICalculatedColumnStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ICalculatedColumnStrategy.js
+64 notice 98B     dist/App_Scripts/Strategy/Interface/ICalendarStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ICalendarStrategy.js
+64 notice 104B    dist/App_Scripts/Strategy/Interface/ICellValidationStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ICellValidationStrategy.js
+64 notice 95B     dist/App_Scripts/Strategy/Interface/IChartStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IChartStrategy.js
+64 notice 103B    dist/App_Scripts/Strategy/Interface/IColumnChooserStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IColumnChooserStrategy.js
+64 notice 359B    dist/App_Scripts/Strategy/Interface/IColumnFilterStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IColumnFilterStrategy.js
+64 notice 100B    dist/App_Scripts/Strategy/Interface/IColumnInfoStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IColumnInfoStrategy.js
+64 notice 130B    dist/App_Scripts/Strategy/Interface/IConditionalStyleStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IConditionalStyleStrategy.js
+64 notice 99B     dist/App_Scripts/Strategy/Interface/IDashboardStrategy.d.ts
+64 notice 256B    dist/App_Scripts/Strategy/Interface/IDashboardStrategy.js
+64 notice 104B    dist/App_Scripts/Strategy/Interface/IDataManagementStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IDataManagementStrategy.js
+64 notice 100B    dist/App_Scripts/Strategy/Interface/IDataSourceStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IDataSourceStrategy.js
+64 notice 1.3kB   dist/App_Scripts/Strategy/Interface/IExportStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IExportStrategy.js
+64 notice 103B    dist/App_Scripts/Strategy/Interface/IFlashingCellsStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IFlashingCellsStrategy.js
+64 notice 102B    dist/App_Scripts/Strategy/Interface/IFormatColumnStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IFormatColumnStrategy.js
+64 notice 104B    dist/App_Scripts/Strategy/Interface/IFreeTextColumnStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IFreeTextColumnStrategy.js
+64 notice 94B     dist/App_Scripts/Strategy/Interface/IHomeStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IHomeStrategy.js
+64 notice 123B    dist/App_Scripts/Strategy/Interface/ILayoutStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ILayoutStrategy.js
+64 notice 234B    dist/App_Scripts/Strategy/Interface/IPlusMinusStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IPlusMinusStrategy.js
+64 notice 101B    dist/App_Scripts/Strategy/Interface/IQuickSearchStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IQuickSearchStrategy.js
+64 notice 102B    dist/App_Scripts/Strategy/Interface/ISelectColumnStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ISelectColumnStrategy.js
+64 notice 613B    dist/App_Scripts/Strategy/Interface/ISelectedCellsStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ISelectedCellsStrategy.js
+64 notice 220B    dist/App_Scripts/Strategy/Interface/IShortcutStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IShortcutStrategy.js
+64 notice 555B    dist/App_Scripts/Strategy/Interface/ISmartEditStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ISmartEditStrategy.js
+64 notice 327B    dist/App_Scripts/Strategy/Interface/IStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IStrategy.js
+64 notice 144B    dist/App_Scripts/Strategy/Interface/IStrategyActionReturn.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IStrategyActionReturn.js
+64 notice 351B    dist/App_Scripts/Strategy/Interface/ITeamSharingStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/ITeamSharingStrategy.js
+64 notice 95B     dist/App_Scripts/Strategy/Interface/IThemeStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IThemeStrategy.js
+64 notice 100B    dist/App_Scripts/Strategy/Interface/IUserFilterStrategy.d.ts
+64 notice 77B     dist/App_Scripts/Strategy/Interface/IUserFilterStrategy.js
+64 notice 556B    dist/App_Scripts/Strategy/LayoutStrategy.d.ts
+64 notice 1.1kB   dist/App_Scripts/Strategy/LayoutStrategy.js
+64 notice 740B    dist/App_Scripts/Strategy/PlusMinusStrategy.d.ts
+64 notice 9.3kB   dist/App_Scripts/Strategy/PlusMinusStrategy.js
+64 notice 653B    dist/App_Scripts/Strategy/QuickSearchStrategy.d.ts
+64 notice 1.6kB   dist/App_Scripts/Strategy/QuickSearchStrategy.js
+64 notice 394B    dist/App_Scripts/Strategy/QuickSearchStrategyagGrid.d.ts
+64 notice 662B    dist/App_Scripts/Strategy/QuickSearchStrategyagGrid.js
+64 notice 415B    dist/App_Scripts/Strategy/SelectColumnStrategy.d.ts
+64 notice 876B    dist/App_Scripts/Strategy/SelectColumnStrategy.js
+64 notice 761B    dist/App_Scripts/Strategy/SelectedCellsStrategy.d.ts
+64 notice 5.0kB   dist/App_Scripts/Strategy/SelectedCellsStrategy.js
+64 notice 700B    dist/App_Scripts/Strategy/ShortcutStrategy.d.ts
+64 notice 8.0kB   dist/App_Scripts/Strategy/ShortcutStrategy.js
+64 notice 944B    dist/App_Scripts/Strategy/SmartEditStrategy.d.ts
+64 notice 5.1kB   dist/App_Scripts/Strategy/SmartEditStrategy.js
+64 notice 475B    dist/App_Scripts/Strategy/TeamSharingStrategy.d.ts
+64 notice 834B    dist/App_Scripts/Strategy/TeamSharingStrategy.js
+64 notice 474B    dist/App_Scripts/Strategy/ThemeStrategy.d.ts
+64 notice 3.9kB   dist/App_Scripts/Strategy/ThemeStrategy.js
+64 notice 537B    dist/App_Scripts/Strategy/UserFilterStrategy.d.ts
+64 notice 2.3kB   dist/App_Scripts/Strategy/UserFilterStrategy.js
+64 notice 20.1kB  dist/App_Scripts/Styles/fonts/glyphicons-halflings-regular.eot
+64 notice 108.7kB dist/App_Scripts/Styles/fonts/glyphicons-halflings-regular.svg
+64 notice 45.4kB  dist/App_Scripts/Styles/fonts/glyphicons-halflings-regular.ttf
+64 notice 23.4kB  dist/App_Scripts/Styles/fonts/glyphicons-halflings-regular.woff
+64 notice 18.0kB  dist/App_Scripts/Styles/fonts/glyphicons-halflings-regular.woff2
+64 notice 130.5kB dist/App_Scripts/Styles/stylesheets/adaptableblotter-style.css
+64 notice 23.4kB  dist/App_Scripts/Styles/themes/default/bootstrap.min.css
+64 notice 105B    dist/App_Scripts/Styles/themes/index.d.ts
+64 notice 384B    dist/App_Scripts/Styles/themes/index.js
+64 notice 142.3kB dist/App_Scripts/Styles/themes/slate/bootstrap.min.css
+64 notice 6.1kB   dist/App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.d.ts
+64 notice 20.3kB  dist/App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.js
+64 notice 353B    dist/App_Scripts/Vendors/AdaptableGrid/BlotterApi.d.ts
+64 notice 382B    dist/App_Scripts/Vendors/AdaptableGrid/BlotterApi.js
+64 notice 321B    dist/App_Scripts/Vendors/AdaptableGrid/BlotterFactoryAdaptableGrid.d.ts
+64 notice 554B    dist/App_Scripts/Vendors/AdaptableGrid/BlotterFactoryAdaptableGrid.js
+64 notice 6.6kB   dist/App_Scripts/Vendors/agGrid/AdaptableBlotter.d.ts
+64 notice 71.6kB  dist/App_Scripts/Vendors/agGrid/AdaptableBlotter.js
+64 notice 353B    dist/App_Scripts/Vendors/agGrid/BlotterApi.d.ts
+64 notice 442B    dist/App_Scripts/Vendors/agGrid/BlotterApi.js
+64 notice 314B    dist/App_Scripts/Vendors/agGrid/BlotterFactoryAgGrid.d.ts
+64 notice 522B    dist/App_Scripts/Vendors/agGrid/BlotterFactoryAgGrid.js
+64 notice 132B    dist/App_Scripts/Vendors/agGrid/FilterWrapper.d.ts
+64 notice 1.9kB   dist/App_Scripts/Vendors/agGrid/FilterWrapper.js
+64 notice 140B    dist/App_Scripts/Vendors/agGrid/FloatingFilterWrapper.d.ts
+64 notice 1.1kB   dist/App_Scripts/Vendors/agGrid/FloatingFilterWrapper.js
+64 notice 6.6kB   dist/App_Scripts/Vendors/Hypergrid/AdaptableBlotter.d.ts
+64 notice 67.7kB  dist/App_Scripts/Vendors/Hypergrid/AdaptableBlotter.js
+64 notice 353B    dist/App_Scripts/Vendors/Hypergrid/BlotterApi.d.ts
+64 notice 446B    dist/App_Scripts/Vendors/Hypergrid/BlotterApi.js
+64 notice 317B    dist/App_Scripts/Vendors/Hypergrid/BlotterFactoryHypergrid.d.ts
+64 notice 540B    dist/App_Scripts/Vendors/Hypergrid/BlotterFactoryHypergrid.js
+64 notice 214B    dist/App_Scripts/Vendors/Hypergrid/CustomSortDataSource.d.ts
+64 notice 7.3kB   dist/App_Scripts/Vendors/Hypergrid/CustomSortDataSource.js
+64 notice 43B     dist/App_Scripts/Vendors/Hypergrid/DataSourceIndexed.d.ts
+64 notice 1.5kB   dist/App_Scripts/Vendors/Hypergrid/DataSourceIndexed.js
+64 notice 137B    dist/App_Scripts/Vendors/Hypergrid/FilterAndSearchDataSource.d.ts
+64 notice 8.8kB   dist/App_Scripts/Vendors/Hypergrid/FilterAndSearchDataSource.js
+64 notice 111B    dist/App_Scripts/Vendors/Hypergrid/HypergridThemes.d.ts
+64 notice 3.9kB   dist/App_Scripts/Vendors/Hypergrid/HypergridThemes.js
+64 notice 6.4kB   dist/App_Scripts/Vendors/Kendo/AdaptableBlotter.d.ts
+64 notice 44.4kB  dist/App_Scripts/Vendors/Kendo/AdaptableBlotter.js
+64 notice 353B    dist/App_Scripts/Vendors/Kendo/BlotterApi.d.ts
+64 notice 379B    dist/App_Scripts/Vendors/Kendo/BlotterApi.js
+64 notice 313B    dist/App_Scripts/Vendors/Kendo/BlotterFactoryKendo.d.ts
+64 notice 516B    dist/App_Scripts/Vendors/Kendo/BlotterFactoryKendo.js
+64 notice 95B     dist/App_Scripts/View/About/AboutPopup.d.ts
+64 notice 6.2kB   dist/App_Scripts/View/About/AboutPopup.js
+64 notice 232B    dist/App_Scripts/View/AdaptableBlotterView.d.ts
+64 notice 4.9kB   dist/App_Scripts/View/AdaptableBlotterView.js
+64 notice 468B    dist/App_Scripts/View/AdaptablePopover.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/AdaptablePopover.js
+64 notice 371B    dist/App_Scripts/View/AdaptableViewFactory.d.ts
+64 notice 7.0kB   dist/App_Scripts/View/AdaptableViewFactory.js
+64 notice 599B    dist/App_Scripts/View/AdvancedSearch/AdvancedSearchEntityRow.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/AdvancedSearch/AdvancedSearchEntityRow.js
+64 notice 104B    dist/App_Scripts/View/AdvancedSearch/AdvancedSearchPopup.d.ts
+64 notice 7.9kB   dist/App_Scripts/View/AdvancedSearch/AdvancedSearchPopup.js
+64 notice 113B    dist/App_Scripts/View/AdvancedSearch/AdvancedSearchToolbarControl.d.ts
+64 notice 6.0kB   dist/App_Scripts/View/AdvancedSearch/AdvancedSearchToolbarControl.js
+64 notice 569B    dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchExpressionWizard.d.ts
+64 notice 723B    dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchExpressionWizard.js
+64 notice 988B    dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSettingsWizard.d.ts
+64 notice 3.1kB   dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSettingsWizard.js
+64 notice 860B    dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSummaryWizard.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSummaryWizard.js
+64 notice 323B    dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchWizard.d.ts
+64 notice 2.0kB   dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchWizard.js
+64 notice 782B    dist/App_Scripts/View/Alert/AlertEntityRow.d.ts
+64 notice 3.2kB   dist/App_Scripts/View/Alert/AlertEntityRow.js
+64 notice 95B     dist/App_Scripts/View/Alert/AlertPopup.d.ts
+64 notice 7.0kB   dist/App_Scripts/View/Alert/AlertPopup.js
+64 notice 1.2kB   dist/App_Scripts/View/Alert/AlertSummary.d.ts
+64 notice 5.0kB   dist/App_Scripts/View/Alert/AlertSummary.js
+64 notice 104B    dist/App_Scripts/View/Alert/AlertToolbarControl.d.ts
+64 notice 4.0kB   dist/App_Scripts/View/Alert/AlertToolbarControl.js
+64 notice 512B    dist/App_Scripts/View/Alert/Wizard/AlertExpressionWizard.d.ts
+64 notice 661B    dist/App_Scripts/View/Alert/Wizard/AlertExpressionWizard.js
+64 notice 1.3kB   dist/App_Scripts/View/Alert/Wizard/AlertRulesWizard.d.ts
+64 notice 10.0kB  dist/App_Scripts/View/Alert/Wizard/AlertRulesWizard.js
+64 notice 941B    dist/App_Scripts/View/Alert/Wizard/AlertSelectColumnWizard.d.ts
+64 notice 1.7kB   dist/App_Scripts/View/Alert/Wizard/AlertSelectColumnWizard.js
+64 notice 947B    dist/App_Scripts/View/Alert/Wizard/AlertSelectQueryWizard.d.ts
+64 notice 2.7kB   dist/App_Scripts/View/Alert/Wizard/AlertSelectQueryWizard.js
+64 notice 825B    dist/App_Scripts/View/Alert/Wizard/AlertSummaryWizard.d.ts
+64 notice 2.0kB   dist/App_Scripts/View/Alert/Wizard/AlertSummaryWizard.js
+64 notice 927B    dist/App_Scripts/View/Alert/Wizard/AlertTypeWizard.d.ts
+64 notice 5.1kB   dist/App_Scripts/View/Alert/Wizard/AlertTypeWizard.js
+64 notice 368B    dist/App_Scripts/View/Alert/Wizard/AlertWizard.d.ts
+64 notice 2.6kB   dist/App_Scripts/View/Alert/Wizard/AlertWizard.js
+64 notice 101B    dist/App_Scripts/View/Application/ApplicationPopup.d.ts
+64 notice 610B    dist/App_Scripts/View/Application/ApplicationPopup.js
+64 notice 110B    dist/App_Scripts/View/Application/ApplicationToolbarControl.d.ts
+64 notice 2.0kB   dist/App_Scripts/View/Application/ApplicationToolbarControl.js
+64 notice 220B    dist/App_Scripts/View/BulkUpdate/BulkUpdatePopup.d.ts
+64 notice 11.4kB  dist/App_Scripts/View/BulkUpdate/BulkUpdatePopup.js
+64 notice 109B    dist/App_Scripts/View/BulkUpdate/BulkUpdateToolbarControl.d.ts
+64 notice 8.6kB   dist/App_Scripts/View/BulkUpdate/BulkUpdateToolbarControl.js
+64 notice 266B    dist/App_Scripts/View/CalculatedColumn/CalculatedColumnEntityRow.d.ts
+64 notice 1.3kB   dist/App_Scripts/View/CalculatedColumn/CalculatedColumnEntityRow.js
+64 notice 106B    dist/App_Scripts/View/CalculatedColumn/CalculatedColumnPopup.d.ts
+64 notice 7.8kB   dist/App_Scripts/View/CalculatedColumn/CalculatedColumnPopup.js
+64 notice 1.3kB   dist/App_Scripts/View/CalculatedColumn/CalculatedColumnSummary.d.ts
+64 notice 4.4kB   dist/App_Scripts/View/CalculatedColumn/CalculatedColumnSummary.js
+64 notice 1.0kB   dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnExpressionWizard.d.ts
+64 notice 2.4kB   dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnExpressionWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSettingsWizard.d.ts
+64 notice 3.0kB   dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSettingsWizard.js
+64 notice 744B    dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSummaryWizard.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSummaryWizard.js
+64 notice 500B    dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnWizard.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnWizard.js
+64 notice 384B    dist/App_Scripts/View/Calendars/CalendarEntryItem.d.ts
+64 notice 661B    dist/App_Scripts/View/Calendars/CalendarEntryItem.js
+64 notice 497B    dist/App_Scripts/View/Calendars/CalendarsEntryRow.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/Calendars/CalendarsEntryRow.js
+64 notice 99B     dist/App_Scripts/View/Calendars/CalendarsPopup.d.ts
+64 notice 4.7kB   dist/App_Scripts/View/Calendars/CalendarsPopup.js
+64 notice 835B    dist/App_Scripts/View/CellValidation/CellValidationEntityRow.d.ts
+64 notice 3.0kB   dist/App_Scripts/View/CellValidation/CellValidationEntityRow.js
+64 notice 104B    dist/App_Scripts/View/CellValidation/CellValidationPopup.d.ts
+64 notice 7.6kB   dist/App_Scripts/View/CellValidation/CellValidationPopup.js
+64 notice 1.3kB   dist/App_Scripts/View/CellValidation/CellValidationSummary.d.ts
+64 notice 5.4kB   dist/App_Scripts/View/CellValidation/CellValidationSummary.js
+64 notice 1.0kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationActionWizard.d.ts
+64 notice 3.8kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationActionWizard.js
+64 notice 527B    dist/App_Scripts/View/CellValidation/Wizard/CellValidationExpressionWizard.d.ts
+64 notice 688B    dist/App_Scripts/View/CellValidation/Wizard/CellValidationExpressionWizard.js
+64 notice 1.4kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationRulesWizard.d.ts
+64 notice 11.8kB  dist/App_Scripts/View/CellValidation/Wizard/CellValidationRulesWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationSelectColumnWizard.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationSelectColumnWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationSelectQueryWizard.d.ts
+64 notice 2.7kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationSelectQueryWizard.js
+64 notice 867B    dist/App_Scripts/View/CellValidation/Wizard/CellValidationSummaryWizard.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationSummaryWizard.js
+64 notice 404B    dist/App_Scripts/View/CellValidation/Wizard/CellValidationWizard.d.ts
+64 notice 2.9kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationWizard.js
+64 notice 102B    dist/App_Scripts/View/Chart/ChartDisplayPopup.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/Chart/ChartDisplayPopup.js
+64 notice 433B    dist/App_Scripts/View/Chart/ChartEntityRow.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/Chart/ChartEntityRow.js
+64 notice 95B     dist/App_Scripts/View/Chart/ChartPopup.d.ts
+64 notice 7.2kB   dist/App_Scripts/View/Chart/ChartPopup.js
+64 notice 104B    dist/App_Scripts/View/Chart/ChartToolbarControl.d.ts
+64 notice 5.8kB   dist/App_Scripts/View/Chart/ChartToolbarControl.js
+64 notice 1.4kB   dist/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.d.ts
+64 notice 6.4kB   dist/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.d.ts
+64 notice 4.1kB   dist/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.js
+64 notice 781B    dist/App_Scripts/View/Chart/Wizard/ChartSummaryWizard.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/Chart/Wizard/ChartSummaryWizard.js
+64 notice 368B    dist/App_Scripts/View/Chart/Wizard/ChartWizard.d.ts
+64 notice 2.4kB   dist/App_Scripts/View/Chart/Wizard/ChartWizard.js
+64 notice 1.3kB   dist/App_Scripts/View/Chart/Wizard/ChartXAxisWizard.d.ts
+64 notice 6.7kB   dist/App_Scripts/View/Chart/Wizard/ChartXAxisWizard.js
+64 notice 954B    dist/App_Scripts/View/Chart/Wizard/ChartYAxisWizard.d.ts
+64 notice 3.2kB   dist/App_Scripts/View/Chart/Wizard/ChartYAxisWizard.js
+64 notice 237B    dist/App_Scripts/View/ColorPicker.d.ts
+64 notice 1.3kB   dist/App_Scripts/View/ColorPicker.js
+64 notice 103B    dist/App_Scripts/View/ColumnChooser/ColumnChooserPopup.d.ts
+64 notice 2.6kB   dist/App_Scripts/View/ColumnChooser/ColumnChooserPopup.js
+64 notice 656B    dist/App_Scripts/View/ColumnChooser/ColumnChooserSummary.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/ColumnChooser/ColumnChooserSummary.js
+64 notice 720B    dist/App_Scripts/View/ColumnFilter/ColumnFilterEntityRow.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/ColumnFilter/ColumnFilterEntityRow.js
+64 notice 102B    dist/App_Scripts/View/ColumnFilter/ColumnFilterPopup.d.ts
+64 notice 3.9kB   dist/App_Scripts/View/ColumnFilter/ColumnFilterPopup.js
+64 notice 1.2kB   dist/App_Scripts/View/ColumnFilter/ColumnFilterSummary.d.ts
+64 notice 3.4kB   dist/App_Scripts/View/ColumnFilter/ColumnFilterSummary.js
+64 notice 111B    dist/App_Scripts/View/ColumnFilter/ColumnFilterToolbarControl.d.ts
+64 notice 4.0kB   dist/App_Scripts/View/ColumnFilter/ColumnFilterToolbarControl.js
+64 notice 249B    dist/App_Scripts/View/ColumnInfo/ColumnInfoPopup.d.ts
+64 notice 12.7kB  dist/App_Scripts/View/ColumnInfo/ColumnInfoPopup.js
+64 notice 485B    dist/App_Scripts/View/Components/AdaptableObjectCollection.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/Components/AdaptableObjectCollection.js
+64 notice 362B    dist/App_Scripts/View/Components/AdaptableObjectRow.d.ts
+64 notice 1.2kB   dist/App_Scripts/View/Components/AdaptableObjectRow.js
+64 notice 505B    dist/App_Scripts/View/Components/AlertsPanel.d.ts
+64 notice 3.1kB   dist/App_Scripts/View/Components/AlertsPanel.js
+64 notice 263B    dist/App_Scripts/View/Components/Buttons/ButtonApply.d.ts
+64 notice 809B    dist/App_Scripts/View/Components/Buttons/ButtonApply.js
+64 notice 916B    dist/App_Scripts/View/Components/Buttons/ButtonBase.d.ts
+64 notice 2.8kB   dist/App_Scripts/View/Components/Buttons/ButtonBase.js
+64 notice 182B    dist/App_Scripts/View/Components/Buttons/ButtonCancel.d.ts
+64 notice 849B    dist/App_Scripts/View/Components/Buttons/ButtonCancel.js
+64 notice 181B    dist/App_Scripts/View/Components/Buttons/ButtonClear.d.ts
+64 notice 838B    dist/App_Scripts/View/Components/Buttons/ButtonClear.js
+64 notice 181B    dist/App_Scripts/View/Components/Buttons/ButtonClose.d.ts
+64 notice 838B    dist/App_Scripts/View/Components/Buttons/ButtonClose.js
+64 notice 185B    dist/App_Scripts/View/Components/Buttons/ButtonCondition.d.ts
+64 notice 818B    dist/App_Scripts/View/Components/Buttons/ButtonCondition.js
+64 notice 185B    dist/App_Scripts/View/Components/Buttons/ButtonConfigure.d.ts
+64 notice 821B    dist/App_Scripts/View/Components/Buttons/ButtonConfigure.js
+64 notice 193B    dist/App_Scripts/View/Components/Buttons/ButtonDashboard.d.ts
+64 notice 932B    dist/App_Scripts/View/Components/Buttons/ButtonDashboard.js
+64 notice 610B    dist/App_Scripts/View/Components/Buttons/ButtonDelete.d.ts
+64 notice 2.3kB   dist/App_Scripts/View/Components/Buttons/ButtonDelete.js
+64 notice 185B    dist/App_Scripts/View/Components/Buttons/ButtonDirection.d.ts
+64 notice 830B    dist/App_Scripts/View/Components/Buttons/ButtonDirection.js
+64 notice 180B    dist/App_Scripts/View/Components/Buttons/ButtonEdit.d.ts
+64 notice 785B    dist/App_Scripts/View/Components/Buttons/ButtonEdit.js
+64 notice 285B    dist/App_Scripts/View/Components/Buttons/ButtonInfo.d.ts
+64 notice 821B    dist/App_Scripts/View/Components/Buttons/ButtonInfo.js
+64 notice 184B    dist/App_Scripts/View/Components/Buttons/ButtonMinimise.d.ts
+64 notice 820B    dist/App_Scripts/View/Components/Buttons/ButtonMinimise.js
+64 notice 179B    dist/App_Scripts/View/Components/Buttons/ButtonNew.d.ts
+64 notice 777B    dist/App_Scripts/View/Components/Buttons/ButtonNew.js
+64 notice 180B    dist/App_Scripts/View/Components/Buttons/ButtonNext.d.ts
+64 notice 781B    dist/App_Scripts/View/Components/Buttons/ButtonNext.js
+64 notice 189B    dist/App_Scripts/View/Components/Buttons/ButtonPreviewDelete.d.ts
+64 notice 852B    dist/App_Scripts/View/Components/Buttons/ButtonPreviewDelete.js
+64 notice 180B    dist/App_Scripts/View/Components/Buttons/ButtonPreviewHeader.d.ts
+64 notice 828B    dist/App_Scripts/View/Components/Buttons/ButtonPreviewHeader.js
+64 notice 180B    dist/App_Scripts/View/Components/Buttons/ButtonSave.d.ts
+64 notice 792B    dist/App_Scripts/View/Components/Buttons/ButtonSave.js
+64 notice 181B    dist/App_Scripts/View/Components/Buttons/ButtonShare.d.ts
+64 notice 857B    dist/App_Scripts/View/Components/Buttons/ButtonShare.js
+64 notice 185B    dist/App_Scripts/View/Components/Buttons/ButtonShowChart.d.ts
+64 notice 814B    dist/App_Scripts/View/Components/Buttons/ButtonShowChart.js
+64 notice 180B    dist/App_Scripts/View/Components/Buttons/ButtonUndo.d.ts
+64 notice 812B    dist/App_Scripts/View/Components/Buttons/ButtonUndo.js
+64 notice 188B    dist/App_Scripts/View/Components/Buttons/ButtonWizardAction.d.ts
+64 notice 852B    dist/App_Scripts/View/Components/Buttons/ButtonWizardAction.js
+64 notice 873B    dist/App_Scripts/View/Components/Buttons/EntityListActionButtons.d.ts
+64 notice 2.6kB   dist/App_Scripts/View/Components/Buttons/EntityListActionButtons.js
+64 notice 639B    dist/App_Scripts/View/Components/FilterForm/FilterForm.d.ts
+64 notice 16.4kB  dist/App_Scripts/View/Components/FilterForm/FilterForm.js
+64 notice 664B    dist/App_Scripts/View/Components/FilterForm/FloatingFilterForm.d.ts
+64 notice 10.8kB  dist/App_Scripts/View/Components/FilterForm/FloatingFilterForm.js
+64 notice 2.3kB   dist/App_Scripts/View/Components/FilterForm/ListBoxFilterForm.d.ts
+64 notice 15.9kB  dist/App_Scripts/View/Components/FilterForm/ListBoxFilterForm.js
+64 notice 624B    dist/App_Scripts/View/Components/FilterForm/ListBoxMenu.d.ts
+64 notice 1.1kB   dist/App_Scripts/View/Components/FilterForm/ListBoxMenu.js
+64 notice 227B    dist/App_Scripts/View/Components/FilterForm/Waiting.d.ts
+64 notice 1.1kB   dist/App_Scripts/View/Components/FilterForm/Waiting.js
+64 notice 325B    dist/App_Scripts/View/Components/Forms/AdaptableBlotterForm.d.ts
+64 notice 1.1kB   dist/App_Scripts/View/Components/Forms/AdaptableBlotterForm.js
+64 notice 430B    dist/App_Scripts/View/Components/Forms/AdaptableBlotterFormControlTextClear.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/Components/Forms/AdaptableBlotterFormControlTextClear.js
+64 notice 2.2kB   dist/App_Scripts/View/Components/ListBox/DualListBoxEditor.d.ts
+64 notice 29.2kB  dist/App_Scripts/View/Components/ListBox/DualListBoxEditor.js
+64 notice 556B    dist/App_Scripts/View/Components/ListBox/ListBoxFilterSortComponent.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/Components/ListBox/ListBoxFilterSortComponent.js
+64 notice 1.1kB   dist/App_Scripts/View/Components/ListBox/SingleListBox.d.ts
+64 notice 4.7kB   dist/App_Scripts/View/Components/ListBox/SingleListBox.js
+64 notice 676B    dist/App_Scripts/View/Components/Panels/FilterFormPanel.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/Components/Panels/FilterFormPanel.js
+64 notice 610B    dist/App_Scripts/View/Components/Panels/PanelDashboard.d.ts
+64 notice 3.2kB   dist/App_Scripts/View/Components/Panels/PanelDashboard.js
+64 notice 514B    dist/App_Scripts/View/Components/Panels/PanelWithButton.d.ts
+64 notice 3.1kB   dist/App_Scripts/View/Components/Panels/PanelWithButton.js
+64 notice 326B    dist/App_Scripts/View/Components/Panels/PanelWithImage.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/Components/Panels/PanelWithImage.js
+64 notice 298B    dist/App_Scripts/View/Components/Panels/PanelWithInfo.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/Components/Panels/PanelWithInfo.js
+64 notice 347B    dist/App_Scripts/View/Components/Panels/PanelWithRow.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/Components/Panels/PanelWithRow.js
+64 notice 706B    dist/App_Scripts/View/Components/Panels/PanelWithTwoButtons.d.ts
+64 notice 2.8kB   dist/App_Scripts/View/Components/Panels/PanelWithTwoButtons.js
+64 notice 433B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.d.ts
+64 notice 2.3kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.js
+64 notice 473B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterLoadingScreen.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterLoadingScreen.js
+64 notice 643B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopup.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopup.js
+64 notice 448B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupAlert.d.ts
+64 notice 1.7kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupAlert.js
+64 notice 579B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupConfirmation.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupConfirmation.js
+64 notice 395B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupPrompt.d.ts
+64 notice 943B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupPrompt.js
+64 notice 375B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupWarning.d.ts
+64 notice 1.1kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopupWarning.js
+64 notice 707B    dist/App_Scripts/View/Components/PreviewResultsPanel.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/Components/PreviewResultsPanel.js
+64 notice 777B    dist/App_Scripts/View/Components/Selectors/ColumnSelector.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/Components/Selectors/ColumnSelector.js
+64 notice 765B    dist/App_Scripts/View/Components/Selectors/ColumnValueSelector.d.ts
+64 notice 3.5kB   dist/App_Scripts/View/Components/Selectors/ColumnValueSelector.js
+64 notice 898B    dist/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.d.ts
+64 notice 77B     dist/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.js
+64 notice 1.1kB   dist/App_Scripts/View/Components/SharedProps/ConfigEntityRowProps.d.ts
+64 notice 77B     dist/App_Scripts/View/Components/SharedProps/ConfigEntityRowProps.js
+64 notice 279B    dist/App_Scripts/View/Components/SharedProps/EditableConfigEntityState.d.ts
+64 notice 77B     dist/App_Scripts/View/Components/SharedProps/EditableConfigEntityState.js
+64 notice 514B    dist/App_Scripts/View/Components/SharedProps/StrategySummaryProps.d.ts
+64 notice 77B     dist/App_Scripts/View/Components/SharedProps/StrategySummaryProps.js
+64 notice 912B    dist/App_Scripts/View/Components/SharedProps/StrategyViewPopupProps.d.ts
+64 notice 77B     dist/App_Scripts/View/Components/SharedProps/StrategyViewPopupProps.js
+64 notice 543B    dist/App_Scripts/View/Components/SharedProps/ToolbarStrategyViewPopupProps.d.ts
+64 notice 77B     dist/App_Scripts/View/Components/SharedProps/ToolbarStrategyViewPopupProps.js
+64 notice 281B    dist/App_Scripts/View/Components/StrategyProfile.d.ts
+64 notice 861B    dist/App_Scripts/View/Components/StrategyProfile.js
+64 notice 646B    dist/App_Scripts/View/Components/StrategySummary/StrategyDetail.d.ts
+64 notice 1.2kB   dist/App_Scripts/View/Components/StrategySummary/StrategyDetail.js
+64 notice 487B    dist/App_Scripts/View/Components/StrategySummary/StrategyHeader.d.ts
+64 notice 1.2kB   dist/App_Scripts/View/Components/StrategySummary/StrategyHeader.js
+64 notice 278B    dist/App_Scripts/View/Components/StrategySummary/SummaryRowItem.d.ts
+64 notice 714B    dist/App_Scripts/View/Components/StrategySummary/SummaryRowItem.js
+64 notice 995B    dist/App_Scripts/View/Components/StyleComponent.d.ts
+64 notice 10.4kB  dist/App_Scripts/View/Components/StyleComponent.js
+64 notice 326B    dist/App_Scripts/View/Components/StyleVisualItem.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/Components/StyleVisualItem.js
+64 notice 368B    dist/App_Scripts/View/Components/WizardSummaryPage.d.ts
+64 notice 1.3kB   dist/App_Scripts/View/Components/WizardSummaryPage.js
+64 notice 379B    dist/App_Scripts/View/Components/WizardSummaryRow.d.ts
+64 notice 614B    dist/App_Scripts/View/Components/WizardSummaryRow.js
+64 notice 286B    dist/App_Scripts/View/ConditionalStyle/ConditionalStyleEntityRow.d.ts
+64 notice 2.2kB   dist/App_Scripts/View/ConditionalStyle/ConditionalStyleEntityRow.js
+64 notice 106B    dist/App_Scripts/View/ConditionalStyle/ConditionalStylePopup.d.ts
+64 notice 7.3kB   dist/App_Scripts/View/ConditionalStyle/ConditionalStylePopup.js
+64 notice 1.2kB   dist/App_Scripts/View/ConditionalStyle/ConditionalStyleSummary.d.ts
+64 notice 6.4kB   dist/App_Scripts/View/ConditionalStyle/ConditionalStyleSummary.js
+64 notice 543B    dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleExpressionWizard.d.ts
+64 notice 709B    dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleExpressionWizard.js
+64 notice 1.1kB   dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleScopeWizard.d.ts
+64 notice 4.5kB   dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleScopeWizard.js
+64 notice 941B    dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleStyleWizard.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleStyleWizard.js
+64 notice 872B    dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleSummaryWizard.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleSummaryWizard.js
+64 notice 471B    dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleWizard.d.ts
+64 notice 2.4kB   dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleWizard.js
+64 notice 358B    dist/App_Scripts/View/CustomSort/CustomSortEntityRow.d.ts
+64 notice 1.3kB   dist/App_Scripts/View/CustomSort/CustomSortEntityRow.js
+64 notice 100B    dist/App_Scripts/View/CustomSort/CustomSortPopup.d.ts
+64 notice 7.4kB   dist/App_Scripts/View/CustomSort/CustomSortPopup.js
+64 notice 1.1kB   dist/App_Scripts/View/CustomSort/CustomSortSummary.d.ts
+64 notice 5.9kB   dist/App_Scripts/View/CustomSort/CustomSortSummary.js
+64 notice 928B    dist/App_Scripts/View/CustomSort/Wizard/CustomSortColumnWizard.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/CustomSort/Wizard/CustomSortColumnWizard.js
+64 notice 791B    dist/App_Scripts/View/CustomSort/Wizard/CustomSortSummaryWizard.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/CustomSort/Wizard/CustomSortSummaryWizard.js
+64 notice 1.1kB   dist/App_Scripts/View/CustomSort/Wizard/CustomSortValuesWizard.d.ts
+64 notice 2.9kB   dist/App_Scripts/View/CustomSort/Wizard/CustomSortValuesWizard.js
+64 notice 388B    dist/App_Scripts/View/CustomSort/Wizard/CustomSortWizard.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/CustomSort/Wizard/CustomSortWizard.js
+64 notice 94B     dist/App_Scripts/View/Dashboard/Dashboard.d.ts
+64 notice 5.7kB   dist/App_Scripts/View/Dashboard/Dashboard.js
+64 notice 99B     dist/App_Scripts/View/Dashboard/DashboardPopup.d.ts
+64 notice 4.2kB   dist/App_Scripts/View/Dashboard/DashboardPopup.js
+64 notice 104B    dist/App_Scripts/View/DataManagement/DataManagementPopup.d.ts
+64 notice 2.2kB   dist/App_Scripts/View/DataManagement/DataManagementPopup.js
+64 notice 100B    dist/App_Scripts/View/DataSource/DataSourcePopup.d.ts
+64 notice 3.8kB   dist/App_Scripts/View/DataSource/DataSourcePopup.js
+64 notice 109B    dist/App_Scripts/View/DataSource/DataSourceToolbarControl.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/DataSource/DataSourceToolbarControl.js
+64 notice 96B     dist/App_Scripts/View/Export/ExportPopup.d.ts
+64 notice 7.3kB   dist/App_Scripts/View/Export/ExportPopup.js
+64 notice 105B    dist/App_Scripts/View/Export/ExportToolbarControl.d.ts
+64 notice 9.7kB   dist/App_Scripts/View/Export/ExportToolbarControl.js
+64 notice 112B    dist/App_Scripts/View/Export/IPushPullDomainPageSelector.d.ts
+64 notice 4.6kB   dist/App_Scripts/View/Export/IPushPullDomainPageSelector.js
+64 notice 99B     dist/App_Scripts/View/Export/IPushPullLogin.d.ts
+64 notice 3.4kB   dist/App_Scripts/View/Export/IPushPullLogin.js
+64 notice 691B    dist/App_Scripts/View/Export/ReportEntityRow.d.ts
+64 notice 4.3kB   dist/App_Scripts/View/Export/ReportEntityRow.js
+64 notice 999B    dist/App_Scripts/View/Export/Wizard/ReportColumnChooserWizard.d.ts
+64 notice 2.0kB   dist/App_Scripts/View/Export/Wizard/ReportColumnChooserWizard.js
+64 notice 904B    dist/App_Scripts/View/Export/Wizard/ReportColumnTypeWizard.d.ts
+64 notice 5.1kB   dist/App_Scripts/View/Export/Wizard/ReportColumnTypeWizard.js
+64 notice 549B    dist/App_Scripts/View/Export/Wizard/ReportExpressionWizard.d.ts
+64 notice 887B    dist/App_Scripts/View/Export/Wizard/ReportExpressionWizard.js
+64 notice 865B    dist/App_Scripts/View/Export/Wizard/ReportSettingsWizard.d.ts
+64 notice 2.6kB   dist/App_Scripts/View/Export/Wizard/ReportSettingsWizard.js
+64 notice 812B    dist/App_Scripts/View/Export/Wizard/ReportSummaryWizard.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/Export/Wizard/ReportSummaryWizard.js
+64 notice 307B    dist/App_Scripts/View/Export/Wizard/ReportWizard.d.ts
+64 notice 2.4kB   dist/App_Scripts/View/Export/Wizard/ReportWizard.js
+64 notice 447B    dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderColumnValues.d.ts
+64 notice 1.3kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderColumnValues.js
+64 notice 2.3kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderConditionSelector.d.ts
+64 notice 19.6kB  dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderConditionSelector.js
+64 notice 1.8kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPage.d.ts
+64 notice 8.8kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPage.js
+64 notice 1.3kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPreview.d.ts
+64 notice 13.4kB  dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPreview.js
+64 notice 1.1kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderRanges.d.ts
+64 notice 10.0kB  dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderRanges.js
+64 notice 500B    dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderUserFilter.d.ts
+64 notice 1.6kB   dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderUserFilter.js
+64 notice 1.1kB   dist/App_Scripts/View/FlashingCells/FlashingCellEntityRow.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/FlashingCells/FlashingCellEntityRow.js
+64 notice 103B    dist/App_Scripts/View/FlashingCells/FlashingCellsPopup.d.ts
+64 notice 6.0kB   dist/App_Scripts/View/FlashingCells/FlashingCellsPopup.js
+64 notice 916B    dist/App_Scripts/View/FlashingCells/FlashingCellSummary.d.ts
+64 notice 2.7kB   dist/App_Scripts/View/FlashingCells/FlashingCellSummary.js
+64 notice 278B    dist/App_Scripts/View/FormatColumn/FormatColumnEntityRow.d.ts
+64 notice 1.6kB   dist/App_Scripts/View/FormatColumn/FormatColumnEntityRow.js
+64 notice 102B    dist/App_Scripts/View/FormatColumn/FormatColumnPopup.d.ts
+64 notice 7.0kB   dist/App_Scripts/View/FormatColumn/FormatColumnPopup.js
+64 notice 1.4kB   dist/App_Scripts/View/FormatColumn/FormatColumnSummary.d.ts
+64 notice 5.8kB   dist/App_Scripts/View/FormatColumn/FormatColumnSummary.js
+64 notice 935B    dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnScopeWizard.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnScopeWizard.js
+64 notice 909B    dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnStyleWizard.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnStyleWizard.js
+64 notice 811B    dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnSummaryWizard.d.ts
+64 notice 1.6kB   dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnSummaryWizard.js
+64 notice 455B    dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnWizard.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnWizard.js
+64 notice 282B    dist/App_Scripts/View/FreeTextColumn/FreeTextColumnEntityRow.d.ts
+64 notice 1.5kB   dist/App_Scripts/View/FreeTextColumn/FreeTextColumnEntityRow.js
+64 notice 104B    dist/App_Scripts/View/FreeTextColumn/FreeTextColumnPopup.d.ts
+64 notice 6.8kB   dist/App_Scripts/View/FreeTextColumn/FreeTextColumnPopup.js
+64 notice 1.4kB   dist/App_Scripts/View/FreeTextColumn/FreeTextColumnSummary.d.ts
+64 notice 5.8kB   dist/App_Scripts/View/FreeTextColumn/FreeTextColumnSummary.js
+64 notice 1.1kB   dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSettingsWizard.d.ts
+64 notice 4.4kB   dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSettingsWizard.js
+64 notice 823B    dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSummaryWizard.d.ts
+64 notice 1.6kB   dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSummaryWizard.js
+64 notice 404B    dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnWizard.d.ts
+64 notice 1.6kB   dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnWizard.js
+64 notice 101B    dist/App_Scripts/View/Home/HomeButtonsPopup.d.ts
+64 notice 2.4kB   dist/App_Scripts/View/Home/HomeButtonsPopup.js
+64 notice 105B    dist/App_Scripts/View/Home/HomeToolbarControl.d.ts
+64 notice 9.7kB   dist/App_Scripts/View/Home/HomeToolbarControl.js
+64 notice 772B    dist/App_Scripts/View/Layout/GridSortRow.d.ts
+64 notice 2.3kB   dist/App_Scripts/View/Layout/GridSortRow.js
+64 notice 519B    dist/App_Scripts/View/Layout/LayoutEntityRow.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/Layout/LayoutEntityRow.js
+64 notice 96B     dist/App_Scripts/View/Layout/LayoutPopup.d.ts
+64 notice 8.1kB   dist/App_Scripts/View/Layout/LayoutPopup.js
+64 notice 105B    dist/App_Scripts/View/Layout/LayoutToolbarControl.d.ts
+64 notice 7.3kB   dist/App_Scripts/View/Layout/LayoutToolbarControl.js
+64 notice 930B    dist/App_Scripts/View/Layout/Wizard/LayoutColumnWizard.d.ts
+64 notice 2.5kB   dist/App_Scripts/View/Layout/Wizard/LayoutColumnWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/Layout/Wizard/LayoutGridSortWizard.d.ts
+64 notice 4.1kB   dist/App_Scripts/View/Layout/Wizard/LayoutGridSortWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/Layout/Wizard/LayoutSelectionWizard.d.ts
+64 notice 3.9kB   dist/App_Scripts/View/Layout/Wizard/LayoutSelectionWizard.js
+64 notice 891B    dist/App_Scripts/View/Layout/Wizard/LayoutSettingsWizard.d.ts
+64 notice 3.0kB   dist/App_Scripts/View/Layout/Wizard/LayoutSettingsWizard.js
+64 notice 795B    dist/App_Scripts/View/Layout/Wizard/LayoutSummaryWizard.d.ts
+64 notice 1.7kB   dist/App_Scripts/View/Layout/Wizard/LayoutSummaryWizard.js
+64 notice 482B    dist/App_Scripts/View/Layout/Wizard/LayoutWizard.d.ts
+64 notice 2.3kB   dist/App_Scripts/View/Layout/Wizard/LayoutWizard.js
+64 notice 556B    dist/App_Scripts/View/PlusMinus/PlusMinusEntityRow.d.ts
+64 notice 1.9kB   dist/App_Scripts/View/PlusMinus/PlusMinusEntityRow.js
+64 notice 99B     dist/App_Scripts/View/PlusMinus/PlusMinusPopup.d.ts
+64 notice 9.5kB   dist/App_Scripts/View/PlusMinus/PlusMinusPopup.js
+64 notice 1.3kB   dist/App_Scripts/View/PlusMinus/PlusMinusSummary.d.ts
+64 notice 5.9kB   dist/App_Scripts/View/PlusMinus/PlusMinusSummary.js
+64 notice 933B    dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusColumnWizard.d.ts
+64 notice 1.7kB   dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusColumnWizard.js
+64 notice 530B    dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusExpressionWizard.d.ts
+64 notice 692B    dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusExpressionWizard.js
+64 notice 952B    dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusSettingsWizard.d.ts
+64 notice 4.2kB   dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusSettingsWizard.js
+64 notice 837B    dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusSummaryWizard.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusSummaryWizard.js
+64 notice 414B    dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusWizard.d.ts
+64 notice 2.3kB   dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusWizard.js
+64 notice 101B    dist/App_Scripts/View/QuickSearch/QuickSearchPopup.d.ts
+64 notice 11.5kB  dist/App_Scripts/View/QuickSearch/QuickSearchPopup.js
+64 notice 110B    dist/App_Scripts/View/QuickSearch/QuickSearchToolbarControl.d.ts
+64 notice 3.6kB   dist/App_Scripts/View/QuickSearch/QuickSearchToolbarControl.js
+64 notice 103B    dist/App_Scripts/View/SelectedCells/SelectedCellsPopup.d.ts
+64 notice 4.3kB   dist/App_Scripts/View/SelectedCells/SelectedCellsPopup.js
+64 notice 112B    dist/App_Scripts/View/SelectedCells/SelectedCellsToolbarControl.d.ts
+64 notice 5.4kB   dist/App_Scripts/View/SelectedCells/SelectedCellsToolbarControl.js
+64 notice 938B    dist/App_Scripts/View/Shortcut/ShortcutEntityRow.d.ts
+64 notice 3.2kB   dist/App_Scripts/View/Shortcut/ShortcutEntityRow.js
+64 notice 98B     dist/App_Scripts/View/Shortcut/ShortcutPopup.d.ts
+64 notice 8.0kB   dist/App_Scripts/View/Shortcut/ShortcutPopup.js
+64 notice 1.3kB   dist/App_Scripts/View/Shortcut/Wizard/ShortcutSettingsWizard.d.ts
+64 notice 12.4kB  dist/App_Scripts/View/Shortcut/Wizard/ShortcutSettingsWizard.js
+64 notice 704B    dist/App_Scripts/View/Shortcut/Wizard/ShortcutSummaryWizard.d.ts
+64 notice 1.4kB   dist/App_Scripts/View/Shortcut/Wizard/ShortcutSummaryWizard.js
+64 notice 825B    dist/App_Scripts/View/Shortcut/Wizard/ShortcutTypeWizard.d.ts
+64 notice 3.1kB   dist/App_Scripts/View/Shortcut/Wizard/ShortcutTypeWizard.js
+64 notice 459B    dist/App_Scripts/View/Shortcut/Wizard/ShortcutWizard.d.ts
+64 notice 1.8kB   dist/App_Scripts/View/Shortcut/Wizard/ShortcutWizard.js
+64 notice 99B     dist/App_Scripts/View/SmartEdit/SmartEditPopup.d.ts
+64 notice 8.4kB   dist/App_Scripts/View/SmartEdit/SmartEditPopup.js
+64 notice 108B    dist/App_Scripts/View/SmartEdit/SmartEditToolbarControl.d.ts
+64 notice 8.4kB   dist/App_Scripts/View/SmartEdit/SmartEditToolbarControl.js
+64 notice 101B    dist/App_Scripts/View/TeamSharing/TeamSharingPopup.d.ts
+64 notice 11.0kB  dist/App_Scripts/View/TeamSharing/TeamSharingPopup.js
+64 notice 95B     dist/App_Scripts/View/Theme/ThemePopup.d.ts
+64 notice 2.9kB   dist/App_Scripts/View/Theme/ThemePopup.js
+64 notice 1.4kB   dist/App_Scripts/View/UIHelper.d.ts
+64 notice 4.6kB   dist/App_Scripts/View/UIHelper.js
+64 notice 225B    dist/App_Scripts/View/UIInterfaces.d.ts
+64 notice 165B    dist/App_Scripts/View/UIInterfaces.js
+64 notice 274B    dist/App_Scripts/View/UserFilter/UserFilterEntityRow.d.ts
+64 notice 1.7kB   dist/App_Scripts/View/UserFilter/UserFilterEntityRow.js
+64 notice 100B    dist/App_Scripts/View/UserFilter/UserFilterPopup.d.ts
+64 notice 7.8kB   dist/App_Scripts/View/UserFilter/UserFilterPopup.js
+64 notice 1.4kB   dist/App_Scripts/View/UserFilter/UserFilterSummary.d.ts
+64 notice 6.6kB   dist/App_Scripts/View/UserFilter/UserFilterSummary.js
+64 notice 507B    dist/App_Scripts/View/UserFilter/Wizard/UserFilterExpressionWizard.d.ts
+64 notice 713B    dist/App_Scripts/View/UserFilter/Wizard/UserFilterExpressionWizard.js
+64 notice 961B    dist/App_Scripts/View/UserFilter/Wizard/UserFilterSelectColumnWizard.d.ts
+64 notice 2.1kB   dist/App_Scripts/View/UserFilter/Wizard/UserFilterSelectColumnWizard.js
+64 notice 1.0kB   dist/App_Scripts/View/UserFilter/Wizard/UserFilterSettingsWizard.d.ts
+64 notice 3.5kB   dist/App_Scripts/View/UserFilter/Wizard/UserFilterSettingsWizard.js
+64 notice 831B    dist/App_Scripts/View/UserFilter/Wizard/UserFilterSummaryWizard.d.ts
+64 notice 1.6kB   dist/App_Scripts/View/UserFilter/Wizard/UserFilterSummaryWizard.js
+64 notice 418B    dist/App_Scripts/View/UserFilter/Wizard/UserFilterWizard.d.ts
+64 notice 2.4kB   dist/App_Scripts/View/UserFilter/Wizard/UserFilterWizard.js
+64 notice 985B    dist/App_Scripts/View/Wizard/AdaptableWizard.d.ts
+64 notice 6.5kB   dist/App_Scripts/View/Wizard/AdaptableWizard.js
+64 notice 1.6kB   dist/App_Scripts/View/Wizard/Interface/IAdaptableWizard.d.ts
+64 notice 77B     dist/App_Scripts/View/Wizard/Interface/IAdaptableWizard.js
+64 notice 298B    dist/App_Scripts/View/Wizard/WizardLegend.d.ts
+64 notice 1.2kB   dist/App_Scripts/View/Wizard/WizardLegend.js
+65 notice === Tarball Details ===
+66 notice name:          adaptableblotter
+66 notice version:       2.5.3
+66 notice filename:      adaptableblotter-2.5.3.tgz
+66 notice package size:  16.2 MB
+66 notice unpacked size: 82.0 MB
+66 notice shasum:        eddf35b0e0371fa54a5a50b0aacdd4b6f9f8c42e
+66 notice integrity:     sha512-/jMwJ86zHHhxz[...]p+qkBrnXYIrQg==
+66 notice total files:   875
+67 notice
+68 verbose pack [ 'adaptableblotter-react' ]
+69 silly exec npm [ 'pack',
+69 silly exec   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react' ]
+70 notice
+71 notice 📦  adaptableblotter-react@0.2.24
+72 notice === Tarball Contents ===
+73 notice 3.9kB   package.json
+73 notice 23.2kB  LICENSE.md
+73 notice 2.1kB   README.md
+73 notice 652B    dist/AdaptableBlotter.d.ts
+73 notice 837B    dist/AdaptableBlotterAgGrid.d.ts
+73 notice 20.1kB  dist/fonts/glyphicons-halflings-regular.eot
+73 notice 108.7kB dist/fonts/glyphicons-halflings-regular.svg
+73 notice 45.4kB  dist/fonts/glyphicons-halflings-regular.ttf
+73 notice 23.4kB  dist/fonts/glyphicons-halflings-regular.woff
+73 notice 18.0kB  dist/fonts/glyphicons-halflings-regular.woff2
+73 notice 263B    dist/index.d.ts
+73 notice 8.4MB   dist/index.es5.js
+73 notice 8.6MB   dist/index.umd.js
+73 notice 938B    dist/lib/AdaptableBlotter.js
+73 notice 656B    dist/lib/AdaptableBlotter.js.map
+73 notice 1.3kB   dist/lib/AdaptableBlotterAgGrid.js
+73 notice 996B    dist/lib/AdaptableBlotterAgGrid.js.map
+73 notice 387B    dist/lib/index.js
+73 notice 190B    dist/lib/index.js.map
+73 notice 130.5kB dist/styles/adaptableblotter-style.css
+74 notice === Tarball Details ===
+75 notice name:          adaptableblotter-react
+75 notice version:       0.2.24
+75 notice filename:      adaptableblotter-react-0.2.24.tgz
+75 notice package size:  3.5 MB
+75 notice unpacked size: 17.5 MB
+75 notice shasum:        b5d25580b0fad19915c291b4f691dee7d867d20b
+75 notice integrity:     sha512-omiaWnpsMBIPW[...]8UyOwwgf2q+xw==
+75 notice total files:   20
+76 notice
+77 verbose publish adaptableblotter
+78 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter undefined
+79 silly exec npm [ 'publish', '--ignore-scripts', 'adaptableblotter-2.5.3.tgz' ]
+80 info published adaptableblotter 2.5.3
+81 verbose publish adaptableblotter-react
+82 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react undefined
+83 silly exec npm [ 'publish',
+83 silly exec   '--ignore-scripts',
+83 silly exec   'adaptableblotter-react-0.2.24.tgz' ]
+84 silly run-lifecycle postpublish adaptableblotter-react
+85 info lifecycle adaptableblotter-react@0.2.24~postpublish: adaptableblotter-react@0.2.24
+86 verbose lifecycle adaptableblotter-react@0.2.24~postpublish: unsafe-perm in lifecycle true
+87 verbose lifecycle adaptableblotter-react@0.2.24~postpublish: PATH: /usr/local/lib/node_modules/lerna/node_modules/npm-lifecycle/node-gyp-bin:/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+88 verbose lifecycle adaptableblotter-react@0.2.24~postpublish: CWD: /Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react
+89 silly lifecycle adaptableblotter-react@0.2.24~postpublish: Args: [ '-c', 'npm run gh-pages' ]
+90 silly lifecycle adaptableblotter-react@0.2.24~postpublish: Returned: code: 0  signal: null
+91 info published adaptableblotter-react 0.2.24
+92 silly gitCheckout packages/*/package.json
+93 silly gitCheckout packages/adaptableblotter-angular/dist/adaptableblotter/package.json
+94 error Error: Command failed: git checkout -- packages/adaptableblotter-angular/dist/adaptableblotter/package.json
+94 error error: pathspec 'packages/adaptableblotter-angular/dist/adaptableblotter/package.json' did not match any file(s) known to git.
+94 error
+94 error     at makeError (/usr/local/lib/node_modules/lerna/node_modules/execa/index.js:172:9)
+94 error     at Promise.all.then.arr (/usr/local/lib/node_modules/lerna/node_modules/execa/index.js:277:16)
+94 error     at <anonymous>
