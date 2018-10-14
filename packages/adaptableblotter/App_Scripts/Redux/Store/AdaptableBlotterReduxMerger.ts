@@ -2,8 +2,10 @@ import * as _ from 'lodash'
 
 function customizer(objValue: any, srcValue: any) {
   if (_.isArray(objValue)) {
-    return objValue.concat(srcValue);
-  }
+    if (srcValue) {
+      return srcValue
+    }
+   }
 }
 
 export function MergeState(oldState: any, newState: any) {

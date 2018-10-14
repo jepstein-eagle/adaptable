@@ -24,11 +24,11 @@ const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLB
 
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
-    StrategyConstants: string[];
+    StrategyIds: string[];
 }
 
 export interface DashboardSetToolbarsAction extends Redux.Action {
-    StrategyConstants: string[];
+    StrategyIds: string[];
 }
 
 export interface DashboardShowToolbarAction extends Redux.Action {
@@ -49,7 +49,7 @@ export interface DashboardCreateDefaultConfigurationItemAction extends Redux.Act
 }
 
 export interface DashboardSetFunctionButtonsAction extends Redux.Action {
-    StrategyConstants: string[];
+    StrategyIds: string[];
 }
 
 export interface DashboardSetZoomAction extends Redux.Action {
@@ -90,14 +90,14 @@ export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action 
     Title: string
 }
 
-export const DashboardSetAvailableToolbars = (StrategyConstants: string[]): DashboardSetAvailableToolbarsAction => ({
+export const DashboardSetAvailableToolbars = (StrategyIds: string[]): DashboardSetAvailableToolbarsAction => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
-    StrategyConstants
+    StrategyIds
 })
 
-export const DashboardSetToolbars = (StrategyConstants: string[]): DashboardSetToolbarsAction => ({
+export const DashboardSetToolbars = (StrategyIds: string[]): DashboardSetToolbarsAction => ({
     type: DASHBOARD_SET_TOOLBARS,
-    StrategyConstants
+    StrategyIds
 })
 
 export const DashboardShowToolbar = (StrategyId: string): DashboardShowToolbarAction => ({
@@ -116,9 +116,9 @@ export const DashboardMoveItem = (StrategyId: string, NewIndex: number): Dashboa
     NewIndex
 })
 
-export const DashboardSetFunctionButtons = (StrategyConstants: string[]): DashboardSetFunctionButtonsAction => ({
+export const DashboardSetFunctionButtons = (StrategyIds: string[]): DashboardSetFunctionButtonsAction => ({
     type: DASHBOARD_SET_FUNCTION_BUTTONS,
-    StrategyConstants,
+    StrategyIds,
 
 })
 
@@ -215,10 +215,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
 
     switch (action.type) {
         case DASHBOARD_SET_AVAILABLE_TOOLBARS:
-            return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyConstants })
+            return Object.assign({}, state, { AvailableToolbars: (<DashboardSetAvailableToolbarsAction>action).StrategyIds })
         case DASHBOARD_SET_TOOLBARS: {
             let actionTyped = <DashboardSetToolbarsAction>action;
-            let dashboardToolbars = actionTyped.StrategyConstants
+            let dashboardToolbars = actionTyped.StrategyIds
             return Object.assign({}, state, { VisibleToolbars: dashboardToolbars });
         }
         case DASHBOARD_MOVE_ITEM: {
@@ -243,7 +243,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
         }
         case DASHBOARD_SET_FUNCTION_BUTTONS: {
             let actionTyped = <DashboardSetFunctionButtonsAction>action;
-            let dashboardFunctionButtons = actionTyped.StrategyConstants
+            let dashboardFunctionButtons = actionTyped.StrategyIds
             return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
         }
         case DASHBOARD_SET_ZOOM: {

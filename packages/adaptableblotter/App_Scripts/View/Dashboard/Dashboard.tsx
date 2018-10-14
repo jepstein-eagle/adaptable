@@ -26,7 +26,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     render() {
-        let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
+         let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
         let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
         let optionsBlotterName: string = this.props.Blotter.BlotterOptions.blotterId;
