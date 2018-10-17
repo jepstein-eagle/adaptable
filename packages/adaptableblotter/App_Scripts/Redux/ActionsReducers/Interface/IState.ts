@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert } from '../../../Core/Interface/IMessage'
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -8,7 +8,7 @@ import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFla
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 
-export interface IState{
+export interface IState {
 
 }
 
@@ -57,6 +57,7 @@ export interface PopupState extends ISystemState {
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
     LoadingPopup: ILoadingPopup;
+    AboutPopup: IAboutPopup;
 }
 
 export interface TeamSharingState extends ISystemState {

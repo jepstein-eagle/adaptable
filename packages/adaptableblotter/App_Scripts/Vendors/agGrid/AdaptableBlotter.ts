@@ -34,7 +34,6 @@ import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
 import { ChartStrategy } from '../../Strategy/ChartStrategy';
-import { AboutStrategy } from '../../Strategy/AboutStrategy';
 import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
@@ -148,8 +147,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy(this))
-        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
+         this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))

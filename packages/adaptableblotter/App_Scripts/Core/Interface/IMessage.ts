@@ -44,6 +44,10 @@ export interface ILoadingPopup {
     ShowLoadingPopup: boolean;
  }
 
+export interface IAboutPopup {
+    ShowAboutPopup: boolean;
+ }
+
 export interface IAlertPopup {
     ShowAlertPopup: boolean;
     Header: string,

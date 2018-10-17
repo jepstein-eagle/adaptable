@@ -13,6 +13,7 @@ import * as StyleConstants from '../Core/Constants/StyleConstants';
 import { AdaptableBlotterPopupAlert } from "./Components/Popups/AdaptableBlotterPopupAlert";
 import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart";
 import { AdaptableBlotterLoadingScreen } from "./Components/Popups/AdaptableBlotterLoadingScreen";
+import { AdaptableBlotterAbout } from "./Components/Popups/AdaptableBlotterAbout";
 
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
@@ -28,6 +29,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
     onCloseChartPopup: () => PopupRedux.PopupHideChartAction;
     onCloseLoadingPopup: () => PopupRedux.PopupHideChartAction;
+    onCloseAboutPopup: () => PopupRedux.PopupHideAboutAction;
 }
 
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
@@ -42,6 +44,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     onClose={this.props.onCloseChartPopup}
                     showChart={this.props.PopupState.ChartPopup.ShowChartPopup}
                 />
+
+                <AdaptableBlotterAbout
+                    AdaptableBlotter={this.props.Blotter}
+                    onClose={this.props.onCloseAboutPopup}
+                     showAbout={this.props.PopupState.AboutPopup.ShowAboutPopup}
+                 />
 
                 <AdaptableBlotterLoadingScreen
                     AdaptableBlotter={this.props.Blotter}
@@ -103,6 +111,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
         onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
+        onCloseAboutPopup: () => dispatch(PopupRedux.PopupHideAbout()),
         onCloseChartPopup: () => dispatch(PopupRedux.PopupHideChart()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),

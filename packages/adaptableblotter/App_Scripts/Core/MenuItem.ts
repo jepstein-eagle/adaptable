@@ -10,8 +10,6 @@ export class MenuItemDoReduxAction implements IMenuItem {
         public GlyphIcon: string,
          public IsVisible: boolean ) {
     }
-
-    ; 
 }
 
 export class MenuItemShowPopup implements IMenuItem {

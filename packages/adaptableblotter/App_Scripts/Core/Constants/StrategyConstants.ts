@@ -1,6 +1,5 @@
 
 // Strategy Ids
-export const AboutStrategyId: string = "About"
 export const AdvancedSearchStrategyId: string = "AdvancedSearch"
 export const AlertStrategyId: string = "Alert"
 export const ApplicationStrategyId: string = "Application"
@@ -34,7 +33,6 @@ export const ThemeStrategyId: string = "Theme"
 export const UserFilterStrategyId: string = "UserFilter"
 
 // Strategy Names
-export const AboutStrategyName: string = "About"
 export const AlertStrategyName: string = "Alert"
 export const AdvancedSearchStrategyName: string = "Advanced Search"
 export const ApplicationStrategyName: string = "Application"
@@ -66,8 +64,7 @@ export const TeamSharingStrategyName: string = "Team Sharing"
 export const ThemeStrategyName: string = "Theme"
 export const UserFilterStrategyName: string = "User Filter"
 
-//
-export const AboutGlyph: string = "info-sign"
+// Strategy Glyphs
 export const AlertGlyph: string = "bullhorn"
 export const AdvancedSearchGlyph: string = "search"
 export const ApplicationGlyph: string = "font"
@@ -102,8 +99,6 @@ export const UserFilterGlyph: string = "user"
 
 export function getIdForStrategyName(strategyName: string) {
     switch (strategyName) {
-        case AboutStrategyName:
-            return AboutStrategyId
         case AlertStrategyName:
             return AlertStrategyId
         case AdvancedSearchStrategyName:
@@ -170,8 +165,6 @@ export function getIdForStrategyName(strategyName: string) {
 
 export function getNameForStrategyId(strategyID: string) {
     switch (strategyID) {
-        case AboutStrategyId:
-            return AboutStrategyName
         case AlertStrategyId:
             return AlertStrategyName
         case AdvancedSearchStrategyId:
@@ -237,8 +230,6 @@ export function getNameForStrategyId(strategyID: string) {
 
 export function getGhyphiconForStrategyId(strategyID: string) {
     switch (strategyID) {
-        case AboutStrategyId:
-            return AboutGlyph
         case AlertStrategyId:
             return AlertGlyph
         case AdvancedSearchStrategyId:

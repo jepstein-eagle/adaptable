@@ -27,7 +27,6 @@ import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
 import { IPushPullLogin } from './Export/IPushPullLogin'
 import { HomeToolbarControl } from './Home/HomeToolbarControl'
 import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
-import { AboutPopup } from './About/AboutPopup'
 import { ApplicationPopup } from './Application/ApplicationPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { DataManagementPopup } from './DataManagement/DataManagementPopup'
@@ -49,8 +48,7 @@ import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
-  AboutPopup: AboutPopup,
-  AdvancedSearchPopup: AdvancedSearchPopup,
+   AdvancedSearchPopup: AdvancedSearchPopup,
   AlertPopup: AlertPopup,
   ApplicationPopup: ApplicationPopup,
   BulkUpdatePopup: BulkUpdatePopup,

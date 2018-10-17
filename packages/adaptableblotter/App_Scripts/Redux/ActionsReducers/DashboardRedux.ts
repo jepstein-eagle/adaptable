@@ -193,7 +193,6 @@ const initialDashboardState: DashboardState = {
         // StrategyConstants.BulkUpdateStrategyId
     ],
     VisibleButtons: [
-        StrategyConstants.AboutStrategyId,
         StrategyConstants.DashboardStrategyId,
         StrategyConstants.SmartEditStrategyId,
         StrategyConstants.ColumnChooserStrategyId,
