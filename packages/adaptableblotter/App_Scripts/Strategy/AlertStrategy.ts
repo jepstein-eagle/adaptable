@@ -94,6 +94,6 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(alert.Range, dataChangedEvent.NewValue, dataChangedEvent.OldValue, columns.find(c => c.ColumnId == dataChangedEvent.ColumnId), this.blotter, null)
-        return ExpressionHelper.TestRangeEvaluation(rangeEvaluation)
+        return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter)
     }
 }

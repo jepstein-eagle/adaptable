@@ -290,12 +290,12 @@ export class DataGenerator {
     }
 
     protected getStatus(): string {
-      let randomNumber =  this.generateRandomInt(1, 3);
-        if (randomNumber==1){
+        let randomNumber = this.generateRandomInt(1, 3);
+        if (randomNumber == 1) {
             return "Completed"
-        }else  if (randomNumber==2){
+        } else if (randomNumber == 2) {
             return "Pending"
-        }else  if (randomNumber==3){
+        } else if (randomNumber == 3) {
             return "Rejected"
         }
     }
@@ -416,7 +416,7 @@ export class DataGenerator {
 
 
 
-    public getRandomItem(ary: any[] , max?: number): any {
+    public getRandomItem(ary: any[], max?: number): any {
         if (max) {
             return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];
         }
@@ -459,13 +459,13 @@ export class DataGenerator {
             "JP Morgan",
             "Morgan Stanley",
             "BNP",
-         //   "Lloyds TSB",
-         //   "MUFJ",
-         //   "Rabobank",
-         //   "RBC",
-         //   "Deutsche Bank",
-         //   "Credit Suisse",
-         //   "Nomura"
+            //   "Lloyds TSB",
+            //   "MUFJ",
+            //   "Rabobank",
+            //   "RBC",
+            //   "Deutsche Bank",
+            //   "Credit Suisse",
+            //   "Nomura"
         ];
         return counterparties;
     }
@@ -505,11 +505,10 @@ export class DataGenerator {
 
     protected getCountries(): string[] {
         let countries = [
-           "+2502+S",
             "Argentina",
             "Australia",
             "Belgium",
-          /*  "Brazil",
+            "Brazil",
             "Canada",
             "China",
             "Denmark",
@@ -528,7 +527,7 @@ export class DataGenerator {
             "Qatar",
             "Russia",
             "Spain",
-            "Thailand"*/
+            "Thailand"
         ];
         return countries;
     }

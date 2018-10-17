@@ -1,5 +1,5 @@
 import { FilterHelper } from './FilterHelper'
-import { LeafExpressionOperator, RangeOperandType } from '../Enums'
+import { LeafExpressionOperator, RangeOperandType, DistinctCriteriaPairValue } from '../Enums'
 import { DataType } from '../Enums'
 import { Helper } from './Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -11,13 +11,16 @@ import { Expression } from '../Api/Expression';
 import { ColumnHelper } from './ColumnHelper';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { ObjectFactory } from '../ObjectFactory';
 
 export interface IRangeEvaluation {
     operand1: any;
     operand2: any;
     newValue: any;
     operator: LeafExpressionOperator;
-    initialValue: any
+    initialValue: any,
+    columnId: string
 }
 
 export module ExpressionHelper {
@@ -154,7 +157,7 @@ export module ExpressionHelper {
                     for (let range of columnRanges.Ranges) {
                         let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnId), null, column, blotter, getOtherColumnValue)
 
-                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation);
+                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, blotter);
                         if (isColumnSatisfied) {
                             break;
                         }
@@ -338,6 +341,8 @@ export module ExpressionHelper {
                 return "Ends With "
             case LeafExpressionOperator.Regex:
                 return "Matches Expression "
+            case LeafExpressionOperator.NoDuplicates:
+                return "No Duplicates "
 
         }
     }
@@ -465,13 +470,8 @@ export module ExpressionHelper {
     }
 
     export function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any, ): IRangeEvaluation {
-        let rangeEvaluation: IRangeEvaluation = {
-            operand1: rangeExpression.Operand1,
-            operand2: rangeExpression.Operand2,
-            newValue: newValue,
-            operator: rangeExpression.Operator,
-            initialValue: initialValue
-        }
+        let rangeEvaluation: IRangeEvaluation = ObjectFactory.CreateRangeEvaluation(rangeExpression.Operator, rangeExpression.Operand1, rangeExpression.Operand2, newValue, initialValue, column.ColumnId);
+
         switch (column.DataType) {
             case DataType.Date:
                 if (rangeExpression.Operand1Type == RangeOperandType.Column) {
@@ -531,7 +531,7 @@ export module ExpressionHelper {
         return rangeEvaluation;
     }
 
-    export function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation): boolean {
+    export function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation, blotter: IAdaptableBlotter): boolean {
         if (rangeEvaluation.newValue == null) {
             return false;
         }
@@ -581,6 +581,10 @@ export module ExpressionHelper {
             case LeafExpressionOperator.Regex:
                 let regex = new RegExp(rangeEvaluation.operand1)
                 return regex.test(rangeEvaluation.newValue);
+            case LeafExpressionOperator.NoDuplicates:
+                let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue)
+                let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
+                return existingItem != null;
         }
         return false;
     }
@@ -604,7 +608,8 @@ export module ExpressionHelper {
             && operator != LeafExpressionOperator.IsNegative
             && operator != LeafExpressionOperator.IsNotNumber
             && operator != LeafExpressionOperator.IsTrue
-            && operator != LeafExpressionOperator.IsFalse;
+            && operator != LeafExpressionOperator.IsFalse
+            && operator != LeafExpressionOperator.NoDuplicates;
     }
 
 

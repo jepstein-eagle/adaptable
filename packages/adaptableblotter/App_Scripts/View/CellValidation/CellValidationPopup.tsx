@@ -24,6 +24,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -35,7 +36,7 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
 
 
 class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityState> {
-    constructor(props:CellValidationPopupProps) {
+    constructor(props: CellValidationPopupProps) {
         super(props);
         this.state = UIHelper.EmptyConfigState();
     }
@@ -52,15 +53,15 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     render() {
         let cssClassName: string = this.props.cssClassName + "__cellValidation";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
-       
+
         let infoBody: any[] = ["Cell Validation Rules determine whether an edit is valid.", <br />, <br />,
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", <br />, <br />,
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."]
 
         let colItems: IColItem[] = [
             { Content: "Validation Rule", Size: 4 },
-            { Content: "Expression", Size: 4 },
-            { Content: "Action", Size: 2 },
+            { Content: "Expression", Size: 3 },
+            { Content: "Action", Size: 3 },
             { Content: "", Size: 2 },
         ]
 
@@ -87,9 +88,9 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createCellValidation()}
             overrideTooltip="Create Cell Validation Rule"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyConstants.CellValidationStrategyName} bsStyle="primary" cssClassName={cssClassName}
@@ -112,12 +113,12 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICellValidationRule}
                         ConfigEntities={null}
-                       Blotter={this.props.Blotter}
+                        Blotter={this.props.Blotter}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                         WizardStartIndex={this.state.WizardStartIndex}
+                        WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
                         onFinishWizard={() => this.onFinishWizard()}
                         canFinishWizard={() => this.canFinishWizard()} />
@@ -153,8 +154,8 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
     canFinishWizard() {
         let cellValidationRule = this.state.EditedAdaptableBlotterObject as ICellValidationRule
         return StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
-        ( ExpressionHelper.IsEmptyOrValidExpression( cellValidationRule.Expression)) &&
-        StringExtensions.IsNotNullOrEmpty(cellValidationRule.Description)
+            (ExpressionHelper.IsEmptyOrValidExpression(cellValidationRule.Expression)) &&
+            StringExtensions.IsNotNullOrEmpty(CellValidationHelper.createCellValidationDescription(cellValidationRule, this.props.Columns))
     }
 }
 

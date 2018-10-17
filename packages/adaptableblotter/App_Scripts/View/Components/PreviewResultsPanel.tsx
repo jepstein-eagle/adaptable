@@ -7,6 +7,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IUserFilter, ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";
 
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
@@ -34,10 +35,10 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                 {previewResult.ValidationRules.length > 0 ?
                     <td>
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true &&
-                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} MessageType={MessageType.Error} />
+                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules, this.props.Columns)]} MessageType={MessageType.Error} />
                         }
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning == true &&
-                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} MessageType={MessageType.Warning} />
+                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules, this.props.Columns)]} MessageType={MessageType.Warning} />
                         }
                     </td>
                     :
@@ -69,13 +70,13 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         </div>
     }
 
-    private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
+    private getValidationErrorMessage(CellValidations: ICellValidationRule[], columns: IColumn[]): string {
         let returnString: string[] = []
         for (let CellValidation of CellValidations) {
             let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression( CellValidation.Expression)) ?
                 " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
                 "";
-            returnString.push(CellValidation.Description + expressionDescription)
+            returnString.push(CellValidationHelper.createCellValidationDescription(CellValidation, columns) + expressionDescription)
         }
         return returnString.join("\n");
     }

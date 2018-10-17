@@ -1,5 +1,5 @@
 import { Helper } from './Helpers/Helper';
-import { ExpressionHelper } from './Helpers/ExpressionHelper';
+import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn } from './Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
@@ -10,6 +10,7 @@ import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrat
 import * as GeneralConstants from './Constants/GeneralConstants';
 import { Expression } from './Api/Expression';
 import { IVendorGridInfo } from './Interface/Interfaces';
+import { CellValidationHelper } from './Helpers/CellValidationHelper';
 
 export module ObjectFactory {
 
@@ -91,8 +92,7 @@ export module ObjectFactory {
                 Operand1Type: RangeOperandType.Column,
                 Operand2Type: RangeOperandType.Column,
             },
-            Expression: ExpressionHelper.CreateEmptyExpression(),
-            Description: ""
+            Expression: ExpressionHelper.CreateEmptyExpression()
         }
     }
 
@@ -136,12 +136,11 @@ export module ObjectFactory {
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let userFilters: IUserFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :
             "";
-        return (columnFriendlyName + ": " + CellValidation.Description + expressionDescription);
+        return (columnFriendlyName + ": " + CellValidationHelper.createCellValidationDescription(CellValidation, columns) + expressionDescription);
     }
 
     export function CreateEmptyConditionalStyle(): IConditionalStyle {
@@ -199,12 +198,31 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, description: string, expression: Expression): ICellValidationRule {
+    export function CreateRange(operator: LeafExpressionOperator, operand1: any, operand2: any, rangeOperandType: RangeOperandType, rangeOperandType2: RangeOperandType): IRange {
+        return {
+            Operator: operator,
+            Operand1: operand1,
+            Operand2: operand2,
+            Operand1Type: rangeOperandType,
+            Operand2Type: rangeOperandType2
+        }
+    }
+
+    export function CreateRangeEvaluation(operator: LeafExpressionOperator, operand1: any, operand2: any, newValue: any, initialValue: any, columnId: string): IRangeEvaluation {
+        return {
+        operand1:operand1,
+        operand2: operand2,
+        newValue: newValue,
+        operator: operator,
+        initialValue: initialValue,
+        columnId: columnId
+    }
+}
+    export function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, expression: Expression): ICellValidationRule {
         return {
             ColumnId: columnId,
             Range: range,
             ActionMode: actionMode,
-            Description: description,
             Expression: expression,
         }
     }
@@ -233,5 +251,4 @@ export module ObjectFactory {
             VWAP: null
         }
     }
-
 }

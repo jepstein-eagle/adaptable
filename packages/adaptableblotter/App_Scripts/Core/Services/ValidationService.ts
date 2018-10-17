@@ -2,7 +2,7 @@
 import { IDataChangingEvent } from './Interface/IAuditService';
 import { IValidationService } from './Interface/IValidationService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { LeafExpressionOperator, DistinctCriteriaPairValue, ActionMode } from '../Enums';
+import { LeafExpressionOperator, DistinctCriteriaPairValue, ActionMode, RangeOperandType } from '../Enums';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import * as StrategyConstants from '../Constants/StrategyConstants'
 import { IColumn } from '../Interface/IColumn';
@@ -25,7 +25,8 @@ export class ValidationService implements IValidationService {
             let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue)
             let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
             if (existingItem) {
-                let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, null, ActionMode.StopEdit, "Primary Key column cannot contain duplicate values", ExpressionHelper.CreateEmptyExpression());
+                let range = ObjectFactory.CreateRange(LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, RangeOperandType.Column, null)
+                let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, range, ActionMode.StopEdit, ExpressionHelper.CreateEmptyExpression());
                 failedWarningRules.push(cellValidationRule);
             }
         }
@@ -99,7 +100,7 @@ export class ValidationService implements IValidationService {
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent), columns.find(c => c.ColumnId == dataChangedEvent.ColumnId), this.blotter, null)
-        return ExpressionHelper.TestRangeEvaluation(rangeEvaluation)
+        return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter)
     }
 
     private GetCellValidationState(): CellValidationState {

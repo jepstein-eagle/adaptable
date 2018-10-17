@@ -11,6 +11,7 @@ import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ICellValidationRule, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { CellValidationHelper } from "../../../Core/Helpers/CellValidationHelper";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
@@ -30,7 +31,7 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Mode", Value: this.props.Data.ActionMode },
-            { Key: "Rule", Value: this.props.Data.Description },
+            { Key: "Rule", Value: CellValidationHelper.createCellValidationDescription( this.props.Data, this.props.Columns) },
             {
                 Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression( this.props.Data.Expression) ?
                     ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) :

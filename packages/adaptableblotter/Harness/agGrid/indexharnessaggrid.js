@@ -42,7 +42,7 @@ function InitTradeBlotter() {
     enableRemoteConfigServer: false, // not running remote config
     // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
     // predefinedConfig: "demoConfig.json", // passing in predefined config with a file
-    serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+    //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     iPushPullConfig: {
       api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
       api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
@@ -54,7 +54,7 @@ function InitTradeBlotter() {
     useDefaultVendorGridThemes: true,
     useAdaptableBlotterFilterForm: false,
     // useAdaptableBlotterQuickFilter: false
-    getColumnValues: retrieveValues,
+   // getColumnValues: retrieveValues,
     //  maxColumnValueItemsDisplayed: 5
   }
 

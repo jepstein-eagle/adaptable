@@ -20,6 +20,7 @@ import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSor
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../Core/Enums";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";
 
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
@@ -110,7 +111,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
-                        {cellVal.Description}
+                        {CellValidationHelper.createCellValidationDescription( cellVal, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
                         {(ExpressionHelper.IsNotEmptyExpression (cellVal.Expression) )?
