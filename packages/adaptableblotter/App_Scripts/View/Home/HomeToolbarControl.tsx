@@ -119,7 +119,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             {this.props.DashboardState.ShowSystemStatusButton &&
                 statusButton
             }
-            {this.props.DashboardState.ShowSystemStatusButton &&
+            {this.props.DashboardState.ShowAboutButton &&
                 aboutButton
             }
 

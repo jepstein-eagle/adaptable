@@ -143,6 +143,7 @@ export interface DashboardState extends IUserState {
     Zoom: number;
     DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden';
     ShowSystemStatusButton: boolean;
+    ShowAboutButton: boolean;
     ShowFunctionsDropdown: boolean;
     ShowColumnsDropdown: boolean;
     HomeToolbarTitle: string;

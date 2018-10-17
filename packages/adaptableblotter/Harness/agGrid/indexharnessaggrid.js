@@ -305,6 +305,10 @@ function apiTester(state, gridOptions) {
       let test5 = adaptableblotter.api.configGetAdvancedSearchState(true)
       console.log("advanced search string");
       console.log(test5);
+    } else if (quickSearchText == "#hideabout") {
+      adaptableblotter.api.dashboardHideAboutButton()
+    } else if (quickSearchText == "#showabout") {
+      adaptableblotter.api.dashboardShowAboutButton()
     } else if (quickSearchText == "#permies") {
       adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
     } else if (quickSearchText == "#systemfilters") {

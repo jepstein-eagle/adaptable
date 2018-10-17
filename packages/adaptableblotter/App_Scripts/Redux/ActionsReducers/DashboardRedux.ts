@@ -14,6 +14,8 @@ const DASHBOARD_SET_ZOOM = 'DASHBOARD_SET_ZOOM';
 const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
 const DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON = 'DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
 const DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON = 'DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON';
+const DASHBOARD_SHOW_ABOUT_BUTTON = 'DASDASHBOARD_SHOW_ABOUT_BUTTONHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
+const DASHBOARD_HIDE_ABOUT_BUTTON = 'DASHBOARD_HIDE_ABOUT_BUTTON';
 const DASHBOARD_SHOW_FUNCTIONS_DROPDOWN = 'DASHBOARD_SHOW_FUNCTIONS_DROPDOWN';
 const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
 const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
@@ -65,6 +67,13 @@ export interface DashboardShowSystemStatusButtonAction extends Redux.Action {
 }
 
 export interface DashboardHideSystemStatusButtonAction extends Redux.Action {
+
+}
+export interface DashboardShowAboutButtonAction extends Redux.Action {
+
+}
+
+export interface DashboardHideAboutButtonAction extends Redux.Action {
 
 }
 export interface DashboardShowFunctionsDropdownAction extends Redux.Action {
@@ -140,6 +149,14 @@ export const DashboardHideSystemStatusButton = (): DashboardHideSystemStatusButt
     type: DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON,
 })
 
+export const DashboardShowAboutButton = (): DashboardShowAboutButtonAction => ({
+    type: DASHBOARD_SHOW_ABOUT_BUTTON,
+})
+
+export const DashboardHideAboutButton = (): DashboardHideAboutButtonAction => ({
+    type: DASHBOARD_HIDE_ABOUT_BUTTON,
+})
+
 export const DashboardShowFunctionsDropdownButton = (): DashboardShowFunctionsDropdownAction => ({
     type: DASHBOARD_SHOW_FUNCTIONS_DROPDOWN,
 })
@@ -202,6 +219,7 @@ const initialDashboardState: DashboardState = {
     Zoom: 1,
     DashboardVisibility: Visibility.Visible,
     ShowSystemStatusButton: true,
+    ShowAboutButton: true,
     ShowFunctionsDropdown: true,
     ShowColumnsDropdown: true,
     HomeToolbarTitle: "",
@@ -259,6 +277,13 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
 
         case DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON: {
             return Object.assign({}, state, { ShowSystemStatusButton: false });
+        }
+        case DASHBOARD_SHOW_ABOUT_BUTTON: {
+            return Object.assign({}, state, { ShowAboutButton: true });
+        }
+
+        case DASHBOARD_HIDE_ABOUT_BUTTON: {
+            return Object.assign({}, state, { ShowAboutButton: false });
         }
 
         case DASHBOARD_SHOW_FUNCTIONS_DROPDOWN: {

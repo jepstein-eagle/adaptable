@@ -135,6 +135,15 @@ export abstract class BlotterApiBase implements IBlotterApi {
   public dashboardHideSystemStatusButton(): void {
     this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton())
   }
+
+  public dashboardShowAboutButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowAboutButton())
+  }
+
+  public dashboardHideAboutButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideAboutButton())
+  }
+
   public dashboardShowFunctionsDropdown(): void {
     this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdownButton())
   }
