@@ -92,7 +92,7 @@
     "build-abvendor": "webpack --config webpack.vendor.js",
     "build-themes": "node postcss-scopify.config.js",
     "build-dev": "webpack --config webpack.dev.js",
-    "build-prod": "npm run prebuild && webpack --config webpack.prod.js -p && npm run build-ts",
+    "build-prod": "increase-memory-limit && npm run prebuild && webpack --config webpack.prod.js -p && npm run build-ts",
     "prepublish": "npm run build-prod",
     "build-ts": "tsc --outDir ./dist/App_Scripts",
     "build-ts-watch": "tsc --outDir ./dist/App_Scripts --watch",
