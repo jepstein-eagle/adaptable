@@ -23,6 +23,7 @@ import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
+import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
@@ -212,10 +213,10 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     private getButtonStyle(): string {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return WARNING_BSSTYLE;
             }
         }
         return "success";

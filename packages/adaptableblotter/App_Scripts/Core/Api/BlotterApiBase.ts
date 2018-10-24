@@ -145,18 +145,19 @@ export abstract class BlotterApiBase implements IBlotterApi {
   }
 
   public dashboardShowFunctionsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdownButton())
+    this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown())
   }
 
   public dashboardHideFunctionsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdownButton())
+    this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown())
   }
+  
   public dashboardShowColumnsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdownButton())
+    this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown())
   }
 
   public dashboardHideColumnsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdownButton())
+    this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown())
   }
 
   public dashboardSetHomeToolbarTitle(title: string): void {

@@ -5,6 +5,7 @@ import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { INFO_BSSTYLE, WARNING_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
   }
@@ -67,9 +68,9 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
 
     private onMessageTypeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        if (e.value == "Info") {
+        if (e.value == INFO_BSSTYLE) {
             this.setState({ MessageType: MessageType.Info } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
-        } else    if (e.value == "Warning") {
+        } else    if (e.value == WARNING_BSSTYLE) {
             this.setState({ MessageType: MessageType.Warning} as AlertTypeWizardState, () => this.props.UpdateGoBackState())
           } else {
             this.setState({ MessageType: MessageType.Error} as AlertTypeWizardState, () => this.props.UpdateGoBackState())

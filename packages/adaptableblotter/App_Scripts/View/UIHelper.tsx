@@ -6,6 +6,7 @@ import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotte
 import { IStyle } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Core/Api/Expression';
+import { PRIMARY_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Core/Constants/StyleConstants';
 
 
 export module UIHelper {
@@ -88,11 +89,11 @@ export module UIHelper {
     export function getStyleNameByStatusColour(statusColour: StatusColour): string {
         switch (statusColour) {
             case StatusColour.Red:
-                return "danger"
+                return DANGER_BSSTYLE
             case StatusColour.Amber:
-                return "warning";
+                return WARNING_BSSTYLE;
             case StatusColour.Green:
-                return "success";
+                return SUCCESS_BSSTYLE;
         }
     }
 
@@ -110,11 +111,11 @@ export module UIHelper {
     export function getStyleNameByMessageType(messageType: MessageType): string {
         switch (messageType) {
             case MessageType.Error:
-                return "danger"
+                return DANGER_BSSTYLE;
             case MessageType.Warning:
-                return "warning";
+                return WARNING_BSSTYLE;
             case MessageType.Info:
-                return "info";
+                return INFO_BSSTYLE;
         }
     }
 

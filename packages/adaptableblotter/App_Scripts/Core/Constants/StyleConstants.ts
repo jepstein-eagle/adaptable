@@ -5,6 +5,13 @@ export const AB_HEADER: string = "Ab-"
 export const FLASH_UP_STYLE: string = AB_HEADER + "FlashUp"
 export const FLASH_DOWN_STYLE: string = AB_HEADER + "FlashDown"
 
+// Constants for when we use Boostrap bsStyles
+export const DEFAULT_BSSTYLE: string = "default"
+export const PRIMARY_BSSTYLE: string = "primary"
+export const INFO_BSSTYLE: string = "info"
+export const SUCCESS_BSSTYLE: string = "success"
+export const WARNING_BSSTYLE: string = "warning"
+export const DANGER_BSSTYLE: string = "danger"
 
 // constants for CSS
 export const AB_STYLE: string = "#ab-style"

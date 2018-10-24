@@ -6,6 +6,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICalculatedColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
@@ -26,7 +27,7 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
 
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
         return <div className={cssClassName}>
-            <Panel header="Calculated Column Settings" bsStyle="primary">
+            <Panel header="Calculated Column Settings" bsStyle={PRIMARY_BSSTYLE}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="formInlineName">
                         <Col xs={3}>

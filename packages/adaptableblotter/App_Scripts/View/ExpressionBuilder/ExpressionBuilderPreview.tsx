@@ -95,7 +95,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     if (y.Operator == LeafExpressionOperator.Between) {
 
                         if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
-                            return <ListGroupItem key={columnId + index} bsStyle="danger" >
+                            return <ListGroupItem key={columnId + index} bsStyle={StyleConstants.DANGER_BSSTYLE} >
                                 <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}{' '}And{' '}{this.getOperand2Value(y)}
@@ -118,7 +118,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     }
                     else {
                         if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
-                            return <ListGroupItem key={columnId + index} bsStyle="danger" >
+                            return <ListGroupItem key={columnId + index} bsStyle={StyleConstants.DANGER_BSSTYLE} >
                                 <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}

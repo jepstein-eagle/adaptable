@@ -96,6 +96,8 @@ export interface IAdaptableBlotter {
 
     // Filtering
     applyGridFiltering(): void
+    clearGridFiltering(): void
+    clearColumnFiltering(columnIds:string[]): void
 
     //TEMPORARY : JO
     getIPPStyle(): IPPStyle

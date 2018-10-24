@@ -57,7 +57,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
                 Index={index}
                 onEdit={null}
                 onDeleteConfirm={null}
-                onClear={() => this.props.onClearColumnFilter(columnFilter.ColumnId)}
+                onClear={() => this.onClearColumnFilter(columnFilter.ColumnId)}
                 onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
                 AccessLevel={this.props.AccessLevel}
             />
@@ -78,6 +78,11 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
             </PanelWithImage>
         </div>
+    }
+
+    private onClearColumnFilter(columnId: string){
+        this.props.onClearColumnFilter(columnId)
+        this.props.Blotter.clearColumnFiltering([columnId])
     }
 
     private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {

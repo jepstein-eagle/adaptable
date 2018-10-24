@@ -6,6 +6,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
@@ -27,7 +28,7 @@ export class AlertSelectColumnWizard extends React.Component<AlertSelectColumnWi
         let cssClassName: string = this.props.cssClassName + "-selectcolumn"
        
         return <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
+        <Panel header="Select a Column" bsStyle={PRIMARY_BSSTYLE}>
             <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}

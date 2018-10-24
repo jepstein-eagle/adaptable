@@ -15,7 +15,7 @@ export class AdaptableBlotterPopupWarning extends React.Component<AdaptableBlott
         return this.props.ShowPopup && <div className={StyleConstants.POPUP_ALERT}>
             <SweetAlert
                 warning
-                confirmBtnBsStyle="warning" title={this.props.Header} bsSize="small"
+                confirmBtnBsStyle={StyleConstants.WARNING_BSSTYLE} title={this.props.Header} bsSize="small"
                 btnSize="sm"
                 onConfirm={() => this.props.onClose()} >
                 <p>

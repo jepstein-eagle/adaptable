@@ -505,6 +505,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
+    public clearGridFiltering(){
+        // todo
+    }
+
+    
+    public clearColumnFiltering(columnIds: string[]): void {
+        // to do
+    }
+
+
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);
     }

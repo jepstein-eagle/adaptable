@@ -3,6 +3,7 @@ import * as React from "react";
 import SweetAlert from 'react-bootstrap-sweetalert'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { MessageType } from "../../../Core/Enums";
+import { PRIMARY_BSSTYLE, DANGER_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 export interface AdaptableBlotterPopupAlertProps extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
     ShowPopup: boolean
@@ -23,15 +24,15 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
         let isError: boolean = false
         switch (this.props.MessageType) {
             case MessageType.Info:
-                style = "success"
+                style = StyleConstants.INFO_BSSTYLE
                 isInfo=true
                 break;
             case MessageType.Warning:
-                style = "warning"
+                style = StyleConstants.WARNING_BSSTYLE
                 isWarning=true;
                 break;
             case MessageType.Error:
-                style = "danger"
+                style = StyleConstants.DANGER_BSSTYLE
                 isError= true;
                 break;
         }

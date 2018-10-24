@@ -886,6 +886,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //which call onRefresh to refresh live excel updates
         this.ReindexAndRepaint()
     }
+
+    public clearGridFiltering(){
+        // todo
+    }
+
+    
+    public clearColumnFiltering(columnIds: string[]): void {
+        // to do
+    }
+
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
 
         let colIndex = this.hyperGrid.behavior.getColumns().findIndex((x: any) => x.name == calculatedColumnID)

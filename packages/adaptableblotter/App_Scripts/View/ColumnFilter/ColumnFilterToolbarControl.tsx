@@ -56,7 +56,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} MessageType={MessageType.Info} useButton={true} triggerAction={"click"} />
 
                         {' '}
-                        <ButtonClear onClick={() => this.props.onClearAllFilters()}
+                        <ButtonClear onClick={() => this.onClearFilters() }
                             bsStyle={"primary"}
                             cssClassName={cssClassName}
                             size={"small"}
@@ -73,6 +73,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.ColumnFilterStrategyName} glyphicon={StrategyConstants.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
+    }
+
+    private onClearFilters(){
+        // better to put in store but lets test first...
+        this.props.onClearAllFilters();
+        this.props.Blotter.clearGridFiltering();
     }
 }
 

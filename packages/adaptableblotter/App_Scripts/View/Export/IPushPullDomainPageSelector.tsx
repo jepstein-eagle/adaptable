@@ -56,7 +56,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
         return <PanelWithButton cssClassName={cssClassName} headerText="iPushPull Folder and Page Selector" bsStyle="primary" glyphicon="export">
 
 
-            {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? <Alert bsStyle="danger">
+            {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? <Alert bsStyle={StyleConstants.DANGER_BSSTYLE}>
                 Error getting iPushPull Pages : {this.props.ErrorMsg}
             </Alert> : <ListGroup fill className="ab_preview_panel">
                     {itemsElements}

@@ -157,19 +157,19 @@ export const DashboardHideAboutButton = (): DashboardHideAboutButtonAction => ({
     type: DASHBOARD_HIDE_ABOUT_BUTTON,
 })
 
-export const DashboardShowFunctionsDropdownButton = (): DashboardShowFunctionsDropdownAction => ({
+export const DashboardShowFunctionsDropdown = (): DashboardShowFunctionsDropdownAction => ({
     type: DASHBOARD_SHOW_FUNCTIONS_DROPDOWN,
 })
 
-export const DashboardHideFunctionsDropdownButton = (): DashboardHideFunctionsDropdownAction => ({
+export const DashboardHideFunctionsDropdown = (): DashboardHideFunctionsDropdownAction => ({
     type: DASHBOARD_HIDE_FUNCTIONS_DROPDOWN,
 })
 
-export const DashboardShowColumnsDropdownButton = (): DashboardShowColumnsDropdownAction => ({
+export const DashboardShowColumnsDropdown = (): DashboardShowColumnsDropdownAction => ({
     type: DASHBOARD_SHOW_COLUMNS_DROPDOWN,
 })
 
-export const DashboardHideColumnsDropdownButton = (): DashboardHideColumnsDropdownAction => ({
+export const DashboardHideColumnsDropdown = (): DashboardHideColumnsDropdownAction => ({
     type: DASHBOARD_HIDE_COLUMNS_DROPDOWN,
 })
 

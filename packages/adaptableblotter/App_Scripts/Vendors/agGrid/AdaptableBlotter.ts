@@ -147,14 +147,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-         this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
+        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(this))
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-        //   this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -166,7 +166,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
-      //  this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+        //  this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
@@ -273,6 +273,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else {
             AdaptableBlotterLogger.LogError('Trying to filter on a non-filterable grid.')
         }
+    }
+
+    public clearGridFiltering() {
+        this.gridOptions.columnApi.getAllColumns().forEach(c => {
+            c.setFilterActive(false)
+        });
+    }
+
+    public clearColumnFiltering(columnIds: string[]): void {
+        columnIds.forEach(c => {
+            let column: Column = this.gridOptions.columnApi.getAllColumns().find(col => col.getColId() == c);
+            if (column) {
+                column.setFilterActive(false)
+            }
+        });
     }
 
     public hideFilterFormPopup: Function
@@ -497,7 +512,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type')
+            AdaptableBlotterLogger.LogMessage('column is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -1105,7 +1120,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (popupState.ShowScreenPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
                     // ignore
                 } else {
-                   this.debouncedSetColumnIntoStore() // was: this.setColumnIntoStore();
+                    this.debouncedSetColumnIntoStore() // was: this.setColumnIntoStore();
                 }
             }
         });

@@ -769,6 +769,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
+    public clearGridFiltering(){
+        // todo
+    }
+
+    
+    public clearColumnFiltering(columnIds: string[]): void {
+        // to do
+    }
+
+
     public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
         // nothing to do
     }

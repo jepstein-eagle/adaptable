@@ -11,6 +11,7 @@ import { ButtonSave } from "../Components/Buttons/ButtonSave";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Core/Enums";
+import { DANGER_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
     onClear: (columnFilter: IColumnFilter) => void;
@@ -36,7 +37,7 @@ export class ColumnFilterEntityRow extends React.Component<ColumnFilterEntityRow
                 />
             {' '}
             <ButtonClear cssClassName={this.props.cssClassName} onClick={() => this.props.onClear(this.props.ColumnFilter)} overrideTooltip="Clear Column Filter"
-                bsStyle={"danger"}
+                bsStyle={DANGER_BSSTYLE}
                 DisplayMode="Glyph"
                 size={"small"}
                 overrideDisableButton={this.props.ColumnFilter == null} 

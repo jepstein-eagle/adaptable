@@ -21,6 +21,7 @@ import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
@@ -131,10 +132,10 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     private getButtonStyle(): string {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return WARNING_BSSTYLE;
             }
         }
         return "success";

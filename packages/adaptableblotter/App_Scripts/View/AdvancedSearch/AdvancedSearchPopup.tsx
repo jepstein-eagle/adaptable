@@ -23,6 +23,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { PRIMARY_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
@@ -96,7 +97,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.AdvancedSearchStrategyName} infoBody={infoBody}
+            <PanelWithButton cssClassName={cssClassName} bsStyle={PRIMARY_BSSTYLE} headerText={StrategyConstants.AdvancedSearchStrategyName} infoBody={infoBody}
                 button={newSearchButton} glyphicon={StrategyConstants.AdvancedSearchGlyph} className="ab_main_popup" >
 
                 {advancedSearchRows.length > 0 &&

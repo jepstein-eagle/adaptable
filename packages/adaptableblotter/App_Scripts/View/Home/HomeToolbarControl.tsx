@@ -2,27 +2,24 @@
 import { connect } from 'react-redux';
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox, DropdownButton, SplitButton, ButtonToolbar } from 'react-bootstrap';
+import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { MenuState, EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
+import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { Helper } from '../../Core/Helpers/Helper'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
 import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Core/Enums";
-import { ISystemStatus, IEntitlement } from "../../Core/Interface/Interfaces";
+import { ISystemStatus } from "../../Core/Interface/Interfaces";
 import { IAlert, } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -196,11 +193,11 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
         switch (statusColor) {
             case StatusColour.Green:
-                return "success"
+                return SUCCESS_BSSTYLE
             case StatusColour.Amber:
-                return "warning"
+                return WARNING_BSSTYLE
             case StatusColour.Red:
-                return "danger"
+                return DANGER_BSSTYLE
         }
     }
 

@@ -19,7 +19,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
     render() {
 
         return <ButtonBase ToolTipAndText="Delete"
-            bsStyle='danger'
+            bsStyle={StyleConstants.DANGER_BSSTYLE}
             bsSize={this.props.size}
             glyph="trash"
             onClick={() => this.onClick()}
