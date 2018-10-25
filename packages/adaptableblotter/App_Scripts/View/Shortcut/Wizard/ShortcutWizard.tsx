@@ -14,7 +14,7 @@ export interface ShortcutWizardProps extends IAdaptableBlotterObjectExpressionAd
 export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column Type", "Settings"]
+        let stepNames: string[] = ["Column Type", "Settings", "Summary"]
 
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
@@ -23,17 +23,17 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Steps={[
-                    <ShortcutTypeWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} />,
-                    <ShortcutSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
-                    < ShortcutSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} />
+                    <ShortcutTypeWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} />,
+                    <ShortcutSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} NumericKeysAvailable={this.props.NumericKeysAvailable} DateKeysAvailable={this.props.DateKeysAvailable} />,
+                    <ShortcutSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
+                onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
-                />
-         
+            />
+
         </div>
     }
 

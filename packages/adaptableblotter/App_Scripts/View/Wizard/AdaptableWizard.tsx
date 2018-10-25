@@ -1,8 +1,7 @@
 import * as React from "react";
-import { Button, Modal, Glyphicon } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 import { WizardLegend } from './WizardLegend'
-import { UIHelper } from "../UIHelper";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
 import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
@@ -74,7 +73,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 <div className={cssClassName + StyleConstants.WIZARD_BASE}>
                     <Modal.Header closeButton className={cssClassName + StyleConstants.WIZARD_HEADER}>
                         <Modal.Title>
-                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />
+                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} onStepButtonClicked={(s) => this.onStepButtonClicked(s)} />
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={cssClassName + StyleConstants.WIZARD_BODY}>
@@ -83,15 +82,23 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                         </div>
                     </Modal.Body>
                     <Modal.Footer className={cssClassName + StyleConstants.WIZARD_FOOTER}>
-                        <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} AccessLevel={AccessLevel.Full}/>
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" AccessLevel={AccessLevel.Full}/>
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} AccessLevel={AccessLevel.Full}/>
+                        <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} AccessLevel={AccessLevel.Full} />
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" AccessLevel={AccessLevel.Full} />
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} AccessLevel={AccessLevel.Full} />
                         <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="primary" overrideDisableButton={!this.canFinishWizard()} onClick={() => this.handleClickFinish()} overrideText="Finish" glyph={"ok"} AccessLevel={AccessLevel.Full} />
                     </Modal.Footer>
                 </div>
             </Modal>
         );
     }
+
+    private onStepButtonClicked(stepName: string): void {
+        let stepIndex: number = this.props.StepNames.findIndex(s => s == stepName);
+        let BodyElement: any = this.props.Steps[stepIndex];
+        let newElement = this.cloneWizardStep(BodyElement)
+        this.setState({ ActiveState: newElement, IndexState: stepIndex })
+    }
+
     ForceUpdateGoBackState() {
         //to force back/next. We'll see if that needs to be optimised'
         /*

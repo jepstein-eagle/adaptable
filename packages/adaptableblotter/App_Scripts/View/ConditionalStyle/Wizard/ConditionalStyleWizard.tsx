@@ -16,7 +16,7 @@ export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpr
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Scope", "Create Style", "Build Query"]
+        let stepNames: string[] = ["Scope", "Create Style", "Build Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ConditionalStyleStrategyName}

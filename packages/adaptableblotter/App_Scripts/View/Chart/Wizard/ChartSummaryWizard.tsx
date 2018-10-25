@@ -7,6 +7,7 @@ import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
 
 
 export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
@@ -24,19 +25,27 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             { Key: "Type", Value: this.props.Data.Type },
             { Key: "Y Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumn, this.props.Columns) },
             { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumn, this.props.Columns) },
-            { Key: "X Axis Values", Value: this.props.Data.XAxisColumnValues.join(', ')},
+            { Key: "X Axis Values", Value: this.getColumnValuesList( this.props.Data.XAxisColumnValues) },
             {
                 Key: "Additional Column", Value: (this.props.Data.AdditionalColumn) ?
                     ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumn, this.props.Columns) :
                     "None"
             },
-            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.props.Data.AdditionalColumnValues.join(', ') : "n/a" },
+            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.getColumnValuesList( this.props.Data.AdditionalColumnValues) : "n/a" },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>
+    }
+
+    private getColumnValuesList(columnValueArray: string[]): string {
+        if (columnValueArray[0] == GeneralConstants.ALL_COLUMN_VALUES) {
+            return "All Column Values"
+        } else {
+            return columnValueArray.join(', ')
+        }
     }
 
     public canNext(): boolean { return true }
