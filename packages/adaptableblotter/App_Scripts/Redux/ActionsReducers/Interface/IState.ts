@@ -146,6 +146,7 @@ export interface DashboardState extends IUserState {
     ShowAboutButton: boolean;
     ShowFunctionsDropdown: boolean;
     ShowColumnsDropdown: boolean;
+    ShowToolbarsDropdown: boolean;
     HomeToolbarTitle: string;
     ApplicationToolbarTitle: string;
 }

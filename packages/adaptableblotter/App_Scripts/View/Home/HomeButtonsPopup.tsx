@@ -19,6 +19,8 @@ interface HomeButtonsPopupComponentProps extends StrategyViewPopupProps<HomeButt
     onDashboardHideFunctionsDropdown: () => DashboardRedux.DashboardHideFunctionsDropdownAction
     onDashboardShowColumnsDropdown: () => DashboardRedux.DashboardShowColumnsDropdownAction
     onDashboardHideColumnsDropdown: () => DashboardRedux.DashboardHideColumnsDropdownAction
+    onDashboardShowToolbarsDropdown: () => DashboardRedux.DashboardShowToolbarsDropdownAction
+    onDashboardHideToolbarsDropdown: () => DashboardRedux.DashboardHideToolbarsDropdownAction
     onDashboardShowSystemStatusButton: () => DashboardRedux.DashboardShowSystemStatusButtonAction
     onDashboardHideSystemStatusButton: () => DashboardRedux.DashboardHideSystemStatusButtonAction
     onDashboardShowAboutButton: () => DashboardRedux.DashboardShowAboutButtonAction
@@ -41,21 +43,25 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
 
         let individualHomeToolbarOptions = <AdaptableBlotterForm horizontal>
             <FormGroup controlId="formInlineName">
-                <Col xs={5} className="ab_medium_margin">
+                <Col xs={4} className="ab_medium_margin">
                     <Checkbox onChange={(e) => this.onShowFunctionsDropdownChanged(e)}
-                        checked={this.props.DashboardState.ShowFunctionsDropdown} > Show Functions Dropdown </Checkbox>
+                        checked={this.props.DashboardState.ShowFunctionsDropdown} > Functions Dropdown </Checkbox>
                 </Col>
-                <Col xs={5} className="ab_medium_margin">
+                <Col xs={4} className="ab_medium_margin">
                     <Checkbox onChange={(e) => this.onShowColumnsDropdownChanged(e)}
-                        checked={this.props.DashboardState.ShowColumnsDropdown} > Show Columns Dropdown</Checkbox>
+                        checked={this.props.DashboardState.ShowColumnsDropdown} > Columns Dropdown</Checkbox>
                 </Col>
-                <Col xs={5} className="ab_medium_margin">
+                <Col xs={3} className="ab_medium_margin">
+                    <Checkbox onChange={(e) => this.onShowToolbarsDropdownChanged(e)}
+                        checked={this.props.DashboardState.ShowToolbarsDropdown} > Toolbars Dropdown </Checkbox>
+                </Col>
+                <Col xs={4} className="ab_medium_margin">
                     <Checkbox onChange={(e) => this.onShowSystemStatusButtonChanged(e)}
-                        checked={this.props.DashboardState.ShowSystemStatusButton} > Show System Status Button </Checkbox>
+                        checked={this.props.DashboardState.ShowSystemStatusButton} > System Status Button </Checkbox>
                 </Col>
-                <Col xs={5} className="ab_medium_margin">
+                <Col xs={4} className="ab_medium_margin">
                     <Checkbox onChange={(e) => this.onShowAboutButtonChanged(e)}
-                        checked={this.props.DashboardState.ShowAboutButton} > Show About Button </Checkbox>
+                        checked={this.props.DashboardState.ShowAboutButton} > About Button </Checkbox>
                 </Col>
             </FormGroup>
         </AdaptableBlotterForm>;
@@ -89,6 +95,15 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
             this.props.onDashboardShowColumnsDropdown()
         } else {
             this.props.onDashboardHideColumnsDropdown()
+        }
+    }
+
+    onShowToolbarsDropdownChanged(event: React.FormEvent<any>): void {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.props.onDashboardShowToolbarsDropdown()
+        } else {
+            this.props.onDashboardHideToolbarsDropdown()
         }
     }
 
@@ -131,6 +146,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onDashboardHideFunctionsDropdown: () => dispatch(DashboardRedux.DashboardHideFunctionsDropdown()),
         onDashboardShowColumnsDropdown: () => dispatch(DashboardRedux.DashboardShowColumnsDropdown()),
         onDashboardHideColumnsDropdown: () => dispatch(DashboardRedux.DashboardHideColumnsDropdown()),
+        onDashboardShowToolbarsDropdown: () => dispatch(DashboardRedux.DashboardShowToolbarsDropdown()),
+        onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
         onDashboardShowSystemStatusButton: () => dispatch(DashboardRedux.DashboardShowSystemStatusButton()),
         onDashboardHideSystemStatusButton: () => dispatch(DashboardRedux.DashboardHideSystemStatusButton()),
         onDashboardShowAboutButton: () => dispatch(DashboardRedux.DashboardShowAboutButton()),
