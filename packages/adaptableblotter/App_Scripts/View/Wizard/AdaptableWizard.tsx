@@ -37,6 +37,7 @@ class DummyActiveStep implements AdaptableWizardStep {
     public Back(): void {
         // no implementation for this
     }
+
     public GetIndexStepIncrement() {
         return 1;
     }
@@ -73,7 +74,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 <div className={cssClassName + StyleConstants.WIZARD_BASE}>
                     <Modal.Header closeButton className={cssClassName + StyleConstants.WIZARD_HEADER}>
                         <Modal.Title>
-                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} onStepButtonClicked={(s) => this.onStepButtonClicked(s)} />
+                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} CanShowAllSteps={this.canFinishWizard()} onStepButtonClicked={(s) => this.onStepButtonClicked(s)} />
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={cssClassName + StyleConstants.WIZARD_BODY}>
@@ -96,7 +97,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         let stepIndex: number = this.props.StepNames.findIndex(s => s == stepName);
         let BodyElement: any = this.props.Steps[stepIndex];
         let newElement = this.cloneWizardStep(BodyElement)
-        this.setState({ ActiveState: newElement, IndexState: stepIndex })
+            this.setState({ ActiveState: newElement, IndexState: stepIndex })
     }
 
     ForceUpdateGoBackState() {
@@ -117,7 +118,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         return this.state.IndexState == 0;
     }
 
-    canFinishWizard(): boolean {
+      canFinishWizard(): boolean {
         return this.ActiveStep.canNext() && this.props.canFinishWizard();
     }
 

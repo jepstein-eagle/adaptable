@@ -32,7 +32,7 @@ export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> ext
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]
     SystemFilters: string[]
-   Blotter: IAdaptableBlotter
+    Blotter: IAdaptableBlotter
 }
 
 // props for a basic wizard
