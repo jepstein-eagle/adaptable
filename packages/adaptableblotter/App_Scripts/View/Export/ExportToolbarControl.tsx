@@ -49,8 +49,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         let cssClassName: string = this.props.cssClassName + "__export";
         let savedReport: IReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
-        let sortedReports: IReport[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Reports, "Name")
-
+     
         let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport
 

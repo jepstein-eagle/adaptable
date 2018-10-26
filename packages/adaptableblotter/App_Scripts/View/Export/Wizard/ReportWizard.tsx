@@ -12,7 +12,7 @@ import { IReport } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Columns", "Build Query", "Choose Name", "Summary"]
+        let stepNames: string[] = ["Type", "Columns", "Build Query", "Choose Name", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ExportStrategyName}
