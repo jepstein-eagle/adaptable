@@ -37,11 +37,12 @@ function InitTradeBlotter() {
   let adaptableBlotterOptions = {
     primaryKey: "tradeId", // pk for blotter - required
     userName: "demo user", // name of current user
-    blotterId: "demo blotter", // id for blotter
+    blotterId: "demo blotter 2.5", // id for blotter
     enableAuditLog: false, // not running audit log
     enableRemoteConfigServer: false, // not running remote config
     // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
-    // predefinedConfig: "demoConfig.json", // passing in predefined config with a file
+  //  predefinedConfig: tradeJson,
+    // "demoConfig.json", // passing in predefined config with a file
     //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     iPushPullConfig: {
       api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -51,10 +52,10 @@ function InitTradeBlotter() {
     autoSaveLayouts: true, // layouts will save automatically
     vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
     ignoreCaseInQueries: true,
-  //  useDefaultVendorGridThemes: true,
+    //  useDefaultVendorGridThemes: true,
     //useAdaptableBlotterFilterForm: false,
     // useAdaptableBlotterQuickFilter: false
-   // getColumnValues: retrieveValues,
+    // getColumnValues: retrieveValues,
     //  maxColumnValueItemsDisplayed: 5
   }
 
@@ -556,9 +557,17 @@ let layoutdemojson = {
   }
 }
 
+
 let tradeJson = {
-  "Filter": {
-    "SystemFilters": ["Zero", "Positive", "Negative"]
+  "Dashboard": {
+    "VisibleToolbars": [
+      "SmartEdit",
+      "Layout",
+      "QuickSearch"
+    ],
+  },
+  "Theme": {
+    "CurrentTheme": "Dark Theme"
   }
 }
 
