@@ -78,7 +78,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -100,6 +100,8 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { raw } from 'body-parser';
 import { HomeStrategy } from '../../Strategy/HomeStrategy';
 import { FreeTextColumnStrategy } from '../../Strategy/FreeTextColumnStrategy';
+import { typeCastObjTo$t } from 'igniteui-react-core/ES2015/type';
+import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -1211,6 +1213,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
             this.debouncedSetSelectedCells();
         });
+        this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
+            console.log(params)
+        });
         this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged(params)
             this.debouncedSetSelectedCells();
@@ -1385,9 +1390,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (sortModel != null) {
             if (sortModel.length > 0) {
                 sortModel.forEach(sm => {
+                    if (ColumnHelper.isSpecialColumn(sm.colId)) {
+                        let groupedColumn: Column = this.gridOptions.columnApi.getAllColumns().find(c => c.isRowGroupActive() == true)
+                        if (groupedColumn) {
+                           let customSort: ICustomSort = this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == groupedColumn.getColId());
+                            if (customSort) {
+                                // check that not already applied
+                               if (! this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
+                                    let customSortStrategy: CustomSortagGridStrategy = this.Strategies.get(StrategyConstants.CustomSortStrategyId) as CustomSortagGridStrategy;
+                                    let groupCustomSort: ICustomSort = ObjectFactory.CreateEmptyCustomSort();
+                                    groupCustomSort.ColumnId = sm.colId;
+                                    groupCustomSort.SortedValues = customSort.SortedValues;
+                                    let comparator: any = customSortStrategy.getComparerFunction(groupCustomSort, this);
+                                    this.setCustomSort(sm.colId, comparator)
+                                }
+                            }
+                        }
+                    }
+
                     let gridSort: IGridSort = { Column: sm.colId, SortOrder: (sm.sort == "asc") ? SortOrder.Ascending : SortOrder.Descending }
                     gridSorts.push(gridSort);
-
                 })
             }
         }

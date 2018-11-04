@@ -7,7 +7,7 @@ export class CustomSortagGridStrategy extends CustomSortStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(blotter)
     }
-    protected getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
+    public getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
         return function compareItemsOfCustomSort(valueA: any, valueB: any, nodeA?: RowNode, nodeB?: RowNode, isInverted?: boolean): number {
             let firstElementValueString = blotter.getDisplayValueFromRecord(nodeA, customSort.ColumnId)
             let secondElementValueString = blotter.getDisplayValueFromRecord(nodeB, customSort.ColumnId)

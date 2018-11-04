@@ -6,7 +6,7 @@ export module EntitlementHelper {
 
     export function getEntitlementAccessLevelForStrategy(entitlements: IEntitlement[], strategyId: string): AccessLevel {
         if (ArrayExtensions.IsNull(entitlements)) {
-            alert(strategyId)
+        //    alert(strategyId)
           }
             if (ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
             let entitlement: IEntitlement = entitlements.find(e => e.FunctionName == strategyId);

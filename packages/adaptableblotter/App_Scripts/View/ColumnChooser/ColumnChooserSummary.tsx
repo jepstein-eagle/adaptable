@@ -16,7 +16,7 @@ export interface ColumnChooserSummaryProps extends StrategySummaryProps<ColumnCh
 export class ColumnChooserSummaryComponent extends React.Component<ColumnChooserSummaryProps, EditableConfigEntityState> {
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__ColumnChoosers";
-        alert("AccessLevel for chooser: " + this.props.AccessLevel)
+     //   alert("AccessLevel for chooser: " + this.props.AccessLevel)
     
        
         let colItems: IColItem[] = []

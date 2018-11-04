@@ -57,7 +57,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         });
     }
 
-    protected getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
+    public getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
         return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
             let firstElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(firstElement), customSort.ColumnId) //firstElement[customSort.ColumnId];
             let secondElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(secondElement), customSort.ColumnId)//secondElement[customSort.ColumnId];
