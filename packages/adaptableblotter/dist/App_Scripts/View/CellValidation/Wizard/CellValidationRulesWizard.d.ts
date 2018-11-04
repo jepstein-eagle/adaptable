@@ -18,12 +18,9 @@ export declare class CellValidationRulesWizard extends React.Component<CellValid
     private onOperand1ValueChanged;
     private onOperand2ValueChanged;
     private onDisallowEditChanged;
-    private getColumnDataTypeFromState;
     private checkOperator;
     private isBetweenOperator;
     private getAvailableOperators;
-    createCellValidationDescription(CellValidation: ICellValidationRule): string;
-    private operatorRequiresValue;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

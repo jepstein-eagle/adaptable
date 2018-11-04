@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert } from '../../../Core/Interface/IMessage';
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Core/Interface/IMessage';
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
@@ -42,6 +42,7 @@ export interface PopupState extends ISystemState {
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
     LoadingPopup: ILoadingPopup;
+    AboutPopup: IAboutPopup;
 }
 export interface TeamSharingState extends ISystemState {
     Activated: boolean;
@@ -101,8 +102,10 @@ export interface DashboardState extends IUserState {
     Zoom: number;
     DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden';
     ShowSystemStatusButton: boolean;
+    ShowAboutButton: boolean;
     ShowFunctionsDropdown: boolean;
     ShowColumnsDropdown: boolean;
+    ShowToolbarsDropdown: boolean;
     HomeToolbarTitle: string;
     ApplicationToolbarTitle: string;
 }

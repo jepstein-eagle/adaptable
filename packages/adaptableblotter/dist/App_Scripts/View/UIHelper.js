@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../Core/Enums");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
+const StyleConstants_1 = require("../Core/Constants/StyleConstants");
 var UIHelper;
 (function (UIHelper) {
     function EmptyConfigState() {
@@ -79,11 +80,11 @@ var UIHelper;
     function getStyleNameByStatusColour(statusColour) {
         switch (statusColour) {
             case Enums_1.StatusColour.Red:
-                return "danger";
+                return StyleConstants_1.DANGER_BSSTYLE;
             case Enums_1.StatusColour.Amber:
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             case Enums_1.StatusColour.Green:
-                return "success";
+                return StyleConstants_1.SUCCESS_BSSTYLE;
         }
     }
     UIHelper.getStyleNameByStatusColour = getStyleNameByStatusColour;
@@ -101,11 +102,11 @@ var UIHelper;
     function getStyleNameByMessageType(messageType) {
         switch (messageType) {
             case Enums_1.MessageType.Error:
-                return "danger";
+                return StyleConstants_1.DANGER_BSSTYLE;
             case Enums_1.MessageType.Warning:
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             case Enums_1.MessageType.Info:
-                return "info";
+                return StyleConstants_1.INFO_BSSTYLE;
         }
     }
     UIHelper.getStyleNameByMessageType = getStyleNameByMessageType;

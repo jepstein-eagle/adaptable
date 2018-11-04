@@ -8,6 +8,7 @@ export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChart
 export declare class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: ChartSummaryWizardProps);
     render(): any;
+    private getColumnValuesList;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

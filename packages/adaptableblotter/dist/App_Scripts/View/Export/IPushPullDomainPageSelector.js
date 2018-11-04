@@ -40,7 +40,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component {
             }
         });
         return React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "iPushPull Folder and Page Selector", bsStyle: "primary", glyphicon: "export" },
-            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? React.createElement(react_bootstrap_1.Alert, { bsStyle: "danger" },
+            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? React.createElement(react_bootstrap_1.Alert, { bsStyle: StyleConstants.DANGER_BSSTYLE },
                 "Error getting iPushPull Pages : ",
                 this.props.ErrorMsg) : React.createElement(react_bootstrap_1.ListGroup, { fill: true, className: "ab_preview_panel" }, itemsElements),
             React.createElement(react_bootstrap_2.Button, { className: "ab_right_modal_button", onClick: () => { this.props.onCancel(); } },

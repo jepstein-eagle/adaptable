@@ -13,15 +13,15 @@ class AdaptableBlotterPopupAlert extends React.Component {
         let isError = false;
         switch (this.props.MessageType) {
             case Enums_1.MessageType.Info:
-                style = "success";
+                style = StyleConstants.INFO_BSSTYLE;
                 isInfo = true;
                 break;
             case Enums_1.MessageType.Warning:
-                style = "warning";
+                style = StyleConstants.WARNING_BSSTYLE;
                 isWarning = true;
                 break;
             case Enums_1.MessageType.Error:
-                style = "danger";
+                style = StyleConstants.DANGER_BSSTYLE;
                 isError = true;
                 break;
         }

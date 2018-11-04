@@ -8,8 +8,6 @@ const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-//import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-const Helper_1 = require("../../Core/Helpers/Helper");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
@@ -28,7 +26,6 @@ class ExportToolbarControlComponent extends React.Component {
         let cssClassName = this.props.cssClassName + "__export";
         let savedReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
-        let sortedReports = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.Reports, "Name");
         let currentReportId = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport;
         let availableReports = this.props.Reports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {

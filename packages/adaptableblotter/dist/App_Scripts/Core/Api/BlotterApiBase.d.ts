@@ -29,6 +29,8 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     dashboardMinimise(): void;
     dashboardShowSystemStatusButton(): void;
     dashboardHideSystemStatusButton(): void;
+    dashboardShowAboutButton(): void;
+    dashboardHideAboutButton(): void;
     dashboardShowFunctionsDropdown(): void;
     dashboardHideFunctionsDropdown(): void;
     dashboardShowColumnsDropdown(): void;

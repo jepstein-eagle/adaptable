@@ -20,6 +20,7 @@ export declare class AdaptableWizard extends React.Component<AdaptableWizardProp
     StepName: string;
     constructor(props: AdaptableWizardProps);
     render(): JSX.Element;
+    private onStepButtonClicked;
     ForceUpdateGoBackState(): void;
     isLastStep(): boolean;
     isFirstStep(): boolean;

@@ -5,6 +5,13 @@ exports.AB_HEADER = "Ab-";
 // Constants for when we create internal styles
 exports.FLASH_UP_STYLE = exports.AB_HEADER + "FlashUp";
 exports.FLASH_DOWN_STYLE = exports.AB_HEADER + "FlashDown";
+// Constants for when we use Boostrap bsStyles
+exports.DEFAULT_BSSTYLE = "default";
+exports.PRIMARY_BSSTYLE = "primary";
+exports.INFO_BSSTYLE = "info";
+exports.SUCCESS_BSSTYLE = "success";
+exports.WARNING_BSSTYLE = "warning";
+exports.DANGER_BSSTYLE = "danger";
 // constants for CSS
 exports.AB_STYLE = "#ab-style";
 exports.BASE = "__base";

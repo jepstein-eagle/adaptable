@@ -9,5 +9,5 @@ export declare class CustomSortStrategy extends AdaptableStrategyBase {
     addContextMenuItem(columnId: string): void;
     removeCustomSorts(): void;
     applyCustomSorts(): void;
-    protected getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function;
+    getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function;
 }

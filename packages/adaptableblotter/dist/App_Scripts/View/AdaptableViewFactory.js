@@ -29,7 +29,6 @@ const TeamSharingPopup_1 = require("./TeamSharing/TeamSharingPopup");
 const IPushPullLogin_1 = require("./Export/IPushPullLogin");
 const HomeToolbarControl_1 = require("./Home/HomeToolbarControl");
 const HomeButtonsPopup_1 = require("./Home/HomeButtonsPopup");
-const AboutPopup_1 = require("./About/AboutPopup");
 const ApplicationPopup_1 = require("./Application/ApplicationPopup");
 const DashboardPopup_1 = require("./Dashboard/DashboardPopup");
 const DataManagementPopup_1 = require("./DataManagement/DataManagementPopup");
@@ -49,7 +48,6 @@ const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
 exports.AdaptableViewFactory = {
-    AboutPopup: AboutPopup_1.AboutPopup,
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
     AlertPopup: AlertPopup_1.AlertPopup,
     ApplicationPopup: ApplicationPopup_1.ApplicationPopup,

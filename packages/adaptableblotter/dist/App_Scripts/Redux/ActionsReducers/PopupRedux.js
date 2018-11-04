@@ -7,6 +7,8 @@ exports.POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
 exports.POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
 exports.POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
 exports.POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
+exports.POPUP_SHOW_ABOUT = 'POPUP_SHOW_ABOUT';
+exports.POPUP_HIDE_ABOUT = 'POPUP_HIDE_ABOUT';
 exports.POPUP_SHOW_ALERT = 'POPUP_SHOW_ALERT';
 exports.POPUP_HIDE_ALERT = 'POPUP_HIDE_ALERT';
 exports.POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
@@ -43,6 +45,12 @@ exports.PopupShowLoading = () => ({
 });
 exports.PopupHideLoading = () => ({
     type: exports.POPUP_HIDE_LOADING
+});
+exports.PopupShowAbout = () => ({
+    type: exports.POPUP_SHOW_ABOUT,
+});
+exports.PopupHideAbout = () => ({
+    type: exports.POPUP_HIDE_ABOUT
 });
 exports.PopupShowPrompt = (Prompt) => ({
     type: exports.POPUP_SHOW_PROMPT,
@@ -81,6 +89,9 @@ const initialPopupState = {
     },
     LoadingPopup: {
         ShowLoadingPopup: true,
+    },
+    AboutPopup: {
+        ShowAboutPopup: false,
     },
     AlertPopup: {
         ShowAlertPopup: false,
@@ -206,6 +217,14 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
         case exports.POPUP_HIDE_LOADING: {
             let newLoadingPopup = { ShowLoadingPopup: false };
             return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
+        }
+        case exports.POPUP_SHOW_ABOUT: {
+            let newAboutPopup = { ShowAboutPopup: true };
+            return Object.assign({}, state, { AboutPopup: newAboutPopup });
+        }
+        case exports.POPUP_HIDE_ABOUT: {
+            let newAboutPopup = { ShowAboutPopup: false };
+            return Object.assign({}, state, { AboutPopup: newAboutPopup });
         }
         case exports.POPUP_CLEAR_PARAM: {
             let newScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, ComponentStrategy: state.ScreenPopup.ComponentStrategy, ComponentName: state.ScreenPopup.ComponentName, Params: null };

@@ -4,6 +4,7 @@ const ExpressionHelper_1 = require("./Helpers/ExpressionHelper");
 const Enums_1 = require("./Enums");
 const ColumnHelper_1 = require("./Helpers/ColumnHelper");
 const GeneralConstants = require("./Constants/GeneralConstants");
+const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateEmptyCustomSort() {
@@ -84,8 +85,7 @@ var ObjectFactory;
                 Operand1Type: Enums_1.RangeOperandType.Column,
                 Operand2Type: Enums_1.RangeOperandType.Column,
             },
-            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            Description: ""
+            Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         };
     }
     ObjectFactory.CreateEmptyCellValidation = CreateEmptyCellValidation;
@@ -128,12 +128,11 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyShortcut = CreateEmptyShortcut;
     function CreateCellValidationMessage(CellValidation, blotter, showIntro = true) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let userFilters = blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
         let columnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns);
         let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :
             "";
-        return (columnFriendlyName + ": " + CellValidation.Description + expressionDescription);
+        return (columnFriendlyName + ": " + CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(CellValidation, columns) + expressionDescription);
     }
     ObjectFactory.CreateCellValidationMessage = CreateCellValidationMessage;
     function CreateEmptyConditionalStyle() {
@@ -191,12 +190,32 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateUserFilterFromColumnFilter = CreateUserFilterFromColumnFilter;
-    function CreateCellValidationRule(columnId, range, actionMode, description, expression) {
+    function CreateRange(operator, operand1, operand2, rangeOperandType, rangeOperandType2) {
+        return {
+            Operator: operator,
+            Operand1: operand1,
+            Operand2: operand2,
+            Operand1Type: rangeOperandType,
+            Operand2Type: rangeOperandType2
+        };
+    }
+    ObjectFactory.CreateRange = CreateRange;
+    function CreateRangeEvaluation(operator, operand1, operand2, newValue, initialValue, columnId) {
+        return {
+            operand1: operand1,
+            operand2: operand2,
+            newValue: newValue,
+            operator: operator,
+            initialValue: initialValue,
+            columnId: columnId
+        };
+    }
+    ObjectFactory.CreateRangeEvaluation = CreateRangeEvaluation;
+    function CreateCellValidationRule(columnId, range, actionMode, expression) {
         return {
             ColumnId: columnId,
             Range: range,
             ActionMode: actionMode,
-            Description: description,
             Expression: expression,
         };
     }

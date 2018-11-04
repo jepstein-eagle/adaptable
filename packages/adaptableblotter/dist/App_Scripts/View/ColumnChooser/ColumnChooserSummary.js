@@ -7,7 +7,7 @@ const StyleConstants = require("../../Core/Constants/StyleConstants");
 class ColumnChooserSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__ColumnChoosers";
-        alert("AccessLevel for chooser: " + this.props.AccessLevel);
+        //   alert("AccessLevel for chooser: " + this.props.AccessLevel)
         let colItems = [];
         colItems.push({ Size: 3, Content: React.createElement("b", null, 'Column Category') });
         colItems.push({ Size: 5, Content: this.props.SummarisedColumn.Category ? this.props.SummarisedColumn.Category : "None" });

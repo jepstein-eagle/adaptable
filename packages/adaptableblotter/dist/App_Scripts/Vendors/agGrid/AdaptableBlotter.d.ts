@@ -57,6 +57,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     applyGridFiltering(): void;
+    clearGridFiltering(): void;
+    clearColumnFiltering(columnIds: string[]): void;
     hideFilterFormPopup: Function;
     hideFilterForm(): void;
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void;

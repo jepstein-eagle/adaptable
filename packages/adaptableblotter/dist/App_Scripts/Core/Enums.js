@@ -49,6 +49,9 @@ var LeafExpressionOperator;
     LeafExpressionOperator["IsNotNumber"] = "IsNotNumber";
     LeafExpressionOperator["IsTrue"] = "IsTrue";
     LeafExpressionOperator["IsFalse"] = "IsFalse";
+    LeafExpressionOperator["NoDuplicates"] = "NoDuplicates";
+    // Special
+    LeafExpressionOperator["PrimaryKeyDuplicate"] = "PrimaryKeyDuplicate";
 })(LeafExpressionOperator = exports.LeafExpressionOperator || (exports.LeafExpressionOperator = {}));
 var MathOperation;
 (function (MathOperation) {

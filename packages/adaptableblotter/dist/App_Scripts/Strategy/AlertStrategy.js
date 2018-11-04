@@ -72,7 +72,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let rangeEvaluation = ExpressionHelper_1.ExpressionHelper.GetRangeEvaluation(alert.Range, dataChangedEvent.NewValue, dataChangedEvent.OldValue, columns.find(c => c.ColumnId == dataChangedEvent.ColumnId), this.blotter, null);
-        return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation);
+        return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
     }
 }
 exports.AlertStrategy = AlertStrategy;

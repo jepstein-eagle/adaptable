@@ -91,6 +91,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch' | 'formatColumn'): void;
     removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch' | 'formatColumn'): void;
     applyGridFiltering(): void;
+    clearGridFiltering(): void;
+    clearColumnFiltering(columnIds: string[]): void;
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;

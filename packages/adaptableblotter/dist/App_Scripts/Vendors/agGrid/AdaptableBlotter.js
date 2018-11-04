@@ -22,7 +22,6 @@ const StyleService_1 = require("../../Core/Services/StyleService");
 const AuditLogService_1 = require("../../Core/Services/AuditLogService");
 const ChartService_1 = require("../../Core/Services/ChartService");
 const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
-const AboutStrategy_1 = require("../../Strategy/AboutStrategy");
 const ApplicationStrategy_1 = require("../../Strategy/ApplicationStrategy");
 const BulkUpdateStrategy_1 = require("../../Strategy/BulkUpdateStrategy");
 const CustomSortagGridStrategy_1 = require("../../Strategy/CustomSortagGridStrategy");
@@ -103,7 +102,6 @@ class AdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
         this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
         this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
         this.Strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy_1.ApplicationStrategy(this));
@@ -111,7 +109,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        //   this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
@@ -203,6 +201,19 @@ class AdaptableBlotter {
         else {
             AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Trying to filter on a non-filterable grid.');
         }
+    }
+    clearGridFiltering() {
+        this.gridOptions.columnApi.getAllColumns().forEach(c => {
+            c.setFilterActive(false);
+        });
+    }
+    clearColumnFiltering(columnIds) {
+        columnIds.forEach(c => {
+            let column = this.gridOptions.columnApi.getAllColumns().find(col => col.getColId() == c);
+            if (column) {
+                column.setFilterActive(false);
+            }
+        });
     }
     hideFilterForm() {
         if (this.hideFilterFormPopup) {
@@ -402,7 +413,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type');
+            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage('column is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         // get the column type if already in store (and not unknown)
@@ -1039,6 +1050,9 @@ class AdaptableBlotter {
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_RANGE_SELECTION_CHANGED, (params) => {
             this.debouncedSetSelectedCells();
         });
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params) => {
+            console.log(params);
+        });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_SORT_CHANGED, (params) => {
             this.onSortChanged(params);
             this.debouncedSetSelectedCells();
@@ -1204,6 +1218,23 @@ class AdaptableBlotter {
         if (sortModel != null) {
             if (sortModel.length > 0) {
                 sortModel.forEach(sm => {
+                    if (ColumnHelper_1.ColumnHelper.isSpecialColumn(sm.colId)) {
+                        let groupedColumn = this.gridOptions.columnApi.getAllColumns().find(c => c.isRowGroupActive() == true);
+                        if (groupedColumn) {
+                            let customSort = this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == groupedColumn.getColId());
+                            if (customSort) {
+                                // check that not already applied
+                                if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper_1.ColumnHelper.isSpecialColumn(gs.Column))) {
+                                    let customSortStrategy = this.Strategies.get(StrategyConstants.CustomSortStrategyId);
+                                    let groupCustomSort = ObjectFactory_1.ObjectFactory.CreateEmptyCustomSort();
+                                    groupCustomSort.ColumnId = sm.colId;
+                                    groupCustomSort.SortedValues = customSort.SortedValues;
+                                    let comparator = customSortStrategy.getComparerFunction(groupCustomSort, this);
+                                    this.setCustomSort(sm.colId, comparator);
+                                }
+                            }
+                        }
+                    }
                     let gridSort = { Column: sm.colId, SortOrder: (sm.sort == "asc") ? Enums_1.SortOrder.Ascending : Enums_1.SortOrder.Descending };
                     gridSorts.push(gridSort);
                 });

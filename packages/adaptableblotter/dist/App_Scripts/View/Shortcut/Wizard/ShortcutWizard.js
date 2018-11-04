@@ -8,7 +8,7 @@ const ShortcutTypeWizard_1 = require("./ShortcutTypeWizard");
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 class ShortcutWizard extends React.Component {
     render() {
-        let stepNames = ["Column Type", "Settings"];
+        let stepNames = ["Column Type", "Settings", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
             React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ShortcutStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(ShortcutTypeWizard_1.ShortcutTypeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0] }),

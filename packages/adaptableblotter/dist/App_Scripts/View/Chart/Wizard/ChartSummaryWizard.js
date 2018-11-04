@@ -4,6 +4,7 @@ const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const GeneralConstants = require("../../../Core/Constants/GeneralConstants");
 class ChartSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -16,16 +17,24 @@ class ChartSummaryWizard extends React.Component {
             { Key: "Type", Value: this.props.Data.Type },
             { Key: "Y Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumn, this.props.Columns) },
             { Key: "X Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumn, this.props.Columns) },
-            { Key: "X Axis Values", Value: this.props.Data.XAxisColumnValues.join(', ') },
+            { Key: "X Axis Values", Value: this.getColumnValuesList(this.props.Data.XAxisColumnValues) },
             {
                 Key: "Additional Column", Value: (this.props.Data.AdditionalColumn) ?
                     ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumn, this.props.Columns) :
                     "None"
             },
-            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.props.Data.AdditionalColumnValues.join(', ') : "n/a" },
+            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.getColumnValuesList(this.props.Data.AdditionalColumnValues) : "n/a" },
         ];
         let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.ChartStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);
+    }
+    getColumnValuesList(columnValueArray) {
+        if (columnValueArray[0] == GeneralConstants.ALL_COLUMN_VALUES) {
+            return "All Column Values";
+        }
+        else {
+            return columnValueArray.join(', ');
+        }
     }
     canNext() { return true; }
     canBack() { return true; }

@@ -121,17 +121,13 @@
   ],
   "maintainers": [
     {
-      "name": "jonathannaim",
-      "email": "jonathan.naim@gmail.com"
-    },
-    {
       "name": "JonnyAdaptableTools",
       "email": "jonny.wolfson@adaptabletools.com"
     }
   ],
   "author": {
-    "name": "Jonathan Naim",
-    "email": "jo.naim@adaptabletools.com"
+    "name": "Jonny Wolfson",
+    "email": "jonny.wolfson@adaptabletools.com"
   },
   "homepage": "http://www.adaptabletools.com/",
   "repository": {

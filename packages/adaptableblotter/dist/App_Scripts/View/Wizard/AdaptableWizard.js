@@ -49,7 +49,7 @@ class AdaptableWizard extends React.Component {
             React.createElement("div", { className: cssClassName + StyleConstants.WIZARD_BASE },
                 React.createElement(react_bootstrap_1.Modal.Header, { closeButton: true, className: cssClassName + StyleConstants.WIZARD_HEADER },
                     React.createElement(react_bootstrap_1.Modal.Title, null,
-                        React.createElement(WizardLegend_1.WizardLegend, { StepNames: this.props.StepNames, ActiveStepName: this.ActiveStep.StepName, FriendlyName: this.props.FriendlyName }))),
+                        React.createElement(WizardLegend_1.WizardLegend, { StepNames: this.props.StepNames, ActiveStepName: this.ActiveStep.StepName, FriendlyName: this.props.FriendlyName, CanShowAllSteps: this.canFinishWizard(), onStepButtonClicked: (s) => this.onStepButtonClicked(s) }))),
                 React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.WIZARD_BODY },
                     React.createElement("div", { className: "ab_main_wizard" }, this.state.ActiveState)),
                 React.createElement(react_bootstrap_1.Modal.Footer, { className: cssClassName + StyleConstants.WIZARD_FOOTER },
@@ -57,6 +57,12 @@ class AdaptableWizard extends React.Component {
                     React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "default", overrideDisableButton: !this.ActiveStep.canBack() || this.isFirstStep(), onClick: () => this.handleClickBack(), glyph: "chevron-left", overrideText: "Back", AccessLevel: Enums_1.AccessLevel.Full }),
                     React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "info", overrideDisableButton: !this.ActiveStep.canNext() || this.isLastStep(), onClick: () => this.handleClickNext(), overrideText: "Next", glyph: "chevron-right", AccessLevel: Enums_1.AccessLevel.Full }),
                     React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "primary", overrideDisableButton: !this.canFinishWizard(), onClick: () => this.handleClickFinish(), overrideText: "Finish", glyph: "ok", AccessLevel: Enums_1.AccessLevel.Full })))));
+    }
+    onStepButtonClicked(stepName) {
+        let stepIndex = this.props.StepNames.findIndex(s => s == stepName);
+        let BodyElement = this.props.Steps[stepIndex];
+        let newElement = this.cloneWizardStep(BodyElement);
+        this.setState({ ActiveState: newElement, IndexState: stepIndex });
     }
     ForceUpdateGoBackState() {
         //to force back/next. We'll see if that needs to be optimised'

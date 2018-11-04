@@ -17,6 +17,7 @@ const CellValidationEntityRow_1 = require("./CellValidationEntityRow");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
 class CellValidationPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -40,8 +41,8 @@ class CellValidationPopupComponent extends React.Component {
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."];
         let colItems = [
             { Content: "Validation Rule", Size: 4 },
-            { Content: "Expression", Size: 4 },
-            { Content: "Action", Size: 2 },
+            { Content: "Expression", Size: 3 },
+            { Content: "Action", Size: 3 },
             { Content: "", Size: 2 },
         ];
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
@@ -81,7 +82,7 @@ class CellValidationPopupComponent extends React.Component {
         let cellValidationRule = this.state.EditedAdaptableBlotterObject;
         return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
             (ExpressionHelper_1.ExpressionHelper.IsEmptyOrValidExpression(cellValidationRule.Expression)) &&
-            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(cellValidationRule.Description);
+            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(cellValidationRule, this.props.Columns));
     }
 }
 function mapStateToProps(state, ownProps) {

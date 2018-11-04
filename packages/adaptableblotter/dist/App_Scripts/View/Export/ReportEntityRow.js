@@ -32,6 +32,7 @@ class ReportEntityRow extends React.Component {
                 "Start Sync with iPushPull");
         let exportGlyph = React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyConstants.ExportGlyph });
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
+        let isSystemReport = ReportHelper_1.ReportHelper.IsSystemReport(report);
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = report.Name;
         colItems[1].Content = ReportHelper_1.ReportHelper.GetReportColumnsDescription(report, this.props.Columns);
@@ -45,7 +46,7 @@ class ReportEntityRow extends React.Component {
                 OpenfinHelper_1.OpenfinHelper.isRunningInOpenfin() && OpenfinHelper_1.OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem,
                 iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem));
         colItems[3].Content = exportButton;
-        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, report), showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), EntityName: "Report" });
+        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, report), overrideDisableEdit: isSystemReport, overrideDisableDelete: isSystemReport, overrideDisableShare: isSystemReport, showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), EntityName: "Report" });
         colItems[4].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

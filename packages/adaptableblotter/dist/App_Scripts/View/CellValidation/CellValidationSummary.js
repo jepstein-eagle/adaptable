@@ -13,6 +13,7 @@ const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail")
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
+const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
 class CellValidationSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -21,14 +22,14 @@ class CellValidationSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
         let strategySummaries = [];
-        alert("AccessLevel for cv: " + this.props.AccessLevel);
+        //   alert("AccessLevel for cv: " + this.props.AccessLevel)
         // title row
         let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.CellValidationStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);
         // existing items
         this.props.CellValidations.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: item.Description, ConfigEnity: item, EntityName: StrategyConstants.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(item, this.props.Columns), ConfigEnity: item, EntityName: StrategyConstants.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });

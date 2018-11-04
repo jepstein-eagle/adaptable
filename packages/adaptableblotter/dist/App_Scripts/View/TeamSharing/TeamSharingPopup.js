@@ -12,6 +12,7 @@ const StyleVisualItem_1 = require("../Components/StyleVisualItem");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const Enums_1 = require("../../Core/Enums");
 const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
 class TeamSharingPopupComponent extends React.Component {
     componentDidMount() {
         this.props.onGetSharedItems();
@@ -66,7 +67,7 @@ class TeamSharingPopupComponent extends React.Component {
                 let cellVal = sharedEntity.entity;
                 return React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center" } },
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)),
-                    React.createElement(react_bootstrap_1.Col, { xs: 4 }, cellVal.Description),
+                    React.createElement(react_bootstrap_1.Col, { xs: 4 }, CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(cellVal, this.props.Columns)),
                     React.createElement(react_bootstrap_1.Col, { xs: 4 }, (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(cellVal.Expression)) ?
                         ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns) :
                         "No Expression"));

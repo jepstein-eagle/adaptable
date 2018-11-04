@@ -34,7 +34,6 @@ const DashboardStrategy_1 = require("../../Strategy/DashboardStrategy");
 const EventDispatcher_1 = require("../../Core/EventDispatcher");
 const Enums_1 = require("../../Core/Enums");
 const DefaultAdaptableBlotterOptions_1 = require("../../Core/DefaultAdaptableBlotterOptions");
-const AboutStrategy_1 = require("../../Strategy/AboutStrategy");
 const BulkUpdateStrategy_1 = require("../../Strategy/BulkUpdateStrategy");
 const BlotterApi_1 = require("./BlotterApi");
 const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
@@ -70,7 +69,6 @@ class AdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
@@ -393,6 +391,12 @@ class AdaptableBlotter {
     // }
     applyGridFiltering() {
         return null;
+    }
+    clearGridFiltering() {
+        // todo
+    }
+    clearColumnFiltering(columnIds) {
+        // to do
     }
     destroy() {
         ReactDOM.unmountComponentAtNode(this.container);

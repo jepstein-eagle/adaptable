@@ -43,7 +43,6 @@ const ObjectFactory_1 = require("../../Core/ObjectFactory");
 const DefaultAdaptableBlotterOptions_1 = require("../../Core/DefaultAdaptableBlotterOptions");
 const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
 const color_1 = require("../../Core/color");
-const AboutStrategy_1 = require("../../Strategy/AboutStrategy");
 const BulkUpdateStrategy_1 = require("../../Strategy/BulkUpdateStrategy");
 const FilterForm_1 = require("../../View/Components/FilterForm/FilterForm");
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
@@ -81,7 +80,6 @@ class AdaptableBlotter {
         // store the options in state - and also later anything else that we need...
         //   this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetBlotterOptionsAction>(GridRedux.GridSetBlotterOptions(this.BlotterOptions));
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
         this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
         // this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
@@ -639,6 +637,12 @@ class AdaptableBlotter {
         this.vendorGrid.dataSource.filter(myFilter);
         quickSearchColors.forEach(x => this.addCellStyle(x.rowId, x.columnIndex, "Ab-QuickSearch"));
         this._onRefresh.Dispatch(this, this);
+    }
+    clearGridFiltering() {
+        // todo
+    }
+    clearColumnFiltering(columnIds) {
+        // to do
     }
     editCalculatedColumnInGrid(calculatedColumn) {
         // nothing to do

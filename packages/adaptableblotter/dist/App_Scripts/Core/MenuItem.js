@@ -9,7 +9,6 @@ class MenuItemDoReduxAction {
         this.GlyphIcon = GlyphIcon;
         this.IsVisible = IsVisible;
     }
-    ;
 }
 exports.MenuItemDoReduxAction = MenuItemDoReduxAction;
 class MenuItemShowPopup {

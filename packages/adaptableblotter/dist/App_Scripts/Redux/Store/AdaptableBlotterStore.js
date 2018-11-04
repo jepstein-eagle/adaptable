@@ -102,7 +102,7 @@ exports.LoadState = (State) => ({
 const rootReducerWithResetManagement = (state, action) => {
     switch (action.type) {
         case RESET_STATE:
-            alert("in top");
+            //   alert("in top")
             //This trigger the persist of the state with nothing
             state.AdvancedSearch = undefined;
             state.Alert = undefined;

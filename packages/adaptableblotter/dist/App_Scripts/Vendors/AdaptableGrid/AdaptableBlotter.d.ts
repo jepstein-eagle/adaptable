@@ -86,6 +86,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getAllRows(): any[];
     getAllVisibleRows(): any[];
     applyGridFiltering(): void;
+    clearGridFiltering(): void;
+    clearColumnFiltering(columnIds: string[]): void;
     destroy(): void;
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;

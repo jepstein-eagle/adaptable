@@ -1,5 +1,6 @@
+import { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn } from './Api/Interface/IAdaptableBlotterObjects';
-import { ActionMode } from './Enums';
+import { LeafExpressionOperator, RangeOperandType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
@@ -27,7 +28,9 @@ export declare module ObjectFactory {
     function CreateColumnFilter(columnId: string, expression: Expression): IColumnFilter;
     function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter;
     function CreateUserFilterFromColumnFilter(columnFilter: IColumnFilter, name: string): IUserFilter;
-    function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, description: string, expression: Expression): ICellValidationRule;
+    function CreateRange(operator: LeafExpressionOperator, operand1: any, operand2: any, rangeOperandType: RangeOperandType, rangeOperandType2: RangeOperandType): IRange;
+    function CreateRangeEvaluation(operator: LeafExpressionOperator, operand1: any, operand2: any, newValue: any, initialValue: any, columnId: string): IRangeEvaluation;
+    function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, expression: Expression): ICellValidationRule;
     function CreateEmptyStyle(): IStyle;
     function CreateEmptySelectedCellSummmary(): ISelectedCellSummmary;
 }

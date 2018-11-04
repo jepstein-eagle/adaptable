@@ -5,6 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const StyleConstants_1 = require("../../../Core/Constants/StyleConstants");
 class CalculatedColumnSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +16,7 @@ class CalculatedColumnSettingsWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-settings";
         let validationState = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { header: "Calculated Column Settings", bsStyle: "primary" },
+            React.createElement(react_bootstrap_1.Panel, { header: "Calculated Column Settings", bsStyle: StyleConstants_1.PRIMARY_BSSTYLE },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName" },
                         React.createElement(react_bootstrap_1.Col, { xs: 3 },

@@ -11,12 +11,14 @@ const StyleConstants = require("../Core/Constants/StyleConstants");
 const AdaptableBlotterPopupAlert_1 = require("./Components/Popups/AdaptableBlotterPopupAlert");
 const AdaptableBlotterChart_1 = require("./Components/Popups/AdaptableBlotterChart");
 const AdaptableBlotterLoadingScreen_1 = require("./Components/Popups/AdaptableBlotterLoadingScreen");
+const AdaptableBlotterAbout_1 = require("./Components/Popups/AdaptableBlotterAbout");
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component {
     render() {
         return (React.createElement("div", { className: StyleConstants.AB_STYLE + StyleConstants.BASE },
             React.createElement(Dashboard_1.Dashboard, { Blotter: this.props.Blotter }),
             React.createElement(AdaptableBlotterChart_1.AdaptableBlotterChart, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseChartPopup, showChart: this.props.PopupState.ChartPopup.ShowChartPopup }),
+            React.createElement(AdaptableBlotterAbout_1.AdaptableBlotterAbout, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseAboutPopup, showAbout: this.props.PopupState.AboutPopup.ShowAboutPopup }),
             React.createElement(AdaptableBlotterLoadingScreen_1.AdaptableBlotterLoadingScreen, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseLoadingPopup, showLoadingScreen: this.props.PopupState.LoadingPopup.ShowLoadingPopup }),
             React.createElement(AdaptableBlotterPopupAlert_1.AdaptableBlotterPopupAlert, { Header: this.props.PopupState.AlertPopup.Header, Msg: this.props.PopupState.AlertPopup.Msg, onClose: this.props.onCloseAlertPopup, ShowPopup: this.props.PopupState.AlertPopup.ShowAlertPopup, MessageType: this.props.PopupState.AlertPopup.MessageType }),
             React.createElement(AdaptableBlotterPopupPrompt_1.AdaptableBlotterPopupPrompt, { Msg: this.props.PopupState.PromptPopup.PromptMsg, Title: this.props.PopupState.PromptPopup.PromptTitle, onClose: this.props.onClosePromptPopup, onConfirm: this.props.onConfirmPromptPopup, ShowPopup: this.props.PopupState.PromptPopup.ShowPromptPopup }),
@@ -34,6 +36,7 @@ function mapDispatchToProps(dispatch) {
     return {
         onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
         onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
+        onCloseAboutPopup: () => dispatch(PopupRedux.PopupHideAbout()),
         onCloseChartPopup: () => dispatch(PopupRedux.PopupHideChart()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),

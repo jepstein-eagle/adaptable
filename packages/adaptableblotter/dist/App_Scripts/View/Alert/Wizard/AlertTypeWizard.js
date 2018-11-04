@@ -5,6 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Core/Enums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
+const StyleConstants_1 = require("../../../Core/Constants/StyleConstants");
 class AlertTypeWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -48,10 +49,10 @@ class AlertTypeWizard extends React.Component {
     }
     onMessageTypeSelectChanged(event) {
         let e = event.target;
-        if (e.value == "Info") {
+        if (e.value == StyleConstants_1.INFO_BSSTYLE) {
             this.setState({ MessageType: Enums_1.MessageType.Info }, () => this.props.UpdateGoBackState());
         }
-        else if (e.value == "Warning") {
+        else if (e.value == StyleConstants_1.WARNING_BSSTYLE) {
             this.setState({ MessageType: Enums_1.MessageType.Warning }, () => this.props.UpdateGoBackState());
         }
         else {

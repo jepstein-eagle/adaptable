@@ -10,6 +10,7 @@ export interface IRangeEvaluation {
     newValue: any;
     operator: LeafExpressionOperator;
     initialValue: any;
+    columnId: string;
 }
 export declare module ExpressionHelper {
     function CreateSingleColumnExpression(columnId: string, columnDisplayValues: Array<string>, columnRawValues: Array<string>, userFilters: Array<string>, ranges: Array<IRange>): Expression;
@@ -32,7 +33,7 @@ export declare module ExpressionHelper {
     function CreateEmptyExpression(): Expression;
     function CreateEmptyRangeExpression(): IRange;
     function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any): IRangeEvaluation;
-    function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation): boolean;
+    function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation, blotter: IAdaptableBlotter): boolean;
     function ExpressionContainsFilter(expression: Expression, filter: IUserFilter): boolean;
     function OperatorRequiresValue(operator: LeafExpressionOperator): boolean;
 }

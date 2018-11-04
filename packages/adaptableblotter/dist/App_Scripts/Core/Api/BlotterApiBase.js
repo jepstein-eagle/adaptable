@@ -106,17 +106,23 @@ class BlotterApiBase {
     dashboardHideSystemStatusButton() {
         this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton());
     }
+    dashboardShowAboutButton() {
+        this.dispatchAction(DashboardRedux.DashboardShowAboutButton());
+    }
+    dashboardHideAboutButton() {
+        this.dispatchAction(DashboardRedux.DashboardHideAboutButton());
+    }
     dashboardShowFunctionsDropdown() {
-        this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdownButton());
+        this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown());
     }
     dashboardHideFunctionsDropdown() {
-        this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdownButton());
+        this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown());
     }
     dashboardShowColumnsDropdown() {
-        this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdownButton());
+        this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown());
     }
     dashboardHideColumnsDropdown() {
-        this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdownButton());
+        this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown());
     }
     dashboardSetHomeToolbarTitle(title) {
         this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));

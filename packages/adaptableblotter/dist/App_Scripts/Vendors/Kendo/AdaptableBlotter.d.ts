@@ -95,6 +95,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
     applyGridFiltering(): void;
+    clearGridFiltering(): void;
+    clearColumnFiltering(columnIds: string[]): void;
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;

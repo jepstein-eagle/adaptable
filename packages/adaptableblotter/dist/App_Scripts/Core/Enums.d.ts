@@ -38,7 +38,9 @@ export declare enum LeafExpressionOperator {
     IsNegative = "IsNegative",
     IsNotNumber = "IsNotNumber",
     IsTrue = "IsTrue",
-    IsFalse = "IsFalse"
+    IsFalse = "IsFalse",
+    NoDuplicates = "NoDuplicates",
+    PrimaryKeyDuplicate = "PrimaryKeyDuplicate"
 }
 export declare enum MathOperation {
     Add = "Add",

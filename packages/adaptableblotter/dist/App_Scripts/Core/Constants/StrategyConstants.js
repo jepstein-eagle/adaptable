@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // Strategy Ids
-exports.AboutStrategyId = "About";
 exports.AdvancedSearchStrategyId = "AdvancedSearch";
 exports.AlertStrategyId = "Alert";
 exports.ApplicationStrategyId = "Application";
@@ -34,7 +33,6 @@ exports.TeamSharingStrategyId = "TeamSharing";
 exports.ThemeStrategyId = "Theme";
 exports.UserFilterStrategyId = "UserFilter";
 // Strategy Names
-exports.AboutStrategyName = "About";
 exports.AlertStrategyName = "Alert";
 exports.AdvancedSearchStrategyName = "Advanced Search";
 exports.ApplicationStrategyName = "Application";
@@ -65,8 +63,7 @@ exports.SmartEditStrategyName = "Smart Edit";
 exports.TeamSharingStrategyName = "Team Sharing";
 exports.ThemeStrategyName = "Theme";
 exports.UserFilterStrategyName = "User Filter";
-//
-exports.AboutGlyph = "info-sign";
+// Strategy Glyphs
 exports.AlertGlyph = "bullhorn";
 exports.AdvancedSearchGlyph = "search";
 exports.ApplicationGlyph = "font";
@@ -100,8 +97,6 @@ exports.ThemeGlyph = "leaf";
 exports.UserFilterGlyph = "user";
 function getIdForStrategyName(strategyName) {
     switch (strategyName) {
-        case exports.AboutStrategyName:
-            return exports.AboutStrategyId;
         case exports.AlertStrategyName:
             return exports.AlertStrategyId;
         case exports.AdvancedSearchStrategyName:
@@ -167,8 +162,6 @@ function getIdForStrategyName(strategyName) {
 exports.getIdForStrategyName = getIdForStrategyName;
 function getNameForStrategyId(strategyID) {
     switch (strategyID) {
-        case exports.AboutStrategyId:
-            return exports.AboutStrategyName;
         case exports.AlertStrategyId:
             return exports.AlertStrategyName;
         case exports.AdvancedSearchStrategyId:
@@ -234,8 +227,6 @@ function getNameForStrategyId(strategyID) {
 exports.getNameForStrategyId = getNameForStrategyId;
 function getGhyphiconForStrategyId(strategyID) {
     switch (strategyID) {
-        case exports.AboutStrategyId:
-            return exports.AboutGlyph;
         case exports.AlertStrategyId:
             return exports.AlertGlyph;
         case exports.AdvancedSearchStrategyId:

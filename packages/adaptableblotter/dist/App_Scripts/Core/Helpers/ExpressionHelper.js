@@ -8,6 +8,7 @@ const Expression_1 = require("../Api/Expression");
 const ColumnHelper_1 = require("./ColumnHelper");
 const AdaptableBlotterLogger_1 = require("./AdaptableBlotterLogger");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
+const ObjectFactory_1 = require("../ObjectFactory");
 var ExpressionHelper;
 (function (ExpressionHelper) {
     function CreateSingleColumnExpression(columnId, columnDisplayValues, columnRawValues, userFilters, ranges) {
@@ -118,7 +119,7 @@ var ExpressionHelper;
                     let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnId);
                     for (let range of columnRanges.Ranges) {
                         let rangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnId), null, column, blotter, getOtherColumnValue);
-                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation);
+                        isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, blotter);
                         if (isColumnSatisfied) {
                             break;
                         }
@@ -302,6 +303,8 @@ var ExpressionHelper;
                 return "Ends With ";
             case Enums_1.LeafExpressionOperator.Regex:
                 return "Matches Expression ";
+            case Enums_1.LeafExpressionOperator.NoDuplicates:
+                return "No Duplicates ";
         }
     }
     ExpressionHelper.OperatorToLongFriendlyString = OperatorToLongFriendlyString;
@@ -417,13 +420,7 @@ var ExpressionHelper;
     }
     ExpressionHelper.CreateEmptyRangeExpression = CreateEmptyRangeExpression;
     function GetRangeEvaluation(rangeExpression, newValue, initialValue, column, blotter, getOtherColumnValue) {
-        let rangeEvaluation = {
-            operand1: rangeExpression.Operand1,
-            operand2: rangeExpression.Operand2,
-            newValue: newValue,
-            operator: rangeExpression.Operator,
-            initialValue: initialValue
-        };
+        let rangeEvaluation = ObjectFactory_1.ObjectFactory.CreateRangeEvaluation(rangeExpression.Operator, rangeExpression.Operand1, rangeExpression.Operand2, newValue, initialValue, column.ColumnId);
         switch (column.DataType) {
             case Enums_2.DataType.Date:
                 if (rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column) {
@@ -487,7 +484,7 @@ var ExpressionHelper;
         return rangeEvaluation;
     }
     ExpressionHelper.GetRangeEvaluation = GetRangeEvaluation;
-    function TestRangeEvaluation(rangeEvaluation) {
+    function TestRangeEvaluation(rangeEvaluation, blotter) {
         if (rangeEvaluation.newValue == null) {
             return false;
         }
@@ -537,6 +534,10 @@ var ExpressionHelper;
             case Enums_1.LeafExpressionOperator.Regex:
                 let regex = new RegExp(rangeEvaluation.operand1);
                 return regex.test(rangeEvaluation.newValue);
+            case Enums_1.LeafExpressionOperator.NoDuplicates:
+                let displayValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
+                return existingItem != null;
         }
         return false;
     }
@@ -559,7 +560,8 @@ var ExpressionHelper;
             && operator != Enums_1.LeafExpressionOperator.IsNegative
             && operator != Enums_1.LeafExpressionOperator.IsNotNumber
             && operator != Enums_1.LeafExpressionOperator.IsTrue
-            && operator != Enums_1.LeafExpressionOperator.IsFalse;
+            && operator != Enums_1.LeafExpressionOperator.IsFalse
+            && operator != Enums_1.LeafExpressionOperator.NoDuplicates;
     }
     ExpressionHelper.OperatorRequiresValue = OperatorRequiresValue;
 })(ExpressionHelper = exports.ExpressionHelper || (exports.ExpressionHelper = {}));

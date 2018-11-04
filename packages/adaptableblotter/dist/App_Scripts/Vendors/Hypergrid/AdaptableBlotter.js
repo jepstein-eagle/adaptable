@@ -26,7 +26,6 @@ const FlashingCellsHypergridStrategy_1 = require("../../Strategy/FlashingCellsHy
 const CalendarStrategy_1 = require("../../Strategy/CalendarStrategy");
 const ConditionalStyleHypergridStrategy_1 = require("../../Strategy/ConditionalStyleHypergridStrategy");
 const QuickSearchStrategy_1 = require("../../Strategy/QuickSearchStrategy");
-const AboutStrategy_1 = require("../../Strategy/AboutStrategy");
 const AdvancedSearchStrategy_1 = require("../../Strategy/AdvancedSearchStrategy");
 const FormatColumnHypergridStrategy_1 = require("../../Strategy/FormatColumnHypergridStrategy");
 const ColumnInfoStrategy_1 = require("../../Strategy/ColumnInfoStrategy");
@@ -106,7 +105,6 @@ class AdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
-        this.Strategies.set(StrategyConstants.AboutStrategyId, new AboutStrategy_1.AboutStrategy(this));
         this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(this));
         this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy_1.AlertStrategy(this));
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
@@ -757,6 +755,12 @@ class AdaptableBlotter {
     applyGridFiltering() {
         //which call onRefresh to refresh live excel updates
         this.ReindexAndRepaint();
+    }
+    clearGridFiltering() {
+        // todo
+    }
+    clearColumnFiltering(columnIds) {
+        // to do
     }
     removeCalculatedColumnFromGrid(calculatedColumnID) {
         let colIndex = this.hyperGrid.behavior.getColumns().findIndex((x) => x.name == calculatedColumnID);

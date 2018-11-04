@@ -1,6 +1,12 @@
 export declare const AB_HEADER: string;
 export declare const FLASH_UP_STYLE: string;
 export declare const FLASH_DOWN_STYLE: string;
+export declare const DEFAULT_BSSTYLE: string;
+export declare const PRIMARY_BSSTYLE: string;
+export declare const INFO_BSSTYLE: string;
+export declare const SUCCESS_BSSTYLE: string;
+export declare const WARNING_BSSTYLE: string;
+export declare const DANGER_BSSTYLE: string;
 export declare const AB_STYLE: string;
 export declare const BASE: string;
 export declare const MODAL_BASE: string;

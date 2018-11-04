@@ -17,7 +17,8 @@ class ValidationService {
             let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
             let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
             if (existingItem) {
-                let cellValidationRule = ObjectFactory_1.ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, null, Enums_1.ActionMode.StopEdit, "Primary Key column cannot contain duplicate values", ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression());
+                let range = ObjectFactory_1.ObjectFactory.CreateRange(Enums_1.LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, Enums_1.RangeOperandType.Column, null);
+                let cellValidationRule = ObjectFactory_1.ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, range, Enums_1.ActionMode.StopEdit, ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression());
                 failedWarningRules.push(cellValidationRule);
             }
         }
@@ -74,7 +75,7 @@ class ValidationService {
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let rangeEvaluation = ExpressionHelper_1.ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent), columns.find(c => c.ColumnId == dataChangedEvent.ColumnId), this.blotter, null);
-        return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation);
+        return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
     }
     GetCellValidationState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;

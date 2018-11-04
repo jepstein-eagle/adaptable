@@ -5,6 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
 const Enums_1 = require("../../../Core/Enums");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
+const StyleConstants_1 = require("../../../Core/Constants/StyleConstants");
 class AlertSelectColumnWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +17,7 @@ class AlertSelectColumnWizard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "-selectcolumn";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { header: "Select a Column", bsStyle: "primary" },
+            React.createElement(react_bootstrap_1.Panel, { header: "Select a Column", bsStyle: StyleConstants_1.PRIMARY_BSSTYLE },
                 React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.ColumnId], ColumnList: this.props.Columns, onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })));
     }
     onColumnSelectedChanged(columns) {

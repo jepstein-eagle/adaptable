@@ -71,6 +71,8 @@ export interface IAdaptableBlotter {
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
     getFirstRecord(): any;
     applyGridFiltering(): void;
+    clearGridFiltering(): void;
+    clearColumnFiltering(columnIds: string[]): void;
     getIPPStyle(): IPPStyle;
     getRowCount(): number;
     getColumnCount(): number;

@@ -57,7 +57,7 @@ class ExpressionBuilderPreview extends React.Component {
                 columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
                     if (y.Operator == Enums_1.LeafExpressionOperator.Between) {
                         if (StringExtensions_1.StringExtensions.IsEmpty(y.Operand1) || StringExtensions_1.StringExtensions.IsEmpty(y.Operand2)) {
-                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: "danger" },
+                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: StyleConstants.DANGER_BSSTYLE },
                                 React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Range), style: { cursor: 'pointer' } },
                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                         ExpressionHelper_1.ExpressionHelper.OperatorToShortFriendlyString(y.Operator),
@@ -85,7 +85,7 @@ class ExpressionBuilderPreview extends React.Component {
                     }
                     else {
                         if (StringExtensions_1.StringExtensions.IsEmpty(y.Operand1) || y.Operator == Enums_1.LeafExpressionOperator.Unknown) {
-                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: "danger" },
+                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: StyleConstants.DANGER_BSSTYLE },
                                 React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Range), style: { cursor: 'pointer' } },
                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                         ExpressionHelper_1.ExpressionHelper.OperatorToShortFriendlyString(y.Operator),

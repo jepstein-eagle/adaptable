@@ -9,7 +9,7 @@ const ConditionalStyleSummaryWizard_1 = require("./ConditionalStyleSummaryWizard
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
 class ConditionalStyleWizard extends React.Component {
     render() {
-        let stepNames = ["Select Scope", "Create Style", "Build Query"];
+        let stepNames = ["Scope", "Create Style", "Build Query", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
             React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ConditionalStyleStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
                     React.createElement(ConditionalStyleScopeWizard_1.ConditionalStyleScopeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),

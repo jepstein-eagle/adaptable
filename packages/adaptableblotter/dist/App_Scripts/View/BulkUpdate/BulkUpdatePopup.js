@@ -16,6 +16,7 @@ const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
 const PreviewHelper_1 = require("../../Core/Helpers/PreviewHelper");
 const ColumnValueSelector_1 = require("../Components/Selectors/ColumnValueSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
+const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
 class BulkUpdatePopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -124,10 +125,10 @@ class BulkUpdatePopupComponent extends React.Component {
     getButtonStyle() {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return StyleConstants_1.DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             }
         }
         return "success";

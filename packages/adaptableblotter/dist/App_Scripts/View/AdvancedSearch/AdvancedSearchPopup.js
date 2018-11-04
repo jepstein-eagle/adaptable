@@ -17,6 +17,7 @@ const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
 class AdvancedSearchPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -52,7 +53,7 @@ class AdvancedSearchPopupComponent extends React.Component {
         });
         let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyConstants.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyConstants.AdvancedSearchGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, headerText: StrategyConstants.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyConstants.AdvancedSearchGlyph, className: "ab_main_popup" },
                 advancedSearchRows.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: advancedSearchRows }),
                 advancedSearchRows.length == 0 &&

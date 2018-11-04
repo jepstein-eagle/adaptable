@@ -10,12 +10,12 @@ const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Enums_1 = require("../../Core/Enums");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const AdaptablePopover_1 = require("../AdaptablePopover");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
 const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
 const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
 const PreviewHelper_1 = require("../../Core/Helpers/PreviewHelper");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
+const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
 class SmartEditPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -63,16 +63,6 @@ class SmartEditPopupComponent extends React.Component {
         const e = event.target;
         this.props.onSmartEditValueChange(Number(e.value));
     }
-    getValidationErrorMessage(CellValidations) {
-        let returnString = [];
-        for (let CellValidation of CellValidations) {
-            let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
-                " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
-                "";
-            returnString.push(CellValidation.Description + expressionDescription);
-        }
-        return returnString.join("\n");
-    }
     onApplySmartEdit() {
         this.props.onApplySmartEdit();
     }
@@ -91,10 +81,10 @@ class SmartEditPopupComponent extends React.Component {
     getButtonStyle() {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return StyleConstants_1.DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             }
         }
         return "success";

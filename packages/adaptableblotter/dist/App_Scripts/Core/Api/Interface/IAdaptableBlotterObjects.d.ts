@@ -91,7 +91,6 @@ export interface ICellValidationRule extends IAdaptableBlotterObject {
     ColumnId: string;
     Range: IRange;
     ActionMode: 'Warn User' | 'Stop Edit';
-    Description: string;
     Expression: Expression;
 }
 export interface IColumnFilter extends IAdaptableBlotterObject {
