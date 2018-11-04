@@ -72,7 +72,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
             let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
 
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
-            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "2.5"));
+            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "2.6"));
 
             if (options.blotterId != undefined) {
                 returnRows.push(this.createColItem(colItems, "Blotter Id", options.blotterId));
