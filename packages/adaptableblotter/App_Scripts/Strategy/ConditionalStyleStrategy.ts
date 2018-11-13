@@ -7,6 +7,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { StateChangedTrigger } from '../Core/Enums';
+import { IColumn } from '../Core/Interface/IColumn';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState
@@ -32,13 +33,13 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
         }
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
             this.createContextMenuItemShowPopup(
                 "Create " + StrategyConstants.ConditionalStyleStrategyName,
                 ScreenPopups.ConditionalStylePopup,
                 StrategyConstants.ConditionalStyleGlyph,
-                "New|" + columnId)
+                "New|" + column.ColumnId)
         }
     }
 

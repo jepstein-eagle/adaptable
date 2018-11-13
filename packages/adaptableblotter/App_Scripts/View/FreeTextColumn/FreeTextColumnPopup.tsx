@@ -114,7 +114,7 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFreeTextColumn(), WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFreeTextColumn(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onEdit(index: number, FreeTextColumn: IFreeTextColumn) {
@@ -131,7 +131,7 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
         let FreeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
             this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, FreeTextColumn)
-        } else {
+          } else {
             this.props.onAddFreeTextColumn(FreeTextColumn)
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });

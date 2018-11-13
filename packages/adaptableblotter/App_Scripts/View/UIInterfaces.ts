@@ -19,3 +19,8 @@ export interface KeyValuePair {
     Value: any
 }
 
+export interface FreeTextStoredValue {
+    PrimaryKey: any,
+    FreeText: any
+}
+

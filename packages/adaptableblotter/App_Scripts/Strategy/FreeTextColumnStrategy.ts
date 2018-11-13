@@ -6,6 +6,7 @@ import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy'
 import { FreeTextColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { StateChangedTrigger } from '../Core/Enums';
+import { IColumn } from '../Core/Interface/IColumn';
 
 export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IFreeTextColumnStrategy {
     protected FreeTextColumnState: FreeTextColumnState
@@ -17,9 +18,9 @@ export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IF
         this.createMenuItemShowPopup(StrategyConstants.FreeTextColumnStrategyName, ScreenPopups.FreeTextColumnPopup, StrategyConstants.FreeTextColumnGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            let FreeTextExists: boolean = ArrayExtensions.ContainsItem(this.FreeTextColumnState.FreeTextColumns.map(f => f.ColumnId), columnId)
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            let FreeTextExists: boolean = ArrayExtensions.ContainsItem(this.FreeTextColumnState.FreeTextColumns.map(f => f.ColumnId), column.ColumnId)
             let label = FreeTextExists ? "Edit " : "Create "
             let popupParam = FreeTextExists ? "Edit|" : "New|"
 
@@ -27,7 +28,7 @@ export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IF
                 label + StrategyConstants.FreeTextColumnStrategyName,
                 ScreenPopups.FreeTextColumnPopup,
                 StrategyConstants.FreeTextColumnGlyph,
-                popupParam + columnId)
+                popupParam + column.ColumnId)
         }
     }
 

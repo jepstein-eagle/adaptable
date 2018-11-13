@@ -6,6 +6,7 @@ import { ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy
 import { ICalculatedColumn } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { StateChangedTrigger } from '../Core/Enums';
 import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
+import { IColumn } from '../Core/Interface/IColumn';
 
 export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy {
     private CalculatedColumnState: CalculatedColumnState
@@ -27,14 +28,14 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
         this.createMenuItemShowPopup(StrategyConstants.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyConstants.CalculatedColumnGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            if (this.CalculatedColumnState.CalculatedColumns.find(cc => cc.ColumnId == columnId)) {
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            if (this.CalculatedColumnState.CalculatedColumns.find(cc => cc.ColumnId == column.ColumnId)) {
                 this.createContextMenuItemShowPopup(
                     "Edit " + StrategyConstants.CalculatedColumnStrategyName,
                     ScreenPopups.CalculatedColumnPopup,
                     StrategyConstants.CalculatedColumnGlyph,
-                    "Edit|" + columnId)
+                    "Edit|" + column.ColumnId)
             }
         }
     }

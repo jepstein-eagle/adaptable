@@ -11,7 +11,7 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { ICalculatedColumn, IGridSort, ILayout } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
@@ -88,6 +88,9 @@ export interface IAdaptableBlotter {
     removeCustomSort(columnId: string): void
     setGridSort(gridSorts: IGridSort[]): void
 
+    //FreeTextColumn
+    addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void
+
     //CalculatedColumn
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void
@@ -97,7 +100,7 @@ export interface IAdaptableBlotter {
     // Filtering
     applyGridFiltering(): void
     clearGridFiltering(): void
-    clearColumnFiltering(columnIds:string[]): void
+    clearColumnFiltering(columnIds: string[]): void
 
     //TEMPORARY : JO
     getIPPStyle(): IPPStyle
@@ -116,11 +119,17 @@ export interface IAdaptableBlotter {
     isSelectable(): boolean
     isSortable(): boolean
     isFilterable(): boolean
+    isQuickFilterable(): boolean
+    isQuickFilterActive(): boolean
+    showQuickFilter(): void
+    hideQuickFilter(): void
 
     //Theme
     applyLightTheme(): void
     applyDarkTheme(): void
 
+    redraw(): void
+    
     isInitialised: boolean
 }
 

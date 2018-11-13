@@ -163,7 +163,7 @@ export module ObjectFactory {
         return {
             ColumnId: "",
             DefaultValue: "",
-            StoredValues: null
+            FreeTextStoredValues: []
         }
     }
 

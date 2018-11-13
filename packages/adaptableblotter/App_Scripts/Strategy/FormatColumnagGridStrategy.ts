@@ -35,7 +35,7 @@ export class FormatColumnagGridStrategy extends FormatColumnStrategy implements 
             }
         }
 
-        theBlotter.redrawRows();
+        this.blotter.redraw()
     }
 
 }

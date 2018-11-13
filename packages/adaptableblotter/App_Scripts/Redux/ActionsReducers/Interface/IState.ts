@@ -65,6 +65,9 @@ export interface TeamSharingState extends ISystemState {
     SharedEntities: ISharedEntity[];
 }
 
+export interface HomeState extends ISystemState {
+    
+}
 
 /*
 Predefined Config Only 

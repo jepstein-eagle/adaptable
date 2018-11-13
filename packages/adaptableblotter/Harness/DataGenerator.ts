@@ -195,7 +195,7 @@ export class DataGenerator {
         {
             "tradeId": i,
             "notional": this.getRandomItem(this.getNotionals()),
-            "deskId": this.generateRandomInt(0, 250),
+            "deskId": this.generateRandomInt(0, 400),
             "counterparty": this.getRandomItem(this.getCounterparties()),
             "currency": tradeCurrency,
             "country": this.getRandomItem(this.getCountries()),

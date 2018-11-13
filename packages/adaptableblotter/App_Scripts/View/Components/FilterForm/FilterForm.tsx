@@ -5,6 +5,7 @@ import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptable
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux'
 import * as SystemFilterRedux from '../../../Redux/ActionsReducers/SystemFilterRedux'
+import * as HomeRedux from '../../../Redux/ActionsReducers/HomeRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
@@ -48,7 +49,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ShowCloseButton: boolean;
     onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
-    onHideFilterForm: () => SystemFilterRedux.HideFilterFormAction
+    onHideFilterForm: () => HomeRedux.HideFilterFormAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
 
@@ -355,7 +356,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(SystemFilterRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(HomeRedux.HideFilterForm()),
     };
 }
 

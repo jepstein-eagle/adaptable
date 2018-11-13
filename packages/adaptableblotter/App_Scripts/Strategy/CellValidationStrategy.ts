@@ -5,6 +5,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Core/Enums';
+import { IColumn } from '../Core/Interface/IColumn';
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
 
@@ -28,13 +29,13 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
         }
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
             this.createContextMenuItemShowPopup(
                 "Create Cell Validation Rule",
                 ScreenPopups.CellValidationPopup,
                 StrategyConstants.CellValidationGlyph,
-                "New|" + columnId)
+                "New|" + column.ColumnId)
             }
     }
 }

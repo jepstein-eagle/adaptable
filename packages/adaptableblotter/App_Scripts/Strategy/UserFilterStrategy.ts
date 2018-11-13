@@ -6,6 +6,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IUserFilter } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { IColumn } from '../Core/Interface/IColumn';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]
@@ -18,13 +19,13 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
         this.createMenuItemShowPopup(StrategyConstants.UserFilterStrategyName, ScreenPopups.UserFilterPopup, StrategyConstants.UserFilterGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter, "filter")) {
             this.createContextMenuItemShowPopup(
                 "Create User Filter",
                 ScreenPopups.UserFilterPopup,
                 StrategyConstants.UserFilterGlyph,
-                "New|" + columnId
+                "New|" + column.ColumnId
             )
         }
     }

@@ -28,14 +28,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         this.createMenuItemShowPopup(StrategyConstants.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyConstants.FlashingCellGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+          
             if (column.DataType == DataType.Number) {
-                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
+                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == column.ColumnId) == null) {
 
-                    let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
+                    let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == column.ColumnId)
                     if (flashingCell && flashingCell.IsLive) {
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell Off",
@@ -45,7 +44,6 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                     }
                     else {
                         if (!flashingCell) {
-                            let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
                             flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
                         }
                         this.createContextMenuItemReduxAction(

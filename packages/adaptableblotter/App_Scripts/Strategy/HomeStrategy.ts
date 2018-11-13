@@ -1,5 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import * as GlyphConstants from '../Core/Constants/GlyphConstants'
+import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
@@ -7,14 +9,25 @@ import { IGridSort } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { SearchChangedTrigger } from '../Core/Enums';
 import { LayoutHelper } from '../Core/Helpers/LayoutHelper';
+import { IColumn } from '../Core/Interface/IColumn';
 
 // This is a special strategy that the user can never remove but which is useful to us 
+// We use it to manage internal state changes and menu items that are not directly strategy related
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
     private GridSorts: IGridSort[]
     private GridState: GridState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.HomeStrategyId, blotter)
+    }
+
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter, "quickfilter")) {
+             this.createContextMenuItemReduxAction(
+                this.blotter.isQuickFilterActive() ? "Hide Quick Filter Bar" : "Show Quick Filter Bar",
+                this.blotter.isQuickFilterActive() ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
+                this.blotter.isQuickFilterActive() ?   HomeRedux.QuickFilterBarHide(): HomeRedux.QuickFilterBarShow())
+        }
     }
 
 

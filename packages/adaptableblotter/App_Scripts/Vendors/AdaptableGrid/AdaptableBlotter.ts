@@ -47,7 +47,7 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ILayout } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -530,6 +530,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
+    public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void {
+        // to do
+    }
     public isGroupRecord(record: any): boolean {
         return false;
     }
@@ -592,11 +595,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
+    public isQuickFilterable(): boolean{
+        return false;
+    }
+
+    public isQuickFilterActive(): boolean{
+        return false;
+    }
+
+    public showQuickFilter(): void{
+        // todo
+    }
+
+    public hideQuickFilter(): void{
+        // todo
+    }
+
     public applyLightTheme(): void {
         // todo 
     }
     public applyDarkTheme(): void {
         // todo 
+    }
+
+    public redraw() {
+        this._onRefresh.Dispatch(this, this)
     }
 
 

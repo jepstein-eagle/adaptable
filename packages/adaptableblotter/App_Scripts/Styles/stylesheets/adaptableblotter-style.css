@@ -508,3 +508,25 @@ End Searchable DropDown Styles
 .ab_large_right_margin_style {
   margin-right: 10px;
 }
+
+/* Styles for the coloured cell render */
+.div-colour-render-bar {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.div-colour-render-text {
+  position: absolute;
+  padding-left: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  z-index: 100;
+}
+
+.div-colour-render-div {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}

@@ -58,4 +58,26 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
         return columnList
 
     }
+
+    Test(expression: string, record: any): any {
+        try {
+            if(this.blotter.isGroupRecord(record)){
+                return null;
+            }
+            return math.eval(expression, {
+                node: record,
+                Col: (columnId: string) => {
+                    try { return this.colFunctionValue(columnId, record) }
+                    catch (e) {
+                        throw Error("Unknown column " + columnId)
+                    }
+                }
+            })
+        }
+        catch (e) {
+            AdaptableBlotterLogger.LogError(e);
+            return null;
+        }
+    }
+
 }

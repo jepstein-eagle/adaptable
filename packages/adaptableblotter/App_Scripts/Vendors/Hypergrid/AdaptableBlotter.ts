@@ -62,7 +62,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -77,6 +77,7 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { HypergridThemes } from './HypergridThemes';
 import { HomeStrategy } from '../../Strategy/HomeStrategy';
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
+import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 
 
 //icon to indicate toggle state
@@ -149,7 +150,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
-       this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
         this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
@@ -274,7 +275,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 DataType: existingColumn ? existingColumn.DataType : this.getColumnDataType(x),
                 Visible: true,
                 Index: index,
-                ReadOnly:  this.isColumnReadonly(x.name, index),
+                ReadOnly: this.isColumnReadonly(x.name, index),
                 Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
                 Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
             }
@@ -609,8 +610,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnIndex(columnId: string): number {
         //this returns the index of the column in the collection which is as well the index y of the cell in the grid
         // it doesnt return the index from the schema
-    let hgindex: any =    this.hyperGrid.behavior.getActiveColumns().findIndex((x:any) => x.name==columnId);
-    return hgindex;
+        let hgindex: any = this.hyperGrid.behavior.getActiveColumns().findIndex((x: any) => x.name == columnId);
+        return hgindex;
     }
 
 
@@ -630,7 +631,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //now instead of checking if editor was defined at design time on the column we try to instantiate the editor
             //for that column directly
             let cellEvent = new this.hyperGrid.behavior.CellEvent
-             //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
+            //this index does need to be the coordinate y/grid index of the column and not the hypergrid column index
             cellEvent.resetGridCY(index, 1);
             let editor = this.hyperGrid.behavior.getCellEditorAt(cellEvent);
             if (editor) {
@@ -726,9 +727,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getDisplayValueFromRawValue(colId: string, rawValue: any): any {
         let formatter = this.getColumnFormatter(colId);
-        if(formatter){
+        if (formatter) {
             return formatter(rawValue)
-        }else{
+        } else {
             return rawValue;
         }
     }
@@ -887,11 +888,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint()
     }
 
-    public clearGridFiltering(){
+    public clearGridFiltering() {
         // todo
     }
 
-    
+
     public clearColumnFiltering(columnIds: string[]): void {
         // to do
     }
@@ -971,6 +972,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.hyperGrid.behavior.changed()
         this.setColumnIntoStore();
+    }
+
+    public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void {
+        // to do
     }
 
     public isGroupRecord(): boolean {
@@ -1087,10 +1092,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let colId: string = e.detail.primitiveEvent.column.name
                     //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
                     this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
-                    this.Strategies.forEach(s => {
-                        s.addContextMenuItem(colId)
-                    })
 
+                    let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+                    if (column != null) {
+                        this.Strategies.forEach(s => {
+                            s.addContextMenuItem(column)
+                        })
+                    }
 
                     ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
                 }
@@ -1391,6 +1399,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
+    public isQuickFilterable(): boolean {
+        return false;
+    }
+
+    public isQuickFilterActive(): boolean {
+        return false;
+    }
+
+    public showQuickFilter(): void {
+        // todo
+    }
+
+    public hideQuickFilter(): void {
+        // todo
+    }
+
+
     public applyLightTheme(): void {
         if (this.BlotterOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getLightTheme());
@@ -1416,6 +1441,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return origgetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName)
         };
+    }
+
+    public redraw() {
+      this.ReindexAndRepaint();
     }
 
 }

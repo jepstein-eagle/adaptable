@@ -51,7 +51,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         // base class implementation which is empty
     }
 
-    public addContextMenuItem(columnId: string): void {
+    public addContextMenuItem(column: IColumn): void {
         // base class implementation which is empty
     }
 
@@ -90,7 +90,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.Id,
             ComponentName,
             GlyphIcon,
-          //  this.isReadOnlyStrategy(),
+            //  this.isReadOnlyStrategy(),
             this.isVisibleStrategy(),
             PopupParams)
         this.popupMenuItem = menuItemShowPopup;
@@ -143,20 +143,18 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
+    canCreateContextMenuItem(column: IColumn, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
         if (this.isReadOnlyStrategy()) {
             return false;
         }
-
-        let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-        if (column == null) {
-            return false;
-        }
-
-        if (functionType == "sort" && !column.Sortable) {
-            return false;
-        } else if (functionType == "filter" && (!column.Filterable || !blotter.isFilterable())) {
-            return false;
+        if (StringExtensions.IsNotNullOrEmpty(functionType)) {
+            if (functionType == "sort") {
+                return column.Sortable;
+            } else if (functionType == "filter") {
+                return column.Filterable && blotter.isFilterable()
+            } else if (functionType == "quickfilter") {
+                return (blotter.isQuickFilterable() && blotter.BlotterOptions.useAdaptableBlotterFloatingFilter)
+            }
         }
         return true;
     }

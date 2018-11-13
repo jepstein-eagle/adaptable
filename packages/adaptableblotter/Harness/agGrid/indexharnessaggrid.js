@@ -5,7 +5,7 @@ var trades
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(10000);
+  trades = dataGen.getTrades(1000);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -15,7 +15,7 @@ function InitTradeBlotter() {
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-    //  floatingFilter: true,
+    floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
     columnTypes: { // not required but helpful for column data type identification
@@ -41,7 +41,7 @@ function InitTradeBlotter() {
     enableAuditLog: false, // not running audit log
     enableRemoteConfigServer: false, // not running remote config
     // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
-  //  predefinedConfig: tradeJson,
+    //  predefinedConfig: tradeJson,
     // "demoConfig.json", // passing in predefined config with a file
     //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     iPushPullConfig: {
@@ -138,6 +138,7 @@ function getTradeSchema() {
   schema.push({
     headerName: "Notional",
     field: "notional",
+    enableValue: true,
     editable: true,
     valueFormatter: notionalFormatter,
     cellClass: 'number-cell'
@@ -146,6 +147,7 @@ function getTradeSchema() {
     headerName: "Desk No.",
     field: "deskId",
     editable: true,
+    cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     suppressSorting: false,
     suppressFilter: true
@@ -179,6 +181,7 @@ function getTradeSchema() {
     headerName: "B/O Spread",
     field: "bidOfferSpread",
     columnGroupShow: 'open',
+    enableValue: true,
     editable: true,
     cellClass: 'number-cell'
   });
@@ -193,6 +196,7 @@ function getTradeSchema() {
     field: "price",
     columnGroupShow: 'open',
     editable: true,
+    enableValue: true,
     cellClass: 'number-cell',
     enableRowGroup: true,
     filter: 'agNumberColumnFilter'
@@ -286,6 +290,39 @@ function dataChangeHack(state, gridOptions) {
     });
   }
 }
+
+function percentCellRenderer(params) {
+  let maxValue = 400;
+  let value = params.value;
+  console.log("actual value: " + value)
+  let eDivPercentBar = document.createElement('div');
+  eDivPercentBar.className = 'div-colour-render-bar';
+  let percentValue = (100 / maxValue) * value;
+  console.log("percent value: " + percentValue);
+  eDivPercentBar.style.width = percentValue + '%';
+  if (value < 20) {
+    eDivPercentBar.style.backgroundColor = 'red';
+  } else if (value < 60) {
+    eDivPercentBar.style.backgroundColor = '#ff9900';
+  } else {
+    eDivPercentBar.style.backgroundColor = '#00A000';
+  }
+
+  let eValue = document.createElement('div');
+  eValue.className = 'div-colour-render-text';
+ // eValue.innerHTML = value + '%';
+  eValue.innerHTML = value;
+
+  let eOuterDiv = document.createElement('div');
+  eOuterDiv.className = 'div-colour-render-div';
+ // eOuterDiv.appendChild(eValue);
+  eOuterDiv.appendChild(eDivPercentBar);
+
+  return eOuterDiv;
+
+}
+
+
 
 function apiTester(state, gridOptions) {
   if (state.QuickSearch.QuickSearchText != quickSearchText) {

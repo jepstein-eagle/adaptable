@@ -20,6 +20,7 @@ import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as SystemRedux from '../ActionsReducers/SystemRedux'
+import * as HomeRedux from '../ActionsReducers/HomeRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExportRedux from '../ActionsReducers/ExportRedux'
@@ -57,13 +58,14 @@ import { GridState, LayoutState, IState } from '../ActionsReducers/Interface/ISt
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { AlertToolbarControl } from '../../View/Alert/AlertToolbarControl';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -125,7 +127,7 @@ export const LoadState = (State: { [s: string]: IState }): LoadStateAction => ({
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
   switch (action.type) {
     case RESET_STATE:
-   //   alert("in top")
+      //   alert("in top")
       //This trigger the persist of the state with nothing
       state.AdvancedSearch = undefined
       state.Alert = undefined
@@ -166,7 +168,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       //  state = undefined
       break;
     case LOAD_STATE:
-      const {State} = <LoadStateAction>action;
+      const { State } = <LoadStateAction>action;
       Object.keys(State).forEach(key => {
         state[key] = State[key];
       });
@@ -573,6 +575,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           return returnAction;
         }
+        /*
+     Calculated Columns
+      */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
           let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
           if (!returnObj.IsValid) {
@@ -623,10 +628,27 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           let returnAction = next(action);
           return returnAction;
         }
-        case SystemFilterRedux.HIDE_FILTER_FORM: {
-          blotter.hideFilterForm()
-          return next(action);
+        /*
+        Free Text Columns
+        */
+        case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
+          let returnAction = next(action);
+          let freeTextColumn: IFreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>action).FreeTextColumn
+          let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
+
+          blotter.addFreeTextColumnToGrid(freeTextColumn)
+          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+          return returnAction;
         }
+ 
+        case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
+         // not too sure what I need to do - perhaps just refresh everything?
+        
+          let returnAction = next(action);
+           return returnAction;
+        }
+        // TODO:  Need to do Delete? 
+
         case LayoutRedux.LAYOUT_SELECT: {
           let returnAction = next(action);
           let layoutState = middlewareAPI.getState().Layout;
@@ -720,6 +742,25 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
           return returnAction;
         }
+
+        /*  *********
+         HOME ACTIONS - Filter and quick Filter
+         ************ */
+        case HomeRedux.QUICK_FILTER_BAR_SHOW: {
+          blotter.showQuickFilter();
+          return next(action);
+        }
+
+        case HomeRedux.QUICK_FILTER_BAR_HIDE: {
+          blotter.hideQuickFilter();
+          return next(action);
+        }
+
+        case HomeRedux.FILTER_FORM_HIDE: {
+          blotter.hideFilterForm()
+          return next(action);
+        }
+
 
         /*  *********
         SMART EDIT ACTIONS
@@ -917,8 +958,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
 
           //Create all calculated columns before we load the layout
-          middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
-            blotter.addCalculatedColumnToGrid(x)
+          middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(cc => {
+            blotter.addCalculatedColumnToGrid(cc)
+          })
+
+          //Create all free text columns before we load the layout
+          middlewareAPI.getState().FreeTextColumn.FreeTextColumns.forEach(ftc => {
+            blotter.addFreeTextColumnToGrid(ftc)
           })
 
           //load the default layout if its current

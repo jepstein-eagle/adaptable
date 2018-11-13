@@ -65,7 +65,7 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -789,6 +789,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
+    public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void {
+        // to do
+    }
+
     public isGroupRecord(record: any): boolean {
         return false;
     }
@@ -1027,11 +1031,30 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
+    public isQuickFilterable(): boolean{
+        return false;
+    }
+
+    public isQuickFilterActive(): boolean{
+        return false;
+    }
+
+    public showQuickFilter(): void{
+        // todo
+    }
+
+    public hideQuickFilter(): void{
+        // todo
+    }
     public applyLightTheme(): void {
         // todo 
     }
     public applyDarkTheme(): void {
         // todo 
+    }
+
+    public redraw() {
+        this._onRefresh.Dispatch(this, this)
     }
 
 }

@@ -17,7 +17,7 @@ export class FreeTextColumnEntityRow extends React.Component<SharedEntityExpress
 
         colItems[0].Content = FreeTextColumn.ColumnId
         colItems[1].Content = FreeTextColumn.DefaultValue
-        colItems[2].Content = ArrayExtensions.IsNullOrEmpty(FreeTextColumn.StoredValues) ? 0 : FreeTextColumn.StoredValues.length
+        colItems[2].Content = ArrayExtensions.IsNullOrEmpty(FreeTextColumn.FreeTextStoredValues) ? 0 : FreeTextColumn.FreeTextStoredValues.length
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             editClick={() => this.props.onEdit(this.props.Index, FreeTextColumn)}

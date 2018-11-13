@@ -15,6 +15,7 @@ import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore'
 import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
+import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 // services
 import { ICalendarService } from '../../Core/Services/Interface/ICalendarService'
@@ -29,11 +30,12 @@ import { AuditLogService } from '../../Core/Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../../Core/Services/Interface/ICalculatedColumnExpressionService";
 import { ChartService } from '../../Core/Services/ChartService';
 import { IChartService } from '../../Core/Services/Interface/IChartService';
+import { IFreeTextColumnService } from '../../Core/Services/Interface/IFreeTextColumnService';
+import { FreeTextColumnService } from '../../Core/Services/FreeTextColumnService';
 // strategies
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
-import { ChartStrategy } from '../../Strategy/ChartStrategy';
 import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
@@ -61,6 +63,10 @@ import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrateg
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { SelectedCellsStrategy } from '../../Strategy/SelectedCellsStrategy';
 import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
+import { HomeStrategy } from '../../Strategy/HomeStrategy';
+import { FreeTextColumnStrategy } from '../../Strategy/FreeTextColumnStrategy';
+import { ChartStrategy } from '../../Strategy/ChartStrategy';
+
 // components
 import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
@@ -74,11 +80,11 @@ import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCri
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { Color } from '../../Core/color';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../../View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -93,15 +99,10 @@ import { LayoutHelper } from '../../Core/Helpers/LayoutHelper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, LoggerFactory } from "ag-grid"
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
-import { raw } from 'body-parser';
-import { HomeStrategy } from '../../Strategy/HomeStrategy';
-import { FreeTextColumnStrategy } from '../../Strategy/FreeTextColumnStrategy';
-import { typeCastObjTo$t } from 'igniteui-react-core/ES2015/type';
-import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -118,6 +119,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public StyleService: StyleService
     public ChartService: IChartService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
+    public FreeTextColumnService: IFreeTextColumnService
 
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
     private abContainerElement: HTMLElement;
@@ -142,6 +144,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
+        this.FreeTextColumnService = new FreeTextColumnService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
@@ -156,7 +159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-      //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -168,7 +171,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
-        //  this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
@@ -330,7 +333,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let vendorCols: Column[] = this.gridOptions.columnApi.getAllGridColumns()
         let quickSearchClassName = this.getQuickSearchClassName();
 
-        vendorCols.forEach((vendorColumn, index) => {
+        vendorCols.forEach((vendorColumn) => {
             let colId: string = vendorColumn.getColId()
             if (!ColumnHelper.isSpecialColumn(colId)) {
                 let existingColumn: IColumn = existingColumns.find(c => c.ColumnId == colId);
@@ -470,7 +473,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let test: RowNode[] = this.gridOptions.api.getSelectedNodes();
         if (test) {
-            let s: any = test.length;
         }
         let selected = this.gridOptions.api.getRangeSelections();
         let columns: IColumn[] = []
@@ -652,11 +654,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Record: null
                 }
                 dataChangedEvents.push(dataChangedEvent)
+
+                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent)
             }
         })
-        var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
+
+        // if its a freetext column then do our own stuff
+
 
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
@@ -922,8 +928,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
     }
 
-    public redrawRows() {
+    public redraw() {
         this.gridOptions.api.redrawRows();
+        this.gridOptions.api.refreshHeader();
         this._onRefresh.Dispatch(this, this)
     }
 
@@ -997,14 +1004,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
+        this.addSpecialColumnToState(calculatedColumn.ColumnId, true);
+    }
 
-        let vendorColumn = this.gridOptions.columnApi.getAllColumns().find(vc => vc.getColId() == calculatedColumn.ColumnId)
+    public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn) {
+        let venderCols = this.gridOptions.columnApi.getAllColumns()
+        let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
+        colDefs.push({
+            headerName: freeTextColumn.ColumnId,
+            colId: freeTextColumn.ColumnId,
+            editable: true,
+            hide: true,
+            valueGetter: (params: ValueGetterParams) => this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node)
+        })
+        this.gridOptions.api.setColumnDefs(colDefs)
+
+        this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
+    }
+
+    private addSpecialColumnToState(columnId: string, isReadOnly: boolean): void {
+
+        let vendorColumn = this.gridOptions.columnApi.getAllColumns().find(vc => vc.getColId() == columnId)
         let hiddenCol: IColumn = {
-            ColumnId: calculatedColumn.ColumnId,
-            FriendlyName: calculatedColumn.ColumnId,
+            ColumnId: columnId,
+            FriendlyName: columnId,
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
-            ReadOnly: true,
+            ReadOnly: isReadOnly,
             Sortable: this.isSortable(),
             Filterable: this.isFilterable(),
         }
@@ -1115,7 +1141,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //   Events.EVENT_COLUMN_PINNED,
             Events.EVENT_NEW_COLUMNS_LOADED
         ];
-        this.gridOptions.api.addGlobalListener((type: string, event: any) => {
+        this.gridOptions.api.addGlobalListener((type: string) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
                 let popupState = this.getState().Popup.ScreenPopup;
@@ -1131,7 +1157,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
             Events.EVENT_COLUMN_PINNED
         ];
-        this.gridOptions.api.addGlobalListener((type: string, event: any) => {
+        this.gridOptions.api.addGlobalListener((type: string) => {
             if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
                 this.debouncedSaveGridLayout();
             }
@@ -1194,37 +1220,42 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         Record: null
                     }
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+
+                    // it might be a free text column so we need to update the values
+                    this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
                 }
                 return whatToReturn;
             };
             this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
+
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null;
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
             this.applyGridFiltering();
             this.debouncedSetSelectedCells();
+
         });
-        this.gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
-        this.gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
         this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
             console.log(params)
         });
         this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
-            this.onSortChanged(params)
+            this.onSortChanged()
             this.debouncedSetSelectedCells();
         });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
         //  });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
         //});
-        this.gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, () => {
             // not sure about this - doing it to make sure that we set the columns properly at least once!
             this.checkColumnsDataTypeSet();
         });
@@ -1337,6 +1368,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
+
         }
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -1345,11 +1377,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //but you can also clsoe the menu from filter and clicking outside the menu....
             //    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
             let colId: string = params.column.getColId()
-            //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
+
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
-            this.Strategies.forEach(s => {
-                s.addContextMenuItem(colId)
-            })
+            let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+            if (column != null) {
+                this.Strategies.forEach(s => {
+                    s.addContextMenuItem(column)
+                })
+            }
 
             let colMenuItems: (string | MenuItemDef)[];
             //if there was an initial implementation we init the list of menu items with this one, otherwise we take
@@ -1383,7 +1418,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
     }
 
-    private onSortChanged(params: any): void {
+    private onSortChanged(): void {
         let sortModel: any[] = this.gridOptions.api.getSortModel();
 
         let gridSorts: IGridSort[] = [];
@@ -1393,10 +1428,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (ColumnHelper.isSpecialColumn(sm.colId)) {
                         let groupedColumn: Column = this.gridOptions.columnApi.getAllColumns().find(c => c.isRowGroupActive() == true)
                         if (groupedColumn) {
-                           let customSort: ICustomSort = this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == groupedColumn.getColId());
+                            let customSort: ICustomSort = this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == groupedColumn.getColId());
                             if (customSort) {
                                 // check that not already applied
-                               if (! this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
+                                if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
                                     let customSortStrategy: CustomSortagGridStrategy = this.Strategies.get(StrategyConstants.CustomSortStrategyId) as CustomSortagGridStrategy;
                                     let groupCustomSort: ICustomSort = ObjectFactory.CreateEmptyCustomSort();
                                     groupCustomSort.ColumnId = sm.colId;
@@ -1468,6 +1503,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    private checkIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedEvent) {
+        let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
+        if (freeTextColumn) {
+            let freeTextStoredValue: FreeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue }
+            this.AdaptableBlotterStore.TheStore.dispatch<FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
+        }
+    }
+
     public getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo {
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
@@ -1520,10 +1563,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 // assume for now its just a number
                 let column: Column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn")
                 if (column) {
-                    //  alert("have a special column")
                     this.gridOptions.columnApi.setColumnWidth(column, groupedState, true);
                 }
-                //   this.gridOptions.api.refreshHeader();
             }
         }
     }
@@ -1562,6 +1603,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return this.gridOptions.enableFilter;
         }
         return false;
+    }
+
+    public isQuickFilterable(): boolean {
+        return true;
+    }
+
+    public isQuickFilterActive(): boolean {
+        if (this.gridOptions.floatingFilter != null) {
+            return this.gridOptions.floatingFilter;
+        }
+        return false;
+    }
+
+    public showQuickFilter(): void {
+        this.gridOptions.floatingFilter = true;
+        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+            this.createFloatingFilterWrapper(col);
+        });
+        this.gridOptions.api.refreshHeader();
+    }
+
+    public hideQuickFilter(): void {
+        this.gridOptions.floatingFilter = false;
+        //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+        //       this.deleteFloatingFilterWrapper(col);
+        //   }); 
+        this.gridOptions.api.refreshHeader();
     }
 
     public applyLightTheme(): void {

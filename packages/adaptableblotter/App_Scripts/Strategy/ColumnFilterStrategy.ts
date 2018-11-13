@@ -20,18 +20,14 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         this.createMenuItemShowPopup(StrategyConstants.ColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyConstants.ColumnFilterGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
-
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-            if (column) {
-                let existingColumnFilter = this.columnFilterState.find(x => x.ColumnId == columnId);
-                if (existingColumnFilter) {
-                    this.createContextMenuItemReduxAction(
-                        "Clear Column Filter",
-                        StrategyConstants.ColumnFilterGlyph,
-                        ColumnFilterRedux.ColumnFilterClear(columnId))
-                }
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter, "filter")) {
+            let existingColumnFilter = this.columnFilterState.find(x => x.ColumnId == column.ColumnId);
+            if (existingColumnFilter) {
+                this.createContextMenuItemReduxAction(
+                    "Clear Column Filter",
+                    StrategyConstants.ColumnFilterGlyph,
+                    ColumnFilterRedux.ColumnFilterClear(column.ColumnId))
             }
         }
     }

@@ -16,13 +16,13 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
         this.createMenuItemShowPopup(StrategyConstants.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyConstants.ColumnInfoGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
             this.createContextMenuItemShowPopup(
             StrategyConstants.ColumnInfoStrategyName,
             ScreenPopups.ColumnInfoPopup,
             StrategyConstants.ColumnInfoGlyph,
-            columnId)
+            column.ColumnId)
     }
 }
 }

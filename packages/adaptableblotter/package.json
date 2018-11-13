@@ -5,6 +5,7 @@
   "main": "index.js",
   "typings": "index.d.ts",
   "dependencies": {
+    "ipushpull-js": "git+https://bitbucket.org/ipushpull/ipp-js.git#master",
     "@types/angular": "^1.6.47",
     "@types/body-parser": "^1.17.0",
     "@types/bunyan": "^1.8.4",
