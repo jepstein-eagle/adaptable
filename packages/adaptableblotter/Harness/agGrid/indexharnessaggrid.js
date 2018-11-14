@@ -5,7 +5,7 @@ var trades
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(1000);
+  trades = dataGen.getTrades(10000);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -147,7 +147,7 @@ function getTradeSchema() {
     headerName: "Desk No.",
     field: "deskId",
     editable: true,
-    cellRenderer: percentCellRenderer,
+   // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     suppressSorting: false,
     suppressFilter: true
@@ -310,12 +310,12 @@ function percentCellRenderer(params) {
 
   let eValue = document.createElement('div');
   eValue.className = 'div-colour-render-text';
- // eValue.innerHTML = value + '%';
+  // eValue.innerHTML = value + '%';
   eValue.innerHTML = value;
 
   let eOuterDiv = document.createElement('div');
   eOuterDiv.className = 'div-colour-render-div';
- // eOuterDiv.appendChild(eValue);
+  // eOuterDiv.appendChild(eValue);
   eOuterDiv.appendChild(eDivPercentBar);
 
   return eOuterDiv;

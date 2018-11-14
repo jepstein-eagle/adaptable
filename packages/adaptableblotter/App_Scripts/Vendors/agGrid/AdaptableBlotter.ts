@@ -99,7 +99,7 @@ import { LayoutHelper } from '../../Core/Helpers/LayoutHelper';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams } from "ag-grid"
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
@@ -1025,7 +1025,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private addSpecialColumnToState(columnId: string, isReadOnly: boolean): void {
 
         let vendorColumn = this.gridOptions.columnApi.getAllColumns().find(vc => vc.getColId() == columnId)
-        let hiddenCol: IColumn = {
+        let specialColumn: IColumn = {
             ColumnId: columnId,
             FriendlyName: columnId,
             DataType: this.getColumnDataType(vendorColumn),
@@ -1034,16 +1034,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Sortable: this.isSortable(),
             Filterable: this.isFilterable(),
         }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(hiddenCol));
+        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(specialColumn));
 
         let quickSearchClassName = this.getQuickSearchClassName();
-        this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
+        this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
 
         if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn)
         }
-        let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
-        conditionalStyleagGridStrategy.InitStyles();
+
+        if (this.isInitialised) {
+            let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
+            conditionalStyleagGridStrategy.InitStyles();
+        }
     }
 
     public isGroupRecord(record: any): boolean {
@@ -1371,6 +1374,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         }
 
+        // add any special filters
+        let deskColummn = this.getState().Grid.Columns.find(c => c.ColumnId == "deskId")
+        if (deskColummn) {
+            let cellRendererFunc: ICellRendererFunc = (params: any) => {
+                let maxValue = 400;
+                let value = params.value;
+                let eDivPercentBar = document.createElement('div');
+                eDivPercentBar.className = 'ab_div-colour-render-bar';
+                let percentValue = (100 / maxValue) * value;
+                eDivPercentBar.style.width = percentValue + '%';
+                eDivPercentBar.style.backgroundColor = 'green';
+                let eValue = document.createElement('div');
+                eValue.className = 'ab_div-colour-render-text';
+                // eValue.innerHTML = value + '%';
+                eValue.innerHTML = value;
+
+                let eOuterDiv = document.createElement('div');
+                eOuterDiv.className = 'ab_div-colour-render-div';
+                eOuterDiv.appendChild(eValue);
+                eOuterDiv.appendChild(eDivPercentBar);
+                return eOuterDiv;
+            }
+            let agGol: Column = this.gridOptions.columnApi.getColumn("deskId")
+           // agGol.getColDef().cellRenderer = cellRendererFunc;
+
+        }
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 

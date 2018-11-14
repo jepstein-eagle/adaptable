@@ -42,6 +42,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             {this.state.chartData != null &&
                     <IgrCategoryChart
                         yAxisMinimumValue={0}
+                      //  chartType="area"
                         chartTitle={this.props.CurrentChartName}
                         yAxisTitle="Notional"
                         xAxisTitle="Counterparty"
