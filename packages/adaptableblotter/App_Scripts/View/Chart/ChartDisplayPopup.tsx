@@ -17,6 +17,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
  }
 
 interface ChartDisplayState {
+    chartDefinition: IChartDefinition
     chartData: any
 }
 
@@ -29,6 +30,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         IgrCategoryChartModule.register();
        let currentChartDefinition: IChartDefinition = this.props.ChartDefinitions.find(cd => cd.Name == this.props.CurrentChartName);
         this.state = {
+            chartDefinition: currentChartDefinition,
             chartData: this.props.ChartService.BuildChartData(currentChartDefinition, this.props.Columns)
         };
     }
@@ -44,8 +46,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                         yAxisMinimumValue={0}
                       //  chartType="area"
                         chartTitle={this.props.CurrentChartName}
-                        yAxisTitle="Notional"
-                        xAxisTitle="Counterparty"
+                        yAxisTitle={this.state.chartDefinition.YAxisColumn}
+                        xAxisTitle={this.state.chartDefinition.XAxisColumn}
                         width="700px"
                         height="500px"
                         dataSource={this.state.chartData} />

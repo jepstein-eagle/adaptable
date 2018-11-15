@@ -3,7 +3,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IChartService } from './Interface/IChartService';
 import { IChartDefinition, IColumnValueExpression } from '../Api/Interface/IAdaptableBlotterObjects';
 import { DistinctCriteriaPairValue } from '../Enums';
-import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
+import { KeyValuePair } from '../../View/UIInterfaces';
 import { Expression } from '../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { IColumn } from '../Interface/IColumn';
