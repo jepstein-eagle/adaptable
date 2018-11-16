@@ -49,7 +49,7 @@ export class FreeTextColumnSettingsWizard extends React.Component<FreeTextColumn
                         </Col>
                         <Col xs={8}>
                         <FormGroup controlId="formInlineName" validationState={null}>
-                        <FormControl value={this.state.DefaultValue} type="text" placeholder="Default Value" onChange={(e) => this.handleDefaultValueChange(e)} />
+                        <FormControl value={this.state.DefaultValue} type="text" placeholder="Default Column Value (not required)" onChange={(e) => this.handleDefaultValueChange(e)} />
                           <FormControl.Feedback />
                                 <HelpBlock>{""}</HelpBlock>
                             </FormGroup>

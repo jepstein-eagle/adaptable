@@ -154,7 +154,7 @@ export interface IFormatColumn extends IAdaptableBlotterObject {
 export interface IFreeTextColumn extends IAdaptableBlotterObject {
   ColumnId: string
   DefaultValue: any
-  FreeTextStoredValues: FreeTextStoredValue[] 
+  FreeTextStoredValues: FreeTextStoredValue[]
 }
 
 export interface ILayout extends IAdaptableBlotterObject {
@@ -223,5 +223,20 @@ export interface IStyle {
   FontSize?: 'XSmall' | 'Small' | 'Medium' | 'Large' | 'XLarge'
   ClassName?: string
 }
+
+export interface ICellRenderer extends IAdaptableBlotterObject {
+  ColumnId: string
+}
+
+export interface IPercentCellRenderer extends ICellRenderer {
+  MaxValue: number;
+  MinValue: number;
+  PositiveColor: string;
+  NegativeColor: string;
+  ShowValue: boolean;
+  ShowPercentSign: boolean;
+}
+
+
 
 

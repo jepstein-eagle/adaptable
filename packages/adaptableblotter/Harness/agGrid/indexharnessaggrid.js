@@ -3,6 +3,11 @@ var adaptableblotter
 var quickSearchText
 var trades
 
+function runQuickSearch() {
+  // silly function to demo calling api outside of blotter
+  let element = document.getElementById("txtInput")
+  adaptableblotter.api.layoutSet("neil")
+}
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
   trades = dataGen.getTrades(10000);
@@ -42,7 +47,6 @@ function InitTradeBlotter() {
     enableRemoteConfigServer: false, // not running remote config
     // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
     //  predefinedConfig: tradeJson,
-    // "demoConfig.json", // passing in predefined config with a file
     //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     iPushPullConfig: {
       api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -52,6 +56,7 @@ function InitTradeBlotter() {
     autoSaveLayouts: true, // layouts will save automatically
     vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
     ignoreCaseInQueries: true,
+    maxColumnValueItemsDisplayed: 200,
     //  useDefaultVendorGridThemes: true,
     //useAdaptableBlotterFilterForm: false,
     // useAdaptableBlotterQuickFilter: false
@@ -132,22 +137,22 @@ function getTradeSchema() {
     headerName: "Trade Id",
     field: "tradeId",
     editable: true,
-    type: "abColDefNumber",
-    suppressSorting: true
+    type: "abColDefNumber"
   });
   schema.push({
     headerName: "Notional",
     field: "notional",
     enableValue: true,
     editable: true,
-    valueFormatter: notionalFormatter,
+ //   valueFormatter: notionalFormatter,
+    suppressSorting: true,
     cellClass: 'number-cell'
   });
   schema.push({
     headerName: "Desk No.",
     field: "deskId",
     editable: true,
-   // cellRenderer: percentCellRenderer,
+    // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     suppressSorting: false,
     suppressFilter: true
@@ -290,38 +295,6 @@ function dataChangeHack(state, gridOptions) {
     });
   }
 }
-
-function percentCellRenderer(params) {
-  let maxValue = 400;
-  let value = params.value;
-  console.log("actual value: " + value)
-  let eDivPercentBar = document.createElement('div');
-  eDivPercentBar.className = 'div-colour-render-bar';
-  let percentValue = (100 / maxValue) * value;
-  console.log("percent value: " + percentValue);
-  eDivPercentBar.style.width = percentValue + '%';
-  if (value < 20) {
-    eDivPercentBar.style.backgroundColor = 'red';
-  } else if (value < 60) {
-    eDivPercentBar.style.backgroundColor = '#ff9900';
-  } else {
-    eDivPercentBar.style.backgroundColor = '#00A000';
-  }
-
-  let eValue = document.createElement('div');
-  eValue.className = 'div-colour-render-text';
-  // eValue.innerHTML = value + '%';
-  eValue.innerHTML = value;
-
-  let eOuterDiv = document.createElement('div');
-  eOuterDiv.className = 'div-colour-render-div';
-  // eOuterDiv.appendChild(eValue);
-  eOuterDiv.appendChild(eDivPercentBar);
-
-  return eOuterDiv;
-
-}
-
 
 
 function apiTester(state, gridOptions) {

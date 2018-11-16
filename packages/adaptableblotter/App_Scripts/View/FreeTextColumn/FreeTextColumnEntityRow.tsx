@@ -7,6 +7,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from "../UIInterfaces";
 import { IFreeTextColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 
 export class FreeTextColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FreeTextColumnEntityRow>, {}> {
 
@@ -16,7 +17,7 @@ export class FreeTextColumnEntityRow extends React.Component<SharedEntityExpress
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = FreeTextColumn.ColumnId
-        colItems[1].Content = FreeTextColumn.DefaultValue
+        colItems[1].Content = StringExtensions.IsNullOrEmpty( FreeTextColumn.DefaultValue)? "[None]":FreeTextColumn.DefaultValue;          
         colItems[2].Content = ArrayExtensions.IsNullOrEmpty(FreeTextColumn.FreeTextStoredValues) ? 0 : FreeTextColumn.FreeTextStoredValues.length
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}

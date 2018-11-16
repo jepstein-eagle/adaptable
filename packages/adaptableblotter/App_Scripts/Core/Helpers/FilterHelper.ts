@@ -4,7 +4,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter, IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, ICellRenderer, IPercentCellRenderer } from '../Api/Interface/IAdaptableBlotterObjects';
 
 
 export module FilterHelper {
@@ -49,6 +49,37 @@ export module FilterHelper {
             TRUE_SYSTEM_FILTER,
             FALSE_SYSTEM_FILTER
         ]
+    }
+
+    export function TestGetCellRenderers(): IPercentCellRenderer[] {
+        let cellPercentRenderer: IPercentCellRenderer = {
+            ColumnId: "changeOnYear",
+            MaxValue: 100,
+            MinValue: -100,
+            PositiveColor: "green",
+            NegativeColor: "red",
+            ShowValue: false,
+            ShowPercentSign: true,
+            }
+        let cellPercentRenderer2: IPercentCellRenderer = {
+            ColumnId: "deskId",
+            MaxValue: 400,
+            MinValue: 0,
+            PositiveColor: "green",
+            NegativeColor: "red",
+            ShowValue: false,
+            ShowPercentSign: true,
+         }
+        let cellPercentRenderer3: IPercentCellRenderer = {
+            ColumnId: "notional",
+            MaxValue: 0,
+            MinValue: -1000,
+            PositiveColor: "brown",
+            NegativeColor: "red",
+            ShowValue: false,
+            ShowPercentSign: true,
+         }
+        return [cellPercentRenderer, cellPercentRenderer2, cellPercentRenderer3]
     }
 
     export function GetUserFilters(userFilters: IUserFilter[], userFilterNames: string[]): IUserFilter[] {

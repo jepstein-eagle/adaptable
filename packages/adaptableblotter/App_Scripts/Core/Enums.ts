@@ -186,6 +186,7 @@ export enum StateChangedTrigger {
     CalculatedColumn = "CalculatedColumn",
     Calendar = "Calendar",
     CellValidation = "CellValidation",
+    CellRenderer = "CellRenderer",
     Chart = "Chart",
     ColumnFilter = "ColumnFilter",
     ConditionalStyle = "ConditionalStyle",

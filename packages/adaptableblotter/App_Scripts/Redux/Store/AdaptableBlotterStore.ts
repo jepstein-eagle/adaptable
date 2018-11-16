@@ -39,6 +39,7 @@ import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
+import * as CellRendererRedux from '../ActionsReducers/CellRendererRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
@@ -91,6 +92,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   UserFilter: UserFilterRedux.UserFilterReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
   Theme: ThemeRedux.ThemeReducer,
+  CellRenderer: CellRendererRedux.CellRendererReducer,
   CellValidation: CellValidationRedux.CellValidationReducer,
   Layout: LayoutRedux.LayoutReducer,
   Dashboard: DashboardRedux.DashboardReducer,

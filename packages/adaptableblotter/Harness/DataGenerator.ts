@@ -194,12 +194,12 @@ export class DataGenerator {
         let trade =
         {
             "tradeId": i,
-            "notional": this.getRandomItem(this.getNotionals()),
+            "notional": this.generateRandomInt(-1000, 0),// this.getRandomItem(this.getNotionals()),
             "deskId": this.generateRandomInt(0, 400),
             "counterparty": this.getRandomItem(this.getCounterparties()),
             "currency": tradeCurrency,
             "country": this.getRandomItem(this.getCountries()),
-            "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
+            "changeOnYear": this.getMeaningfulPositiveNegativeInteger(100),//  this.getMeaningfulPositiveNegativeDouble(),
             "amount": this.getRandomItem(this.getAmounts()),
             "price": price,
             "bid": bid,
@@ -328,6 +328,10 @@ export class DataGenerator {
 
     protected getMeaningfulPositiveNegativeDouble(): number {
         return this.roundTo4Dp(this.generateRandomInt(-150, 150) + this.generateRandomDouble());
+    }
+
+    protected getMeaningfulPositiveNegativeInteger(seed: number): number {
+        return this.generateRandomInt(-seed, seed) 
     }
 
     protected removeDecimalPoints(val: number): number {

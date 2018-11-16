@@ -84,7 +84,7 @@ import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../../View/UIInt
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -103,6 +103,7 @@ import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICe
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+import { CellRendererStrategy } from '../../Strategy/CellRendererStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -158,6 +159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
+        this.Strategies.set(StrategyConstants.CellRendererStrategyId, new CellRendererStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
@@ -1375,31 +1377,72 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // add any special filters
-        let deskColummn = this.getState().Grid.Columns.find(c => c.ColumnId == "deskId")
-        if (deskColummn) {
-            let cellRendererFunc: ICellRendererFunc = (params: any) => {
-                let maxValue = 400;
-                let value = params.value;
-                let eDivPercentBar = document.createElement('div');
-                eDivPercentBar.className = 'ab_div-colour-render-bar';
-                let percentValue = (100 / maxValue) * value;
-                eDivPercentBar.style.width = percentValue + '%';
-                eDivPercentBar.style.backgroundColor = 'green';
-                let eValue = document.createElement('div');
-                eValue.className = 'ab_div-colour-render-text';
-                // eValue.innerHTML = value + '%';
-                eValue.innerHTML = value;
+        let percentCellRenderers: IPercentCellRenderer[] = this.getState().CellRenderer.PercentCellRenderers;
+        percentCellRenderers.forEach(pcr => {
+         
+            let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
+            if (renderedColumn) {
+                let cellRendererFunc: ICellRendererFunc = (params: any) => {
+                    let isNegativeValue: boolean = params.value < 0;
+                    let showNegatives: boolean = pcr.MinValue < 0;
+                    let showPositives: boolean = pcr.MaxValue > 0;
+                    let maxValue = pcr.MaxValue;
+                    let minValue = pcr.MinValue;
+                    let value = params.value;
+                    if (isNegativeValue) {
+                        value = value * -1;
+                    }
+                     let percentagePositiveValue = ((100 / maxValue) * value);
+                    let percentageNegativeValue = ((100 / (minValue * -1)) * value);
+                 
+                    if (showNegatives && showPositives) { // if need both then half the space
+                        percentagePositiveValue = percentagePositiveValue / 2;
+                        percentageNegativeValue = percentageNegativeValue / 2;
+                    }
 
-                let eOuterDiv = document.createElement('div');
-                eOuterDiv.className = 'ab_div-colour-render-div';
-                eOuterDiv.appendChild(eValue);
-                eOuterDiv.appendChild(eDivPercentBar);
-                return eOuterDiv;
+                    let eOuterDiv = document.createElement('div');
+                    eOuterDiv.className = 'ab_div-colour-render-div';
+                    if (pcr.ShowValue) {
+                        let eValue = document.createElement('div');
+                        eValue.className = 'ab_div-colour-render-text';
+                        eValue.innerHTML = (pcr.ShowPercentSign) ? value : value + '%';
+                        eOuterDiv.appendChild(eValue);
+                    }
+
+                    if (showNegatives) {
+                        let fullWidth = (showPositives) ? 50 : 100
+
+                        let negativeDivBlankBar = document.createElement('div');
+                        negativeDivBlankBar.className = 'ab_div-colour-render-bar';
+                        negativeDivBlankBar.style.width = (fullWidth - percentageNegativeValue) + '%';
+                        eOuterDiv.appendChild(negativeDivBlankBar);
+
+                        let negativeDivPercentBar = document.createElement('div');
+                        negativeDivPercentBar.className = 'ab_div-colour-render-bar';
+                        negativeDivPercentBar.style.width = percentageNegativeValue + '%';
+                        if (isNegativeValue) {
+                            negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
+                        }
+                        eOuterDiv.appendChild(negativeDivPercentBar);
+                    }
+
+                    if (showPositives) {
+                        let positivePercentBarDiv = document.createElement('div');
+                        positivePercentBarDiv.className = 'ab_div-colour-render-bar';
+                        positivePercentBarDiv.style.width = percentagePositiveValue + '%';
+                        if (!isNegativeValue) {
+                            positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
+                        }
+
+                        eOuterDiv.appendChild(positivePercentBarDiv);
+                    }
+                    return eOuterDiv;
+                }
+                let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId)
+                vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
             }
-            let agGol: Column = this.gridOptions.columnApi.getColumn("deskId")
-           // agGol.getColDef().cellRenderer = cellRendererFunc;
+        });
 
-        }
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 
