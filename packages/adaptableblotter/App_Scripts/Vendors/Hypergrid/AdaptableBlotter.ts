@@ -62,7 +62,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -1441,6 +1441,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return origgetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName)
         };
+    }
+
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
     }
 
     public redraw() {

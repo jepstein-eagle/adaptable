@@ -51,36 +51,6 @@ export module FilterHelper {
         ]
     }
 
-    export function TestGetCellRenderers(): IPercentCellRenderer[] {
-        let cellPercentRenderer: IPercentCellRenderer = {
-            ColumnId: "changeOnYear",
-            MaxValue: 100,
-            MinValue: -100,
-            PositiveColor: "green",
-            NegativeColor: "red",
-            ShowValue: false,
-            ShowPercentSign: true,
-            }
-        let cellPercentRenderer2: IPercentCellRenderer = {
-            ColumnId: "deskId",
-            MaxValue: 400,
-            MinValue: 0,
-            PositiveColor: "green",
-            NegativeColor: "red",
-            ShowValue: false,
-            ShowPercentSign: true,
-         }
-        let cellPercentRenderer3: IPercentCellRenderer = {
-            ColumnId: "notional",
-            MaxValue: 0,
-            MinValue: -1000,
-            PositiveColor: "brown",
-            NegativeColor: "red",
-            ShowValue: false,
-            ShowPercentSign: true,
-         }
-        return [cellPercentRenderer, cellPercentRenderer2, cellPercentRenderer3]
-    }
 
     export function GetUserFilters(userFilters: IUserFilter[], userFilterNames: string[]): IUserFilter[] {
         return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null)

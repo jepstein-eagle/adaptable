@@ -65,7 +65,7 @@ import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { SelectColumnStrategy } from '../../Strategy/SelectColumnStrategy';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IColumnFilter, ICellValidationRule, IGridSort, ILayout, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -1051,6 +1051,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     public applyDarkTheme(): void {
         // todo 
+    }
+
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
     }
 
     public redraw() {

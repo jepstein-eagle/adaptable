@@ -1,17 +1,16 @@
 import * as React from "react";
-import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock, ControlLabel } from 'react-bootstrap';
+import { FormGroup, FormControl, Col, Panel, ControlLabel, Row } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICellRenderer, IRange, IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ColorPicker } from "../../ColorPicker";
 
 export interface CellRenderersWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
-    Columns: Array<IColumn>
+    Columns: Array<IColumn>;
+    ColorPalette: Array<string>;
 }
 export interface CellRendererSettingsWizardState {
     MinValue: number;
@@ -28,38 +27,87 @@ export class CellRendererSettingsWizard extends React.Component<CellRenderersWiz
             MaxValue: this.props.Data.MaxValue,
             PositiveColor: this.props.Data.PositiveColor,
             NegativeColor: this.props.Data.NegativeColor,
-          }
+        }
     }
 
     render(): any {
 
-           let cssClassName: string = this.props.cssClassName + "-s"
+        let cssClassName: string = this.props.cssClassName + "-s"
 
         return <div className={cssClassName}>
             <Panel header={"hello"} bsStyle="primary">
 
                 <AdaptableBlotterForm >
-                   
-                <FormGroup controlId="formInlineNumberResult">
-                                <Col xs={3}>
-                                    <ControlLabel>Value:</ControlLabel>
-                                </Col>
-                                <Col xs={6}>
-                                    <FormControl
-                                        type="number"
-                                        placeholder="Enter Number"
-                                      //  onChange={this.minValueChanged}
-                                        value={this.state.MinValue}
-                                    />
-                                </Col>
-                                <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Minimum Value"}
-                                    bodyText={["To do"]} MessageType={MessageType.Info} />
-                                </Col>
-                            </FormGroup>
-                   
+
+                    <FormGroup controlId="formMinimumValue">
+                        <Row>
+                            <Col xs={3}>
+                                <ControlLabel>Minimum Value:</ControlLabel>
+                            </Col>
+                            <Col xs={6}>
+                                <FormControl
+                                    type="number"
+                                    placeholder="Enter Number"
+                                    onChange={this.onMinValueChanged}
+                                    value={this.state.MinValue}
+                                />
+                            </Col>
+                            <Col xs={1}><AdaptablePopover cssClassName={cssClassName} headerText={"Minimum Value"}
+                                bodyText={["To do"]} MessageType={MessageType.Info} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+
+                    <FormGroup controlId="formMaximumValue">
+                        <Row>
+                            <Col xs={3}>
+                                <ControlLabel>Maximum Value:</ControlLabel>
+                            </Col>
+                            <Col xs={6}>
+                                <FormControl
+                                    type="number"
+                                    placeholder="Enter Number"
+                                    onChange={this.onMaxValueChanged}
+                                    value={this.state.MaxValue}
+                                />
+                            </Col>
+                            <Col xs={1}><AdaptablePopover cssClassName={cssClassName} headerText={"Maximum Value"}
+                                bodyText={["To do"]} MessageType={MessageType.Info} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+
+                    <FormGroup controlId="formPositiveColour">
+                        <Row>
+                            <Col xs={3} >
+                                <ControlLabel>Positive Colour:</ControlLabel>
+                            </Col>
+                            <Col xs={3}>
+                                <ColorPicker
+                                    ColorPalette={this.props.ColorPalette}
+                                    value={this.state.PositiveColor}
+                                    onChange={(x) => this.onPositiveColorSelectChanged(x)} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+
+                    <FormGroup controlId="formNegativeColour">
+                        <Row>
+                            <Col xs={3} >
+                                <ControlLabel>Negative Colour:</ControlLabel>
+                            </Col>
+                            <Col xs={3}>
+                                <ColorPicker
+                                    ColorPalette={this.props.ColorPalette}
+                                    value={this.state.NegativeColor}
+                                    onChange={(x) => this.onNegativeColorSelectChanged(x)} />
+                            </Col>
+                        </Row>
+                    </FormGroup>
+
                 </AdaptableBlotterForm>
 
-            
+
 
             </Panel>
         </div>
@@ -68,24 +116,38 @@ export class CellRendererSettingsWizard extends React.Component<CellRenderersWiz
 
     }
 
-    minValueChanged = (e: any) => {
+    private onMinValueChanged = (e: any) => {
         this.setState({ MinValue: e.target.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+    private onMaxValueChanged = (e: any) => {
+        this.setState({ MaxValue: e.target.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+    private onPositiveColorSelectChanged(event: React.FormEvent<ColorPicker>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ PositiveColor: e.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
+
+    private onNegativeColorSelectChanged(event: React.FormEvent<ColorPicker>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ NegativeColor: e.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 
     public canNext(): boolean {
-       
+
         return true;// StringExtensions.IsNotNullOrEmpty(this.state.PositiveColor);
     }
 
     public canBack(): boolean { return true; }
     public Next(): void {
-        
+
         this.props.Data.MinValue = this.state.MinValue;
         this.props.Data.MaxValue = this.state.MaxValue;
         this.props.Data.PositiveColor = this.state.PositiveColor;
         this.props.Data.NegativeColor = this.state.NegativeColor;
-  
+
     }
 
     public Back(): void {

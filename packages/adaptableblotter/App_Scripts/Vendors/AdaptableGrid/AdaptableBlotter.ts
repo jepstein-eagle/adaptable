@@ -47,7 +47,7 @@ import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -471,6 +471,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null;
     }
 
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
+    }
     // public hideRows(rowIds: string[]): void {
     //     // doing it long way to see if it works...
     //     // this is called at the end of ApplySearchOnGrid so we can just do one re-render here.

@@ -1380,67 +1380,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let percentCellRenderers: IPercentCellRenderer[] = this.getState().CellRenderer.PercentCellRenderers;
         percentCellRenderers.forEach(pcr => {
          
-            let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
-            if (renderedColumn) {
-                let cellRendererFunc: ICellRendererFunc = (params: any) => {
-                    let isNegativeValue: boolean = params.value < 0;
-                    let showNegatives: boolean = pcr.MinValue < 0;
-                    let showPositives: boolean = pcr.MaxValue > 0;
-                    let maxValue = pcr.MaxValue;
-                    let minValue = pcr.MinValue;
-                    let value = params.value;
-                    if (isNegativeValue) {
-                        value = value * -1;
-                    }
-                     let percentagePositiveValue = ((100 / maxValue) * value);
-                    let percentageNegativeValue = ((100 / (minValue * -1)) * value);
-                 
-                    if (showNegatives && showPositives) { // if need both then half the space
-                        percentagePositiveValue = percentagePositiveValue / 2;
-                        percentageNegativeValue = percentageNegativeValue / 2;
-                    }
-
-                    let eOuterDiv = document.createElement('div');
-                    eOuterDiv.className = 'ab_div-colour-render-div';
-                    if (pcr.ShowValue) {
-                        let eValue = document.createElement('div');
-                        eValue.className = 'ab_div-colour-render-text';
-                        eValue.innerHTML = (pcr.ShowPercentSign) ? value : value + '%';
-                        eOuterDiv.appendChild(eValue);
-                    }
-
-                    if (showNegatives) {
-                        let fullWidth = (showPositives) ? 50 : 100
-
-                        let negativeDivBlankBar = document.createElement('div');
-                        negativeDivBlankBar.className = 'ab_div-colour-render-bar';
-                        negativeDivBlankBar.style.width = (fullWidth - percentageNegativeValue) + '%';
-                        eOuterDiv.appendChild(negativeDivBlankBar);
-
-                        let negativeDivPercentBar = document.createElement('div');
-                        negativeDivPercentBar.className = 'ab_div-colour-render-bar';
-                        negativeDivPercentBar.style.width = percentageNegativeValue + '%';
-                        if (isNegativeValue) {
-                            negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
-                        }
-                        eOuterDiv.appendChild(negativeDivPercentBar);
-                    }
-
-                    if (showPositives) {
-                        let positivePercentBarDiv = document.createElement('div');
-                        positivePercentBarDiv.className = 'ab_div-colour-render-bar';
-                        positivePercentBarDiv.style.width = percentagePositiveValue + '%';
-                        if (!isNegativeValue) {
-                            positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
-                        }
-
-                        eOuterDiv.appendChild(positivePercentBarDiv);
-                    }
-                    return eOuterDiv;
-                }
-                let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId)
-                vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
-            }
+           this.addPercentCellRenderer(pcr);
         });
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -1488,6 +1428,70 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.Strategies.forEach(strat => strat.InitializeWithRedux());
 
             });
+    }
+
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
+        let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
+        if (renderedColumn) {
+            let cellRendererFunc: ICellRendererFunc = (params: any) => {
+                let isNegativeValue: boolean = params.value < 0;
+                let showNegatives: boolean = pcr.MinValue < 0;
+                let showPositives: boolean = pcr.MaxValue > 0;
+                let maxValue = pcr.MaxValue;
+                let minValue = pcr.MinValue;
+                let value = params.value;
+                if (isNegativeValue) {
+                    value = value * -1;
+                }
+                 let percentagePositiveValue = ((100 / maxValue) * value);
+                let percentageNegativeValue = ((100 / (minValue * -1)) * value);
+             
+                if (showNegatives && showPositives) { // if need both then half the space
+                    percentagePositiveValue = percentagePositiveValue / 2;
+                    percentageNegativeValue = percentageNegativeValue / 2;
+                }
+
+                let eOuterDiv = document.createElement('div');
+                eOuterDiv.className = 'ab_div-colour-render-div';
+                if (pcr.ShowValue) {
+                    let eValue = document.createElement('div');
+                    eValue.className = 'ab_div-colour-render-text';
+                    eValue.innerHTML = (pcr.ShowPercentSign) ? value : value + '%';
+                    eOuterDiv.appendChild(eValue);
+                }
+
+                if (showNegatives) {
+                    let fullWidth = (showPositives) ? 50 : 100
+
+                    let negativeDivBlankBar = document.createElement('div');
+                    negativeDivBlankBar.className = 'ab_div-colour-render-bar';
+                    negativeDivBlankBar.style.width = (fullWidth - percentageNegativeValue) + '%';
+                    eOuterDiv.appendChild(negativeDivBlankBar);
+
+                    let negativeDivPercentBar = document.createElement('div');
+                    negativeDivPercentBar.className = 'ab_div-colour-render-bar';
+                    negativeDivPercentBar.style.width = percentageNegativeValue + '%';
+                    if (isNegativeValue) {
+                        negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
+                    }
+                    eOuterDiv.appendChild(negativeDivPercentBar);
+                }
+
+                if (showPositives) {
+                    let positivePercentBarDiv = document.createElement('div');
+                    positivePercentBarDiv.className = 'ab_div-colour-render-bar';
+                    positivePercentBarDiv.style.width = percentagePositiveValue + '%';
+                    if (!isNegativeValue) {
+                        positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
+                    }
+
+                    eOuterDiv.appendChild(positivePercentBarDiv);
+                }
+                return eOuterDiv;
+            }
+            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId)
+            vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
+        }
     }
 
     private onSortChanged(): void {

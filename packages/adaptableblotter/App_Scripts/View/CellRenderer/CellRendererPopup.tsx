@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as CellRendererRedux from '../../Redux/ActionsReducers/CellRendererRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -22,20 +21,20 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IPercentCellRenderer, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 
-
 interface CellRendererPopupProps extends StrategyViewPopupProps<CellRendererPopupComponent> {
     PercentCellRenderers: IPercentCellRenderer[];
-    onAddEditCellRenderer: (Index: number, CellRenderer: IPercentCellRenderer) => CellRendererRedux.CellRendererAddUpdateAction
+    onAddEditCellRenderer: (Index: number, percentCellRenderer: IPercentCellRenderer) => CellRendererRedux.CellRendererAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
-}
+    onPositiveColorChanged: (percentCellRenderer: IPercentCellRenderer, PositiveColor: string) => CellRendererRedux.CellRendererChangePositiveColorAction
+    onNegativeColorChanged: (percentCellRenderer: IPercentCellRenderer, NegativeColor: string) => CellRendererRedux.CellRendererChangeNegativeColorAction
 
+}
 
 class CellRendererPopupComponent extends React.Component<CellRendererPopupProps, EditableConfigEntityState> {
     constructor(props: CellRendererPopupProps) {
         super(props);
         this.state = UIHelper.EmptyConfigState();
     }
-
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__cellRenderer";
@@ -44,7 +43,11 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
         let infoBody: any[] = ["To Do."]
 
         let colItems: IColItem[] = [
-            { Content: "Column", Size: 4 },
+            { Content: "Column", Size: 3 },
+            { Content: "Min", Size: 1 },
+            { Content: "Max", Size: 1 },
+            { Content: "Pos", Size: 2 },
+            { Content: "Neg", Size: 2 },
             { Content: "", Size: 2 },
         ]
 
@@ -58,13 +61,16 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
                 Column={column}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
+                ColorPalette={this.props.ColorPalette}
                 Index={index}
                 onEdit={(index, x) => this.onEdit(index, x as IPercentCellRenderer)}
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={CellRendererRedux.CellRendererDelete(index)}
+                onPositiveColorChanged={(percentCellRenderer, positiveColor) => this.props.onPositiveColorChanged(percentCellRenderer, positiveColor)}
+                onNegativeColorChanged={(percentCellRenderer, negativeColor) => this.props.onNegativeColorChanged(percentCellRenderer, negativeColor)}
+              
             />
-
 
         })
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createCellRenderer()}
@@ -98,6 +104,7 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
                         Blotter={this.props.Blotter}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
+                        ColorPalette={this.props.ColorPalette}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         WizardStartIndex={this.state.WizardStartIndex}
@@ -111,13 +118,12 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
     }
 
     createCellRenderer() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCellRenderer(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPercentCellRenderer(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
 
     onEdit(index: number, CellRenderer: IPercentCellRenderer) {
         this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(CellRenderer), EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
     }
-
 
     onCloseWizard() {
         this.props.onClearPopupParams()
@@ -128,7 +134,6 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
         this.props.onAddEditCellRenderer(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPercentCellRenderer);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
-
 
     canFinishWizard() {
         let cellRenderer = this.state.EditedAdaptableBlotterObject as IPercentCellRenderer
@@ -144,11 +149,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditCellRenderer: (index: number, CellRenderer: IPercentCellRenderer) => dispatch(CellRendererRedux.CellRendererAddUpdate(index, CellRenderer)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellRendererStrategyId))
-    };
+        onAddEditCellRenderer: (index: number, percentCellRenderer: IPercentCellRenderer) => dispatch(CellRendererRedux.CellRendererAddUpdate(index, percentCellRenderer)),
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellRendererStrategyId)),
+        onPositiveColorChanged: (percentCellRenderer: IPercentCellRenderer, positiveColor: string) => dispatch(CellRendererRedux.CellRendererChangePositiveColor(percentCellRenderer, positiveColor)),
+        onNegativeColorChanged: (percentCellRenderer: IPercentCellRenderer, negativeColor: string) => dispatch(CellRendererRedux.CellRendererChangeNegativeColor(percentCellRenderer, negativeColor))
+  };
 }
 
 export let CellRendererPopup = connect(mapStateToProps, mapDispatchToProps)(CellRendererPopupComponent);
-
-

@@ -4,14 +4,14 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ICellRenderer, IUserFilter, IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentCellRenderer, IStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
-
+import { StyleVisualItem } from "../../Components/StyleVisualItem";
+import { ObjectFactory } from "../../../Core/ObjectFactory";
 
 export interface CellRendererSummaryWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
     Columns: IColumn[]
 }
-
 
 export class CellRendererSummaryWizard extends React.Component<CellRendererSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: CellRendererSummaryWizardProps) {
@@ -21,11 +21,20 @@ export class CellRendererSummaryWizard extends React.Component<CellRendererSumma
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
+        let positiveStyle: IStyle = ObjectFactory.CreateEmptyStyle();
+        positiveStyle.BackColor = this.props.Data.PositiveColor;
+        positiveStyle.ForeColor = this.props.Data.PositiveColor;
+        let negativeStyle: IStyle = ObjectFactory.CreateEmptyStyle();
+        negativeStyle.BackColor = this.props.Data.NegativeColor;
+        negativeStyle.ForeColor = this.props.Data.NegativeColor;
+
         let keyValuePairs: KeyValuePair[] = [
-            {
-                 Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-               {  Key: "Min Value", Value: this.props.Data.MinValue },
-                 ]
+            { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
+            { Key: "Min Value", Value: this.props.Data.MinValue },
+            { Key: "Max Value", Value: this.props.Data.MaxValue },
+            { Key: "Positive Colour", Value: <StyleVisualItem Style={positiveStyle} /> },
+            { Key: "Negative Colour", Value: <StyleVisualItem Style={negativeStyle} /> },
+        ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CellRendererStrategyName} />
         return <div className={cssClassName}>
@@ -47,7 +56,7 @@ export class CellRendererSummaryWizard extends React.Component<CellRendererSumma
         return 1;
     }
     public GetIndexStepDecrement() {
-        return  1;
+        return 1;
     }
     public StepName = this.props.StepName
 }

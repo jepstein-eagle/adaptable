@@ -229,8 +229,8 @@ export interface ICellRenderer extends IAdaptableBlotterObject {
 }
 
 export interface IPercentCellRenderer extends ICellRenderer {
-  MaxValue: number;
   MinValue: number;
+  MaxValue: number;
   PositiveColor: string;
   NegativeColor: string;
   ShowValue: boolean;

@@ -9,6 +9,7 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 import { CellRendererSettingsWizard } from "./CellRendererSettingsWizard";
 
 export interface CellRendererWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CellRendererWizard> {
+    ColorPalette: Array<string>;
 }
 
 export class CellRendererWizard extends React.Component<CellRendererWizardProps, {}> {
@@ -23,7 +24,7 @@ export class CellRendererWizard extends React.Component<CellRendererWizardProps,
                 cssClassName={this.props.cssClassName}
                 Steps={[
                     <CellRendererSelectColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <CellRendererSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} />,
+                    <CellRendererSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} ColorPalette={this.props.ColorPalette} />,
                     <CellRendererSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

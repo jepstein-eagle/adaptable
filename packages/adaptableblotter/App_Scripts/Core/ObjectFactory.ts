@@ -1,6 +1,6 @@
 import { Helper } from './Helpers/Helper';
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, ICellRenderer } from './Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, ICellRenderer, IPercentCellRenderer } from './Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
@@ -96,10 +96,15 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateEmptyCellRenderer(): ICellRenderer {
+    export function CreateEmptyPercentCellRenderer(): IPercentCellRenderer {
         return {
-             ColumnId: "",
-           
+            ColumnId: "",
+            MaxValue: 100,
+            MinValue: 0,
+            PositiveColor: '#008000',
+            NegativeColor: '#FF0000',
+            ShowValue: false,
+            ShowPercentSign: false
         }
     }
 
@@ -126,7 +131,8 @@ export module ObjectFactory {
             IsLive: false,
             ColumnId: column.ColumnId,
             FlashingCellDuration: 500,
-            UpColor: '#008000', DownColor: '#FF0000'
+            UpColor: '#008000',
+            DownColor: '#FF0000'
         };
     }
 
@@ -217,14 +223,14 @@ export module ObjectFactory {
 
     export function CreateRangeEvaluation(operator: LeafExpressionOperator, operand1: any, operand2: any, newValue: any, initialValue: any, columnId: string): IRangeEvaluation {
         return {
-        operand1:operand1,
-        operand2: operand2,
-        newValue: newValue,
-        operator: operator,
-        initialValue: initialValue,
-        columnId: columnId
+            operand1: operand1,
+            operand2: operand2,
+            newValue: newValue,
+            operator: operator,
+            initialValue: initialValue,
+            columnId: columnId
+        }
     }
-}
     export function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, expression: Expression): ICellValidationRule {
         return {
             ColumnId: columnId,

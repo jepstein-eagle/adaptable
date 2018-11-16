@@ -34,4 +34,5 @@ export class StyleVisualItem extends React.Component<StyleVisualItemProps, {}> {
         }
         return styleVisualisation;
     }
+
 }
