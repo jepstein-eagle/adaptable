@@ -6,6 +6,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { ICellRenderer, IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
 export interface CellRendererSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
@@ -25,14 +26,14 @@ export class CellRendererSelectColumnWizard extends React.Component<CellRenderer
 
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-selectcolumn"
-       
+
         return <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-            <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.ColumnId]}
-                ColumnList={this.props.Columns}
-                onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                SelectionMode={SelectionMode.Single} />
-        </Panel>
+            <Panel header="Select a Column" bsStyle="primary">
+                <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.state.ColumnId]}
+                    ColumnList={ColumnHelper.getNumericColumns(this.props.Columns)}
+                    onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                    SelectionMode={SelectionMode.Single} />
+            </Panel>
         </div>
     }
 
@@ -51,10 +52,10 @@ export class CellRendererSelectColumnWizard extends React.Component<CellRenderer
 
     public Back(): void {  //todo
     }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

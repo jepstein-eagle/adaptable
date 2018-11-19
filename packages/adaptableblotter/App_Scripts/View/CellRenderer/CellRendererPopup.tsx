@@ -33,8 +33,24 @@ interface CellRendererPopupProps extends StrategyViewPopupProps<CellRendererPopu
 class CellRendererPopupComponent extends React.Component<CellRendererPopupProps, EditableConfigEntityState> {
     constructor(props: CellRendererPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = { EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 }
     }
+
+    componentDidMount() {
+        if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+            let arrayParams = this.props.PopupParams.split("|")
+            if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let newPercentRender: IPercentCellRenderer = ObjectFactory.CreateEmptyPercentCellRenderer()
+                newPercentRender.ColumnId = arrayParams[1]
+                this.onEdit(newPercentRender)
+            }
+            if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
+                let editPercentRender = this.props.PercentCellRenderers.find(x => x.ColumnId == arrayParams[1])
+                this.onEdit(editPercentRender)
+            }
+        }
+    }
+
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__cellRenderer";
@@ -51,29 +67,28 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
             { Content: "", Size: 2 },
         ]
 
-        let CellRendererItems = this.props.PercentCellRenderers.map((x, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
+        let CellRendererItems = this.props.PercentCellRenderers.map((percentCellRenderer:IPercentCellRenderer, index) => {
+            let column = this.props.Columns.find(c => c.ColumnId == percentCellRenderer.ColumnId)
             return <CellRendererEntityRow
                 key={index}
                 cssClassName={cssClassName}
                 colItems={colItems}
-                AdaptableBlotterObject={x}
+                AdaptableBlotterObject={percentCellRenderer}
                 Column={column}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 ColorPalette={this.props.ColorPalette}
                 Index={index}
-                onEdit={(index, x) => this.onEdit(index, x as IPercentCellRenderer)}
-                onShare={() => this.props.onShare(x)}
+                onEdit={() => this.onEdit(percentCellRenderer)}
+                onShare={() => this.props.onShare(percentCellRenderer)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={CellRendererRedux.CellRendererDelete(index)}
                 onPositiveColorChanged={(percentCellRenderer, positiveColor) => this.props.onPositiveColorChanged(percentCellRenderer, positiveColor)}
-                onNegativeColorChanged={(percentCellRenderer, negativeColor) => this.props.onNegativeColorChanged(percentCellRenderer, negativeColor)}
-              
+                onNegativeColorChanged={(percentCellRenderer, negativeColor) => this.props.onNegativeColorChanged(percentCellRenderer, negativeColor)} 
             />
 
         })
-        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createCellRenderer()}
+        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Cell Renderer "
             DisplayMode="Glyph+Text"
             size={"small"}
@@ -117,12 +132,13 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
         </div>
     }
 
-    createCellRenderer() {
+    onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPercentCellRenderer(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
 
-    onEdit(index: number, CellRenderer: IPercentCellRenderer) {
-        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(CellRenderer), EditedAdaptableBlotterObjectIndex: index, WizardStartIndex: 1 });
+    onEdit(renderedColumn: IPercentCellRenderer) {
+        let clonedObject: IPercentCellRenderer = Helper.cloneObject(renderedColumn);
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
     }
 
     onCloseWizard() {

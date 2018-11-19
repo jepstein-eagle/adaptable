@@ -23,7 +23,7 @@ export class FormatColumnEntityRow extends React.Component<SharedEntityExpressio
             editClick={() => this.props.onEdit(this.props.Index, formatColumn)}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
-             ConfirmDeleteAction={this.props.onDeleteConfirm}
+            ConfirmDeleteAction={this.props.onDeleteConfirm}
             EntityName={StrategyConstants.FormatColumnStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

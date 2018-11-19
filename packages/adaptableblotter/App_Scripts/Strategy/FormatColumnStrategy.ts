@@ -28,7 +28,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
                 label + StrategyConstants.FormatColumnStrategyName,
                 ScreenPopups.FormatColumnPopup,
                 StrategyConstants.FormatColumnGlyph,
-                popupParam + column)
+                popupParam + column.ColumnId)
         }
     }
 

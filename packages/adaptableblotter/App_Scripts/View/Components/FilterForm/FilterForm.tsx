@@ -47,6 +47,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
     ShowCloseButton: boolean;
+    DistinctCriteriaPairValue: DistinctCriteriaPairValue;
     onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => HomeRedux.HideFilterFormAction
@@ -71,7 +72,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             ColumnValuePairs: [],
             ShowWaitingMessage: false,
             SelectedTab: ContextMenuTab.Filter,
-            DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
+            DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue,
         };
     }
     componentWillMount() {
@@ -82,9 +83,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
-                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.DistinctCriteriaPairValue)
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
+                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue });
                         } else { // get the distinct items and make sure within max items that can be displayed
                             let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(distinctItem => {
@@ -93,7 +94,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                                     distinctItem
                                 columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
                             })
-                            let distinctCriteriaPairValue: DistinctCriteriaPairValue = result.DistinctCriteriaPairValue == 'RawValue' ? DistinctCriteriaPairValue.RawValue : DistinctCriteriaPairValue.DisplayValue;
+                            let distinctCriteriaPairValue: DistinctCriteriaPairValue = (result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.RawValue) ?
+                                DistinctCriteriaPairValue.RawValue :
+                                DistinctCriteriaPairValue.DisplayValue;
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                             // set the UIPermittedValues for this column to what has been sent
                             this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
@@ -103,9 +106,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     });
             }
             else {
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.DistinctCriteriaPairValue)
                 columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
+                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue });
             }
         }
     }
@@ -243,14 +246,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
 
     onClickColumValue(columnValues: string[]) {
-
+alert("clicking for: " + this.state.DistinctCriteriaPairValue)
         let displayValues: string[] = []
         let rawValues: string[] = []
 
         columnValues.forEach(columnValue => {
             let columnValuePair: IRawValueDisplayValuePair = (this.state.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue) ?
                 this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue) :
-                this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue)
+                this.state.ColumnValuePairs.find(cvp => cvp.RawValue == columnValue)
 
             displayValues.push(columnValuePair.DisplayValue);
             rawValues.push(columnValuePair.RawValue);
@@ -368,7 +371,9 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
         EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu}
-        ShowCloseButton={FilterContext.ShowCloseButton} />
+        ShowCloseButton={FilterContext.ShowCloseButton}
+        DistinctCriteriaPairValue={FilterContext.DistinctCriteriaPairValue}
+    />
 </Provider>;
 
 let panelStyle = {

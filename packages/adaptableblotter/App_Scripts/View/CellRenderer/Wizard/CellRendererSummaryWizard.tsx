@@ -30,8 +30,8 @@ export class CellRendererSummaryWizard extends React.Component<CellRendererSumma
 
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Min Value", Value: this.props.Data.MinValue },
-            { Key: "Max Value", Value: this.props.Data.MaxValue },
+            { Key: "Minimum Value", Value: this.props.Data.MinValue },
+            { Key: "Maximum Value", Value: this.props.Data.MaxValue },
             { Key: "Positive Colour", Value: <StyleVisualItem Style={positiveStyle} /> },
             { Key: "Negative Colour", Value: <StyleVisualItem Style={negativeStyle} /> },
         ]

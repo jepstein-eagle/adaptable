@@ -1249,9 +1249,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
-        this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
-            console.log(params)
-        });
+        //  this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
+        //     console.log(params)
+        // });
         this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
             this.onSortChanged()
             this.debouncedSetSelectedCells();
@@ -1379,8 +1379,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // add any special filters
         let percentCellRenderers: IPercentCellRenderer[] = this.getState().CellRenderer.PercentCellRenderers;
         percentCellRenderers.forEach(pcr => {
-         
-           this.addPercentCellRenderer(pcr);
+
+            this.addPercentCellRenderer(pcr);
         });
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -1430,22 +1430,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
     }
 
-    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void {
         let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
         if (renderedColumn) {
+            let showNegatives: boolean = pcr.MinValue < 0;
+            let showPositives: boolean = pcr.MaxValue > 0;
+            let maxValue = pcr.MaxValue;
+            let minValue = pcr.MinValue;
+
             let cellRendererFunc: ICellRendererFunc = (params: any) => {
                 let isNegativeValue: boolean = params.value < 0;
-                let showNegatives: boolean = pcr.MinValue < 0;
-                let showPositives: boolean = pcr.MaxValue > 0;
-                let maxValue = pcr.MaxValue;
-                let minValue = pcr.MinValue;
                 let value = params.value;
                 if (isNegativeValue) {
                     value = value * -1;
                 }
-                 let percentagePositiveValue = ((100 / maxValue) * value);
+                let percentagePositiveValue = ((100 / maxValue) * value);
                 let percentageNegativeValue = ((100 / (minValue * -1)) * value);
-             
+
                 if (showNegatives && showPositives) { // if need both then half the space
                     percentagePositiveValue = percentagePositiveValue / 2;
                     percentageNegativeValue = percentageNegativeValue / 2;
@@ -1484,12 +1485,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (!isNegativeValue) {
                         positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
                     }
-
                     eOuterDiv.appendChild(positivePercentBarDiv);
                 }
                 return eOuterDiv;
             }
-            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId)
+            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
         }
     }

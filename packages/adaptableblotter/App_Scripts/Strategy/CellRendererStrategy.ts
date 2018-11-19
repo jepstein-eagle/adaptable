@@ -19,8 +19,8 @@ export  class CellRendererStrategy extends AdaptableStrategyBase implements ICel
     }
 
     public addContextMenuItem(column: IColumn): void {
-        if (this.canCreateContextMenuItem(column, this.blotter)) {
-            let cellRendererExists: boolean = true;// todo ArrayExtensions.ContainsItem(this.CellRendererState.CellRenderers.map(f => f.ColumnId), column.ColumnId)
+        if (this.canCreateContextMenuItem(column, this.blotter, "numeric")) {
+            let cellRendererExists: boolean = ArrayExtensions.ContainsItem(this.CellRendererState.PercentCellRenderers.map(f => f.ColumnId), column.ColumnId)
             let label = cellRendererExists ? "Edit " : "Create "
             let popupParam = cellRendererExists ? "Edit|" : "New|"
 
@@ -28,7 +28,7 @@ export  class CellRendererStrategy extends AdaptableStrategyBase implements ICel
                 label + StrategyConstants.CellRendererStrategyName,
                 ScreenPopups.CellRendererPopup,
                 StrategyConstants.CellRendererGlyph,
-                popupParam + column)
+                popupParam + column.ColumnId)
         }
     }
 

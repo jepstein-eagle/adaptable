@@ -75,7 +75,7 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                 Columns={this.props.Columns}
                 UserFilters={null}
                 Index={index}
-                onEdit={(index, x) => this.onEdit(formatColumn)}
+                onEdit={() => this.onEdit(formatColumn)}
                 onShare={() => this.props.onShare(formatColumn)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)} />

@@ -59,7 +59,7 @@ import { GridState, LayoutState, IState } from '../ActionsReducers/Interface/ISt
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
@@ -642,14 +642,27 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
           return returnAction;
         }
- 
+
         case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
-         // not too sure what I need to do - perhaps just refresh everything?
-        
+          // not too sure what I need to do - perhaps just refresh everything?
+
           let returnAction = next(action);
-           return returnAction;
+          return returnAction;
         }
         // TODO:  Need to do Delete? 
+
+        /*
+       Cell Renderer
+       */
+        case CellRendererRedux.CELL_RENDERER_ADD_UPDATE: {
+          let returnAction = next(action);
+          // need to see if its an add or an update but for now assume its an add...
+          let percentCellRenderer: IPercentCellRenderer = (<CellRendererRedux.CellRendererAddUpdateAction>action).CellRenderer;
+          blotter.addPercentCellRenderer(percentCellRenderer);
+          blotter.redraw();
+          return returnAction;
+        }
+
 
         case LayoutRedux.LAYOUT_SELECT: {
           let returnAction = next(action);

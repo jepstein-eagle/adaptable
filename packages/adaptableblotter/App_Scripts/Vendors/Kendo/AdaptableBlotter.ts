@@ -211,7 +211,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let filterContext: IColumnFilterContext = {
             Column: this.getColumnFromColumnId(e.field),
             Blotter: this,
-            ShowCloseButton: true
+            ShowCloseButton: true,
+            DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue
         };
 
         // Remove default filter UI

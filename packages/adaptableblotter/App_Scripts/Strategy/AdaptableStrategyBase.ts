@@ -7,7 +7,7 @@ import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Core/Api/Interface/IStateEvents';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { IAdvancedSearch } from '../Core/Api/Interface/IAdaptableBlotterObjects';
@@ -150,6 +150,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         if (StringExtensions.IsNotNullOrEmpty(functionType)) {
             if (functionType == "sort") {
                 return column.Sortable;
+            } else if (functionType == "numeric") {
+                return column.DataType == DataType.Number;
             } else if (functionType == "filter") {
                 return column.Filterable && blotter.isFilterable()
             } else if (functionType == "quickfilter") {
