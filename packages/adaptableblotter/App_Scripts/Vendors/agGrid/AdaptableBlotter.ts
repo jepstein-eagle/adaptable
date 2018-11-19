@@ -1504,6 +1504,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+       this.removePercentCellRenderer(pcr);
+       this.addPercentCellRenderer(pcr);
+    }
+
     private onSortChanged(): void {
         let sortModel: any[] = this.gridOptions.api.getSortModel();
 

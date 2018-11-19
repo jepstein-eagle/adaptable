@@ -1450,6 +1450,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
+    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
+    }
+
     public redraw() {
         this.ReindexAndRepaint();
     }

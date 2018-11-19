@@ -36,7 +36,7 @@ export  class CellRendererStrategy extends AdaptableStrategyBase implements ICel
         if (this.CellRendererState != this.blotter.AdaptableBlotterStore.TheStore.getState().CellRenderer) {
             this.CellRendererState = this.blotter.AdaptableBlotterStore.TheStore.getState().CellRenderer;
 
-            if (this.blotter.isInitialised) {
+             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CellRenderer, this.CellRendererState)
             }
         }

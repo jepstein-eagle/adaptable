@@ -475,6 +475,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //t odo
     }
 
+    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
+    }
+
     public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
      // todo
     }

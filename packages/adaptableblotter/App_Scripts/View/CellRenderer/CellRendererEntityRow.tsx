@@ -8,6 +8,7 @@ import { IColItem } from "../UIInterfaces";
 import { IPercentCellRenderer } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { ColorPicker } from "../ColorPicker";
+import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 
 
 export interface CellRendererEntityRowProps extends SharedEntityExpressionRowProps<CellRendererEntityRow> {
@@ -26,8 +27,6 @@ export class CellRendererEntityRow extends React.Component<CellRendererEntityRow
         colItems[0].Content = ColumnHelper.getFriendlyNameFromColumn(cellRenderer.ColumnId, this.props.Column)
         colItems[1].Content = cellRenderer.MinValue
         colItems[2].Content = cellRenderer.MaxValue
-        colItems[3].Content = cellRenderer.PositiveColor
-        colItems[4].Content = cellRenderer.NegativeColor
         colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} value={cellRenderer.PositiveColor} onChange={(x) => this.onPositiveColorChanged(x)} />
         colItems[4].Content = <ColorPicker ColorPalette={this.props.ColorPalette} value={cellRenderer.NegativeColor} onChange={(x) => this.onNegativeColorChanged(x)} />
 
@@ -49,7 +48,7 @@ export class CellRendererEntityRow extends React.Component<CellRendererEntityRow
     onPositiveColorChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.props.onPositiveColorChanged(this.props.AdaptableBlotterObject as IPercentCellRenderer, e.value);
-    }
+     }
 
     onNegativeColorChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;

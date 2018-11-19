@@ -97,8 +97,9 @@ export interface IAdaptableBlotter {
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void
    
     // cellRenderer
-     addPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
-     removePercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+    removePercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+    addPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+    editPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
 
 
     getFirstRecord(): any
