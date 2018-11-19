@@ -88,7 +88,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AuditService: IAuditService
     public ValidationService: IValidationService
     public ChartService: IChartService
-   
+
     public StyleService: StyleService
     // public ThemeService: ThemeService
     public AuditLogService: AuditLogService
@@ -104,9 +104,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         this.vendorGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Kendo';
-        this.EmbedColumnMenu= false;
-       this.isInitialised = true;
-       
+        this.EmbedColumnMenu = false;
+        this.isInitialised = true;
+
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
         // create the services
         this.CalendarService = new CalendarService(this);
@@ -114,7 +114,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ValidationService = new ValidationService(this);
         this.ChartService = new ChartService(this);
-        
+
         // this.ThemeService = new ThemeService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, null)
@@ -137,7 +137,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsKendoStrategy(this))
-        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))  
+        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnKendoStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
@@ -159,7 +159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.abContainerElement.innerHTML = ""
 
-            iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
 
         this.AdaptableBlotterStore.Load
@@ -212,7 +212,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Column: this.getColumnFromColumnId(e.field),
             Blotter: this,
             ShowCloseButton: true,
-            DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue
         };
 
         // Remove default filter UI
@@ -478,8 +477,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.vendorGrid.closeCell()
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             let record: any = this.vendorGrid.dataSource.getByUid(id);
             return (columnId: string) => { return record[columnId]; }
         }
@@ -488,8 +487,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             return (columnId: string) => { return record[columnId]; }
         }
         else {
@@ -770,11 +769,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
-    public clearGridFiltering(){
+    public clearGridFiltering() {
         // todo
     }
 
-    
+
     public clearColumnFiltering(columnIds: string[]): void {
         // to do
     }
@@ -877,8 +876,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                     this.api.alertShowError("Validation Error", errorMessage, true)
-                     e.preventDefault();
+                    this.api.alertShowError("Validation Error", errorMessage, true)
+                    e.preventDefault();
                 }
                 else {
                     let warningMessage: string = "";
@@ -960,7 +959,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getVisibleRowCount(): number {
         return 1
     }
-    
+
     public getVisibleColumnCount(): number {
         return 1
     }
@@ -1022,29 +1021,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
-    public isSelectable(): boolean{
+    public isSelectable(): boolean {
         return true;
     }
-    public isSortable(): boolean{
+    public isSortable(): boolean {
         return true;
     }
-    public isFilterable(): boolean{
+    public isFilterable(): boolean {
         return true;
     }
 
-    public isQuickFilterable(): boolean{
+    public isQuickFilterable(): boolean {
         return false;
     }
 
-    public isQuickFilterActive(): boolean{
+    public isQuickFilterActive(): boolean {
         return false;
     }
 
-    public showQuickFilter(): void{
+    public showQuickFilter(): void {
         // todo
     }
 
-    public hideQuickFilter(): void{
+    public hideQuickFilter(): void {
         // todo
     }
     public applyLightTheme(): void {
@@ -1054,7 +1053,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo 
     }
 
-    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
+    }
+
+    public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
     }
 
     public redraw() {

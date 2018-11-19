@@ -60,7 +60,6 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
     render() {
 
-        alert("using" + this.props.DistinctCriteriaPairValue)
         let userFiltersItemsElements = this.props.UserFilters.map((x, y) => {
             let isActive: boolean
             isActive = this.state.UiSelectedUserFilters.indexOf(x.RawValue) >= 0;

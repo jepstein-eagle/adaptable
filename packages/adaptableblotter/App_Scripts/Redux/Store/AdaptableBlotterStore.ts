@@ -663,7 +663,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
+        case CellRendererRedux.CELL_RENDERER_DELETE: {
+          let cellRendererState = middlewareAPI.getState().CellRenderer;
+          let actionTyped = <CellRendererRedux.CellRendererDeleteAction>action
+          let percentCellRenderer: IPercentCellRenderer =cellRendererState.PercentCellRenderers[actionTyped.Index];
+          blotter.removePercentCellRenderer(percentCellRenderer);
+          blotter.redraw();
+          let returnAction = next(action);
+          return returnAction;
+        }
 
+       /*
+       Layout
+       */
         case LayoutRedux.LAYOUT_SELECT: {
           let returnAction = next(action);
           let layoutState = middlewareAPI.getState().Layout;

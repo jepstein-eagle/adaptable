@@ -7,6 +7,7 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColorPicker } from "../../ColorPicker";
+import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface CellRenderersWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
     Columns: Array<IColumn>;
@@ -33,9 +34,10 @@ export class CellRendererSettingsWizard extends React.Component<CellRenderersWiz
     render(): any {
 
         let cssClassName: string = this.props.cssClassName + "-s"
+        let friendlyColumnName: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns);
 
         return <div className={cssClassName}>
-            <Panel header={"hello"} bsStyle="primary">
+            <Panel header={"Cell Renderer for " + friendlyColumnName} bsStyle="primary">
 
                 <AdaptableBlotterForm >
 

@@ -438,9 +438,9 @@ export module ExpressionHelper {
     export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(
             Expression,
-            blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"), // this value
-            blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"), // this value
-            blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"),  // other column value
+            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value
+            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value
+            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue),  // other column value
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
@@ -451,9 +451,9 @@ export module ExpressionHelper {
     export function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
         return IsSatisfied(
             Expression,
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"),  // this value
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"),  // this value
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue),  // this value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
             columns,
             blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,

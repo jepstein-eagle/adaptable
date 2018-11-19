@@ -47,8 +47,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
     ShowCloseButton: boolean;
-    DistinctCriteriaPairValue: DistinctCriteriaPairValue;
-    onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
+     onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => HomeRedux.HideFilterFormAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
@@ -72,7 +71,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             ColumnValuePairs: [],
             ShowWaitingMessage: false,
             SelectedTab: ContextMenuTab.Filter,
-            DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue,
+            DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
         };
     }
     componentWillMount() {
@@ -83,9 +82,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
-                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.DistinctCriteriaPairValue)
+                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue });
+                            this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
                         } else { // get the distinct items and make sure within max items that can be displayed
                             let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(distinctItem => {
@@ -106,9 +105,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     });
             }
             else {
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, this.props.DistinctCriteriaPairValue)
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
                 columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
-                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: this.props.DistinctCriteriaPairValue });
+                this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
             }
         }
     }
@@ -246,7 +245,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
 
     onClickColumValue(columnValues: string[]) {
-alert("clicking for: " + this.state.DistinctCriteriaPairValue)
         let displayValues: string[] = []
         let rawValues: string[] = []
 
@@ -372,7 +370,6 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
         TeamSharingActivated={false}
         EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu}
         ShowCloseButton={FilterContext.ShowCloseButton}
-        DistinctCriteriaPairValue={FilterContext.DistinctCriteriaPairValue}
     />
 </Provider>;
 
