@@ -1,7 +1,7 @@
 import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType, ChartType } from '../../Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Interface/Interfaces';
-import { KeyValuePair, FreeTextStoredValue } from '../../../View/UIInterfaces';
+import { FreeTextStoredValue } from '../../../View/UIInterfaces';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -75,10 +75,10 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
 export interface IChartDefinition extends IAdaptableBlotterObject {
   Type: 'Bar Chart' | 'Line Chart';
   Name: string
-  YAxisColumn: string
-  XAxisColumn: string
+  YAxisColumnId: string
+  XAxisColumnId: string
   XAxisColumnValues: string[]
-  AdditionalColumn?: string
+  AdditionalColumnId?: string
   AdditionalColumnValues?: string[]
 }
 
@@ -134,7 +134,7 @@ export interface IReport extends IAdaptableBlotterObject {
   Name: string;
   ReportColumnScope: ReportColumnScope
   ReportRowScope: ReportRowScope
-  Columns: string[]
+  ColumnIds: string[]
   Expression: Expression,
 }
 

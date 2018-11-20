@@ -19,6 +19,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     ValueMember?: string
     SortMember?: string
     ReducedDisplay?: boolean
+    //  UseGroups?: boolean
     cssClassName: string
 }
 
@@ -161,56 +162,56 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         let listGroupSelectedStyle: any = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge
 
         return (<div className={cssClassName}>
-                <Col xs={4}>
-                    <Panel header={this.props.HeaderAvailable} className="ab_no-padding-anywhere-panel" bsStyle="info">
-                        <div>
-                            {headerFirstListBox}
-                            <ListGroup  className="AvailableDropZone" style={listGroupAvailableStyle}
-                                onDragEnter={(event) => this.DragEnterAvailable(event)}
-                                onDragOver={(event) => this.DragOverAvailable(event)}
-                                onDragLeave={(event) => this.DragLeaveAvailable(event)}>
-                                {columnValuesElements}
-                            </ListGroup>
-                        </div>
-                    </Panel>
-                </Col>
-                <Col xs={2} style={colButtonStyle} >
-                    <ButtonGroup  >
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Add All"} DisplayMode={"Text+Glyph"} glyph={"fast-forward"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={this.state.AvailableValues.length == 0}
-                            onClick={() => this.AddAll()} />
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Add"} DisplayMode={"Text+Glyph"} glyph={"step-forward"} style={{ width: "110px", marginBottom: "30px" }} overrideDisableButton={this.state.UiSelectedAvailableValues.length == 0}
-                            onClick={() => this.Add()} />
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Remove"} style={{ width: "110px", marginBottom: "10px" }} glyph="step-backward" DisplayMode={"Glyph+Text"} overrideDisableButton={this.state.UiSelectedSelectedValues.length == 0}
-                            onClick={() => this.Remove()} />
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Remove All"} style={{ width: "110px", marginBottom: "10px" }} DisplayMode={"Glyph+Text"} glyph="fast-backward" overrideDisableButton={this.state.SelectedValues.length == 0}
-                            onClick={() => this.RemoveAll()} />
-                    </ButtonGroup>
-                </Col>
-                <Col xs={4} >
-                    <Panel header={this.props.HeaderSelected} className="ab_no-padding-anywhere-panel" bsStyle="info">
-                        <div>
-                            <ListGroup  style={listGroupSelectedStyle} className="SelectedDropZone"
-                                onDragEnter={(event) => this.DragEnterSelected(event)}
-                                onDragOver={(event) => this.DragOverSelected(event)}
-                                onDragLeave={(event) => this.DragLeaveSelected(event)}>
-                                {itemsElements}
-                            </ListGroup>
-                        </div>
-                    </Panel>
-                </Col>
-                <Col xs={2} style={colButtonStyle} >
-                    <ButtonGroup>
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Top"} DisplayMode={"Glyph+Text"} glyph={"triangle-top"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoTopOrUp()}
-                            onClick={() => this.Top()} />
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Up"} DisplayMode={"Glyph+Text"} glyph={"menu-up"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoTopOrUp()}
-                            onClick={() => this.Up()} />
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Down"} DisplayMode={"Glyph+Text"} glyph={"menu-down"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoDownOrBottom()}
-                            onClick={() => this.Down()} />
-                        <ButtonDirection cssClassName={cssClassName} overrideText={"Bottom"} DisplayMode={"Glyph+Text"} glyph={"triangle-bottom"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoDownOrBottom()}
-                            onClick={() => this.Bottom()} />
-                    </ButtonGroup>
-                </Col>
-         </div>
+            <Col xs={4}>
+                <Panel header={this.props.HeaderAvailable} className="ab_no-padding-anywhere-panel" bsStyle="info">
+                    <div>
+                        {headerFirstListBox}
+                        <ListGroup className="AvailableDropZone" style={listGroupAvailableStyle}
+                            onDragEnter={(event) => this.DragEnterAvailable(event)}
+                            onDragOver={(event) => this.DragOverAvailable(event)}
+                            onDragLeave={(event) => this.DragLeaveAvailable(event)}>
+                            {columnValuesElements}
+                        </ListGroup>
+                    </div>
+                </Panel>
+            </Col>
+            <Col xs={2} style={colButtonStyle} >
+                <ButtonGroup  >
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Add All"} DisplayMode={"Text+Glyph"} glyph={"fast-forward"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={this.state.AvailableValues.length == 0}
+                        onClick={() => this.AddAll()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Add"} DisplayMode={"Text+Glyph"} glyph={"step-forward"} style={{ width: "110px", marginBottom: "30px" }} overrideDisableButton={this.state.UiSelectedAvailableValues.length == 0}
+                        onClick={() => this.Add()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Remove"} style={{ width: "110px", marginBottom: "10px" }} glyph="step-backward" DisplayMode={"Glyph+Text"} overrideDisableButton={this.state.UiSelectedSelectedValues.length == 0}
+                        onClick={() => this.Remove()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Remove All"} style={{ width: "110px", marginBottom: "10px" }} DisplayMode={"Glyph+Text"} glyph="fast-backward" overrideDisableButton={this.state.SelectedValues.length == 0}
+                        onClick={() => this.RemoveAll()} />
+                </ButtonGroup>
+            </Col>
+            <Col xs={4} >
+                <Panel header={this.props.HeaderSelected} className="ab_no-padding-anywhere-panel" bsStyle="info">
+                    <div>
+                        <ListGroup style={listGroupSelectedStyle} className="SelectedDropZone"
+                            onDragEnter={(event) => this.DragEnterSelected(event)}
+                            onDragOver={(event) => this.DragOverSelected(event)}
+                            onDragLeave={(event) => this.DragLeaveSelected(event)}>
+                            {itemsElements}
+                        </ListGroup>
+                    </div>
+                </Panel>
+            </Col>
+            <Col xs={2} style={colButtonStyle} >
+                <ButtonGroup>
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Top"} DisplayMode={"Glyph+Text"} glyph={"triangle-top"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoTopOrUp()}
+                        onClick={() => this.Top()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Up"} DisplayMode={"Glyph+Text"} glyph={"menu-up"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoTopOrUp()}
+                        onClick={() => this.Up()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Down"} DisplayMode={"Glyph+Text"} glyph={"menu-down"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoDownOrBottom()}
+                        onClick={() => this.Down()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Bottom"} DisplayMode={"Glyph+Text"} glyph={"triangle-bottom"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={!this.canGoDownOrBottom()}
+                        onClick={() => this.Bottom()} />
+                </ButtonGroup>
+            </Col>
+        </div>
         );
     }
 
@@ -321,7 +322,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
     RemoveAll() {
         let newSelectedValues: string[] = [];
-        let newAvailableValues = [].concat(this.state.AllValues);
+        let newAvailableValues = [].concat(this.state.AllValues).sort();
         this.setState({
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
@@ -349,6 +350,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
 
         })
+        newAvailableValues = newAvailableValues.sort();
         this.setState({
             UiSelectedSelectedValues: [],
             SelectedValues: newSelectedValues,
@@ -364,7 +366,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     }
     DragSelectedEnd() {
         if (this.overHTMLElement && this.draggedElement) {
-           //now we need to check in which drop area we dropped the selected item
+            //now we need to check in which drop area we dropped the selected item
             let to: number;
             let from = this.state.SelectedValues.indexOf(this.draggedElement);
             let newSelectedArray: Array<any>
@@ -444,7 +446,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             this.overHTMLElement = null;
             this.draggedHTMLElement = null;
             this.draggedElement = null
-            // Update state
+            // Update state 
+            // first reorder available??
+            newAvailableValues = newAvailableValues.sort();
 
             this.setState({
                 SelectedValues: newSelectedArray,
@@ -674,7 +678,7 @@ var listGroupStyleSelectedSmall: React.CSSProperties = {
 var listGroupItemStyle: React.CSSProperties = {
     'fontSize': 'small',
     'padding': '8px',
- };
+};
 
 var colButtonStyle = {
     transform: 'translateY(100px)',

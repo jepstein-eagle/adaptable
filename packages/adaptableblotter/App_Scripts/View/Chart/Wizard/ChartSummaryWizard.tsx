@@ -23,12 +23,12 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
         let keyValuePairs: KeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Type", Value: this.props.Data.Type },
-            { Key: "Y Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumn, this.props.Columns) },
-            { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumn, this.props.Columns) },
+            { Key: "Y Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumnId, this.props.Columns) },
+            { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
             { Key: "X Axis Values", Value: this.getColumnValuesList( this.props.Data.XAxisColumnValues) },
             {
-                Key: "Additional Column", Value: (this.props.Data.AdditionalColumn) ?
-                    ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumn, this.props.Columns) :
+                Key: "Additional Column", Value: (this.props.Data.AdditionalColumnId) ?
+                    ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumnId, this.props.Columns) :
                     "None"
             },
             { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.getColumnValuesList( this.props.Data.AdditionalColumnValues) : "n/a" },

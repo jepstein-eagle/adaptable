@@ -20,7 +20,7 @@ export interface IPermittedColumnValues {
 
 export interface IColumnCategory {
     Category: string;
-    Columns: string[]
+    ColumnIds: string[]
 }
 
 export interface ICellInfo {

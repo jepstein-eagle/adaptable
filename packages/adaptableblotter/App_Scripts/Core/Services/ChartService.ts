@@ -18,12 +18,12 @@ export class ChartService implements IChartService {
 
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
 
-        let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumn, columns)
-        let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumn, columns)
+        let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnId, columns)
+        let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
 
         let xAxisColValues: string[] = chartDefinition.XAxisColumnValues.length > 0 && chartDefinition.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
             chartDefinition.XAxisColumnValues :
-            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumn, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
 
         let additionalColValues: string[] = this.getAdditionalColumnValues(chartDefinition);
 
@@ -31,16 +31,16 @@ export class ChartService implements IChartService {
             let chartDataRow: any = new Object()
             chartDataRow[xAxisColumnName] = cv
 
-            let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumn, Value: cv }
+            let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
-                    let columnValueKVP: KeyValuePair = { Key: chartDefinition.AdditionalColumn, Value: columnValue }
-                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumn, [xAxisKVP, columnValueKVP], columns)
+                    let columnValueKVP: KeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
+                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP, columnValueKVP], columns)
                     chartDataRow[columnValue] = groupedTotal
                 })
             } else { // just do the first one
-                let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumn, [xAxisKVP], columns)
+                let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP], columns)
                 chartDataRow[yAxisColumnName] = groupedTotal
             }
             return chartDataRow
@@ -79,7 +79,7 @@ export class ChartService implements IChartService {
         }
         return chartDefinition.AdditionalColumnValues.length > 0 && chartDefinition.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
             chartDefinition.AdditionalColumnValues :
-            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumn, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
 
     }
 }

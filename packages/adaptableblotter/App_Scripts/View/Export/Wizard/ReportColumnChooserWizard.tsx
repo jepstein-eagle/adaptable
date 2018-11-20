@@ -22,7 +22,7 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
         super(props);
         this.state = {
             AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-            SelectedColumnValues: this.props.Data.Columns.map(c =>
+            SelectedColumnValues: this.props.Data.ColumnIds.map(c =>
                 this.props.Columns.find(col => col.ColumnId == c).FriendlyName),
         }
     }
@@ -57,7 +57,7 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
     }
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.Columns = this.state.SelectedColumnValues.map(c =>
+        this.props.Data.ColumnIds = this.state.SelectedColumnValues.map(c =>
             this.props.Columns.find(col => col.FriendlyName == c).ColumnId)
     }
     public Back(): void {

@@ -46,8 +46,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                         yAxisMinimumValue={0}
                       //  chartType="area"
                         chartTitle={this.props.CurrentChartName}
-                        yAxisTitle={this.state.chartDefinition.YAxisColumn}
-                        xAxisTitle={this.state.chartDefinition.XAxisColumn}
+                        yAxisTitle={this.state.chartDefinition.YAxisColumnId}
+                        xAxisTitle={this.state.chartDefinition.XAxisColumnId}
                         width="700px"
                         height="500px"
                         dataSource={this.state.chartData} />

@@ -144,7 +144,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let report = this.state.EditedAdaptableBlotterObject as IReport
         return StringExtensions.IsNotNullOrEmpty(report.Name) &&
             ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || ArrayExtensions.IsNotNullOrEmpty(report.Columns))
+            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || ArrayExtensions.IsNotNullOrEmpty(report.ColumnIds))
     }
 
     onNew() {

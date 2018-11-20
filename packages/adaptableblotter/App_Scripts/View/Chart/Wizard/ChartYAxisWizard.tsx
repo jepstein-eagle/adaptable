@@ -22,7 +22,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
     constructor(props: ChartYAxisWizardProps) {
         super(props)
         this.state = {
-            YAxisColumn: props.Data.YAxisColumn,
+            YAxisColumn: props.Data.YAxisColumnId,
         }
     }
     render(): any {
@@ -74,7 +74,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.YAxisColumn = this.state.YAxisColumn
+        this.props.Data.YAxisColumnId = this.state.YAxisColumn
     }
     public Back(): void {
         // todo

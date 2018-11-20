@@ -22,8 +22,8 @@ export module ObjectFactory {
         return {
             Name: "",
             Type: ChartType.BarChart,
-            YAxisColumn: "",
-            XAxisColumn: "",
+            YAxisColumnId: "",
+            XAxisColumnId: "",
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]
         }
     }
@@ -120,7 +120,7 @@ export module ObjectFactory {
         return {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            Columns: [],
+            ColumnIds: [],
             ReportColumnScope: ReportColumnScope.AllColumns,
             ReportRowScope: ReportRowScope.ExpressionRows
         };

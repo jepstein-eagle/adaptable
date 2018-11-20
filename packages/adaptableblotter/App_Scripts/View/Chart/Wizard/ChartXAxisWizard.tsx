@@ -33,11 +33,11 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
         let hasDistinctColumnValues: boolean = props.Data.XAxisColumnValues.length > 0 && props.Data.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES
         this.state = {
 
-            XAxisColumn: props.Data.XAxisColumn,
+            XAxisColumn: props.Data.XAxisColumnId,
             XAxisColumnValues: props.Data.XAxisColumnValues,
             UseAllXAsisColumnValues: (hasDistinctColumnValues) ? false : true,
-            AvailableXAxisColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumn)) ?
-                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, DistinctCriteriaPairValue.DisplayValue) :
+            AvailableXAxisColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumnId)) ?
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue) :
                 null
         }
     }
@@ -134,7 +134,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.XAxisColumn = this.state.XAxisColumn
+        this.props.Data.XAxisColumnId = this.state.XAxisColumn
         this.props.Data.XAxisColumnValues = this.state.XAxisColumnValues
     }
     

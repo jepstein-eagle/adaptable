@@ -31,11 +31,11 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
         super(props)
         let hasDistinctColumnValues: boolean = ArrayExtensions.IsNotNullOrEmpty(props.Data.AdditionalColumnValues) && props.Data.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES
         this.state = {
-            AdditionalColumn: props.Data.AdditionalColumn,
+            AdditionalColumn: props.Data.AdditionalColumnId,
             AdditionalColumnValues: props.Data.AdditionalColumnValues ? props.Data.AdditionalColumnValues : [],
             UseAllAdditionalColumnValues: (hasDistinctColumnValues) ? false : true,
-            AvailableAdditionalColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.AdditionalColumn)) ?
-                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumn, DistinctCriteriaPairValue.DisplayValue) :
+            AvailableAdditionalColumnValues: (StringExtensions.IsNotNullOrEmpty(this.props.Data.AdditionalColumnId)) ?
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.AdditionalColumnId, DistinctCriteriaPairValue.DisplayValue) :
                 null
         }
     }
@@ -119,7 +119,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.AdditionalColumn = this.state.AdditionalColumn
+        this.props.Data.AdditionalColumnId = this.state.AdditionalColumn
         this.props.Data.AdditionalColumnValues = this.state.AdditionalColumnValues
     }
     public Back(): void {

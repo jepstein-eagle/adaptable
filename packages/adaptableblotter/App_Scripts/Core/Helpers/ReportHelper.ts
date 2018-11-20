@@ -25,7 +25,7 @@ export module ReportHelper {
             case ReportColumnScope.SelectedColumns:
                 return "[Selected Columns]";
             case ReportColumnScope.BespokeColumns:
-                return Report.Columns.map(c =>
+                return Report.ColumnIds.map(c =>
                     cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
         }
     }
@@ -70,7 +70,7 @@ export module ReportHelper {
                 }
                 break;
             case ReportColumnScope.BespokeColumns:
-                ReportColumns = Report.Columns.map(c => gridColumns.find(col => col.ColumnId == c));
+                ReportColumns = Report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
                 break;
         }
 
@@ -145,7 +145,7 @@ export module ReportHelper {
             Name: ALL_DATA_REPORT,
             ReportColumnScope: ReportColumnScope.AllColumns,
             ReportRowScope: ReportRowScope.AllRows,
-            Columns: [],
+            ColumnIds: [],
             Expression: ExpressionHelper.CreateEmptyExpression()
         });
 
@@ -153,7 +153,7 @@ export module ReportHelper {
             Name: VISIBLE_DATA_REPORT,
             ReportColumnScope: ReportColumnScope.VisibleColumns,
             ReportRowScope: ReportRowScope.VisibleRows,
-            Columns: [],
+            ColumnIds: [],
             Expression: ExpressionHelper.CreateEmptyExpression()
          });
 
@@ -161,7 +161,7 @@ export module ReportHelper {
             Name: SELECTED_CELLS_REPORT,
             ReportColumnScope: ReportColumnScope.SelectedColumns,
             ReportRowScope: ReportRowScope.SelectedRows,
-            Columns: [],
+            ColumnIds: [],
             Expression: ExpressionHelper.CreateEmptyExpression()
         });
         return _systemReports;

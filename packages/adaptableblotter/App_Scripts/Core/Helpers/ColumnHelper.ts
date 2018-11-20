@@ -76,7 +76,7 @@ export module ColumnHelper {
         let returnValue: string = ""
         categories.forEach(c => {
             if (StringExtensions.IsNullOrEmpty(returnValue)) {
-                let column: string = c.Columns.find(col => col == columnId);
+                let column: string = c.ColumnIds.find(col => col == columnId);
                 if (column) {
                     returnValue = c.Category;
                 }
