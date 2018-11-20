@@ -581,8 +581,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             let record = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
             return (columnId: string) => {
                 let column = this.getHypergridColumn(columnId);
@@ -593,8 +593,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return (columnId: string) => { return this.getDisplayValue(id, columnId); }
         }
     }
-    public getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             return (columnId: string) => {
                 let column = this.getHypergridColumn(columnId);
                 return this.valOrFunc(record, column);
@@ -1082,7 +1082,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                         Blotter: this,
                         ShowCloseButton: true,
-                        DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue
                     };
                     this.filterContainer.style.visibility = 'visible';
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
@@ -1444,11 +1443,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
+    public addPercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // to do
+    }
+    public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
+    }
+
+    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
     }
 
     public redraw() {
-      this.ReindexAndRepaint();
+        this.ReindexAndRepaint();
     }
 
 }

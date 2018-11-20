@@ -655,15 +655,51 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
        Cell Renderer
        */
         case CellRendererRedux.CELL_RENDERER_ADD_UPDATE: {
+          let actionTyped = <CellRendererRedux.CellRendererAddUpdateAction>action
+
+          if (actionTyped.Index >= 0) { // edit so first remove before doing anything
+            let editedCellRender: IPercentCellRenderer = middlewareAPI.getState().CellRenderer.PercentCellRenderers[actionTyped.Index];
+            blotter.removePercentCellRenderer(editedCellRender);
+          }
           let returnAction = next(action);
-          // need to see if its an add or an update but for now assume its an add...
-          let percentCellRenderer: IPercentCellRenderer = (<CellRendererRedux.CellRendererAddUpdateAction>action).CellRenderer;
-          blotter.addPercentCellRenderer(percentCellRenderer);
+         
+          // add new one
+          blotter.addPercentCellRenderer(actionTyped.CellRenderer);
           blotter.redraw();
           return returnAction;
         }
 
+        case CellRendererRedux.CELL_RENDERER_DELETE: {
+          let returnAction = next(action);
+          let cellRendererState = middlewareAPI.getState().CellRenderer;
+          let actionTyped = <CellRendererRedux.CellRendererDeleteAction>action
+          let percentCellRenderer: IPercentCellRenderer = cellRendererState.PercentCellRenderers[actionTyped.Index];
+          blotter.removePercentCellRenderer(percentCellRenderer);
+          blotter.redraw();
+          return returnAction;
+        }
 
+        case CellRendererRedux.CELL_RENDERER_CHANGE_POSITIVE_COLOR:{
+          let returnAction = next(action);
+          let percentCellRenderer: IPercentCellRenderer = (<CellRendererRedux.CellRendererChangePositiveColorAction>action).CellRenderer;
+          let editedCellRender: IPercentCellRenderer = middlewareAPI.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == percentCellRenderer.ColumnId);
+          blotter.editPercentCellRenderer(editedCellRender);
+          blotter.redraw();
+          return returnAction;
+        }
+
+        case CellRendererRedux.CELL_RENDERER_CHANGE_NEGATIVE_COLOR: {
+          let returnAction = next(action);
+          let percentCellRenderer: IPercentCellRenderer = (<CellRendererRedux.CellRendererChangeNegativeColorAction>action).CellRenderer;
+          let editedCellRender: IPercentCellRenderer = middlewareAPI.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == percentCellRenderer.ColumnId);
+          blotter.editPercentCellRenderer(editedCellRender);
+          blotter.redraw();
+          return returnAction;
+        }
+
+        /*
+        Layout
+        */
         case LayoutRedux.LAYOUT_SELECT: {
           let returnAction = next(action);
           let layoutState = middlewareAPI.getState().Layout;

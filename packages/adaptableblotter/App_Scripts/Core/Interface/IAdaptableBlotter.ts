@@ -66,8 +66,8 @@ export interface IAdaptableBlotter {
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
     getRawValueFromRecord(row: any, columnId: string): any
-    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
-    getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any
+    getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
+    getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
     getDisplayValueFromRawValue(colId: string, rawValue: any): any
 
@@ -97,8 +97,11 @@ export interface IAdaptableBlotter {
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void
    
     // cellRenderer
-     addPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
-        
+    removePercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+    addPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+    editPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+
+
     getFirstRecord(): any
 
     // Filtering

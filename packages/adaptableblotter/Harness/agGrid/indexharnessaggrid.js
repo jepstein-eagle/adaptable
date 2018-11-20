@@ -144,7 +144,7 @@ function getTradeSchema() {
     field: "notional",
     enableValue: true,
     editable: true,
- //   valueFormatter: notionalFormatter,
+    valueFormatter: notionalFormatter,
     suppressSorting: true,
     cellClass: 'number-cell'
   });
@@ -155,7 +155,7 @@ function getTradeSchema() {
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     suppressSorting: false,
-    suppressFilter: true
+    suppressFilter: true  
   });
   schema.push({
     headerName: "Counterparty",

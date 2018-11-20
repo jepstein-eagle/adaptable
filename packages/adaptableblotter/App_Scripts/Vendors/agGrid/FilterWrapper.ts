@@ -42,13 +42,11 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
             //we always unmount first so the autofocus from the form works... in other grids we unmount when hidden
             ReactDOM.unmountComponentAtNode(this.filterContainer)
             let column: IColumn  = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == this.column.getColId());
-            let renderedColumn: IPercentCellRenderer = blotter.AdaptableBlotterStore.TheStore.getState().CellRenderer.PercentCellRenderers.find(c=>c.ColumnId ==column.ColumnId)   
             let filterContext: IColumnFilterContext = {
                 Column: column,
                 Blotter: blotter,
                 ShowCloseButton : (params != null && params.hidePopup !=null),
-                DistinctCriteriaPairValue: (renderedColumn)? DistinctCriteriaPairValue.RawValue: DistinctCriteriaPairValue.DisplayValue
-            };
+             };
             blotter.hideFilterFormPopup = (params)? params.hidePopup: null
             ReactDOM.render(FilterFormReact(filterContext), this.filterContainer);
         }

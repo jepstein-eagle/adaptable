@@ -336,9 +336,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid.exitCurrentEditor();
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
+    public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
         // this is very very wrong!
-        if (type == "getColumnValue") {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             return (columnId: string) => { return this.getRawValueFromRecord(id, columnId); }
         }
         else {
@@ -346,8 +346,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             return (columnId: string) => { return this.getCellFromRowAndColumnId(record, columnId).getRawValue() }
         }
         else {
@@ -472,7 +472,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addPercentCellRenderer(pcr: IPercentCellRenderer): void{
+        //t odo
     }
+
+    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+        // todo
+    }
+
+    public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
+     // todo
+    }
+    
     // public hideRows(rowIds: string[]): void {
     //     // doing it long way to see if it works...
     //     // this is called at the end of ApplySearchOnGrid so we can just do one re-render here.

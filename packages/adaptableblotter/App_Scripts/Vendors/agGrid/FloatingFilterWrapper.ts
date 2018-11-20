@@ -20,7 +20,6 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
                 Column:column,
                 Blotter: blotter,
                 ShowCloseButton: false,
-                DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue
             };
             ReactDOM.render(FloatingFilterFormReact(filterContext), this.filterContainer);
         }

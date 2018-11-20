@@ -474,8 +474,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
 
         let test: RowNode[] = this.gridOptions.api.getSelectedNodes();
-        if (test) {
-        }
         let selected = this.gridOptions.api.getRangeSelections();
         let columns: IColumn[] = []
         if (selected) {
@@ -674,8 +672,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.stopEditing(true)
     }
 
-    public getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             let rowNodeSearch: RowNode
             //ag-grid doesn't support FindRow based on data
             // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
@@ -691,8 +689,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any {
-        if (type == "getColumnValue") {
+    public getRecordIsSatisfiedFunctionFromRecord(record: RowNode, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
             return (columnId: string) => { return this.gridOptions.api.getValue(columnId, record) }
         } else {
             return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
@@ -775,17 +773,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
         } else { // get the distinct values for the column from the grid
             //we use forEachNode as we want to get all data even the one filtered out...
+            let isRenderedColumn = this.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == columnId);
             let data = this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
                 if (!rowNode.group) {
-                    let displayString = this.getDisplayValueFromRecord(rowNode, columnId)
                     let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+                    let displayValue = (isRenderedColumn) ?
+                        rawValue :
+                        this.getDisplayValueFromRecord(rowNode, columnId);
                     if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
                     }
                     else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                        returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                        returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
                     }
                 }
             })
@@ -808,13 +809,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValueFromRecord(row: RowNode, columnId: string): string {
-        //TODO : this method needs optimizing since getting the column everytime seems costly
-        //we do not handle yet if the column uses a template... we handle only if it's using a renderer
         if (row == null) {
             return ""
         }
         let rawValue = this.gridOptions.api.getValue(columnId, row)
-
         return this.getDisplayValueFromRawValue(columnId, rawValue);
     }
 
@@ -848,11 +846,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getRenderedValue(colDef: ColDef, valueToRender: any): string {
+        let isRenderedColumn = this.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == colDef.field);
+        if (isRenderedColumn) {
+            return valueToRender;
+        }
         let render: any = colDef.cellRenderer
         if (typeof render == "string") {
             return this.cleanValue(valueToRender)
         }
-        return render({ value: valueToRender }) || "";
+          return render({ value: valueToRender }) || "";
     }
 
     private cleanValue(value: string): string {
@@ -1492,6 +1494,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
         }
+    }
+    public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
+        let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
+        if (renderedColumn) {
+            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            // note we dont get it from the original (but I guess it will be applied next time you run...)
+            vendorGridColumn.getColDef().cellRenderer = null;
+        }
+    }
+
+    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+       this.removePercentCellRenderer(pcr);
+       this.addPercentCellRenderer(pcr);
     }
 
     private onSortChanged(): void {
