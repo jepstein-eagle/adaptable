@@ -63,8 +63,8 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
             { Content: "Column", Size: 3 },
             { Content: "Min", Size: 1 },
             { Content: "Max", Size: 1 },
-            { Content: "Pos", Size: 2 },
-            { Content: "Neg", Size: 2 },
+            { Content: "Positive", Size: 2 },
+            { Content: "Negative", Size: 2 },
             { Content: "", Size: 2 },
         ]
 

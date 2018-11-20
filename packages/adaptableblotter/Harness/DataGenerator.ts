@@ -194,7 +194,7 @@ export class DataGenerator {
         let trade =
         {
             "tradeId": i,
-            "notional": this.generateRandomInt(-1000, 0),// this.getRandomItem(this.getNotionals()),
+            "notional": this.generateRandomInt(0,1000),// this.getRandomItem(this.getNotionals()),
             "deskId": this.generateRandomInt(0, 400),
             "counterparty": this.getRandomItem(this.getCounterparties()),
             "currency": tradeCurrency,
@@ -448,7 +448,16 @@ export class DataGenerator {
             0.3,
             0.35,
             0.4,
-            0.5
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8,
+            0.85,
+            0.9,
+            0.95
         ];
         return bidOfferSpreads;
     }

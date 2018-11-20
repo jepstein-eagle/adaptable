@@ -655,7 +655,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
        Cell Renderer
        */
         case CellRendererRedux.CELL_RENDERER_ADD_UPDATE: {
-          // need to see if its an add or an update but for now assume its an add...
           let actionTyped = <CellRendererRedux.CellRendererAddUpdateAction>action
 
           if (actionTyped.Index >= 0) { // edit so first remove before doing anything
@@ -666,7 +665,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          
           // add new one
           blotter.addPercentCellRenderer(actionTyped.CellRenderer);
-
           blotter.redraw();
           return returnAction;
         }
