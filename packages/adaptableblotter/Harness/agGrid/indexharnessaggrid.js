@@ -46,7 +46,7 @@ function InitTradeBlotter() {
     enableAuditLog: false, // not running audit log
     enableRemoteConfigServer: false, // not running remote config
     // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
-    //  predefinedConfig: tradeJson,
+    predefinedConfig: categoryJson,
     //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
     iPushPullConfig: {
       api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
@@ -155,7 +155,7 @@ function getTradeSchema() {
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     suppressSorting: false,
-    suppressFilter: true  
+    suppressFilter: true
   });
   schema.push({
     headerName: "Counterparty",
@@ -176,6 +176,7 @@ function getTradeSchema() {
     enableRowGroup: true,
     filter: 'agTextColumnFilter'
   });
+  
   schema.push({
     headerName: "Change On Year",
     field: "changeOnYear",
@@ -218,6 +219,7 @@ function getTradeSchema() {
     columnGroupShow: 'closed',
     cellClass: 'number-cell'
   });
+  /*
   schema.push({
     headerName: "Bbg Ask",
     field: "bloombergAsk",
@@ -268,6 +270,7 @@ function getTradeSchema() {
     field: "percentChange",
     filter: 'text'
   });
+  */
   schema.push({
     headerName: "Last Updated By",
     field: "lastUpdatedBy",
@@ -552,6 +555,24 @@ function currencyRendereragGrid(params) {
   }
 }
 
+let categoryJson = {
+  "UserInterface": {
+    "ColumnCategories": [
+      {
+        "Category": "Price",
+        "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional"]
+      },
+      {
+        "Category": "Strings",
+        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status"]
+      },
+      {
+        "Category": "Others",
+        "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
+      }
+    ]
+  }
+}
 
 let layoutdemojson = {
   "Layout": {

@@ -322,7 +322,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
     RemoveAll() {
         let newSelectedValues: string[] = [];
-        let newAvailableValues = [].concat(this.state.AllValues).sort();
+        let newAvailableValues = [].concat(this.state.AllValues);
+         newAvailableValues = Helper.sortArrayWithProperty(SortOrder.Ascending, newAvailableValues, this.props.SortMember),
+
         this.setState({
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
@@ -350,7 +352,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
 
         })
-        newAvailableValues = newAvailableValues.sort();
+        newAvailableValues = Helper.sortArrayWithProperty(SortOrder.Ascending, newAvailableValues, this.props.SortMember),
         this.setState({
             UiSelectedSelectedValues: [],
             SelectedValues: newSelectedValues,
@@ -448,7 +450,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             this.draggedElement = null
             // Update state 
             // first reorder available??
-            newAvailableValues = newAvailableValues.sort();
+            newAvailableValues = Helper.sortArrayWithProperty(SortOrder.Ascending, newAvailableValues, this.props.SortMember),
 
             this.setState({
                 SelectedValues: newSelectedArray,

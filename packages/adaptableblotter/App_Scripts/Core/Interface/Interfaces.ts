@@ -33,3 +33,8 @@ export interface IVendorGridInfo{
     GroupState: any
     ColumnState: any
 }
+
+export interface IMasterChildren{
+    Master: any;
+    Children: any[]
+}

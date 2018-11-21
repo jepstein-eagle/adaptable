@@ -17,12 +17,12 @@ export module Helper {
     }
 
     export function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[] {
-        let newValues = [].concat(values)
-        let direction = 1
-        if (sortOrder == SortOrder.Descending) {
-            direction = -1
-        }
         if (sortProperty) {
+            let newValues = [].concat(values)
+            let direction = 1
+            if (sortOrder == SortOrder.Descending) {
+                direction = -1
+            }
             return newValues.sort((a, b) => {
                 let aSortProperty = a[sortProperty]
                 let bSortProperty = b[sortProperty]
@@ -34,7 +34,7 @@ export module Helper {
             });
         }
         else {
-            return newValues.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
+            return sortArray(values, sortOrder)
         }
     }
     export function sortArray(values: any[], sortOrder: SortOrder = SortOrder.Ascending): any[] {
@@ -78,13 +78,13 @@ export module Helper {
             var i;
             for (i = 0; i < infoArray.length; ++i) {
                 item = infoArray[i];
-                  if (separator == ",") {
+                if (separator == ",") {
                     if (item != null && item != undefined) {
                         if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
                             item = '"' + item.replace(/"/g, '""') + '"';
                         }
                         // bit of a hack but we have a user where they have "+2502+S" as a value which Excel then thinks is a formula
-                        if (item.indexOf('+')==0) { 
+                        if (item.indexOf('+') == 0) {
                             item = "'" + item + "'";
                         }
                     }
