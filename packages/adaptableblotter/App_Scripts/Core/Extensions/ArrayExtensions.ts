@@ -2,6 +2,9 @@
 export module ArrayExtensions {
 
     export function ContainsItem(array: any[], itemToCheck: any): boolean {
+      if(array==null){
+          return false;
+      }
         return array.indexOf(itemToCheck) > -1;
     }
 

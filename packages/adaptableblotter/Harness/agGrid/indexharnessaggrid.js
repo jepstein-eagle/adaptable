@@ -559,7 +559,7 @@ let categoryJson = {
   "UserInterface": {
     "ColumnCategories": [
       {
-        "Category": "Price",
+        "Category": "Pricing",
         "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional"]
       },
       {

@@ -69,7 +69,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         })
 
         let header = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
-            SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
+            SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)} DisableSort={false}></ListBoxFilterSortComponent>
 
         return <div className={cssClassName}>
             {header}

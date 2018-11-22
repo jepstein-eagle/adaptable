@@ -20,26 +20,21 @@ interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPo
 
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
     render() {
-       alert("I order this again")
         let cssClassName: string = this.props.cssClassName + "__columnchooser";
         let availableValues: any[]
         let selectedValues: any[]
-       let isMasterChild = ArrayExtensions.IsNotEmpty(this.props.ColumnCategories);
-         if (isMasterChild) {
-            let test: IMasterChildren[] = this.props.ColumnCategories.map(cc => {
+        let masterChildren: IMasterChildren[]
+         if (ArrayExtensions.IsNotEmpty(this.props.ColumnCategories)) {
+            masterChildren = this.props.ColumnCategories.map(cc => {
                 return {
                     Master: cc.Category,
                     Children: cc.ColumnIds.map(ci => ColumnHelper.getFriendlyNameFromColumnId(ci, this.props.Columns))
                 }
             })
-            console.log(test);
-
-            availableValues = this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
-            selectedValues = this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))
-        } else {
-            availableValues = this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
-            selectedValues = this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))
+            console.log(masterChildren);
         }
+        availableValues = this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
+        selectedValues = this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))
 
         let infoBody: any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.", <br />, <br />,
             "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.", <br />, <br />,
@@ -52,6 +47,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
                     SelectedValues={selectedValues}
                     HeaderAvailable="Hidden Columns"
                     HeaderSelected="Visible Columns"
+                    MasterChildren={masterChildren}
                     onChange={(SelectedValues) => this.ColumnListChange(SelectedValues)}>
                 </DualListBoxEditor>
             </PanelWithImage>

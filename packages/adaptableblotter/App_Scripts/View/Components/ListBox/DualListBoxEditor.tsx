@@ -7,6 +7,15 @@ import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { IMasterChildren } from "../../../Core/Interface/Interfaces";
+import { ButtonMinimise } from "../Buttons/ButtonMinimise";
+import { ButtonMaximise } from "../Buttons/ButtonMaximise";
+
+export interface IMasterValue {
+    value: string;
+    isOpen: boolean;
+    isAvailable: boolean
+}
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>
@@ -19,7 +28,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     ValueMember?: string
     SortMember?: string
     ReducedDisplay?: boolean
-    //  UseGroups?: boolean
+    MasterChildren?: IMasterChildren[]
     cssClassName: string
 }
 
@@ -31,6 +40,7 @@ export interface DualListBoxEditorState extends React.ClassAttributes<DualListBo
     FilterValue: string
     SortOrder: SortOrder
     AllValues: Array<any>
+    MasterValues: Array<IMasterValue>
 }
 
 export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, DualListBoxEditorState> {
@@ -54,14 +64,16 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 }
             }
         })
+
         this.state = {
             SelectedValues: this.props.SelectedValues,
-            AvailableValues: Helper.sortArrayWithProperty(SortOrder.Ascending, availableValues, this.props.SortMember),
+            AvailableValues: this.createAvailableValuesList(availableValues, SortOrder.Ascending, this.props.SortMember),
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
             FilterValue: "",
             SortOrder: SortOrder.Ascending,
-            AllValues: this.props.SelectedValues.concat(this.props.AvailableValues)
+            AllValues: this.props.SelectedValues.concat(this.props.AvailableValues),
+            MasterValues: this.buildMasterValues(this.props.MasterChildren)
         };
     }
     componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
@@ -103,17 +115,20 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
         this.setState({
             SelectedValues: nextProps.SelectedValues,
-            AvailableValues: Helper.sortArrayWithProperty(this.state.SortOrder, availableValues, nextProps.SortMember),
+            AvailableValues: this.createAvailableValuesList(availableValues, this.state.SortOrder, nextProps.SortMember),
             UiSelectedAvailableValues: uiAvailableSelected,
             UiSelectedSelectedValues: uiSelectedSelected,
             FilterValue: this.state.FilterValue,
-            SortOrder: this.state.SortOrder
+            SortOrder: this.state.SortOrder,
+            MasterValues: this.buildMasterValues(nextProps.MasterChildren)
         });
     }
     render() {
         let cssClassName: string = this.props.cssClassName + StyleConstants.DOUBLE_LIST_BOX;
         let setRefFirstSelected = true
-        let itemsElements = this.state.SelectedValues.map(x => {
+
+        // build selected elements
+        let selectedElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
             if (isActive && setRefFirstSelected) {
                 setRefFirstSelected = false
@@ -137,26 +152,66 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
         })
 
-        let columnValuesElements = this.state.AvailableValues.map(x => {
+        // build available elements - might have master/children
+        let availableElements = this.state.AvailableValues.map(x => {
             let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
             let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
-            if (this.state.FilterValue != "" && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
+            let masterValue: IMasterValue = this.state.MasterValues.find(mv => mv.value == x)
+            let isMasterElement = masterValue != null;
+            let bsItemStyle = (isMasterElement) ? StyleConstants.DEFAULT_BSSTYLE : StyleConstants.DEFAULT_BSSTYLE
+
+            let buttonMinimise = <ButtonMinimise
+                style={{ marginLeft: "0px" }}
+                bsStyle={bsItemStyle}
+                onClick={() => this.onMaximiseMaster(x)}
+                cssClassName={cssClassName}
+                size={"xs"}
+                hideToolTip={true}
+                DisplayMode="Glyph"
+            />
+            let buttonMaximise = <ButtonMaximise
+                style={{ marginLeft: "0px" }}
+                bsStyle={bsItemStyle}
+                onClick={() => this.onMinimiseMaster(x)}
+                cssClassName={cssClassName}
+                size={"xs"}
+                overrideTooltip="Collapse"
+                DisplayMode="Glyph"
+            />
+
+
+            if (this.isValueFilteredOut(display)) {
                 return null;
             }
             else {
-                return <ListGroupItem active={isActive} className="Available" style={listGroupItemStyle}
-                    draggable={true}
+                return <ListGroupItem
+                    className="Available"
+                    style={listGroupItemStyle}
+                    active={isActive}
+                    //  bsStyle={bsItemStyle}
+                    draggable={!isMasterElement}
                     onClick={() => this.onClickAvailableValuesItem(x)}
                     key={value}
                     onDragStart={(event) => this.DragAvailableStart(event, x)}
                     onDragEnd={() => this.DragAvailableEnd()}
-                    value={value}>{display}</ListGroupItem>
+                    value={value}>
+                    {isMasterElement ?
+                        masterValue.isOpen ?
+                            <span>{buttonMaximise}{' '}<b>{display}</b></span> :
+                            <span>{buttonMinimise}{' '}<b>{display}</b></span> :
+                        display
+                    }
+                </ListGroupItem>
             }
         })
 
-        let headerFirstListBox = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
-            SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
+        let headerFirstListBox = <ListBoxFilterSortComponent
+            FilterValue={this.state.FilterValue}
+            sortColumnValues={() => this.sortColumnValues()}
+            SortOrder={this.state.SortOrder}
+            handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}
+            DisableSort={ArrayExtensions.IsNotEmpty(this.state.MasterValues)} />
 
         let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
         let listGroupSelectedStyle: any = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge
@@ -170,21 +225,17 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                             onDragEnter={(event) => this.DragEnterAvailable(event)}
                             onDragOver={(event) => this.DragOverAvailable(event)}
                             onDragLeave={(event) => this.DragLeaveAvailable(event)}>
-                            {columnValuesElements}
+                            {availableElements}
                         </ListGroup>
                     </div>
                 </Panel>
             </Col>
             <Col xs={2} style={colButtonStyle} >
                 <ButtonGroup  >
-                    <ButtonDirection cssClassName={cssClassName} overrideText={"Add All"} DisplayMode={"Text+Glyph"} glyph={"fast-forward"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={this.state.AvailableValues.length == 0}
-                        onClick={() => this.AddAll()} />
-                    <ButtonDirection cssClassName={cssClassName} overrideText={"Add"} DisplayMode={"Text+Glyph"} glyph={"step-forward"} style={{ width: "110px", marginBottom: "30px" }} overrideDisableButton={this.state.UiSelectedAvailableValues.length == 0}
-                        onClick={() => this.Add()} />
-                    <ButtonDirection cssClassName={cssClassName} overrideText={"Remove"} style={{ width: "110px", marginBottom: "10px" }} glyph="step-backward" DisplayMode={"Glyph+Text"} overrideDisableButton={this.state.UiSelectedSelectedValues.length == 0}
-                        onClick={() => this.Remove()} />
-                    <ButtonDirection cssClassName={cssClassName} overrideText={"Remove All"} style={{ width: "110px", marginBottom: "10px" }} DisplayMode={"Glyph+Text"} glyph="fast-backward" overrideDisableButton={this.state.SelectedValues.length == 0}
-                        onClick={() => this.RemoveAll()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Add All"} DisplayMode={"Text+Glyph"} glyph={"fast-forward"} style={{ width: "110px", marginBottom: "10px" }} overrideDisableButton={this.state.AvailableValues.length == 0} onClick={() => this.AddAll()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Add"} DisplayMode={"Text+Glyph"} glyph={"step-forward"} style={{ width: "110px", marginBottom: "30px" }} overrideDisableButton={this.state.UiSelectedAvailableValues.length == 0} onClick={() => this.Add()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Remove"} style={{ width: "110px", marginBottom: "10px" }} glyph="step-backward" DisplayMode={"Glyph+Text"} overrideDisableButton={this.state.UiSelectedSelectedValues.length == 0} onClick={() => this.Remove()} />
+                    <ButtonDirection cssClassName={cssClassName} overrideText={"Remove All"} style={{ width: "110px", marginBottom: "10px" }} DisplayMode={"Glyph+Text"} glyph="fast-backward" overrideDisableButton={this.state.SelectedValues.length == 0} onClick={() => this.RemoveAll()} />
                 </ButtonGroup>
             </Col>
             <Col xs={4} >
@@ -194,7 +245,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                             onDragEnter={(event) => this.DragEnterSelected(event)}
                             onDragOver={(event) => this.DragOverSelected(event)}
                             onDragLeave={(event) => this.DragLeaveSelected(event)}>
-                            {itemsElements}
+                            {selectedElements}
                         </ListGroup>
                     </div>
                 </Panel>
@@ -213,6 +264,74 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             </Col>
         </div>
         );
+    }
+
+    buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[] {
+        if (ArrayExtensions.IsNullOrEmpty(masterChildren)) {
+            return [];
+        }
+
+        return this.props.MasterChildren.map(mc => {
+            return { value: mc.Master, isAvailable: false, isOpen: true }
+        });
+
+    }
+
+    onMinimiseMaster(x: any): void {
+        let masterValues = [].concat(this.state.MasterValues)
+        let currentMasterValue: IMasterValue = masterValues.find(mv => mv.value == x)
+        currentMasterValue.isOpen = true;
+        console.log(masterValues)
+        this.setState({
+            MasterValues: masterValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
+    }
+
+    onMaximiseMaster(x: any): void {
+        let masterValues = [].concat(this.state.MasterValues)
+        let currentMasterValue: IMasterValue = masterValues.find(mv => mv.value == x)
+        currentMasterValue.isOpen = false;
+        console.log(masterValues)
+        this.setState({
+            MasterValues: masterValues
+        } as DualListBoxEditorState, () => this.raiseOnChange());
+    }
+
+    createAvailableValuesList(availableValues: any[], sortOrder: SortOrder, sortMember: string): any[] {
+        if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
+            return Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+        }
+
+        // doing the master slave
+        // let availableMasters: any[] = []
+        let returnValues: any[] = []
+        this.props.MasterChildren.forEach(mc => {
+            let availableChildren: any[] = []
+
+            //  console.log(availableValues)
+            //  returnValues.push(mc.Master);
+            mc.Children.forEach(c => {
+                if (ArrayExtensions.ContainsItem(availableValues, c)) {
+                    availableChildren.push(c);
+                }
+            })
+            // only add the item if there are available children
+            if (ArrayExtensions.IsNotEmpty(availableChildren)) {
+
+                returnValues.push(mc.Master);
+                // only add the children if the Master is open
+                let masterValue: IMasterValue = this.state.MasterValues.find(mv => mv.value == mc.Master)
+                if (masterValue.isOpen) {
+                    availableChildren.forEach(c => { returnValues.push(c) })
+                }
+            }
+        })
+        return returnValues;
+    }
+
+    isValueFilteredOut(item: string): boolean {
+        return (this.state.FilterValue != "" && item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0)
+
     }
 
     canGoTopOrUp(): boolean {
@@ -293,6 +412,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
 
         })
+        newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
+
         this.setState({
             UiSelectedAvailableValues: [],
             SelectedValues: newSelectedValues,
@@ -307,11 +428,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
                 newSelectedValues.push(x[this.props.ValueMember])
             }
             else {
-                newSelectedValues.push(x)
+                if (ArrayExtensions.NotContainsItem(this.state.MasterValues, x)) {
+                    newSelectedValues.push(x)
+                }
             }
         })
 
         let newAvailableValues: string[] = [];
+
         this.setState({
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
@@ -323,8 +447,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     RemoveAll() {
         let newSelectedValues: string[] = [];
         let newAvailableValues = [].concat(this.state.AllValues);
-         newAvailableValues = Helper.sortArrayWithProperty(SortOrder.Ascending, newAvailableValues, this.props.SortMember),
-
+        newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
         this.setState({
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
@@ -352,13 +475,14 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             }
 
         })
-        newAvailableValues = Helper.sortArrayWithProperty(SortOrder.Ascending, newAvailableValues, this.props.SortMember),
+        newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
         this.setState({
             UiSelectedSelectedValues: [],
             SelectedValues: newSelectedValues,
             AvailableValues: newAvailableValues
         } as DualListBoxEditorState, () => this.raiseOnChange());
     }
+
     private draggedHTMLElement: HTMLElement;
     private draggedElement: any;
     private overHTMLElement: HTMLElement;
@@ -449,8 +573,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             this.draggedHTMLElement = null;
             this.draggedElement = null
             // Update state 
-            // first reorder available??
-            newAvailableValues = Helper.sortArrayWithProperty(SortOrder.Ascending, newAvailableValues, this.props.SortMember),
+            newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
 
             this.setState({
                 SelectedValues: newSelectedArray,
