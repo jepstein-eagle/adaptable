@@ -30,10 +30,7 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
         let cssClassName: string = this.props.cssClassName + "-summary"
 
         let keyValuePairs: KeyValuePair[] = [
-            {
-                Key: "Scope", Value: this.props.Data.ConditionalStyleScope == ConditionalStyleScope.Row ? "Row" :
-                    ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
-            },
+            { Key: "Scope", Value: this.getScope() },
             { Key: "Style", Value: <StyleVisualItem Style={this.props.Data.Style} /> },
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }
         ]
@@ -42,6 +39,18 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
         return <div className={cssClassName}>
             {summaryPage}
         </div>
+    }
+
+    private getScope(): string {
+        switch (this.props.Data.ConditionalStyleScope) {
+            case ConditionalStyleScope.Row:
+                return "Row";
+            case ConditionalStyleScope.Column:
+                return ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns);
+            case ConditionalStyleScope.ColumnCategory:
+                return "Category: " + this.props.Data.ColumnCategoryId
+
+        }
     }
 
     public canNext(): boolean { return true; }

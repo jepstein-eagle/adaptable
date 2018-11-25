@@ -20,7 +20,7 @@ function InitTradeBlotter() {
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-    floatingFilter: true,
+  //  floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
     columnTypes: { // not required but helpful for column data type identification
@@ -219,7 +219,7 @@ function getTradeSchema() {
     columnGroupShow: 'closed',
     cellClass: 'number-cell'
   });
-  /*
+
   schema.push({
     headerName: "Bbg Ask",
     field: "bloombergAsk",
@@ -244,6 +244,7 @@ function getTradeSchema() {
     editable: true,
     filter: 'text'
   });
+ 
   schema.push({
     headerName: "Trade Date",
     field: "tradeDate",
@@ -270,7 +271,8 @@ function getTradeSchema() {
     field: "percentChange",
     filter: 'text'
   });
-  */
+
+  
   schema.push({
     headerName: "Last Updated By",
     field: "lastUpdatedBy",
@@ -559,20 +561,22 @@ let categoryJson = {
   "UserInterface": {
     "ColumnCategories": [
       {
-        "Category": "Pricing",
-        "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional"]
+        "CategoryId": "Pricing",
+        "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
       },
       {
-        "Category": "Strings",
-        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status"]
+        "CategoryId": "Strings",
+        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status","Moodys", "sandpRating",]
       },
       {
-        "Category": "Others",
+        "CategoryId": "Others",
         "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
       }
     ]
   }
 }
+
+
 
 let layoutdemojson = {
   "Layout": {

@@ -78,7 +78,7 @@ export module ColumnHelper {
             if (StringExtensions.IsNullOrEmpty(returnValue)) {
                 let column: string = c.ColumnIds.find(col => col == columnId);
                 if (column) {
-                    returnValue = c.Category;
+                    returnValue = c.CategoryId;
                 }
             }
         })

@@ -27,11 +27,10 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
          if (ArrayExtensions.IsNotEmpty(this.props.ColumnCategories)) {
             masterChildren = this.props.ColumnCategories.map(cc => {
                 return {
-                    Master: cc.Category,
+                    Master: cc.CategoryId,
                     Children: cc.ColumnIds.map(ci => ColumnHelper.getFriendlyNameFromColumnId(ci, this.props.Columns))
                 }
             })
-            console.log(masterChildren);
         }
         availableValues = this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
         selectedValues = this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))

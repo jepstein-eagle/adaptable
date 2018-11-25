@@ -8,6 +8,8 @@ import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { StyleHelper } from '../Core/Helpers/StyleHelper';
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import { IColumnCategory } from '../Core/Interface/Interfaces';
+import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -23,6 +25,9 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
             if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
                 if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
                     listOfColumns.push(...this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(c => c.ColumnId))
+                } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
+                    let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories.find(cc => cc.CategoryId == x.ColumnCategoryId)
+                    listOfColumns.push(...columnCategory.ColumnIds);
                 }
                 else if (x.ConditionalStyleScope == ConditionalStyleScope.Column) {
                     listOfColumns.push(x.ColumnId)
@@ -61,8 +66,14 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
                         cellClassRules[styleName] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
-                    }
-                    else if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                    } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
+                        let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories.find(cc => cc.CategoryId == cs.ColumnCategoryId)
+                        if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
+                            cellClassRules[styleName] = function (params: any) {
+                                return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
+                            }
+                        }
+                    } else if (cs.ConditionalStyleScope == ConditionalStyleScope.Row) {
                         cellClassRules[styleName] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }

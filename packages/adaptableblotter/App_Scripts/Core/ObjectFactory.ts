@@ -158,7 +158,8 @@ export module ObjectFactory {
 
     export function CreateEmptyConditionalStyle(): IConditionalStyle {
         return {
-            ColumnId: "",
+            ColumnId: null,
+            ColumnCategoryId: null,
             Style: CreateEmptyStyle(),
             ConditionalStyleScope: ConditionalStyleScope.Row,
             Expression: ExpressionHelper.CreateEmptyExpression()

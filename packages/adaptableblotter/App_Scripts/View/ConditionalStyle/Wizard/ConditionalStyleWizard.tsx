@@ -7,10 +7,12 @@ import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWi
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { IColumnCategory } from "../../../Core/Interface/Interfaces";
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
     ColorPalette: string[],
     StyleClassNames: string[]
+    ColumnCategories: IColumnCategory[]
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -24,7 +26,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Steps={[
-                    <ConditionalStyleScopeWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <ConditionalStyleScopeWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} ColumnCategories={this.props.ColumnCategories} />,
                     <ConditionalStyleStyleWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
                     <ConditionalStyleExpressionWizard
                         cssClassName={this.props.cssClassName} StepName={stepNames[2]}

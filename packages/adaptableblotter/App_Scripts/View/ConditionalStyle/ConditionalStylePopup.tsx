@@ -24,10 +24,12 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IColumnCategory } from "../../Core/Interface/Interfaces";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
     StyleClassNames: string[]
+    ColumnCategories: IColumnCategory[]
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -55,7 +57,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
     render() {
         let cssClassName: string = this.props.cssClassName + "__conditionalstyle";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
-    
+
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
             "Styles include selection of fore and back colours, and font properties."]
 
@@ -83,9 +85,9 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Conditional Style"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyConstants.ConditionalStyleStrategyName} button={newButton} bsStyle={StyleConstants.PRIMARY_BSSTYLE} cssClassName={cssClassName} glyphicon={StrategyConstants.ConditionalStyleGlyph} infoBody={infoBody}>
@@ -105,6 +107,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
+                        ColumnCategories={this.props.ColumnCategories}
                         StyleClassNames={this.props.StyleClassNames}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -142,16 +145,21 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
 
     canFinishWizard() {
         let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle
-        return (conditionalStyle.ConditionalStyleScope== ConditionalStyleScope.Row ||  StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
-            ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
-            UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
+        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)) {
+            return false;
+        }
+        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)) {
+            return false;
+        }
+        return ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) && UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        StyleClassNames: state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames,
+        ColumnCategories: state.UserInterface.ColumnCategories
     };
 }
 

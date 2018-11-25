@@ -8,6 +8,7 @@ import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { IMasterChildren } from "../../../Core/Interface/Interfaces";
+import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 
 export interface IMasterValue {
     value: string;
@@ -266,8 +267,6 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
     }
 
-
-
     onMasterValueCheckChanged(event: React.FormEvent<any>, item: any): void {
         let e = event.target as HTMLInputElement;
 
@@ -286,16 +285,26 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         this.setState({
             MasterValues: masterValues, UiSelectedAvailableValues: newArray
         } as DualListBoxEditorState);
-
     }
 
     createAvailableValuesList(availableValues: any[], sortOrder: SortOrder, sortMember: string): any[] {
+        // if there are no master / children then sort the values
         if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
             return Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
         }
 
-        // doing the master slave
+        // we do have master / children
         let returnValues: any[] = []
+
+        // first add any orphans = that are not masters or are not children
+        availableValues.forEach(av => {
+            let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == av || ArrayExtensions.ContainsItem(mc.Children, av));
+            if (!masterChildren) {
+                returnValues.push(av);
+            }
+        })
+
+        // now add all the Master Children
         this.props.MasterChildren.forEach(mc => {
             let availableChildren: any[] = []
 
@@ -306,31 +315,66 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             })
             // only add the item if there are available children
             if (ArrayExtensions.IsNotEmpty(availableChildren)) {
-
                 returnValues.push(mc.Master);
                 availableChildren.forEach(c => {
                     returnValues.push(c)
                 })
-
             }
         })
         return returnValues;
     }
 
     isValueFilteredOut(item: string): boolean {
-        // remove a value if master child and master is closed
-        if (ArrayExtensions.IsNotEmpty(this.state.MasterValues)) {
+        // if not master child then simply filter on the value
+        if (ArrayExtensions.IsNullOrEmpty(this.state.MasterValues)) {
+            return (this.state.FilterValue != "" && item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0)
+        }
+
+        let masterNames = this.state.MasterValues.map(mv => { return mv.value })
+let isFilterMode: boolean = StringExtensions.IsNotEmpty(this.state.FilterValue);
+        
+        if (ArrayExtensions.ContainsItem(masterNames, item)) {
+            let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == item);
+            let filterMaster: boolean = true;
+            if (masterChildren) {
+                // so we are dealing with a Master
+
+                masterChildren.Children.forEach(c => {
+                    if (ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
+                        // we need the child to be present to show the master
+                        if (isFilterMode) {
+                            // if there is a filter then the child needs to pass that in order to display the Master
+                            if (c.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) >= 0) {
+                                filterMaster = false;
+                            }
+                        } else {
+                            // if no filter, then always show the Master
+                            filterMaster = false;
+                        }
+                    }
+                })
+            }
+            return filterMaster;
+        } else {
+            // its a child - so first check that the Master is open
             let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => ArrayExtensions.ContainsItem(mc.Children, item));
             if (masterChildren) {
                 let masterValue: IMasterValue = this.state.MasterValues.find(mv => mv.value == masterChildren.Master);
-                if (masterValue && !masterValue.isOpen) {
+                if (!masterValue.isOpen) { // no open Master so always filter
                     return true;
+                } else {
+                    // if there is a filter then check on that, otherwise return false
+                    if (isFilterMode) {
+                        return (item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0)
+                    } else {
+                        return false;
+                    }
                 }
+            } else {
+                // for orphans filter as normal
+                return (item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0)
             }
         }
-
-        return (this.state.FilterValue != "" && item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0)
-
     }
 
     canGoTopOrUp(): boolean {
@@ -829,7 +873,7 @@ var listGroupStyleSelectedSmall: React.CSSProperties = {
 
 var listGroupItemStyle: React.CSSProperties = {
     'fontSize': 'small',
-    'padding': '8px',
+    'padding': '5px',
 };
 
 var colButtonStyle = {

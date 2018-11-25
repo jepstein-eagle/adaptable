@@ -44,6 +44,7 @@ export class StyleService {
             this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
             this.clearCSSRules()
 
+            // Format Column
             this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(formatColumn), this.blotter)
                 this.addCSSRule("." + styleName,
@@ -52,6 +53,10 @@ export class StyleService {
 
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Row).forEach((element, index) => {
+                let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
+                this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
+            });
+            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory).forEach((element, index) => {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
