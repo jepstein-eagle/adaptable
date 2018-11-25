@@ -4,11 +4,10 @@ import { ConditionalStyleScope } from '../Core/Enums';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import * as StyleConstants from '../Core/Constants/StyleConstants'
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { StyleHelper } from '../Core/Helpers/StyleHelper';
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import { IColumnCategory } from '../Core/Interface/Interfaces';
+import {  ILinkedColumn } from '../Core/Interface/Interfaces';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
@@ -26,8 +25,8 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
                 if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
                     listOfColumns.push(...this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(c => c.ColumnId))
                 } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                    let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories.find(cc => cc.CategoryId == x.ColumnCategoryId)
-                    listOfColumns.push(...columnCategory.ColumnIds);
+                    let linkedColumn: ILinkedColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().LinkedColumn.LinkedColumns.find(lc => lc.LinkedColumnId == x.ColumnCategoryId)
+                    listOfColumns.push(...linkedColumn.ColumnIds);
                 }
                 else if (x.ConditionalStyleScope == ConditionalStyleScope.Column) {
                     listOfColumns.push(x.ColumnId)
@@ -67,8 +66,8 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories.find(cc => cc.CategoryId == cs.ColumnCategoryId)
-                        if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
+                        let linkedColumn: ILinkedColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().LinkedColumn.LinkedColumns.find(lc => lc.LinkedColumnId == cs.ColumnCategoryId)
+                        if (ArrayExtensions.ContainsItem(linkedColumn.ColumnIds, column.ColumnId)) {
                             cellClassRules[styleName] = function (params: any) {
                                 return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                             }

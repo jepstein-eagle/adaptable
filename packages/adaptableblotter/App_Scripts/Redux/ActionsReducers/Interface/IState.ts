@@ -3,7 +3,7 @@ import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
+import { IEntitlement, IPermittedColumnValues, ISystemStatus, ILinkedColumn } from '../../../Core/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentCellRenderer } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
@@ -82,7 +82,6 @@ export interface UserInterfaceState extends IDesignTimeState {
     ColorPalette: string[];
     StyleClassNames: string[];
     PermittedColumnValues: IPermittedColumnValues[];
-    ColumnCategories: IColumnCategory[];
 }
 
 export interface SystemFilterState extends IDesignTimeState {
@@ -193,6 +192,10 @@ export interface FreeTextColumnState extends IUserState {
 export interface LayoutState extends IUserState {
     CurrentLayout: string;
     Layouts: ILayout[];
+}
+
+export interface LinkedColumnState extends IUserState {
+    LinkedColumns: ILinkedColumn[];
 }
 
 export interface PlusMinusState extends IUserState {

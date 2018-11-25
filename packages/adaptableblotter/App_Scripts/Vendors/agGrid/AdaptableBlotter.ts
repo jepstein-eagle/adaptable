@@ -104,6 +104,7 @@ import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { CellRendererStrategy } from '../../Strategy/CellRendererStrategy';
+import { LinkedColumnStrategy } from '../../Strategy/LinkedColumnStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -176,6 +177,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyConstants.LinkedColumnStrategyId, new LinkedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
@@ -361,9 +363,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             ReadOnly: this.isColumnReadonly(colId),
             Sortable: this.isColumnSortable(colId),
             Filterable: this.isColumnFilterable(colId),
-            Category: ColumnHelper.getColumnCategoryFromCategories(colId, this.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories)
-
-        }
+         }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
     }

@@ -34,6 +34,7 @@ export interface AdaptableBlotterState {
     FormatColumn: AdaptableBlotterStates.FormatColumnState;
     FreeTextColumn: AdaptableBlotterStates.FreeTextColumnState;
     Layout: AdaptableBlotterStates.LayoutState;
+    LinkedColumn: AdaptableBlotterStates.LinkedColumnState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
     SelectedCells: AdaptableBlotterStates.SelectedCellsState;

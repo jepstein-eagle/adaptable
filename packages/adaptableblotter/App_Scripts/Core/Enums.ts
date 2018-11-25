@@ -199,6 +199,7 @@ export enum StateChangedTrigger {
     FormatColumn = "FormatColumn",
     FreeTextColumn = "FreeTextColumn",
     Layout = "Layout",
+    LinkedColumn = "LinkedColumn",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
     SelectedCells = "SelectedCells",

@@ -20,14 +20,13 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IConditionalStyle, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { ILinkedColumn } from "../../Core/Interface/Interfaces";
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyle[]
     ColorPalette: string[]
-    ColumnCategories: IColumnCategory[]
+   LinkedColumns: ILinkedColumn[]
     StyleClassNames: string[]
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
 
@@ -91,7 +90,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     SystemFilters={this.props.SystemFilters}
                     ColorPalette={this.props.ColorPalette}
                     StyleClassNames={this.props.StyleClassNames}
-                    ColumnCategories={this.props.ColumnCategories}
+                    LinkedColumns={this.props.LinkedColumns}
                     Blotter={this.props.Blotter}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
@@ -139,7 +138,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         Entitlements: state.Entitlements.FunctionEntitlements,
         ColorPalette: state.UserInterface.ColorPalette,
         StyleClassNames: state.UserInterface.StyleClassNames,
-        ColumnCategories: state.UserInterface.ColumnCategories
+        LinkedColumns: state.LinkedColumn.LinkedColumns
     };
 }
 

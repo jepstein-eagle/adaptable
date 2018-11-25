@@ -8,12 +8,12 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IConditionalStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { IColumnCategory } from "../../../Core/Interface/Interfaces";
+import {  ILinkedColumn } from "../../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: Array<IColumn>
-    ColumnCategories: Array<IColumnCategory>
+    LinkedColumns: Array<ILinkedColumn>
 }
 
 export interface ConditionalStyleScopeWizardState {
@@ -37,8 +37,8 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-scope"
 
-        let optionCategories = this.props.ColumnCategories.map(cc => {
-            return <option value={cc.CategoryId} key={cc.CategoryId}>{cc.CategoryId}</option>
+        let optionCategories = this.props.LinkedColumns.map(cc => {
+            return <option value={cc.LinkedColumnId} key={cc.LinkedColumnId}>{cc.LinkedColumnId}</option>
         })
 
         return <div className={cssClassName}>
@@ -63,14 +63,14 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
                             SelectionMode={SelectionMode.Single} />
                     </Col>
                 }
-                {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
+                {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) &&
                     <Col xs={12} className="ab_large_margin">
                         <Radio className={cssClassName + "__radiobutton"} inline value="Column Category" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory} onChange={(e) => this.onScopeSelectChanged(e)}>Column Category</Radio>
                         {' '} {' '}
                         <AdaptablePopover cssClassName={cssClassName} headerText={"Conditional Style: Column Category"} bodyText={["Pick the category from the list below to apply the conditional style to all columns in the category."]} MessageType={MessageType.Info} />
                     </Col>
                 }
-                {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory &&
+                {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) && this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory &&
                     <Col xs={12} className="ab_large_margin">
                         <FormControl componentClass="select" placeholder="select" value={this.state.ColumnCategoryId} onChange={(x) => this.onColumnCategorySelectedChanged(x)} >
                             <option value="select" key="select">Select Category</option>

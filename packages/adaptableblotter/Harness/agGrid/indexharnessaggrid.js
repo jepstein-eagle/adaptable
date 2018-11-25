@@ -558,18 +558,18 @@ function currencyRendereragGrid(params) {
 }
 
 let categoryJson = {
-  "UserInterface": {
-    "ColumnCategories": [
+  "LinkedColumn": {
+    "LinkedColumns": [
       {
-        "CategoryId": "Pricing",
+        "LinkedColumnId": "Pricing",
         "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
       },
       {
-        "CategoryId": "Strings",
+        "LinkedColumnId": "Strings",
         "ColumnIds": ["country", "currency", "deskId", "counterparty", "status","Moodys", "sandpRating",]
       },
       {
-        "CategoryId": "Others",
+        "LinkedColumnId": "Others",
         "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
       }
     ]

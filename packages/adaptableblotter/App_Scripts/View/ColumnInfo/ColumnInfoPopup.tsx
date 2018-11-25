@@ -20,7 +20,7 @@ import { DataType, SelectionMode, AccessLevel } from '../../Core/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
+import { IEntitlement, ILinkedColumn } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
@@ -33,7 +33,7 @@ import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
     CalculatedColumns: Array<ICalculatedColumn>
     FunctionEntitlements: IEntitlement[]
-    ColumnCategories: IColumnCategory[]
+    LinkedColumns: ILinkedColumn[]
 }
 
 export interface ColumnInfoState {
@@ -68,7 +68,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let headerText = StrategyConstants.ColumnInfoStrategyName;
 
         let summaries: any[] = [];
-        if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories)) {
+        if (ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns)) {
             summaries.push(
 
                 <div key={StrategyConstants.ColumnChooserStrategyId} className={this.isStrategyReadOnly(StrategyConstants.ColumnChooserStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
@@ -245,7 +245,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        ColumnCategories: state.UserInterface.ColumnCategories,
+        LinkedColumns: state.LinkedColumn.LinkedColumns,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }

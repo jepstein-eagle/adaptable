@@ -2,8 +2,8 @@ import { IColumn } from '../Interface/IColumn';
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 import { DataType } from '../Enums';
-import { IColumnCategory } from '../Interface/Interfaces';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { ILinkedColumn } from '../Interface/Interfaces';
 
 export module ColumnHelper {
 
@@ -72,13 +72,13 @@ export module ColumnHelper {
         return columns.filter(c => c.DataType == DataType.Number)
     }
 
-    export function getColumnCategoryFromCategories(columnId: string, categories: IColumnCategory[]): string {
+    export function getLinkedColumnFromLinkedColumns(columnId: string, linkedColumns: ILinkedColumn[]): string {
         let returnValue: string = ""
-        categories.forEach(c => {
+        linkedColumns.forEach(c => {
             if (StringExtensions.IsNullOrEmpty(returnValue)) {
                 let column: string = c.ColumnIds.find(col => col == columnId);
                 if (column) {
-                    returnValue = c.CategoryId;
+                    returnValue = c.LinkedColumnId;
                 }
             }
         })

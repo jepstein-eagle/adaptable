@@ -18,8 +18,8 @@ export interface IPermittedColumnValues {
     PermittedValues: any[]
 }
 
-export interface IColumnCategory {
-    CategoryId: string;
+export interface ILinkedColumn {
+    LinkedColumnId: string;
     ColumnIds: string[]
 }
 

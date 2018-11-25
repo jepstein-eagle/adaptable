@@ -24,12 +24,12 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { ILinkedColumn } from "../../Core/Interface/Interfaces";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
     StyleClassNames: string[]
-    ColumnCategories: IColumnCategory[]
+    LinkedColumns: ILinkedColumn[]
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -107,7 +107,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
-                        ColumnCategories={this.props.ColumnCategories}
+                        LinkedColumns={this.props.LinkedColumns}
                         StyleClassNames={this.props.StyleClassNames}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -159,7 +159,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
         StyleClassNames: state.UserInterface.StyleClassNames,
-        ColumnCategories: state.UserInterface.ColumnCategories
+        LinkedColumns: state.LinkedColumn.LinkedColumns
     };
 }
 
