@@ -21,29 +21,24 @@ export interface LinkedColumnColumnsWizardState {
 export class LinkedColumnColumnsWizard extends React.Component<LinkedColumnColumnsWizardProps, LinkedColumnColumnsWizardState> implements AdaptableWizardStep {
     constructor(props: LinkedColumnColumnsWizardProps) {
         super(props)
+
+        let selectedFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.ColumnIds, this.props.Columns)
         let currentlyLinkedColumns: string[] = [];
         this.props.LinkedColumns.map(lk => {
             currentlyLinkedColumns.push(...lk.ColumnIds)
         })
-        console.log("currently linked: " + currentlyLinkedColumns)
-        let allColumns: string[] = this.props.Columns.map(c => c.ColumnId);
-        console.log("all " + allColumns)
 
-        //  let availableColumnsId: string[] =allColumns.filter(c => ArrayExtensions.ContainsItem(currentlyLinkedColumns, c));
-        //  console.log("availalbe id: " + availableColumnsId)
+        let allColumns: string[] = this.props.Columns.map(c => c.ColumnId);
         let availableColumns: string[] = []
         allColumns.forEach(c => {
             if (ArrayExtensions.NotContainsItem(currentlyLinkedColumns, c)) {
                 availableColumns.push(c);
             }
         })
-        console.log("avaible : " + availableColumns)
 
-        let availableFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(availableColumns, this.props.Columns)
-        console.log("friendly : " + availableFriendlyColumns)
-    
-        let selectedFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.ColumnIds, this.props.Columns)
-        console.log("friendly : " + selectedFriendlyColumns)
+
+        let availableFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(availableColumns, this.props.Columns);
+        selectedFriendlyColumns.forEach(sc => availableFriendlyColumns.push(sc))
 
         this.state = {
             AvailableColumns: availableFriendlyColumns,
@@ -70,8 +65,8 @@ export class LinkedColumnColumnsWizard extends React.Component<LinkedColumnColum
     }
 
     OnSelectedValuesChange(newValues: Array<string>) {
-     //   let selectedColumns: string[] = ColumnHelper.getFriendlyNamesFromColumnIds(newValues, this.props.Columns);
-     console.log("from method: " + newValues)
+        //   let selectedColumns: string[] = ColumnHelper.getFriendlyNamesFromColumnIds(newValues, this.props.Columns);
+        console.log("from method: " + newValues)
         this.setState({ SelectedColumns: newValues } as LinkedColumnColumnsWizardState, () => this.props.UpdateGoBackState())
     }
 

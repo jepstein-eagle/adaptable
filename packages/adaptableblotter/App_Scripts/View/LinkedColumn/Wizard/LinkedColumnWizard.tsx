@@ -22,9 +22,9 @@ export class LinkedColumnWizard extends React.Component<LinkedColumnWizardProps,
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Steps={[
-                    <LinkedColumnSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} LinkedColumns={this.props.LinkedColumns} />,
-                    <LinkedColumnColumnsWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} LinkedColumns={this.props.LinkedColumns} Columns={this.props.Columns} />,
-                    <LinkedColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[4]} Columns={this.props.Columns} />
+                    <LinkedColumnSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} LinkedColumns={this.props.LinkedColumns} />,
+                    <LinkedColumnColumnsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} LinkedColumns={this.props.LinkedColumns} Columns={this.props.Columns} />,
+                    <LinkedColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
 
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

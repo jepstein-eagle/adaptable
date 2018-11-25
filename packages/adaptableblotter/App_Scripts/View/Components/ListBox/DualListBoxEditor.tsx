@@ -131,20 +131,24 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
             if (isActive && setRefFirstSelected) {
                 setRefFirstSelected = false
-                return <ListGroupItem key={x} className="Selected"
+                return <ListGroupItem key={x} 
+                className="Selected"
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
-                    active={isActive}
+                    style={listGroupItemStyle}
+                     active={isActive}
                     ref="FirstSelectedSelected"
                     onDragStart={(event) => this.DragSelectedStart(event, x)}
                     onDragEnd={() => this.DragSelectedEnd()}
                     value={x}>{x}</ListGroupItem>
             }
             else {
-                return <ListGroupItem key={x} className="Selected" style={listGroupItemStyle}
+                return <ListGroupItem key={x} 
+                className="Selected" 
+                style={listGroupItemStyle}
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
-                    active={isActive}
+                    bsSize={'small'} active={isActive}
                     onDragStart={(event) => this.DragSelectedStart(event, x)}
                     onDragEnd={() => this.DragSelectedEnd()}
                     value={x}>{x}</ListGroupItem>

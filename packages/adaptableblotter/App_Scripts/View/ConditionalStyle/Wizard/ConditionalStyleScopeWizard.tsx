@@ -65,15 +65,15 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
                 }
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) &&
                     <Col xs={12} className="ab_large_margin">
-                        <Radio className={cssClassName + "__radiobutton"} inline value="LinkedColumn" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn} onChange={(e) => this.onScopeSelectChanged(e)}>Linked Column</Radio>
+                        <Radio className={cssClassName + "__radiobutton"} inline value="LinkedColumn" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn} onChange={(e) => this.onScopeSelectChanged(e)}>Linked Columns</Radio>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Conditional Style: Linked Column"} bodyText={["Pick the linked column from the list below to apply the conditional style to all linked columns."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Conditional Style: Linked Columns"} bodyText={["Pick the linked column from the list below to apply the conditional style to all linked columns."]} MessageType={MessageType.Info} />
                     </Col>
                 }
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) && this.state.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn &&
                     <Col xs={12} className="ab_large_margin">
                         <FormControl componentClass="select" placeholder="select" value={this.state.LinkedColumnId} onChange={(x) => this.onLinkedColumnSelectedChanged(x)} >
-                            <option value="select" key="select">Select Linked Column</option>
+                            <option value="select" key="select">Select Linked Columns</option>
                             {optionLinkedColumns}
                         </FormControl>
                     </Col>

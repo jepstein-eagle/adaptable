@@ -54,11 +54,11 @@ class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps,
 
 
 
-        let infoBody: any[] = ["Create LinkedColumns - groups of column order, visibility and sorts.", <br />, <br />,
-            "You can create as many LinkedColumns as you wish."]
+        let infoBody: any[] = ["Linked Columns allow you to group different columns, primarily for use in Conditional Styles.", <br />, <br />,
+            "They are also used in Column Chooser to make it easier to find and manage large column sets."]
 
         let colItems: IColItem[] = [
-            { Content: "Id", Size: 2 },
+            { Content: "Link Name", Size: 2 },
             { Content: "Columns", Size: 7 },
             { Content: "", Size: 3 },
         ]

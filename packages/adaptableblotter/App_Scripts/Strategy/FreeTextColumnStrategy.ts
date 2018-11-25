@@ -20,19 +20,17 @@ export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IF
 
     public addContextMenuItem(column: IColumn): void {
         if (this.canCreateContextMenuItem(column, this.blotter)) {
-            let FreeTextExists: boolean = ArrayExtensions.ContainsItem(this.FreeTextColumnState.FreeTextColumns.map(f => f.ColumnId), column.ColumnId)
-            let label = FreeTextExists ? "Edit " : "Create "
-            let popupParam = FreeTextExists ? "Edit|" : "New|"
-
-            this.createContextMenuItemShowPopup(
-                label + StrategyConstants.FreeTextColumnStrategyName,
-                ScreenPopups.FreeTextColumnPopup,
-                StrategyConstants.FreeTextColumnGlyph,
-                popupParam + column.ColumnId)
+            if (this.FreeTextColumnState.FreeTextColumns.find(cc => cc.ColumnId == column.ColumnId)) {
+                this.createContextMenuItemShowPopup(
+                    "Edit " + StrategyConstants.FreeTextColumnStrategyName,
+                    ScreenPopups.FreeTextColumnPopup,
+                    StrategyConstants.FreeTextColumnGlyph,
+                    "Edit|" + column.ColumnId)
+            }
         }
     }
 
-    protected InitState() {
+      protected InitState() {
         if (this.FreeTextColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn) {
             this.FreeTextColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn;
 

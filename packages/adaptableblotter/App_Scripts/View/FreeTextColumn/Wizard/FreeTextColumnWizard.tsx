@@ -7,7 +7,7 @@ import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FreeTextColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FreeTextColumnWizard> {
-  }
+}
 
 export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardProps, {}> {
 
@@ -21,17 +21,16 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
                 cssClassName={this.props.cssClassName}
                 Steps={
                     [
-                         <FreeTextColumnSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns}/>,
-                        < FreeTextColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
+                        <FreeTextColumnSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
+                        <FreeTextColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} />
                     ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
+                onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
-                />
-         
+            />
+
         </div>
     }
 }
-

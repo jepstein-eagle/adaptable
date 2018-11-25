@@ -50,7 +50,7 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
         let cssClassName: string = this.props.cssClassName + "__FreeTextcolumn";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__FreeTextcolumn";
 
-        let infoBody: any[] = ["FreeText a column so it styles with the colours and font properties that you provide.", <br />, <br />, "Unlike Conditional Styles the column is ", <b>always</b>, " FreeTextted as set and is not dependent on a rule being met."]
+        let infoBody: any[] = ["A FreeText Column is one where you can insert any values you wish.", <br />, <br />, "These values are stored with your setting and not with the rest of the data in the grid."]
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
