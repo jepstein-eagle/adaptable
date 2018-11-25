@@ -7,7 +7,6 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import * as StrategyConstants from '../Constants/StrategyConstants'
 
-
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
     private FlashingCellState: FlashingCellState
@@ -32,8 +31,6 @@ export class StyleService {
 
     InitState() {
 
-
-
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell
             || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
             || this.QuickSearchState != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
@@ -56,7 +53,7 @@ export class StyleService {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
-            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory).forEach((element, index) => {
+            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn).forEach((element, index) => {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
@@ -64,7 +61,6 @@ export class StyleService {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
-
 
             // quick search
             if (StringExtensions.IsNullOrEmpty(this.QuickSearchState.Style.ClassName)) {
@@ -81,24 +77,10 @@ export class StyleService {
 
     private clearCSSRules() {
         this.style.innerHTML = ""
-        // let i = this.sheet.cssRules.length - 1;
-        // while (i >= 0) {
-        //     if ("deleteRule" in this.sheet) { this.sheet.deleteRule(i); }
-        //     else if ("removeRule" in this.sheet) { this.sheet.removeRule(i); }
-        //     i--;
-        // }
-    }
+       }
 
     private addCSSRule(selector: string, rules: string) {
         this.style.innerHTML += selector + "{" + rules + "}" + "\n"
-        // if ("insertRule" in this.sheet) {
-        //     this.style.innerHTML += selector + "{" + rules + "}"
-        //     this.sheet.insertRule(selector + "{" + rules + "}", this.sheet.cssRules.length);
-        // }
-        // else if ("addRule" in this.sheet) {
-        //     this.sheet.addRule(selector, rules);
-        // }
-    }
-
+        }
 
 }

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { ButtonToolbar } from 'react-bootstrap';
+import { ButtonToolbar, Sizes } from 'react-bootstrap';
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
@@ -24,6 +24,9 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     EntityName: string
     cssClassName: string
     AccessLevel: AccessLevel
+    editSize: Sizes
+    deleteSize: Sizes
+   shareSize: Sizes
 }
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
@@ -37,7 +40,10 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         ConfirmDeleteAction: null,
         EntityName: "",
         cssClassName: "",
-        AccessLevel: AccessLevel.Full
+        AccessLevel: AccessLevel.Full,
+        editSize: "small",
+        deleteSize: 'small',
+        shareSize: 'small',
     };
     render() {
         return <ButtonToolbar className={this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR} bsSize={"small"} style={{ margin: "0px", padding: "0px" }}>
@@ -48,7 +54,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     overrideDisableButton={this.props.overrideDisableEdit}
                     overrideTooltip={this.props.overrideTooltipEdit}
                     DisplayMode="Glyph"
-                    size="small"
+                    size={this.props.editSize}
                     AccessLevel={this.props.AccessLevel} 
                     />}
             {this.props.showDelete &&
@@ -61,7 +67,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     ConfirmAction={this.props.ConfirmDeleteAction}
                     ConfirmationMsg={"Are you sure you want to delete this " + this.props.EntityName + "?"}
                     ConfirmationTitle={"Delete " + this.props.EntityName}
-                    size="small" 
+                    size={this.props.deleteSize}
                     AccessLevel={this.props.AccessLevel} 
                     />}
             {this.props.showShare &&
@@ -71,7 +77,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     overrideDisableButton={this.props.overrideDisableShare}
                     overrideTooltip={this.props.overrideTooltipShare}
                     DisplayMode="Glyph"
-                    size="small" 
+                    size={this.props.shareSize}
                     AccessLevel={this.props.AccessLevel} 
                     />
             }

@@ -37,7 +37,12 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
             showShare={this.props.showShare}
-             EntityName={this.props.EntityName} />)
+             EntityName={this.props.EntityName} 
+             editSize={'xs'}
+             deleteSize={'xs'}
+             shareSize={'xs'}
+             
+             />)
 
 
         return <SummaryRowItem cssClassName={this.props.cssClassName} SummaryItems={summaryItems} />

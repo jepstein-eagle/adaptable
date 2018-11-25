@@ -25,9 +25,9 @@ import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnChooserSummary } from "../ColumnChooser/ColumnChooserSummary";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { LinkedColumnSummary } from "../LinkedColumn/LinkedColumnSummary";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -71,8 +71,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         if (ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns)) {
             summaries.push(
 
-                <div key={StrategyConstants.ColumnChooserStrategyId} className={this.isStrategyReadOnly(StrategyConstants.ColumnChooserStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
-                    <ColumnChooserSummary
+                <div key={StrategyConstants.LinkedColumnStrategyId} className={this.isStrategyReadOnly(StrategyConstants.LinkedColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <LinkedColumnSummary
                         key={StrategyConstants.ColumnChooserStrategyId}
                         SummarisedColumn={this.state.SelectedColumn}
                         TeamSharingActivated={this.props.TeamSharingActivated}

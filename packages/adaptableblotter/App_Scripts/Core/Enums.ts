@@ -77,7 +77,7 @@ export enum LayoutSource {
 export enum ConditionalStyleScope {
     Column = 'Column',
     Row = 'Row',
-    ColumnCategory = 'ColumnCategory'
+    LinkedColumn = 'LinkedColumn'
 }
 
 export enum ReportColumnScope {

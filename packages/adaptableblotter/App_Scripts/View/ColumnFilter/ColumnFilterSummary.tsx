@@ -43,7 +43,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         summaryItems.push(
             <ButtonClear cssClassName={this.props.cssClassName}
                 bsStyle={StyleConstants.PRIMARY_BSSTYLE}
-                size={"small"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
+                size={"xs"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
                 overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null}

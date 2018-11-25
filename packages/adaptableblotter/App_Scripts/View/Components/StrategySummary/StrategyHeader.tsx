@@ -24,7 +24,7 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
             null :
             <ButtonNew
                 cssClassName={this.props.cssClassName}
-                size={"small"}
+                size={"xsmall"}
                 onClick={() => this.props.onNew()}
                 overrideTooltip={"Create " + this.props.NewButtonTooltip}
                 DisplayMode="Glyph"

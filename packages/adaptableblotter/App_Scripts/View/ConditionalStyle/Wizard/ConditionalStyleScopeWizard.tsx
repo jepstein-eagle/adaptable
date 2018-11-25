@@ -18,7 +18,7 @@ export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepPro
 
 export interface ConditionalStyleScopeWizardState {
     ColumnId: string;
-    ColumnCategoryId: string;
+    LinkedColumnId: string;
     ConditionalStyleScope: ConditionalStyleScope;
 }
 
@@ -29,7 +29,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
         super(props)
         this.state = {
             ColumnId: StringExtensions.IsNull( this.props.Data.ColumnId)? "": this.props.Data.ColumnId,
-            ColumnCategoryId:StringExtensions.IsNull( this.props.Data.ColumnCategoryId)? "": this.props.Data.ColumnCategoryId,
+            LinkedColumnId:StringExtensions.IsNull( this.props.Data.LinkedColumnId)? "": this.props.Data.LinkedColumnId,
             ConditionalStyleScope: this.props.Data.ConditionalStyleScope as ConditionalStyleScope,
         }
     }
@@ -37,7 +37,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-scope"
 
-        let optionCategories = this.props.LinkedColumns.map(cc => {
+        let optionLinkedColumns = this.props.LinkedColumns.map(cc => {
             return <option value={cc.LinkedColumnId} key={cc.LinkedColumnId}>{cc.LinkedColumnId}</option>
         })
 
@@ -65,16 +65,16 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
                 }
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) &&
                     <Col xs={12} className="ab_large_margin">
-                        <Radio className={cssClassName + "__radiobutton"} inline value="Column Category" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory} onChange={(e) => this.onScopeSelectChanged(e)}>Column Category</Radio>
+                        <Radio className={cssClassName + "__radiobutton"} inline value="LinkedColumn" checked={this.state.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn} onChange={(e) => this.onScopeSelectChanged(e)}>Linked Column</Radio>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Conditional Style: Column Category"} bodyText={["Pick the category from the list below to apply the conditional style to all columns in the category."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Conditional Style: Linked Column"} bodyText={["Pick the linked column from the list below to apply the conditional style to all linked columns."]} MessageType={MessageType.Info} />
                     </Col>
                 }
-                {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) && this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory &&
+                {ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns) && this.state.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn &&
                     <Col xs={12} className="ab_large_margin">
-                        <FormControl componentClass="select" placeholder="select" value={this.state.ColumnCategoryId} onChange={(x) => this.onColumnCategorySelectedChanged(x)} >
-                            <option value="select" key="select">Select Category</option>
-                            {optionCategories}
+                        <FormControl componentClass="select" placeholder="select" value={this.state.LinkedColumnId} onChange={(x) => this.onLinkedColumnSelectedChanged(x)} >
+                            <option value="select" key="select">Select Linked Column</option>
+                            {optionLinkedColumns}
                         </FormControl>
                     </Col>
                 }
@@ -86,17 +86,17 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
         this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onColumnCategorySelectedChanged(event: React.FormEvent<any>) {
+    private onLinkedColumnSelectedChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ColumnCategoryId: e.value } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ LinkedColumnId: e.value } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onScopeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.value == "Column") {
             this.setState({ ConditionalStyleScope: ConditionalStyleScope.Column } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
-        } else if (e.value == "Column Category") {
-            this.setState({ ConditionalStyleScope: ConditionalStyleScope.ColumnCategory } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
+        } else if (e.value == "LinkedColumn") {
+            this.setState({ ConditionalStyleScope: ConditionalStyleScope.LinkedColumn } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
         } else {
             this.setState({ ConditionalStyleScope: ConditionalStyleScope.Row, ColumnId: "" } as ConditionalStyleScopeWizardState, () => this.props.UpdateGoBackState())
         }
@@ -110,7 +110,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
         if (this.state.ConditionalStyleScope == ConditionalStyleScope.Column && StringExtensions.IsEmpty(this.state.ColumnId)) {
             return false;
         }
-        if (this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && StringExtensions.IsEmpty(this.state.ColumnCategoryId)) {
+        if (this.state.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn && StringExtensions.IsEmpty(this.state.LinkedColumnId)) {
             return false;
         }
         return true;
@@ -119,7 +119,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
     public canBack(): boolean { return false; }
     public Next(): void {
         this.props.Data.ColumnId = this.state.ColumnId;
-        this.props.Data.ColumnCategoryId = this.state.ColumnCategoryId;
+        this.props.Data.LinkedColumnId = this.state.LinkedColumnId;
         this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
     }
 

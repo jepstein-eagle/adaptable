@@ -47,8 +47,8 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
                 return "Row";
             case ConditionalStyleScope.Column:
                 return ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns);
-            case ConditionalStyleScope.ColumnCategory:
-                return "Category: " + this.props.Data.ColumnCategoryId
+            case ConditionalStyleScope.LinkedColumn:
+                return "Category: " + this.props.Data.LinkedColumnId
 
         }
     }

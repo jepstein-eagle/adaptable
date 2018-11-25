@@ -9,7 +9,7 @@ import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import * as GeneralConstants from './Constants/GeneralConstants';
 import { Expression } from './Api/Expression';
-import { IVendorGridInfo } from './Interface/Interfaces';
+import { IVendorGridInfo, ILinkedColumn } from './Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 
 export module ObjectFactory {
@@ -61,6 +61,13 @@ export module ObjectFactory {
         return {
             Name: "",
             Expression: ExpressionHelper.CreateEmptyExpression()
+        }
+    }
+
+    export function CreateEmptyLinkedColumn(): ILinkedColumn {
+        return {
+            LinkedColumnId: "",
+            ColumnIds: []
         }
     }
 
@@ -159,7 +166,7 @@ export module ObjectFactory {
     export function CreateEmptyConditionalStyle(): IConditionalStyle {
         return {
             ColumnId: null,
-            ColumnCategoryId: null,
+            LinkedColumnId: null,
             Style: CreateEmptyStyle(),
             ConditionalStyleScope: ConditionalStyleScope.Row,
             Expression: ExpressionHelper.CreateEmptyExpression()

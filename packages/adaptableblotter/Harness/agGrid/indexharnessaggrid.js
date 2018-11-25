@@ -566,7 +566,7 @@ let categoryJson = {
       },
       {
         "LinkedColumnId": "Strings",
-        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status","Moodys", "sandpRating",]
+        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
       },
       {
         "LinkedColumnId": "Others",

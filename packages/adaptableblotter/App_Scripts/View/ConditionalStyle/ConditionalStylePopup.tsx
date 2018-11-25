@@ -148,7 +148,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
         if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)) {
             return false;
         }
-        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)) {
+        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn && StringExtensions.IsNullOrEmpty(conditionalStyle.LinkedColumnId)) {
             return false;
         }
         return ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) && UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
