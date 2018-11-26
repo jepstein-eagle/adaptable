@@ -120,8 +120,8 @@ export interface IColumnFilter extends IAdaptableBlotterObject {
 
 export interface IConditionalStyle extends IAdaptableBlotterObject {
   ColumnId?: string
-  LinkedColumnId?: string
-  ConditionalStyleScope: 'Column' | 'Row' | 'LinkedColumn'
+  ColumnCategoryId?: string
+  ConditionalStyleScope: 'Column' | 'Row' | 'ColumnCategory'
   Expression: Expression
   Style: IStyle
 }

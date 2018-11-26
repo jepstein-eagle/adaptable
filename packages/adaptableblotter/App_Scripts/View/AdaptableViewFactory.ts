@@ -21,7 +21,7 @@ import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup'
 import { ThemePopup } from './Theme/ThemePopup'
 import { CellValidationPopup } from './CellValidation/CellValidationPopup'
 import { LayoutPopup } from './Layout/LayoutPopup'
-import { LinkedColumnPopup } from './LinkedColumn/LinkedColumnPopup'
+import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
@@ -75,7 +75,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector: IPushPullDomainPageSelector,
   LayoutPopup: LayoutPopup,
-  LinkedColumnPopup: LinkedColumnPopup,
+  ColumnCategoryPopup: ColumnCategoryPopup,
   PlusMinusPopup: PlusMinusPopup,
   QuickSearchPopup: QuickSearchPopup,
   SelectedCellsPopup: SelectedCellsPopup,

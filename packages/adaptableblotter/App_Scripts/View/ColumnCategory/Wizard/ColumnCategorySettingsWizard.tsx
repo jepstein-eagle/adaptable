@@ -5,22 +5,22 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
-import { ILinkedColumn } from "../../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../../Core/Interface/Interfaces";
 
-export interface LinkedColumnSettingsWizardProps extends AdaptableWizardStepProps<ILinkedColumn> {
-    LinkedColumns: ILinkedColumn[]
+export interface ColumnCategorySettingsWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
+    ColumnCategorys: IColumnCategory[]
 }
 
-export interface LinkedColumnSettingsWizardState {
-    LinkedColumnId: string,
+export interface ColumnCategorySettingsWizardState {
+    ColumnCategoryId: string,
     ErrorMessage: string
 }
 
-export class LinkedColumnSettingsWizard extends React.Component<LinkedColumnSettingsWizardProps, LinkedColumnSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: LinkedColumnSettingsWizardProps) {
+export class ColumnCategorySettingsWizard extends React.Component<ColumnCategorySettingsWizardProps, ColumnCategorySettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: ColumnCategorySettingsWizardProps) {
         super(props)
         this.state = {
-            LinkedColumnId: props.Data.LinkedColumnId,
+            ColumnCategoryId: props.Data.ColumnCategoryId,
             ErrorMessage: null
         }
     }
@@ -30,14 +30,14 @@ export class LinkedColumnSettingsWizard extends React.Component<LinkedColumnSett
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return <div className={cssClassName}>
-            <Panel header="Linked Column Settings" bsStyle={PRIMARY_BSSTYLE}>
+            <Panel header="Column Category Settings" bsStyle={PRIMARY_BSSTYLE}>
                 <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="linkedColumnName">
-                        <Col xs={4} componentClass={ControlLabel}>Linked Column Name: </Col>
+                    <FormGroup controlId="ColumnCategoryName">
+                        <Col xs={3} componentClass={ControlLabel}> Name: </Col>
                         <Col xs={7}>
                             <FormGroup controlId="formInlineName" validationState={validationState}>
-                                <FormControl value={this.state.LinkedColumnId} type="string" placeholder="Enter Linked Column name"
-                                    onChange={(e) => this.onLinkedColumnNameChange(e)} />
+                                <FormControl value={this.state.ColumnCategoryId} type="string" placeholder="Enter name for Column Category"
+                                    onChange={(e) => this.onColumnCategoryNameChange(e)} />
                                 <FormControl.Feedback />
                                 <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                             </FormGroup>
@@ -49,22 +49,22 @@ export class LinkedColumnSettingsWizard extends React.Component<LinkedColumnSett
         </div>
     }
 
-    onLinkedColumnNameChange(event: React.FormEvent<any>) {
+    onColumnCategoryNameChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({
-            LinkedColumnId: e.value,
-            ErrorMessage: ArrayExtensions.ContainsItem( this.props.LinkedColumns.map(s=>s.LinkedColumnId),  e.value) ? "A Linked Column already exists with that name" : null
-        } as LinkedColumnSettingsWizardState, () => this.props.UpdateGoBackState())
+            ColumnCategoryId: e.value,
+            ErrorMessage: ArrayExtensions.ContainsItem( this.props.ColumnCategorys.map(s=>s.ColumnCategoryId),  e.value) ? "A Column Category already exists with that name" : null
+        } as ColumnCategorySettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
-        return StringExtensions.IsNotEmpty(this.state.LinkedColumnId) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
+        return StringExtensions.IsNotEmpty(this.state.ColumnCategoryId) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
     }
 
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.LinkedColumnId = this.state.LinkedColumnId
+        this.props.Data.ColumnCategoryId = this.state.ColumnCategoryId
     }
     public Back(): void {
         // todo

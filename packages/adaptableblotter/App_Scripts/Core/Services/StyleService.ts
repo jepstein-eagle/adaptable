@@ -53,7 +53,7 @@ export class StyleService {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });
-            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn).forEach((element, index) => {
+            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory).forEach((element, index) => {
                 let styleName = StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter)
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''))
             });

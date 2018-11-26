@@ -4,8 +4,8 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Core/Helpers/Helper';
-import { LinkedColumnWizard } from './Wizard/LinkedColumnWizard'
-import * as LinkedColumnRedux from '../../Redux/ActionsReducers/LinkedColumnRedux'
+import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard'
+import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
@@ -20,66 +20,66 @@ import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { ILinkedColumn } from "../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { StrategyProfile } from "../Components/StrategyProfile";
 
-export interface LinkedColumnSummaryProps extends StrategySummaryProps<LinkedColumnSummaryComponent> {
-    LinkedColumns: ILinkedColumn[]
-    // onAddUpdateLinkedColumn: (index: number, LinkedColumn: ILinkedColumn) => LinkedColumnRedux.LinkedColumnAddUpdateConditionAction
+export interface ColumnCategorySummaryProps extends StrategySummaryProps<ColumnCategorySummaryComponent> {
+    ColumnCategorys: IColumnCategory[]
+    // onAddUpdateColumnCategory: (index: number, ColumnCategory: IColumnCategory) => ColumnCategoryRedux.ColumnCategoryAddUpdateConditionAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
-export class LinkedColumnSummaryComponent extends React.Component<LinkedColumnSummaryProps, EditableConfigEntityState> {
+export class ColumnCategorySummaryComponent extends React.Component<ColumnCategorySummaryProps, EditableConfigEntityState> {
 
-    constructor(props: LinkedColumnSummaryProps) {
+    constructor(props: ColumnCategorySummaryProps) {
         super(props);
         this.state = UIHelper.EmptyConfigState();
 
     }
     render(): any {
-        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__LinkedColumn";
-        let linkedColumn: ILinkedColumn = this.props.LinkedColumns.find(lk => ArrayExtensions.ContainsItem(lk.ColumnIds, this.props.SummarisedColumn.ColumnId))
-        let noLinkedColumn: boolean = linkedColumn == null;
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__ColumnCategory";
+        let ColumnCategory: IColumnCategory = this.props.ColumnCategorys.find(lk => ArrayExtensions.ContainsItem(lk.ColumnIds, this.props.SummarisedColumn.ColumnId))
+        let noColumnCategory: boolean = ColumnCategory == null;
 
-        let linkedColumnRow: any;
-        if (noLinkedColumn) {
-            linkedColumnRow = <StrategyHeader
-                key={StrategyConstants.LinkedColumnStrategyName}
+        let ColumnCategoryRow: any;
+        if (noColumnCategory) {
+            ColumnCategoryRow = <StrategyHeader
+                key={StrategyConstants.ColumnCategoryStrategyName}
                 cssClassName={this.props.cssClassName}
-                StrategyId={StrategyConstants.LinkedColumnStrategyId}
+                StrategyId={StrategyConstants.ColumnCategoryStrategyId}
                 StrategySummary={ "None"}
                 onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyConstants.LinkedColumnStrategyName}
+                NewButtonTooltip={StrategyConstants.ColumnCategoryStrategyName}
                 AccessLevel={this.props.AccessLevel}
             />
         } else {
-            linkedColumnRow = <StrategyDetail
-                key={StrategyConstants.LinkedColumnStrategyName}
+            ColumnCategoryRow = <StrategyDetail
+                key={StrategyConstants.ColumnCategoryStrategyName}
                 cssClassName={this.props.cssClassName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.LinkedColumnStrategyId} />}
-                Item2={linkedColumn.LinkedColumnId}
-                ConfigEnity={linkedColumn}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.ColumnCategoryStrategyId} />}
+                Item2={ColumnCategory.ColumnCategoryId}
+                ConfigEnity={ColumnCategory}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyConstants.LinkedColumnStrategyName}
-                onEdit={() => this.onEdit(linkedColumn)}
-                onShare={() => this.props.onShare(linkedColumn)}
-                onDelete={LinkedColumnRedux.LinkedColumnDelete(linkedColumn)}
+                EntityName={StrategyConstants.ColumnCategoryStrategyName}
+                onEdit={() => this.onEdit(ColumnCategory)}
+                onShare={() => this.props.onShare(ColumnCategory)}
+                onDelete={ColumnCategoryRedux.ColumnCategoryDelete(ColumnCategory)}
                 showBold={true}
             />
         }
 
         return <div >
-            {linkedColumnRow}
+            {ColumnCategoryRow}
 
             {this.state.EditedAdaptableBlotterObject &&
-                <LinkedColumnWizard
+                <ColumnCategoryWizard
                     cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ILinkedColumn}
+                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IColumnCategory}
                     ConfigEntities={null}
                     ModalContainer={this.props.ModalContainer}
                     Columns={this.props.Columns}
-                    LinkedColumns={this.props.LinkedColumns}
+                    ColumnCategorys={this.props.ColumnCategorys}
                     UserFilters={this.props.UserFilters}
                     SystemFilters={this.props.SystemFilters}
                     Blotter={this.props.Blotter}
@@ -94,12 +94,12 @@ export class LinkedColumnSummaryComponent extends React.Component<LinkedColumnSu
 
 
     onNew() {
-        let configEntity: ILinkedColumn = ObjectFactory.CreateEmptyLinkedColumn()
+        let configEntity: IColumnCategory = ObjectFactory.CreateEmptyColumnCategory()
         this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
-    onEdit( LinkedColumn: ILinkedColumn) {
-        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(LinkedColumn), WizardStartIndex: 1});
+    onEdit( ColumnCategory: IColumnCategory) {
+        this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(ColumnCategory), WizardStartIndex: 1});
     }
 
     onCloseWizard() {
@@ -107,15 +107,15 @@ export class LinkedColumnSummaryComponent extends React.Component<LinkedColumnSu
     }
 
     onFinishWizard() {
-        //  this.props.onAddUpdateLinkedColumn(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ILinkedColumn);
+        //  this.props.onAddUpdateColumnCategory(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IColumnCategory);
         //  this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     canFinishWizard() {
-        //   let LinkedColumn = this.state.EditedAdaptableBlotterObject as ILinkedColumn
-        //   return StringExtensions.IsNotNullOrEmpty(LinkedColumn.ColumnId) &&
-        //       StringExtensions.IsNotNullOrEmpty(LinkedColumn.NudgeValue.toString()) && // check its a number??
-        //       (LinkedColumn.IsDefaultNudge || ExpressionHelper.IsNotEmptyOrInvalidExpression(LinkedColumn.Expression))
+        //   let ColumnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory
+        //   return StringExtensions.IsNotNullOrEmpty(ColumnCategory.ColumnId) &&
+        //       StringExtensions.IsNotNullOrEmpty(ColumnCategory.NudgeValue.toString()) && // check its a number??
+        //       (ColumnCategory.IsDefaultNudge || ExpressionHelper.IsNotEmptyOrInvalidExpression(ColumnCategory.Expression))
     }
 
 }
@@ -123,7 +123,7 @@ export class LinkedColumnSummaryComponent extends React.Component<LinkedColumnSu
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
-        LinkedColumns: state.LinkedColumn.LinkedColumns,
+        ColumnCategorys: state.ColumnCategory.ColumnCategories,
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
         Entitlements: state.Entitlements.FunctionEntitlements
@@ -132,11 +132,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        //   onAddUpdateLinkedColumn: (index: number, LinkedColumn: ILinkedColumn) => dispatch(LinkedColumnRedux.LinkedColumnAddUpdateCondition(index, LinkedColumn)),
+        //   onAddUpdateColumnCategory: (index: number, ColumnCategory: IColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAddUpdateCondition(index, ColumnCategory)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LinkedColumnStrategyId))
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId))
     };
 }
 
-export let LinkedColumnSummary = connect(mapStateToProps, mapDispatchToProps)(LinkedColumnSummaryComponent);
+export let ColumnCategorySummary = connect(mapStateToProps, mapDispatchToProps)(ColumnCategorySummaryComponent);
 

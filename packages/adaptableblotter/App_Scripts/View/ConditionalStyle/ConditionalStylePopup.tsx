@@ -24,12 +24,12 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { ILinkedColumn } from "../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../Core/Interface/Interfaces";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
     StyleClassNames: string[]
-    LinkedColumns: ILinkedColumn[]
+    ColumnCategories: IColumnCategory[]
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -107,7 +107,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
-                        LinkedColumns={this.props.LinkedColumns}
+                        ColumnCategories={this.props.ColumnCategories}
                         StyleClassNames={this.props.StyleClassNames}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -148,7 +148,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
         if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)) {
             return false;
         }
-        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn && StringExtensions.IsNullOrEmpty(conditionalStyle.LinkedColumnId)) {
+        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)) {
             return false;
         }
         return ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) && UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
@@ -159,7 +159,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
         StyleClassNames: state.UserInterface.StyleClassNames,
-        LinkedColumns: state.LinkedColumn.LinkedColumns
+        ColumnCategories: state.ColumnCategory.ColumnCategories
     };
 }
 

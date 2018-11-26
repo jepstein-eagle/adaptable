@@ -77,7 +77,7 @@ export enum LayoutSource {
 export enum ConditionalStyleScope {
     Column = 'Column',
     Row = 'Row',
-    LinkedColumn = 'LinkedColumn'
+    ColumnCategory = 'ColumnCategory'
 }
 
 export enum ReportColumnScope {
@@ -199,7 +199,7 @@ export enum StateChangedTrigger {
     FormatColumn = "FormatColumn",
     FreeTextColumn = "FreeTextColumn",
     Layout = "Layout",
-    LinkedColumn = "LinkedColumn",
+    ColumnCategory = "ColumnCategory",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
     SelectedCells = "SelectedCells",

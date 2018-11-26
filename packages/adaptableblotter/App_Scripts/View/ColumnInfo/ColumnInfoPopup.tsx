@@ -20,20 +20,20 @@ import { DataType, SelectionMode, AccessLevel } from '../../Core/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { IEntitlement, ILinkedColumn } from "../../Core/Interface/Interfaces";
+import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { LinkedColumnSummary } from "../LinkedColumn/LinkedColumnSummary";
+import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
     CalculatedColumns: Array<ICalculatedColumn>
     FunctionEntitlements: IEntitlement[]
-    LinkedColumns: ILinkedColumn[]
+    ColumnCategory: IColumnCategory[]
 }
 
 export interface ColumnInfoState {
@@ -68,11 +68,11 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let headerText = StrategyConstants.ColumnInfoStrategyName;
 
         let summaries: any[] = [];
-        if (ArrayExtensions.IsNotNullOrEmpty(this.props.LinkedColumns)) {
+        if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategory)) {
             summaries.push(
 
-                <div key={StrategyConstants.LinkedColumnStrategyId} className={this.isStrategyReadOnly(StrategyConstants.LinkedColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
-                    <LinkedColumnSummary
+                <div key={StrategyConstants.ColumnCategoryStrategyId} className={this.isStrategyReadOnly(StrategyConstants.ColumnCategoryStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <ColumnCategorySummary
                         key={StrategyConstants.ColumnChooserStrategyId}
                         SummarisedColumn={this.state.SelectedColumn}
                         TeamSharingActivated={this.props.TeamSharingActivated}
@@ -245,7 +245,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        LinkedColumns: state.LinkedColumn.LinkedColumns,
+        ColumnCategory: state.ColumnCategory.ColumnCategories,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }

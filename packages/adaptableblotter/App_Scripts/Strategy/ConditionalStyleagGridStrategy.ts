@@ -7,7 +7,7 @@ import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
 import { StyleHelper } from '../Core/Helpers/StyleHelper';
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import { ILinkedColumn } from '../Core/Interface/Interfaces';
+import { IColumnCategory } from '../Core/Interface/Interfaces';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
@@ -24,10 +24,10 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
             if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
                 if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
                     listOfColumns.push(...this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(c => c.ColumnId))
-                } else if (x.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn) {
-                    let linkedColumn: ILinkedColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().LinkedColumn.LinkedColumns.find(lc => lc.LinkedColumnId == x.LinkedColumnId)
-                    if (linkedColumn) {
-                        listOfColumns.push(...linkedColumn.ColumnIds);
+                } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
+                    let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == x.ColumnCategoryId)
+                    if (columnCategory) {
+                        listOfColumns.push(...columnCategory.ColumnIds);
                     }
                 }
                 else if (x.ConditionalStyleScope == ConditionalStyleScope.Column) {
@@ -67,10 +67,10 @@ export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy imp
                         cellClassRules[styleName] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
-                    } else if (cs.ConditionalStyleScope == ConditionalStyleScope.LinkedColumn) {
-                        let linkedColumn: ILinkedColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().LinkedColumn.LinkedColumns.find(lc => lc.LinkedColumnId == cs.LinkedColumnId)
-                        if (linkedColumn) {
-                            if (ArrayExtensions.ContainsItem(linkedColumn.ColumnIds, column.ColumnId)) {
+                    } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
+                        let columnCategory: IColumnCategory= this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId)
+                        if (columnCategory) {
+                            if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                                 cellClassRules[styleName] = function (params: any) {
                                     return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                                 }

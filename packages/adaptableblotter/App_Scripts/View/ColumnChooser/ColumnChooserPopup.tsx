@@ -9,13 +9,13 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { ILinkedColumn, IMasterChildren } from "../../Core/Interface/Interfaces";
+import { IColumnCategory, IMasterChildren } from "../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
-    LinkedColumns: Array<ILinkedColumn>
+    ColumnCategories: Array<IColumnCategory>
 }
 
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
@@ -24,10 +24,10 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
         let availableValues: any[]
         let selectedValues: any[]
         let masterChildren: IMasterChildren[]
-         if (ArrayExtensions.IsNotEmpty(this.props.LinkedColumns)) {
-            masterChildren = this.props.LinkedColumns.map(cc => {
+         if (ArrayExtensions.IsNotEmpty(this.props.ColumnCategories)) {
+            masterChildren = this.props.ColumnCategories.map(cc => {
                 return {
-                    Master: cc.LinkedColumnId,
+                    Master: cc.ColumnCategoryId,
                     Children: cc.ColumnIds.map(ci => ColumnHelper.getFriendlyNameFromColumnId(ci, this.props.Columns))
                 }
             })
@@ -62,7 +62,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        LinkedColumns: state.LinkedColumn.LinkedColumns,
+        ColumnCategories: state.ColumnCategory.ColumnCategories,
     };
 }
 

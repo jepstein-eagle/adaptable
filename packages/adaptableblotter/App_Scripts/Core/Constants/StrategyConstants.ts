@@ -23,7 +23,7 @@ export const FormatColumnStrategyId: string = "FormatColumn"
 export const FreeTextColumnStrategyId: string = "FreeTextColumn"
 export const HomeStrategyId: string = "Home"
 export const LayoutStrategyId: string = "Layout"
-export const LinkedColumnStrategyId: string = "LinkedColumn"
+export const ColumnCategoryStrategyId: string = "ColumnCategory"
 export const PlusMinusStrategyId: string = "PlusMinus"
 export const QuickSearchStrategyId: string = "QuickSearch"
 export const SelectColumnStrategyId: string = "SelectColumn"
@@ -57,7 +57,7 @@ export const FlashingCellsStrategyName: string = "Flashing Cells"
 export const FormatColumnStrategyName: string = "Formatted Column"
 export const FreeTextColumnStrategyName: string = "Free Text Column"
 export const LayoutStrategyName: string = "Layout"
-export const LinkedColumnStrategyName: string = "Linked Columns"
+export const ColumnCategoryStrategyName: string = "Column Category"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
 export const SelectColumnStrategyName: string = "Select Column"
@@ -92,7 +92,7 @@ export const FormatColumnGlyph: string = "picture"
 export const FreeTextColumnGlyph: string = "comment"
 export const FunctionsGlyph: string = "home"
 export const LayoutGlyph: string = "th"
-export const LinkedColumnGlyph: string = "link"
+export const ColumnCategoryGlyph: string = "link"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
 export const SelectColumnGlyph: string = "compressed"
@@ -149,8 +149,8 @@ export function getIdForStrategyName(strategyName: string) {
             return FreeTextColumnStrategyId
         case LayoutStrategyName:
             return LayoutStrategyId
-        case LinkedColumnStrategyName:
-            return LinkedColumnStrategyId
+        case ColumnCategoryStrategyName:
+            return ColumnCategoryStrategyId
         case PlusMinusStrategyName:
             return PlusMinusStrategyId
         case QuickSearchStrategyName:
@@ -219,8 +219,8 @@ export function getNameForStrategyId(strategyID: string) {
             return FreeTextColumnStrategyName
         case LayoutStrategyId:
             return LayoutStrategyName
-        case LinkedColumnStrategyId:
-            return LinkedColumnStrategyName
+        case ColumnCategoryStrategyId:
+            return ColumnCategoryStrategyName
         case PlusMinusStrategyId:
             return PlusMinusStrategyName
         case QuickSearchStrategyId:
@@ -284,8 +284,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return FreeTextColumnGlyph
         case LayoutStrategyId:
             return LayoutGlyph
-        case LinkedColumnStrategyId:
-            return LinkedColumnGlyph
+        case ColumnCategoryStrategyId:
+            return ColumnCategoryGlyph
         case PlusMinusStrategyId:
             return PlusMinusGlyph
         case QuickSearchStrategyId:

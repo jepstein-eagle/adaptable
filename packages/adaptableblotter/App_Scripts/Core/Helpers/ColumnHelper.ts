@@ -3,7 +3,7 @@ import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 import { DataType } from '../Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { ILinkedColumn } from '../Interface/Interfaces';
+import { IColumnCategory } from '../Interface/Interfaces';
 
 export module ColumnHelper {
 
@@ -72,13 +72,13 @@ export module ColumnHelper {
         return columns.filter(c => c.DataType == DataType.Number)
     }
 
-    export function getLinkedColumnFromLinkedColumns(columnId: string, linkedColumns: ILinkedColumn[]): string {
+    export function getColumnCategoryFromColumnCategories(columnId: string, ColumnCategoryns: IColumnCategory[]): string {
         let returnValue: string = ""
-        linkedColumns.forEach(c => {
+        ColumnCategoryns.forEach(c => {
             if (StringExtensions.IsNullOrEmpty(returnValue)) {
                 let column: string = c.ColumnIds.find(col => col == columnId);
                 if (column) {
-                    returnValue = c.LinkedColumnId;
+                    returnValue = c.ColumnCategoryId;
                 }
             }
         })

@@ -3,35 +3,35 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
-import { ILinkedColumn } from "../../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
-export interface LinkedColumnColumnsWizardProps extends AdaptableWizardStepProps<ILinkedColumn> {
+export interface ColumnCategoryColumnsWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
     Columns: Array<IColumn>
-    LinkedColumns: ILinkedColumn[]
+    ColumnCategorys: IColumnCategory[]
 
 }
-export interface LinkedColumnColumnsWizardState {
+export interface ColumnCategoryColumnsWizardState {
     AvailableColumns: string[],
     SelectedColumns: string[]
     IsEdit: boolean
 }
 
-export class LinkedColumnColumnsWizard extends React.Component<LinkedColumnColumnsWizardProps, LinkedColumnColumnsWizardState> implements AdaptableWizardStep {
-    constructor(props: LinkedColumnColumnsWizardProps) {
+export class ColumnCategoryColumnsWizard extends React.Component<ColumnCategoryColumnsWizardProps, ColumnCategoryColumnsWizardState> implements AdaptableWizardStep {
+    constructor(props: ColumnCategoryColumnsWizardProps) {
         super(props)
 
         let selectedFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.ColumnIds, this.props.Columns)
-        let currentlyLinkedColumns: string[] = [];
-        this.props.LinkedColumns.map(lk => {
-            currentlyLinkedColumns.push(...lk.ColumnIds)
+        let currentlyColumnCategorys: string[] = [];
+        this.props.ColumnCategorys.map(lk => {
+            currentlyColumnCategorys.push(...lk.ColumnIds)
         })
 
         let allColumns: string[] = this.props.Columns.map(c => c.ColumnId);
         let availableColumns: string[] = []
         allColumns.forEach(c => {
-            if (ArrayExtensions.NotContainsItem(currentlyLinkedColumns, c)) {
+            if (ArrayExtensions.NotContainsItem(currentlyColumnCategorys, c)) {
                 availableColumns.push(c);
             }
         })
@@ -52,7 +52,7 @@ export class LinkedColumnColumnsWizard extends React.Component<LinkedColumnColum
         let cssClassName: string = this.props.cssClassName + "-values"
 
         return <div className={cssClassName}>
-            <PanelWithInfo cssClassName={cssClassName} header={"Columns in Linked Column: " + this.props.Data.LinkedColumnId} bsStyle="primary" infoBody={infoBody}>
+            <PanelWithInfo cssClassName={cssClassName} header={"Columns in Column Category: " + this.props.Data.ColumnCategoryId} bsStyle="primary" infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.state.AvailableColumns}
                     cssClassName={cssClassName}
                     SelectedValues={this.state.SelectedColumns}
@@ -67,7 +67,7 @@ export class LinkedColumnColumnsWizard extends React.Component<LinkedColumnColum
     OnSelectedValuesChange(newValues: Array<string>) {
         //   let selectedColumns: string[] = ColumnHelper.getFriendlyNamesFromColumnIds(newValues, this.props.Columns);
         console.log("from method: " + newValues)
-        this.setState({ SelectedColumns: newValues } as LinkedColumnColumnsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ SelectedColumns: newValues } as ColumnCategoryColumnsWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean { return this.state.SelectedColumns.length > 0; }

@@ -3,28 +3,28 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ILinkedColumn } from "../../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../../Core/Interface/Interfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
-export interface LinkedColumnSummaryWizardProps extends AdaptableWizardStepProps<ILinkedColumn> {
+export interface ColumnCategorySummaryWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
     Columns: IColumn[]
 }
 
-export class LinkedColumnSummaryWizard extends React.Component<LinkedColumnSummaryWizardProps, {}> implements AdaptableWizardStep {
-    constructor(props: LinkedColumnSummaryWizardProps) {
+export class ColumnCategorySummaryWizard extends React.Component<ColumnCategorySummaryWizardProps, {}> implements AdaptableWizardStep {
+    constructor(props: ColumnCategorySummaryWizardProps) {
         super(props)
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
         let keyValuePairs: KeyValuePair[] = [
-            { Key: "Name", Value: this.props.Data.LinkedColumnId },
+            { Key: "Name", Value: this.props.Data.ColumnCategoryId },
             { Key: "Columns", Value: this.getColumnNames() },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.LinkedColumnStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ColumnCategoryStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

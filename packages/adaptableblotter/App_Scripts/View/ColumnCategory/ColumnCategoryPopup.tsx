@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as LinkedColumnRedux from '../../Redux/ActionsReducers/LinkedColumnRedux'
+import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-//import { LinkedColumnWizard } from './Wizard/LinkedColumnWizard'
-//import { LinkedColumnEntityRow } from './LinkedColumnEntityRow'
+//import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard'
+//import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow'
 import { Helper } from '../../Core/Helpers/Helper';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -25,19 +25,19 @@ import { SortOrder, AccessLevel } from "../../Core/Enums";
 import { IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { ILinkedColumn } from "../../Core/Interface/Interfaces";
-import { LinkedColumnEntityRow } from "./LinkedColumnEntityRow";
-import { LinkedColumnWizard } from "./Wizard/LinkedColumnWizard";
+import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { ColumnCategoryEntityRow } from "./ColumnCategoryEntityRow";
+import { ColumnCategoryWizard } from "./Wizard/ColumnCategoryWizard";
 
-interface LinkedColumnPopupProps extends StrategyViewPopupProps<LinkedColumnPopupComponent> {
-    LinkedColumns: ILinkedColumn[];
-    onAddLinkedColumn: (LinkedColumn: ILinkedColumn) => LinkedColumnRedux.LinkedColumnAddAction
-    onEditLinkedColumn: (Index: number, LinkedColumn: ILinkedColumn) => LinkedColumnRedux.LinkedColumnEditAction
+interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategoryPopupComponent> {
+    ColumnCategorys: IColumnCategory[];
+    onAddColumnCategory: (ColumnCategory: IColumnCategory) => ColumnCategoryRedux.ColumnCategoryAddAction
+    onEditColumnCategory: (Index: number, ColumnCategory: IColumnCategory) => ColumnCategoryRedux.ColumnCategoryEditAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction,
 }
 
-class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps, EditableConfigEntityState> {
-    constructor(props: LinkedColumnPopupProps) {
+class ColumnCategoryPopupComponent extends React.Component<ColumnCategoryPopupProps, EditableConfigEntityState> {
+    constructor(props: ColumnCategoryPopupProps) {
         super(props);
         this.state = UIHelper.EmptyConfigState();
     }
@@ -49,22 +49,22 @@ class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps,
     }
 
     render() {
-        let cssClassName: string = this.props.cssClassName + "__LinkedColumn";
-        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__LinkedColumn";
+        let cssClassName: string = this.props.cssClassName + "__ColumnCategory";
+        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__ColumnCategory";
 
 
 
-        let infoBody: any[] = ["Linked Columns allow you to group different columns, primarily for use in Conditional Styles.", <br />, <br />,
+        let infoBody: any[] = ["Column Categories allow you to link different columns, primarily for use in Conditional Styles.", <br />, <br />,
             "They are also used in Column Chooser to make it easier to find and manage large column sets."]
 
         let colItems: IColItem[] = [
-            { Content: "Link Name", Size: 2 },
+            { Content: "Categry", Size: 2 },
             { Content: "Columns", Size: 7 },
             { Content: "", Size: 3 },
         ]
 
-        let LinkedColumnRows = this.props.LinkedColumns.map((x, index) => {
-            return <LinkedColumnEntityRow
+        let ColumnCategoryRows = this.props.ColumnCategorys.map((x, index) => {
+            return <ColumnCategoryEntityRow
                 key={index}
                 cssClassName={cssClassName}
                 colItems={colItems}
@@ -72,12 +72,12 @@ class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps,
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 Index={index}
-                onEdit={(index, x) => this.onEdit(index, x as ILinkedColumn)}
+                onEdit={(index, x) => this.onEdit(index, x as IColumnCategory)}
                 onShare={() => this.props.onShare(x)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                onDeleteConfirm={LinkedColumnRedux.LinkedColumnDelete(x)}
+                onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(x)}
             >
-            </LinkedColumnEntityRow>
+            </ColumnCategoryEntityRow>
         })
 
         let newSearchButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
@@ -87,29 +87,29 @@ class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps,
             AccessLevel={this.props.AccessLevel} />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.LinkedColumnStrategyName} infoBody={infoBody}
-                button={newSearchButton} glyphicon={StrategyConstants.LinkedColumnGlyph} className="ab_main_popup" >
+            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.ColumnCategoryStrategyName} infoBody={infoBody}
+                button={newSearchButton} glyphicon={StrategyConstants.ColumnCategoryGlyph} className="ab_main_popup" >
 
-                {LinkedColumnRows.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={LinkedColumnRows} />
+                {ColumnCategoryRows.length > 0 &&
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={ColumnCategoryRows} />
                 }
 
-                {LinkedColumnRows.length == 0 &&
+                {ColumnCategoryRows.length == 0 &&
                     <Well bsSize="small">
-                        <HelpBlock>Click 'New' to start creating LinkedColumns.</HelpBlock>
+                        <HelpBlock>Click 'New' to start creating ColumnCategorys.</HelpBlock>
                     </Well>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&
-                    <LinkedColumnWizard
+                    <ColumnCategoryWizard
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject}
-                        ConfigEntities={this.props.LinkedColumns}
+                        ConfigEntities={this.props.ColumnCategorys}
                         ModalContainer={this.props.ModalContainer}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        LinkedColumns={this.props.LinkedColumns}
+                        ColumnCategorys={this.props.ColumnCategorys}
                         Blotter={this.props.Blotter}
                         WizardStartIndex={this.state.WizardStartIndex}
                         onCloseWizard={() => this.onCloseWizard()}
@@ -122,11 +122,11 @@ class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps,
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyLinkedColumn(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyColumnCategory(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 })
     }
 
-    onEdit(index: number, LinkedColumn: ILinkedColumn) {
-        let clonedObject: ILinkedColumn = Helper.cloneObject(LinkedColumn);
+    onEdit(index: number, ColumnCategory: IColumnCategory) {
+        let clonedObject: IColumnCategory = Helper.cloneObject(ColumnCategory);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index })
     }
 
@@ -136,36 +136,36 @@ class LinkedColumnPopupComponent extends React.Component<LinkedColumnPopupProps,
     }
 
     onFinishWizard() {
-        let LinkedColumn = this.state.EditedAdaptableBlotterObject as ILinkedColumn
+        let ColumnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-            this.props.onEditLinkedColumn(this.state.EditedAdaptableBlotterObjectIndex, LinkedColumn)
+            this.props.onEditColumnCategory(this.state.EditedAdaptableBlotterObjectIndex, ColumnCategory)
         } else {
-            this.props.onAddLinkedColumn(LinkedColumn)
+            this.props.onAddColumnCategory(ColumnCategory)
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
     }
 
     canFinishWizard() {
-        let linkedColumn = this.state.EditedAdaptableBlotterObject as ILinkedColumn
-        return StringExtensions.IsNotEmpty(linkedColumn.LinkedColumnId) && ArrayExtensions.IsNotEmpty(linkedColumn.ColumnIds)
+        let ColumnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory
+        return StringExtensions.IsNotEmpty(ColumnCategory.ColumnCategoryId) && ArrayExtensions.IsNotEmpty(ColumnCategory.ColumnIds)
     }
 
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        LinkedColumns: state.LinkedColumn.LinkedColumns,
+        ColumnCategorys: state.ColumnCategory.ColumnCategories,
 
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddLinkedColumn: (LinkedColumn: ILinkedColumn) => dispatch(LinkedColumnRedux.LinkedColumnAdd(LinkedColumn)),
-        onEditLinkedColumn: (Index: number, LinkedColumn: ILinkedColumn) => dispatch(LinkedColumnRedux.LinkedColumnEdit(Index, LinkedColumn)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LinkedColumnStrategyId))
+        onAddColumnCategory: (ColumnCategory: IColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),
+        onEditColumnCategory: (Index: number, ColumnCategory: IColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryEdit(Index, ColumnCategory)),
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId))
     };
 }
 
-export let LinkedColumnPopup = connect(mapStateToProps, mapDispatchToProps)(LinkedColumnPopupComponent);
+export let ColumnCategoryPopup = connect(mapStateToProps, mapDispatchToProps)(ColumnCategoryPopupComponent);
 
