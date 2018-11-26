@@ -38,17 +38,17 @@ import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditional
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
 import { ApplicationStrategy } from '../../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../../Strategy/BulkUpdateStrategy';
-import { CustomSortagGridStrategy } from '../../Strategy/CustomSortagGridStrategy'
+import { CustomSortagGridStrategy } from './Strategy/CustomSortagGridStrategy'
 import { SmartEditStrategy } from '../../Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../../Strategy/ShortcutStrategy'
 import { DataManagementStrategy } from '../../Strategy/DataManagementStrategy'
 import { PlusMinusStrategy } from '../../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../../Strategy/ExportStrategy'
-import { FlashingCellsagGridStrategy } from '../../Strategy/FlashingCellsagGridStrategy'
+import { FlashingCellsagGridStrategy } from './Strategy/FlashingCellsagGridStrategy'
 import { CalendarStrategy } from '../../Strategy/CalendarStrategy'
-import { ConditionalStyleagGridStrategy } from '../../Strategy/ConditionalStyleagGridStrategy'
-import { QuickSearchStrategyagGrid } from '../../Strategy/QuickSearchStrategyagGrid'
+import { ConditionalStyleagGridStrategy } from './Strategy/ConditionalStyleagGridStrategy'
+import { QuickSearchagGridStrategy } from './Strategy/QuickSearchagGridStrategy'
 import { AdvancedSearchStrategy } from '../../Strategy/AdvancedSearchStrategy'
 import { UserFilterStrategy } from '../../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../../Strategy/ColumnFilterStrategy'
@@ -56,7 +56,7 @@ import { CellValidationStrategy } from '../../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../../Strategy/ThemeStrategy'
 import { TeamSharingStrategy } from '../../Strategy/TeamSharingStrategy'
-import { FormatColumnagGridStrategy } from '../../Strategy/FormatColumnagGridStrategy'
+import { FormatColumnagGridStrategy } from './Strategy/FormatColumnagGridStrategy'
 import { ColumnInfoStrategy } from '../../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../../Strategy/CalculatedColumnStrategy";
@@ -179,7 +179,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchagGridStrategy(this))
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))

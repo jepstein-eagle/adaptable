@@ -1,12 +1,12 @@
-import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
-import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
-import { ConditionalStyleScope } from '../Core/Enums';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
-import { Helper } from '../Core/Helpers/Helper';
-import { AdaptableBlotter } from '../Vendors/Hypergrid/AdaptableBlotter'
-import { IConditionalStyle } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IColumnCategory } from '../Core/Interface/Interfaces';
+import { IConditionalStyleStrategy } from '../../../Strategy/Interface/IConditionalStyleStrategy';
+import { ConditionalStyleStrategy } from '../../../Strategy/ConditionalStyleStrategy';
+import { ConditionalStyleScope } from '../../../Core/Enums';
+import { IDataChangedEvent } from '../../../Core/Services/Interface/IAuditService'
+import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
+import { Helper } from '../../../Core/Helpers/Helper';
+import { AdaptableBlotter } from '../AdaptableBlotter'
+import { IConditionalStyle } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IColumnCategory } from '../../../Core/Interface/Interfaces';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

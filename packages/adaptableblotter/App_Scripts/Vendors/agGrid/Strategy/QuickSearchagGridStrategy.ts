@@ -1,8 +1,8 @@
-import { IQuickSearchStrategy } from './Interface/IQuickSearchStrategy';
-import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter';
-import { QuickSearchStrategy } from './QuickSearchStrategy';
+import { IQuickSearchStrategy } from '../../../Strategy/Interface/IQuickSearchStrategy';
+import { AdaptableBlotter } from '../AdaptableBlotter';
+import { QuickSearchStrategy } from '../../../Strategy/QuickSearchStrategy';
 
-export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQuickSearchStrategy {
+export class QuickSearchagGridStrategy extends QuickSearchStrategy implements IQuickSearchStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }

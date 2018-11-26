@@ -1,10 +1,10 @@
-import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
-import { FormatColumnStrategy } from './FormatColumnStrategy';
-import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import * as StyleConstants from '../Core/Constants/StyleConstants'
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { StyleHelper } from '../Core/Helpers/StyleHelper';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import { IFormatColumnStrategy } from '../../../Strategy/Interface/IFormatColumnStrategy';
+import { FormatColumnStrategy } from '../../../Strategy/FormatColumnStrategy';
+import { AdaptableBlotter } from '../AdaptableBlotter'
+import * as StyleConstants from '../../../Core/Constants/StyleConstants'
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StyleHelper } from '../../../Core/Helpers/StyleHelper';
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {

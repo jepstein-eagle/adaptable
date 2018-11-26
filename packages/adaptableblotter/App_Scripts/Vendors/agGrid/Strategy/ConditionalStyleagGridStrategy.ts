@@ -1,14 +1,14 @@
-import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
-import { ConditionalStyleStrategy } from './ConditionalStyleStrategy';
-import { ConditionalStyleScope } from '../Core/Enums';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper';
-import { AdaptableBlotter } from '../Vendors/agGrid/AdaptableBlotter'
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { StyleHelper } from '../Core/Helpers/StyleHelper';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import { IColumnCategory } from '../Core/Interface/Interfaces';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { IConditionalStyleStrategy } from '../../../Strategy/Interface/IConditionalStyleStrategy';
+import { ConditionalStyleStrategy } from '../../../Strategy/ConditionalStyleStrategy';
+import { ConditionalStyleScope } from '../../../Core/Enums';
+import { IDataChangedEvent } from '../../../Core/Services/Interface/IAuditService'
+import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
+import { AdaptableBlotter } from '../AdaptableBlotter'
+import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StyleHelper } from '../../../Core/Helpers/StyleHelper';
+import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import { IColumnCategory } from '../../../Core/Interface/Interfaces';
+import { ArrayExtensions } from '../../../Core/Extensions/ArrayExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
