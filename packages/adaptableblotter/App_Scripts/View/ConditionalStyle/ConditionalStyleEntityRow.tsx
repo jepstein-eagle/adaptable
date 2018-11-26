@@ -22,11 +22,7 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content =
-            conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns) :
-                "Whole Row"
-
+        colItems[0].Content =this.getScope(conditionalStyle);
         colItems[1].Content = <StyleVisualItem Style={conditionalStyle.Style} />
         colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns)
         let buttons: any = <EntityListActionButtons
@@ -40,5 +36,17 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
         colItems[3].Content = buttons;
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
+    }
+
+    private getScope(conditionalStyle: IConditionalStyle): string {
+        switch (conditionalStyle.ConditionalStyleScope) {
+            case ConditionalStyleScope.Row:
+                return "Row";
+            case ConditionalStyleScope.Column:
+                return ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns);
+            case ConditionalStyleScope.ColumnCategory:
+                return "Category: " + conditionalStyle.ColumnCategoryId
+
+        }
     }
 }

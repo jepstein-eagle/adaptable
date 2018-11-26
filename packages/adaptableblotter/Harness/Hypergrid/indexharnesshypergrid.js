@@ -105,7 +105,7 @@ function InitBlotter() {
         blotterId: "my Blotter",
         enableAuditLog: false,
         enableRemoteConfigServer: false,
-        //  predefinedConfig: json,
+         predefinedConfig: categoryJson,
         serverSearchOption: "None",
         vendorGrid: vendorGrid,
         useDefaultVendorGridThemes: true,
@@ -184,7 +184,24 @@ function getTradesForSearch(searchArgs, dataGen) {
     }
 }
 
-
+let categoryJson = {
+    "ColumnCategory": {
+      "ColumnCategories": [
+        {
+          "ColumnCategoryId": "Pricing",
+          "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
+        },
+        {
+          "ColumnCategoryId": "Strings",
+          "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
+        },
+        {
+          "ColumnCategoryId": "Others",
+          "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
+        }
+      ]
+    }
+  }
 
 let json = {
     "UserInterface": {

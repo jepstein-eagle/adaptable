@@ -78,6 +78,7 @@ import { HypergridThemes } from './HypergridThemes';
 import { HomeStrategy } from '../../Strategy/HomeStrategy';
 import { AlertStrategy } from '../../Strategy/AlertStrategy';
 import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
+import { ColumnCategoryStrategy } from '../../Strategy/ColumnCategoryStrategy';
 
 
 //icon to indicate toggle state
@@ -158,12 +159,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
         this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
