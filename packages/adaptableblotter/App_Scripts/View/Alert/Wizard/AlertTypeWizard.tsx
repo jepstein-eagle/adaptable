@@ -8,7 +8,7 @@ import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterO
 import { INFO_BSSTYLE, WARNING_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-  }
+}
 
 export interface AlertTypeWizardState {
     MessageType: MessageType,
@@ -22,7 +22,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
         super(props)
         this.state = {
             MessageType: this.props.Data.MessageType as MessageType,
-            ShowAsPopup: this.props.Data.ShowAsPopup ,
+            ShowAsPopup: this.props.Data.ShowAsPopup,
         }
     }
 
@@ -47,9 +47,9 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
                         {' '} {' '}
                         <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Error"} bodyText={["Sends the alert as an error."]} MessageType={MessageType.Info} />
                     </Col>
-                   
+
                 </AdaptableBlotterForm>
-               
+
             </Panel>
             <Panel header="Alert Details" bsStyle="primary">
                 <AdaptableBlotterForm inline>
@@ -58,9 +58,9 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
                         {' '} {' '}
                         <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Details"} bodyText={["Shows a popup in centre of screen when Alert is triggered."]} MessageType={MessageType.Info} />
                     </Col>
-                      
+
                 </AdaptableBlotterForm>
-               
+
             </Panel>
         </div>
     }
@@ -68,12 +68,12 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
 
     private onMessageTypeSelectChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        if (e.value == INFO_BSSTYLE) {
+        if (e.value == "Info") {
             this.setState({ MessageType: MessageType.Info } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
-        } else    if (e.value == WARNING_BSSTYLE) {
-            this.setState({ MessageType: MessageType.Warning} as AlertTypeWizardState, () => this.props.UpdateGoBackState())
-          } else {
-            this.setState({ MessageType: MessageType.Error} as AlertTypeWizardState, () => this.props.UpdateGoBackState())
+        } else if (e.value == 'Warning') {
+            this.setState({ MessageType: MessageType.Warning } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
+        } else if (e.value == 'Error') {
+            this.setState({ MessageType: MessageType.Error } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
         }
     }
 

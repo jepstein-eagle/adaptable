@@ -573,7 +573,23 @@ let categoryJson = {
         "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
       }
     ]
-  }
+  },
+  "Entitlements": {
+		"FunctionEntitlements": [
+			{
+				"FunctionName": "QuickSearch",
+				"AccessLevel": "ReadOnly"
+			},
+			{
+				"FunctionName": "PlusMinus",
+				"AccessLevel": "Hidden"
+			},
+			{
+				"FunctionName": "SmartEdit",
+				"AccessLevel": "ReadOnly"
+			}
+		]
+	}
 }
 
 
