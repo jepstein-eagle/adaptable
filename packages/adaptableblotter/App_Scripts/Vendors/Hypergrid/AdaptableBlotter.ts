@@ -270,7 +270,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setColumnIntoStore() {
         // let columns: IColumn[] = this.hyperGrid.behavior.columns.map((x: any) => {
         let activeColumns: IColumn[] = this.hyperGrid.behavior.getActiveColumns().map((x: any, index: number) => {
-            let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == x.name);
+            let existingColumn: IColumn = ColumnHelper.getColumnFromId(x.name, this.getState().Grid.Columns);
             return {
                 ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : "Unknown Column",
                 FriendlyName: existingColumn ? existingColumn.FriendlyName :
@@ -284,7 +284,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         let hiddenColumns: IColumn[] = this.hyperGrid.behavior.getHiddenColumns().map((x: any) => {
-            let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == x.name);
+            let existingColumn: IColumn = ColumnHelper.getColumnFromId(x.name, this.getState().Grid.Columns);
             return {
                 ColumnId: existingColumn ? existingColumn.ColumnId : x.name ? x.name : "Unknown Column",
                 FriendlyName: existingColumn ? existingColumn.FriendlyName :
@@ -399,7 +399,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
             for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
                 let column = this.hyperGrid.behavior.getActiveColumns()[columnIndex]
-                let selectedColumn: IColumn = this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == column.name);
+                let selectedColumn: IColumn = ColumnHelper.getColumnFromId(column.name, this.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
                 columns.push(selectedColumn)
                 for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
                     let row = this.hyperGrid.behavior.dataModel.dataSource.getRow(rowIndex)
@@ -1082,7 +1082,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let filterIconWidth = getFilterIcon(filterIndex >= 0).width;
                 if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
                     let filterContext: IColumnFilterContext = {
-                        Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
+                        Column: ColumnHelper.getColumnFromId(e.detail.primitiveEvent.column.name, this.AdaptableBlotterStore.TheStore.getState().Grid.Columns),
                         Blotter: this,
                         ShowCloseButton: true,
                     };

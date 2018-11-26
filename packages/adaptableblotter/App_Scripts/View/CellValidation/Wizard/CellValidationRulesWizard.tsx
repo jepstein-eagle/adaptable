@@ -123,10 +123,6 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
         this.setState({ Operator: operator } as CellValidationSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-  //  private getColumnDataTypeFromState(): DataType {
- //       return this.props.Columns.find(c => c.ColumnId == this.props.Data.ColumnId).DataType;
- //   }
-
     private checkOperator(operator: LeafExpressionOperator): boolean {
         return this.state.Operator == operator;
     }

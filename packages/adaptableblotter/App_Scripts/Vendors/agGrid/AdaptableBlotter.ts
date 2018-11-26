@@ -340,7 +340,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         vendorCols.forEach((vendorColumn) => {
             let colId: string = vendorColumn.getColId()
             if (!ColumnHelper.isSpecialColumn(colId)) {
-                let existingColumn: IColumn = existingColumns.find(c => c.ColumnId == colId);
+                let existingColumn: IColumn = ColumnHelper.getColumnFromId(colId, existingColumns);
                 if (existingColumn) {
                     existingColumn.Visible = vendorColumn.isVisible()
                 } else {
@@ -363,7 +363,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             ReadOnly: this.isColumnReadonly(colId),
             Sortable: this.isColumnSortable(colId),
             Filterable: this.isColumnFilterable(colId),
-         }
+        }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
     }
@@ -484,7 +484,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 for (let column of rangeSelection.columns) {
                     let colId: string = column.getColId();
                     if (index == 0) {
-                        let selectedColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == colId);
+                        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
                         columns.push(selectedColumn);
                     }
 
@@ -521,7 +521,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // get the column type if already in store (and not unknown)
-        let existingColumn: IColumn = this.getState().Grid.Columns.find(c => c.ColumnId == column.getId());
+        let existingColumn: IColumn = ColumnHelper.getColumnFromId(column.getId(), this.getState().Grid.Columns);
         if (existingColumn && existingColumn.DataType != DataType.Unknown) {
             return existingColumn.DataType;
         }
@@ -854,7 +854,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (typeof render == "string") {
             return this.cleanValue(valueToRender)
         }
-          return render({ value: valueToRender }) || "";
+        return render({ value: valueToRender }) || "";
     }
 
     private cleanValue(value: string): string {
@@ -1433,7 +1433,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addPercentCellRenderer(pcr: IPercentCellRenderer): void {
-        let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
+        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
             let showNegatives: boolean = pcr.MinValue < 0;
             let showPositives: boolean = pcr.MaxValue > 0;
@@ -1496,7 +1496,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
     public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
-        let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId)
+        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns)
         if (renderedColumn) {
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             // note we dont get it from the original (but I guess it will be applied next time you run...)
@@ -1505,8 +1505,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
-       this.removePercentCellRenderer(pcr);
-       this.addPercentCellRenderer(pcr);
+        this.removePercentCellRenderer(pcr);
+        this.addPercentCellRenderer(pcr);
     }
 
     private onSortChanged(): void {

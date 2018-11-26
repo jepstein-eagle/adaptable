@@ -7,7 +7,7 @@ import { IColumnCategory } from '../Interface/Interfaces';
 
 export module ColumnHelper {
 
-    // Lets put all column mapping in one place so we can properly deal with missing columns consistently...
+    // Single place for all column mapping functions so can be dealt with consistetly re error handling
 
     export function isSpecialColumn(columnId: string): boolean {
         return columnId == "ag-Grid-AutoColumn"
@@ -31,7 +31,12 @@ export module ColumnHelper {
 
     export function getFriendlyNameFromColumnId(columnId: string, columns: IColumn[]): string {
         let foundColumn: IColumn = columns.find(c => c.ColumnId == columnId);
-        return getFriendlyNameFromColumn(columnId, foundColumn);
+        if (foundColumn) {
+            return getFriendlyNameFromColumn(columnId, foundColumn);
+        } else {
+            AdaptableBlotterLogger.LogWarning("No column found named '" + columnId + "'");
+            return columnId + GeneralConstants.MISSING_COLUMN
+        }
     }
 
     export function getFriendlyNamesFromColumnIds(columnIds: string[], columns: IColumn[]): string[] {
@@ -47,7 +52,12 @@ export module ColumnHelper {
             return friendlyName.replace(GeneralConstants.MISSING_COLUMN, "");  // Ids should stay "pure"
         }
         let foundColumn: IColumn = columns.find(c => c.FriendlyName == friendlyName);
-        return (foundColumn) ? foundColumn.ColumnId : friendlyName // if not found then keep the name that we have from before
+        if (foundColumn) {
+            return foundColumn.ColumnId;
+        } else {
+            AdaptableBlotterLogger.LogWarning("No column found named '" + friendlyName + "'");
+            return friendlyName + GeneralConstants.MISSING_COLUMN
+        }
     }
 
     export function getColumnIdsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): string[] {
@@ -64,9 +74,15 @@ export module ColumnHelper {
     }
 
     export function getColumnFromId(columnId: string, columns: IColumn[]): IColumn {
-        // TODO check for missing column
-        return columns.find(c => c.ColumnId == columnId)
-    }
+        let foundColumn: IColumn =  columns.find(c => c.ColumnId == columnId)
+        if (foundColumn) {
+            return foundColumn;
+        } else {
+            AdaptableBlotterLogger.LogWarning("No column found named '" + columnId + "'");
+            return null;
+        }
+      
+     }
 
     export function getNumericColumns(columns: IColumn[]): IColumn[] {
         return columns.filter(c => c.DataType == DataType.Number)

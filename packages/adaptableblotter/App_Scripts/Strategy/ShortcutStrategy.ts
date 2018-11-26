@@ -16,6 +16,7 @@ import { IColumn } from '../Core/Interface/IColumn';
 import { IShortcut, ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
+import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
@@ -45,7 +46,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
-        let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);
+        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);

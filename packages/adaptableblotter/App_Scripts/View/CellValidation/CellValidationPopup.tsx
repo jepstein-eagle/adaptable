@@ -25,6 +25,7 @@ import { ICellValidationRule, IAdaptableBlotterObject } from "../../Core/Api/Int
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -66,7 +67,7 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
         ]
 
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
+            let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return <CellValidationEntityRow
                 key={index}
                 cssClassName={cssClassName}

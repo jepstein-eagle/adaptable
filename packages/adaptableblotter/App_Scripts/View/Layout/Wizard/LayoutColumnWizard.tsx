@@ -22,7 +22,6 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
         this.state = {
             SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.Columns, this.props.Columns)
         }
-        //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
 
     render(): any {

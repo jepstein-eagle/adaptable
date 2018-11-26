@@ -5,6 +5,7 @@ import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid/dist/lib/fil
 import { FloatingFilterFormReact } from "../../View/Components/FilterForm/FloatingFilterForm";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { DistinctCriteriaPairValue } from "../../Core/Enums";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 
@@ -15,7 +16,7 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
             let colId = params.column.getColId()
             this.filterContainer = document.createElement("div")
             this.filterContainer.id = "floatingFilter_" + colId
-            let column : IColumn =  blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
+            let column: IColumn  = ColumnHelper.getColumnFromId(colId, blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
             let filterContext: IColumnFilterContext = {
                 Column:column,
                 Blotter: blotter,

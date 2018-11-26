@@ -24,6 +24,7 @@ import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Core/Constants/StyleConstants";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
@@ -64,7 +65,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
         let col: IColumn
         if (this.props.PreviewInfo) {
-            col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId)
+            col  = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
         }
 
         let hasDataTypeError = false;

@@ -68,6 +68,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { AlertToolbarControl } from '../../View/Alert/AlertToolbarControl';
+import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
 
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -711,8 +712,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             // set columns
             let blotterColumns: IColumn[] = []
             currentLayout.Columns.forEach(c => {
-              let column: IColumn = gridState.Columns.find(x => x.ColumnId == c)
-              if (column) {
+               let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
+             if (column) {
                 blotterColumns.push(column);
               } else {
                 AdaptableBlotterLogger.LogWarning("Column '" + c + "' not found")

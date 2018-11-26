@@ -70,7 +70,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCellInfo.Selection) {
                 for (var selectedCell of keyValuePair[1]) {
-                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedCell.columnId);
+                    let selectedColumn: IColumn = ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
                     if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof selectedCell.value != "number") {

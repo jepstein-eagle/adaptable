@@ -28,6 +28,7 @@ import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObj
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -49,7 +50,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
     componentWillMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-            this.setState({ SelectedColumn: this.props.Columns.find(c => c.ColumnId == this.props.PopupParams), ShowSelector: false })
+            let column = ColumnHelper.getColumnFromId(this.props.PopupParams, this.props.Columns);
+            this.setState({ SelectedColumn: column, ShowSelector: false })
         }
     }
 

@@ -11,6 +11,7 @@ import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper'
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
+import { ColumnHelper } from '../Helpers/ColumnHelper';
 
 export class ValidationService implements IValidationService {
 
@@ -99,7 +100,8 @@ export class ValidationService implements IValidationService {
             return true;
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
-        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent), columns.find(c => c.ColumnId == dataChangedEvent.ColumnId), this.blotter, null)
+        let column: IColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
+        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent), column, this.blotter, null)
         return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter)
     }
 

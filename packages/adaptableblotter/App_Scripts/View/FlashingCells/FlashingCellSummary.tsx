@@ -13,6 +13,7 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IFlashingCell } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[]
@@ -32,14 +33,14 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         colItems.push({ Size: 3, Content: <b>{StrategyConstants.FlashingCellsStrategyName}</b> });
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
-        
-        return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems ={colItems} />
-     }
+
+        return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems={colItems} />
+    }
 
     onFlashingSelectedChanged(flashingCell: IFlashingCell) {
         let existingfc = this.props.FlashingCells.find(e => e.ColumnId == this.props.SummarisedColumn.ColumnId)
         if (!existingfc) {
-            let col: IColumn = this.props.Columns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
+            let col: IColumn = ColumnHelper.getColumnFromId(this.props.SummarisedColumn.ColumnId, this.props.Columns);
             existingfc = ObjectFactory.CreateDefaultFlashingCell(col);
             this.props.onSelectFlashingCell(existingfc)
         }

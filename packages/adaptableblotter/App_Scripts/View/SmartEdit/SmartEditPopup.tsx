@@ -22,6 +22,7 @@ import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
@@ -55,7 +56,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
         let col: IColumn
         if (this.props.PreviewInfo) {
-            col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId)
+            col = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
         }
 
 

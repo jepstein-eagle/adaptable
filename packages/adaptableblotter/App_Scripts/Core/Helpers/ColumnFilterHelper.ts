@@ -13,7 +13,7 @@ export module ColumnFilterHelper {
     export function ConvertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): KeyValuePair[] {
         let infoBody: KeyValuePair[] = []
         columnFilters.forEach(x => {
-            let column: IColumn = columns.find(c => c.ColumnId == x.ColumnId);
+            let column: IColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
             if (column) {
                 let expression: string = ExpressionHelper.ConvertExpressionToString(x.Filter, columns, false)
                 infoBody.push({ Key: ColumnHelper.getFriendlyNameFromColumnId(x.ColumnId, columns), Value: expression })

@@ -26,6 +26,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { AccessLevel } from "../../Core/Enums";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -67,8 +68,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             { Content: "", Size: 2 },
         ]
         let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-            let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
-
+            let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
+          
             return <PlusMinusEntityRow
                 cssClassName={cssClassName}
                 colItems={colItems}

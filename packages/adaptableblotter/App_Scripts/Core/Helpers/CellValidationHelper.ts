@@ -18,7 +18,7 @@ export module CellValidationHelper {
         if (!ExpressionHelper.OperatorRequiresValue(cellValidationRule.Range.Operator)) {
             return valueDescription;
         }
-        let dataType: DataType = columns.find(c => c.ColumnId == cellValidationRule.ColumnId).DataType;
+        let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns);
         let operand1Text: string = (dataType == DataType.Boolean || dataType == DataType.Number) ?
             cellValidationRule.Range.Operand1 :
             "'" + cellValidationRule.Range.Operand1 + "'"

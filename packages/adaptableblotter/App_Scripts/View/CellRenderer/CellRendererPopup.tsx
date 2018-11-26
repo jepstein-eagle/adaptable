@@ -20,6 +20,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IPercentCellRenderer, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface CellRendererPopupProps extends StrategyViewPopupProps<CellRendererPopupComponent> {
     PercentCellRenderers: IPercentCellRenderer[];
@@ -69,7 +70,7 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
         ]
 
         let CellRendererItems = this.props.PercentCellRenderers.map((percentCellRenderer:IPercentCellRenderer, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == percentCellRenderer.ColumnId)
+            let column = ColumnHelper.getColumnFromId(percentCellRenderer.ColumnId, this.props.Columns);
             return <CellRendererEntityRow
                 key={index}
                 cssClassName={cssClassName}

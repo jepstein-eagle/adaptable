@@ -5,7 +5,6 @@ import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { INFO_BSSTYLE, WARNING_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
 }
@@ -13,7 +12,6 @@ export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDef
 export interface AlertTypeWizardState {
     MessageType: MessageType,
     ShowAsPopup: boolean,
-
 }
 
 export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, AlertTypeWizardState> implements AdaptableWizardStep {
@@ -21,7 +19,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     constructor(props: AlertTypeWizardProps) {
         super(props)
         this.state = {
-            MessageType: this.props.Data.MessageType as MessageType,
+            MessageType: this.props.Data.MessageType,
             ShowAsPopup: this.props.Data.ShowAsPopup,
         }
     }
@@ -103,5 +101,3 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     }
     public StepName = this.props.StepName
 }
-
-

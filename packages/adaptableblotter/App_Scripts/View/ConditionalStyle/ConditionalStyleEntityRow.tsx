@@ -18,8 +18,8 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
     render(): any {
         let conditionalStyle: IConditionalStyle = this.props.AdaptableBlotterObject as IConditionalStyle;
 
-        let column = this.props.Columns.find(x => x.ColumnId == conditionalStyle.ColumnId)
-
+        let column = ColumnHelper.getColumnFromId(conditionalStyle.ColumnId, this.props.Columns);
+         
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content =this.getScope(conditionalStyle);

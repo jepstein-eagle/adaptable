@@ -21,6 +21,7 @@ import { IAlert, } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -213,8 +214,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     onSetColumnVisibility(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let changedColumnn: IColumn = this.props.Columns.find(c => c.ColumnId == e.value);
-
+        let changedColumnn: IColumn = ColumnHelper.getColumnFromId(e.value, this.props.Columns);
+          
         let columns: IColumn[] = [].concat(this.props.Columns);
         changedColumnn = Object.assign({}, changedColumnn, {
             Visible: !changedColumnn.Visible

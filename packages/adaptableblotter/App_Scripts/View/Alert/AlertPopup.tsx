@@ -23,6 +23,7 @@ import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IAlertDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { MessageType, AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
@@ -63,7 +64,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         ]
 
         let AlertItems = this.props.AlertDefinitions.map((x, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
+            let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return <AlertEntityRow
                 key={index}
                 cssClassName={cssClassName}
