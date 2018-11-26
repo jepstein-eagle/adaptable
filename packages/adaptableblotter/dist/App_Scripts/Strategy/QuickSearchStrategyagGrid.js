@@ -6,10 +6,9 @@ class QuickSearchStrategyagGrid extends QuickSearchStrategy_1.QuickSearchStrateg
         super(blotter);
     }
     postSearch() {
-        let theBlotter = this.blotter;
         if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
             //TODO : This is probably temporary and is used to reevaluate the quicksearch CellClassRules
-            theBlotter.redrawRows();
+            this.blotter.redraw();
         }
     }
 }

@@ -27,7 +27,7 @@ export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
 
-    VendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid';
+    VendorGridName: 'agGrid' | 'Hypergrid' ;
     EmbedColumnMenu: boolean
 
     // Services

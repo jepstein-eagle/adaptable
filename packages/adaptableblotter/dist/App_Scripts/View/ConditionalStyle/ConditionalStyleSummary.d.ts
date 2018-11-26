@@ -3,9 +3,11 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
 import { IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IColumnCategory } from "../../Core/Interface/Interfaces";
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyle[];
     ColorPalette: string[];
+    ColumnCategories: IColumnCategory[];
     StyleClassNames: string[];
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction;
 }

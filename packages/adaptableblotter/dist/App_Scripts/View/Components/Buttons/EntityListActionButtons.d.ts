@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
+import { Sizes } from 'react-bootstrap';
 import { AccessLevel } from "../../../Core/Enums";
 export interface EntityListActionButtonsProps extends React.ClassAttributes<EntityListActionButtons> {
     editClick?: () => void;
@@ -17,6 +18,9 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     EntityName: string;
     cssClassName: string;
     AccessLevel: AccessLevel;
+    editSize: Sizes;
+    deleteSize: Sizes;
+    shareSize: Sizes;
 }
 export declare class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
     static defaultProps: EntityListActionButtonsProps;

@@ -56,6 +56,8 @@ const ChartService_1 = require("../../Core/Services/ChartService");
 const HypergridThemes_1 = require("./HypergridThemes");
 const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
 const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
+const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnCategoryStrategy_1 = require("../../Strategy/ColumnCategoryStrategy");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -113,12 +115,14 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
         this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy_1.ConditionalStyleHypergridStrategy(this));
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy_1.FlashingCellsHypergridStrategy(this));
@@ -474,8 +478,8 @@ class AdaptableBlotter {
             func(element);
         }
     }
-    getRecordIsSatisfiedFunction(id, type) {
-        if (type == "getColumnValue") {
+    getRecordIsSatisfiedFunction(id, distinctCriteria) {
+        if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
             let record = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
             return (columnId) => {
                 let column = this.getHypergridColumn(columnId);
@@ -486,8 +490,8 @@ class AdaptableBlotter {
             return (columnId) => { return this.getDisplayValue(id, columnId); };
         }
     }
-    getRecordIsSatisfiedFunctionFromRecord(record, type) {
-        if (type == "getColumnValue") {
+    getRecordIsSatisfiedFunctionFromRecord(record, distinctCriteria) {
+        if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
             return (columnId) => {
                 let column = this.getHypergridColumn(columnId);
                 return this.valOrFunc(record, column);
@@ -828,6 +832,9 @@ class AdaptableBlotter {
         this.hyperGrid.behavior.changed();
         this.setColumnIntoStore();
     }
+    addFreeTextColumnToGrid(freeTextColumn) {
+        // to do
+    }
     isGroupRecord() {
         return false;
     }
@@ -924,7 +931,7 @@ class AdaptableBlotter {
                     let filterContext = {
                         Column: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == e.detail.primitiveEvent.column.name),
                         Blotter: this,
-                        ShowCloseButton: true
+                        ShowCloseButton: true,
                     };
                     this.filterContainer.style.visibility = 'visible';
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
@@ -934,9 +941,12 @@ class AdaptableBlotter {
                     let colId = e.detail.primitiveEvent.column.name;
                     //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
                     this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
-                    this.Strategies.forEach(s => {
-                        s.addContextMenuItem(colId);
-                    });
+                    let column = ColumnHelper_1.ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+                    if (column != null) {
+                        this.Strategies.forEach(s => {
+                            s.addContextMenuItem(column);
+                        });
+                    }
                     ReactDOM.render(FilterForm_1.FilterFormReact(filterContext), this.filterContainer);
                 }
                 e.preventDefault();
@@ -1210,6 +1220,18 @@ class AdaptableBlotter {
         }
         return true;
     }
+    isQuickFilterable() {
+        return false;
+    }
+    isQuickFilterActive() {
+        return false;
+    }
+    showQuickFilter() {
+        // todo
+    }
+    hideQuickFilter() {
+        // todo
+    }
     applyLightTheme() {
         if (this.BlotterOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getLightTheme());
@@ -1233,6 +1255,18 @@ class AdaptableBlotter {
             }
             return origgetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName);
         };
+    }
+    addPercentCellRenderer(pcr) {
+        // to do
+    }
+    removePercentCellRenderer(pcr) {
+        // todo
+    }
+    editPercentCellRenderer(pcr) {
+        // todo
+    }
+    redraw() {
+        this.ReindexAndRepaint();
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

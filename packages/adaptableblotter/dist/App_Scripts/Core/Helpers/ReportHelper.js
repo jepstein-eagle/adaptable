@@ -20,7 +20,7 @@ var ReportHelper;
             case Enums_1.ReportColumnScope.SelectedColumns:
                 return "[Selected Columns]";
             case Enums_1.ReportColumnScope.BespokeColumns:
-                return Report.Columns.map(c => cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
+                return Report.ColumnIds.map(c => cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
         }
     }
     ReportHelper.GetReportColumnsDescription = GetReportColumnsDescription;
@@ -63,7 +63,7 @@ var ReportHelper;
                 }
                 break;
             case Enums_1.ReportColumnScope.BespokeColumns:
-                ReportColumns = Report.Columns.map(c => gridColumns.find(col => col.ColumnId == c));
+                ReportColumns = Report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
                 break;
         }
         // populate the first row
@@ -127,21 +127,21 @@ var ReportHelper;
             Name: ReportHelper.ALL_DATA_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.AllColumns,
             ReportRowScope: Enums_1.ReportRowScope.AllRows,
-            Columns: [],
+            ColumnIds: [],
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         _systemReports.push({
             Name: ReportHelper.VISIBLE_DATA_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.VisibleColumns,
             ReportRowScope: Enums_1.ReportRowScope.VisibleRows,
-            Columns: [],
+            ColumnIds: [],
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         _systemReports.push({
             Name: ReportHelper.SELECTED_CELLS_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.SelectedColumns,
             ReportRowScope: Enums_1.ReportRowScope.SelectedRows,
-            Columns: [],
+            ColumnIds: [],
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         return _systemReports;

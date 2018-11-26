@@ -72,7 +72,7 @@ class ExportPopupComponent extends React.Component {
         let report = this.state.EditedAdaptableBlotterObject;
         return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(report.Name) &&
             ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != Enums_1.ReportColumnScope.BespokeColumns || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(report.Columns));
+            (report.ReportColumnScope != Enums_1.ReportColumnScope.BespokeColumns || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(report.ColumnIds));
     }
     onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyReport(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });

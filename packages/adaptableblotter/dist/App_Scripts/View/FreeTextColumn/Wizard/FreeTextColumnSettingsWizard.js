@@ -33,7 +33,7 @@ class FreeTextColumnSettingsWizard extends React.Component {
                             React.createElement(react_bootstrap_1.ControlLabel, null, "Default Value")),
                         React.createElement(react_bootstrap_1.Col, { xs: 8 },
                             React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName", validationState: null },
-                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.DefaultValue, type: "text", placeholder: "Default Value", onChange: (e) => this.handleDefaultValueChange(e) }),
+                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.DefaultValue, type: "text", placeholder: "Default Column Value (not required)", onChange: (e) => this.handleDefaultValueChange(e) }),
                                 React.createElement(react_bootstrap_1.FormControl.Feedback, null),
                                 React.createElement(react_bootstrap_1.HelpBlock, null, ""))),
                         React.createElement(react_bootstrap_1.Col, { xs: 1 },

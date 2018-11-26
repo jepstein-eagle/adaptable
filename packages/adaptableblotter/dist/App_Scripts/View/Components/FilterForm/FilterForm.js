@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRedux");
 const UserFilterRedux = require("../../../Redux/ActionsReducers/UserFilterRedux");
-const SystemFilterRedux = require("../../../Redux/ActionsReducers/SystemFilterRedux");
+const HomeRedux = require("../../../Redux/ActionsReducers/HomeRedux");
 const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
 const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
 const FilterHelper_1 = require("../../../Core/Helpers/FilterHelper");
@@ -52,7 +52,9 @@ class FilterFormComponent extends React.Component {
                                 distinctItem;
                             columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
                         });
-                        let distinctCriteriaPairValue = result.DistinctCriteriaPairValue == 'RawValue' ? Enums_1.DistinctCriteriaPairValue.RawValue : Enums_1.DistinctCriteriaPairValue.DisplayValue;
+                        let distinctCriteriaPairValue = (result.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.RawValue) ?
+                            Enums_1.DistinctCriteriaPairValue.RawValue :
+                            Enums_1.DistinctCriteriaPairValue.DisplayValue;
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                         // set the UIPermittedValues for this column to what has been sent
                         this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
@@ -119,7 +121,7 @@ class FilterFormComponent extends React.Component {
         columnValues.forEach(columnValue => {
             let columnValuePair = (this.state.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) ?
                 this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue) :
-                this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue);
+                this.state.ColumnValuePairs.find(cvp => cvp.RawValue == columnValue);
             displayValues.push(columnValuePair.DisplayValue);
             rawValues.push(columnValuePair.RawValue);
         });
@@ -200,7 +202,7 @@ function mapDispatchToProps(dispatch) {
         onClearColumnFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(SystemFilterRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(HomeRedux.HideFilterForm()),
     };
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);

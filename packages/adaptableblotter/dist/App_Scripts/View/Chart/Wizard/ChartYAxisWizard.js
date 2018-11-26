@@ -12,7 +12,7 @@ class ChartYAxisWizard extends React.Component {
         super(props);
         this.StepName = this.props.StepName;
         this.state = {
-            YAxisColumn: props.Data.YAxisColumn,
+            YAxisColumn: props.Data.YAxisColumnId,
         };
     }
     render() {
@@ -44,7 +44,7 @@ class ChartYAxisWizard extends React.Component {
     }
     canBack() { return true; }
     Next() {
-        this.props.Data.YAxisColumn = this.state.YAxisColumn;
+        this.props.Data.YAxisColumnId = this.state.YAxisColumn;
     }
     Back() {
         // todo

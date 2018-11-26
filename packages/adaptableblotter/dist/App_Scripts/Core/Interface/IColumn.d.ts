@@ -7,5 +7,4 @@ export interface IColumn {
     ReadOnly: boolean;
     Sortable: boolean;
     Filterable: boolean;
-    Category?: string;
 }

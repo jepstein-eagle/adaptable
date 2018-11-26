@@ -14,7 +14,7 @@ import { ICalculatedColumnExpressionService } from "../../Core/Services/Interfac
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ICalculatedColumn, IGridSort } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -64,8 +64,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setValue(cellInfo: ICellInfo): void;
     setValueBatch(batchValues: ICellInfo[]): void;
     cancelEdit(): void;
-    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any;
-    getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any;
+    getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
+    getRecordIsSatisfiedFunctionFromRecord(record: AdaptableGrid.Row, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getColumnIndex(columnId: string): number;
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
@@ -85,6 +85,9 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     forAllVisibleRecordsDo(func: (record: any) => any): void;
     getAllRows(): any[];
     getAllVisibleRows(): any[];
+    addPercentCellRenderer(pcr: IPercentCellRenderer): void;
+    editPercentCellRenderer(pcr: IPercentCellRenderer): void;
+    removePercentCellRenderer(pcr: IPercentCellRenderer): void;
     applyGridFiltering(): void;
     clearGridFiltering(): void;
     clearColumnFiltering(columnIds: string[]): void;
@@ -92,6 +95,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
+    addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void;
     isGroupRecord(record: any): boolean;
     getFirstRecord(): any;
     rendergrid(): void;
@@ -108,6 +112,11 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;
+    isQuickFilterable(): boolean;
+    isQuickFilterActive(): boolean;
+    showQuickFilter(): void;
+    hideQuickFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
+    redraw(): void;
 }

@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const MenuItem_1 = require("../Core/MenuItem");
 const MenuRedux = require("../Redux/ActionsReducers/MenuRedux");
+const Enums_1 = require("../Core/Enums");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
-const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
 class AdaptableStrategyBase {
     constructor(Id, blotter) {
         this.Id = Id;
@@ -32,7 +32,7 @@ class AdaptableStrategyBase {
     addPopupMenuItem() {
         // base class implementation which is empty
     }
-    addContextMenuItem(columnId) {
+    addContextMenuItem(column) {
         // base class implementation which is empty
     }
     getStrategyEntitlement() {
@@ -86,19 +86,23 @@ class AdaptableStrategyBase {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.AddItemColumnContextMenu(menuItem));
         }
     }
-    canCreateContextMenuItem(columnId, blotter, functionType = "") {
+    canCreateContextMenuItem(column, blotter, functionType = "") {
         if (this.isReadOnlyStrategy()) {
             return false;
         }
-        let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-        if (column == null) {
-            return false;
-        }
-        if (functionType == "sort" && !column.Sortable) {
-            return false;
-        }
-        else if (functionType == "filter" && (!column.Filterable || !blotter.isFilterable())) {
-            return false;
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(functionType)) {
+            if (functionType == "sort") {
+                return column.Sortable;
+            }
+            else if (functionType == "numeric") {
+                return column.DataType == Enums_1.DataType.Number;
+            }
+            else if (functionType == "filter") {
+                return column.Filterable && blotter.isFilterable();
+            }
+            else if (functionType == "quickfilter") {
+                return (blotter.isQuickFilterable() && blotter.BlotterOptions.useAdaptableBlotterFloatingFilter);
+            }
         }
         return true;
     }

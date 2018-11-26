@@ -31,12 +31,17 @@ class StyleService {
             this.FormatColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn;
             this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
             this.clearCSSRules();
+            // Format Column
             this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
                 let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.FormatColumnStrategyId, this.FormatColumnState.FormatColumns.indexOf(formatColumn), this.blotter);
                 this.addCSSRule("." + styleName, 'background-color: ' + formatColumn.Style.BackColor + ' !important;color: ' + formatColumn.Style.ForeColor + ' !important;font-weight: ' + formatColumn.Style.FontWeight + ' !important;font-style: ' + formatColumn.Style.FontStyle + ' !important;' + (formatColumn.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(formatColumn.Style.FontSize) + ' !important') : ''));
             });
             //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
             this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row).forEach((element, index) => {
+                let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter);
+                this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''));
+            });
+            this.ConditionalStyleState.ConditionalStyles.filter(x => x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory).forEach((element, index) => {
                 let styleName = StyleHelper_1.StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, this.ConditionalStyleState.ConditionalStyles.indexOf(element), this.blotter);
                 this.addCSSRule("." + styleName, 'background-color: ' + element.Style.BackColor + ' !important;color: ' + element.Style.ForeColor + ' !important;font-weight: ' + element.Style.FontWeight + ' !important;font-style: ' + element.Style.FontStyle + ' !important;' + (element.Style.FontSize ? ('font-size: ' + EnumExtensions_1.EnumExtensions.getCssFontSizeFromFontSizeEnum(element.Style.FontSize) + ' !important') : ''));
             });
@@ -58,22 +63,9 @@ class StyleService {
     }
     clearCSSRules() {
         this.style.innerHTML = "";
-        // let i = this.sheet.cssRules.length - 1;
-        // while (i >= 0) {
-        //     if ("deleteRule" in this.sheet) { this.sheet.deleteRule(i); }
-        //     else if ("removeRule" in this.sheet) { this.sheet.removeRule(i); }
-        //     i--;
-        // }
     }
     addCSSRule(selector, rules) {
         this.style.innerHTML += selector + "{" + rules + "}" + "\n";
-        // if ("insertRule" in this.sheet) {
-        //     this.style.innerHTML += selector + "{" + rules + "}"
-        //     this.sheet.insertRule(selector + "{" + rules + "}", this.sheet.cssRules.length);
-        // }
-        // else if ("addRule" in this.sheet) {
-        //     this.sheet.addRule(selector, rules);
-        // }
     }
 }
 exports.StyleService = StyleService;

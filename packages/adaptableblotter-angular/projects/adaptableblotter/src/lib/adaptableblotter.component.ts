@@ -11,7 +11,7 @@ import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/ty
 })
 export class AdaptableBlotterComponent implements OnInit {
   @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
-  @Input() vendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid';
+  @Input() vendorGridName: 'agGrid' | 'Hypergrid' ;
 
   @Output() adaptableBlotterMounted = new EventEmitter<any>();
 

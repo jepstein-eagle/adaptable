@@ -14,15 +14,22 @@ class ConditionalStyleEntityRow extends React.Component {
         let conditionalStyle = this.props.AdaptableBlotterObject;
         let column = this.props.Columns.find(x => x.ColumnId == conditionalStyle.ColumnId);
         let colItems = [].concat(this.props.colItems);
-        colItems[0].Content =
-            conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column ?
-                ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns) :
-                "Whole Row";
+        colItems[0].Content = this.getScope(conditionalStyle);
         colItems[1].Content = React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: conditionalStyle.Style });
         colItems[2].Content = ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns);
         let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, conditionalStyle), shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, overrideDisableEdit: (!column && conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: StrategyConstants.ConditionalStyleStrategyName });
         colItems[3].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
+    }
+    getScope(conditionalStyle) {
+        switch (conditionalStyle.ConditionalStyleScope) {
+            case Enums_1.ConditionalStyleScope.Row:
+                return "Row";
+            case Enums_1.ConditionalStyleScope.Column:
+                return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns);
+            case Enums_1.ConditionalStyleScope.ColumnCategory:
+                return "Category: " + conditionalStyle.ColumnCategoryId;
+        }
     }
 }
 exports.ConditionalStyleEntityRow = ConditionalStyleEntityRow;

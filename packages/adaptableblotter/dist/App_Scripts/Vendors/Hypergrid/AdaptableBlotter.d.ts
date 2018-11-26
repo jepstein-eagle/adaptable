@@ -13,7 +13,7 @@ import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ICalculatedColumn, IStyle } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IStyle, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -71,8 +71,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     cancelEdit(): void;
     forAllRecordsDo(func: (record: any) => any): any;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
-    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any;
-    getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any;
+    getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
+    getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getColumnIndex(columnId: string): number;
     private isColumnReadonly;
     private isColumnSortable;
@@ -96,6 +96,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;
+    addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void;
     isGroupRecord(): boolean;
     getFirstRecord(): any;
     destroy(): void;
@@ -116,9 +117,17 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;
+    isQuickFilterable(): boolean;
+    isQuickFilterActive(): boolean;
+    showQuickFilter(): void;
+    hideQuickFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
     private applyAlternateRowStyle;
+    addPercentCellRenderer(pcr: IPercentCellRenderer): void;
+    removePercentCellRenderer(pcr: IPercentCellRenderer): void;
+    editPercentCellRenderer(pcr: IPercentCellRenderer): void;
+    redraw(): void;
 }
 export interface CellStyleHypergrid {
     conditionalStyleColumn?: IStyle;

@@ -6,6 +6,7 @@ const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
 const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
 const StyleHelper_1 = require("../Core/Helpers/StyleHelper");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
+const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
         super(blotter);
@@ -19,6 +20,12 @@ class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.Conditio
             if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
                 if (x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row) {
                     listOfColumns.push(...this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(c => c.ColumnId));
+                }
+                else if (x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
+                    let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
+                    if (columnCategory) {
+                        listOfColumns.push(...columnCategory.ColumnIds);
+                    }
                 }
                 else if (x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column) {
                     listOfColumns.push(x.ColumnId);
@@ -51,6 +58,16 @@ class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.Conditio
                             return ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter);
                         };
                     }
+                    else if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
+                        let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
+                        if (columnCategory) {
+                            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
+                                cellClassRules[styleName] = function (params) {
+                                    return ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter);
+                                };
+                            }
+                        }
+                    }
                     else if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row) {
                         cellClassRules[styleName] = function (params) {
                             return ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter);
@@ -60,7 +77,7 @@ class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.Conditio
                 theBlotter.setCellClassRules(cellClassRules, column.ColumnId, "ConditionalStyle");
             }
         }
-        theBlotter.redrawRows();
+        this.blotter.redraw();
     }
 }
 exports.ConditionalStyleagGridStrategy = ConditionalStyleagGridStrategy;

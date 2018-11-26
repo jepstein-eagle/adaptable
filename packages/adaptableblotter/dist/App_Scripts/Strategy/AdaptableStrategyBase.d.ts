@@ -4,6 +4,7 @@ import { IMenuItem } from '../Core/Interface/IMenu';
 import { Action } from 'redux';
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { IColumn } from '../Core/Interface/IColumn';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 export declare abstract class AdaptableStrategyBase implements IStrategy {
     Id: string;
@@ -15,7 +16,7 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     getPopupMenuItem(): IMenuItem;
     protected hasPopupMenu(): boolean;
     protected addPopupMenuItem(): void;
-    addContextMenuItem(columnId: string): void;
+    addContextMenuItem(column: IColumn): void;
     getStrategyEntitlement(): IEntitlement;
     isVisibleStrategy(): boolean;
     isReadOnlyStrategy(): boolean;
@@ -23,7 +24,7 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     createContextMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any;
     createContextMenuItemShowPopup(Label: string, ComponentName: string, GlyphIcon: string, PopupParams?: string): void;
     addContextMenuItemToStore(menuItem: IMenuItem): void;
-    canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType?: string): boolean;
+    canCreateContextMenuItem(column: IColumn, blotter: IAdaptableBlotter, functionType?: string): boolean;
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void;
     publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IUserState): void;
 }

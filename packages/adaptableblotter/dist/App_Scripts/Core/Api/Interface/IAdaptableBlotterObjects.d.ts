@@ -1,7 +1,7 @@
 import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Interface/Interfaces';
-import { KeyValuePair } from '../../../View/UIInterfaces';
+import { FreeTextStoredValue } from '../../../View/UIInterfaces';
 /**
  * The base empty Adaptable Blotter Object interface
  */
@@ -64,10 +64,10 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Type: 'Bar Chart' | 'Line Chart';
     Name: string;
-    YAxisColumn: string;
-    XAxisColumn: string;
+    YAxisColumnId: string;
+    XAxisColumnId: string;
     XAxisColumnValues: string[];
-    AdditionalColumn?: string;
+    AdditionalColumnId?: string;
     AdditionalColumnValues?: string[];
 }
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
@@ -98,8 +98,9 @@ export interface IColumnFilter extends IAdaptableBlotterObject {
     Filter: Expression;
 }
 export interface IConditionalStyle extends IAdaptableBlotterObject {
-    ColumnId: string;
-    ConditionalStyleScope: 'Column' | 'Row';
+    ColumnId?: string;
+    ColumnCategoryId?: string;
+    ConditionalStyleScope: 'Column' | 'Row' | 'ColumnCategory';
     Expression: Expression;
     Style: IStyle;
 }
@@ -111,7 +112,7 @@ export interface IReport extends IAdaptableBlotterObject {
     Name: string;
     ReportColumnScope: ReportColumnScope;
     ReportRowScope: ReportRowScope;
-    Columns: string[];
+    ColumnIds: string[];
     Expression: Expression;
 }
 export interface IFlashingCell extends IAdaptableBlotterObject {
@@ -128,7 +129,7 @@ export interface IFormatColumn extends IAdaptableBlotterObject {
 export interface IFreeTextColumn extends IAdaptableBlotterObject {
     ColumnId: string;
     DefaultValue: any;
-    StoredValues: KeyValuePair[];
+    FreeTextStoredValues: FreeTextStoredValue[];
 }
 export interface ILayout extends IAdaptableBlotterObject {
     Name: string;
@@ -187,4 +188,15 @@ export interface IStyle {
     FontStyle?: 'Normal' | 'Italic';
     FontSize?: 'XSmall' | 'Small' | 'Medium' | 'Large' | 'XLarge';
     ClassName?: string;
+}
+export interface ICellRenderer extends IAdaptableBlotterObject {
+    ColumnId: string;
+}
+export interface IPercentCellRenderer extends ICellRenderer {
+    MinValue: number;
+    MaxValue: number;
+    PositiveColor: string;
+    NegativeColor: string;
+    ShowValue: boolean;
+    ShowPercentSign: boolean;
 }

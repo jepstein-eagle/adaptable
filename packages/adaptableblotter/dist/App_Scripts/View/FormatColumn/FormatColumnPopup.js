@@ -45,7 +45,7 @@ class FormatColumnPopupComponent extends React.Component {
             { Content: "", Size: 3 },
         ];
         let FormatColumns = this.props.FormatColumns.map((formatColumn, index) => {
-            return React.createElement(FormatColumnEntityRow_1.FormatColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: formatColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: (index, x) => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FormatColumnRedux.FormatColumnDelete(formatColumn) });
+            return React.createElement(FormatColumnEntityRow_1.FormatColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: formatColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: () => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FormatColumnRedux.FormatColumnDelete(formatColumn) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },

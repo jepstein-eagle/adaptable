@@ -12,5 +12,5 @@ export declare module ColumnHelper {
     function getColumnsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): IColumn[];
     function getColumnFromId(columnId: string, columns: IColumn[]): IColumn;
     function getNumericColumns(columns: IColumn[]): IColumn[];
-    function getColumnCategoryFromCategories(columnId: string, categories: IColumnCategory[]): string;
+    function getColumnCategoryFromColumnCategories(columnId: string, ColumnCategoryns: IColumnCategory[]): string;
 }

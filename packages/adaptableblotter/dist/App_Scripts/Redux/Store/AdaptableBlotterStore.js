@@ -21,6 +21,7 @@ const CalculatedColumnRedux = require("../ActionsReducers/CalculatedColumnRedux"
 const ShortcutRedux = require("../ActionsReducers/ShortcutRedux");
 const GridRedux = require("../ActionsReducers/GridRedux");
 const SystemRedux = require("../ActionsReducers/SystemRedux");
+const HomeRedux = require("../ActionsReducers/HomeRedux");
 const PlusMinusRedux = require("../ActionsReducers/PlusMinusRedux");
 const ColumnChooserRedux = require("../ActionsReducers/ColumnChooserRedux");
 const ExportRedux = require("../ActionsReducers/ExportRedux");
@@ -37,8 +38,10 @@ const ThemeRedux = require("../ActionsReducers/ThemeRedux");
 const FormatColumnRedux = require("../ActionsReducers/FormatColumnRedux");
 const FreeTextColumnRedux = require("../ActionsReducers/FreeTextColumnRedux");
 const LayoutRedux = require("../ActionsReducers/LayoutRedux");
+const ColumnCategoryRedux = require("../ActionsReducers/ColumnCategoryRedux");
 const DashboardRedux = require("../ActionsReducers/DashboardRedux");
 const CellValidationRedux = require("../ActionsReducers/CellValidationRedux");
+const CellRendererRedux = require("../ActionsReducers/CellRendererRedux");
 const EntitlementsRedux = require("../ActionsReducers/EntitlementsRedux");
 const TeamSharingRedux = require("../ActionsReducers/TeamSharingRedux");
 const UserInterfaceRedux = require("../ActionsReducers/UserInterfaceRedux");
@@ -75,8 +78,10 @@ const rootReducer = Redux.combineReducers({
     UserFilter: UserFilterRedux.UserFilterReducer,
     SystemFilter: SystemFilterRedux.SystemFilterReducer,
     Theme: ThemeRedux.ThemeReducer,
+    CellRenderer: CellRendererRedux.CellRendererReducer,
     CellValidation: CellValidationRedux.CellValidationReducer,
     Layout: LayoutRedux.LayoutReducer,
+    ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
     Dashboard: DashboardRedux.DashboardReducer,
     Entitlements: EntitlementsRedux.EntitlementsReducer,
     CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
@@ -482,6 +487,9 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     }
                     return returnAction;
                 }
+                /*
+             Calculated Columns
+              */
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
                     let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid(action.Expression);
                     if (!returnObj.IsValid) {
@@ -532,10 +540,66 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let returnAction = next(action);
                     return returnAction;
                 }
-                case SystemFilterRedux.HIDE_FILTER_FORM: {
-                    blotter.hideFilterForm();
-                    return next(action);
+                /*
+                Free Text Columns
+                */
+                case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
+                    let returnAction = next(action);
+                    let freeTextColumn = action.FreeTextColumn;
+                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible);
+                    blotter.addFreeTextColumnToGrid(freeTextColumn);
+                    middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout));
+                    return returnAction;
                 }
+                case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
+                    // not too sure what I need to do - perhaps just refresh everything?
+                    let returnAction = next(action);
+                    return returnAction;
+                }
+                // TODO:  Need to do Delete? 
+                /*
+               Cell Renderer
+               */
+                case CellRendererRedux.CELL_RENDERER_ADD_UPDATE: {
+                    let actionTyped = action;
+                    if (actionTyped.Index >= 0) { // edit so first remove before doing anything
+                        let editedCellRender = middlewareAPI.getState().CellRenderer.PercentCellRenderers[actionTyped.Index];
+                        blotter.removePercentCellRenderer(editedCellRender);
+                    }
+                    let returnAction = next(action);
+                    // add new one
+                    blotter.addPercentCellRenderer(actionTyped.CellRenderer);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                case CellRendererRedux.CELL_RENDERER_DELETE: {
+                    let returnAction = next(action);
+                    let cellRendererState = middlewareAPI.getState().CellRenderer;
+                    let actionTyped = action;
+                    let percentCellRenderer = cellRendererState.PercentCellRenderers[actionTyped.Index];
+                    blotter.removePercentCellRenderer(percentCellRenderer);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                case CellRendererRedux.CELL_RENDERER_CHANGE_POSITIVE_COLOR: {
+                    let returnAction = next(action);
+                    let percentCellRenderer = action.CellRenderer;
+                    let editedCellRender = middlewareAPI.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == percentCellRenderer.ColumnId);
+                    blotter.editPercentCellRenderer(editedCellRender);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                case CellRendererRedux.CELL_RENDERER_CHANGE_NEGATIVE_COLOR: {
+                    let returnAction = next(action);
+                    let percentCellRenderer = action.CellRenderer;
+                    let editedCellRender = middlewareAPI.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == percentCellRenderer.ColumnId);
+                    blotter.editPercentCellRenderer(editedCellRender);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                /*
+                Layout
+                */
                 case LayoutRedux.LAYOUT_SELECT: {
                     let returnAction = next(action);
                     let layoutState = middlewareAPI.getState().Layout;
@@ -628,6 +692,21 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let apiSummaryReturn = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
                     middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
                     return returnAction;
+                }
+                /*  *********
+                 HOME ACTIONS - Filter and quick Filter
+                 ************ */
+                case HomeRedux.QUICK_FILTER_BAR_SHOW: {
+                    blotter.showQuickFilter();
+                    return next(action);
+                }
+                case HomeRedux.QUICK_FILTER_BAR_HIDE: {
+                    blotter.hideQuickFilter();
+                    return next(action);
+                }
+                case HomeRedux.FILTER_FORM_HIDE: {
+                    blotter.hideFilterForm();
+                    return next(action);
                 }
                 /*  *********
                 SMART EDIT ACTIONS
@@ -807,8 +886,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         currentLayout = layoutState.CurrentLayout;
                     }
                     //Create all calculated columns before we load the layout
-                    middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
-                        blotter.addCalculatedColumnToGrid(x);
+                    middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(cc => {
+                        blotter.addCalculatedColumnToGrid(cc);
+                    });
+                    //Create all free text columns before we load the layout
+                    middlewareAPI.getState().FreeTextColumn.FreeTextColumns.forEach(ftc => {
+                        blotter.addFreeTextColumnToGrid(ftc);
                     });
                     //load the default layout if its current
                     if (currentLayout == GeneralConstants_1.DEFAULT_LAYOUT) {

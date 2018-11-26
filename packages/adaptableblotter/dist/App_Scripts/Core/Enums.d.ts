@@ -59,7 +59,8 @@ export declare enum LayoutSource {
 }
 export declare enum ConditionalStyleScope {
     Column = "Column",
-    Row = "Row"
+    Row = "Row",
+    ColumnCategory = "ColumnCategory"
 }
 export declare enum ReportColumnScope {
     AllColumns = "AllColumns",
@@ -150,6 +151,7 @@ export declare enum StateChangedTrigger {
     CalculatedColumn = "CalculatedColumn",
     Calendar = "Calendar",
     CellValidation = "CellValidation",
+    CellRenderer = "CellRenderer",
     Chart = "Chart",
     ColumnFilter = "ColumnFilter",
     ConditionalStyle = "ConditionalStyle",
@@ -161,6 +163,7 @@ export declare enum StateChangedTrigger {
     FormatColumn = "FormatColumn",
     FreeTextColumn = "FreeTextColumn",
     Layout = "Layout",
+    ColumnCategory = "ColumnCategory",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
     SelectedCells = "SelectedCells",

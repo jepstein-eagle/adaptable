@@ -44,7 +44,7 @@ class SingleListBox extends React.Component {
                 return React.createElement(react_bootstrap_1.ListGroupItem, { key: value, style: listGroupItemStyle, onClick: () => this.onClickItem(x), active: isActive, value: value }, display);
             }
         });
-        let header = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e) });
+        let header = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e), DisableSort: false });
         return React.createElement("div", { className: cssClassName },
             header,
             React.createElement(react_bootstrap_1.ListGroup, { style: this.props.style }, itemsElements));

@@ -10,9 +10,9 @@ class ColumnInfoStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyConstants.ColumnInfoGlyph);
     }
-    addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            this.createContextMenuItemShowPopup(StrategyConstants.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyConstants.ColumnInfoGlyph, columnId);
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            this.createContextMenuItemShowPopup(StrategyConstants.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyConstants.ColumnInfoGlyph, column.ColumnId);
         }
     }
 }

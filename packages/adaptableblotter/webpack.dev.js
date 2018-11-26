@@ -4,28 +4,28 @@ var failPlugin = require('webpack-fail-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var conditionalEntry = {
-    'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
+   // 'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
     'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
     'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
     'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
     harness: "./Harness/DataGenerator.ts",
   //  'AdaptableBlotterReact': ["./App_Scripts/View/AdaptableBlotterReact.tsx"],
 };
-if (process.env.arg == "kendo") {
-    conditionalEntry = {
-        'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
-        harness: "./Harness/DataGenerator.ts"
-    };
-} else if (process.env.arg == "hypergrid") {
+//if (process.env.arg == "kendo") {
+ //   conditionalEntry = {
+ //       'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
+ //       harness: "./Harness/DataGenerator.ts"
+ //   };
+  if (process.env.arg == "hypergrid") {
     conditionalEntry = {
         'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
-} else if (process.env.arg == "adaptablegrid") {
-    conditionalEntry = {
-        'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
-        harness: "./Harness/DataGenerator.ts"
-    };
+//} else if (process.env.arg == "adaptablegrid") {
+//    conditionalEntry = {
+//        'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
+//        harness: "./Harness/DataGenerator.ts"
+//    };
 }
 else if (process.env.arg == "aggrid") {
     conditionalEntry = {

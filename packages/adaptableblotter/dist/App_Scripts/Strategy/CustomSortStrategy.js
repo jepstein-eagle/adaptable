@@ -21,12 +21,12 @@ class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph);
     }
-    addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId, this.blotter, "sort")) {
-            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter, "sort")) {
+            let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
             let label = (customSort) ? "Edit " : "Create ";
             let popupParam = (customSort) ? "Edit|" : "New|";
-            this.createContextMenuItemShowPopup(label + StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph, popupParam + columnId);
+            this.createContextMenuItemShowPopup(label + StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph, popupParam + column.ColumnId);
         }
     }
     removeCustomSorts() {

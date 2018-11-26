@@ -1,11 +1,11 @@
 import { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn } from './Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentCellRenderer } from './Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, RangeOperandType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { Expression } from './Api/Expression';
-import { IVendorGridInfo } from './Interface/Interfaces';
+import { IVendorGridInfo, IColumnCategory } from './Interface/Interfaces';
 export declare module ObjectFactory {
     function CreateEmptyCustomSort(): ICustomSort;
     function CreateEmptyChartDefinition(): IChartDefinition;
@@ -13,9 +13,11 @@ export declare module ObjectFactory {
     function CreateEmptyPlusMinusRule(): IPlusMinusRule;
     function CreateEmptyAlertDefinition(): IAlertDefinition;
     function CreateEmptyAdvancedSearch(): IAdvancedSearch;
+    function CreateEmptyColumnCategory(): IColumnCategory;
     function CreateEmptyRange(): IRange;
     function CreateEmptyGridSort(): IGridSort;
     function CreateEmptyCellValidation(): ICellValidationRule;
+    function CreateEmptyPercentCellRenderer(): IPercentCellRenderer;
     function CreateEmptyUserFilter(): IUserFilter;
     function CreateEmptyReport(): IReport;
     function CreateDefaultFlashingCell(column: IColumn): IFlashingCell;

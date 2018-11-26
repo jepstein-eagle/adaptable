@@ -5,4 +5,5 @@ export interface ICalculatedColumnExpressionService {
     };
     ComputeExpressionValue(expression: string, record: any): any;
     getColumnListFromExpression(expression: string): string[];
+    Test(expression: string, record: any): any;
 }

@@ -20,9 +20,9 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const ColumnChooserSummary_1 = require("../ColumnChooser/ColumnChooserSummary");
 const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
 const EntitlementHelper_1 = require("../../Core/Helpers/EntitlementHelper");
+const ColumnCategorySummary_1 = require("../ColumnCategory/ColumnCategorySummary");
 class ColumnInfoPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -44,9 +44,9 @@ class ColumnInfoPopupComponent extends React.Component {
         let selectedColumnId = (this.state.SelectedColumn) ? this.state.SelectedColumn.ColumnId : null;
         let headerText = StrategyConstants.ColumnInfoStrategyName;
         let summaries = [];
-        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories)) {
-            summaries.push(React.createElement("div", { key: StrategyConstants.ColumnChooserStrategyId, className: this.isStrategyReadOnly(StrategyConstants.ColumnChooserStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ColumnChooserSummary_1.ColumnChooserSummary, { key: StrategyConstants.ColumnChooserStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, AccessLevel: this.getAccessLevel(StrategyConstants.ColumnChooserStrategyId) })));
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategory)) {
+            summaries.push(React.createElement("div", { key: StrategyConstants.ColumnCategoryStrategyId, className: this.isStrategyReadOnly(StrategyConstants.ColumnCategoryStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(ColumnCategorySummary_1.ColumnCategorySummary, { key: StrategyConstants.ColumnChooserStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, AccessLevel: this.getAccessLevel(StrategyConstants.ColumnChooserStrategyId) })));
         }
         if (this.isStrategyVisible(StrategyConstants.CustomSortStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyConstants.CustomSortStrategyId, className: this.isStrategyReadOnly(StrategyConstants.CustomSortStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
@@ -118,7 +118,7 @@ class ColumnInfoPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        ColumnCategories: state.UserInterface.ColumnCategories,
+        ColumnCategory: state.ColumnCategory.ColumnCategories,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }

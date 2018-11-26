@@ -7,6 +7,7 @@ exports.ApplicationStrategyId = "Application";
 exports.BulkUpdateStrategyId = "BulkUpdate";
 exports.CalculatedColumnStrategyId = "CalculatedColumn";
 exports.CalendarStrategyId = "Calendar";
+exports.CellRendererStrategyId = "CellRenderer";
 exports.CellValidationStrategyId = "CellValidation";
 exports.ChartStrategyId = "Chart";
 exports.ColumnChooserStrategyId = "ColumnChooser";
@@ -15,7 +16,7 @@ exports.ColumnInfoStrategyId = "ColumnInfo";
 exports.ConditionalStyleStrategyId = "ConditionalStyle";
 exports.CustomSortStrategyId = "CustomSort";
 exports.DashboardStrategyId = "Dashboard";
-exports.DataManagementStrategyId = "UserDataManagement";
+exports.DataManagementStrategyId = "DataManagement";
 exports.DataSourceStrategyId = "DataSource";
 exports.ExportStrategyId = "Export";
 exports.FlashingCellsStrategyId = "FlashingCells";
@@ -23,6 +24,7 @@ exports.FormatColumnStrategyId = "FormatColumn";
 exports.FreeTextColumnStrategyId = "FreeTextColumn";
 exports.HomeStrategyId = "Home";
 exports.LayoutStrategyId = "Layout";
+exports.ColumnCategoryStrategyId = "ColumnCategory";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
 exports.SelectColumnStrategyId = "SelectColumn";
@@ -33,12 +35,13 @@ exports.TeamSharingStrategyId = "TeamSharing";
 exports.ThemeStrategyId = "Theme";
 exports.UserFilterStrategyId = "UserFilter";
 // Strategy Names
-exports.AlertStrategyName = "Alert";
 exports.AdvancedSearchStrategyName = "Advanced Search";
+exports.AlertStrategyName = "Alert";
 exports.ApplicationStrategyName = "Application";
 exports.BulkUpdateStrategyName = "Bulk Update";
 exports.CalculatedColumnStrategyName = "Calculated Column";
 exports.CalendarStrategyName = "Calendar";
+exports.CellRendererStrategyName = "Cell Renderer";
 exports.CellValidationStrategyName = "Cell Validation";
 exports.ChartStrategyName = "Chart";
 exports.ColumnChooserStrategyName = "Column Chooser";
@@ -51,9 +54,10 @@ exports.DataManagementStrategyName = "Manage State";
 exports.DataSourceStrategyName = "Data Source";
 exports.ExportStrategyName = "Export";
 exports.FlashingCellsStrategyName = "Flashing Cells";
-exports.FormatColumnStrategyName = "Format Column";
+exports.FormatColumnStrategyName = "Formatted Column";
 exports.FreeTextColumnStrategyName = "Free Text Column";
 exports.LayoutStrategyName = "Layout";
+exports.ColumnCategoryStrategyName = "Column Category";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
 exports.SelectColumnStrategyName = "Select Column";
@@ -64,12 +68,13 @@ exports.TeamSharingStrategyName = "Team Sharing";
 exports.ThemeStrategyName = "Theme";
 exports.UserFilterStrategyName = "User Filter";
 // Strategy Glyphs
-exports.AlertGlyph = "bullhorn";
 exports.AdvancedSearchGlyph = "search";
+exports.AlertGlyph = "bullhorn";
 exports.ApplicationGlyph = "font";
 exports.BulkUpdateGlyph = "hand-up";
 exports.CalculatedColumnGlyph = "th-list";
 exports.CalendarGlyph = "calendar";
+exports.CellRendererGlyph = "tree-conifer";
 exports.CellValidationGlyph = "flag";
 exports.ChartGlyph = "signal";
 exports.ColumnChooserGlyph = "list-alt";
@@ -83,9 +88,10 @@ exports.DataSourceGlyph = "book";
 exports.ExportGlyph = "export";
 exports.FlashingCellGlyph = "flash";
 exports.FormatColumnGlyph = "picture";
-exports.FreeTextColumnGlyph = "picture";
+exports.FreeTextColumnGlyph = "comment";
 exports.FunctionsGlyph = "home";
 exports.LayoutGlyph = "th";
+exports.ColumnCategoryGlyph = "link";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
 exports.SelectColumnGlyph = "compressed";
@@ -111,6 +117,8 @@ function getIdForStrategyName(strategyName) {
             return exports.CalendarStrategyId;
         case exports.CellValidationStrategyName:
             return exports.CellValidationStrategyId;
+        case exports.CellRendererStrategyName:
+            return exports.CellRendererStrategyId;
         case exports.ChartStrategyName:
             return exports.ChartStrategyId;
         case exports.ColumnChooserStrategyName:
@@ -139,6 +147,8 @@ function getIdForStrategyName(strategyName) {
             return exports.FreeTextColumnStrategyId;
         case exports.LayoutStrategyName:
             return exports.LayoutStrategyId;
+        case exports.ColumnCategoryStrategyName:
+            return exports.ColumnCategoryStrategyId;
         case exports.PlusMinusStrategyName:
             return exports.PlusMinusStrategyId;
         case exports.QuickSearchStrategyName:
@@ -176,6 +186,8 @@ function getNameForStrategyId(strategyID) {
             return exports.CalendarStrategyName;
         case exports.CellValidationStrategyId:
             return exports.CellValidationStrategyName;
+        case exports.CellRendererStrategyId:
+            return exports.CellRendererStrategyName;
         case exports.ChartStrategyId:
             return exports.ChartStrategyName;
         case exports.ColumnChooserStrategyId:
@@ -204,6 +216,8 @@ function getNameForStrategyId(strategyID) {
             return exports.FreeTextColumnStrategyName;
         case exports.LayoutStrategyId:
             return exports.LayoutStrategyName;
+        case exports.ColumnCategoryStrategyId:
+            return exports.ColumnCategoryStrategyName;
         case exports.PlusMinusStrategyId:
             return exports.PlusMinusStrategyName;
         case exports.QuickSearchStrategyId:
@@ -241,6 +255,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.CalendarGlyph;
         case exports.CellValidationStrategyId:
             return exports.CellValidationGlyph;
+        case exports.CellRendererStrategyId:
+            return exports.CellRendererGlyph;
         case exports.ChartStrategyId:
             return exports.ChartGlyph;
         case exports.ColumnChooserStrategyId:
@@ -265,6 +281,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.FreeTextColumnGlyph;
         case exports.LayoutStrategyId:
             return exports.LayoutGlyph;
+        case exports.ColumnCategoryStrategyId:
+            return exports.ColumnCategoryGlyph;
         case exports.PlusMinusStrategyId:
             return exports.PlusMinusGlyph;
         case exports.QuickSearchStrategyId:

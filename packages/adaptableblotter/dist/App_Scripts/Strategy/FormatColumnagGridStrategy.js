@@ -29,7 +29,7 @@ class FormatColumnagGridStrategy extends FormatColumnStrategy_1.FormatColumnStra
                 theBlotter.setCellClassRules(cellClassRules, column.ColumnId, "FormatColumn");
             }
         }
-        theBlotter.redrawRows();
+        this.blotter.redraw();
     }
 }
 exports.FormatColumnagGridStrategy = FormatColumnagGridStrategy;

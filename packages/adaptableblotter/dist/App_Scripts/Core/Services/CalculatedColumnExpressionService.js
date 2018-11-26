@@ -59,5 +59,27 @@ class CalculatedColumnExpressionService {
         }
         return columnList;
     }
+    Test(expression, record) {
+        try {
+            if (this.blotter.isGroupRecord(record)) {
+                return null;
+            }
+            return math.eval(expression, {
+                node: record,
+                Col: (columnId) => {
+                    try {
+                        return this.colFunctionValue(columnId, record);
+                    }
+                    catch (e) {
+                        throw Error("Unknown column " + columnId);
+                    }
+                }
+            });
+        }
+        catch (e) {
+            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError(e);
+            return null;
+        }
+    }
 }
 exports.CalculatedColumnExpressionService = CalculatedColumnExpressionService;

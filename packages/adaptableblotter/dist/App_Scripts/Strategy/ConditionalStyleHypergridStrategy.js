@@ -23,6 +23,13 @@ class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy_1.Condi
                     if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row) {
                         theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style });
                     }
+                    else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
+                        let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
+                        columnCategory.ColumnIds.forEach(cc => {
+                            //      alert('ouch')
+                            theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style });
+                        });
+                    }
                     else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column) {
                         theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style });
                     }
@@ -32,6 +39,13 @@ class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy_1.Condi
                 if (ExpressionHelper_1.ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
                     if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row) {
                         theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style });
+                    }
+                    else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
+                        //     alert("here")
+                        let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
+                        columnCategory.ColumnIds.forEach(cc => {
+                            theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style });
+                        });
                     }
                     else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column) {
                         theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style });

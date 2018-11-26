@@ -23,6 +23,7 @@ const FormatColumnPopup_1 = require("./FormatColumn/FormatColumnPopup");
 const ThemePopup_1 = require("./Theme/ThemePopup");
 const CellValidationPopup_1 = require("./CellValidation/CellValidationPopup");
 const LayoutPopup_1 = require("./Layout/LayoutPopup");
+const ColumnCategoryPopup_1 = require("./ColumnCategory/ColumnCategoryPopup");
 const LayoutToolbarControl_1 = require("./Layout/LayoutToolbarControl");
 const ExportToolbarControl_1 = require("./Export/ExportToolbarControl");
 const TeamSharingPopup_1 = require("./TeamSharing/TeamSharingPopup");
@@ -47,6 +48,7 @@ const ChartPopup_1 = require("./Chart/ChartPopup");
 const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
+const CellRendererPopup_1 = require("./CellRenderer/CellRendererPopup");
 exports.AdaptableViewFactory = {
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
     AlertPopup: AlertPopup_1.AlertPopup,
@@ -54,6 +56,7 @@ exports.AdaptableViewFactory = {
     BulkUpdatePopup: BulkUpdatePopup_1.BulkUpdatePopup,
     CalculatedColumnPopup: CalculatedColumnPopup_1.CalculatedColumnPopup,
     CalendarsPopup: CalendarsPopup_1.CalendarsPopup,
+    CellRendererPopup: CellRendererPopup_1.CellRendererPopup,
     CellValidationPopup: CellValidationPopup_1.CellValidationPopup,
     ChartPopup: ChartPopup_1.ChartPopup,
     ColumnChooserPopup: ColumnChooserPopup_1.ColumnChooserPopup,
@@ -72,6 +75,7 @@ exports.AdaptableViewFactory = {
     IPushPullLogin: IPushPullLogin_1.IPushPullLogin,
     IPushPullDomainPageSelector: IPushPullDomainPageSelector_1.IPushPullDomainPageSelector,
     LayoutPopup: LayoutPopup_1.LayoutPopup,
+    ColumnCategoryPopup: ColumnCategoryPopup_1.ColumnCategoryPopup,
     PlusMinusPopup: PlusMinusPopup_1.PlusMinusPopup,
     QuickSearchPopup: QuickSearchPopup_1.QuickSearchPopup,
     SelectedCellsPopup: SelectedCellsPopup_1.SelectedCellsPopup,

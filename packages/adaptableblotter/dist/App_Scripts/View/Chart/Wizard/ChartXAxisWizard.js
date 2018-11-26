@@ -15,11 +15,11 @@ class ChartXAxisWizard extends React.Component {
         this.StepName = this.props.StepName;
         let hasDistinctColumnValues = props.Data.XAxisColumnValues.length > 0 && props.Data.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES;
         this.state = {
-            XAxisColumn: props.Data.XAxisColumn,
+            XAxisColumn: props.Data.XAxisColumnId,
             XAxisColumnValues: props.Data.XAxisColumnValues,
             UseAllXAsisColumnValues: (hasDistinctColumnValues) ? false : true,
-            AvailableXAxisColumnValues: (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumn)) ?
-                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
+            AvailableXAxisColumnValues: (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumnId)) ?
+                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
                 null
         };
     }
@@ -76,7 +76,7 @@ class ChartXAxisWizard extends React.Component {
     }
     canBack() { return true; }
     Next() {
-        this.props.Data.XAxisColumn = this.state.XAxisColumn;
+        this.props.Data.XAxisColumnId = this.state.XAxisColumn;
         this.props.Data.XAxisColumnValues = this.state.XAxisColumnValues;
     }
     Back() {

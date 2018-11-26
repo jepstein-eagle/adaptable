@@ -13,6 +13,7 @@ class ChartDisplayPopupComponent extends React.Component {
         igr_category_chart_module_1.IgrCategoryChartModule.register();
         let currentChartDefinition = this.props.ChartDefinitions.find(cd => cd.Name == this.props.CurrentChartName);
         this.state = {
+            chartDefinition: currentChartDefinition,
             chartData: this.props.ChartService.BuildChartData(currentChartDefinition, this.props.Columns)
         };
     }
@@ -20,7 +21,9 @@ class ChartDisplayPopupComponent extends React.Component {
         let cssClassName = this.props.cssClassName + "__Charts";
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.ChartStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.ChartGlyph }, this.state.chartData != null &&
-                React.createElement(igr_category_chart_1.IgrCategoryChart, { yAxisMinimumValue: 0, chartTitle: this.props.CurrentChartName, yAxisTitle: "Notional", xAxisTitle: "Counterparty", width: "700px", height: "500px", dataSource: this.state.chartData })));
+                React.createElement(igr_category_chart_1.IgrCategoryChart, { yAxisMinimumValue: 0, 
+                    //  chartType="area"
+                    chartTitle: this.props.CurrentChartName, yAxisTitle: this.state.chartDefinition.YAxisColumnId, xAxisTitle: this.state.chartDefinition.XAxisColumnId, width: "700px", height: "500px", dataSource: this.state.chartData })));
     }
 }
 function mapStateToProps(state, ownProps) {

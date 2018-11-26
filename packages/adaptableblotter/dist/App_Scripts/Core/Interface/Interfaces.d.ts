@@ -14,8 +14,8 @@ export interface IPermittedColumnValues {
     PermittedValues: any[];
 }
 export interface IColumnCategory {
-    Category: string;
-    Columns: string[];
+    ColumnCategoryId: string;
+    ColumnIds: string[];
 }
 export interface ICellInfo {
     Id: any;
@@ -25,4 +25,8 @@ export interface ICellInfo {
 export interface IVendorGridInfo {
     GroupState: any;
     ColumnState: any;
+}
+export interface IMasterChildren {
+    Master: any;
+    Children: any[];
 }

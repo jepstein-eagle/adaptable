@@ -2,13 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
+const GlyphConstants = require("../Core/Constants/GlyphConstants");
+const HomeRedux = require("../Redux/ActionsReducers/HomeRedux");
 const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
 const Enums_1 = require("../Core/Enums");
 const LayoutHelper_1 = require("../Core/Helpers/LayoutHelper");
 // This is a special strategy that the user can never remove but which is useful to us 
+// We use it to manage internal state changes and menu items that are not directly strategy related
 class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.HomeStrategyId, blotter);
+    }
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter, "quickfilter")) {
+            this.createContextMenuItemReduxAction(this.blotter.isQuickFilterActive() ? "Hide Quick Filter Bar" : "Show Quick Filter Bar", this.blotter.isQuickFilterActive() ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH, this.blotter.isQuickFilterActive() ? HomeRedux.QuickFilterBarHide() : HomeRedux.QuickFilterBarShow());
+        }
     }
     InitState() {
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {

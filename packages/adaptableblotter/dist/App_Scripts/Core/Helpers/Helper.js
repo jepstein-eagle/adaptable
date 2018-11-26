@@ -19,12 +19,12 @@ var Helper;
     }
     Helper.cloneObject = cloneObject;
     function sortArrayWithProperty(sortOrder, values, sortProperty) {
-        let newValues = [].concat(values);
-        let direction = 1;
-        if (sortOrder == Enums_1.SortOrder.Descending) {
-            direction = -1;
-        }
         if (sortProperty) {
+            let newValues = [].concat(values);
+            let direction = 1;
+            if (sortOrder == Enums_1.SortOrder.Descending) {
+                direction = -1;
+            }
             return newValues.sort((a, b) => {
                 let aSortProperty = a[sortProperty];
                 let bSortProperty = b[sortProperty];
@@ -37,7 +37,7 @@ var Helper;
             });
         }
         else {
-            return newValues.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
+            return sortArray(values, sortOrder);
         }
     }
     Helper.sortArrayWithProperty = sortArrayWithProperty;

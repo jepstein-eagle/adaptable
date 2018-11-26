@@ -259,17 +259,17 @@ class AdaptableBlotter {
     cancelEdit() {
         this.grid.exitCurrentEditor();
     }
-    getRecordIsSatisfiedFunction(id, type) {
+    getRecordIsSatisfiedFunction(id, distinctCriteria) {
         // this is very very wrong!
-        if (type == "getColumnValue") {
+        if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
             return (columnId) => { return this.getRawValueFromRecord(id, columnId); };
         }
         else {
             return (columnId) => { return this.getDisplayValue(id, columnId); };
         }
     }
-    getRecordIsSatisfiedFunctionFromRecord(record, type) {
-        if (type == "getColumnValue") {
+    getRecordIsSatisfiedFunctionFromRecord(record, distinctCriteria) {
+        if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
             return (columnId) => { return this.getCellFromRowAndColumnId(record, columnId).getRawValue(); };
         }
         else {
@@ -368,6 +368,15 @@ class AdaptableBlotter {
     getAllVisibleRows() {
         return null;
     }
+    addPercentCellRenderer(pcr) {
+        //t odo
+    }
+    editPercentCellRenderer(pcr) {
+        // todo
+    }
+    removePercentCellRenderer(pcr) {
+        // todo
+    }
     // public hideRows(rowIds: string[]): void {
     //     // doing it long way to see if it works...
     //     // this is called at the end of ApplySearchOnGrid so we can just do one re-render here.
@@ -409,6 +418,9 @@ class AdaptableBlotter {
     }
     removeCalculatedColumnFromGrid(calculatedColumnID) {
         // todo
+    }
+    addFreeTextColumnToGrid(freeTextColumn) {
+        // to do
     }
     isGroupRecord(record) {
         return false;
@@ -459,11 +471,26 @@ class AdaptableBlotter {
     isFilterable() {
         return true;
     }
+    isQuickFilterable() {
+        return false;
+    }
+    isQuickFilterActive() {
+        return false;
+    }
+    showQuickFilter() {
+        // todo
+    }
+    hideQuickFilter() {
+        // todo
+    }
     applyLightTheme() {
         // todo 
     }
     applyDarkTheme() {
         // todo 
+    }
+    redraw() {
+        this._onRefresh.Dispatch(this, this);
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

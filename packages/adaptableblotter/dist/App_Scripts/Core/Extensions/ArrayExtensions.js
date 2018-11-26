@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ArrayExtensions;
 (function (ArrayExtensions) {
     function ContainsItem(array, itemToCheck) {
+        if (array == null) {
+            return false;
+        }
         return array.indexOf(itemToCheck) > -1;
     }
     ArrayExtensions.ContainsItem = ContainsItem;

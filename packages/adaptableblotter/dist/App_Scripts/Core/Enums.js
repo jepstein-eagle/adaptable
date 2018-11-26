@@ -76,6 +76,7 @@ var ConditionalStyleScope;
 (function (ConditionalStyleScope) {
     ConditionalStyleScope["Column"] = "Column";
     ConditionalStyleScope["Row"] = "Row";
+    ConditionalStyleScope["ColumnCategory"] = "ColumnCategory";
 })(ConditionalStyleScope = exports.ConditionalStyleScope || (exports.ConditionalStyleScope = {}));
 var ReportColumnScope;
 (function (ReportColumnScope) {
@@ -183,6 +184,7 @@ var StateChangedTrigger;
     StateChangedTrigger["CalculatedColumn"] = "CalculatedColumn";
     StateChangedTrigger["Calendar"] = "Calendar";
     StateChangedTrigger["CellValidation"] = "CellValidation";
+    StateChangedTrigger["CellRenderer"] = "CellRenderer";
     StateChangedTrigger["Chart"] = "Chart";
     StateChangedTrigger["ColumnFilter"] = "ColumnFilter";
     StateChangedTrigger["ConditionalStyle"] = "ConditionalStyle";
@@ -194,6 +196,7 @@ var StateChangedTrigger;
     StateChangedTrigger["FormatColumn"] = "FormatColumn";
     StateChangedTrigger["FreeTextColumn"] = "FreeTextColumn";
     StateChangedTrigger["Layout"] = "Layout";
+    StateChangedTrigger["ColumnCategory"] = "ColumnCategory";
     StateChangedTrigger["PlusMinus"] = "PlusMinus";
     StateChangedTrigger["QuickSearch"] = "QuickSearch";
     StateChangedTrigger["SelectedCells"] = "SelectedCells";

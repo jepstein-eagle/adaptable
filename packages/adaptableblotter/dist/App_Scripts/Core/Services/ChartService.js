@@ -10,25 +10,25 @@ class ChartService {
         this.blotter = blotter;
     }
     BuildChartData(chartDefinition, columns) {
-        let yAxisColumnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumn, columns);
-        let xAxisColumnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumn, columns);
+        let yAxisColumnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnId, columns);
+        let xAxisColumnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
         let xAxisColValues = chartDefinition.XAxisColumnValues.length > 0 && chartDefinition.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
             chartDefinition.XAxisColumnValues :
-            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
+            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
         let additionalColValues = this.getAdditionalColumnValues(chartDefinition);
         let chartData = xAxisColValues.map(cv => {
             let chartDataRow = new Object();
             chartDataRow[xAxisColumnName] = cv;
-            let xAxisKVP = { Key: chartDefinition.XAxisColumn, Value: cv };
+            let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
             if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue) => {
-                    let columnValueKVP = { Key: chartDefinition.AdditionalColumn, Value: columnValue };
-                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumn, [xAxisKVP, columnValueKVP], columns);
+                    let columnValueKVP = { Key: chartDefinition.AdditionalColumnId, Value: columnValue };
+                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP, columnValueKVP], columns);
                     chartDataRow[columnValue] = groupedTotal;
                 });
             }
             else { // just do the first one
-                let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumn, [xAxisKVP], columns);
+                let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP], columns);
                 chartDataRow[yAxisColumnName] = groupedTotal;
             }
             return chartDataRow;
@@ -63,7 +63,7 @@ class ChartService {
         }
         return chartDefinition.AdditionalColumnValues.length > 0 && chartDefinition.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
             chartDefinition.AdditionalColumnValues :
-            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumn, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
+            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
     }
 }
 exports.ChartService = ChartService;

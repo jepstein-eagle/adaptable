@@ -19,9 +19,9 @@ class CellValidationStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
             }
         }
     }
-    addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            this.createContextMenuItemShowPopup("Create Cell Validation Rule", ScreenPopups.CellValidationPopup, StrategyConstants.CellValidationGlyph, "New|" + columnId);
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            this.createContextMenuItemShowPopup("Create Cell Validation Rule", ScreenPopups.CellValidationPopup, StrategyConstants.CellValidationGlyph, "New|" + column.ColumnId);
         }
     }
 }

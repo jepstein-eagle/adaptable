@@ -78,31 +78,6 @@ export class DataGenerator {
 
   private _numericCols: string[] = ["price", "bid", "ask"];
 
-  //Can't be bothered to create a ts file for kendo....
-  startTickingDataKendo(grid: any) {
-    setInterval(() => {
-      let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
-      //pick a random trade in the first ten
-      let trade = this.getRandomItem(grid.dataSource.data(), 10);
-      //pick a random colum in the numeric col
-      let columnName = this.getRandomItem(this._numericCols);
-      let initialNewValue = trade[columnName];
-      let newValue = initialNewValue + numberToAdd;
-      //for now I decide to use dataItem.set but we'll need to see how people are
-      //managing ticking data since the grid doesn't allow partial refresh... so if we keep calling sync on
-      //every tick the grid becomes unusable since we loose editing, cell selection etc......
-      //also if people call sync then we don't have the "change" event
-
-      // JW. Im still not sure that the crude cell.html isnt the easiest after all so long as we make sure it covers all bases
-      // as that way at least we dont refresh anything etc and it has no impact.
-      //   trade.set(columnName, newValue);
-
-      //trade[columnName] = newValue;
-      //trade.dirty = true;
-      //grid.dataSource.sync();
-    }, 5000);
-  }
-
   startTickingDataHypergrid(grid: any) {
     setInterval(() => {
       let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;

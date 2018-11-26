@@ -11,7 +11,7 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { ICalculatedColumn, IGridSort } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentCellRenderer } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
@@ -24,7 +24,7 @@ export interface IAdaptableBlotter {
     BlotterOptions: IAdaptableBlotterOptions;
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection;
-    VendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid';
+    VendorGridName: 'agGrid' | 'Hypergrid';
     EmbedColumnMenu: boolean;
     CalendarService: ICalendarService;
     AuditService: IAuditService;
@@ -51,8 +51,8 @@ export interface IAdaptableBlotter {
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): string;
     getRawValueFromRecord(row: any, columnId: string): any;
-    getRecordIsSatisfiedFunction(id: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any;
-    getRecordIsSatisfiedFunctionFromRecord(record: any, type: "getColumnValue" | "getDisplayColumnValue"): (columnId: string) => any;
+    getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
+    getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void;
     getDisplayValueFromRawValue(colId: string, rawValue: any): any;
     setValue(cellInfo: ICellInfo): void;
@@ -66,9 +66,13 @@ export interface IAdaptableBlotter {
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
     setGridSort(gridSorts: IGridSort[]): void;
+    addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void;
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
+    removePercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void;
+    addPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void;
+    editPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void;
     getFirstRecord(): any;
     applyGridFiltering(): void;
     clearGridFiltering(): void;
@@ -83,7 +87,12 @@ export interface IAdaptableBlotter {
     isSelectable(): boolean;
     isSortable(): boolean;
     isFilterable(): boolean;
+    isQuickFilterable(): boolean;
+    isQuickFilterActive(): boolean;
+    showQuickFilter(): void;
+    hideQuickFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
+    redraw(): void;
     isInitialised: boolean;
 }

@@ -9,6 +9,7 @@ export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepP
 export declare class ConditionalStyleSummaryWizard extends React.Component<ConditionalStyleSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: ConditionalStyleSummaryWizardProps);
     render(): any;
+    private getScope;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

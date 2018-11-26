@@ -13,6 +13,7 @@ const AdaptableBlotterStore_1 = require("../../Redux/Store/AdaptableBlotterStore
 const MenuRedux = require("../../Redux/ActionsReducers/MenuRedux");
 const LayoutRedux = require("../../Redux/ActionsReducers/LayoutRedux");
 const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
+const FreeTextColumnRedux = require("../../Redux/ActionsReducers/FreeTextColumnRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const CalendarService_1 = require("../../Core/Services/CalendarService");
 const CalculatedColumnExpressionService_1 = require("../../Core/Services/CalculatedColumnExpressionService");
@@ -21,6 +22,7 @@ const ValidationService_1 = require("../../Core/Services/ValidationService");
 const StyleService_1 = require("../../Core/Services/StyleService");
 const AuditLogService_1 = require("../../Core/Services/AuditLogService");
 const ChartService_1 = require("../../Core/Services/ChartService");
+const FreeTextColumnService_1 = require("../../Core/Services/FreeTextColumnService");
 const AlertStrategy_1 = require("../../Strategy/AlertStrategy");
 const ApplicationStrategy_1 = require("../../Strategy/ApplicationStrategy");
 const BulkUpdateStrategy_1 = require("../../Strategy/BulkUpdateStrategy");
@@ -49,6 +51,11 @@ const CalculatedColumnStrategy_1 = require("../../Strategy/CalculatedColumnStrat
 const SelectColumnStrategy_1 = require("../../Strategy/SelectColumnStrategy");
 const SelectedCellsStrategy_1 = require("../../Strategy/SelectedCellsStrategy");
 const DataSourceStrategy_1 = require("../../Strategy/DataSourceStrategy");
+const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
+const FreeTextColumnStrategy_1 = require("../../Strategy/FreeTextColumnStrategy");
+const ChartStrategy_1 = require("../../Strategy/ChartStrategy");
+const CellRendererStrategy_1 = require("../../Strategy/CellRendererStrategy");
+const ColumnCategoryStrategy_1 = require("../../Strategy/ColumnCategoryStrategy");
 // components
 const FilterWrapper_1 = require("./FilterWrapper");
 const FloatingFilterWrapper_1 = require("./FloatingFilterWrapper");
@@ -67,7 +74,6 @@ const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
 const LayoutHelper_1 = require("../../Core/Helpers/LayoutHelper");
 const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
-const HomeStrategy_1 = require("../../Strategy/HomeStrategy");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this.calculatedColumnPathMap = new Map();
@@ -96,6 +102,7 @@ class AdaptableBlotter {
         this.AuditLogService = new AuditLogService_1.AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService_1.StyleService(this);
         this.ChartService = new ChartService_1.ChartService(this);
+        this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -108,8 +115,9 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
+        this.Strategies.set(StrategyConstants.CellRendererStrategyId, new CellRendererStrategy_1.CellRendererStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
@@ -121,9 +129,10 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy_1.FlashingCellsagGridStrategy(this));
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy_1.FormatColumnagGridStrategy(this));
-        //  this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
@@ -246,7 +255,7 @@ class AdaptableBlotter {
         let existingColumns = this.getState().Grid.Columns;
         let vendorCols = this.gridOptions.columnApi.getAllGridColumns();
         let quickSearchClassName = this.getQuickSearchClassName();
-        vendorCols.forEach((vendorColumn, index) => {
+        vendorCols.forEach((vendorColumn) => {
             let colId = vendorColumn.getColId();
             if (!ColumnHelper_1.ColumnHelper.isSpecialColumn(colId)) {
                 let existingColumn = existingColumns.find(c => c.ColumnId == colId);
@@ -271,7 +280,6 @@ class AdaptableBlotter {
             ReadOnly: this.isColumnReadonly(colId),
             Sortable: this.isColumnSortable(colId),
             Filterable: this.isColumnFilterable(colId),
-            Category: ColumnHelper_1.ColumnHelper.getColumnCategoryFromCategories(colId, this.AdaptableBlotterStore.TheStore.getState().UserInterface.ColumnCategories)
         };
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
         return abColumn;
@@ -370,9 +378,6 @@ class AdaptableBlotter {
     setSelectedCells() {
         let selectionMap = new Map();
         let test = this.gridOptions.api.getSelectedNodes();
-        if (test) {
-            let s = test.length;
-        }
         let selected = this.gridOptions.api.getRangeSelections();
         let columns = [];
         if (selected) {
@@ -537,19 +542,20 @@ class AdaptableBlotter {
                     Record: null
                 };
                 dataChangedEvents.push(dataChangedEvent);
+                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
             }
         });
-        var res = this.gridOptions.api.updateRowData({ update: itemsToUpdate });
         this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
+        // if its a freetext column then do our own stuff
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
     }
     cancelEdit() {
         this.gridOptions.api.stopEditing(true);
     }
-    getRecordIsSatisfiedFunction(id, type) {
-        if (type == "getColumnValue") {
+    getRecordIsSatisfiedFunction(id, distinctCriteria) {
+        if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
             let rowNodeSearch;
             //ag-grid doesn't support FindRow based on data
             // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
@@ -564,8 +570,8 @@ class AdaptableBlotter {
             return (columnId) => { return this.getDisplayValue(id, columnId); };
         }
     }
-    getRecordIsSatisfiedFunctionFromRecord(record, type) {
-        if (type == "getColumnValue") {
+    getRecordIsSatisfiedFunctionFromRecord(record, distinctCriteria) {
+        if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
             return (columnId) => { return this.gridOptions.api.getValue(columnId, record); };
         }
         else {
@@ -636,17 +642,20 @@ class AdaptableBlotter {
         }
         else { // get the distinct values for the column from the grid
             //we use forEachNode as we want to get all data even the one filtered out...
+            let isRenderedColumn = this.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == columnId);
             let data = this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
                 if (!rowNode.group) {
-                    let displayString = this.getDisplayValueFromRecord(rowNode, columnId);
                     let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
+                    let displayValue = (isRenderedColumn) ?
+                        rawValue :
+                        this.getDisplayValueFromRecord(rowNode, columnId);
                     if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
-                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
                     }
                     else if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.DisplayValue) {
-                        returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                        returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
                     }
                 }
             });
@@ -667,8 +676,6 @@ class AdaptableBlotter {
         return returnValue;
     }
     getDisplayValueFromRecord(row, columnId) {
-        //TODO : this method needs optimizing since getting the column everytime seems costly
-        //we do not handle yet if the column uses a template... we handle only if it's using a renderer
         if (row == null) {
             return "";
         }
@@ -704,6 +711,10 @@ class AdaptableBlotter {
         }
     }
     getRenderedValue(colDef, valueToRender) {
+        let isRenderedColumn = this.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == colDef.field);
+        if (isRenderedColumn) {
+            return valueToRender;
+        }
         let render = colDef.cellRenderer;
         if (typeof render == "string") {
             return this.cleanValue(valueToRender);
@@ -779,8 +790,9 @@ class AdaptableBlotter {
             func(rowNode);
         });
     }
-    redrawRows() {
+    redraw() {
         this.gridOptions.api.redrawRows();
+        this.gridOptions.api.refreshHeader();
         this._onRefresh.Dispatch(this, this);
     }
     refreshCells(rowNode, columnIds) {
@@ -846,24 +858,42 @@ class AdaptableBlotter {
             }
             childrenColumnList.push(calculatedColumn.ColumnId);
         }
-        let vendorColumn = this.gridOptions.columnApi.getAllColumns().find(vc => vc.getColId() == calculatedColumn.ColumnId);
-        let hiddenCol = {
-            ColumnId: calculatedColumn.ColumnId,
-            FriendlyName: calculatedColumn.ColumnId,
+        this.addSpecialColumnToState(calculatedColumn.ColumnId, true);
+    }
+    addFreeTextColumnToGrid(freeTextColumn) {
+        let venderCols = this.gridOptions.columnApi.getAllColumns();
+        let colDefs = venderCols.map(x => x.getColDef());
+        colDefs.push({
+            headerName: freeTextColumn.ColumnId,
+            colId: freeTextColumn.ColumnId,
+            editable: true,
+            hide: true,
+            valueGetter: (params) => this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node)
+        });
+        this.gridOptions.api.setColumnDefs(colDefs);
+        this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
+    }
+    addSpecialColumnToState(columnId, isReadOnly) {
+        let vendorColumn = this.gridOptions.columnApi.getAllColumns().find(vc => vc.getColId() == columnId);
+        let specialColumn = {
+            ColumnId: columnId,
+            FriendlyName: columnId,
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
-            ReadOnly: true,
+            ReadOnly: isReadOnly,
             Sortable: this.isSortable(),
             Filterable: this.isFilterable(),
         };
-        this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridAddColumn(hiddenCol));
+        this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridAddColumn(specialColumn));
         let quickSearchClassName = this.getQuickSearchClassName();
-        this.addQuickSearchStyleToColumn(hiddenCol, quickSearchClassName);
+        this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
         if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn);
         }
-        let conditionalStyleagGridStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId);
-        conditionalStyleagGridStrategy.InitStyles();
+        if (this.isInitialised) {
+            let conditionalStyleagGridStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId);
+            conditionalStyleagGridStrategy.InitStyles();
+        }
     }
     isGroupRecord(record) {
         let rowNode = record;
@@ -953,7 +983,7 @@ class AdaptableBlotter {
             //   Events.EVENT_COLUMN_PINNED,
             eventKeys_1.Events.EVENT_NEW_COLUMNS_LOADED
         ];
-        this.gridOptions.api.addGlobalListener((type, event) => {
+        this.gridOptions.api.addGlobalListener((type) => {
             if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
                 // bit messy but better than alternative which was calling setColumnIntoStore for every single column
                 let popupState = this.getState().Popup.ScreenPopup;
@@ -970,7 +1000,7 @@ class AdaptableBlotter {
             eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
             eventKeys_1.Events.EVENT_COLUMN_PINNED
         ];
-        this.gridOptions.api.addGlobalListener((type, event) => {
+        this.gridOptions.api.addGlobalListener((type) => {
             if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
                 this.debouncedSaveGridLayout();
             }
@@ -1031,6 +1061,8 @@ class AdaptableBlotter {
                         Record: null
                     };
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                    // it might be a free text column so we need to update the values
+                    this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
                 }
                 return whatToReturn;
             };
@@ -1044,24 +1076,24 @@ class AdaptableBlotter {
             this.applyGridFiltering();
             this.debouncedSetSelectedCells();
         });
-        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_SELECTION_CHANGED, (params) => {
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
-        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_RANGE_SELECTION_CHANGED, (params) => {
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_RANGE_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
-        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params) => {
-            console.log(params);
-        });
+        //  this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
+        //     console.log(params)
+        // });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_SORT_CHANGED, (params) => {
-            this.onSortChanged(params);
+            this.onSortChanged();
             this.debouncedSetSelectedCells();
         });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
         //  });
         //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
         //});
-        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_MODEL_UPDATED, (params) => {
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_MODEL_UPDATED, () => {
             // not sure about this - doing it to make sure that we set the columns properly at least once!
             this.checkColumnsDataTypeSet();
         });
@@ -1171,17 +1203,24 @@ class AdaptableBlotter {
                 this.createFloatingFilterWrapper(col);
             });
         }
+        // add any special filters
+        let percentCellRenderers = this.getState().CellRenderer.PercentCellRenderers;
+        percentCellRenderers.forEach(pcr => {
+            this.addPercentCellRenderer(pcr);
+        });
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select 
             //but you can also clsoe the menu from filter and clicking outside the menu....
             //    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
             let colId = params.column.getColId();
-            //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
-            this.Strategies.forEach(s => {
-                s.addContextMenuItem(colId);
-            });
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+            if (column != null) {
+                this.Strategies.forEach(s => {
+                    s.addContextMenuItem(column);
+                });
+            }
             let colMenuItems;
             //if there was an initial implementation we init the list of menu items with this one, otherwise we take
             //the default items
@@ -1212,7 +1251,75 @@ class AdaptableBlotter {
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         });
     }
-    onSortChanged(params) {
+    addPercentCellRenderer(pcr) {
+        let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId);
+        if (renderedColumn) {
+            let showNegatives = pcr.MinValue < 0;
+            let showPositives = pcr.MaxValue > 0;
+            let maxValue = pcr.MaxValue;
+            let minValue = pcr.MinValue;
+            let cellRendererFunc = (params) => {
+                let isNegativeValue = params.value < 0;
+                let value = params.value;
+                if (isNegativeValue) {
+                    value = value * -1;
+                }
+                let percentagePositiveValue = ((100 / maxValue) * value);
+                let percentageNegativeValue = ((100 / (minValue * -1)) * value);
+                if (showNegatives && showPositives) { // if need both then half the space
+                    percentagePositiveValue = percentagePositiveValue / 2;
+                    percentageNegativeValue = percentageNegativeValue / 2;
+                }
+                let eOuterDiv = document.createElement('div');
+                eOuterDiv.className = 'ab_div-colour-render-div';
+                if (pcr.ShowValue) {
+                    let eValue = document.createElement('div');
+                    eValue.className = 'ab_div-colour-render-text';
+                    eValue.innerHTML = (pcr.ShowPercentSign) ? value : value + '%';
+                    eOuterDiv.appendChild(eValue);
+                }
+                if (showNegatives) {
+                    let fullWidth = (showPositives) ? 50 : 100;
+                    let negativeDivBlankBar = document.createElement('div');
+                    negativeDivBlankBar.className = 'ab_div-colour-render-bar';
+                    negativeDivBlankBar.style.width = (fullWidth - percentageNegativeValue) + '%';
+                    eOuterDiv.appendChild(negativeDivBlankBar);
+                    let negativeDivPercentBar = document.createElement('div');
+                    negativeDivPercentBar.className = 'ab_div-colour-render-bar';
+                    negativeDivPercentBar.style.width = percentageNegativeValue + '%';
+                    if (isNegativeValue) {
+                        negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
+                    }
+                    eOuterDiv.appendChild(negativeDivPercentBar);
+                }
+                if (showPositives) {
+                    let positivePercentBarDiv = document.createElement('div');
+                    positivePercentBarDiv.className = 'ab_div-colour-render-bar';
+                    positivePercentBarDiv.style.width = percentagePositiveValue + '%';
+                    if (!isNegativeValue) {
+                        positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
+                    }
+                    eOuterDiv.appendChild(positivePercentBarDiv);
+                }
+                return eOuterDiv;
+            };
+            let vendorGridColumn = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
+        }
+    }
+    removePercentCellRenderer(pcr) {
+        let renderedColumn = this.getState().Grid.Columns.find(c => c.ColumnId == pcr.ColumnId);
+        if (renderedColumn) {
+            let vendorGridColumn = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            // note we dont get it from the original (but I guess it will be applied next time you run...)
+            vendorGridColumn.getColDef().cellRenderer = null;
+        }
+    }
+    editPercentCellRenderer(pcr) {
+        this.removePercentCellRenderer(pcr);
+        this.addPercentCellRenderer(pcr);
+    }
+    onSortChanged() {
         let sortModel = this.gridOptions.api.getSortModel();
         let gridSorts = [];
         if (sortModel != null) {
@@ -1286,6 +1393,13 @@ class AdaptableBlotter {
             this.setColumnIntoStore();
         }
     }
+    checkIfDataChangingColumnIsFreeText(dataChangedEvent) {
+        let freeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
+        if (freeTextColumn) {
+            let freeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue };
+            this.AdaptableBlotterStore.TheStore.dispatch(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
+        }
+    }
     getVendorGridState(visibleCols, forceFetch) {
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
@@ -1332,10 +1446,8 @@ class AdaptableBlotter {
                 // assume for now its just a number
                 let column = this.gridOptions.columnApi.getColumn("ag-Grid-AutoColumn");
                 if (column) {
-                    //  alert("have a special column")
                     this.gridOptions.columnApi.setColumnWidth(column, groupedState, true);
                 }
-                //   this.gridOptions.api.refreshHeader();
             }
         }
     }
@@ -1367,6 +1479,29 @@ class AdaptableBlotter {
             return this.gridOptions.enableFilter;
         }
         return false;
+    }
+    isQuickFilterable() {
+        return true;
+    }
+    isQuickFilterActive() {
+        if (this.gridOptions.floatingFilter != null) {
+            return this.gridOptions.floatingFilter;
+        }
+        return false;
+    }
+    showQuickFilter() {
+        this.gridOptions.floatingFilter = true;
+        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+            this.createFloatingFilterWrapper(col);
+        });
+        this.gridOptions.api.refreshHeader();
+    }
+    hideQuickFilter() {
+        this.gridOptions.floatingFilter = false;
+        //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+        //       this.deleteFloatingFilterWrapper(col);
+        //   }); 
+        this.gridOptions.api.refreshHeader();
     }
     applyLightTheme() {
         if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {

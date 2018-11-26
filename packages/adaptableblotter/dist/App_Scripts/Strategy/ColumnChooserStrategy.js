@@ -11,9 +11,9 @@ class ColumnChooserStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyConstants.ColumnChooserGlyph);
     }
-    addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            this.createContextMenuItemReduxAction("Hide Column", StrategyConstants.ColumnChooserGlyph, GridRedux.GridHideColumn(columnId));
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            this.createContextMenuItemReduxAction("Hide Column", StrategyConstants.ColumnChooserGlyph, GridRedux.GridHideColumn(column.ColumnId));
         }
     }
 }

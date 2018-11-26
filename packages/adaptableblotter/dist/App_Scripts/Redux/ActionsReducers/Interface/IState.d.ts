@@ -4,7 +4,7 @@ import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy'
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentCellRenderer } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 export interface IState {
@@ -48,6 +48,8 @@ export interface TeamSharingState extends ISystemState {
     Activated: boolean;
     SharedEntities: ISharedEntity[];
 }
+export interface HomeState extends ISystemState {
+}
 export interface EntitlementsState extends IDesignTimeState {
     FunctionEntitlements: IEntitlement[];
 }
@@ -55,7 +57,6 @@ export interface UserInterfaceState extends IDesignTimeState {
     ColorPalette: string[];
     StyleClassNames: string[];
     PermittedColumnValues: IPermittedColumnValues[];
-    ColumnCategories: IColumnCategory[];
 }
 export interface SystemFilterState extends IDesignTimeState {
     SystemFilters: string[];
@@ -83,6 +84,9 @@ export interface CalendarState extends IUserState {
 }
 export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];
+}
+export interface CellRendererState extends IUserState {
+    PercentCellRenderers: IPercentCellRenderer[];
 }
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
@@ -137,6 +141,9 @@ export interface FreeTextColumnState extends IUserState {
 export interface LayoutState extends IUserState {
     CurrentLayout: string;
     Layouts: ILayout[];
+}
+export interface ColumnCategoryState extends IUserState {
+    ColumnCategories: IColumnCategory[];
 }
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];

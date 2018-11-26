@@ -56,7 +56,7 @@ class ConditionalStylePopupComponent extends React.Component {
                 conditionalStyles.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: conditionalStyles }),
                 this.state.EditedAdaptableBlotterObject != null &&
-                    React.createElement(ConditionalStyleWizard_1.ConditionalStyleWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
+                    React.createElement(ConditionalStyleWizard_1.ConditionalStyleWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, ColorPalette: this.props.ColorPalette, ColumnCategories: this.props.ColumnCategories, StyleClassNames: this.props.StyleClassNames, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyConditionalStyle(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
@@ -76,15 +76,20 @@ class ConditionalStylePopupComponent extends React.Component {
     }
     canFinishWizard() {
         let conditionalStyle = this.state.EditedAdaptableBlotterObject;
-        return (conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
-            ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
-            UIHelper_1.UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
+        if (conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column && StringExtensions_1.StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)) {
+            return false;
+        }
+        if (conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory && StringExtensions_1.StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)) {
+            return false;
+        }
+        return ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) && UIHelper_1.UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        StyleClassNames: state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames,
+        ColumnCategories: state.ColumnCategory.ColumnCategories
     };
 }
 function mapDispatchToProps(dispatch) {

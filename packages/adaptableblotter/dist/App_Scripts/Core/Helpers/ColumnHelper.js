@@ -71,17 +71,17 @@ var ColumnHelper;
         return columns.filter(c => c.DataType == Enums_1.DataType.Number);
     }
     ColumnHelper.getNumericColumns = getNumericColumns;
-    function getColumnCategoryFromCategories(columnId, categories) {
+    function getColumnCategoryFromColumnCategories(columnId, ColumnCategoryns) {
         let returnValue = "";
-        categories.forEach(c => {
+        ColumnCategoryns.forEach(c => {
             if (StringExtensions_1.StringExtensions.IsNullOrEmpty(returnValue)) {
-                let column = c.Columns.find(col => col == columnId);
+                let column = c.ColumnIds.find(col => col == columnId);
                 if (column) {
-                    returnValue = c.Category;
+                    returnValue = c.ColumnCategoryId;
                 }
             }
         });
         return returnValue;
     }
-    ColumnHelper.getColumnCategoryFromCategories = getColumnCategoryFromCategories;
+    ColumnHelper.getColumnCategoryFromColumnCategories = getColumnCategoryFromColumnCategories;
 })(ColumnHelper = exports.ColumnHelper || (exports.ColumnHelper = {}));

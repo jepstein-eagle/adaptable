@@ -37,7 +37,7 @@ class ConditionalStyleSummaryComponent extends React.Component {
         return React.createElement("div", null,
             strategySummaries,
             this.state.EditedAdaptableBlotterObject &&
-                React.createElement(ConditionalStyleWizard_1.ConditionalStyleWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }));
+                React.createElement(ConditionalStyleWizard_1.ConditionalStyleWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames, ColumnCategories: this.props.ColumnCategories, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }));
     }
     onNew() {
         let configEntity = ObjectFactory_1.ObjectFactory.CreateEmptyConditionalStyle();
@@ -71,7 +71,8 @@ function mapStateToProps(state, ownProps) {
         SystemFilters: state.SystemFilter.SystemFilters,
         Entitlements: state.Entitlements.FunctionEntitlements,
         ColorPalette: state.UserInterface.ColorPalette,
-        StyleClassNames: state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames,
+        ColumnCategories: state.ColumnCategory.ColumnCategories
     };
 }
 function mapDispatchToProps(dispatch) {

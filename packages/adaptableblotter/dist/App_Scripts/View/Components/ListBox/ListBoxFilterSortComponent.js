@@ -15,9 +15,9 @@ class ListBoxFilterSortComponent extends React.Component {
                             React.createElement(react_bootstrap_1.Button, { onClick: () => this.clearFilter() },
                                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: "remove" }))),
                         React.createElement(react_bootstrap_1.InputGroup.Button, null, this.props.SortOrder == Enums_1.SortOrder.Ascending ?
-                            React.createElement(react_bootstrap_1.Button, { onClick: () => this.props.sortColumnValues() },
+                            React.createElement(react_bootstrap_1.Button, { disabled: this.props.DisableSort, onClick: () => this.props.sortColumnValues() },
                                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: "sort-by-alphabet" })) :
-                            React.createElement(react_bootstrap_1.Button, { onClick: () => this.props.sortColumnValues() },
+                            React.createElement(react_bootstrap_1.Button, { disabled: this.props.DisableSort, onClick: () => this.props.sortColumnValues() },
                                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: "sort-by-alphabet-alt" })))),
                     React.createElement(react_bootstrap_1.InputGroup, null))));
     }

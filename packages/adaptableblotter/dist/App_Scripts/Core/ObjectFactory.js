@@ -15,8 +15,8 @@ var ObjectFactory;
         return {
             Name: "",
             Type: Enums_1.ChartType.BarChart,
-            YAxisColumn: "",
-            XAxisColumn: "",
+            YAxisColumnId: "",
+            XAxisColumnId: "",
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]
         };
     }
@@ -57,6 +57,13 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyAdvancedSearch = CreateEmptyAdvancedSearch;
+    function CreateEmptyColumnCategory() {
+        return {
+            ColumnCategoryId: "",
+            ColumnIds: []
+        };
+    }
+    ObjectFactory.CreateEmptyColumnCategory = CreateEmptyColumnCategory;
     function CreateEmptyRange() {
         return {
             Operator: Enums_1.LeafExpressionOperator.Unknown,
@@ -89,6 +96,18 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyCellValidation = CreateEmptyCellValidation;
+    function CreateEmptyPercentCellRenderer() {
+        return {
+            ColumnId: "",
+            MaxValue: 100,
+            MinValue: 0,
+            PositiveColor: '#008000',
+            NegativeColor: '#FF0000',
+            ShowValue: false,
+            ShowPercentSign: false
+        };
+    }
+    ObjectFactory.CreateEmptyPercentCellRenderer = CreateEmptyPercentCellRenderer;
     function CreateEmptyUserFilter() {
         return {
             Name: "",
@@ -101,7 +120,7 @@ var ObjectFactory;
         return {
             Name: "",
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            Columns: [],
+            ColumnIds: [],
             ReportColumnScope: Enums_1.ReportColumnScope.AllColumns,
             ReportRowScope: Enums_1.ReportRowScope.ExpressionRows
         };
@@ -112,7 +131,8 @@ var ObjectFactory;
             IsLive: false,
             ColumnId: column.ColumnId,
             FlashingCellDuration: 500,
-            UpColor: '#008000', DownColor: '#FF0000'
+            UpColor: '#008000',
+            DownColor: '#FF0000'
         };
     }
     ObjectFactory.CreateDefaultFlashingCell = CreateDefaultFlashingCell;
@@ -137,7 +157,8 @@ var ObjectFactory;
     ObjectFactory.CreateCellValidationMessage = CreateCellValidationMessage;
     function CreateEmptyConditionalStyle() {
         return {
-            ColumnId: "",
+            ColumnId: null,
+            ColumnCategoryId: null,
             Style: CreateEmptyStyle(),
             ConditionalStyleScope: Enums_1.ConditionalStyleScope.Row,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
@@ -155,7 +176,7 @@ var ObjectFactory;
         return {
             ColumnId: "",
             DefaultValue: "",
-            StoredValues: null
+            FreeTextStoredValues: []
         };
     }
     ObjectFactory.CreateEmptyFreeTextColumn = CreateEmptyFreeTextColumn;

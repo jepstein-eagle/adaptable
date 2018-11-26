@@ -10,4 +10,5 @@ export declare class CalculatedColumnExpressionService implements ICalculatedCol
     };
     ComputeExpressionValue(expression: string, record: any): any;
     getColumnListFromExpression(expression: string): string[];
+    Test(expression: string, record: any): any;
 }

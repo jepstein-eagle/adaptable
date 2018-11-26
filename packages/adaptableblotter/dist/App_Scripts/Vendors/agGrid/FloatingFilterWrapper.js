@@ -8,10 +8,11 @@ exports.FloatingFilterWrapperFactory = (blotter) => {
             let colId = params.column.getColId();
             this.filterContainer = document.createElement("div");
             this.filterContainer.id = "floatingFilter_" + colId;
+            let column = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId);
             let filterContext = {
-                Column: blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == colId),
+                Column: column,
                 Blotter: blotter,
-                ShowCloseButton: false
+                ShowCloseButton: false,
             };
             ReactDOM.render(FloatingFilterForm_1.FloatingFilterFormReact(filterContext), this.filterContainer);
         }

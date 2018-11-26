@@ -24,7 +24,7 @@ class ColumnFilterSummaryComponent extends React.Component {
         let summaryItems = [];
         summaryItems.push(React.createElement("b", null, React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.ColumnFilterStrategyId })));
         summaryItems.push(description);
-        summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: StyleConstants.PRIMARY_BSSTYLE, size: "small", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null, AccessLevel: this.props.AccessLevel }));
+        summaryItems.push(React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName, bsStyle: StyleConstants.PRIMARY_BSSTYLE, size: "xs", onClick: () => this.props.onClearFilter(columnFilter.ColumnId), overrideTooltip: "Clear Column Filter", DisplayMode: "Glyph", overrideDisableButton: columnFilter == null, AccessLevel: this.props.AccessLevel }));
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: cssWizardClassName, SummaryItems: summaryItems });
     }
     getDescription(columnFilter) {

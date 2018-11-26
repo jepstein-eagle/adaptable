@@ -5,6 +5,7 @@ export interface ListBoxFilterSortComponentProps extends React.ClassAttributes<L
     SortOrder: SortOrder;
     handleChangeFilterValue: (value: string) => void;
     sortColumnValues: () => void;
+    DisableSort: boolean;
 }
 export declare class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSortComponentProps, {}> {
     render(): JSX.Element;

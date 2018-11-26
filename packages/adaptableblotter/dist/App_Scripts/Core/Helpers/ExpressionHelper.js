@@ -398,16 +398,16 @@ var ExpressionHelper;
     }
     ExpressionHelper.IsEmptyRange = IsEmptyRange;
     function checkForExpression(Expression, identifierValue, columns, blotter) {
-        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"), // this value
-        blotter.getRecordIsSatisfiedFunction(identifierValue, "getDisplayColumnValue"), // this value
-        blotter.getRecordIsSatisfiedFunction(identifierValue, "getColumnValue"), // other column value
+        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.RawValue), // this value
+        blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.DisplayValue), // this value
+        blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.RawValue), // other column value
         columns, blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters, blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters, blotter);
     }
     ExpressionHelper.checkForExpression = checkForExpression;
     function checkForExpressionFromRecord(Expression, record, columns, blotter) {
-        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // this value
-        blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getDisplayColumnValue"), // this value
-        blotter.getRecordIsSatisfiedFunctionFromRecord(record, "getColumnValue"), // other column value
+        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.RawValue), // this value
+        blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.DisplayValue), // this value
+        blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.RawValue), // other column value
         columns, blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters, blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters, blotter);
     }
     ExpressionHelper.checkForExpressionFromRecord = checkForExpressionFromRecord;
