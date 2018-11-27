@@ -225,18 +225,15 @@ export interface IStyle {
   ClassName?: string
 }
 
-export interface IPercentBar extends IAdaptableBlotterObject {
-  ColumnId: string
-}
 
 export interface IPercentBar extends IAdaptableBlotterObject {
+  ColumnId: string;
   MinValue: number;
   MaxValue: number;
   PositiveColor: string;
   NegativeColor: string;
   ShowValue: boolean;
-  ShowPercentSign: boolean;
-}
+ }
 
 
 

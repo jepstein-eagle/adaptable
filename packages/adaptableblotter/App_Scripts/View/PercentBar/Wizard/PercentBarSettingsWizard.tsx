@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormGroup, FormControl, Col, Panel, ControlLabel, Row } from 'react-bootstrap';
+import { FormGroup, FormControl, Col, Panel, ControlLabel, Row, Checkbox } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { MessageType } from '../../../Core/Enums';
@@ -18,6 +18,7 @@ export interface PercentBarSettingsWizardState {
     MaxValue: number;
     PositiveColor: string;
     NegativeColor: string;
+    ShowValue: boolean;
 }
 
 export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardProps, PercentBarSettingsWizardState> implements AdaptableWizardStep {
@@ -28,7 +29,8 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
             MaxValue: this.props.Data.MaxValue,
             PositiveColor: this.props.Data.PositiveColor,
             NegativeColor: this.props.Data.NegativeColor,
-        }
+            ShowValue: this.props.Data.ShowValue,
+         }
     }
 
     render(): any {
@@ -107,7 +109,16 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
                         </Row>
                     </FormGroup>
 
-                </AdaptableBlotterForm>
+                    <FormGroup controlId="formShowValue">
+                        <Row>
+                        <Col xs={12}>
+                        <Checkbox inline onChange={(e) => this.onShowValueChanged(e)} checked={this.state.ShowValue}>Show Value</Checkbox>
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Percent Bar: Show Value"} bodyText={["Whether to show additionally the value of the cell in the bar."]} MessageType={MessageType.Info} />
+                    </Col>
+                        </Row>
+                    </FormGroup>
+
+                   </AdaptableBlotterForm>
 
 
 
@@ -136,6 +147,11 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
         this.setState({ NegativeColor: e.value } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
+    
+    private onShowValueChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ ShowValue: e.checked } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
 
     public canNext(): boolean {
 
@@ -149,8 +165,8 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
         this.props.Data.MaxValue = this.state.MaxValue;
         this.props.Data.PositiveColor = this.state.PositiveColor;
         this.props.Data.NegativeColor = this.state.NegativeColor;
-
-    }
+        this.props.Data.ShowValue = this.state.ShowValue;
+         }
 
     public Back(): void {
         //todo

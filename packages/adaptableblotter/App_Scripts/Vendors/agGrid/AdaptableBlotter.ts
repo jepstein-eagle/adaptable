@@ -1459,7 +1459,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (pcr.ShowValue) {
                     let eValue = document.createElement('div');
                     eValue.className = 'ab_div-colour-render-text';
-                    eValue.innerHTML = (pcr.ShowPercentSign) ? value : value + '%';
+                    eValue.innerHTML = params.value;
                     eOuterDiv.appendChild(eValue);
                 }
 
