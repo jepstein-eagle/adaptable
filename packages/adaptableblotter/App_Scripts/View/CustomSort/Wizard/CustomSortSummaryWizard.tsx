@@ -1,15 +1,11 @@
 import * as React from "react";
-import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { SelectionMode } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { ICustomSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {
@@ -22,7 +18,7 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Values", Value: this.props.Data.SortedValues.join(', ') }
         ]

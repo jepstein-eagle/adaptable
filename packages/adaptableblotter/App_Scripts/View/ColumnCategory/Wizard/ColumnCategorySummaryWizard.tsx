@@ -1,9 +1,8 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IColumnCategory } from "../../../Core/Interface/Interfaces";
+import { IColumnCategory, IKeyValuePair } from "../../../Core/Interface/Interfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
@@ -19,7 +18,7 @@ export class ColumnCategorySummaryWizard extends React.Component<ColumnCategoryS
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.ColumnCategoryId },
             { Key: "Columns", Value: this.getColumnNames() },
         ]

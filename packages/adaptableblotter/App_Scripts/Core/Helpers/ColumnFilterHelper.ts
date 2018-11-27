@@ -2,16 +2,16 @@ import { ExpressionHelper } from './ExpressionHelper'
 import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
-import { KeyValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IKeyValuePair } from '../Interface/Interfaces';
 
 
 export module ColumnFilterHelper {
 
 
-    export function ConvertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): KeyValuePair[] {
-        let infoBody: KeyValuePair[] = []
+    export function ConvertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): IKeyValuePair[] {
+        let infoBody: IKeyValuePair[] = []
         columnFilters.forEach(x => {
             let column: IColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
             if (column) {

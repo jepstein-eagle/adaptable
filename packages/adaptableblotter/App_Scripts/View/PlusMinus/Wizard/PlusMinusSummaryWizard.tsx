@@ -1,17 +1,12 @@
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { MessageType } from '../../../Core/Enums';
-import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
 import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: IColumn[]
@@ -25,7 +20,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId,  this.props.Columns)},
             { Key: "Nudge Value", Value: this.props.Data.NudgeValue },
             { Key: "Is Column Default", Value: this.props.Data.IsDefaultNudge ? "True" : "False" },

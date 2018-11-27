@@ -1,13 +1,12 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 
 export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
@@ -20,7 +19,7 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Type", Value: this.props.Data.Type },
             { Key: "Y Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumnId, this.props.Columns) },

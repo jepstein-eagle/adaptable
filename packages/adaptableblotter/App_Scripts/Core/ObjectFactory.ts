@@ -4,7 +4,6 @@ import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
-import { KeyValuePair } from '../View/UIInterfaces';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import * as GeneralConstants from './Constants/GeneralConstants';

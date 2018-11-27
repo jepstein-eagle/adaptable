@@ -17,9 +17,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Core/Helpers/ColumnFilterHelper";
-import { KeyValuePair } from "../UIInterfaces";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement, IKeyValuePair } from "../../Core/Interface/Interfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
@@ -39,7 +37,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
 
-                let filterStrings: KeyValuePair[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns)
+                let filterStrings: IKeyValuePair[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns)
         let infoBody: any[] = []
        filterStrings.forEach(fs => {
                 infoBody.push(<b> {fs.Key} </b>)

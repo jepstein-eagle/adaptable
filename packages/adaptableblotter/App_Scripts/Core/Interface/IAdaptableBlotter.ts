@@ -8,7 +8,7 @@ import { IValidationService } from '../Services/Interface/IValidationService'
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
 import { AuditLogService } from '../Services/AuditLogService'
 import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
-import { IRawValueDisplayValuePair, KeyValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentCellRenderer } from '../Api/Interface/IAdaptableBlotterObjects';

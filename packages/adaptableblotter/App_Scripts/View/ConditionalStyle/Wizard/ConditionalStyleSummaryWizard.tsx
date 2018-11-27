@@ -1,19 +1,14 @@
 import * as React from "react";
-import { Radio, Col, Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Core/Enums";
 import { IConditionalStyle, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: IColumn[]
@@ -29,7 +24,7 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Scope", Value: this.getScope() },
             { Key: "Style", Value: <StyleVisualItem Style={this.props.Data.Style} /> },
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }

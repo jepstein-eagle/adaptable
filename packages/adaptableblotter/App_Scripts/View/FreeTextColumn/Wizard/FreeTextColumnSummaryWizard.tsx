@@ -1,13 +1,12 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IFreeTextColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
-import { string } from "prop-types";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 
 export interface FreeTextColumnSummaryWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {
@@ -24,7 +23,7 @@ export class FreeTextColumnSummaryWizard extends React.Component<FreeTextColumnS
 
         let cssClassName: string = this.props.cssClassName + "-summary"
        
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.ColumnId },
             { Key: "Default Value", Value: StringExtensions.IsNullOrEmpty( this.props.Data.DefaultValue)? "[None]": this.props.Data.DefaultValue },
             { Key: "No. Stored Values", Value: ArrayExtensions.IsNullOrEmpty(this.props.Data.FreeTextStoredValues) ? 0 : this.props.Data.FreeTextStoredValues.length },

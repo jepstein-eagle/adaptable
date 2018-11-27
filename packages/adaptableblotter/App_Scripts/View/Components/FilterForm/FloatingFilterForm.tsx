@@ -14,8 +14,8 @@ import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Core/Enums';
-import { KeyValuePair } from '../../UIInterfaces';
 import { ObjectFactory } from '../../../Core/ObjectFactory';
+import { IKeyValuePair } from '../../../Core/Interface/Interfaces';
 
 
 interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterFormComponent> {
@@ -32,9 +32,9 @@ interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterF
 export interface FloatingFilterFormState {
     floatingFilterFormText: string
     filterExpression: Expression
-    numberOperatorPairs: KeyValuePair[]
-    stringOperatorPairs: KeyValuePair[]
-    dateOperatorPairs: KeyValuePair[]
+    numberOperatorPairs: IKeyValuePair[]
+    stringOperatorPairs: IKeyValuePair[]
+    dateOperatorPairs: IKeyValuePair[]
     placeholder: string
 }
 
@@ -153,7 +153,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         this.props.onAddEditColumnFilter(columnFilter)
     }
 
-    createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
+    createRangeExpression(operatorKVP: IKeyValuePair, searchText: string): void {
         if (searchText.trim() == operatorKVP.Key) {
             // its operator only so do nothing (but set placeholder to ensure not wiped)
             this.clearExpressionState(searchText)
@@ -185,7 +185,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         // first check for existing operators and handle those
         let isRangeExpression: boolean = false
 
-        let operators: KeyValuePair[];
+        let operators: IKeyValuePair[];
         switch (this.props.CurrentColumn.DataType) {
             case DataType.Number:
                 operators = this.state.numberOperatorPairs;
@@ -215,7 +215,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
                 this.createColumnFilter(expression, searchText)
             } else {
                 // if just a single, non-operator, value then do an "Equals" range
-                let equalOperatorPair: KeyValuePair = this.state.numberOperatorPairs.find(op => op.Value == LeafExpressionOperator.Equals)
+                let equalOperatorPair: IKeyValuePair = this.state.numberOperatorPairs.find(op => op.Value == LeafExpressionOperator.Equals)
                 this.createRangeExpression(equalOperatorPair, searchText);
             }
         }

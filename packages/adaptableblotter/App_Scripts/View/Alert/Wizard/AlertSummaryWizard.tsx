@@ -1,13 +1,13 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IAlertDefinition, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import { AlertHelper } from "../../../Core/Helpers/AlertHelper";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
@@ -24,7 +24,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Rule", Value: AlertHelper.createAlertDescription(this.props.Data, this.props.Columns) },
             { Key: "Alert Type", Value: this.props.Data.MessageType },

@@ -3,13 +3,13 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IChartService } from './Interface/IChartService';
 import { IChartDefinition, IColumnValueExpression } from '../Api/Interface/IAdaptableBlotterObjects';
 import { DistinctCriteriaPairValue } from '../Enums';
-import { KeyValuePair } from '../../View/UIInterfaces';
 import { Expression } from '../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import * as GeneralConstants from '../Constants/GeneralConstants';
+import { IKeyValuePair } from '../Interface/Interfaces';
 
 export class ChartService implements IChartService {
 
@@ -31,11 +31,11 @@ export class ChartService implements IChartService {
             let chartDataRow: any = new Object()
             chartDataRow[xAxisColumnName] = cv
 
-            let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
+            let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
-                    let columnValueKVP: KeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
+                    let columnValueKVP: IKeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
                     let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP, columnValueKVP], columns)
                     chartDataRow[columnValue] = groupedTotal
                 })
@@ -48,7 +48,7 @@ export class ChartService implements IChartService {
         return chartData
     }
 
-    private buildGroupedTotal(yAxisColumn: string, kvps: KeyValuePair[], columns: IColumn[]): number {
+    private buildGroupedTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[]): number {
         let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,

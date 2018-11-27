@@ -1,16 +1,9 @@
 import * as React from "react";
-import { Radio, Panel, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, MessageType, MathOperation } from '../../../Core/Enums';
-import { EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IShortcut } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }
@@ -26,7 +19,7 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
 
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Key", Value: this.props.Data.ShortcutKey },
             { Key: "Result", Value: this.props.Data.ShortcutResult },
             { Key: "Operation", Value: this.props.Data.ShortcutOperation },

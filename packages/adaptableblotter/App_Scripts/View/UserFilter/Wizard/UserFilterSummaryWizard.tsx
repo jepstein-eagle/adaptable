@@ -1,15 +1,12 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     Columns: IColumn[]
@@ -26,7 +23,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     render() {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }

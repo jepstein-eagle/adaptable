@@ -1,17 +1,13 @@
 import * as React from "react";
-import { Radio, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { MessageType } from '../../../Core/Enums';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { ICellValidationRule, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../../Core/Helpers/CellValidationHelper";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
@@ -28,7 +24,7 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Mode", Value: this.props.Data.ActionMode },
             { Key: "Rule", Value: CellValidationHelper.createCellValidationDescription( this.props.Data, this.props.Columns) },

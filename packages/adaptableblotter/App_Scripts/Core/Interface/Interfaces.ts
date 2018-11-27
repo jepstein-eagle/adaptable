@@ -38,3 +38,8 @@ export interface IMasterChildren{
     Master: any;
     Children: any[]
 }
+
+export interface IKeyValuePair {
+    Key: string,
+    Value: any
+}

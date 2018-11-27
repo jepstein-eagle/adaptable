@@ -1,13 +1,13 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IPercentCellRenderer, IStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import { StyleVisualItem } from "../../Components/StyleVisualItem";
 import { ObjectFactory } from "../../../Core/ObjectFactory";
+import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface CellRendererSummaryWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
     Columns: IColumn[]
@@ -28,7 +28,7 @@ export class CellRendererSummaryWizard extends React.Component<CellRendererSumma
         negativeStyle.BackColor = this.props.Data.NegativeColor;
         negativeStyle.ForeColor = this.props.Data.NegativeColor;
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Minimum Value", Value: this.props.Data.MinValue },
             { Key: "Maximum Value", Value: this.props.Data.MaxValue },
