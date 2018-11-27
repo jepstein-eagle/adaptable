@@ -5,23 +5,23 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColorPicker } from "../../ColorPicker";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
-export interface CellRenderersWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
+export interface PercentBarsWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     Columns: Array<IColumn>;
     ColorPalette: Array<string>;
 }
-export interface CellRendererSettingsWizardState {
+export interface PercentBarSettingsWizardState {
     MinValue: number;
     MaxValue: number;
     PositiveColor: string;
     NegativeColor: string;
 }
 
-export class CellRendererSettingsWizard extends React.Component<CellRenderersWizardProps, CellRendererSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: CellRenderersWizardProps) {
+export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardProps, PercentBarSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: PercentBarsWizardProps) {
         super(props)
         this.state = {
             MinValue: this.props.Data.MinValue,
@@ -37,7 +37,7 @@ export class CellRendererSettingsWizard extends React.Component<CellRenderersWiz
         let friendlyColumnName: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns);
 
         return <div className={cssClassName}>
-            <Panel header={"Cell Renderer for " + friendlyColumnName} bsStyle="primary">
+            <Panel header={"Percent Bar for " + friendlyColumnName} bsStyle="primary">
 
                 <AdaptableBlotterForm >
 
@@ -119,21 +119,21 @@ export class CellRendererSettingsWizard extends React.Component<CellRenderersWiz
     }
 
     private onMinValueChanged = (e: any) => {
-        this.setState({ MinValue: e.target.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ MinValue: e.target.value } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onMaxValueChanged = (e: any) => {
-        this.setState({ MaxValue: e.target.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ MaxValue: e.target.value } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onPositiveColorSelectChanged(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ PositiveColor: e.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ PositiveColor: e.value } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onNegativeColorSelectChanged(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ NegativeColor: e.value } as CellRendererSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ NegativeColor: e.value } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 

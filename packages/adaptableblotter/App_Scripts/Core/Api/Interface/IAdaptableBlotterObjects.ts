@@ -225,11 +225,11 @@ export interface IStyle {
   ClassName?: string
 }
 
-export interface ICellRenderer extends IAdaptableBlotterObject {
+export interface IPercentBar extends IAdaptableBlotterObject {
   ColumnId: string
 }
 
-export interface IPercentCellRenderer extends ICellRenderer {
+export interface IPercentBar extends IAdaptableBlotterObject {
   MinValue: number;
   MaxValue: number;
   PositiveColor: string;

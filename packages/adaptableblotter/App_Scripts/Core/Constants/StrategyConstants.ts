@@ -6,7 +6,7 @@ export const ApplicationStrategyId: string = "Application"
 export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
 export const CalendarStrategyId: string = "Calendar"
-export const CellRendererStrategyId: string = "CellRenderer"
+export const PercentBarStrategyId: string = "PercentBar"
 export const CellValidationStrategyId: string = "CellValidation"
 export const ChartStrategyId: string = "Chart"
 export const ColumnChooserStrategyId: string = "ColumnChooser"
@@ -41,7 +41,7 @@ export const ApplicationStrategyName: string = "Application"
 export const BulkUpdateStrategyName: string = "Bulk Update"
 export const CalculatedColumnStrategyName: string = "Calculated Column"
 export const CalendarStrategyName: string = "Calendar"
-export const CellRendererStrategyName: string = "Cell Renderer"
+export const PercentBarStrategyName: string = "Percent Bar"
 export const CellValidationStrategyName: string = "Cell Validation"
 export const ChartStrategyName: string = "Chart"
 export const ColumnChooserStrategyName: string = "Column Chooser"
@@ -75,7 +75,7 @@ export const ApplicationGlyph: string = "font"
 export const BulkUpdateGlyph: string = "hand-up"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"
-export const CellRendererGlyph: string = "tree-conifer"
+export const PercentBarGlyph: string = "transfer"
 export const CellValidationGlyph: string = "flag"
 export const ChartGlyph: string = "signal"
 export const ColumnChooserGlyph: string = "list-alt"
@@ -119,8 +119,8 @@ export function getIdForStrategyName(strategyName: string) {
             return CalendarStrategyId
         case CellValidationStrategyName:
             return CellValidationStrategyId
-        case CellRendererStrategyName:
-            return CellRendererStrategyId
+        case PercentBarStrategyName:
+            return PercentBarStrategyId
         case ChartStrategyName:
             return ChartStrategyId
         case ColumnChooserStrategyName:
@@ -189,8 +189,8 @@ export function getNameForStrategyId(strategyID: string) {
             return CalendarStrategyName
         case CellValidationStrategyId:
             return CellValidationStrategyName
-        case CellRendererStrategyId:
-            return CellRendererStrategyName
+        case PercentBarStrategyId:
+            return PercentBarStrategyName
         case ChartStrategyId:
             return ChartStrategyName
         case ColumnChooserStrategyId:
@@ -258,8 +258,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return CalendarGlyph
         case CellValidationStrategyId:
             return CellValidationGlyph
-        case CellRendererStrategyId:
-            return CellRendererGlyph
+        case PercentBarStrategyId:
+            return PercentBarGlyph
         case ChartStrategyId:
             return ChartGlyph
         case ColumnChooserStrategyId:

@@ -21,7 +21,7 @@ export interface AdaptableBlotterState {
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
     Calendar: AdaptableBlotterStates.CalendarState;
-    CellRenderer: AdaptableBlotterStates.CellRendererState;
+    PercentBar: AdaptableBlotterStates.PercentBarState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
     Chart: AdaptableBlotterStates.ChartState;
     ColumnFilter: AdaptableBlotterStates.ColumnFilterState;

@@ -11,7 +11,7 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentCellRenderer } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
@@ -96,10 +96,10 @@ export interface IAdaptableBlotter {
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void
    
-    // cellRenderer
-    removePercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
-    addPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
-    editPercentCellRenderer(percentCellRenderer: IPercentCellRenderer): void
+    // percentBar
+    removePercentBar(percentBar: IPercentBar): void
+    addPercentBar(percentBar: IPercentBar): void
+    editPercentBar(percentBar: IPercentBar): void
 
 
     getFirstRecord(): any

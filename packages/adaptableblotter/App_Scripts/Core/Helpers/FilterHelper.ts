@@ -1,10 +1,8 @@
-import { ExpressionHelper } from './ExpressionHelper'
 import { DataType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { StringExtensions } from '../Extensions/StringExtensions'
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter, IColumnFilter, ICellRenderer, IPercentCellRenderer } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 
 
 export module FilterHelper {
@@ -112,21 +110,21 @@ export module FilterHelper {
 
             case BLANKS_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (itemToCheck: any, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (itemToCheck: any): boolean => {
                         return Helper.IsInputNullOrEmpty(itemToCheck);
                     },
                 }
             }
             case NON_BLANKS_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (itemToCheck: any, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (itemToCheck: any): boolean => {
                         return Helper.IsInputNotNullOrEmpty(itemToCheck);
                     },
                 }
             }
             case TODAY_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (dateToCheck: Date): boolean => {
                         let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
                         return (today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
                     },
@@ -134,21 +132,21 @@ export module FilterHelper {
             }
             case IN_PAST_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (dateToCheck: Date): boolean => {
                         return +dateToCheck < Date.now();
                     },
                 }
             }
             case IN_FUTURE_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (dateToCheck: Date): boolean => {
                         return +dateToCheck > Date.now();
                     },
                 }
             }
             case YESTERDAY_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (dateToCheck: Date): boolean => {
                         let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date);
                         return (yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
                     },
@@ -156,7 +154,7 @@ export module FilterHelper {
             }
             case TOMORROW_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (dateToCheck: Date): boolean => {
                         let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date);
                         return (tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0))
                     },
@@ -180,7 +178,7 @@ export module FilterHelper {
             }
             case THIS_YEAR_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (dateToCheck: Date): boolean => {
                         let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date);
                         let todayyear: number = today.getFullYear();
                         let datetocheckyear: number = dateToCheck.getFullYear();
@@ -191,7 +189,7 @@ export module FilterHelper {
             }
             case POSITIVE_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (numberToCheck: number): boolean => {
                         return (numberToCheck > 0);
                     },
 
@@ -199,14 +197,14 @@ export module FilterHelper {
             }
             case NEGATIVE_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (numberToCheck: number): boolean => {
                         return (numberToCheck < 0);
                     },
                 }
             }
             case ZERO_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (numberToCheck: number, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (numberToCheck: number): boolean => {
                         return (numberToCheck == 0);
                     },
 
@@ -214,14 +212,14 @@ export module FilterHelper {
             }
             case TRUE_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (boolToCheck: boolean): boolean => {
                         return (boolToCheck);
                     },
                 }
             }
             case FALSE_SYSTEM_FILTER: {
                 return {
-                    IsExpressionSatisfied: (boolToCheck: boolean, blotter: IAdaptableBlotter): boolean => {
+                    IsExpressionSatisfied: (boolToCheck: boolean): boolean => {
                         return (!boolToCheck);
                     },
                 }

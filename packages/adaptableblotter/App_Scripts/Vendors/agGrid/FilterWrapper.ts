@@ -3,9 +3,7 @@ import * as ReactDOM from "react-dom";
 import { IColumnFilterContext } from '../../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from './AdaptableBlotter'
 import { FilterFormReact } from "../../View/Components/FilterForm/FilterForm";
-import { DistinctCriteriaPairValue } from "../../Core/Enums";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { IPercentCellRenderer } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {

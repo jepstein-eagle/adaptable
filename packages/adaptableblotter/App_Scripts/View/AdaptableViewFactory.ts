@@ -47,7 +47,7 @@ import { ChartPopup } from './Chart/ChartPopup';
 import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
-import { CellRendererPopup } from './CellRenderer/CellRendererPopup';
+import { PercentBarPopup } from './PercentBar/PercentBarPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
    AdvancedSearchPopup: AdvancedSearchPopup,
@@ -56,7 +56,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   BulkUpdatePopup: BulkUpdatePopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   CalendarsPopup: CalendarsPopup,
-  CellRendererPopup: CellRendererPopup,
+  PercentBarPopup: PercentBarPopup,
   CellValidationPopup: CellValidationPopup,
   ChartPopup: ChartPopup,
   ColumnChooserPopup: ColumnChooserPopup,

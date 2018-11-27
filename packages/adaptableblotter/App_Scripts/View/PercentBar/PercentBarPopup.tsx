@@ -5,34 +5,34 @@ import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as CellRendererRedux from '../../Redux/ActionsReducers/CellRendererRedux'
+import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Core/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { CellRendererWizard } from './Wizard/CellRendererWizard'
+import { PercentBarWizard } from './Wizard/PercentBarWizard'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { CellRendererEntityRow } from './CellRendererEntityRow';
+import { PercentBarEntityRow } from './PercentBarEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IPercentCellRenderer, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
-interface CellRendererPopupProps extends StrategyViewPopupProps<CellRendererPopupComponent> {
-    PercentCellRenderers: IPercentCellRenderer[];
-    onAddEditCellRenderer: (Index: number, percentCellRenderer: IPercentCellRenderer) => CellRendererRedux.CellRendererAddUpdateAction
+interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
+    PercentBars: IPercentBar[];
+    onAddEditPercentBar: (Index: number, PercentBar: IPercentBar) => PercentBarRedux.PercentBarAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
-    onPositiveColorChanged: (percentCellRenderer: IPercentCellRenderer, PositiveColor: string) => CellRendererRedux.CellRendererChangePositiveColorAction
-    onNegativeColorChanged: (percentCellRenderer: IPercentCellRenderer, NegativeColor: string) => CellRendererRedux.CellRendererChangeNegativeColorAction
+    onPositiveColorChanged: (PercentBar: IPercentBar, PositiveColor: string) => PercentBarRedux.PercentBarChangePositiveColorAction
+    onNegativeColorChanged: (PercentBar: IPercentBar, NegativeColor: string) => PercentBarRedux.PercentBarChangeNegativeColorAction
 
 }
 
-class CellRendererPopupComponent extends React.Component<CellRendererPopupProps, EditableConfigEntityState> {
-    constructor(props: CellRendererPopupProps) {
+class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, EditableConfigEntityState> {
+    constructor(props: PercentBarPopupProps) {
         super(props);
         this.state = { EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: 0 }
     }
@@ -41,13 +41,13 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|")
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
-                let newPercentRender: IPercentCellRenderer = ObjectFactory.CreateEmptyPercentCellRenderer()
+                let newPercentRender: IPercentBar = ObjectFactory.CreateEmptyPercentBar()
                 newPercentRender.ColumnId = arrayParams[1]
                 this.onEdit(-1, newPercentRender)
             }
             if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
-                let editPercentRender = this.props.PercentCellRenderers.find(x => x.ColumnId == arrayParams[1])
-                let index = this.props.PercentCellRenderers.findIndex(x => x.ColumnId == editPercentRender.ColumnId)
+                let editPercentRender = this.props.PercentBars.find(x => x.ColumnId == arrayParams[1])
+                let index = this.props.PercentBars.findIndex(x => x.ColumnId == editPercentRender.ColumnId)
                 this.onEdit(index, editPercentRender)
             }
         }
@@ -55,7 +55,7 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
 
 
     render() {
-        let cssClassName: string = this.props.cssClassName + "__cellRenderer";
+        let cssClassName: string = this.props.cssClassName + "__PercentBar";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
 
         let infoBody: any[] = ["To Do."]
@@ -69,44 +69,44 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
             { Content: "", Size: 2 },
         ]
 
-        let CellRendererItems = this.props.PercentCellRenderers.map((percentCellRenderer:IPercentCellRenderer, index) => {
-            let column = ColumnHelper.getColumnFromId(percentCellRenderer.ColumnId, this.props.Columns);
-            return <CellRendererEntityRow
+        let PercentBarItems = this.props.PercentBars.map((PercentBar:IPercentBar, index) => {
+            let column = ColumnHelper.getColumnFromId(PercentBar.ColumnId, this.props.Columns);
+            return <PercentBarEntityRow
                 key={index}
                 cssClassName={cssClassName}
                 colItems={colItems}
-                AdaptableBlotterObject={percentCellRenderer}
+                AdaptableBlotterObject={PercentBar}
                 Column={column}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 ColorPalette={this.props.ColorPalette}
                 Index={index}
-                onEdit={(index, object) => this.onEdit(index, percentCellRenderer)}
-                onShare={() => this.props.onShare(percentCellRenderer)}
+                onEdit={(index, object) => this.onEdit(index, PercentBar)}
+                onShare={() => this.props.onShare(PercentBar)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                onDeleteConfirm={CellRendererRedux.CellRendererDelete(index)}
-                onPositiveColorChanged={(percentCellRenderer, positiveColor) => this.props.onPositiveColorChanged(percentCellRenderer, positiveColor)}
-                onNegativeColorChanged={(percentCellRenderer, negativeColor) => this.props.onNegativeColorChanged(percentCellRenderer, negativeColor)} 
+                onDeleteConfirm={PercentBarRedux.PercentBarDelete(index)}
+                onPositiveColorChanged={(PercentBar, positiveColor) => this.props.onPositiveColorChanged(PercentBar, positiveColor)}
+                onNegativeColorChanged={(PercentBar, negativeColor) => this.props.onNegativeColorChanged(PercentBar, negativeColor)} 
             />
 
         })
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
-            overrideTooltip="Create Cell Renderer "
+            overrideTooltip="Create Percent Bar "
             DisplayMode="Glyph+Text"
             size={"small"}
             AccessLevel={this.props.AccessLevel}
         />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyConstants.CellRendererStrategyName} bsStyle="primary" cssClassName={cssClassName}
+            <PanelWithButton headerText={StrategyConstants.PercentBarStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
-                glyphicon={StrategyConstants.CellRendererGlyph}
+                glyphicon={StrategyConstants.PercentBarGlyph}
                 infoBody={infoBody}>
-                {CellRendererItems.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={CellRendererItems} />
+                {PercentBarItems.length > 0 &&
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={PercentBarItems} />
                 }
 
-                {CellRendererItems.length == 0 &&
+                {PercentBarItems.length == 0 &&
                     <Well bsSize="small">
                         <HelpBlock>Click 'New' to start creating s for valid cell edits.</HelpBlock>
                         <HelpBlock>Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).</HelpBlock>
@@ -114,9 +114,9 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&
-                    <CellRendererWizard
+                    <PercentBarWizard
                         cssClassName={cssWizardClassName}
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPercentCellRenderer}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPercentBar}
                         ConfigEntities={null}
                         Blotter={this.props.Blotter}
                         ModalContainer={this.props.ModalContainer}
@@ -135,11 +135,11 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPercentCellRenderer(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPercentBar(), EditedAdaptableBlotterObjectIndex: -1, WizardStartIndex: 0 });
     }
 
-    onEdit(index: number, renderedColumn: IPercentCellRenderer) {
-         let clonedObject: IPercentCellRenderer = Helper.cloneObject(renderedColumn);
+    onEdit(index: number, renderedColumn: IPercentBar) {
+         let clonedObject: IPercentBar = Helper.cloneObject(renderedColumn);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 , EditedAdaptableBlotterObjectIndex: index});
     }
 
@@ -149,29 +149,29 @@ class CellRendererPopupComponent extends React.Component<CellRendererPopupProps,
     }
 
     onFinishWizard() {
-        this.props.onAddEditCellRenderer(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPercentCellRenderer);
+        this.props.onAddEditPercentBar(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IPercentBar);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
     canFinishWizard() {
-        let cellRenderer = this.state.EditedAdaptableBlotterObject as IPercentCellRenderer
-        return StringExtensions.IsNotNullOrEmpty(cellRenderer.ColumnId)
+        let PercentBar = this.state.EditedAdaptableBlotterObject as IPercentBar
+        return StringExtensions.IsNotNullOrEmpty(PercentBar.ColumnId)
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        PercentCellRenderers: state.CellRenderer.PercentCellRenderers
+        PercentBars: state.PercentBar.PercentBars
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onAddEditCellRenderer: (index: number, percentCellRenderer: IPercentCellRenderer) => dispatch(CellRendererRedux.CellRendererAddUpdate(index, percentCellRenderer)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellRendererStrategyId)),
-        onPositiveColorChanged: (percentCellRenderer: IPercentCellRenderer, positiveColor: string) => dispatch(CellRendererRedux.CellRendererChangePositiveColor(percentCellRenderer, positiveColor)),
-        onNegativeColorChanged: (percentCellRenderer: IPercentCellRenderer, negativeColor: string) => dispatch(CellRendererRedux.CellRendererChangeNegativeColor(percentCellRenderer, negativeColor))
+        onAddEditPercentBar: (index: number, PercentBar: IPercentBar) => dispatch(PercentBarRedux.PercentBarAddUpdate(index, PercentBar)),
+        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+        onPositiveColorChanged: (PercentBar: IPercentBar, positiveColor: string) => dispatch(PercentBarRedux.PercentBarChangePositiveColor(PercentBar, positiveColor)),
+        onNegativeColorChanged: (PercentBar: IPercentBar, negativeColor: string) => dispatch(PercentBarRedux.PercentBarChangeNegativeColor(PercentBar, negativeColor))
   };
 }
 
-export let CellRendererPopup = connect(mapStateToProps, mapDispatchToProps)(CellRendererPopupComponent);
+export let PercentBarPopup = connect(mapStateToProps, mapDispatchToProps)(PercentBarPopupComponent);

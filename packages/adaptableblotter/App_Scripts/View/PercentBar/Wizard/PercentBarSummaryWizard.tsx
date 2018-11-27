@@ -3,18 +3,18 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IPercentCellRenderer, IStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar, IStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import { StyleVisualItem } from "../../Components/StyleVisualItem";
 import { ObjectFactory } from "../../../Core/ObjectFactory";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
-export interface CellRendererSummaryWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
+export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     Columns: IColumn[]
 }
 
-export class CellRendererSummaryWizard extends React.Component<CellRendererSummaryWizardProps, {}> implements AdaptableWizardStep {
-    constructor(props: CellRendererSummaryWizardProps) {
+export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWizardProps, {}> implements AdaptableWizardStep {
+    constructor(props: PercentBarSummaryWizardProps) {
         super(props)
     }
 
@@ -36,7 +36,7 @@ export class CellRendererSummaryWizard extends React.Component<CellRendererSumma
             { Key: "Negative Colour", Value: <StyleVisualItem Style={negativeStyle} /> },
         ]
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CellRendererStrategyName} />
+        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.PercentBarStrategyName} />
         return <div className={cssClassName}>
             {summaryPage}
         </div>

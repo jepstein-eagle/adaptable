@@ -5,19 +5,19 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { ICellRenderer, IPercentCellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 
-export interface CellRendererSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentCellRenderer> {
+export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     Columns: Array<IColumn>
 }
-export interface CellRendererSelectColumnWizardState {
+export interface PercentBarSelectColumnWizardState {
     ColumnId: string
 }
 
-export class CellRendererSelectColumnWizard extends React.Component<CellRendererSelectColumnWizardProps, CellRendererSelectColumnWizardState> implements AdaptableWizardStep {
-    constructor(props: CellRendererSelectColumnWizardProps) {
+export class PercentBarSelectColumnWizard extends React.Component<PercentBarSelectColumnWizardProps, PercentBarSelectColumnWizardState> implements AdaptableWizardStep {
+    constructor(props: PercentBarSelectColumnWizardProps) {
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
@@ -38,7 +38,7 @@ export class CellRendererSelectColumnWizard extends React.Component<CellRenderer
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as CellRendererSelectColumnWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as PercentBarSelectColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

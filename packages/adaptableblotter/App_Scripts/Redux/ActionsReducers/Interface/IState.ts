@@ -4,7 +4,7 @@ import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy'
 import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentCellRenderer } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn,  IPercentBar } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 
@@ -124,8 +124,8 @@ export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];
 }
 
-export interface CellRendererState extends IUserState {
-    PercentCellRenderers: IPercentCellRenderer[];
+export interface PercentBarState extends IUserState {
+    PercentBars: IPercentBar[];
 }
 
 export interface ChartState extends IUserState {

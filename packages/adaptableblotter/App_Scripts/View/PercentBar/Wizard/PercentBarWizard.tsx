@@ -1,31 +1,31 @@
-import { ICellRenderer } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
-import { CellRendererSelectColumnWizard } from './CellRendererSelectColumnWizard'
-import { CellRendererSummaryWizard } from './CellRendererSummaryWizard'
+import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard'
+import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard'
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { CellRendererSettingsWizard } from "./CellRendererSettingsWizard";
+import { PercentBarSettingsWizard } from "./PercentBarSettingsWizard";
 
-export interface CellRendererWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CellRendererWizard> {
+export interface PercentBarWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PercentBarWizard> {
     ColorPalette: Array<string>;
 }
 
-export class CellRendererWizard extends React.Component<CellRendererWizardProps, {}> {
+export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}> {
 
     render() {
         let stepNames: string[] = ["Select Column", "Settings", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
-                FriendlyName={StrategyConstants.CellRendererStrategyName}
+                FriendlyName={StrategyConstants.PercentBarStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Steps={[
-                    <CellRendererSelectColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <CellRendererSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} ColorPalette={this.props.ColorPalette} />,
-                    <CellRendererSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
+                    <PercentBarSelectColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
+                    <PercentBarSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} ColorPalette={this.props.ColorPalette} />,
+                    <PercentBarSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

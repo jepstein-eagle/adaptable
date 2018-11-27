@@ -62,7 +62,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { FilterFormReact } from '../../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../../View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -1278,7 +1278,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
 
-                return originalGetCellReturn || this.hyperGrid.cellRenderers.get(declaredRendererName);
+                return originalGetCellReturn || this.hyperGrid.Bars.get(declaredRendererName);
             }
             catch (err) {
                 AdaptableBlotterLogger.LogError("Error during GetCell", err)
@@ -1446,14 +1446,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
     }
 
-    public addPercentCellRenderer(pcr: IPercentCellRenderer): void {
+    public addPercentBar(pcr: IPercentBar): void {
         // to do
     }
-    public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
+    public removePercentBar(pcr: IPercentBar): void {
         // todo
     }
 
-    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
+    public editPercentBar(pcr: IPercentBar): void {
         // todo
     }
 

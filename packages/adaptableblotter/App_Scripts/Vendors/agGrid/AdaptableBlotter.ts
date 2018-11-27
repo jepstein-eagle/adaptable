@@ -66,7 +66,7 @@ import { DataSourceStrategy } from '../../Strategy/DataSourceStrategy';
 import { HomeStrategy } from '../../Strategy/HomeStrategy';
 import { FreeTextColumnStrategy } from '../../Strategy/FreeTextColumnStrategy';
 import { ChartStrategy } from '../../Strategy/ChartStrategy';
-import { CellRendererStrategy } from '../../Strategy/CellRendererStrategy';
+import { PercentBarStrategy } from '../../Strategy/PercentBarStrategy';
 import { ColumnCategoryStrategy } from '../../Strategy/ColumnCategoryStrategy';
 
 // components
@@ -86,7 +86,7 @@ import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../../View/UIInt
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Core/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../../Core/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Core/Api/Interface/IStateEvents';
@@ -160,7 +160,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyConstants.CellRendererStrategyId, new CellRendererStrategy(this))
+        this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
@@ -773,7 +773,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
         } else { // get the distinct values for the column from the grid
             //we use forEachNode as we want to get all data even the one filtered out...
-            let isRenderedColumn = this.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == columnId);
+            let isRenderedColumn = this.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == columnId);
             let data = this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
@@ -846,7 +846,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getRenderedValue(colDef: ColDef, valueToRender: any): string {
-        let isRenderedColumn = this.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == colDef.field);
+        let isRenderedColumn = this.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == colDef.field);
         if (isRenderedColumn) {
             return valueToRender;
         }
@@ -1379,10 +1379,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // add any special filters
-        let percentCellRenderers: IPercentCellRenderer[] = this.getState().CellRenderer.PercentCellRenderers;
-        percentCellRenderers.forEach(pcr => {
+        let percentBars: IPercentBar[] = this.getState().PercentBar.PercentBars;
+        percentBars.forEach(pcr => {
 
-            this.addPercentCellRenderer(pcr);
+            this.addPercentBar(pcr);
         });
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -1432,7 +1432,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
     }
 
-    public addPercentCellRenderer(pcr: IPercentCellRenderer): void {
+    public addPercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
             let showNegatives: boolean = pcr.MinValue < 0;
@@ -1495,7 +1495,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
         }
     }
-    public removePercentCellRenderer(pcr: IPercentCellRenderer): void {
+    public removePercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns)
         if (renderedColumn) {
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
@@ -1504,9 +1504,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public editPercentCellRenderer(pcr: IPercentCellRenderer): void {
-        this.removePercentCellRenderer(pcr);
-        this.addPercentCellRenderer(pcr);
+    public editPercentBar(pcr: IPercentBar): void {
+        this.removePercentBar(pcr);
+        this.addPercentBar(pcr);
     }
 
     private onSortChanged(): void {

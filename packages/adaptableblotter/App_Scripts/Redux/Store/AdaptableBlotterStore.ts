@@ -40,7 +40,7 @@ import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
 import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
-import * as CellRendererRedux from '../ActionsReducers/CellRendererRedux'
+import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
@@ -60,7 +60,7 @@ import { GridState, LayoutState, IState } from '../ActionsReducers/Interface/ISt
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn, IPercentCellRenderer } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn, IPercentBar } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
@@ -94,7 +94,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   UserFilter: UserFilterRedux.UserFilterReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
   Theme: ThemeRedux.ThemeReducer,
-  CellRenderer: CellRendererRedux.CellRendererReducer,
+  PercentBar: PercentBarRedux.PercentBarReducer,
   CellValidation: CellValidationRedux.CellValidationReducer,
   Layout: LayoutRedux.LayoutReducer,
   ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
@@ -655,47 +655,47 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         // TODO:  Need to do Delete? 
 
         /*
-       Cell Renderer
+      PercentBar
        */
-        case CellRendererRedux.CELL_RENDERER_ADD_UPDATE: {
-          let actionTyped = <CellRendererRedux.CellRendererAddUpdateAction>action
+        case PercentBarRedux.PERCENT_BAR_ADD_UPDATE: {
+          let actionTyped = <PercentBarRedux.PercentBarAddUpdateAction>action
 
           if (actionTyped.Index >= 0) { // edit so first remove before doing anything
-            let editedCellRender: IPercentCellRenderer = middlewareAPI.getState().CellRenderer.PercentCellRenderers[actionTyped.Index];
-            blotter.removePercentCellRenderer(editedCellRender);
+            let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars[actionTyped.Index];
+            blotter.removePercentBar(editedCellRender);
           }
           let returnAction = next(action);
          
           // add new one
-          blotter.addPercentCellRenderer(actionTyped.CellRenderer);
+          blotter.addPercentBar(actionTyped.PercentBar);
           blotter.redraw();
           return returnAction;
         }
 
-        case CellRendererRedux.CELL_RENDERER_DELETE: {
+        case PercentBarRedux.PERCENT_BAR_DELETE: {
           let returnAction = next(action);
-          let cellRendererState = middlewareAPI.getState().CellRenderer;
-          let actionTyped = <CellRendererRedux.CellRendererDeleteAction>action
-          let percentCellRenderer: IPercentCellRenderer = cellRendererState.PercentCellRenderers[actionTyped.Index];
-          blotter.removePercentCellRenderer(percentCellRenderer);
+          let PercentBarState = middlewareAPI.getState().PercentBar;
+          let actionTyped = <PercentBarRedux.PercentBarDeleteAction>action
+          let PercentBar: IPercentBar = PercentBarState.PercentBars[actionTyped.Index];
+          blotter.removePercentBar(PercentBar);
           blotter.redraw();
           return returnAction;
         }
 
-        case CellRendererRedux.CELL_RENDERER_CHANGE_POSITIVE_COLOR:{
+        case PercentBarRedux.PERCENT_BAR_CHANGE_POSITIVE_COLOR:{
           let returnAction = next(action);
-          let percentCellRenderer: IPercentCellRenderer = (<CellRendererRedux.CellRendererChangePositiveColorAction>action).CellRenderer;
-          let editedCellRender: IPercentCellRenderer = middlewareAPI.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == percentCellRenderer.ColumnId);
-          blotter.editPercentCellRenderer(editedCellRender);
+          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangePositiveColorAction>action).PercentBar;
+          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
+          blotter.editPercentBar(editedCellRender);
           blotter.redraw();
           return returnAction;
         }
 
-        case CellRendererRedux.CELL_RENDERER_CHANGE_NEGATIVE_COLOR: {
+        case PercentBarRedux.PERCENT_BAR_CHANGE_NEGATIVE_COLOR: {
           let returnAction = next(action);
-          let percentCellRenderer: IPercentCellRenderer = (<CellRendererRedux.CellRendererChangeNegativeColorAction>action).CellRenderer;
-          let editedCellRender: IPercentCellRenderer = middlewareAPI.getState().CellRenderer.PercentCellRenderers.find(pcr => pcr.ColumnId == percentCellRenderer.ColumnId);
-          blotter.editPercentCellRenderer(editedCellRender);
+          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangeNegativeColorAction>action).PercentBar;
+          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
+          blotter.editPercentBar(editedCellRender);
           blotter.redraw();
           return returnAction;
         }
