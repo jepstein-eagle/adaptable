@@ -202,7 +202,7 @@ export class DataGenerator {
             "changeOnYear": this.getMeaningfulPositiveNegativeInteger(100),//  this.getMeaningfulPositiveNegativeDouble(),
             "amount": this.getRandomItem(this.getAmounts()),
             "price": price,
-            "bid": bid,
+            "bid": bid * -1,
             "ask": ask,
             "bidOfferSpread": bidOfferSpread,
             "status": this.getStatus(),

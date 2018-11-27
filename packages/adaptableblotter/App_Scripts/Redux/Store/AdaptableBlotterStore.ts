@@ -673,12 +673,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         }
 
         case PercentBarRedux.PERCENT_BAR_DELETE: {
-          let returnAction = next(action);
-          let PercentBarState = middlewareAPI.getState().PercentBar;
+         let PercentBarState = middlewareAPI.getState().PercentBar;
           let actionTyped = <PercentBarRedux.PercentBarDeleteAction>action
           let PercentBar: IPercentBar = PercentBarState.PercentBars[actionTyped.Index];
           blotter.removePercentBar(PercentBar);
-          blotter.redraw();
+           let returnAction = next(action);
+           blotter.redraw();
           return returnAction;
         }
 

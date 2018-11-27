@@ -30,7 +30,7 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
             PositiveColor: this.props.Data.PositiveColor,
             NegativeColor: this.props.Data.NegativeColor,
             ShowValue: this.props.Data.ShowValue,
-         }
+        }
     }
 
     render(): any {
@@ -39,7 +39,7 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
         let friendlyColumnName: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns);
 
         return <div className={cssClassName}>
-            <Panel header={"Percent Bar for " + friendlyColumnName} bsStyle="primary">
+            <Panel header={"Percent Bar for: " + friendlyColumnName} bsStyle="primary">
 
                 <AdaptableBlotterForm >
 
@@ -56,8 +56,8 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
                                     value={this.state.MinValue}
                                 />
                             </Col>
-                            <Col xs={1}><AdaptablePopover cssClassName={cssClassName} headerText={"Minimum Value"}
-                                bodyText={["To do"]} MessageType={MessageType.Info} />
+                            <Col xs={1}><AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Minimum Value"}
+                                bodyText={["The minimum value of the column (can be minus).  If positive numbers only use the default of 0."]} MessageType={MessageType.Info} />
                             </Col>
                         </Row>
                     </FormGroup>
@@ -75,8 +75,8 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
                                     value={this.state.MaxValue}
                                 />
                             </Col>
-                            <Col xs={1}><AdaptablePopover cssClassName={cssClassName} headerText={"Maximum Value"}
-                                bodyText={["To do"]} MessageType={MessageType.Info} />
+                            <Col xs={1}><AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Maximum Value"}
+                                bodyText={["The maximum value of the column (default is 100)"]} MessageType={MessageType.Info} />
                             </Col>
                         </Row>
                     </FormGroup>
@@ -111,14 +111,19 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
 
                     <FormGroup controlId="formShowValue">
                         <Row>
-                        <Col xs={12}>
-                        <Checkbox inline onChange={(e) => this.onShowValueChanged(e)} checked={this.state.ShowValue}>Show Value</Checkbox>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Percent Bar: Show Value"} bodyText={["Whether to show additionally the value of the cell in the bar."]} MessageType={MessageType.Info} />
-                    </Col>
+                            <Col xs={3}>
+                                <ControlLabel>Show Value:</ControlLabel>
+                            </Col>
+                            <Col xs={1}>
+                                <Checkbox style={{margin: '0px'}}  onChange={(e) => this.onShowValueChanged(e)} checked={this.state.ShowValue}></Checkbox>
+                            </Col>
+                            <Col xs={1}>
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Show Value"} bodyText={["Whether to show additionally the value of the cell in the bar."]} MessageType={MessageType.Info} />
+                            </Col>
                         </Row>
                     </FormGroup>
 
-                   </AdaptableBlotterForm>
+                </AdaptableBlotterForm>
 
 
 
@@ -147,7 +152,7 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
         this.setState({ NegativeColor: e.value } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    
+
     private onShowValueChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ShowValue: e.checked } as PercentBarSettingsWizardState, () => this.props.UpdateGoBackState())
@@ -166,7 +171,7 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarsWizardP
         this.props.Data.PositiveColor = this.state.PositiveColor;
         this.props.Data.NegativeColor = this.state.NegativeColor;
         this.props.Data.ShowValue = this.state.ShowValue;
-         }
+    }
 
     public Back(): void {
         //todo

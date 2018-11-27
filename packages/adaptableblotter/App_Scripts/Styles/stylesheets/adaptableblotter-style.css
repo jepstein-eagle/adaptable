@@ -519,11 +519,11 @@ End Searchable DropDown Styles
 
 .ab_div-colour-render-text {
   position: absolute;
-  padding-left: 4px;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 12p;
   z-index: 100;
 }
+
 
 .ab_div-colour-render-div {
   display: inline-block;

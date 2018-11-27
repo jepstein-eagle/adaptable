@@ -773,13 +773,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
         } else { // get the distinct values for the column from the grid
             //we use forEachNode as we want to get all data even the one filtered out...
-            let isRenderedColumn = this.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == columnId);
+            let useRawValue: boolean = this.useRawValueForColumn(columnId);
             let data = this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
                 if (!rowNode.group) {
                     let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-                    let displayValue = (isRenderedColumn) ?
+                    let displayValue = (useRawValue) ?
                         rawValue :
                         this.getDisplayValueFromRecord(rowNode, columnId);
                     if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
@@ -792,6 +792,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+    }
+
+    private useRawValueForColumn(columnId: string): boolean {
+        // will add more in due course I'm sure but for now only percent bar columns return false...
+        return ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars, columnId);
     }
 
     public getDisplayValue(id: any, columnId: string): string {
@@ -846,7 +851,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getRenderedValue(colDef: ColDef, valueToRender: any): string {
-        let isRenderedColumn = this.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == colDef.field);
+        let isRenderedColumn = ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars, colDef.field);
         if (isRenderedColumn) {
             return valueToRender;
         }
@@ -1378,10 +1383,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         }
 
-        // add any special filters
+        // add any special renderers
         let percentBars: IPercentBar[] = this.getState().PercentBar.PercentBars;
         percentBars.forEach(pcr => {
-
             this.addPercentBar(pcr);
         });
 
@@ -1449,6 +1453,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let percentagePositiveValue = ((100 / maxValue) * value);
                 let percentageNegativeValue = ((100 / (minValue * -1)) * value);
 
+                //    let dualValue 
+
+
                 if (showNegatives && showPositives) { // if need both then half the space
                     percentagePositiveValue = percentagePositiveValue / 2;
                     percentageNegativeValue = percentageNegativeValue / 2;
@@ -1457,10 +1464,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let eOuterDiv = document.createElement('div');
                 eOuterDiv.className = 'ab_div-colour-render-div';
                 if (pcr.ShowValue) {
-                    let eValue = document.createElement('div');
-                    eValue.className = 'ab_div-colour-render-text';
-                    eValue.innerHTML = params.value;
-                    eOuterDiv.appendChild(eValue);
+                    let showValueBar = document.createElement('div');
+                    showValueBar.className = 'ab_div-colour-render-text';
+                    if (showNegatives && showPositives) {
+                        showValueBar.style.paddingLeft = (isNegativeValue) ? '50%' : '20%'
+                    } else {
+                        showValueBar.style.paddingLeft = '5px'
+                    }
+                    showValueBar.innerHTML = params.value;
+                    eOuterDiv.appendChild(showValueBar);
                 }
 
                 if (showNegatives) {

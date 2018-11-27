@@ -34,6 +34,7 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
             { Key: "Maximum Value", Value: this.props.Data.MaxValue },
             { Key: "Positive Colour", Value: <StyleVisualItem Style={positiveStyle} /> },
             { Key: "Negative Colour", Value: <StyleVisualItem Style={negativeStyle} /> },
+            { Key: "Show Value", Value: this.props.Data.ShowValue? "Yes": "No" },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.PercentBarStrategyName} />
@@ -43,11 +44,10 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
 
     }
 
-    public canNext(): boolean {
-        return true;
-    }
+    public canNext(): boolean { return true; }
 
     public canBack(): boolean { return true; }
+
     public Next(): void { /* no implementation */ }
 
     public Back(): void { /* no implementation */ }

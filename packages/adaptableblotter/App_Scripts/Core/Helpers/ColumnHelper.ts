@@ -4,6 +4,7 @@ import { AdaptableBlotterLogger } from './AdaptableBlotterLogger';
 import { DataType } from '../Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumnCategory } from '../Interface/Interfaces';
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 
 export module ColumnHelper {
 
@@ -74,15 +75,19 @@ export module ColumnHelper {
     }
 
     export function getColumnFromId(columnId: string, columns: IColumn[]): IColumn {
-        let foundColumn: IColumn =  columns.find(c => c.ColumnId == columnId)
+       // just return null if no columns rather than logging a warning - otherwise get lots at startup
+        if (ArrayExtensions.IsNullOrEmpty(columns)) {
+            return null;
+        }
+        let foundColumn: IColumn = columns.find(c => c.ColumnId == columnId)
         if (foundColumn) {
             return foundColumn;
         } else {
             AdaptableBlotterLogger.LogWarning("No column found named '" + columnId + "'");
             return null;
         }
-      
-     }
+
+    }
 
     export function getNumericColumns(columns: IColumn[]): IColumn[] {
         return columns.filter(c => c.DataType == DataType.Number)
