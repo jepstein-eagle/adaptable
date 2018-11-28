@@ -2,16 +2,16 @@ import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { AlertHelper } from "../../Core/Helpers/AlertHelper";
+import { AlertHelper } from "../../Utilities/Helpers/AlertHelper";
 
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {

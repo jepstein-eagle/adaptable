@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";

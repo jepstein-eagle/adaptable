@@ -3,10 +3,10 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
@@ -15,9 +15,9 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ICustomSort, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]

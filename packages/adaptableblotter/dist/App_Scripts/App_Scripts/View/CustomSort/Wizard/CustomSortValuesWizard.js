@@ -4,7 +4,7 @@ const React = require("react");
 const Enums_1 = require("../../../Core/Enums");
 const PanelWithInfo_1 = require("../../Components/Panels/PanelWithInfo");
 const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class CustomSortValuesWizard extends React.Component {
     constructor(props) {
         super(props);

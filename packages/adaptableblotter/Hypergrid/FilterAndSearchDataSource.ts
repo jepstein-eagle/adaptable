@@ -1,10 +1,10 @@
 import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
-import { StringExtensions } from '../App_Scripts/Core/Extensions/StringExtensions'
-import { ExpressionHelper } from '../App_Scripts/Core/Helpers/ExpressionHelper';
+import { StringExtensions } from '../App_Scripts/Utilities/Extensions/StringExtensions'
+import { ExpressionHelper } from '../App_Scripts/Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, DisplayAction } from '../App_Scripts/Core/Enums'
 import { IAdvancedSearch, IColumnFilter } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
-import { ArrayExtensions } from '../App_Scripts/Core/Extensions/ArrayExtensions';
+import { ArrayExtensions } from '../App_Scripts/Utilities/Extensions/ArrayExtensions';
 
 /* There are 3 possible reasons why we might need to filter / search the grid:
 1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)

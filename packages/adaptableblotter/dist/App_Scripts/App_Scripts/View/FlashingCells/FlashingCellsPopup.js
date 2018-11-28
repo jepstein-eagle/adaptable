@@ -7,12 +7,12 @@ const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../Core/Enums");
 const FlashingCellEntityRow_1 = require("./FlashingCellEntityRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class FlashingCellsPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__flashingcells";

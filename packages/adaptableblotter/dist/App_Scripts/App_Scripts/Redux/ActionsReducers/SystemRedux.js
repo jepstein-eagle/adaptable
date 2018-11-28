@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const CalendarHelper_1 = require("../../Core/Helpers/CalendarHelper");
+const CalendarHelper_1 = require("../../Utilities/Helpers/CalendarHelper");
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
 This allows us to keep the other reducers pure in terms of everything persists

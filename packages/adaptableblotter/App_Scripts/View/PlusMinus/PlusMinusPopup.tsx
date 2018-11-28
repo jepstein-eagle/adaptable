@@ -9,12 +9,12 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -22,11 +22,11 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { AccessLevel } from "../../Core/Enums";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,

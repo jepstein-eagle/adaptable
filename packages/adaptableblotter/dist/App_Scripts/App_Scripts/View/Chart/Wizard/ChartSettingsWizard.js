@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
-const EnumExtensions_1 = require("../../../Core/Extensions/EnumExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
+const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
 const Enums_1 = require("../../../Core/Enums");
 class ChartSettingsWizard extends React.Component {
     constructor(props) {

@@ -1,8 +1,8 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { ConditionalStyleScope } from '../../Core/Enums';
-import { Helper } from '../../Core/Helpers/Helper';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
@@ -11,7 +11,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { IConditionalStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 

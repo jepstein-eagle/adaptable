@@ -11,7 +11,7 @@ const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const Enums_1 = require("../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 class SelectedCellsToolbarControlComponent extends React.Component {
     constructor(props) {

@@ -5,7 +5,6 @@ require("../App_Scripts/Styles/stylesheets/adaptableblotter-style.css");
 const ReactDOM = require("react-dom");
 const _ = require("lodash");
 const AdaptableBlotterView_1 = require("../App_Scripts/View/AdaptableBlotterView");
-const DefaultAdaptableBlotterOptions_1 = require("../App_Scripts/Core/DefaultAdaptableBlotterOptions");
 const StrategyConstants = require("../App_Scripts/Core/Constants/StrategyConstants");
 const StyleConstants = require("../App_Scripts/Core/Constants/StyleConstants");
 const ScreenPopups = require("../App_Scripts/Core/Constants/ScreenPopups");
@@ -15,14 +14,14 @@ const LayoutRedux = require("../App_Scripts/Redux/ActionsReducers/LayoutRedux");
 const GridRedux = require("../App_Scripts/Redux/ActionsReducers/GridRedux");
 const FreeTextColumnRedux = require("../App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux");
 const PopupRedux = require("../App_Scripts/Redux/ActionsReducers/PopupRedux");
-const CalendarService_1 = require("../App_Scripts/Core/Services/CalendarService");
-const CalculatedColumnExpressionService_1 = require("../App_Scripts/Core/Services/CalculatedColumnExpressionService");
-const AuditService_1 = require("../App_Scripts/Core/Services/AuditService");
-const ValidationService_1 = require("../App_Scripts/Core/Services/ValidationService");
-const StyleService_1 = require("../App_Scripts/Core/Services/StyleService");
-const AuditLogService_1 = require("../App_Scripts/Core/Services/AuditLogService");
-const ChartService_1 = require("../App_Scripts/Core/Services/ChartService");
-const FreeTextColumnService_1 = require("../App_Scripts/Core/Services/FreeTextColumnService");
+const AuditLogService_1 = require("../App_Scripts/Utilities/Services/AuditLogService");
+const StyleService_1 = require("../App_Scripts/Utilities/Services/StyleService");
+const CalendarService_1 = require("../App_Scripts/Utilities/Services/CalendarService");
+const AuditService_1 = require("../App_Scripts/Utilities/Services/AuditService");
+const ValidationService_1 = require("../App_Scripts/Utilities/Services/ValidationService");
+const ChartService_1 = require("../App_Scripts/Utilities/Services/ChartService");
+const FreeTextColumnService_1 = require("../App_Scripts/Utilities/Services/FreeTextColumnService");
+const CalculatedColumnExpressionService_1 = require("../App_Scripts/Utilities/Services/CalculatedColumnExpressionService");
 const AlertStrategy_1 = require("../App_Scripts/Strategy/AlertStrategy");
 const ApplicationStrategy_1 = require("../App_Scripts/Strategy/ApplicationStrategy");
 const BulkUpdateStrategy_1 = require("../App_Scripts/Strategy/BulkUpdateStrategy");
@@ -60,20 +59,21 @@ const ColumnCategoryStrategy_1 = require("../App_Scripts/Strategy/ColumnCategory
 const FilterWrapper_1 = require("./FilterWrapper");
 const FloatingFilterWrapper_1 = require("./FloatingFilterWrapper");
 const EventDispatcher_1 = require("../App_Scripts/Core/EventDispatcher");
-const StringExtensions_1 = require("../App_Scripts/Core/Extensions/StringExtensions");
 const Enums_1 = require("../App_Scripts/Core/Enums");
-const ObjectFactory_1 = require("../App_Scripts/Core/ObjectFactory");
-const color_1 = require("../App_Scripts/Core/color");
+const ObjectFactory_1 = require("../App_Scripts/Utilities/ObjectFactory");
+const color_1 = require("../App_Scripts/Utilities/color");
 const BlotterApi_1 = require("./BlotterApi");
-const ArrayExtensions_1 = require("../App_Scripts/Core/Extensions/ArrayExtensions");
-const AdaptableBlotterLogger_1 = require("../App_Scripts/Core/Helpers/AdaptableBlotterLogger");
 // Helpers
-const StyleHelper_1 = require("../App_Scripts/Core/Helpers/StyleHelper");
-const iPushPullHelper_1 = require("../App_Scripts/Core/Helpers/iPushPullHelper");
-const ColumnHelper_1 = require("../App_Scripts/Core/Helpers/ColumnHelper");
-const LayoutHelper_1 = require("../App_Scripts/Core/Helpers/LayoutHelper");
-const ExpressionHelper_1 = require("../App_Scripts/Core/Helpers/ExpressionHelper");
+const DefaultAdaptableBlotterOptions_1 = require("../App_Scripts/Api/DefaultAdaptableBlotterOptions");
+const iPushPullHelper_1 = require("../App_Scripts/Utilities/Helpers/iPushPullHelper");
+const ColumnHelper_1 = require("../App_Scripts/Utilities/Helpers/ColumnHelper");
+const StyleHelper_1 = require("../App_Scripts/Utilities/Helpers/StyleHelper");
+const LayoutHelper_1 = require("../App_Scripts/Utilities/Helpers/LayoutHelper");
+const ExpressionHelper_1 = require("../App_Scripts/Utilities/Helpers/ExpressionHelper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
+const LoggingHelper_1 = require("../App_Scripts/Utilities/Helpers/LoggingHelper");
+const StringExtensions_1 = require("../App_Scripts/Utilities/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../App_Scripts/Utilities/Extensions/ArrayExtensions");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this.calculatedColumnPathMap = new Map();
@@ -145,12 +145,12 @@ class AdaptableBlotter {
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         })
             .then(() => this.initInternalGridLogic(), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
+            LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
             this.initInternalGridLogic();
         })
@@ -208,7 +208,7 @@ class AdaptableBlotter {
             this._onRefresh.Dispatch(this, this);
         }
         else {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Trying to filter on a non-filterable grid.');
+            LoggingHelper_1.LoggingHelper.LogError('Trying to filter on a non-filterable grid.');
         }
     }
     clearGridFiltering() {
@@ -418,7 +418,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage('column is undefined returning String for Type');
+            LoggingHelper_1.LoggingHelper.LogMessage('column is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         // get the column type if already in store (and not unknown)
@@ -451,7 +451,7 @@ class AdaptableBlotter {
         }
         let row = this.gridOptions.api.getModel().getRow(0);
         if (row == null) { // possible that there will be no data.
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning('there is no first row so we are returning Unknown for Type');
+            LoggingHelper_1.LoggingHelper.LogWarning('there is no first row so we are returning Unknown for Type');
             return Enums_1.DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -481,7 +481,7 @@ class AdaptableBlotter {
                     break;
             }
         }
-        AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType);
+        LoggingHelper_1.LoggingHelper.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType);
         return dataType;
     }
     getabColDefValue(colType) {
@@ -965,7 +965,7 @@ class AdaptableBlotter {
             this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
+            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
             return;
         }
         let gridContainerElement = document.getElementById(this.BlotterOptions.vendorContainer);
@@ -1249,7 +1249,7 @@ class AdaptableBlotter {
         };
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now i'm still initializing the strategies even if loading state has failed.... 
             //we may revisit that later
             this.Strategies.forEach(strat => strat.InitializeWithRedux());

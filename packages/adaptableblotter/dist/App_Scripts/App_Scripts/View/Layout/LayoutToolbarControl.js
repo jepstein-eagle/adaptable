@@ -14,9 +14,9 @@ const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const Enums_1 = require("../../Core/Enums");
 class LayoutToolbarControlComponent extends React.Component {
     render() {

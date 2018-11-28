@@ -8,7 +8,7 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
@@ -20,10 +20,10 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
 import { StatusColour, MathOperation, AccessLevel } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {

@@ -6,7 +6,7 @@ import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObj
 import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface CellValidationSelectQueryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>

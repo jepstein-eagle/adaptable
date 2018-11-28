@@ -4,7 +4,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IColumnCategory, IKeyValuePair } from "../../../Core/Interface/Interfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 
 export interface ColumnCategorySummaryWizardProps extends AdaptableWizardStepProps<IColumnCategory> {

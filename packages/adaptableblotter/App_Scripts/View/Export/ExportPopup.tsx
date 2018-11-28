@@ -10,10 +10,10 @@ import { ExportDestination, ReportColumnScope, AccessLevel } from '../../Core/En
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ReportEntityRow } from './ReportEntityRow'
 import { ReportWizard } from './Wizard/ReportWizard'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -22,12 +22,12 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { IReport, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],

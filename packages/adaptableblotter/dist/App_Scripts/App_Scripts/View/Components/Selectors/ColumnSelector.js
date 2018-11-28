@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_typeahead_1 = require("react-bootstrap-typeahead");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../../../Core/Enums");
-const Helper_1 = require("../../../Core/Helpers/Helper");
+const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const react_bootstrap_1 = require("react-bootstrap");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
 const ButtonClear_1 = require("../Buttons/ButtonClear");

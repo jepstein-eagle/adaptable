@@ -5,7 +5,7 @@ import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid/dist/lib/fil
 import { FloatingFilterFormReact } from "../App_Scripts/View/Components/FilterForm/FloatingFilterForm";
 import { IColumn } from "../App_Scripts/Core/Interface/IColumn";
 import { DistinctCriteriaPairValue } from "../App_Scripts/Core/Enums";
-import { ColumnHelper } from "../App_Scripts/Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../App_Scripts/Utilities/Helpers/ColumnHelper";
 
 
 

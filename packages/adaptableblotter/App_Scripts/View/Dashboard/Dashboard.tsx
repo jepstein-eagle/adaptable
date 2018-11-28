@@ -12,10 +12,10 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogger";
+import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
@@ -55,7 +55,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 </Nav>
             }
             else {
-                AdaptableBlotterLogger.LogError("Cannot find Dashboard Control for " + control)
+                LoggingHelper.LogError("Cannot find Dashboard Control for " + control)
             }
         })
 

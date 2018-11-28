@@ -6,7 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'
 import { CellValidationSummary } from '../CellValidation/CellValidationSummary'
@@ -25,10 +25,10 @@ import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {

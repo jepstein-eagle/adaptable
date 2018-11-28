@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class UserFilterSettingsWizard extends React.Component {
     constructor(props) {
         super(props);

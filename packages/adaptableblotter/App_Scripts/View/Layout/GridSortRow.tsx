@@ -6,7 +6,7 @@ import { IColItem } from "../UIInterfaces";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SelectionMode, SortOrder, AccessLevel } from "../../Core/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { IGridSort } from "../../Api/Interface/IAdaptableBlotterObjects";
 

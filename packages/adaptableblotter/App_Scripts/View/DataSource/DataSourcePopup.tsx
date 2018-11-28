@@ -8,15 +8,15 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { Helper } from '../../Core/Helpers/Helper'
+import { Helper } from '../../Utilities/Helpers/Helper'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {

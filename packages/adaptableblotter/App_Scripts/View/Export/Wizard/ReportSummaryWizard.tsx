@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { ReportHelper } from '../../../Core/Helpers/ReportHelper';
+import { ReportHelper } from '../../../Utilities/Helpers/ReportHelper';
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<IReport> {

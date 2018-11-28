@@ -29,16 +29,16 @@ import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Core/Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Core/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
-import { AdaptableBlotterLogger } from "../Core/Helpers/AdaptableBlotterLogger";
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";
 import { ILiveReport } from "../Strategy/Interface/IExportStrategy";
-import { FilterHelper } from "../Core/Helpers/FilterHelper";
 import { IAlert } from "../Core/Interface/IMessage";
-import { ObjectFactory } from "../Core/ObjectFactory";
+import { ObjectFactory } from "../Utilities/ObjectFactory";
 import { IColumn } from "../Core/Interface/IColumn";
-import { StringExtensions } from "../Core/Extensions/StringExtensions";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState, IState } from "../Redux/ActionsReducers/Interface/IState";
+import { FilterHelper } from "../Utilities/Helpers/FilterHelper";
+import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
+import { LoggingHelper } from "../Utilities/Helpers/LoggingHelper";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 
@@ -552,7 +552,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
         this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow))
       }
     }
-    AdaptableBlotterLogger.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
+    LoggingHelper.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
   }
 
   public alertShowMessage(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
@@ -764,7 +764,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
   private checkItemExists(item: any, name: string, type: string): boolean {
     if (!item) {
-      AdaptableBlotterLogger.LogError("No " + type + " found with the name: " + name)
+      LoggingHelper.LogError("No " + type + " found with the name: " + name)
       return false;
     }
     return true;

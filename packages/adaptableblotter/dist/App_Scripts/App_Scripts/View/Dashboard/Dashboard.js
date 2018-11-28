@@ -9,9 +9,9 @@ const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const Enums_1 = require("../../Core/Enums");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const EntitlementHelper_1 = require("../../Core/Helpers/EntitlementHelper");
+const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const EntitlementHelper_1 = require("../../Utilities/Helpers/EntitlementHelper");
 class DashboardComponent extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
@@ -40,7 +40,7 @@ class DashboardComponent extends React.Component {
                 return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
             }
             else {
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Cannot find Dashboard Control for " + control);
+                LoggingHelper_1.LoggingHelper.LogError("Cannot find Dashboard Control for " + control);
             }
         });
         let homeToolbar = AdaptableViewFactory_1.AdaptableDashboardPermanentToolbarFactory.get(StrategyConstants.HomeStrategyId);

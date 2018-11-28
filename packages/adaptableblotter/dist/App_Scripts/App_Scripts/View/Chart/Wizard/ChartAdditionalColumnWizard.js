@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 const Enums_1 = require("../../../Core/Enums");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const SingleListBox_1 = require("../../Components/ListBox/SingleListBox");
 const GeneralConstants = require("../../../Core/Constants/GeneralConstants");
 class ChartAdditionalColumnWizard extends React.Component {

@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
@@ -13,7 +13,7 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IFlashingCell } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[]

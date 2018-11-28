@@ -4,12 +4,12 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
 import { IPlusMinusRule } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
     Column: IColumn

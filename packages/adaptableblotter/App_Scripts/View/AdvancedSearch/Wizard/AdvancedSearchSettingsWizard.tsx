@@ -1,10 +1,10 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IAdvancedSearch } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {

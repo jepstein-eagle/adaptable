@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ReactDOM = require("react-dom");
-const Helper_1 = require("../../../Core/Helpers/Helper");
+const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Core/Enums");
 const ListBoxFilterSortComponent_1 = require("./ListBoxFilterSortComponent");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
 const ButtonDirection_1 = require("../Buttons/ButtonDirection");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 class DualListBoxEditor extends React.Component {
     constructor(props) {
         super(props);

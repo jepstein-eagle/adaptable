@@ -8,7 +8,7 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { AccessLevel } from "../../Core/Enums";
 
 interface ApplicationToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {

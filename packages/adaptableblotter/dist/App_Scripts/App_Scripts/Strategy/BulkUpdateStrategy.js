@@ -4,7 +4,7 @@ const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
-const PreviewHelper_1 = require("../Core/Helpers/PreviewHelper");
+const PreviewHelper_1 = require("../Utilities/Helpers/PreviewHelper");
 class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.BulkUpdateStrategyId, blotter);

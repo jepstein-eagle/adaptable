@@ -1,14 +1,9 @@
 import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css';
 import { IAdaptableBlotterStore } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
-import { ICalendarService } from '../App_Scripts/Core/Services/Interface/ICalendarService';
-import { IAuditService } from '../App_Scripts/Core/Services/Interface/IAuditService';
-import { IValidationService } from '../App_Scripts/Core/Services/Interface/IValidationService';
-import { AuditLogService } from '../App_Scripts/Core/Services/AuditLogService';
 import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
 import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher';
 import { DataType, DistinctCriteriaPairValue } from '../App_Scripts/Core/Enums';
 import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter';
-import { ICalculatedColumnExpressionService } from "../App_Scripts/Core/Services/Interface/ICalculatedColumnExpressionService";
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
@@ -18,7 +13,12 @@ import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
 import * as _ from 'lodash';
-import { IChartService } from '../App_Scripts/Core/Services/Interface/IChartService';
+import { IChartService } from '../App_Scripts/Utilities/Services/Interface/IChartService';
+import { ICalculatedColumnExpressionService } from '../App_Scripts/Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { IAuditService } from '../App_Scripts/Utilities/Services/Interface/IAuditService';
+import { ICalendarService } from '../App_Scripts/Utilities/Services/Interface/ICalendarService';
+import { IValidationService } from '../App_Scripts/Utilities/Services/Interface/IValidationService';
+import { AuditLogService } from '../App_Scripts/Utilities/Services/AuditLogService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;

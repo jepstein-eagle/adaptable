@@ -9,23 +9,23 @@ import * as HomeRedux from '../../../Redux/ActionsReducers/HomeRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
+import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Core/Enums';
 import { IUserFilter, IColumnFilter, IRange } from '../../../Api/Interface/IAdaptableBlotterObjects';
-import { Helper } from '../../../Core/Helpers/Helper'
+import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { Expression } from "../../../Api/Expression";
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Api/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
 import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem, Well } from 'react-bootstrap';
@@ -34,7 +34,7 @@ import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
 import { IUIPrompt } from "../../../Core/Interface/IMessage";
-import { ObjectFactory } from "../../../Core/ObjectFactory";
+import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

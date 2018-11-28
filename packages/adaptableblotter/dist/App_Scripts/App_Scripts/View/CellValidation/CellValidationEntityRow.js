@@ -4,12 +4,12 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const Enums_1 = require("../../Core/Enums");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
-const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class CellValidationEntityRow extends React.Component {
     render() {
         let cellValidation = this.props.AdaptableBlotterObject;

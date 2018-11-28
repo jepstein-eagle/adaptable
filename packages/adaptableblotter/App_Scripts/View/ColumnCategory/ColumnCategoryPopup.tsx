@@ -8,8 +8,8 @@ import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategory
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 //import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard'
 //import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow'
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
@@ -20,11 +20,11 @@ import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { SortOrder, AccessLevel } from "../../Core/Enums";
 import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnCategoryEntityRow } from "./ColumnCategoryEntityRow";
 import { ColumnCategoryWizard } from "./Wizard/ColumnCategoryWizard";

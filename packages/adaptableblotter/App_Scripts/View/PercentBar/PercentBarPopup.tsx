@@ -7,11 +7,11 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { PercentBarWizard } from './Wizard/PercentBarWizard'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { PercentBarEntityRow } from './PercentBarEntityRow';
@@ -20,7 +20,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IPercentBar, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
     PercentBars: IPercentBar[];

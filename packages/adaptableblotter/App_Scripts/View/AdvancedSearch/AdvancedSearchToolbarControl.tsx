@@ -6,8 +6,8 @@ import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearch
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { Helper } from '../../Core/Helpers/Helper';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -19,7 +19,7 @@ import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IAdvancedSearch } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {

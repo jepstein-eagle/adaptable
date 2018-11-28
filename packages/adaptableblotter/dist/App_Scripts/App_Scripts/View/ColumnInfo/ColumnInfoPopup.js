@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const CustomSortSummary_1 = require("../CustomSort/CustomSortSummary");
 const ConditionalStyleSummary_1 = require("../ConditionalStyle/ConditionalStyleSummary");
 const CellValidationSummary_1 = require("../CellValidation/CellValidationSummary");
@@ -20,10 +20,10 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const EntitlementHelper_1 = require("../../Core/Helpers/EntitlementHelper");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const EntitlementHelper_1 = require("../../Utilities/Helpers/EntitlementHelper");
 const ColumnCategorySummary_1 = require("../ColumnCategory/ColumnCategorySummary");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class ColumnInfoPopupComponent extends React.Component {
     constructor(props) {
         super(props);

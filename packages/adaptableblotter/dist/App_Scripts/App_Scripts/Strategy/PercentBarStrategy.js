@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const Enums_1 = require("../Core/Enums");
 class PercentBarStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {

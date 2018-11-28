@@ -5,7 +5,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
 import { IFlashingCell } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {

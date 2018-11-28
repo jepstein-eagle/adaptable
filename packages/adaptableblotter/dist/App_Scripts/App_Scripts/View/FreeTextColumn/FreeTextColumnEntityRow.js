@@ -5,8 +5,8 @@ const React = require("react");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class FreeTextColumnEntityRow extends React.Component {
     render() {
         let FreeTextColumn = this.props.AdaptableBlotterObject;

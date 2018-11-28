@@ -1,14 +1,14 @@
 import { IConditionalStyleStrategy } from '../../App_Scripts/Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../App_Scripts/Strategy/ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../../App_Scripts/Core/Enums';
-import { IDataChangedEvent } from '../../App_Scripts/Core/Services/Interface/IAuditService'
-import { ExpressionHelper } from '../../App_Scripts/Core/Helpers/ExpressionHelper';
+import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService'
+import { ExpressionHelper } from '../../App_Scripts/Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
-import { StringExtensions } from '../../App_Scripts/Core/Extensions/StringExtensions';
-import { StyleHelper } from '../../App_Scripts/Core/Helpers/StyleHelper';
+import { StringExtensions } from '../../App_Scripts/Utilities/Extensions/StringExtensions';
+import { StyleHelper } from '../../App_Scripts/Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../App_Scripts/Core/Constants/StrategyConstants'
 import { IColumnCategory } from '../../App_Scripts/Core/Interface/Interfaces';
-import { ArrayExtensions } from '../../App_Scripts/Core/Extensions/ArrayExtensions';
+import { ArrayExtensions } from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

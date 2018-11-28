@@ -3,13 +3,13 @@ import { Radio } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SortOrder } from "../../Core/Enums";
-import { LayoutHelper } from "../../Core/Helpers/LayoutHelper";
+import { LayoutHelper } from "../../Utilities/Helpers/LayoutHelper";
 import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 

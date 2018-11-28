@@ -8,11 +8,11 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
 import { SortOrder, AccessLevel } from "../../Core/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
@@ -22,7 +22,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction

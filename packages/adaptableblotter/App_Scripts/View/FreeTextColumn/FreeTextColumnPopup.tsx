@@ -7,11 +7,11 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { Well } from 'react-bootstrap';
 import { FreeTextColumnEntityRow } from './FreeTextColumnEntityRow'
 import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard'
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';

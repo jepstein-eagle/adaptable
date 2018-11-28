@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Core/Enums");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class CellValidationRulesWizard extends React.Component {
     constructor(props) {
         super(props);

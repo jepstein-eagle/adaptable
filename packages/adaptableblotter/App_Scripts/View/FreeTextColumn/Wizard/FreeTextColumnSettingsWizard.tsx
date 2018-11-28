@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IFreeTextColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 
 export interface FreeTextColumnSettingsWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {

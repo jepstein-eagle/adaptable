@@ -5,7 +5,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 export interface ColumnCategoryEntityRowProps<ColumnCategoryEntityRow> extends SharedEntityExpressionRowProps<ColumnCategoryEntityRow> {

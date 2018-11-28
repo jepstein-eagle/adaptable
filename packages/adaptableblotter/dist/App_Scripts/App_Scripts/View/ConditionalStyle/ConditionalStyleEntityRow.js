@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
 const Enums_1 = require("../../Core/Enums");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const StyleVisualItem_1 = require("../Components/StyleVisualItem");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class ConditionalStyleEntityRow extends React.Component {
     render() {
         let conditionalStyle = this.props.AdaptableBlotterObject;

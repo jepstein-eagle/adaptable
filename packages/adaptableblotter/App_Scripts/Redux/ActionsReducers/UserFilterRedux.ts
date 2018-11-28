@@ -1,5 +1,5 @@
 import { UserFilterState } from './Interface/IState';
-import { FilterHelper } from '../../Core/Helpers/FilterHelper';
+import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import * as Redux from 'redux'
 import { IUserFilter, IColumnFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { InputAction } from '../../Core/Interface/IMessage';

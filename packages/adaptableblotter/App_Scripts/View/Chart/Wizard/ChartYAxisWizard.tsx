@@ -1,13 +1,13 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, Col, Panel, Well, Row } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Core/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]

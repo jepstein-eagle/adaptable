@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Helper } from '../../../Core/Helpers/Helper'
+import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGroup, ControlLabel, Checkbox } from 'react-bootstrap';
 import { SortOrder } from '../../../Core/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IMasterChildren } from "../../../Core/Interface/Interfaces";
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 export interface IMasterValue {
     value: string;

@@ -4,7 +4,7 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 class AdvancedSearchEntityRow extends React.Component {
     render() {

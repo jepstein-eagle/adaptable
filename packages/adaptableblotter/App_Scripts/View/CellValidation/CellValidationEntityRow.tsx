@@ -3,15 +3,15 @@ import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ActionMode } from "../../Core/Enums";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {

@@ -8,7 +8,7 @@ import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Core/Constants/GeneralConstants'
-import { EntitlementHelper } from '../../../Core/Helpers/EntitlementHelper';
+import { EntitlementHelper } from '../../../Utilities/Helpers/EntitlementHelper';
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;

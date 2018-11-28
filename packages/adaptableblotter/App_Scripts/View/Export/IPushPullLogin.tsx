@@ -8,7 +8,7 @@ import { ControlLabel, Button, FormControl, FormGroup, Glyphicon } from 'react-b
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {

@@ -5,7 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const Enums_1 = require("../../Core/Enums");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 class GridSortRow extends React.Component {
     render() {

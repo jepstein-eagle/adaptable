@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { DataSourceState, GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { StringExtensions } from '../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
 import { basename } from 'path';
 import { Server } from 'https';
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';

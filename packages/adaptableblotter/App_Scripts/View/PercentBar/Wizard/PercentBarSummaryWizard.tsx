@@ -4,9 +4,9 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IPercentBar, IStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { StyleVisualItem } from "../../Components/StyleVisualItem";
-import { ObjectFactory } from "../../../Core/ObjectFactory";
+import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<IPercentBar> {

@@ -14,7 +14,7 @@ import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableSto
 import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
 import { SelectedCellOperation, AccessLevel } from "../../Core/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 

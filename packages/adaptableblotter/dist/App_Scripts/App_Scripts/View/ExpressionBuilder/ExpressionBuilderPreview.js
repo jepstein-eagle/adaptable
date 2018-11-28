@@ -4,14 +4,14 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const react_bootstrap_1 = require("react-bootstrap");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const Enums_1 = require("../../Core/Enums");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const ButtonPreviewDelete_1 = require("../Components/Buttons/ButtonPreviewDelete");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class ExpressionBuilderPreview extends React.Component {
     componentWillReceiveProps(nextProps, nextContext) {
         //       this.ensureSelectedColumnVisible(nextProps.SelectedColumnId)

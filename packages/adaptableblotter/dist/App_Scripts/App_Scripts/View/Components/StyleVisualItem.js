@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const Enums_1 = require("../../Core/Enums");
 class StyleVisualItem extends React.Component {
     render() {

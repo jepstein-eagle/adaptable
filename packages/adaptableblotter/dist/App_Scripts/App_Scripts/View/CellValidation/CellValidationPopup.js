@@ -6,19 +6,19 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const CellValidationWizard_1 = require("./Wizard/CellValidationWizard");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const CellValidationEntityRow_1 = require("./CellValidationEntityRow");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class CellValidationPopupComponent extends React.Component {
     constructor(props) {
         super(props);

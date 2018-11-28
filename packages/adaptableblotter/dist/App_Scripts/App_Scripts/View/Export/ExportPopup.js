@@ -8,18 +8,18 @@ const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const Enums_1 = require("../../Core/Enums");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ReportEntityRow_1 = require("./ReportEntityRow");
 const ReportWizard_1 = require("./Wizard/ReportWizard");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class ExportPopupComponent extends React.Component {
     constructor(props) {
         super(props);

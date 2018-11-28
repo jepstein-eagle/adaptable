@@ -6,7 +6,7 @@ const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActio
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
-const LayoutHelper_1 = require("../../Core/Helpers/LayoutHelper");
+const LayoutHelper_1 = require("../../Utilities/Helpers/LayoutHelper");
 class LayoutEntityRow extends React.Component {
     render() {
         let layout = this.props.AdaptableBlotterObject;

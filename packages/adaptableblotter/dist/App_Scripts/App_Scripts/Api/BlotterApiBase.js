@@ -25,10 +25,10 @@ const GeneralConstants_1 = require("../Core/Constants/GeneralConstants");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const Enums_1 = require("../Core/Enums");
 const AdaptableBlotterStore_1 = require("../Redux/Store/AdaptableBlotterStore");
-const AdaptableBlotterLogger_1 = require("../Core/Helpers/AdaptableBlotterLogger");
-const FilterHelper_1 = require("../Core/Helpers/FilterHelper");
-const ObjectFactory_1 = require("../Core/ObjectFactory");
-const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
+const ObjectFactory_1 = require("../Utilities/ObjectFactory");
+const FilterHelper_1 = require("../Utilities/Helpers/FilterHelper");
+const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
+const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 class BlotterApiBase {
     constructor(blotter) {
         this.blotter = blotter;
@@ -434,7 +434,7 @@ class BlotterApiBase {
                 this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow));
             }
         }
-        AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum);
+        LoggingHelper_1.LoggingHelper.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum);
     }
     alertShowMessage(alertHeader, alertMessage, showAsPopup) {
         this.alertShow(alertHeader, alertMessage, Enums_1.MessageType.Info, showAsPopup);
@@ -623,7 +623,7 @@ class BlotterApiBase {
     }
     checkItemExists(item, name, type) {
         if (!item) {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("No " + type + " found with the name: " + name);
+            LoggingHelper_1.LoggingHelper.LogError("No " + type + " found with the name: " + name);
             return false;
         }
         return true;

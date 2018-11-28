@@ -6,7 +6,7 @@ import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObject
 import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
     Columns: Array<IColumn>

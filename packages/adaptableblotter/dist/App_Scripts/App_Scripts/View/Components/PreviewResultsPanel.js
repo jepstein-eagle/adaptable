@@ -4,9 +4,9 @@ const React = require("react");
 const Enums_1 = require("../../Core/Enums");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const react_bootstrap_1 = require("react-bootstrap");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class PreviewResultsPanel extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.PREVIEW_RESULTS;

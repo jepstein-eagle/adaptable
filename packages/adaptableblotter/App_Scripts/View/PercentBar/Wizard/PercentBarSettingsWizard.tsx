@@ -7,7 +7,7 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColorPicker } from "../../ColorPicker";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface PercentBarsWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     Columns: Array<IColumn>;

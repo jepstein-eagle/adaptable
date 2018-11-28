@@ -4,7 +4,7 @@ const React = require("react");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class ColumnCategoryEntityRow extends React.Component {
     render() {
         let ColumnCategory = this.props.AdaptableBlotterObject;

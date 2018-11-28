@@ -12,16 +12,16 @@ import { MathOperation } from '../../Core/Enums'
 import { ShortcutEntityRow } from './ShortcutEntityRow'
 import { ShortcutWizard } from './Wizard/ShortcutWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IShortcut, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {

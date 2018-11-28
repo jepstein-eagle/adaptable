@@ -6,11 +6,11 @@ const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const Enums_1 = require("../Core/Enums");
-const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
-const Helper_1 = require("../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../Core/ObjectFactory");
-const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
+const Helper_1 = require("../Utilities/Helpers/Helper");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
+const ExpressionHelper_1 = require("../Utilities/Helpers/ExpressionHelper");
+const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.PlusMinusStrategyId, blotter);

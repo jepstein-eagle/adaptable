@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const Enums_1 = require("../../Core/Enums");
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';

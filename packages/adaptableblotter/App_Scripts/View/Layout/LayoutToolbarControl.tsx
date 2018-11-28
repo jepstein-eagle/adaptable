@@ -9,7 +9,7 @@ import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IUIPrompt } from '../../Core/Interface/IMessage';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -18,12 +18,12 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { ObjectFactory } from "../../Core/ObjectFactory";
+import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 

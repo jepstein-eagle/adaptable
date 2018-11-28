@@ -6,7 +6,7 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: Array<IColumn>

@@ -4,8 +4,8 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { IColumnCategory } from "../../../Core/Interface/Interfaces";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface ColumnCategoryColumnsWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
     Columns: Array<IColumn>

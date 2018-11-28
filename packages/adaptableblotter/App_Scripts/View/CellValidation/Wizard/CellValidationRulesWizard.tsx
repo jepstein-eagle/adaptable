@@ -3,12 +3,12 @@ import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-boot
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>

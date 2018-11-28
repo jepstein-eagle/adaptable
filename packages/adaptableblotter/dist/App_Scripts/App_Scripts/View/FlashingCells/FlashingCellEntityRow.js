@@ -4,7 +4,7 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const ColorPicker_1 = require("../ColorPicker");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class FlashingCellEntityRow extends React.Component {
     render() {
         let flashingCell = this.props.AdaptableBlotterObject;

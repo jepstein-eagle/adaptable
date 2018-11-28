@@ -4,19 +4,19 @@ import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import { IAlert, IUIConfirmation } from '../Core/Interface/IMessage';
-import { Helper } from '../Core/Helpers/Helper';
-import { DataType, ActionMode, MessageType, StateChangedTrigger } from '../Core/Enums'
-import { MathOperation } from '../Core/Enums'
+import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../Core/ObjectFactory';
+import { StateChangedTrigger, DataType, MathOperation, ActionMode } from '../Core/Enums';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { Helper } from '../Utilities/Helpers/Helper';
 import { IShortcut, ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
+import { ObjectFactory } from '../Utilities/ObjectFactory';
+import { IUIConfirmation } from '../Core/Interface/IMessage';
+
 
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {

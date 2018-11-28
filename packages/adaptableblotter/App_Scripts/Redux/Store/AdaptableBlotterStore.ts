@@ -55,21 +55,19 @@ import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
-import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
-import { GridState, LayoutState, IState } from '../ActionsReducers/Interface/IState';
-import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { Helper } from '../../Core/Helpers/Helper';
-import { IColumn } from '../../Core/Interface/IColumn';
-import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
+import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
+import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
+import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import { IColumn } from '../../Core/Interface/IColumn';
+import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import { DEFAULT_LAYOUT } from '../../Core/Constants/GeneralConstants';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { AlertToolbarControl } from '../../View/Alert/AlertToolbarControl';
-import { ColumnHelper } from '../../Core/Helpers/ColumnHelper';
-
+import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
+import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,
@@ -265,7 +263,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         .then(
           () => this.TheStore.dispatch(InitState()),
           (e) => {
-            AdaptableBlotterLogger.LogError('Failed to load previous adaptable blotter state : ', e);
+            LoggingHelper.LogError('Failed to load previous adaptable blotter state : ', e);
             //for now i'm still initializing the AB even if loading state has failed....
             //we may revisit that later
             this.TheStore.dispatch(InitState())
@@ -407,12 +405,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
           let returnAction = next(action);
           let xhr = new XMLHttpRequest();
-          xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
-          xhr.ontimeout = () => AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity)
+          xhr.onerror = (ev: any) => LoggingHelper.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
+          xhr.ontimeout = () => LoggingHelper.LogWarning("TeamSharing share timeout", actionTyped.Entity)
           xhr.onload = () => {
             if (xhr.readyState == 4) {
               if (xhr.status != 200) {
-                AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                LoggingHelper.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
                 middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error }));
               }
               else {
@@ -436,12 +434,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         case TeamSharingRedux.TEAMSHARING_GET: {
           let returnAction = next(action);
           let xhr = new XMLHttpRequest();
-          xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message)
-          xhr.ontimeout = () => AdaptableBlotterLogger.LogWarning("TeamSharing get timeout")
+          xhr.onerror = (ev: any) => LoggingHelper.LogError("TeamSharing get error :" + ev.message)
+          xhr.ontimeout = () => LoggingHelper.LogWarning("TeamSharing get timeout")
           xhr.onload = () => {
             if (xhr.readyState == 4) {
               if (xhr.status != 200) {
-                AdaptableBlotterLogger.LogError("TeamSharing get error : " + xhr.statusText);
+                LoggingHelper.LogError("TeamSharing get error : " + xhr.statusText);
               }
               else {
                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
@@ -575,7 +573,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info }))
           }
           else {
-            AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
+            LoggingHelper.LogError("Unknown item type", actionTyped.Entity)
             middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error }))
           }
           return returnAction;
@@ -716,7 +714,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
              if (column) {
                 blotterColumns.push(column);
               } else {
-                AdaptableBlotterLogger.LogWarning("Column '" + c + "' not found")
+                LoggingHelper.LogWarning("Column '" + c + "' not found")
               }
             })
 
@@ -974,7 +972,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             })
             middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report))
           }).catch((error: string) => {
-            AdaptableBlotterLogger.LogError("Login failed", error);
+            LoggingHelper.LogError("Login failed", error);
             middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
           })
           return next(action);

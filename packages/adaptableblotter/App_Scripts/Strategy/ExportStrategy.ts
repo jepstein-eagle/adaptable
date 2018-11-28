@@ -6,15 +6,15 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { IExportStrategy, ILiveReport } from './Interface/IExportStrategy'
 import { ExportDestination, MessageType, StateChangedTrigger } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../Core/Helpers/Helper';
-import { ReportHelper } from '../Core/Helpers/ReportHelper';
-import { OpenfinHelper } from '../Core/Helpers/OpenfinHelper';
+import { Helper } from '../Utilities/Helpers/Helper';
+import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
+import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
-import { iPushPullHelper } from '../Core/Helpers/iPushPullHelper';
+import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { IReport } from '../Api/Interface/IAdaptableBlotterObjects';
-import { AdaptableBlotterLogger } from '../Core/Helpers/AdaptableBlotterLogger';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
 
@@ -30,14 +30,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
 
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
-            AdaptableBlotterLogger.LogMessage("Excel closed stopping all Live Excel");
+            LoggingHelper.LogMessage("Excel closed stopping all Live Excel");
             this.CurrentLiveReports.forEach(cle => {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
             })
         })
         OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
-            AdaptableBlotterLogger.LogMessage("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
+            LoggingHelper.LogMessage("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbook.name)
             if (liveReport) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
@@ -45,7 +45,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }
         })
         OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
-            AdaptableBlotterLogger.LogMessage("Workbook Saved", workbookSavedEvent);
+            LoggingHelper.LogMessage("Workbook Saved", workbookSavedEvent);
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbookSavedEvent.OldName)
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel));
@@ -126,7 +126,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                             return OpenfinHelper.pushData(cle.WorkbookName, ReportAsArray)
                         })
                             .catch((reason) => {
-                                AdaptableBlotterLogger.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
+                                LoggingHelper.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
                                 this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
@@ -152,7 +152,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                             return iPushPullHelper.pushData(cle.WorkbookName, ReportAsArray, ippStyle)
                         })
                             .catch((reason) => {
-                                AdaptableBlotterLogger.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
+                                LoggingHelper.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull));
                                 this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
@@ -162,10 +162,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             })
             Promise.all(promises).then(() => {
-                AdaptableBlotterLogger.LogMessage("All Data Sent")
+                LoggingHelper.LogMessage("All Data Sent")
                 this.isSendingData = false
             }).catch(() => {
-                AdaptableBlotterLogger.LogWarning("One live Excel failed to send data")
+                LoggingHelper.LogWarning("One live Excel failed to send data")
                 this.isSendingData = false
             })
         }

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const react_bootstrap_1 = require("react-bootstrap");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");

@@ -6,7 +6,7 @@ const Enums_1 = require("../../../Core/Enums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ColorPicker_1 = require("../../ColorPicker");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class PercentBarSettingsWizard extends React.Component {
     constructor(props) {
         super(props);

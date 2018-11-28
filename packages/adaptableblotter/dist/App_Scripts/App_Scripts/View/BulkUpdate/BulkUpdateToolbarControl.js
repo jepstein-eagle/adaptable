@@ -7,7 +7,7 @@ const BulkUpdateRedux = require("../../Redux/ActionsReducers/BulkUpdateRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ButtonApply_1 = require("../Components/Buttons/ButtonApply");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
@@ -17,7 +17,7 @@ const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Core/Enums");
 const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const UIHelper_1 = require("../UIHelper");
 class BulkUpdateToolbarControlComponent extends React.Component {
     constructor(props) {

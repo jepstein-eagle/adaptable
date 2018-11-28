@@ -6,9 +6,9 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
 import { IGridSort } from '../Api/Interface/IAdaptableBlotterObjects';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { SearchChangedTrigger } from '../Core/Enums';
-import { LayoutHelper } from '../Core/Helpers/LayoutHelper';
+import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
 import { IColumn } from '../Core/Interface/IColumn';
 
 // This is a special strategy that the user can never remove but which is useful to us 

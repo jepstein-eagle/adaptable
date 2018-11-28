@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 import { IColumn } from '../Core/Interface/IColumn';

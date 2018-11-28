@@ -1,5 +1,5 @@
 import { SystemFilterState } from './Interface/IState';
-import { FilterHelper } from '../../Core/Helpers/FilterHelper';
+import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import * as Redux from 'redux'
 
 export const SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';

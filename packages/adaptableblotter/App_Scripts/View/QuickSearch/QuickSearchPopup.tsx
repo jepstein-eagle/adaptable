@@ -6,8 +6,8 @@ import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'reac
 import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';

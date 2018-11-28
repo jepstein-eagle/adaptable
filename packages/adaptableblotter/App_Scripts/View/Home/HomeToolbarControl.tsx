@@ -18,10 +18,10 @@ import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Core/Enums";
 import { ISystemStatus } from "../../Core/Interface/Interfaces";
 import { IAlert, } from "../../Core/Interface/IMessage";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {

@@ -3,15 +3,15 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IDataChangedEvent, IDataChangingEvent } from '../Core/Services/Interface/IAuditService';
 import { IAlertDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
-import { ExpressionHelper, IRangeEvaluation } from '../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 import { LeafExpressionOperator, StateChangedTrigger } from '../Core/Enums';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-import { AlertHelper } from '../Core/Helpers/AlertHelper';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
+import { IDataChangedEvent, IDataChangingEvent } from '../Utilities/Services/Interface/IAuditService';
 
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {

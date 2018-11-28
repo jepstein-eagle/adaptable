@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { Checkbox } from "react-bootstrap";
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { UIHelper } from "../../UIHelper";
 import { IConditionalStyle, IStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
 

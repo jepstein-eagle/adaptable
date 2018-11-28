@@ -8,7 +8,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
 import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { IChartService } from "../../Core/Services/Interface/IChartService";
+import { IChartService } from "../../Utilities/Services/Interface/IChartService";
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[]

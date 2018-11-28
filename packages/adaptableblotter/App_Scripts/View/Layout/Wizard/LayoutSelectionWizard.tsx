@@ -3,12 +3,12 @@ import { Panel, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { SelectionMode, LayoutSource, MessageType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ILayout, IGridSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>

@@ -3,8 +3,8 @@ import { MathOperation } from '../Core/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
-import { IPreviewInfo } from '../Core/Interface/IPreviewResult';
 import { ICellInfo } from '../Core/Interface/Interfaces';
+import { IPreviewInfo } from '../Core/Interface/IPreview';
 export declare class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     private SmartEditState;
     constructor(blotter: IAdaptableBlotter);

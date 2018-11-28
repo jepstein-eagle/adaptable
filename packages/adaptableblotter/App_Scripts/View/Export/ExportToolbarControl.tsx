@@ -2,7 +2,7 @@
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem, SplitButton, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IColumn } from '../../Core/Interface/IColumn';
@@ -11,7 +11,7 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 //import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
@@ -20,13 +20,13 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { ExportDestination, SortOrder, AccessLevel } from '../../Core/Enums';
-import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
-import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
+import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
+import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { IReport } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ReportHelper } from "../../Core/Helpers/ReportHelper";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 

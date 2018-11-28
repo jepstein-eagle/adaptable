@@ -3,10 +3,10 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IAlertDefinition, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
-import { AlertHelper } from "../../../Core/Helpers/AlertHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { AlertHelper } from "../../../Utilities/Helpers/AlertHelper";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 

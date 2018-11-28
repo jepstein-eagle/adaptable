@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ReactDOM = require("react-dom");
 const FloatingFilterForm_1 = require("../App_Scripts/View/Components/FilterForm/FloatingFilterForm");
-const ColumnHelper_1 = require("../App_Scripts/Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../App_Scripts/Utilities/Helpers/ColumnHelper");
 exports.FloatingFilterWrapperFactory = (blotter) => {
     return class FilterWrapper {
         init(params) {

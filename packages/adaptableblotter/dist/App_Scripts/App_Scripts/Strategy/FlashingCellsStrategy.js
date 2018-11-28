@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const ObjectFactory_1 = require("../Core/ObjectFactory");
-const Enums_1 = require("../Core/Enums");
+const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const FlashingCellsRedux = require("../Redux/ActionsReducers/FlashingCellsRedux");
+const Enums_1 = require("../Core/Enums");
 class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter);

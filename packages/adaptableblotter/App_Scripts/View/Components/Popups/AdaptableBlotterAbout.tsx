@@ -2,12 +2,12 @@
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { AdaptableObjectRow } from "../AdaptableObjectRow";
 import { IColItem } from "../../UIInterfaces";
-import { Helper } from "../../../Core/Helpers/Helper";
+import { Helper } from "../../../Utilities/Helpers/Helper";
 import { AdaptableObjectCollection } from "../AdaptableObjectCollection";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IAdaptableBlotterOptions } from "../../../Api/Interface/IAdaptableBlotterOptions";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
-import { ColumnFilterHelper } from "../../../Core/Helpers/ColumnFilterHelper";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
+import { ColumnFilterHelper } from "../../../Utilities/Helpers/ColumnFilterHelper";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { Modal, Button } from "react-bootstrap";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';

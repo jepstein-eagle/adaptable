@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICustomSort } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { StateChangedTrigger } from '../Core/Enums';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {

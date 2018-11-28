@@ -7,14 +7,14 @@ import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptable
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { IColumnFilter, IUserFilter, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../../Api/Expression";
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Core/Enums';
-import { ObjectFactory } from '../../../Core/ObjectFactory';
+import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Core/Interface/Interfaces';
 
 

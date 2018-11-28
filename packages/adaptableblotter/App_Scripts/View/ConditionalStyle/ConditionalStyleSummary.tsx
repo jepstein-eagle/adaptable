@@ -3,22 +3,22 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { ConditionalStyleScope, AccessLevel } from '../../Core/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IConditionalStyle, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
 

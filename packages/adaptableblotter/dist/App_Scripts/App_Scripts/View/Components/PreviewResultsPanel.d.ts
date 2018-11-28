@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { IPreviewInfo } from "../../Core/Interface/IPreview";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {

@@ -8,8 +8,8 @@ import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { LayoutWizard } from './Wizard/LayoutWizard'
 import { LayoutEntityRow } from './LayoutEntityRow'
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
@@ -20,11 +20,11 @@ import { UIHelper } from '../UIHelper';
 import { IColumn } from "../../Core/Interface/IColumn";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { SortOrder, AccessLevel } from "../../Core/Enums";
 import { ILayout, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];

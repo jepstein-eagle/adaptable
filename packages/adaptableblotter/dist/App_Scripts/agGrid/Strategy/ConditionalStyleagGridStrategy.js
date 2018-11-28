@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ConditionalStyleStrategy_1 = require("../../App_Scripts/Strategy/ConditionalStyleStrategy");
 const Enums_1 = require("../../App_Scripts/Core/Enums");
-const ExpressionHelper_1 = require("../../App_Scripts/Core/Helpers/ExpressionHelper");
-const StringExtensions_1 = require("../../App_Scripts/Core/Extensions/StringExtensions");
-const StyleHelper_1 = require("../../App_Scripts/Core/Helpers/StyleHelper");
+const ExpressionHelper_1 = require("../../App_Scripts/Utilities/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../App_Scripts/Utilities/Extensions/StringExtensions");
+const StyleHelper_1 = require("../../App_Scripts/Utilities/Helpers/StyleHelper");
 const StrategyConstants = require("../../App_Scripts/Core/Constants/StrategyConstants");
-const ArrayExtensions_1 = require("../../App_Scripts/Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../App_Scripts/Utilities/Extensions/ArrayExtensions");
 class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
         super(blotter);

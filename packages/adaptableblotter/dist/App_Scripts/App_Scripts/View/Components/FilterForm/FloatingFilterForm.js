@@ -5,10 +5,10 @@ const React = require("react");
 const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRedux");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const Enums_1 = require("../../../Core/Enums");
-const ObjectFactory_1 = require("../../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
 class FloatingFilterFormComponent extends React.Component {
     constructor(props) {
         super(props);

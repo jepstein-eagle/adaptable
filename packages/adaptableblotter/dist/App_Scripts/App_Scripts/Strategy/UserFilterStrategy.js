@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../Core/Enums");
 class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {

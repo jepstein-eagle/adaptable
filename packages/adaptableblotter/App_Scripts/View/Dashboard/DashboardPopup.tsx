@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 

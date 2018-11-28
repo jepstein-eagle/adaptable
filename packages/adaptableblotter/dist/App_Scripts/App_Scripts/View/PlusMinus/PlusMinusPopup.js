@@ -7,18 +7,18 @@ const PlusMinusRedux = require("../../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PlusMinusWizard_1 = require("./Wizard/PlusMinusWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const PlusMinusEntityRow_1 = require("./PlusMinusEntityRow");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class PlusMinusPopupComponent extends React.Component {
     constructor(props) {
         super(props);

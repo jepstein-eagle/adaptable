@@ -9,11 +9,6 @@ const GridRedux = require("../App_Scripts/Redux/ActionsReducers/GridRedux");
 const LayoutRedux = require("../App_Scripts/Redux/ActionsReducers/LayoutRedux");
 const PopupRedux = require("../App_Scripts/Redux/ActionsReducers/PopupRedux");
 const AdaptableBlotterStore_1 = require("../App_Scripts/Redux/Store/AdaptableBlotterStore");
-const CalendarService_1 = require("../App_Scripts/Core/Services/CalendarService");
-const AuditService_1 = require("../App_Scripts/Core/Services/AuditService");
-const ValidationService_1 = require("../App_Scripts/Core/Services/ValidationService");
-const CalculatedColumnExpressionService_1 = require("../App_Scripts/Core/Services/CalculatedColumnExpressionService");
-const AuditLogService_1 = require("../App_Scripts/Core/Services/AuditLogService");
 const StrategyConstants = require("../App_Scripts/Core/Constants/StrategyConstants");
 const CustomSortStrategy_1 = require("../App_Scripts/Strategy/CustomSortStrategy");
 const SmartEditStrategy_1 = require("../App_Scripts/Strategy/SmartEditStrategy");
@@ -37,27 +32,32 @@ const ThemeStrategy_1 = require("../App_Scripts/Strategy/ThemeStrategy");
 const DashboardStrategy_1 = require("../App_Scripts/Strategy/DashboardStrategy");
 const TeamSharingStrategy_1 = require("../App_Scripts/Strategy/TeamSharingStrategy");
 const EventDispatcher_1 = require("../App_Scripts/Core/EventDispatcher");
-const EnumExtensions_1 = require("../App_Scripts/Core/Extensions/EnumExtensions");
 const Enums_1 = require("../App_Scripts/Core/Enums");
 const CustomSortDataSource_1 = require("./CustomSortDataSource");
 const FilterAndSearchDataSource_1 = require("./FilterAndSearchDataSource");
-const ObjectFactory_1 = require("../App_Scripts/Core/ObjectFactory");
-const DefaultAdaptableBlotterOptions_1 = require("../App_Scripts/Core/DefaultAdaptableBlotterOptions");
-const iPushPullHelper_1 = require("../App_Scripts/Core/Helpers/iPushPullHelper");
+const ObjectFactory_1 = require("../App_Scripts/Utilities/ObjectFactory");
 const BulkUpdateStrategy_1 = require("../App_Scripts/Strategy/BulkUpdateStrategy");
 const FilterForm_1 = require("../App_Scripts/View/Components/FilterForm/FilterForm");
 //import { ContextMenuReact } from '../App_Scripts/View/Components/ContextMenu/ContextMenu';
 const BlotterApi_1 = require("./BlotterApi");
 const DataSourceStrategy_1 = require("../App_Scripts/Strategy/DataSourceStrategy");
-const AdaptableBlotterLogger_1 = require("../App_Scripts/Core/Helpers/AdaptableBlotterLogger");
 const _ = require("lodash");
 const SelectedCellsStrategy_1 = require("../App_Scripts/Strategy/SelectedCellsStrategy");
-const ChartService_1 = require("../App_Scripts/Core/Services/ChartService");
-const HypergridThemes_1 = require("./HypergridThemes");
-const HomeStrategy_1 = require("../App_Scripts/Strategy/HomeStrategy");
-const AlertStrategy_1 = require("../App_Scripts/Strategy/AlertStrategy");
-const ColumnHelper_1 = require("../App_Scripts/Core/Helpers/ColumnHelper");
 const ColumnCategoryStrategy_1 = require("../App_Scripts/Strategy/ColumnCategoryStrategy");
+const DefaultAdaptableBlotterOptions_1 = require("../App_Scripts/Api/DefaultAdaptableBlotterOptions");
+const ChartService_1 = require("../App_Scripts/Utilities/Services/ChartService");
+const AlertStrategy_1 = require("../App_Scripts/Strategy/AlertStrategy");
+const HomeStrategy_1 = require("../App_Scripts/Strategy/HomeStrategy");
+const LoggingHelper_1 = require("../App_Scripts/Utilities/Helpers/LoggingHelper");
+const iPushPullHelper_1 = require("../App_Scripts/Utilities/Helpers/iPushPullHelper");
+const EnumExtensions_1 = require("../App_Scripts/Utilities/Extensions/EnumExtensions");
+const ColumnHelper_1 = require("../App_Scripts/Utilities/Helpers/ColumnHelper");
+const HypergridThemes_1 = require("./HypergridThemes");
+const AuditLogService_1 = require("../App_Scripts/Utilities/Services/AuditLogService");
+const CalendarService_1 = require("../App_Scripts/Utilities/Services/CalendarService");
+const AuditService_1 = require("../App_Scripts/Utilities/Services/AuditService");
+const ValidationService_1 = require("../App_Scripts/Utilities/Services/ValidationService");
+const CalculatedColumnExpressionService_1 = require("../App_Scripts/Utilities/Services/CalculatedColumnExpressionService");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -139,7 +139,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
         this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
+            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
             return;
         }
         this.abContainerElement.innerHTML = "";
@@ -156,13 +156,13 @@ class AdaptableBlotter {
         iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now i'm still initializing the strategies even if loading state has failed.... 
             //we may revisit that later
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         })
             .then(() => this.initInternalGridLogic(), (e) => {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
+            LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
             //for now i'm still initializing the grid even if loading state has failed.... 
             //we may revisit that later
             this.initInternalGridLogic();
@@ -339,7 +339,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage('columnId is undefined returning String for Type');
+            LoggingHelper_1.LoggingHelper.LogMessage('columnId is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         if (column) {
@@ -394,7 +394,7 @@ class AdaptableBlotter {
                     default:
                         break;
                 }
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
+                LoggingHelper_1.LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
                 return dataType;
             }
             let type = column.type;
@@ -414,7 +414,7 @@ class AdaptableBlotter {
                 //  }
             }
         }
-        AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning('columnId does not exist');
+        LoggingHelper_1.LoggingHelper.LogWarning('columnId does not exist');
         return Enums_1.DataType.String;
     }
     setValue(cellInfo) {
@@ -516,7 +516,7 @@ class AdaptableBlotter {
             //in our current use cases as of 02/10/2017 it should never happens that we
             //check for editable on a different column that we edit
             else {
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("Editing " + this.hyperGrid.cellEditor.column.name + " but checking for editable on column " + columnId);
+                LoggingHelper_1.LoggingHelper.LogWarning("Editing " + this.hyperGrid.cellEditor.column.name + " but checking for editable on column " + columnId);
             }
         }
         else {
@@ -1118,7 +1118,7 @@ class AdaptableBlotter {
                 return originalGetCellReturn || this.hyperGrid.Bars.get(declaredRendererName);
             }
             catch (err) {
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Error during GetCell", err);
+                LoggingHelper_1.LoggingHelper.LogError("Error during GetCell", err);
             }
         };
         this.hyperGrid.addEventListener('fin-column-sort', (e) => {

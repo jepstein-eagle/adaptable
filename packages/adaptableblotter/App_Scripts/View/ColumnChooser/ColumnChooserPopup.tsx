@@ -8,9 +8,9 @@ import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRe
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IColumnCategory, IMasterChildren } from "../../Core/Interface/Interfaces";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {

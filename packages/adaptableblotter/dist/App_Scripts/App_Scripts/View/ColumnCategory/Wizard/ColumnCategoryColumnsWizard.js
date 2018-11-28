@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const PanelWithInfo_1 = require("../../Components/Panels/PanelWithInfo");
 const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class ColumnCategoryColumnsWizard extends React.Component {
     constructor(props) {
         super(props);

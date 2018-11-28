@@ -7,11 +7,11 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AlertWizard } from './Wizard/AlertWizard'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { AlertEntityRow } from './AlertEntityRow';
@@ -19,11 +19,11 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IAlertDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { MessageType, AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {

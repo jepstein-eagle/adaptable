@@ -7,16 +7,17 @@ import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIConfirmation } from '../Core/Interface/IMessage';
 import { DataType, StateChangedTrigger } from '../Core/Enums'
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../Core/Helpers/Helper';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../Core/ObjectFactory';
-import { ICellInfo } from '../Core/Interface/Interfaces';
 import { IColumn } from '../Core/Interface/IColumn';
+import { Helper } from '../Utilities/Helpers/Helper';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { ICellInfo } from '../Core/Interface/Interfaces';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
+import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
+import { ObjectFactory } from '../Utilities/ObjectFactory';
+
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState

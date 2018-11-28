@@ -3,17 +3,17 @@ import * as ReactDOM from "react-dom";
 import { IColumn } from '../../Core/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, RangeOperandType, QueryTab } from '../../Core/Enums';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { Helper } from '../../Core/Helpers/Helper';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
 import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Api/Expression";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.

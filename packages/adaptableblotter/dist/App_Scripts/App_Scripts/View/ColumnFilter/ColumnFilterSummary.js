@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");

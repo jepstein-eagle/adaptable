@@ -3,13 +3,13 @@ import { Radio, Col, Panel, FormControl } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IConditionalStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import {  IColumnCategory } from "../../../Core/Interface/Interfaces";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: Array<IColumn>

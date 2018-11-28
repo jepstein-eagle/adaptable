@@ -6,13 +6,13 @@ const ExpressionBuilderColumnValues_1 = require("./ExpressionBuilderColumnValues
 const ExpressionBuilderUserFilter_1 = require("./ExpressionBuilderUserFilter");
 const ExpressionBuilderRanges_1 = require("./ExpressionBuilderRanges");
 const react_bootstrap_1 = require("react-bootstrap");
-const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
+const FilterHelper_1 = require("../../Utilities/Helpers/FilterHelper");
 const Enums_1 = require("../../Core/Enums");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const Waiting_1 = require("../Components/FilterForm/Waiting");
 class ExpressionBuilderConditionSelector extends React.Component {
     constructor(props) {

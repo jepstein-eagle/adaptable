@@ -5,16 +5,16 @@ import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
 import { Well, HelpBlock, Tab, NavItem, Nav } from 'react-bootstrap';
-import { FilterHelper } from '../../Core/Helpers/FilterHelper';
+import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode, QueryBuildStatus, QueryTab, SortOrder } from '../../Core/Enums'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Api/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { Helper } from "../../Core/Helpers/Helper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { Helper } from "../../Utilities/Helpers/Helper";
 import { Waiting } from "../Components/FilterForm/Waiting";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { raw } from "body-parser";

@@ -13,7 +13,7 @@ const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Core/Enums");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const react_bootstrap_1 = require("react-bootstrap");
-const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
+const ColumnFilterHelper_1 = require("../../Utilities/Helpers/ColumnFilterHelper");
 class ColumnFilterToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__columnfilter";

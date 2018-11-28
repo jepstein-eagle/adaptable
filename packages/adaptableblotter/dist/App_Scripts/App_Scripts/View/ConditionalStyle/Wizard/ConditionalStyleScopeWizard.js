@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Core/Enums");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 class ConditionalStyleScopeWizard extends React.Component {
     constructor(props) {
         super(props);

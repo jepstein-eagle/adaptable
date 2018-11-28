@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch = require("isomorphic-fetch");
 const AdaptableBlotterReduxMerger_1 = require("./AdaptableBlotterReduxMerger");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
 const checkStatus = (response) => {
     const error = new Error(response.statusText);
     if (response.status >= 200 && response.status < 300) {
@@ -27,13 +27,13 @@ class AdaptableBlotterReduxLocalStorageEngine {
                 .then(response => response.json())
                 //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeState(parsedPredefinedState, parsedJsonState))
-                .catch(err => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError(err));
+                .catch(err => LoggingHelper_1.LoggingHelper.LogError(err));
         }
         else if (this.predefinedConfig != null) {
             return new Promise((resolve) => resolve(this.predefinedConfig))
                 //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeState(parsedPredefinedState, parsedJsonState))
-                .catch(err => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError(err));
+                .catch(err => LoggingHelper_1.LoggingHelper.LogError(err));
         }
         else {
             return new Promise((resolve) => {

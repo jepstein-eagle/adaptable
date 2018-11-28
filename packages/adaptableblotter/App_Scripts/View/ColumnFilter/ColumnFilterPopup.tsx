@@ -15,10 +15,10 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
 import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { FilterHelper } from "../../Core/Helpers/FilterHelper";
+import { FilterHelper } from "../../Utilities/Helpers/FilterHelper";
 import { IUIPrompt } from "../../Core/Interface/IMessage";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]

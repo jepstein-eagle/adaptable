@@ -3,14 +3,14 @@ import { ExpressionBuilderConditionSelector } from './ExpressionBuilderCondition
 import { IColumn } from '../../Core/Interface/IColumn';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
 import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus, QueryTab, AccessLevel } from '../../Core/Enums'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
-import { ObjectFactory } from "../../Core/ObjectFactory";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { ObjectFactory } from "../../Utilities/ObjectFactory";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Api/Expression";
 import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";

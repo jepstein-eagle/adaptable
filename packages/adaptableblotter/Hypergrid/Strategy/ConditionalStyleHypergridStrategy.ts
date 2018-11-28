@@ -1,12 +1,12 @@
 import { IConditionalStyleStrategy } from '../../App_Scripts/Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../App_Scripts/Strategy/ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../../App_Scripts/Core/Enums';
-import { IDataChangedEvent } from '../../App_Scripts/Core/Services/Interface/IAuditService'
-import { ExpressionHelper } from '../../App_Scripts/Core/Helpers/ExpressionHelper';
-import { Helper } from '../../App_Scripts/Core/Helpers/Helper';
+import { ExpressionHelper } from '../../App_Scripts/Utilities/Helpers/ExpressionHelper';
+import { Helper } from '../../App_Scripts/Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IConditionalStyle } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 import { IColumnCategory } from '../../App_Scripts/Core/Interface/Interfaces';
+import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

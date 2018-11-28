@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
-const LayoutHelper_1 = require("../../../Core/Helpers/LayoutHelper");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const LayoutHelper_1 = require("../../../Utilities/Helpers/LayoutHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class LayoutSummaryWizard extends React.Component {
     constructor(props) {
         super(props);

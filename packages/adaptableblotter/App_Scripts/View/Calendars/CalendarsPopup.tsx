@@ -12,7 +12,7 @@ import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { SortOrder } from '../../Core/Enums';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { ICalendar, ICalendarEntry } from "../../Api/Interface/IAdaptableBlotterObjects";

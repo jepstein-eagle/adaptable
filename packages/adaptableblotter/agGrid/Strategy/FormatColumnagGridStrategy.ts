@@ -2,8 +2,8 @@ import { IFormatColumnStrategy } from '../../App_Scripts/Strategy/Interface/IFor
 import { FormatColumnStrategy } from '../../App_Scripts/Strategy/FormatColumnStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import * as StyleConstants from '../../App_Scripts/Core/Constants/StyleConstants'
-import { StringExtensions } from '../../App_Scripts/Core/Extensions/StringExtensions';
-import { StyleHelper } from '../../App_Scripts/Core/Helpers/StyleHelper';
+import { StringExtensions } from '../../App_Scripts/Utilities/Extensions/StringExtensions';
+import { StyleHelper } from '../../App_Scripts/Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../App_Scripts/Core/Constants/StrategyConstants'
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {

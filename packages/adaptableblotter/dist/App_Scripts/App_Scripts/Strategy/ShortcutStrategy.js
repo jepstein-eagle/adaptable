@@ -5,12 +5,11 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ShortcutRedux = require("../Redux/ActionsReducers/ShortcutRedux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
-const Helper_1 = require("../Core/Helpers/Helper");
 const Enums_1 = require("../Core/Enums");
-const Enums_2 = require("../Core/Enums");
-const ObjectFactory_1 = require("../Core/ObjectFactory");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
-const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
+const Helper_1 = require("../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ShortcutStrategyId, blotter);
@@ -107,15 +106,15 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let firstNumber = Number(first);
         let secondNumber = Number(second);
         switch (shortcutOperation) {
-            case Enums_2.MathOperation.Add:
+            case Enums_1.MathOperation.Add:
                 return firstNumber + secondNumber;
-            case Enums_2.MathOperation.Subtract:
+            case Enums_1.MathOperation.Subtract:
                 return (firstNumber - secondNumber);
-            case Enums_2.MathOperation.Multiply:
+            case Enums_1.MathOperation.Multiply:
                 return (firstNumber * secondNumber);
-            case Enums_2.MathOperation.Divide:
+            case Enums_1.MathOperation.Divide:
                 return (firstNumber / secondNumber);
-            case Enums_2.MathOperation.Replace:
+            case Enums_1.MathOperation.Replace:
                 return secondNumber;
         }
     }

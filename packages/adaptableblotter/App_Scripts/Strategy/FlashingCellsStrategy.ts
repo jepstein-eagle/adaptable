@@ -2,18 +2,15 @@ import { MenuItemDoReduxAction } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { ObjectFactory } from '../Core/ObjectFactory'
+import { ObjectFactory } from '../Utilities/ObjectFactory'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { DataType, StateChangedTrigger } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
+import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-
+import { DataType, StateChangedTrigger } from '../Core/Enums';
+import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
+import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState

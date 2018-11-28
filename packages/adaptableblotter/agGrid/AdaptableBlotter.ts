@@ -17,20 +17,21 @@ import * as GridRedux from '../App_Scripts/Redux/ActionsReducers/GridRedux'
 import * as FreeTextColumnRedux from '../App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux'
 import * as PopupRedux from '../App_Scripts/Redux/ActionsReducers/PopupRedux'
 // services
-import { ICalendarService } from '../App_Scripts/Core/Services/Interface/ICalendarService'
-import { CalendarService } from '../App_Scripts/Core/Services/CalendarService'
-import { CalculatedColumnExpressionService } from '../App_Scripts/Core/Services/CalculatedColumnExpressionService'
-import { IAuditService, IDataChangedEvent, IDataChangingEvent } from '../App_Scripts/Core/Services/Interface/IAuditService'
-import { IValidationService } from '../App_Scripts/Core/Services/Interface/IValidationService'
-import { AuditService } from '../App_Scripts/Core/Services/AuditService'
-import { ValidationService } from '../App_Scripts/Core/Services/ValidationService'
-import { StyleService } from '../App_Scripts/Core/Services/StyleService'
-import { AuditLogService } from '../App_Scripts/Core/Services/AuditLogService'
-import { ICalculatedColumnExpressionService } from "../App_Scripts/Core/Services/Interface/ICalculatedColumnExpressionService";
-import { ChartService } from '../App_Scripts/Core/Services/ChartService';
-import { IChartService } from '../App_Scripts/Core/Services/Interface/IChartService';
-import { IFreeTextColumnService } from '../App_Scripts/Core/Services/Interface/IFreeTextColumnService';
-import { FreeTextColumnService } from '../App_Scripts/Core/Services/FreeTextColumnService';
+import { ICalendarService } from '../App_Scripts/Utilities/Services/Interface/ICalendarService';
+import { IAuditService, IDataChangedEvent, IDataChangingEvent } from '../App_Scripts/Utilities/Services/Interface/IAuditService';
+import { IValidationService } from '../App_Scripts/Utilities/Services/Interface/IValidationService';
+import { AuditLogService } from '../App_Scripts/Utilities/Services/AuditLogService';
+import { StyleService } from '../App_Scripts/Utilities/Services/StyleService';
+import { IChartService } from '../App_Scripts/Utilities/Services/Interface/IChartService';
+import { ICalculatedColumnExpressionService } from '../App_Scripts/Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { IFreeTextColumnService } from '../App_Scripts/Utilities/Services/Interface/IFreeTextColumnService';
+import { CalendarService } from '../App_Scripts/Utilities/Services/CalendarService';
+import { AuditService } from '../App_Scripts/Utilities/Services/AuditService';
+import { ValidationService } from '../App_Scripts/Utilities/Services/ValidationService';
+import { ChartService } from '../App_Scripts/Utilities/Services/ChartService';
+import { FreeTextColumnService } from '../App_Scripts/Utilities/Services/FreeTextColumnService';
+import { CalculatedColumnExpressionService } from '../App_Scripts/Utilities/Services/CalculatedColumnExpressionService';
+
 // strategies
 import { IStrategy } from '../App_Scripts/Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../App_Scripts/Strategy/Interface/IConditionalStyleStrategy';
@@ -76,10 +77,9 @@ import { IMenuItem } from '../App_Scripts/Core/Interface/IMenu';
 import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
 import { IUIConfirmation } from '../App_Scripts/Core/Interface/IMessage';
 import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher'
-import { StringExtensions } from '../App_Scripts/Core/Extensions/StringExtensions';
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../App_Scripts/Core/Enums'
-import { ObjectFactory } from '../App_Scripts/Core/ObjectFactory';
-import { Color } from '../App_Scripts/Core/color';
+import { ObjectFactory } from '../App_Scripts/Utilities/ObjectFactory';
+import { Color } from '../App_Scripts/Utilities/color';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
 import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
@@ -88,15 +88,15 @@ import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICust
 import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
-import { ArrayExtensions } from '../App_Scripts/Core/Extensions/ArrayExtensions';
-import { AdaptableBlotterLogger } from '../App_Scripts/Core/Helpers/AdaptableBlotterLogger';
 import { ISelectedCell, ISelectedCellInfo } from '../App_Scripts/Strategy/Interface/ISelectedCellsStrategy';
 // Helpers
-import { StyleHelper } from '../App_Scripts/Core/Helpers/StyleHelper';
-import { iPushPullHelper } from '../App_Scripts/Core/Helpers/iPushPullHelper';
-import { ColumnHelper } from '../App_Scripts/Core/Helpers/ColumnHelper';
-import { LayoutHelper } from '../App_Scripts/Core/Helpers/LayoutHelper';
-import { ExpressionHelper } from '../App_Scripts/Core/Helpers/ExpressionHelper';
+import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Api/DefaultAdaptableBlotterOptions';
+import { iPushPullHelper } from '../App_Scripts/Utilities/Helpers/iPushPullHelper';
+import { ColumnHelper } from '../App_Scripts/Utilities/Helpers/ColumnHelper';
+import { StyleHelper } from '../App_Scripts/Utilities/Helpers/StyleHelper';
+import { LayoutHelper } from '../App_Scripts/Utilities/Helpers/LayoutHelper';
+import { ExpressionHelper } from '../App_Scripts/Utilities/Helpers/ExpressionHelper';
+
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
 import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc } from "ag-grid"
@@ -104,7 +104,9 @@ import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../App_Scripts/View/UIInterfaces';
-import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Api/DefaultAdaptableBlotterOptions';
+import { LoggingHelper } from '../App_Scripts/Utilities/Helpers/LoggingHelper';
+import { StringExtensions } from '../App_Scripts/Utilities/Extensions/StringExtensions';
+import { ArrayExtensions } from '../App_Scripts/Utilities/Extensions/ArrayExtensions';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -193,14 +195,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
-                    AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                    LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
                 () => this.initInternalGridLogic(),
                 (e) => {
-                    AdaptableBlotterLogger.LogError('Failed to Init Strategies : ', e);
+                    LoggingHelper.LogError('Failed to Init Strategies : ', e);
                     //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
                     this.initInternalGridLogic()
                 })
@@ -280,7 +282,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.gridOptions.api.onFilterChanged()
             this._onRefresh.Dispatch(this, this);
         } else {
-            AdaptableBlotterLogger.LogError('Trying to filter on a non-filterable grid.')
+            LoggingHelper.LogError('Trying to filter on a non-filterable grid.')
         }
     }
 
@@ -516,7 +518,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            AdaptableBlotterLogger.LogMessage('column is undefined returning String for Type')
+            LoggingHelper.LogMessage('column is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -553,7 +555,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let row = this.gridOptions.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
-            AdaptableBlotterLogger.LogWarning('there is no first row so we are returning Unknown for Type')
+            LoggingHelper.LogWarning('there is no first row so we are returning Unknown for Type')
             return DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -583,7 +585,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
             }
         }
-        AdaptableBlotterLogger.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
+        LoggingHelper.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
         return dataType
     }
 
@@ -1129,7 +1131,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            AdaptableBlotterLogger.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return
         }
 
@@ -1428,7 +1430,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-                AdaptableBlotterLogger.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
                 //for now i'm still initializing the strategies even if loading state has failed.... 
                 //we may revisit that later
                 this.Strategies.forEach(strat => strat.InitializeWithRedux());

@@ -6,18 +6,18 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const AlertWizard_1 = require("./Wizard/AlertWizard");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const AlertEntityRow_1 = require("./AlertEntityRow");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class AlertPopupComponent extends React.Component {
     constructor(props) {
         super(props);

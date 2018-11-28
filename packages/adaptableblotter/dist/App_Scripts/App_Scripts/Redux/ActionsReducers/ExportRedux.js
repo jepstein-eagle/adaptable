@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ReportHelper_1 = require("../../Core/Helpers/ReportHelper");
+const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
 exports.EXPORT_APPLY = 'EXPORT_APPLY';
 exports.IPP_LOGIN = 'IPP_LOGIN';
 exports.SET_DOMAIN_PAGES = 'SET_DOMAIN_PAGES';

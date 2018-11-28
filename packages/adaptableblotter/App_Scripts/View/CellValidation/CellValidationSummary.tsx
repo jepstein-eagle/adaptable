@@ -3,13 +3,13 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
@@ -18,8 +18,8 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterObject, ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]

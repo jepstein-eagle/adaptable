@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FormatColumnStrategy_1 = require("../../App_Scripts/Strategy/FormatColumnStrategy");
-const StringExtensions_1 = require("../../App_Scripts/Core/Extensions/StringExtensions");
-const StyleHelper_1 = require("../../App_Scripts/Core/Helpers/StyleHelper");
+const StringExtensions_1 = require("../../App_Scripts/Utilities/Extensions/StringExtensions");
+const StyleHelper_1 = require("../../App_Scripts/Utilities/Helpers/StyleHelper");
 const StrategyConstants = require("../../App_Scripts/Core/Constants/StrategyConstants");
 class FormatColumnagGridStrategy extends FormatColumnStrategy_1.FormatColumnStrategy {
     constructor(blotterBypass) {

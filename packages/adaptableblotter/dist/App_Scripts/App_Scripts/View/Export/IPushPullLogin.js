@@ -7,7 +7,7 @@ const react_bootstrap_2 = require("react-bootstrap");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 class IPushPullLoginComponent extends React.Component {
     constructor(props) {

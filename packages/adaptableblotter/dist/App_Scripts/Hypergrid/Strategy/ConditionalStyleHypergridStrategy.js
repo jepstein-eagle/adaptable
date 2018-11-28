@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ConditionalStyleStrategy_1 = require("../../App_Scripts/Strategy/ConditionalStyleStrategy");
 const Enums_1 = require("../../App_Scripts/Core/Enums");
-const ExpressionHelper_1 = require("../../App_Scripts/Core/Helpers/ExpressionHelper");
-const Helper_1 = require("../../App_Scripts/Core/Helpers/Helper");
+const ExpressionHelper_1 = require("../../App_Scripts/Utilities/Helpers/ExpressionHelper");
+const Helper_1 = require("../../App_Scripts/Utilities/Helpers/Helper");
 class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
         super(blotter);

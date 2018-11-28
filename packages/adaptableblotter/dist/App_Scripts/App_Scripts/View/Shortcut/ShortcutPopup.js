@@ -11,12 +11,12 @@ const Enums_2 = require("../../Core/Enums");
 const ShortcutEntityRow_1 = require("./ShortcutEntityRow");
 const ShortcutWizard_1 = require("./Wizard/ShortcutWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class ShortcutPopupComponent extends React.Component {
     constructor(props) {
         super(props);

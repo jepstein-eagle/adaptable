@@ -12,10 +12,10 @@ const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const ButtonDashboard_1 = require("../Components/Buttons/ButtonDashboard");
 const Enums_1 = require("../../Core/Enums");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class HomeToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);

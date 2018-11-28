@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const Enums_1 = require("../../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const AdaptableBlotterFormControlTextClear_1 = require("../Forms/AdaptableBlotterFormControlTextClear");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
 const UIHelper_1 = require("../../UIHelper");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class ListBoxFilterForm extends React.Component {
     constructor(props) {
         super(props);

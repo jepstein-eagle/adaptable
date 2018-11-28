@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, Col, Panel, Checkbox, Row, Well, Radio } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
@@ -9,7 +9,7 @@ import { SelectionMode, MessageType, DistinctCriteriaPairValue } from "../../../
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";

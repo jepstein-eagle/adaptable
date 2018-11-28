@@ -6,7 +6,7 @@ import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { IPercentBar } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ColorPicker } from "../ColorPicker";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 

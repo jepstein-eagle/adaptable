@@ -11,20 +11,20 @@ import { MathOperation, MessageType, DataType } from '../../Core/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { isNumber, isDate } from "util";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
-import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
+import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Core/Constants/StyleConstants";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;

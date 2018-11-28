@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const Enums_1 = require("../../Core/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const AlertHelper_1 = require("../../Core/Helpers/AlertHelper");
+const AlertHelper_1 = require("../../Utilities/Helpers/AlertHelper");
 class AlertEntityRow extends React.Component {
     render() {
         let alert = this.props.AdaptableBlotterObject;

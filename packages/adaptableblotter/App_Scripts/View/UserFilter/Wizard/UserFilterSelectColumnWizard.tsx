@@ -3,9 +3,9 @@ import { Panel, Well, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 
 

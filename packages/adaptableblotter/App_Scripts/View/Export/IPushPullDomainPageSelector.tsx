@@ -9,7 +9,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { IPPDomain, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ExportDestination } from "../../Core/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 

@@ -2,12 +2,6 @@ import { DistinctCriteriaPairValue } from '../Enums'
 import { ICellInfo, IAdaptableStrategyCollection, IVendorGridInfo } from './Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IEvent } from './IEvent'
-import { ICalendarService } from '../Services/Interface/ICalendarService'
-import { IAuditService } from '../Services/Interface/IAuditService'
-import { IValidationService } from '../Services/Interface/IValidationService'
-import { IPPStyle } from '../../Strategy/Interface/IExportStrategy'
-import { AuditLogService } from '../Services/AuditLogService'
-import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalculatedColumnExpressionService";
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
@@ -15,7 +9,13 @@ import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } f
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Api/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
-import { IChartService } from '../Services/Interface/IChartService';
+import { ICalendarService } from '../../Utilities/Services/Interface/ICalendarService';
+import { IAuditService } from '../../Utilities/Services/Interface/IAuditService';
+import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
+import { AuditLogService } from '../../Utilities/Services/AuditLogService';
+import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { IChartService } from '../../Utilities/Services/Interface/IChartService';
+import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 
 export interface IAdaptableBlotter {
     /**
@@ -29,6 +29,7 @@ export interface IAdaptableBlotter {
 
     VendorGridName: 'agGrid' | 'Hypergrid' ;
     EmbedColumnMenu: boolean
+    isInitialised: boolean
 
     // Services
     CalendarService: ICalendarService
@@ -53,9 +54,8 @@ export interface IAdaptableBlotter {
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
-    hideFilterForm(): void
-
-    // cell selection
+    
+    // cell / column selection
     getActiveCell(): ICellInfo
     selectColumn(columnId: string): void
 
@@ -68,8 +68,8 @@ export interface IAdaptableBlotter {
     getRawValueFromRecord(row: any, columnId: string): any
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
-    setNewColumnListOrder(VisibleColumnList: Array<IColumn>): void
-    getDisplayValueFromRawValue(colId: string, rawValue: any): any
+    setNewColumnListOrder(visibleColumnList: Array<IColumn>): void
+    getDisplayValueFromRawValue(columnId: string, rawValue: any): any
 
     // editing related
     setValue(cellInfo: ICellInfo): void
@@ -79,6 +79,7 @@ export interface IAdaptableBlotter {
     getCurrentCellEditValue(): any
 
     // Row Methods
+    getFirstRecord(): any
     forAllRecordsDo(func: (record: any) => any): void;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
     isGroupRecord(record: any): boolean
@@ -101,10 +102,8 @@ export interface IAdaptableBlotter {
     addPercentBar(percentBar: IPercentBar): void
     editPercentBar(percentBar: IPercentBar): void
 
-
-    getFirstRecord(): any
-
     // Filtering
+    hideFilterForm(): void
     applyGridFiltering(): void
     clearGridFiltering(): void
     clearColumnFiltering(columnIds: string[]): void
@@ -137,6 +136,5 @@ export interface IAdaptableBlotter {
 
     redraw(): void
     
-    isInitialised: boolean
 }
 

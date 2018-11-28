@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../Utilities/Helpers/ExpressionHelper");
 const Enums_1 = require("../Core/Enums");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
-const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
-const AlertHelper_1 = require("../Core/Helpers/AlertHelper");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
+const AlertHelper_1 = require("../Utilities/Helpers/AlertHelper");
 class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.AlertStrategyId, blotter);

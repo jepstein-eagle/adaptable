@@ -8,15 +8,15 @@ const ColumnCategoryRedux = require("../../Redux/ActionsReducers/ColumnCategoryR
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 //import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard'
 //import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow'
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const ColumnCategoryEntityRow_1 = require("./ColumnCategoryEntityRow");
 const ColumnCategoryWizard_1 = require("./Wizard/ColumnCategoryWizard");
 class ColumnCategoryPopupComponent extends React.Component {

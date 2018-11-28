@@ -12,7 +12,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
-import { Helper } from "../../Core/Helpers/Helper";
+import { Helper } from "../../Utilities/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
 import { SelectedCellOperation } from "../../Core/Enums";
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions'
 import { FormControl, FormControlProps, ButtonGroup, Glyphicon, Sizes, InputGroup, DropdownButton } from 'react-bootstrap';
 import { ButtonClear } from "../Buttons/ButtonClear";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants'

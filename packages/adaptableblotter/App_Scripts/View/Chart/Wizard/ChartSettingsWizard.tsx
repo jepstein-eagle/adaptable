@@ -1,11 +1,11 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
-import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
+import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { ChartType } from "../../../Core/Enums";
 
 export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChartDefinition> {

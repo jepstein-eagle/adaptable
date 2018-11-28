@@ -2,18 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ColumnCategoryWizard_1 = require("./Wizard/ColumnCategoryWizard");
 const ColumnCategoryRedux = require("../../Redux/ActionsReducers/ColumnCategoryRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const StrategyProfile_1 = require("../Components/StrategyProfile");
 class ColumnCategorySummaryComponent extends React.Component {
     constructor(props) {

@@ -3,13 +3,13 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { AlertWizard } from './Wizard/AlertWizard'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
@@ -17,9 +17,9 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterObject, IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AlertHelper } from "../../Core/Helpers/AlertHelper";
+import { AlertHelper } from "../../Utilities/Helpers/AlertHelper";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
     Alerts: IAlertDefinition[]

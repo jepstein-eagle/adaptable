@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const StyleVisualItem_1 = require("../../Components/StyleVisualItem");
-const ObjectFactory_1 = require("../../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
 class PercentBarSummaryWizard extends React.Component {
     constructor(props) {
         super(props);

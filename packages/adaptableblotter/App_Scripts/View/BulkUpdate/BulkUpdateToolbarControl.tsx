@@ -9,8 +9,8 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { Helper } from '../../Core/Helpers/Helper';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -20,7 +20,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Core/Interface/IPreview";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
-import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
+import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
@@ -30,10 +30,10 @@ import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, StatusColour, AccessLevel } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { fail } from "assert";
 import { UIHelper } from "../UIHelper";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {

@@ -8,11 +8,11 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { Well } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
@@ -22,7 +22,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { IFormatColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {

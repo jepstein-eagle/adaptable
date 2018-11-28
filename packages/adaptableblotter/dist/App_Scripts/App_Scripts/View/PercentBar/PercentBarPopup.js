@@ -6,16 +6,16 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const PercentBarRedux = require("../../Redux/ActionsReducers/PercentBarRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const PercentBarWizard_1 = require("./Wizard/PercentBarWizard");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const PercentBarEntityRow_1 = require("./PercentBarEntityRow");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class PercentBarPopupComponent extends React.Component {
     constructor(props) {
         super(props);

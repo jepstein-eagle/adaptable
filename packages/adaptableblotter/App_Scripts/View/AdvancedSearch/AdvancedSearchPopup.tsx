@@ -8,8 +8,8 @@ import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearch
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
@@ -18,11 +18,11 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { PRIMARY_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 

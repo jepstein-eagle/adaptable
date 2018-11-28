@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy'
 import { FreeTextColumnState } from '../Redux/ActionsReducers/Interface/IState';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StateChangedTrigger } from '../Core/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
 

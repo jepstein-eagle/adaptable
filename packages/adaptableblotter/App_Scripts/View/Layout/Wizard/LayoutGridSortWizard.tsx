@@ -1,15 +1,15 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Checkbox, Glyphicon, Button } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { SortOrder, SelectionMode } from "../../../Core/Enums";
-import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
+import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { GridSortRow } from '../GridSortRow'
 import { IColItem } from "../../UIInterfaces";
 import { AdaptableObjectCollection } from '../../Components/AdaptableObjectCollection';
-import { ObjectFactory } from "../../../Core/ObjectFactory";
+import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
 import { ILayout, IGridSort } from "../../../Api/Interface/IAdaptableBlotterObjects";

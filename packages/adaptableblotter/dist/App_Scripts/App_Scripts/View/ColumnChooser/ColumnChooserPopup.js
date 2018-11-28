@@ -6,8 +6,8 @@ const ColumnChooserRedux = require("../../Redux/ActionsReducers/ColumnChooserRed
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const DualListBoxEditor_1 = require("../Components/ListBox/DualListBoxEditor");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class ColumnChooserPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__columnchooser";

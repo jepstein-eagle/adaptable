@@ -7,7 +7,7 @@ import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {

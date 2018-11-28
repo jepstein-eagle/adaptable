@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../../../Core/Enums");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class PercentBarSelectColumnWizard extends React.Component {
     constructor(props) {
         super(props);

@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { SystemState } from './Interface/IState'
 import { ISystemStatus } from '../../Core/Interface/Interfaces';
 import { IAlert } from '../../Core/Interface/IMessage';
-import { CalendarHelper } from '../../Core/Helpers/CalendarHelper';
+import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Core/Enums';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
 import { IPreviewInfo } from '../../Core/Interface/IPreview';

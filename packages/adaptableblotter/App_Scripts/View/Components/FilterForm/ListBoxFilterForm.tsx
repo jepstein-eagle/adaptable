@@ -1,15 +1,15 @@
 import * as React from "react";
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Core/Enums'
 import { MenuItem, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterFormControlTextClear";
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 import { UIHelper } from "../../UIHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 
 export interface ListBoxFilterFormProps extends ListGroupProps {

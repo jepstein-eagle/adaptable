@@ -8,17 +8,17 @@ const LayoutRedux = require("../../Redux/ActionsReducers/LayoutRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const LayoutWizard_1 = require("./Wizard/LayoutWizard");
 const LayoutEntityRow_1 = require("./LayoutEntityRow");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../../Core/Enums");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class LayoutPopupComponent extends React.Component {
     constructor(props) {
         super(props);

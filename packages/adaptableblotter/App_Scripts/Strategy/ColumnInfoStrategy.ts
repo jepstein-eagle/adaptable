@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
     constructor(blotter: IAdaptableBlotter) {

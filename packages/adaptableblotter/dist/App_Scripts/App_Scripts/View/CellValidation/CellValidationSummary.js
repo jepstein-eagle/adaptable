@@ -2,18 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const CellValidationWizard_1 = require("./Wizard/CellValidationWizard");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const CellValidationHelper_1 = require("../../Core/Helpers/CellValidationHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class CellValidationSummaryComponent extends React.Component {
     constructor(props) {
         super(props);

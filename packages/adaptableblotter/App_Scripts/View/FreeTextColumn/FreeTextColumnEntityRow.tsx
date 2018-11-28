@@ -6,8 +6,8 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { IFreeTextColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 
 export class FreeTextColumnEntityRow extends React.Component<SharedEntityExpressionRowProps<FreeTextColumnEntityRow>, {}> {
 

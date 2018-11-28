@@ -9,14 +9,14 @@ import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Core/Enums'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { Helper } from '../../Core/Helpers/Helper'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IFlashingCell, ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: IFlashingCell[],

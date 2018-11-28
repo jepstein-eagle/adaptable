@@ -7,7 +7,7 @@ const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
 const UIHelper_1 = require("../../UIHelper");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
 const GeneralConstants = require("../../../Core/Constants/GeneralConstants");
-const EntitlementHelper_1 = require("../../../Core/Helpers/EntitlementHelper");
+const EntitlementHelper_1 = require("../../../Utilities/Helpers/EntitlementHelper");
 class AdaptableBlotterPopup extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;

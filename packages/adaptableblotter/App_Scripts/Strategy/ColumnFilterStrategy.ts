@@ -7,7 +7,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private columnFilterState: IColumnFilter[]

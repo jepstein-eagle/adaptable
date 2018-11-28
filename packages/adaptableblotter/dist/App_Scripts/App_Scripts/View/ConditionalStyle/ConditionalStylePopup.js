@@ -9,15 +9,15 @@ const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../Core/Enums");
 const ConditionalStyleEntityRow_1 = require("./ConditionalStyleEntityRow");
 const ConditionalStyleWizard_1 = require("./Wizard/ConditionalStyleWizard");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 class ConditionalStylePopupComponent extends React.Component {
     constructor(props) {
         super(props);

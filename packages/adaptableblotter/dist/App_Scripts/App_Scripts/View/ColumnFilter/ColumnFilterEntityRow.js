@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const ButtonSave_1 = require("../Components/Buttons/ButtonSave");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
 class ColumnFilterEntityRow extends React.Component {
     render() {

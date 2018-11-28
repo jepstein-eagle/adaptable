@@ -8,15 +8,15 @@ const AdvancedSearchRedux = require("../../Redux/ActionsReducers/AdvancedSearchR
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdvancedSearchWizard_1 = require("./Wizard/AdvancedSearchWizard");
 const AdvancedSearchEntityRow_1 = require("./AdvancedSearchEntityRow");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
 class AdvancedSearchPopupComponent extends React.Component {
     constructor(props) {

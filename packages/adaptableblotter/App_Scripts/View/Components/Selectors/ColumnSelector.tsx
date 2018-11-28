@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Typeahead } from 'react-bootstrap-typeahead'
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { SelectionMode, SortOrder } from "../../../Core/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { Helper } from "../../../Core/Helpers/Helper";
+import { Helper } from "../../../Utilities/Helpers/Helper";
 import { Sizes, InputGroup } from "react-bootstrap";
 import { CSSProperties } from "react";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';

@@ -47,15 +47,15 @@ const TeamSharingRedux = require("../ActionsReducers/TeamSharingRedux");
 const UserInterfaceRedux = require("../ActionsReducers/UserInterfaceRedux");
 const SelectedCellsRedux = require("../ActionsReducers/SelectedCellsRedux");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
-const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const PreviewHelper_1 = require("../../Core/Helpers/PreviewHelper");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const AdaptableBlotterLogger_1 = require("../../Core/Helpers/AdaptableBlotterLogger");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const ConfigConstants = require("../../Core/Constants/ConfigConstants");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const PreviewHelper_1 = require("../../Utilities/Helpers/PreviewHelper");
+const iPushPullHelper_1 = require("../../Utilities/Helpers/iPushPullHelper");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
@@ -218,7 +218,7 @@ class AdaptableBlotterStore {
             //We load the previous saved session. Redux is pretty awesome in its simplicity!
             loadStorage(this.TheStore)
                 .then(() => this.TheStore.dispatch(exports.InitState()), (e) => {
-                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError('Failed to load previous adaptable blotter state : ', e);
+                LoggingHelper_1.LoggingHelper.LogError('Failed to load previous adaptable blotter state : ', e);
                 //for now i'm still initializing the AB even if loading state has failed....
                 //we may revisit that later
                 this.TheStore.dispatch(exports.InitState());
@@ -313,12 +313,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let actionTyped = action;
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev) => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity);
-                    xhr.ontimeout = () => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity);
+                    xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity);
+                    xhr.ontimeout = () => LoggingHelper_1.LoggingHelper.LogWarning("TeamSharing share timeout", actionTyped.Entity);
                     xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                                LoggingHelper_1.LoggingHelper.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
                                 middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: Enums_1.MessageType.Error }));
                             }
                             else {
@@ -342,12 +342,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 case TeamSharingRedux.TEAMSHARING_GET: {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev) => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message);
-                    xhr.ontimeout = () => AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("TeamSharing get timeout");
+                    xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogError("TeamSharing get error :" + ev.message);
+                    xhr.ontimeout = () => LoggingHelper_1.LoggingHelper.LogWarning("TeamSharing get timeout");
                     xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("TeamSharing get error : " + xhr.statusText);
+                                LoggingHelper_1.LoggingHelper.LogError("TeamSharing get error : " + xhr.statusText);
                             }
                             else {
                                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
@@ -483,7 +483,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: Enums_1.MessageType.Info }));
                     }
                     else {
-                        AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity);
+                        LoggingHelper_1.LoggingHelper.LogError("Unknown item type", actionTyped.Entity);
                         middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: Enums_1.MessageType.Error }));
                     }
                     return returnAction;
@@ -615,7 +615,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                                 blotterColumns.push(column);
                             }
                             else {
-                                AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogWarning("Column '" + c + "' not found");
+                                LoggingHelper_1.LoggingHelper.LogWarning("Column '" + c + "' not found");
                             }
                         });
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns));
@@ -854,7 +854,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         });
                         middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report));
                     }).catch((error) => {
-                        AdaptableBlotterLogger_1.AdaptableBlotterLogger.LogError("Login failed", error);
+                        LoggingHelper_1.LoggingHelper.LogError("Login failed", error);
                         middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));
                     });
                     return next(action);

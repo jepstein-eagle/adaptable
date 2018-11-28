@@ -1,13 +1,13 @@
 import * as React from "react";
-import { Helper } from '../../../Core/Helpers/Helper'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
+import { Helper } from '../../../Utilities/Helpers/Helper'
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '../../../Core/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
     SelectedColumn: IColumn

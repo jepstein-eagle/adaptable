@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const MenuItem_1 = require("../Core/MenuItem");
 const MenuRedux = require("../Redux/ActionsReducers/MenuRedux");
 const Enums_1 = require("../Core/Enums");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
-const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 class AdaptableStrategyBase {
     constructor(Id, blotter) {
         this.Id = Id;

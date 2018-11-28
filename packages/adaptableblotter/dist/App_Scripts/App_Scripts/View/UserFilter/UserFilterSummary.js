@@ -2,18 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
 const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class UserFilterSummaryComponent extends React.Component {
     constructor(props) {
         super(props);

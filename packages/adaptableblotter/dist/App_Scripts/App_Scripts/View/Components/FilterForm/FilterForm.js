@@ -6,22 +6,22 @@ const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRe
 const UserFilterRedux = require("../../../Redux/ActionsReducers/UserFilterRedux");
 const HomeRedux = require("../../../Redux/ActionsReducers/HomeRedux");
 const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
-const FilterHelper_1 = require("../../../Core/Helpers/FilterHelper");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
+const FilterHelper_1 = require("../../../Utilities/Helpers/FilterHelper");
 const Enums_1 = require("../../../Core/Enums");
-const Helper_1 = require("../../../Core/Helpers/Helper");
+const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const ListBoxFilterForm_1 = require("./ListBoxFilterForm");
 const ButtonClose_1 = require("../Buttons/ButtonClose");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
 const Waiting_1 = require("./Waiting");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const ListBoxMenu_1 = require("./ListBoxMenu");
 const react_bootstrap_1 = require("react-bootstrap");
 const FilterFormPanel_1 = require("../Panels/FilterFormPanel");
 const ButtonSave_1 = require("../Buttons/ButtonSave");
-const ObjectFactory_1 = require("../../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
 class FilterFormComponent extends React.Component {
     constructor(props) {
         super(props);
