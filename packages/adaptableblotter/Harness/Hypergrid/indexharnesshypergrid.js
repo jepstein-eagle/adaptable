@@ -61,7 +61,7 @@ function InitBlotter() {
 
     //we enable the edit on some columns
     vendorGrid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
-        let editorName = declaredEditorName;
+         let editorName = declaredEditorName;
         if (options.column.name !== "tradeId"
             //  && options.column.name !== "changeOnYear"
             && options.column.name !== "price"
@@ -113,7 +113,7 @@ function InitBlotter() {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-        getColumnValues: retrieveValues,
+       // getColumnValues: retrieveValues,
         maxColumnValueItemsDisplayed: 1000
     }
 
@@ -125,8 +125,8 @@ function InitBlotter() {
 }
 
 function listenToStateChange(stateChangedArgs) {
-    console.log("state event received")
-    console.log(stateChangedArgs)
+  //  console.log("state event received")
+  //  console.log(stateChangedArgs)
 }
 
 function retrieveValues(columnName) {
@@ -158,10 +158,10 @@ function getTradesForSearch(searchArgs, dataGen) {
     if (searchArgs.data != null && searchArgs.data.length > -1) {
         let searchChangedInfo = searchArgs.data[0].id;
         if (searchChangedInfo.searchChangedTrigger == "QuickSearch") {
-            alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
+         //   alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
 
-            let jsonstring = JSON.stringify(searchArgs)
-            console.log(jsonstring)
+          //  let jsonstring = JSON.stringify(searchArgs)
+         //   console.log(jsonstring)
         }
 
 

@@ -8,6 +8,7 @@ import * as MenuRedux from '../App_Scripts/Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../App_Scripts/Redux/ActionsReducers/GridRedux'
 import * as LayoutRedux from '../App_Scripts/Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../App_Scripts/Redux/ActionsReducers/PopupRedux'
+import * as FreeTextColumnRedux from '../App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../App_Scripts/Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../App_Scripts/Strategy/Interface/IStrategy';
@@ -44,7 +45,7 @@ import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../App_Scripts/Utilities/ObjectFactory';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
+import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../App_Scripts/View/UIInterfaces';
 import { BulkUpdateStrategy } from '../App_Scripts/Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
 import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
@@ -79,6 +80,10 @@ import { CalendarService } from '../App_Scripts/Utilities/Services/CalendarServi
 import { AuditService } from '../App_Scripts/Utilities/Services/AuditService';
 import { ValidationService } from '../App_Scripts/Utilities/Services/ValidationService';
 import { CalculatedColumnExpressionService } from '../App_Scripts/Utilities/Services/CalculatedColumnExpressionService';
+import { FreeTextColumnStrategy } from '../App_Scripts/Strategy/FreeTextColumnStrategy';
+import { IFreeTextColumnStrategy } from '../App_Scripts/Strategy/Interface/IFreeTextColumnStrategy';
+import { IFreeTextColumnService } from '../App_Scripts/Utilities/Services/Interface/IFreeTextColumnService';
+import { FreeTextColumnService } from '../App_Scripts/Utilities/Services/FreeTextColumnService';
 
 
 //icon to indicate toggle state
@@ -113,6 +118,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ChartService: IChartService
 
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
+    public FreeTextColumnService: IFreeTextColumnService
     public BlotterOptions: IAdaptableBlotterOptions
     public VendorGridName: any
     public EmbedColumnMenu: boolean;
@@ -148,6 +154,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return this.valOrFunc(record, column)
         });
 
+        this.FreeTextColumnService = new FreeTextColumnService(this);
+
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
@@ -168,6 +176,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
@@ -480,12 +489,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                     break;
                             }
                         }
+                        LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                     }
                     /* falls through */
                     default:
                         break;
                 }
-                LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                 return dataType
             }
 
@@ -532,6 +541,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
 
+        // it might be a free text column so we need to update the values
+        this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
     }
@@ -554,6 +566,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Record: null
             }
             dataChangedEvents.push(dataChangedEvent);
+            this.checkIfDataChangingColumnIsFreeText(dataChangedEvent)
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
@@ -568,6 +581,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public cancelEdit() {
         this.hyperGrid.cancelEditing()
+    }
+
+    private checkIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedEvent) {
+        let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
+        if (freeTextColumn) {
+            let freeTextStoredValue: FreeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue }
+            this.AdaptableBlotterStore.TheStore.dispatch<FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
+        }
     }
 
     public forAllRecordsDo(func: (record: any) => any): any {
@@ -953,7 +974,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
-        let newSchema = {
+        let schema = {
             name: calculatedColumn.ColumnId,
             header: calculatedColumn.ColumnId,
             calculator: (dataRow: any) => {
@@ -965,21 +986,48 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         this.hyperGrid.behavior.dataModel.schema.push(
-            newSchema
+            schema
         );
+
         this.hyperGrid.behavior.addColumn({
             index: this.hyperGrid.behavior.getColumns().length,
-            header: newSchema.header,
-            calculator: newSchema.calculator
+            header: schema.header,
+            calculator: schema.calculator,
+            type: 'string'
         })
 
         this.hyperGrid.behavior.changed()
         this.setColumnIntoStore();
+
     }
 
+
     public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void {
-        // to do
-    }
+        let schema = {
+            name: freeTextColumn.ColumnId,
+            header: freeTextColumn.ColumnId,
+            calculator: (dataRow: any) => {
+                //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
+                if (Object.keys(dataRow).length == 0) {
+                    return freeTextColumn.ColumnId
+                }
+                return this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, dataRow)
+            }
+        }
+
+        this.hyperGrid.behavior.dataModel.schema.push(
+            schema
+        );
+
+        this.hyperGrid.behavior.addColumn({
+            index: this.hyperGrid.behavior.getColumns().length,
+            header: schema.header,
+            calculator: schema.calculator,
+            type: 'string',
+            editor: 'textfield' // this is not quite right as it says undefined, but not sure how to get a cell editor added dynamically at runtime. 
+        })
+
+      }
 
     public isGroupRecord(): boolean {
         return false;
@@ -1117,6 +1165,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let dataChangingEvent: IDataChangingEvent;
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
             dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
+
+            let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangingEvent.ColumnId);
+            if (freeTextColumn) {
+                let dataChangedEvent: IDataChangedEvent =
+                {
+                    OldValue: null,
+                    NewValue: dataChangingEvent.NewValue,
+                    ColumnId: dataChangingEvent.ColumnId,
+                    IdentifierValue: dataChangingEvent.IdentifierValue,
+                    Timestamp: null,
+                    Record: null
+                }
+                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+            }
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
                 // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyConstants.CellValidationStrategyId) as ICellValidationStrategy;
