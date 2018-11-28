@@ -7,7 +7,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
-import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
+import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreview';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';

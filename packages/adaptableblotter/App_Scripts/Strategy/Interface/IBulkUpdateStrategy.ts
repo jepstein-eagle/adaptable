@@ -1,7 +1,6 @@
 import { IStrategy } from './IStrategy';
-import { MathOperation } from '../../Core/Enums';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
-import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
+import { IPreviewInfo } from '../../Core/Interface/IPreview';
 import { ICellInfo } from '../../Core/Interface/Interfaces';
 
 export interface IBulkUpdateStrategy extends IStrategy {

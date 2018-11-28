@@ -1,7 +1,7 @@
 import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Core/Interface/IMessage'
 import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
-import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
+import { IPreviewInfo } from '../../../Core/Interface/IPreview';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn,  IPercentBar } from '../../../Api/Interface/IAdaptableBlotterObjects';

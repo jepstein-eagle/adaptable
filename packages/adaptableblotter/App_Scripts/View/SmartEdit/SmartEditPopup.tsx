@@ -16,7 +16,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";

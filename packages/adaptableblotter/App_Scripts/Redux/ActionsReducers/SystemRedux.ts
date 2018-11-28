@@ -5,7 +5,7 @@ import { IAlert } from '../../Core/Interface/IMessage';
 import { CalendarHelper } from '../../Core/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Core/Enums';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
-import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
+import { IPreviewInfo } from '../../Core/Interface/IPreview';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

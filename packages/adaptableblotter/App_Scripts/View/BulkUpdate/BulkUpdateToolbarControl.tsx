@@ -17,7 +17,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { IPreviewInfo } from "../../Core/Interface/IPreview";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";

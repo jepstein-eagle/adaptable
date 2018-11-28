@@ -5,7 +5,6 @@ import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../App_Scripts/View/AdaptableBlotterView';
 import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter';
-import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Core/DefaultAdaptableBlotterOptions';
 import * as StrategyConstants from '../App_Scripts/Core/Constants/StrategyConstants'
 import * as StyleConstants from '../App_Scripts/Core/Constants/StyleConstants'
 import * as ScreenPopups from '../App_Scripts/Core/Constants/ScreenPopups'
@@ -105,6 +104,7 @@ import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../App_Scripts/View/UIInterfaces';
+import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Api/DefaultAdaptableBlotterOptions';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 

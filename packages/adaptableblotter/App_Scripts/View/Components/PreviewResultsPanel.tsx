@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MessageType } from '../../Core/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
-import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";

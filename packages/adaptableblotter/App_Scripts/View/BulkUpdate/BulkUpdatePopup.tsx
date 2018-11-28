@@ -15,7 +15,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
 import { IUIConfirmation } from '../../Core/Interface/IMessage';
 import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { isNumber, isDate } from "util";

@@ -1,7 +1,7 @@
 import { IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
 import { MathOperation } from '../../Core/Enums';
-import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
+import { IPreviewInfo } from '../../Core/Interface/IPreview';
 import { ICellInfo } from '../../Core/Interface/Interfaces';
 
 export interface ISmartEditStrategy extends IStrategy {

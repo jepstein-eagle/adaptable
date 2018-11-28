@@ -7,7 +7,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
-import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
+import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreview';
 import { ICellInfo } from '../Core/Interface/Interfaces';
 import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';

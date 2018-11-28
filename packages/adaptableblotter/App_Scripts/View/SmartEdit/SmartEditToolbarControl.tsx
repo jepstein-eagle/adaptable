@@ -13,7 +13,7 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { IPreviewInfo } from "../../Core/Interface/IPreview";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'

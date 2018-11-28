@@ -53,7 +53,6 @@ import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { IDataChangingEvent } from '../App_Scripts/Core/Services/Interface/IAuditService'
 import { ObjectFactory } from '../App_Scripts/Core/ObjectFactory';
-import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Core/DefaultAdaptableBlotterOptions'
 import { ICalculatedColumnExpressionService } from "../App_Scripts/Core/Services/Interface/ICalculatedColumnExpressionService";
 import { iPushPullHelper } from '../App_Scripts/Core/Helpers/iPushPullHelper';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
@@ -81,6 +80,7 @@ import { HomeStrategy } from '../App_Scripts/Strategy/HomeStrategy';
 import { AlertStrategy } from '../App_Scripts/Strategy/AlertStrategy';
 import { ColumnHelper } from '../App_Scripts/Core/Helpers/ColumnHelper';
 import { ColumnCategoryStrategy } from '../App_Scripts/Strategy/ColumnCategoryStrategy';
+import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Api/DefaultAdaptableBlotterOptions';
 
 
 //icon to indicate toggle state
