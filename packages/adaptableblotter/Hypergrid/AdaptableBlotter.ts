@@ -64,10 +64,10 @@ import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
 import { FilterFormReact } from '../App_Scripts/View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../App_Scripts/View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../App_Scripts/Core/Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Core/Api/Interface/IStateEvents';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
 import { DataSourceStrategy } from '../App_Scripts/Strategy/DataSourceStrategy';
 import { AdaptableBlotterLogger } from '../App_Scripts/Core/Helpers/AdaptableBlotterLogger';
 import * as _ from 'lodash'

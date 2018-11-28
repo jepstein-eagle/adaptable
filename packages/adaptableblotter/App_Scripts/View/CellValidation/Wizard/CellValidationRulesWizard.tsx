@@ -7,7 +7,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule, IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

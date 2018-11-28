@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { IPercentBar } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 

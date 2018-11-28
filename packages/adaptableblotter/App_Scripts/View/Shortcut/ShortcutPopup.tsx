@@ -20,7 +20,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IShortcut, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IShortcut, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 

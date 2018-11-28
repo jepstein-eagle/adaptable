@@ -1,6 +1,6 @@
 import { UserFilterState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IUserFilter, IColumnFilter } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { InputAction } from '../../Core/Interface/IMessage';
 export declare const USER_FILTER_ADD_UPDATE = "USER_FILTER_ADD_UPDATE";
 export declare const USER_FILTER_DELETE = "USER_FILTER_DELETE";

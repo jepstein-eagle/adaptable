@@ -7,7 +7,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IConditionalStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import {  IColumnCategory } from "../../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 

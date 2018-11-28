@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ICustomSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
@@ -31,8 +31,12 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
 
     public canNext(): boolean { return true }
     public canBack(): boolean { return true; }
-    public Next(): void { }
-    public Back(): void { }
+    public Next():  void { 
+       // todo
+    }
+    public Back():  void { 
+        //todo
+    }
     public GetIndexStepIncrement() {
         return 1;
     }

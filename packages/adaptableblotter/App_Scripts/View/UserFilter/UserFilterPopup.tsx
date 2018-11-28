@@ -21,7 +21,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 

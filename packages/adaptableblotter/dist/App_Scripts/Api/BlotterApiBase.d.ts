@@ -1,13 +1,13 @@
-import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { IEvent } from "../Interface/IEvent";
+import { IAdaptableBlotter } from "../Core/Interface/IAdaptableBlotter";
+import { IEvent } from "../Core/Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport } from "./Interface/IAdaptableBlotterObjects";
-import { IEntitlement } from "../Interface/Interfaces";
-import { ExportDestination } from "../Enums";
-import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
-import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IEntitlement } from "../Core/Interface/Interfaces";
+import { ExportDestination } from "../Core/Enums";
+import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
+import { ILiveReport } from "../Strategy/Interface/IExportStrategy";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState } from "../Redux/ActionsReducers/Interface/IState";
 export declare abstract class BlotterApiBase implements IBlotterApi {
     protected blotter: IAdaptableBlotter;
     constructor(blotter: IAdaptableBlotter);

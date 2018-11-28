@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { PRIMARY_BSSTYLE } from "../../Core/Constants/StyleConstants";

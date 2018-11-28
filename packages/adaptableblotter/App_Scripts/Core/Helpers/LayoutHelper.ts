@@ -1,6 +1,6 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import * as GeneralConstants from '../Constants/GeneralConstants'
-import { IGridSort, ILayout } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IGridSort, ILayout } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { SortOrder } from '../Enums';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';

@@ -3,7 +3,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IChartDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { AccessLevel } from "../../Core/Enums";
 

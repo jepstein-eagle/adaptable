@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IUserFilter, IGridSort, IColumnFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter, IGridSort, IColumnFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { AccessLevel } from "../../../Core/Enums";
 export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View> {

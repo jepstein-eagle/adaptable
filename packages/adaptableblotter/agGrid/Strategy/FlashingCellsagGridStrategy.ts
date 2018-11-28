@@ -4,7 +4,7 @@ import { IFlashingCellsStrategy } from '../../App_Scripts/Strategy/Interface/IFl
 import { IDataChangedEvent } from '../../App_Scripts/Core/Services/Interface/IAuditService'
 import { DataType } from '../../App_Scripts/Core/Enums'
 import * as StyleConstants from '../../App_Scripts/Core/Constants/StyleConstants'
-import { IFlashingCell } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {

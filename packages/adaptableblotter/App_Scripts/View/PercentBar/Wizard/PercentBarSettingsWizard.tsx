@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IPercentBar } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColorPicker } from "../../ColorPicker";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 

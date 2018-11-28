@@ -1,9 +1,9 @@
 
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IChartService } from './Interface/IChartService';
-import { IChartDefinition, IColumnValueExpression } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IChartDefinition, IColumnValueExpression } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { DistinctCriteriaPairValue } from '../Enums';
-import { Expression } from '../Api/Expression';
+import { Expression } from '../../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';

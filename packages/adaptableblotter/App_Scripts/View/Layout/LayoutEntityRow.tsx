@@ -10,7 +10,7 @@ import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SortOrder } from "../../Core/Enums";
 import { LayoutHelper } from "../../Core/Helpers/LayoutHelper";
-import { ILayout } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {

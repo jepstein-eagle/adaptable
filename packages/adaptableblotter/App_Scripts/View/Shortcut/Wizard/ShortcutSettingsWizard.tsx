@@ -7,7 +7,7 @@ import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IShortcut } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {

@@ -19,7 +19,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IPercentBar, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {

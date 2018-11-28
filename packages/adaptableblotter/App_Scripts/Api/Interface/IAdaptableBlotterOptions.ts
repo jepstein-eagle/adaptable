@@ -1,4 +1,3 @@
-import { DistinctCriteriaPairValue } from "../../Enums";
 
 /**
  * The class injected into the Adaptable Blotter at startup

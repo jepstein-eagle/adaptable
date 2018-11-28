@@ -8,7 +8,7 @@ import { Helper } from '../../Core/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
-import { IPlusMinusRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {

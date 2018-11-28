@@ -8,7 +8,7 @@ import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ActionMode } from "../../Core/Enums";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../Core/Helpers/CellValidationHelper";

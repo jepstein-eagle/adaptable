@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ICalendar } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICalendar } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
     Calendar: ICalendar;
     CurrentCalendar: string;

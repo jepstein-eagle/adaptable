@@ -22,7 +22,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IChartDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ICalculatedColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface CalculatedColumnExpressionWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
     IsExpressionValid: (expression: string) => void;
     GetErrorMessage: () => string;

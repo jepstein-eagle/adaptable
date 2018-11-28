@@ -23,7 +23,7 @@ import { UIHelper } from '../UIHelper';
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { AccessLevel } from "../../Core/Enums";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";

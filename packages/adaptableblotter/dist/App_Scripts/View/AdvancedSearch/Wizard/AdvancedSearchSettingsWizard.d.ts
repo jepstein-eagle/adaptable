@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IAdvancedSearch } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[];
 }

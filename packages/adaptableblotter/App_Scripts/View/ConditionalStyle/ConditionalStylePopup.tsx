@@ -22,7 +22,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IConditionalStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
 

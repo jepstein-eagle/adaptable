@@ -6,11 +6,11 @@ import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Core/Api/Interface/IStateEvents';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Core/Enums';
 import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { IAdvancedSearch } from '../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';

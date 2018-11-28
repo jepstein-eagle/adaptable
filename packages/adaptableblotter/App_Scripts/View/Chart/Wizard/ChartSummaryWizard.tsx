@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";

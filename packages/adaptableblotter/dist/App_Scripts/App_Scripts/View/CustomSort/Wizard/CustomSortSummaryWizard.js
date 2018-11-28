@@ -20,8 +20,12 @@ class CustomSortSummaryWizard extends React.Component {
     }
     canNext() { return true; }
     canBack() { return true; }
-    Next() { }
-    Back() { }
+    Next() {
+        // todo
+    }
+    Back() {
+        //todo
+    }
     GetIndexStepIncrement() {
         return 1;
     }

@@ -14,7 +14,7 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";

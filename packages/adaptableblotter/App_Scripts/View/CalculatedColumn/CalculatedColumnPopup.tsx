@@ -21,7 +21,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {

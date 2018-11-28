@@ -5,7 +5,7 @@ import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntity
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { IColumnFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { ButtonSave } from "../Components/Buttons/ButtonSave";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";

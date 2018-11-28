@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { PercentBarState } from './Interface/IState';
-import { IPercentBar } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
 export declare const PERCENT_BAR_ADD_UPDATE = "PERCENT_BAR_ADD_UPDATE";
 export declare const PERCENT_BAR_DELETE = "PERCENT_BAR_DELETE";
 export declare const PERCENT_BAR_CHANGE_POSITIVE_COLOR = "PERCENT_BAR_CHANGE_POSITIVE_COLOR";

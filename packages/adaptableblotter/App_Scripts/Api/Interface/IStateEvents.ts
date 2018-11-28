@@ -1,5 +1,5 @@
 import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./IAdaptableBlotterObjects";
-import { IUserState } from "../../../Redux/ActionsReducers/Interface/IState";
+import { IUserState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface IColumnStateChangedEventArgs {
   currentLayout: string

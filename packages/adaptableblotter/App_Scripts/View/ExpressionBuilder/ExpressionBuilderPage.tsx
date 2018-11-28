@@ -11,10 +11,10 @@ import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Core/Api/Expression";
-import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { IBlotterApi } from "../../Core/Api/Interface/IBlotterApi";
+import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../Api/Expression";
+import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
+import { IBlotterApi } from "../../Api/Interface/IBlotterApi";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 
 

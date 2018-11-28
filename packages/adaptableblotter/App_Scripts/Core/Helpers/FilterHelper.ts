@@ -2,7 +2,7 @@ import { DataType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { Helper } from './Helper';
 import { IColumn } from '../Interface/IColumn';
-import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 
 export module FilterHelper {

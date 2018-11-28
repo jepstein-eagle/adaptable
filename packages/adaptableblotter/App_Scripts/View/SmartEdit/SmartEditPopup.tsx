@@ -20,7 +20,7 @@ import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResul
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 

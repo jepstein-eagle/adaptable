@@ -16,10 +16,10 @@ import { DistinctCriteriaPairValue } from '../App_Scripts/Core/Enums';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
 import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
-import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentBar } from '../App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../App_Scripts/Core/Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Core/Api/Interface/IStateEvents';
+import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentBar } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
 import { RowNode } from "ag-grid";
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
 export declare class AdaptableBlotter implements IAdaptableBlotter {

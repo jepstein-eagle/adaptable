@@ -15,7 +15,7 @@ import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IFlashingCell, ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell, ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {

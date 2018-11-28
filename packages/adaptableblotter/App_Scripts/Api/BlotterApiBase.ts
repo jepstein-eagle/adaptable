@@ -1,44 +1,44 @@
-import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { IEvent } from "../Interface/IEvent";
+import { IAdaptableBlotter } from "../Core/Interface/IAdaptableBlotter";
+import { IEvent } from "../Core/Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
-import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
-import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
-import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux'
-import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux'
-import * as EntitlementsRedux from '../../Redux/ActionsReducers/EntitlementsRedux'
-import * as UserInterfaceRedux from '../../Redux/ActionsReducers/UserInterfaceRedux'
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
-import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
-import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
-import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
-import * as CalendarRedux from '../../Redux/ActionsReducers/CalendarRedux'
-import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
-import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
-import * as SystemFilterRedux from '../../Redux/ActionsReducers/SystemFilterRedux'
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
+import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
+import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
+import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux'
+import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
+import * as EntitlementsRedux from '../Redux/ActionsReducers/EntitlementsRedux'
+import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux'
+import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
+import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
+import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
+import * as CellValidationRedux from '../Redux/ActionsReducers/CellValidationRedux'
+import * as CalculatedColumnRedux from '../Redux/ActionsReducers/CalculatedColumnRedux'
+import * as CalendarRedux from '../Redux/ActionsReducers/CalendarRedux'
+import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux'
+import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
+import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
+import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux'
+import * as SystemFilterRedux from '../Redux/ActionsReducers/SystemFilterRedux'
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
+import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
+import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
-import { DEFAULT_LAYOUT } from "../Constants/GeneralConstants";
-import * as StrategyConstants from '../Constants/StrategyConstants'
-import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Enums";
-import { ResetUserData, LoadState } from '../../Redux/Store/AdaptableBlotterStore';
-import { AdaptableBlotterLogger } from "../Helpers/AdaptableBlotterLogger";
-import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
+import { DEFAULT_LAYOUT } from "../Core/Constants/GeneralConstants";
+import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Core/Interface/Interfaces";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Core/Enums";
+import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
+import { AdaptableBlotterLogger } from "../Core/Helpers/AdaptableBlotterLogger";
+import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";
-import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { FilterHelper } from "../Helpers/FilterHelper";
-import { IAlert } from "../Interface/IMessage";
-import { ObjectFactory } from "../ObjectFactory";
-import { IColumn } from "../Interface/IColumn";
-import { StringExtensions } from "../Extensions/StringExtensions";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState, IState } from "../../Redux/ActionsReducers/Interface/IState";
+import { ILiveReport } from "../Strategy/Interface/IExportStrategy";
+import { FilterHelper } from "../Core/Helpers/FilterHelper";
+import { IAlert } from "../Core/Interface/IMessage";
+import { ObjectFactory } from "../Core/ObjectFactory";
+import { IColumn } from "../Core/Interface/IColumn";
+import { StringExtensions } from "../Core/Extensions/StringExtensions";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState, IState } from "../Redux/ActionsReducers/Interface/IState";
 
 export abstract class BlotterApiBase implements IBlotterApi {
 

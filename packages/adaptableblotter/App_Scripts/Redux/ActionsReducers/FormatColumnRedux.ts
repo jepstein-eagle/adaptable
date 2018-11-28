@@ -1,6 +1,6 @@
 import { FormatColumnState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IFormatColumn } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IFormatColumn } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 export const FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';
 export const FORMAT_COLUMN_EDIT = 'FORMAT_COLUMN_EDIT';

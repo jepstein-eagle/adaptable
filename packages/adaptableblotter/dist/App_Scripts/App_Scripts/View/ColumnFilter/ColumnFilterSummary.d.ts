@@ -3,7 +3,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[];

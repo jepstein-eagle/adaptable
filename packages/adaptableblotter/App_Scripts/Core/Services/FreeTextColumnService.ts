@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { AdaptableBlotterLogger } from '../Helpers/AdaptableBlotterLogger';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { IFreeTextColumn } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IFreeTextColumn } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 

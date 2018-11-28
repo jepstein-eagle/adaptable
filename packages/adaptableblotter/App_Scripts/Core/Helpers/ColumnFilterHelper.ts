@@ -1,10 +1,10 @@
 import { ExpressionHelper } from './ExpressionHelper'
-import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IKeyValuePair } from '../Interface/Interfaces';
+import { IColumnFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 
 export module ColumnFilterHelper {

@@ -8,7 +8,7 @@ import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterF
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 import { UIHelper } from "../../UIHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 

@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICalculatedColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
 

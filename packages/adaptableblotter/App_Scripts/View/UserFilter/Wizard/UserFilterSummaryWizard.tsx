@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IUserFilter } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'

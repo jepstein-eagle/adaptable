@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { MessageType } from '../../../Core/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
 }

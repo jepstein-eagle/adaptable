@@ -4,7 +4,7 @@ import { ExportDestination } from '../../Core/Enums';
 import * as Redux from 'redux'
 import { ReportHelper } from '../../Core/Helpers/ReportHelper';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy'
-import { IReport } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IReport } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';

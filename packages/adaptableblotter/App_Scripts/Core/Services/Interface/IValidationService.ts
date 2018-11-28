@@ -1,4 +1,4 @@
-import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IDataChangingEvent } from './IAuditService';
 
 export interface IValidationService {

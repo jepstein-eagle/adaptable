@@ -2,10 +2,10 @@ import { EditableConfigEntityState } from './Components/SharedProps/EditableConf
 import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Core/Enums';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../Core/Api/Interface/IAdaptableBlotterOptions';
-import { IStyle } from '../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../Core/Api/Expression';
+import { Expression } from '../Api/Expression';
 import { PRIMARY_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Core/Constants/StyleConstants';
 
 

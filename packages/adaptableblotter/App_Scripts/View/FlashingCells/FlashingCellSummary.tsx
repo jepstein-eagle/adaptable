@@ -12,7 +12,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IFlashingCell } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {

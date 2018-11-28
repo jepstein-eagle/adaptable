@@ -2,9 +2,9 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { ReportColumnScope, ReportRowScope, MessageType } from '../Enums'
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
-import { IReport, IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IReport, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
-import { Expression } from '../Api/Expression';
+import { Expression } from '../../Api/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
 export module ReportHelper {
 

@@ -20,7 +20,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAlertDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { MessageType, AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";

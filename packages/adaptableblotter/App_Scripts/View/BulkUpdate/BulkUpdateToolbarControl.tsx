@@ -26,7 +26,7 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, StatusColour, AccessLevel } from "../../Core/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";

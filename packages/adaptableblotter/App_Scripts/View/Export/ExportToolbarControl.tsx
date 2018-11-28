@@ -24,7 +24,7 @@ import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IReport } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ReportHelper } from "../../Core/Helpers/ReportHelper";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";

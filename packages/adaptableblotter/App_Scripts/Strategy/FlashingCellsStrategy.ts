@@ -10,7 +10,7 @@ import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { DataType, StateChangedTrigger } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { IFlashingCell } from '../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
 

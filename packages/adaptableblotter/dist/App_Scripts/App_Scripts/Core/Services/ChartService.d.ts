@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IChartService } from './Interface/IChartService';
-import { IChartDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IChartDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Interface/IColumn';
 export declare class ChartService implements IChartService {
     private blotter;

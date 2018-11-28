@@ -5,7 +5,7 @@ import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IAdvancedSearch, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {

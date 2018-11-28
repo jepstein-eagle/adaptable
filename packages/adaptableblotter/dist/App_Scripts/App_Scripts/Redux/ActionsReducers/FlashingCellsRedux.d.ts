@@ -1,6 +1,6 @@
 import { FlashingCellState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IFlashingCell } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
 export declare const FLASHING_CELL_SELECT = "FLASHING_CELL_SELECT";
 export declare const FLASHING_CELL_CHANGE_DURATION = "FLASHING_CELL_CHANGE_DURATION";
 export declare const FLASHING_CELL_SELECT_ALL = "FLASHING_CELL_SELECT_ALL";

@@ -16,7 +16,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterObject, IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AlertHelper } from "../../Core/Helpers/AlertHelper";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";

@@ -18,7 +18,7 @@ import { SortOrder, AccessLevel } from '../../Core/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IAdvancedSearch } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 

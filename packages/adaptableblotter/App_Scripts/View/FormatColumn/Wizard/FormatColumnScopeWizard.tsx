@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { IFormatColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     Columns: Array<IColumn>

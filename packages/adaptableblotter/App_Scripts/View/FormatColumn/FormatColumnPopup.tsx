@@ -20,7 +20,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
-import { IFormatColumn, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 

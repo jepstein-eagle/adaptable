@@ -60,7 +60,7 @@ import { GridState, LayoutState, IState } from '../ActionsReducers/Interface/ISt
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { ObjectFactory } from '../../Core/ObjectFactory';
 import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn, IPercentBar } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../Core/Helpers/Helper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';

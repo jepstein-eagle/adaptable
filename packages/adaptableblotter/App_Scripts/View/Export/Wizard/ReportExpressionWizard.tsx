@@ -3,7 +3,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
 import {  ReportColumnScope } from '../../../Core/Enums'
-import { IReport } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IReport } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../UIHelper';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

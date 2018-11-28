@@ -14,7 +14,7 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
-import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FilterHelper } from "../../Core/Helpers/FilterHelper";
 import { IUIPrompt } from "../../Core/Interface/IMessage";
 import { AccessLevel } from "../../Core/Enums";

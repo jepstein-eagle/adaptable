@@ -1,7 +1,7 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType, ChartType } from '../../Enums';
+import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType, ChartType } from '../../Core/Enums';
 import { Expression } from '../Expression';
-import { IVendorGridInfo } from '../../Interface/Interfaces';
-import { FreeTextStoredValue } from '../../../View/UIInterfaces';
+import { IVendorGridInfo } from '../../Core/Interface/Interfaces';
+import { FreeTextStoredValue } from '../../View/UIInterfaces';
 
 /**
  * The base empty Adaptable Blotter Object interface 

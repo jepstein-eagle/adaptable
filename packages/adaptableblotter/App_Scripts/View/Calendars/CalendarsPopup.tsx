@@ -15,7 +15,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { Helper } from '../../Core/Helpers/Helper';
 import { SortOrder } from '../../Core/Enums';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { ICalendar, ICalendarEntry } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICalendar, ICalendarEntry } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
     CurrentCalendar: string

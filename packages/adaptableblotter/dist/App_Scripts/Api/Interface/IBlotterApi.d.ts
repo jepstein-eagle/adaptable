@@ -1,10 +1,10 @@
-import { IEvent } from "../../Interface/IEvent";
-import { IAdaptableBlotter } from "../../Interface/IAdaptableBlotter";
+import { IEvent } from "../../Core/Interface/IEvent";
+import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";
-import { IEntitlement } from "../../Interface/Interfaces";
-import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
-import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../../Redux/ActionsReducers/Interface/IState";
+import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
+import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  */

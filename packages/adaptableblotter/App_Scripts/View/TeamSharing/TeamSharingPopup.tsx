@@ -16,7 +16,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../Core/Enums";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";

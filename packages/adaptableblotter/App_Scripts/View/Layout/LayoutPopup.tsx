@@ -22,7 +22,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { SortOrder, AccessLevel } from "../../Core/Enums";
-import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ILayout, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 

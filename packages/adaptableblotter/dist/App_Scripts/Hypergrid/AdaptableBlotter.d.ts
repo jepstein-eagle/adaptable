@@ -13,10 +13,10 @@ import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
 import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
-import { ICalculatedColumn, IStyle, IFreeTextColumn, IPercentBar } from '../App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../App_Scripts/Core/Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../App_Scripts/Core/Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Core/Api/Interface/IStateEvents';
+import { ICalculatedColumn, IStyle, IFreeTextColumn, IPercentBar } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
 import * as _ from 'lodash';
 import { IChartService } from '../App_Scripts/Core/Services/Interface/IChartService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {

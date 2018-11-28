@@ -1,6 +1,6 @@
 import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { UIHelper } from '../../UIHelper';
 
 

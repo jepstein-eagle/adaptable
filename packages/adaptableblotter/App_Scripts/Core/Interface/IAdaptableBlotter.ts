@@ -11,10 +11,10 @@ import { ICalculatedColumnExpressionService } from "../Services/Interface/ICalcu
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Api/Interface/IStateEvents';
+import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 import { IChartService } from '../Services/Interface/IChartService';
 
 export interface IAdaptableBlotter {

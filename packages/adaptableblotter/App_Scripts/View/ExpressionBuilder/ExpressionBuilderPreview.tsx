@@ -11,8 +11,8 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter, IRange } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Core/Api/Expression";
+import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../Api/Expression";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning

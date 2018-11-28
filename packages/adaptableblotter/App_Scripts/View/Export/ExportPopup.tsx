@@ -25,7 +25,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Core/Extensions/StringExtensions";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { IReport, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IReport, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
 

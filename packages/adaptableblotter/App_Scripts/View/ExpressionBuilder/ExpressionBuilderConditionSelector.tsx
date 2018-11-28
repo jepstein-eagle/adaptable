@@ -10,8 +10,8 @@ import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode, Que
 import { StringExtensions } from '../../Core/Extensions/StringExtensions'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
-import { IUserFilter, IRange } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Core/Api/Expression";
+import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../Api/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { Helper } from "../../Core/Helpers/Helper";

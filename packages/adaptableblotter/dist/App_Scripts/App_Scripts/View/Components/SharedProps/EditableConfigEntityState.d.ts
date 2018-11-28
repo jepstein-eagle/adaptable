@@ -1,4 +1,4 @@
-import { IAdaptableBlotterObject } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface EditableConfigEntityState {
     EditedAdaptableBlotterObject: IAdaptableBlotterObject;
     WizardStartIndex: number;

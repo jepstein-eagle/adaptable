@@ -1,7 +1,7 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IColumn } from '../Interface/IColumn';
-import { IReport, IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IReport, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 export declare module ReportHelper {
     const ALL_DATA_REPORT = "All Data";
     const VISIBLE_DATA_REPORT = "Visible Data";

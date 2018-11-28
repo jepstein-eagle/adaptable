@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Core/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { ICellValidationRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

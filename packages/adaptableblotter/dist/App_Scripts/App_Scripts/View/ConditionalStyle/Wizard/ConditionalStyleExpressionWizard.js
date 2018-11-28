@@ -12,6 +12,8 @@ class ConditionalStyleExpressionWizard extends ExpressionBuilderPage_1.Expressio
     Next() {
         this.props2.Data.Expression = this.state.Expression;
     }
-    Back() { }
+    Back() {
+        //todo
+    }
 }
 exports.ConditionalStyleExpressionWizard = ConditionalStyleExpressionWizard;

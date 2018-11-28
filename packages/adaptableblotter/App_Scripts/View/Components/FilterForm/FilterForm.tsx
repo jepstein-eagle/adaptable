@@ -12,21 +12,21 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Core/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Core/Enums';
-import { IUserFilter, IColumnFilter, IRange } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, IRange } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../../Core/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
-import { Expression } from "../../../Core/Api/Expression";
+import { Expression } from "../../../Api/Expression";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
-import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Api/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
-import { IBlotterApi } from "../../../Core/Api/Interface/IBlotterApi";
+import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
 import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem, Well } from 'react-bootstrap';
 import { IMenuItem } from "../../../Core/Interface/IMenu";

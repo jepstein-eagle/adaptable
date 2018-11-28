@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'rea
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ILayout } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<ILayout> {

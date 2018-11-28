@@ -5,7 +5,7 @@ import { IDataChangedEvent } from '../../App_Scripts/Core/Services/Interface/IAu
 import { ExpressionHelper } from '../../App_Scripts/Core/Helpers/ExpressionHelper';
 import { Helper } from '../../App_Scripts/Core/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
-import { IConditionalStyle } from '../../App_Scripts/Core/Api/Interface/IAdaptableBlotterObjects';
+import { IConditionalStyle } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 import { IColumnCategory } from '../../App_Scripts/Core/Interface/Interfaces';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {

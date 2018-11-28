@@ -5,7 +5,7 @@ import { IColItem } from "../../UIInterfaces";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { AdaptableObjectCollection } from "../AdaptableObjectCollection";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
-import { IAdaptableBlotterOptions } from "../../../Core/Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "../../../Api/Interface/IAdaptableBlotterOptions";
 import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
 import { ColumnFilterHelper } from "../../../Core/Helpers/ColumnFilterHelper";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";

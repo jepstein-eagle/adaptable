@@ -3,7 +3,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IAuditLogEntry } from '../Interface/IAuditLogEntry';
 import { AuditLogTrigger } from '../Enums';
 import { IDataChangedEvent } from './Interface/IAuditService';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 import { AdaptableBlotterLogger } from '../Helpers/AdaptableBlotterLogger';
 // import * as SockJS from 'sockjs-client'
 

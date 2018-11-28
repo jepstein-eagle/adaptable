@@ -8,8 +8,8 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
-import { IColumnFilter, IUserFilter, IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../../Core/Api/Expression";
+import { IColumnFilter, IUserFilter, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../../Api/Expression";
 import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";

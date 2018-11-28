@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IShortcut } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }
 export declare class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizardProps, {}> implements AdaptableWizardStep {

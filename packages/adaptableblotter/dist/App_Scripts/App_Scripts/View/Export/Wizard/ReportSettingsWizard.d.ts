@@ -1,4 +1,4 @@
-import { IReport } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 export interface ReportSettingsWizardProps extends AdaptableWizardStepProps<IReport> {

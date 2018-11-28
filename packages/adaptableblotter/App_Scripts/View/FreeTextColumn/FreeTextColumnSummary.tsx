@@ -16,7 +16,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IAdaptableBlotterObject, IFreeTextColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IFreeTextColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface FreeTextColumnSummaryProps extends StrategySummaryProps<FreeTextColumnSummaryComponent> {

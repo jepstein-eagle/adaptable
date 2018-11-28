@@ -6,7 +6,7 @@ import { LeafExpressionOperator, DistinctCriteriaPairValue, ActionMode, RangeOpe
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import * as StrategyConstants from '../Constants/StrategyConstants'
 import { IColumn } from '../Interface/IColumn';
-import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';

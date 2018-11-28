@@ -6,7 +6,7 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
 import { Helper } from "../../../Core/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
-import { ILayout } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {

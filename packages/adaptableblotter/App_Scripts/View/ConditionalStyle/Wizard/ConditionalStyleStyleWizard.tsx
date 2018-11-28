@@ -5,7 +5,7 @@ import { StyleComponent } from '../../Components/StyleComponent';
 import { Checkbox } from "react-bootstrap";
 import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { UIHelper } from "../../UIHelper";
-import { IConditionalStyle, IStyle } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle, IStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface ConditionalStyleStyleWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {

@@ -3,7 +3,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService';
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { IFlashingCell } from '../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 export declare abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState;

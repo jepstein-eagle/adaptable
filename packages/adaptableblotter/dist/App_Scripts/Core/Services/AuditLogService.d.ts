@@ -1,6 +1,6 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IDataChangedEvent } from './Interface/IAuditService';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 export declare class AuditLogService {
     private blotter;
     private auditLogQueue;

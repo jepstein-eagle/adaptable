@@ -1,6 +1,5 @@
 import {IStrategy} from './IStrategy';
-import { ReportColumnScope, ReportRowScope, ExportDestination } from '../../Core/Enums';
-import { IAdaptableBlotterObject } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ExportDestination } from '../../Core/Enums';
 
 
 

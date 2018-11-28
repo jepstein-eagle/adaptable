@@ -5,7 +5,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
 import { MessageType } from "../../Core/Enums";
 import { FormControl } from 'react-bootstrap';

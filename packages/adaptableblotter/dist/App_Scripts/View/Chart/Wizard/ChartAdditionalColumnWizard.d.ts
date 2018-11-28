@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";

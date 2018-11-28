@@ -20,7 +20,7 @@ import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ObjectFactory } from "../../Core/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import { ILayout } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Core/Enums";
 import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";

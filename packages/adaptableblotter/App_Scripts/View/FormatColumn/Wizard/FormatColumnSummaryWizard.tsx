@@ -4,7 +4,7 @@ import { StyleVisualItem } from '../../Components/StyleVisualItem'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { IFormatColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 
