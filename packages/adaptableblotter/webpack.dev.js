@@ -5,9 +5,9 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var conditionalEntry = {
    // 'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
-    'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
+    'adaptableblotterhypergrid': ["./Hypergrid/AdaptableBlotter.ts"],
     //'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
-    'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+    'adaptableblotteraggrid': ["./agGrid/AdaptableBlotter.ts"],
     harness: "./Harness/DataGenerator.ts",
   //  'AdaptableBlotterReact': ["./App_Scripts/View/AdaptableBlotterReact.tsx"],
 };
@@ -18,7 +18,7 @@ var conditionalEntry = {
  //   };
   if (process.env.arg == "hypergrid") {
     conditionalEntry = {
-        'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./Hypergrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
 //} else if (process.env.arg == "adaptablegrid") {
@@ -29,19 +29,19 @@ var conditionalEntry = {
 }
 else if (process.env.arg == "aggrid") {
     conditionalEntry = {
-        'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+        'adaptableblotteraggrid': ["./agGrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
 }
 else if (process.env.arg == "aggrid-react") { 
   conditionalEntry = {
-      'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+      'adaptableblotteraggrid': ["./agGrid/AdaptableBlotter.ts"],
       harness: ["./Harness/DataGenerator.ts", "./Harness/agGridReact/app.tsx"]
   };
 }
 else if (process.env.arg == "react") {
   conditionalEntry = {
-      'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+      'adaptableblotteraggrid': ["./agGrid/AdaptableBlotter.ts"],
       harness: ["./Harness/DataGenerator.ts", "./Harness/React/app.tsx"]
   };
 }

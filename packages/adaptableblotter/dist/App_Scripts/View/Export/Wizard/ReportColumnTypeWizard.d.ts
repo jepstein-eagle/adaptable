@@ -15,7 +15,7 @@ export declare class ReportColumnTypeWizard extends React.Component<ReportColumn
     canBack(): boolean;
     Next(): void;
     Back(): void;
-    GetIndexStepIncrement(): 1 | 2;
+    GetIndexStepIncrement(): 2 | 1;
     GetIndexStepDecrement(): number;
     StepName: string;
 }

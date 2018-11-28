@@ -14,6 +14,6 @@ export declare class AlertSummaryWizard extends React.Component<AlertSummaryWiza
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): 1 | 2;
+    GetIndexStepDecrement(): 2 | 1;
     StepName: string;
 }
