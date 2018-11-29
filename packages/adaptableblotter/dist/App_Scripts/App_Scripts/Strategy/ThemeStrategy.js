@@ -5,7 +5,7 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const themes_1 = require("../Styles/themes");
 const GeneralConstants = require("../Core/Constants/GeneralConstants");
-const Enums_1 = require("../Core/Enums");
+const Enums_1 = require("../Utilities/Enums");
 class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ThemeStrategyId, blotter);

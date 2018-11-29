@@ -4,7 +4,7 @@ import { IColumn } from '../../Core/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator, RangeOperandType, QueryTab } from '../../Core/Enums';
+import { LeafExpressionOperator, RangeOperandType, QueryTab } from '../../Utilities/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants';

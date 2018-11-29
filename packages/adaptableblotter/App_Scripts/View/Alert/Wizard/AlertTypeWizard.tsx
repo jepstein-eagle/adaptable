@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Radio, Col, Panel, Checkbox } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { MessageType } from '../../../Core/Enums';
+import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";

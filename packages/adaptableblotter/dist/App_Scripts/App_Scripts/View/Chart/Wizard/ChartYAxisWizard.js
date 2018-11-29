@@ -5,7 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class ChartYAxisWizard extends React.Component {
     constructor(props) {

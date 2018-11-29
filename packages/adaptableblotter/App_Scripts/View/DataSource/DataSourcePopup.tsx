@@ -15,7 +15,7 @@ import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 

@@ -13,7 +13,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import { SortOrder } from '../../Core/Enums';
+import { SortOrder } from '../../Utilities/Enums';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { ICalendar, ICalendarEntry } from "../../Api/Interface/IAdaptableBlotterObjects";
 

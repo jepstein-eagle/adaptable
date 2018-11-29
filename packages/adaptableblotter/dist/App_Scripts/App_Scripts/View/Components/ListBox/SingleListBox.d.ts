@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SortOrder, SelectionMode } from '../../../Core/Enums';
+import { SortOrder, SelectionMode } from '../../../Utilities/Enums';
 import { ListGroupProps } from 'react-bootstrap';
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>;

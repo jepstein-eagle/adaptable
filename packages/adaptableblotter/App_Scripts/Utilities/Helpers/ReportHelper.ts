@@ -4,7 +4,7 @@ import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../Api/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ReportColumnScope, MessageType, ReportRowScope } from '../../Core/Enums';
+import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 
 

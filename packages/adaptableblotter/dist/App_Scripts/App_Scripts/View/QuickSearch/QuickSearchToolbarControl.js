@@ -12,7 +12,7 @@ const AdaptableBlotterFormControlTextClear_1 = require("../Components/Forms/Adap
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../../Core/Constants/ScreenPopups");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class QuickSearchToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);

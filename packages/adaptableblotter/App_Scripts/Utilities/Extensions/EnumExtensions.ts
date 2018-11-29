@@ -1,4 +1,4 @@
-import { FontSize } from "../../Core/Enums";
+import { FontSize } from "../Enums";
 
 export module EnumExtensions {
 

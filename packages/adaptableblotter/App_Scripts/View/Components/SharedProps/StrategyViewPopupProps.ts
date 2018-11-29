@@ -3,7 +3,7 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IUserFilter, IGridSort, IColumnFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
-import { AccessLevel } from "../../../Core/Enums";
+import { AccessLevel } from "../../../Utilities/Enums";
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
 export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View> {

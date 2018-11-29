@@ -13,7 +13,7 @@ import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/Adapta
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 
 interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;

@@ -1,7 +1,7 @@
 import { IReport } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ReportColumnScope } from '../../../Core/Enums';
+import { ReportColumnScope } from '../../../Utilities/Enums';
 export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<IReport> {
 }
 export interface ReportColumnsWizardState {

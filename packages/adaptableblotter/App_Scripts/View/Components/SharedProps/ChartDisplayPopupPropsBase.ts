@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { DistinctCriteriaPairValue } from '../../../Utilities/Enums'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";

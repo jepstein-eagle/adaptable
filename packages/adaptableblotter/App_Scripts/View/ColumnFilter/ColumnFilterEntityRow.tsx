@@ -10,7 +10,7 @@ import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ButtonSave } from "../Components/Buttons/ButtonSave";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { DANGER_BSSTYLE } from "../../Core/Constants/StyleConstants";
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {

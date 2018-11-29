@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import * as _ from 'lodash'
 import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Utilities/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';

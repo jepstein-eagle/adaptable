@@ -1,6 +1,7 @@
 ﻿// import styles - ab and 2 default agGrid
 import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css'
 
+
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../App_Scripts/View/AdaptableBlotterView';
@@ -76,8 +77,8 @@ import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 import { IMenuItem } from '../App_Scripts/Core/Interface/IMenu';
 import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
 import { IUIConfirmation } from '../App_Scripts/Core/Interface/IMessage';
-import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher'
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../App_Scripts/Core/Enums'
+import { EventDispatcher } from '../App_Scripts/Utilities/EventDispatcher'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../App_Scripts/Utilities/Enums'
 import { ObjectFactory } from '../App_Scripts/Utilities/ObjectFactory';
 import { Color } from '../App_Scripts/Utilities/color';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';

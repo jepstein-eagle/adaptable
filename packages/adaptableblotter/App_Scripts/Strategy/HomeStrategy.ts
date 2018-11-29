@@ -7,7 +7,7 @@ import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
 import { IGridSort } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { SearchChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger } from '../Utilities/Enums';
 import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
 import { IColumn } from '../Core/Interface/IColumn';
 

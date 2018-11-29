@@ -6,7 +6,7 @@ import { UIHelper } from "../UIHelper";
 import { ButtonClear } from "./Buttons/ButtonClear";
 import { ButtonPreviewDelete } from "./Buttons/ButtonPreviewDelete";
 import { PanelWithButton } from "./Panels/PanelWithButton";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
     Alerts: IAlert[];

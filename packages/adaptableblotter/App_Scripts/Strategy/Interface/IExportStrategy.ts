@@ -1,5 +1,5 @@
 import {IStrategy} from './IStrategy';
-import { ExportDestination } from '../../Core/Enums';
+import { ExportDestination } from '../../Utilities/Enums';
 
 
 

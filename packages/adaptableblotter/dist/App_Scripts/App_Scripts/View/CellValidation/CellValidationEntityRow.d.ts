@@ -2,7 +2,7 @@ import * as React from "react";
 import { IColumn } from '../../Core/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ActionMode } from "../../Core/Enums";
+import { ActionMode } from "../../Utilities/Enums";
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
     Column: IColumn;
     onChangeActionMode: (index: number, ActionMode: ActionMode) => void;

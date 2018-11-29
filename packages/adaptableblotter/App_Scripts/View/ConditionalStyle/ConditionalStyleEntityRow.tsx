@@ -1,6 +1,6 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { ConditionalStyleScope } from '../../Core/Enums';
+import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';

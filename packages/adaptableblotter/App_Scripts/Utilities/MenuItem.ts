@@ -1,6 +1,6 @@
-import { IMenuItem } from './Interface/IMenu';
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import { IMenuItem } from '../Core/Interface/IMenu';
 
 export class MenuItemDoReduxAction implements IMenuItem {
 
@@ -11,6 +11,7 @@ export class MenuItemDoReduxAction implements IMenuItem {
          public IsVisible: boolean ) {
     }
 }
+
 
 export class MenuItemShowPopup implements IMenuItem {
     constructor(public Label: string,

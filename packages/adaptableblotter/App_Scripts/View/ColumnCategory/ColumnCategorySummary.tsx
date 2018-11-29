@@ -18,7 +18,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";

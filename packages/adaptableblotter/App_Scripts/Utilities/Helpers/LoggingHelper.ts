@@ -1,5 +1,5 @@
 import { ArrayExtensions } from "../Extensions/ArrayExtensions";
-import { MessageType } from "../../Core/Enums";
+import { MessageType } from "../Enums";
 
 
 export module LoggingHelper {

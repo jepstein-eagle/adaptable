@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IColumn } from "../../../Core/Interface/IColumn";
-import { SortOrder, SelectionMode } from "../../../Core/Enums";
+import { SortOrder, SelectionMode } from "../../../Utilities/Enums";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { GridSortRow } from '../GridSortRow'
 import { IColItem } from "../../UIInterfaces";

@@ -6,7 +6,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import { ExportDestination, ReportColumnScope, AccessLevel } from '../../Core/Enums'
+import { ExportDestination, ReportColumnScope, AccessLevel } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';

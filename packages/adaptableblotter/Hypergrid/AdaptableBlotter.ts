@@ -38,8 +38,8 @@ import { DashboardStrategy } from '../App_Scripts/Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../App_Scripts/Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../App_Scripts/Strategy/Interface/IColumnFilterStrategy';
 import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
-import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue, SortOrder } from '../App_Scripts/Core/Enums'
+import { EventDispatcher } from '../App_Scripts/Utilities/EventDispatcher'
+import { DataType, DistinctCriteriaPairValue, SortOrder } from '../App_Scripts/Utilities/Enums'
 import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'

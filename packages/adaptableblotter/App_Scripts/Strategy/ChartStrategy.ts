@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState } from '../Redux/ActionsReducers/Interface/IState';
-import { StateChangedTrigger } from '../Core/Enums';
+import { StateChangedTrigger } from '../Utilities/Enums';
 
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {

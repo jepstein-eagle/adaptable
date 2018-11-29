@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FormGroup, FormControl } from 'react-bootstrap';
-import { DataType } from '../../Core/Enums'
-import { MathOperation } from '../../Core/Enums'
+import { DataType } from '../../Utilities/Enums'
+import { MathOperation } from '../../Utilities/Enums'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';

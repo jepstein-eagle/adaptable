@@ -6,7 +6,7 @@ const WizardLegend_1 = require("./WizardLegend");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const ButtonCancel_1 = require("../Components/Buttons/ButtonCancel");
 const ButtonWizardAction_1 = require("../Components/Buttons/ButtonWizardAction");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class DummyActiveStep {
     constructor() {
         this.StepName = "";

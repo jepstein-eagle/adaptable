@@ -7,7 +7,7 @@ const PlusMinusSettingsWizard_1 = require("./PlusMinusSettingsWizard");
 const PlusMinusExpressionWizard_1 = require("./PlusMinusExpressionWizard");
 const PlusMinusSummaryWizard_1 = require("./PlusMinusSummaryWizard");
 const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 class PlusMinusWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Settings", "Build Query", "Summary"];

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGroup, ControlLabel, Checkbox } from 'react-bootstrap';
-import { SortOrder } from '../../../Core/Enums'
+import { SortOrder } from '../../../Utilities/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";

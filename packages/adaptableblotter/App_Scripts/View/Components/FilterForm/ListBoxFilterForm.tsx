@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Core/Enums'
+import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Utilities/Enums'
 import { MenuItem, DropdownButton, ListGroupItem, FormControl, ListGroup, ListGroupProps, FormGroup, InputGroup } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper'

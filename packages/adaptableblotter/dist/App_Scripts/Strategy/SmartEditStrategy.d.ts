@@ -1,5 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { MathOperation } from '../Core/Enums';
+import { MathOperation } from '../Utilities/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';

@@ -7,7 +7,7 @@ const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const UIHelper_1 = require("../UIHelper");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class DataManagementPopupComponent extends React.Component {
     constructor(props) {
         super(props);

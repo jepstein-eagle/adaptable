@@ -10,7 +10,7 @@ import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Core/Enums";
+import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Utilities/Enums";
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";

@@ -12,7 +12,7 @@ import { ICalculatedColumnExpressionService } from '../App_Scripts/Utilities/Ser
 import { IFreeTextColumnService } from '../App_Scripts/Utilities/Services/Interface/IFreeTextColumnService';
 import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
 import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher';
-import { DistinctCriteriaPairValue } from '../App_Scripts/Core/Enums';
+import { DistinctCriteriaPairValue } from '../App_Scripts/Utilities/Enums';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
 import { IColumn } from '../App_Scripts/Core/Interface/IColumn';

@@ -16,7 +16,7 @@ import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary'
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary'
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary'
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary'
-import { DataType, SelectionMode, AccessLevel } from '../../Core/Enums'
+import { DataType, SelectionMode, AccessLevel } from '../../Utilities/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';

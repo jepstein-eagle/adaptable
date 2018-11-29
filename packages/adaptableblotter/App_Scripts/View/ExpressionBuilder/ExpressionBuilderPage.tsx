@@ -5,7 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ExpressionBuilderPreview } from './ExpressionBuilderPreview'
-import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus, QueryTab, AccessLevel } from '../../Core/Enums'
+import { ExpressionMode, DistinctCriteriaPairValue, QueryBuildStatus, QueryTab, AccessLevel } from '../../Utilities/Enums'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";

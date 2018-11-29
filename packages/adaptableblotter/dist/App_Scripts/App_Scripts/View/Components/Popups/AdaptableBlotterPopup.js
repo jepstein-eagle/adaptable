@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
 const UIHelper_1 = require("../../UIHelper");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");

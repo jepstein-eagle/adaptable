@@ -5,7 +5,7 @@ const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ColumnHelper_1 = require("../Helpers/ColumnHelper");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class ValidationService {
     constructor(blotter) {
         this.blotter = blotter;

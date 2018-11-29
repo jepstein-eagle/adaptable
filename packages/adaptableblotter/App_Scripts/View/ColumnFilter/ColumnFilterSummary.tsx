@@ -15,7 +15,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 

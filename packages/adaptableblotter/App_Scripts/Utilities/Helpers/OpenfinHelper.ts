@@ -2,7 +2,7 @@
 import { LoggingHelper } from './LoggingHelper';
 import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';
 import { i } from 'mathjs';
-import { EventDispatcher } from '../../Core/EventDispatcher';
+import { EventDispatcher } from '../EventDispatcher';
 import { IEvent } from '../../Core/Interface/IEvent';
 export module OpenfinHelper {
     declare var fin: any;

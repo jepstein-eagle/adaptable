@@ -1,5 +1,5 @@
 import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../Core/Interface/IPreview";
-import { ActionMode } from "../../Core/Enums";
+import { ActionMode } from "../Enums";
 import { StringExtensions } from "../Extensions/StringExtensions";
 import { ICellInfo } from "../../Core/Interface/Interfaces";
 

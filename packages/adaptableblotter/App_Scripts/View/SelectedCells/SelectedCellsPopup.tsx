@@ -14,7 +14,7 @@ import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
-import { SelectedCellOperation } from "../../Core/Enums";
+import { SelectedCellOperation } from "../../Utilities/Enums";
 
 
 interface SelectedCellsPopupProps extends StrategyViewPopupProps<SelectedCellsPopupComponent> {

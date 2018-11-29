@@ -6,7 +6,7 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 class ChartSettingsWizard extends React.Component {
     constructor(props) {
         super(props);

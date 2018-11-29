@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MathOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Utilities/Enums';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IShortcut } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {

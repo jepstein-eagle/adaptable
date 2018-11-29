@@ -2,7 +2,7 @@ import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css';
 import { IAdaptableBlotterStore } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
 import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
 import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher';
-import { DataType, DistinctCriteriaPairValue } from '../App_Scripts/Core/Enums';
+import { DataType, DistinctCriteriaPairValue } from '../App_Scripts/Utilities/Enums';
 import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';

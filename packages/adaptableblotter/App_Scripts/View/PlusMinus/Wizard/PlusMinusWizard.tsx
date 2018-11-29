@@ -8,7 +8,7 @@ import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard'
 import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { DataType } from "../../../Core/Enums";
+import { DataType } from "../../../Utilities/Enums";
 
 
 export interface PlusMinusWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard';
-import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Core/Enums';
+import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Utilities/Enums';
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Api/Expression";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";

@@ -1,5 +1,5 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState';
-import { DataType, StatusColour, MessageType } from '../Core/Enums';
+import { DataType, StatusColour, MessageType } from '../Utilities/Enums';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';

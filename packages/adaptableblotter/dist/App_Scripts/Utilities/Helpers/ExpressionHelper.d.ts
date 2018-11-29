@@ -1,4 +1,4 @@
-import { LeafExpressionOperator, DataType } from '../../Core/Enums';
+import { LeafExpressionOperator, DataType } from '../../Utilities/Enums';
 import { IRange, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { Expression } from '../../Api/Expression';
 import { IColumn } from '../../Core/Interface/IColumn';

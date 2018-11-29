@@ -1,4 +1,4 @@
-import { SortOrder } from '../../Core/Enums';
+import { SortOrder } from '../../Utilities/Enums';
 export declare module Helper {
     function getStringRepresentionFromKey(event: KeyboardEvent | any): string;
     function cloneObject(obj: any): any;

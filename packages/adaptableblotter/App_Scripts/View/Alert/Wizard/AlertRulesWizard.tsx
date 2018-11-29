@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Core/Enums';
+import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";

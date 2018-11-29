@@ -17,7 +17,7 @@ const UIHelper_1 = require("../UIHelper");
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const StyleConstants = require("../../Core/Constants/StyleConstants");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class LayoutPopupComponent extends React.Component {
     constructor(props) {

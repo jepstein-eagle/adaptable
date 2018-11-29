@@ -6,7 +6,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IUIConfirmation } from '../Core/Interface/IMessage';
-import { DataType, StateChangedTrigger } from '../Core/Enums'
+import { DataType, StateChangedTrigger } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IColumn } from '../Core/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';

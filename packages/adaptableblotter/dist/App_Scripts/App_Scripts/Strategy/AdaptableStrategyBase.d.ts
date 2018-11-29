@@ -3,7 +3,7 @@ import { IStrategy } from './Interface/IStrategy';
 import { IMenuItem } from '../Core/Interface/IMenu';
 import { Action } from 'redux';
 import { IEntitlement } from '../Core/Interface/Interfaces';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 export declare abstract class AdaptableStrategyBase implements IStrategy {

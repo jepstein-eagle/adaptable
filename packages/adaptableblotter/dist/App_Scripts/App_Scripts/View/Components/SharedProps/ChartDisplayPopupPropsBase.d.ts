@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DistinctCriteriaPairValue } from '../../../Core/Enums';
+import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IAdaptableBlotterOptions } from "../../../Api/Interface/IAdaptableBlotterOptions";

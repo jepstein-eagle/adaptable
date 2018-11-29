@@ -7,7 +7,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from "../UIInterfaces";
 import { IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { MessageType } from "../../Core/Enums";
+import { MessageType } from "../../Utilities/Enums";
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'

@@ -10,7 +10,7 @@ const StyleConstants = require("../../Core/Constants/StyleConstants");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class SelectedCellsPopupComponent extends React.Component {
     componentDidMount() {
         this.props.onSelectedCellsCreateSummary();

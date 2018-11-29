@@ -6,7 +6,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ThemesContent } from '../Styles/themes'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import * as GeneralConstants from '../Core/Constants/GeneralConstants'
-import { StateChangedTrigger } from '../Core/Enums';
+import { StateChangedTrigger } from '../Utilities/Enums';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     private ThemeState: ThemeState

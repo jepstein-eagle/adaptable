@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ExpressionHelper_1 = require("./ExpressionHelper");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 var ReportHelper;
 (function (ReportHelper) {
     ReportHelper.ALL_DATA_REPORT = 'All Data';

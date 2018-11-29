@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../App_Scripts/Core/Enums");
+const Enums_1 = require("../App_Scripts/Utilities/Enums");
 const DataSourceIndexed_1 = require("./DataSourceIndexed");
 const SortHelper_1 = require("../App_Scripts/Utilities/Helpers/SortHelper");
 const ArrayExtensions_1 = require("../App_Scripts/Utilities/Extensions/ArrayExtensions");

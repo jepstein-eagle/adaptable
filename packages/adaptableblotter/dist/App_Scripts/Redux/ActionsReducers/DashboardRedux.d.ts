@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState';
-import { Visibility } from '../../Core/Enums';
+import { Visibility } from '../../Utilities/Enums';
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
     StrategyIds: string[];
 }

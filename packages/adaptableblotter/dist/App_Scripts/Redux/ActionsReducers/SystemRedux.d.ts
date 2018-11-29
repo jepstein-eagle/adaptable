@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { SystemState } from './Interface/IState';
 import { ISystemStatus } from '../../Core/Interface/Interfaces';
 import { IAlert } from '../../Core/Interface/IMessage';
-import { ExportDestination } from '../../Core/Enums';
+import { ExportDestination } from '../../Utilities/Enums';
 import { IPreviewInfo } from '../../Core/Interface/IPreview';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";

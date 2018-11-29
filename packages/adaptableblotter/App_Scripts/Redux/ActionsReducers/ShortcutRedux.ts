@@ -1,5 +1,5 @@
 import { ShortcutState } from './Interface/IState';
-import { MathOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { ICellInfo } from '../../Core/Interface/Interfaces';
 import { IShortcut } from '../../Api/Interface/IAdaptableBlotterObjects';

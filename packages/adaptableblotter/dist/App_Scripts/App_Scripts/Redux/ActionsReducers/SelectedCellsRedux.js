@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 exports.SELECTED_CELLS_CHANGE_OPERATION = 'SELECTED_CELLS_CHANGE_OPERATION';
 exports.SelectedCellsChangeOperation = (SelectedCellOperation) => ({
     type: exports.SELECTED_CELLS_CHANGE_OPERATION,

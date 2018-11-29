@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportColumnScope, MessageType } from '../../../Core/Enums';
+import { ReportColumnScope, MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
 import { IReport } from "../../../Api/Interface/IAdaptableBlotterObjects";

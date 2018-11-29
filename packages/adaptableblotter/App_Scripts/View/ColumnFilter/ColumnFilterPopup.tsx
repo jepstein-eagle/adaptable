@@ -17,7 +17,7 @@ import { PanelWithImage } from "../Components/Panels/PanelWithImage";
 import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FilterHelper } from "../../Utilities/Helpers/FilterHelper";
 import { IUIPrompt } from "../../Core/Interface/IMessage";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {

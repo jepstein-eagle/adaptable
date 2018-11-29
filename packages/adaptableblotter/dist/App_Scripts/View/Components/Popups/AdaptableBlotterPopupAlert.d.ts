@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MessageType } from "../../../Core/Enums";
+import { MessageType } from "../../../Utilities/Enums";
 export interface AdaptableBlotterPopupAlertProps extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
     ShowPopup: boolean;
     onClose: Function;

@@ -13,7 +13,7 @@ import { Expression } from "../../../Api/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
-import { DataType, LeafExpressionOperator } from '../../../Core/Enums';
+import { DataType, LeafExpressionOperator } from '../../../Utilities/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Core/Interface/Interfaces';
 

@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ActionMode } from "../../Core/Enums";
+import { ActionMode } from "../../Utilities/Enums";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 

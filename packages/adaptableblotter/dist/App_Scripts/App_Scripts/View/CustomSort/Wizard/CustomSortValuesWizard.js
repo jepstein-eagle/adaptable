@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const PanelWithInfo_1 = require("../../Components/Panels/PanelWithInfo");
 const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");

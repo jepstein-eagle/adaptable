@@ -1,4 +1,4 @@
-import {IEvent} from './Interface/IEvent'
+import {IEvent} from '../Core/Interface/IEvent'
 
 export class EventDispatcher<TSender, TArgs> implements IEvent<TSender, TArgs> {
 

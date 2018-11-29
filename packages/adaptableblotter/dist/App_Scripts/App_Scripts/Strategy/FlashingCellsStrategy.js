@@ -5,7 +5,7 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const FlashingCellsRedux = require("../Redux/ActionsReducers/FlashingCellsRedux");
-const Enums_1 = require("../Core/Enums");
+const Enums_1 = require("../Utilities/Enums");
 class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter);

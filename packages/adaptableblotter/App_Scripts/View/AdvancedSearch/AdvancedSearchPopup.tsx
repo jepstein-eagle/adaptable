@@ -21,7 +21,7 @@ import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { PRIMARY_BSSTYLE } from "../../Core/Constants/StyleConstants";
 

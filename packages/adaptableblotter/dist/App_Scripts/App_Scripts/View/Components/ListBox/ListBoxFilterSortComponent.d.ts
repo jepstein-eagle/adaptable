@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SortOrder } from '../../../Core/Enums';
+import { SortOrder } from '../../../Utilities/Enums';
 export interface ListBoxFilterSortComponentProps extends React.ClassAttributes<ListBoxFilterSortComponent> {
     FilterValue: string;
     SortOrder: SortOrder;

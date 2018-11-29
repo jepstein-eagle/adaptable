@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, MessageType } from '../../Core/Enums';
+import { ExportDestination, MathOperation, MessageType } from '../../Utilities/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'

@@ -1,5 +1,5 @@
 import { SmartEditState } from './Interface/IState';
-import { MathOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { IPreviewInfo } from '../../Core/Interface/IPreview';
 

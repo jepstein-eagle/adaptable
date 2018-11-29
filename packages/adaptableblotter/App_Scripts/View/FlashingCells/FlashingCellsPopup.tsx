@@ -6,7 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { DataType, SortOrder } from '../../Core/Enums'
+import { DataType, SortOrder } from '../../Utilities/Enums'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Utilities/Helpers/Helper'

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ExpressionMode } from '../../../Core/Enums'
+import { ExpressionMode } from '../../../Utilities/Enums'
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'

@@ -1,6 +1,6 @@
 import { IConditionalStyleStrategy } from '../../App_Scripts/Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../App_Scripts/Strategy/ConditionalStyleStrategy';
-import { ConditionalStyleScope } from '../../App_Scripts/Core/Enums';
+import { ConditionalStyleScope } from '../../App_Scripts/Utilities/Enums';
 import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService'
 import { ExpressionHelper } from '../../App_Scripts/Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter'

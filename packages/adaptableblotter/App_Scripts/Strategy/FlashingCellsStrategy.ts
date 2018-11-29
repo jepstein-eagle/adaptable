@@ -1,4 +1,3 @@
-import { MenuItemDoReduxAction } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
@@ -8,13 +7,12 @@ import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Core/Interface/IColumn';
-import { DataType, StateChangedTrigger } from '../Core/Enums';
+import { DataType, StateChangedTrigger } from '../Utilities/Enums';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState
-
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter)

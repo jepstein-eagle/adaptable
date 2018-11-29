@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const ColumnHelper_1 = require("../Helpers/ColumnHelper");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 class ChartService {

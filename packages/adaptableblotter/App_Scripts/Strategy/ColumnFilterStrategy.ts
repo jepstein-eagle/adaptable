@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 

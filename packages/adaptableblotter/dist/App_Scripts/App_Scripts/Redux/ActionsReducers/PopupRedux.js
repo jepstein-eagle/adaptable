@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 exports.POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 exports.POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
 exports.POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';

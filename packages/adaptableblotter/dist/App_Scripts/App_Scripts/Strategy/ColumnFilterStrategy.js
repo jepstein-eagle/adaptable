@@ -4,7 +4,7 @@ const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const ScreenPopups = require("../Core/Constants/ScreenPopups");
 const ColumnFilterRedux = require("../Redux/ActionsReducers/ColumnFilterRedux");
-const Enums_1 = require("../Core/Enums");
+const Enums_1 = require("../Utilities/Enums");
 class ColumnFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ColumnFilterStrategyId, blotter);

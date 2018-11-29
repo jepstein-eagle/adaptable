@@ -19,7 +19,7 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { ExportDestination, SortOrder, AccessLevel } from '../../Core/Enums';
+import { ExportDestination, SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";

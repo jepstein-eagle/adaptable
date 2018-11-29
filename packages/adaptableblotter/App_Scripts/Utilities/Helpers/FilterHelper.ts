@@ -1,6 +1,6 @@
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { DataType } from "../../Core/Enums";
+import { DataType } from "../Enums";
 import { Helper } from "./Helper";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 

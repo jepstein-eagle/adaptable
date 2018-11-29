@@ -27,7 +27,7 @@ import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilt
 import { DEFAULT_LAYOUT } from "../Core/Constants/GeneralConstants";
 import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Core/Interface/Interfaces";
-import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Core/Enums";
+import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Utilities/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";

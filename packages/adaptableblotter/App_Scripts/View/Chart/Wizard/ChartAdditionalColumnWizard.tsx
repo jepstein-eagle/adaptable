@@ -5,7 +5,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { SelectionMode, DistinctCriteriaPairValue } from "../../../Core/Enums";
+import { SelectionMode, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";

@@ -1,6 +1,6 @@
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { LoggingHelper } from './LoggingHelper';
-import { SortOrder } from '../../Core/Enums';
+import { SortOrder } from '../Enums';
 
 export module Helper {
 

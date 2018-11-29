@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="../../typings/index.d.ts" />
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 class ShortcutTypeWizard extends React.Component {
     constructor(props) {

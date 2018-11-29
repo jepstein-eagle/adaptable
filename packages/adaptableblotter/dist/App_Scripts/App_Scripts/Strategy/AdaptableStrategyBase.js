@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const MenuItem_1 = require("../Core/MenuItem");
 const MenuRedux = require("../Redux/ActionsReducers/MenuRedux");
-const Enums_1 = require("../Core/Enums");
+const Enums_1 = require("../Utilities/Enums");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 class AdaptableStrategyBase {

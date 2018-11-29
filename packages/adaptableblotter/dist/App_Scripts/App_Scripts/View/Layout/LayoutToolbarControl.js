@@ -17,7 +17,7 @@ const GeneralConstants = require("../../Core/Constants/GeneralConstants");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class LayoutToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__layout";

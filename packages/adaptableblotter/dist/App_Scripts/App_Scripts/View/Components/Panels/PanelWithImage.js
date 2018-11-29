@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 

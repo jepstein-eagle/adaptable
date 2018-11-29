@@ -3,7 +3,7 @@ import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IEntitlement } from "../../../Core/Interface/Interfaces";
-import { AccessLevel } from "../../../Core/Enums";
+import { AccessLevel } from "../../../Utilities/Enums";
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     onClick?: () => void

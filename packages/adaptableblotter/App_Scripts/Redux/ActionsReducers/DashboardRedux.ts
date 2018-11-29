@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Visibility } from '../../Core/Enums';
+import { Visibility } from '../../Utilities/Enums';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';

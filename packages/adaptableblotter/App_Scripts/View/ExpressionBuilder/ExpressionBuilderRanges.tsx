@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DataType, SelectionMode, RangeOperandType } from '../../Core/Enums'
-import { LeafExpressionOperator } from '../../Core/Enums'
+import { DataType, SelectionMode, RangeOperandType } from '../../Utilities/Enums'
+import { LeafExpressionOperator } from '../../Utilities/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon, Panel, Checkbox, Radio } from 'react-bootstrap';

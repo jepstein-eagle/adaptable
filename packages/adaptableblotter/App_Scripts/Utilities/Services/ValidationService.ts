@@ -9,7 +9,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
-import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode } from '../../Core/Enums';
+import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode } from '../Enums';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 

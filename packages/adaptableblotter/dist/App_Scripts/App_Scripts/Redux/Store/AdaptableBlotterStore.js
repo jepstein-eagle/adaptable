@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const Redux = require("redux");
 const ReduxStorage = require("redux-storage");
 const redux_storage_decorator_migrate_1 = require("redux-storage-decorator-migrate");

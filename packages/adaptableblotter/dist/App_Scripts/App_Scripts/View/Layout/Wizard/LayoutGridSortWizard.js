@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const GridSortRow_1 = require("../GridSortRow");
 const AdaptableObjectCollection_1 = require("../../Components/AdaptableObjectCollection");
 const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");

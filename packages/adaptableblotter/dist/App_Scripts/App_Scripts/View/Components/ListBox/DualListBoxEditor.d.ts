@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SortOrder } from '../../../Core/Enums';
+import { SortOrder } from '../../../Utilities/Enums';
 import { IMasterChildren } from "../../../Core/Interface/Interfaces";
 export interface IMasterValue {
     value: string;

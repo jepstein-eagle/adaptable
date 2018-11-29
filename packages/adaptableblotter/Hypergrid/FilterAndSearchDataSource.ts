@@ -2,7 +2,7 @@ import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
 import { StringExtensions } from '../App_Scripts/Utilities/Extensions/StringExtensions'
 import { ExpressionHelper } from '../App_Scripts/Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator, DisplayAction } from '../App_Scripts/Core/Enums'
+import { LeafExpressionOperator, DisplayAction } from '../App_Scripts/Utilities/Enums'
 import { IAdvancedSearch, IColumnFilter } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../App_Scripts/Utilities/Extensions/ArrayExtensions';
 

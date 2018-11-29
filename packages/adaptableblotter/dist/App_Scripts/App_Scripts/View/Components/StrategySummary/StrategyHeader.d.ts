@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AccessLevel } from "../../../Core/Enums";
+import { AccessLevel } from "../../../Utilities/Enums";
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
     key: string;
     StrategyId: string;

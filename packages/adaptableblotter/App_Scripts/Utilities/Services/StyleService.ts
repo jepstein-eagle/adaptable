@@ -4,7 +4,7 @@ import { FlashingCellState, ConditionalStyleState, QuickSearchState, FormatColum
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
-import { ConditionalStyleScope } from '../../Core/Enums';
+import { ConditionalStyleScope } from '../Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......

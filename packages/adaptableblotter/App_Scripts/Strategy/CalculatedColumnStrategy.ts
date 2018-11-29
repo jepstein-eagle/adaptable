@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy";
 import { ICalculatedColumn } from '../Api/Interface/IAdaptableBlotterObjects';
-import { StateChangedTrigger } from '../Core/Enums';
+import { StateChangedTrigger } from '../Utilities/Enums';
 import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Core/Interface/IColumn';
 

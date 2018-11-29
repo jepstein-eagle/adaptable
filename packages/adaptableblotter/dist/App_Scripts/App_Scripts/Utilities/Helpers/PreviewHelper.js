@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 var PreviewHelper;
 (function (PreviewHelper) {

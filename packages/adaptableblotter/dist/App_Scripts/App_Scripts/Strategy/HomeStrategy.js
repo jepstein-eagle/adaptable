@@ -5,7 +5,7 @@ const StrategyConstants = require("../Core/Constants/StrategyConstants");
 const GlyphConstants = require("../Core/Constants/GlyphConstants");
 const HomeRedux = require("../Redux/ActionsReducers/HomeRedux");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
-const Enums_1 = require("../Core/Enums");
+const Enums_1 = require("../Utilities/Enums");
 const LayoutHelper_1 = require("../Utilities/Helpers/LayoutHelper");
 // This is a special strategy that the user can never remove but which is useful to us 
 // We use it to manage internal state changes and menu items that are not directly strategy related

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 const LoggingHelper_1 = require("./LoggingHelper");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 var Helper;
 (function (Helper) {
     function getStringRepresentionFromKey(event) {

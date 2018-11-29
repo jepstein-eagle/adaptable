@@ -5,7 +5,7 @@ import { WizardLegend } from './WizardLegend'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
 import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {

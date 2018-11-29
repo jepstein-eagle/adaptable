@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");

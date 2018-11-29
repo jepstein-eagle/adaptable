@@ -3,7 +3,7 @@ import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObject
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../../Core/Interface/IColumn';
-import { LeafExpressionOperator, DataType } from '../../Core/Enums';
+import { LeafExpressionOperator, DataType } from '../Enums';
 
 
 export module CellValidationHelper {

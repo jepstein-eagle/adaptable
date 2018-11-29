@@ -3,7 +3,7 @@ import { Helper } from '../../../Utilities/Helpers/Helper'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { IColumn } from '../../../Core/Interface/IColumn';
-import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '../../../Core/Enums';
+import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '../../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import * as StyleConstants from '../../../Core/Constants/StyleConstants';
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";

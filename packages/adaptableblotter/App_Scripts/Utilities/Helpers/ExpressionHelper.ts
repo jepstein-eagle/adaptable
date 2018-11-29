@@ -1,5 +1,5 @@
 import { FilterHelper } from './FilterHelper'
-import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue, RangeOperandType } from '../../Core/Enums';
+import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue, RangeOperandType } from '../Enums';
 import { IRange, IColumnValueExpression, IRangeExpression, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { Expression } from '../../Api/Expression';
 import { IColumn } from '../../Core/Interface/IColumn';

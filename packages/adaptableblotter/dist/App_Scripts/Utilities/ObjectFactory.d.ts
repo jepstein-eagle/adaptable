@@ -1,6 +1,6 @@
 import { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
-import { LeafExpressionOperator, RangeOperandType, ActionMode } from '../Core/Enums';
+import { LeafExpressionOperator, RangeOperandType, ActionMode } from '../Utilities/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';

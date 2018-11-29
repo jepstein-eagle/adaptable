@@ -4,7 +4,7 @@ import * as StrategyConstants from '../Core/Constants/StrategyConstants'
 import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { CalendarState } from '../Redux/ActionsReducers/Interface/IState';
-import { StateChangedTrigger } from '../Core/Enums';
+import { StateChangedTrigger } from '../Utilities/Enums';
 
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {

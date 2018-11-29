@@ -15,7 +15,7 @@ import { IMenuItem } from '../../Core/Interface/IMenu'
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
-import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Core/Enums";
+import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Utilities/Enums";
 import { ISystemStatus } from "../../Core/Interface/Interfaces";
 import { IAlert, } from "../../Core/Interface/IMessage";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";

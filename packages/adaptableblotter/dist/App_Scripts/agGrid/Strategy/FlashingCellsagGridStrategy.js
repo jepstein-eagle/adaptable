@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const FlashingCellsStrategy_1 = require("../../App_Scripts/Strategy/FlashingCellsStrategy");
-const Enums_1 = require("../../App_Scripts/Core/Enums");
+const Enums_1 = require("../../App_Scripts/Utilities/Enums");
 const StyleConstants = require("../../App_Scripts/Core/Constants/StyleConstants");
 class FlashingCellsagGridStrategy extends FlashingCellsStrategy_1.FlashingCellsStrategy {
     constructor(blotter) {

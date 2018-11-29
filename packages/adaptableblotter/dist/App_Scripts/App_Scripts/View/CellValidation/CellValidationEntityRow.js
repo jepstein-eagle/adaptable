@@ -7,7 +7,7 @@ const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class CellValidationEntityRow extends React.Component {

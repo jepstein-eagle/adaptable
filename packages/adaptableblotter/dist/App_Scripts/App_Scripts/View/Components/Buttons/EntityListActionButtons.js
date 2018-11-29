@@ -6,7 +6,7 @@ const ButtonEdit_1 = require("./ButtonEdit");
 const ButtonDelete_1 = require("./ButtonDelete");
 const ButtonShare_1 = require("./ButtonShare");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 class EntityListActionButtons extends React.Component {
     render() {
         return React.createElement(react_bootstrap_1.ButtonToolbar, { className: this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR, bsSize: "small", style: { margin: "0px", padding: "0px" } },

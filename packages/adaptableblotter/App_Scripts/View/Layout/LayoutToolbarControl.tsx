@@ -22,7 +22,7 @@ import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 

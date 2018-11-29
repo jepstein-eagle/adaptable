@@ -4,7 +4,7 @@ const React = require("react");
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 const react_bootstrap_sweetalert_1 = require("react-bootstrap-sweetalert");
 const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 class AdaptableBlotterPopupAlert extends React.Component {
     render() {
         let style;

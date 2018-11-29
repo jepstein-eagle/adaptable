@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, Well } from 'react-bootstrap';
-import { FontWeight, FontStyle, FontSize, MessageType } from '../../Core/Enums';
+import { FontWeight, FontStyle, FontSize, MessageType } from '../../Utilities/Enums';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';

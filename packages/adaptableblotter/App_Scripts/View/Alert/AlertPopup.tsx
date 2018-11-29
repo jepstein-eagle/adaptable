@@ -21,7 +21,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IAlertDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { MessageType, AccessLevel } from "../../Core/Enums";
+import { MessageType, AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 

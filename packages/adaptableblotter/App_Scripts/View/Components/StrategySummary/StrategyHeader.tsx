@@ -3,7 +3,7 @@ import * as React from "react";
 import { ButtonNew } from '../Buttons/ButtonNew';
 import { SummaryRowItem } from './SummaryRowItem';
 import { StrategyProfile } from '../StrategyProfile'
-import { AccessLevel } from "../../../Core/Enums";
+import { AccessLevel } from "../../../Utilities/Enums";
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
     key: string

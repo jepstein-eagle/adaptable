@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");

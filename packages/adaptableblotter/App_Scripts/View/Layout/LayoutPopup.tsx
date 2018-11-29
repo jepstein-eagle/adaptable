@@ -21,7 +21,7 @@ import { IColumn } from "../../Core/Interface/IColumn";
 import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
 import * as StyleConstants from '../../Core/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { SortOrder, AccessLevel } from "../../Core/Enums";
+import { SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { ILayout, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

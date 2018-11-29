@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { MessageType } from '../Enums';
+import { MessageType } from '../../Utilities/Enums';
 
 
 export interface IAlert {

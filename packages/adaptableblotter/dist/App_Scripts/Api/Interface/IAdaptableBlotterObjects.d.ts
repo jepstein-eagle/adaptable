@@ -1,4 +1,4 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Core/Enums';
+import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Utilities/Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Core/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';

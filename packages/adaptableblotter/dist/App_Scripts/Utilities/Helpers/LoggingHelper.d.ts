@@ -1,4 +1,4 @@
-import { MessageType } from "../../Core/Enums";
+import { MessageType } from "../../Utilities/Enums";
 export declare module LoggingHelper {
     function LogAlert(message: string, messageType: MessageType, ...optionalParams: any[]): void;
     function LogMessage(message: string, ...optionalParams: any[]): void;

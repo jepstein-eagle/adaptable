@@ -1,5 +1,5 @@
 import { IEntitlement } from "../../Core/Interface/Interfaces";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../Enums";
 import { ArrayExtensions } from "../Extensions/ArrayExtensions";
 
 export module EntitlementHelper {

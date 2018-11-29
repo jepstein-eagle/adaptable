@@ -8,7 +8,7 @@ import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
 import { IColumn } from "../../Core/Interface/IColumn";
-import { SortOrder } from "../../Core/Enums";
+import { SortOrder } from "../../Utilities/Enums";
 import { LayoutHelper } from "../../Utilities/Helpers/LayoutHelper";
 import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 

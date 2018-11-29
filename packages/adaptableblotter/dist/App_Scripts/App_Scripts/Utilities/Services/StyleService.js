@@ -4,7 +4,7 @@ const StyleConstants = require("../../Core/Constants/StyleConstants");
 const StrategyConstants = require("../../Core/Constants/StrategyConstants");
 const StyleHelper_1 = require("../Helpers/StyleHelper");
 const EnumExtensions_1 = require("../Extensions/EnumExtensions");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 class StyleService {

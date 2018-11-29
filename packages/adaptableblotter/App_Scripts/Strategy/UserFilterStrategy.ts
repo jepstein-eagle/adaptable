@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {

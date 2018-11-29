@@ -11,7 +11,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
-import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Core/Enums';
+import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Utilities/Enums';
 import { IUserFilter, IColumnFilter, IRange } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'

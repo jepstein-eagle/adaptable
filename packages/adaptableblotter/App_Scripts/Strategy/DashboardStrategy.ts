@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Core/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IDashboardStrategy } from './Interface/IDashboardStrategy'
 import { DashboardState } from '../Redux/ActionsReducers/Interface/IState';
-import { Visibility, StateChangedTrigger } from '../Core/Enums';
+import { Visibility, StateChangedTrigger } from '../Utilities/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {

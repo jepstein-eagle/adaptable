@@ -8,7 +8,7 @@ import { IColumn } from '../../Core/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
 import { Well } from 'react-bootstrap';
-import { ConditionalStyleScope, AccessLevel } from '../../Core/Enums'
+import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import { Helper } from '../../Utilities/Helpers/Helper';

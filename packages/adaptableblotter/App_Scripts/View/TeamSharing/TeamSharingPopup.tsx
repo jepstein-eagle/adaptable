@@ -18,7 +18,7 @@ import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
-import { ConditionalStyleScope } from "../../Core/Enums";
+import { ConditionalStyleScope } from "../../Utilities/Enums";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 

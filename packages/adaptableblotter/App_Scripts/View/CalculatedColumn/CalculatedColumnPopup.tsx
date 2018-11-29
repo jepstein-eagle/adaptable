@@ -14,7 +14,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
-import { SortOrder, AccessLevel } from "../../Core/Enums";
+import { SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';

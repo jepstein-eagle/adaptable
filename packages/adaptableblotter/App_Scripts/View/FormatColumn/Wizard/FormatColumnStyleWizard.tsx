@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
+import { FontWeight, FontStyle, FontSize } from '../../../Utilities/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { UIHelper } from "../../UIHelper";

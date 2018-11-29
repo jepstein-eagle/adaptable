@@ -7,7 +7,7 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
 import { basename } from 'path';
 import { Server } from 'https';
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 
 export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSourceStrategy {
     private DataSourceState: DataSourceState

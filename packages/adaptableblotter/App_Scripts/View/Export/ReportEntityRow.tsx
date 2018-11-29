@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DropdownButton, MenuItem, Col, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ExportDestination } from '../../Core/Enums';
+import { ExportDestination } from '../../Utilities/Enums';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';

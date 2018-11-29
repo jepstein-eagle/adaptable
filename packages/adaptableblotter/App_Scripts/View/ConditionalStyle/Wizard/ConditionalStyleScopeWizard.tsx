@@ -2,7 +2,7 @@ import * as React from "react";
 import { Radio, Col, Panel, FormControl } from 'react-bootstrap';
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Core/Enums';
+import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";

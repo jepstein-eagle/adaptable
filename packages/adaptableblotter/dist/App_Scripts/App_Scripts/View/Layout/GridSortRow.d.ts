@@ -1,7 +1,7 @@
 import * as React from "react";
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColumn } from "../../Core/Interface/IColumn";
-import { SortOrder } from "../../Core/Enums";
+import { SortOrder } from "../../Utilities/Enums";
 import { IGridSort } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
     GridSort: IGridSort;

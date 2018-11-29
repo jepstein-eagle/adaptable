@@ -1,5 +1,5 @@
 import {  IStrategy } from './IStrategy';
-import { DataType ,MathOperation } from '../../Core/Enums';
+import { DataType ,MathOperation } from '../../Utilities/Enums';
 import {  ICellInfo } from '../../Core/Interface/Interfaces';
 
 

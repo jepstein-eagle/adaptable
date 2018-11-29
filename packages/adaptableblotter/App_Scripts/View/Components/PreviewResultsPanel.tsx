@@ -1,5 +1,5 @@
 import * as React from "react";
-import { MessageType } from '../../Core/Enums';
+import { MessageType } from '../../Utilities/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
 import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
 import { Glyphicon, Panel, Table } from "react-bootstrap";

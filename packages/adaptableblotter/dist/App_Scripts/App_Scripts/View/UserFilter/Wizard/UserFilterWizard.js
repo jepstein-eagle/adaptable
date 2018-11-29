@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const UserFilterSettingsWizard_1 = require("./UserFilterSettingsWizard");
 const UserFilterExpressionWizard_1 = require("./UserFilterExpressionWizard");

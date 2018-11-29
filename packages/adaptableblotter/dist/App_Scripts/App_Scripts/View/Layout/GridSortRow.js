@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");

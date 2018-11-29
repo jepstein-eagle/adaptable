@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy'
 import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { StateChangedTrigger } from '../Core/Enums';
+import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Core/Interface/IColumn';
 
 export  class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {

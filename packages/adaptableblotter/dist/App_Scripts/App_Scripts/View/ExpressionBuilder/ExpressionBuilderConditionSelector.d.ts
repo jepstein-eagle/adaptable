@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColumn } from '../../Core/Interface/IColumn';
-import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Core/Enums';
+import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Api/Expression";

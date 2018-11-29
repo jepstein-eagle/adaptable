@@ -7,7 +7,7 @@ const UIHelper_1 = require("../UIHelper");
 const ButtonClear_1 = require("./Buttons/ButtonClear");
 const ButtonPreviewDelete_1 = require("./Buttons/ButtonPreviewDelete");
 const PanelWithButton_1 = require("./Panels/PanelWithButton");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class AlertsPanel extends React.Component {
     componentWillUnmount() {
         this.props.onRender();

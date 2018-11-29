@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Core/Enums';
+import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { ListGroupProps } from 'react-bootstrap';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IColumn } from "../../../Core/Interface/IColumn";

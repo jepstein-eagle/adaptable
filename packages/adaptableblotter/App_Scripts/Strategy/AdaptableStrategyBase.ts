@@ -1,19 +1,19 @@
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
 import { IMenuItem } from '../Core/Interface/IMenu';
-import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Core/MenuItem';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { IEntitlement } from '../Core/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
-import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Core/Enums';
+import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdvancedSearch } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Core/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
+import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 
 
 export abstract class AdaptableStrategyBase implements IStrategy {

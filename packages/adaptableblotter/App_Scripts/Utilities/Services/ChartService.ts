@@ -4,7 +4,7 @@ import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IChartDefinition, IColumnValueExpression } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../Core/Enums';
+import { DistinctCriteriaPairValue } from '../Enums';
 import { IKeyValuePair } from '../../Core/Interface/Interfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Api/Expression';
