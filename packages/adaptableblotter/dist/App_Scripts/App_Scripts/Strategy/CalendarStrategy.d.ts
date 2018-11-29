@@ -1,6 +1,6 @@
 import { ICalendarStrategy } from './Interface/ICalendarStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { CalendarState } from '../Redux/ActionsReducers/Interface/IState';
 export declare class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
     protected CalendarState: CalendarState;

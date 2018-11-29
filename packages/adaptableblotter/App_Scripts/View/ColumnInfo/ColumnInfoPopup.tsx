@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
@@ -20,7 +20,7 @@ import { DataType, SelectionMode, AccessLevel } from '../../Utilities/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
+import { IEntitlement, IColumnCategory } from "../../api/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'

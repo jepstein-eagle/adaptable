@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IConditionalStyle, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../api/Interface/Interfaces";
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -36,7 +36,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
     constructor(props: ConditionalStyleSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
 
     }
     render(): any {

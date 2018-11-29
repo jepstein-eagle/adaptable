@@ -1,5 +1,5 @@
 import { IStrategy } from './IStrategy';
-import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { ICellInfo } from '../../api/Interface/Interfaces';
 export interface IShortcutStrategy extends IStrategy {
     ApplyShortcut(cellInfo: ICellInfo, newValue: any): void;
 }

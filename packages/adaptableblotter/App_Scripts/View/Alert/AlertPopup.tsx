@@ -37,7 +37,7 @@ interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
 class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfigEntityState> {
     constructor(props: AlertPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {

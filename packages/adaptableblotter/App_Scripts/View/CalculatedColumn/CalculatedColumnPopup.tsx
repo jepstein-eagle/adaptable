@@ -7,7 +7,6 @@ import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedCo
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -37,7 +36,7 @@ interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedCo
 class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPopupProps, EditableConfigEntityState> {
     constructor(props: CalculatedColumnPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

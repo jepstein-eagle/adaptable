@@ -20,7 +20,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {

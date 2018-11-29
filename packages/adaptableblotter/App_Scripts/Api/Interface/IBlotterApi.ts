@@ -1,8 +1,8 @@
-import { IEvent } from "../../Core/Interface/IEvent";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { IEvent } from "./IEvent";
+import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
 

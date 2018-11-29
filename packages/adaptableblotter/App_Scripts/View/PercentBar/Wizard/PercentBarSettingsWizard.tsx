@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FormGroup, FormControl, Col, Panel, ControlLabel, Row, Checkbox } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';

@@ -7,7 +7,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterFormControlTextClear";
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 import { UIHelper } from "../../UIHelper";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 

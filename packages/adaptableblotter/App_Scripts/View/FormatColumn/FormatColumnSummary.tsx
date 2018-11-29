@@ -9,7 +9,7 @@ import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedu
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
@@ -37,7 +37,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
 
     constructor(props: FormatColumnSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

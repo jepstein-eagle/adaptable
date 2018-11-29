@@ -1,6 +1,6 @@
 import { IAdvancedSearchStrategy } from './Interface/IAdvancedSearchStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 export declare class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
     private AdvancedSearchState;
     constructor(blotter: IAdaptableBlotter);

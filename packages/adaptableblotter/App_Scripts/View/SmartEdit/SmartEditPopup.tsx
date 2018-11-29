@@ -10,13 +10,13 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { MathOperation, MessageType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUIConfirmation } from '../../Core/Interface/IMessage';
+import { IUIConfirmation } from '../../Api/Interface/IMessage';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
+import { IPreviewResult, IPreviewInfo } from "../../Api/Interface/IPreview";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";

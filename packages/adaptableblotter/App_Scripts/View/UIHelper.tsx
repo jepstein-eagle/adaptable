@@ -1,6 +1,6 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
 import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Utilities/Enums';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
@@ -10,7 +10,7 @@ import { PRIMARY_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO
 
 
 export module UIHelper {
-    export function EmptyConfigState(): EditableConfigEntityState {
+    export function getEmptyConfigState(): EditableConfigEntityState {
         return {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
         }

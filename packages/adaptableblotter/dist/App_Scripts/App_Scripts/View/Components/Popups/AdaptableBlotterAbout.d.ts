@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColItem } from "../../UIInterfaces";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
     AdaptableBlotter: IAdaptableBlotter;
     onClose?: Function;

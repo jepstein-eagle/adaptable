@@ -6,7 +6,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {

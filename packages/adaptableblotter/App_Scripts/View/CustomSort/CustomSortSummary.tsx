@@ -29,7 +29,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     constructor(props: CustomSortSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__customsort";

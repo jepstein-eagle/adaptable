@@ -1,5 +1,5 @@
 import * as Redux from "redux";
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import { IState } from '../ActionsReducers/Interface/IState';
 export interface ResetUserDataAction extends Redux.Action {

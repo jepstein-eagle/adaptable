@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Utilities/Enums';

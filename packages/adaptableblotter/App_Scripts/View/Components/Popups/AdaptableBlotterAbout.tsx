@@ -8,11 +8,11 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IAdaptableBlotterOptions } from "../../../Api/Interface/IAdaptableBlotterOptions";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ColumnFilterHelper } from "../../../Utilities/Helpers/ColumnFilterHelper";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 import { Modal, Button } from "react-bootstrap";
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from "../../UIHelper";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { AdaptableBlotterState } from "../../../Redux/Store/Interface/IAdaptableStore";
 
 

@@ -5,7 +5,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
-import { IColumnCategory } from "../../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../../api/Interface/Interfaces";
 
 export interface ColumnCategorySettingsWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
     ColumnCategorys: IColumnCategory[]

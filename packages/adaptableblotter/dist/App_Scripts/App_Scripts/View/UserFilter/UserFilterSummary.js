@@ -17,7 +17,7 @@ const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions"
 class UserFilterSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__userfilter";

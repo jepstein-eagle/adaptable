@@ -17,14 +17,14 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Core/Interface/IPreview";
-import { IColumn } from "../../Core/Interface/IColumn";
-import { IUIConfirmation } from "../../Core/Interface/IMessage";
+import { IPreviewInfo } from "../../Api/Interface/IPreview";
+import { IColumn } from "../../Api/Interface/IColumn";
+import { IUIConfirmation } from "../../Api/Interface/IMessage";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IEvent } from "../../Core/Interface/IEvent";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { IEvent } from "../../Api/Interface/IEvent";
+import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
@@ -34,7 +34,7 @@ import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { fail } from "assert";
 import { UIHelper } from "../UIHelper";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;

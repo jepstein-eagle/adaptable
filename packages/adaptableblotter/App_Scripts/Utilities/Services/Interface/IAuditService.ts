@@ -1,4 +1,4 @@
-import { IEvent } from "../../../Core/Interface/IEvent";
+import { IEvent } from "../../../Api/Interface/IEvent";
 
 export interface IDataChangingEvent {
     NewValue: any;

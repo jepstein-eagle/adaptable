@@ -5,12 +5,12 @@ const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const StyleConstants_1 = require("../Utilities/Constants/StyleConstants");
 var UIHelper;
 (function (UIHelper) {
-    function EmptyConfigState() {
+    function getEmptyConfigState() {
         return {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
         };
     }
-    UIHelper.EmptyConfigState = EmptyConfigState;
+    UIHelper.getEmptyConfigState = getEmptyConfigState;
     function getExpressionBuilderState(expression) {
         return {
             Expression: expression, SelectedColumnId: "", SelectedTab: null

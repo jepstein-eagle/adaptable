@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
@@ -16,7 +16,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { Waiting } from "../Components/FilterForm/Waiting";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { raw } from "body-parser";
 
 

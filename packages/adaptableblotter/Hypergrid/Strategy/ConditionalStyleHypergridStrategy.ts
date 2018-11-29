@@ -5,7 +5,7 @@ import { ExpressionHelper } from '../../App_Scripts/Utilities/Helpers/Expression
 import { Helper } from '../../App_Scripts/Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IConditionalStyle } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
-import { IColumnCategory } from '../../App_Scripts/Core/Interface/Interfaces';
+import { IColumnCategory } from '../../App_Scripts/api/Interface/Interfaces';
 import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {

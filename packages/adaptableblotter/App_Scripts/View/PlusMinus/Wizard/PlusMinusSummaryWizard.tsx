@@ -3,10 +3,10 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { IUserFilter, IPlusMinusRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
+import { IKeyValuePair } from "../../../api/Interface/Interfaces";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: IColumn[]

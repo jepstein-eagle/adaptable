@@ -1,9 +1,9 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { ISelectColumnStrategy } from "./Interface/ISelectColumnStrategy";
-import { IColumn } from '../Core/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 
 export class SelectColumnStrategy extends AdaptableStrategyBase implements ISelectColumnStrategy {
 

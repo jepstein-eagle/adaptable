@@ -1,5 +1,5 @@
-import { IAdaptableBlotter } from "../Core/Interface/IAdaptableBlotter";
-import { IEvent } from "../Core/Interface/IEvent";
+import { IAdaptableBlotter } from "../api/Interface/IAdaptableBlotter";
+import { IEvent } from "./Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
@@ -26,15 +26,15 @@ import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Core/Interface/Interfaces";
+import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../api/Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Utilities/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
 import { Action } from "redux";
 import { ILiveReport } from "../Strategy/Interface/IExportStrategy";
-import { IAlert } from "../Core/Interface/IMessage";
+import { IAlert } from "./Interface/IMessage";
 import { ObjectFactory } from "../Utilities/ObjectFactory";
-import { IColumn } from "../Core/Interface/IColumn";
+import { IColumn } from "./Interface/IColumn";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, LayoutState, IUserState, IState } from "../Redux/ActionsReducers/Interface/IState";
 import { FilterHelper } from "../Utilities/Helpers/FilterHelper";
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";

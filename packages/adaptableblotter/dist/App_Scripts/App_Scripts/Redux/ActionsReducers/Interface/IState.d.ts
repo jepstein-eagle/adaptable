@@ -1,9 +1,9 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Core/Interface/IMessage';
-import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu';
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../api/Interface/IMessage';
+import { IMenuItem, IContextMenu } from '../../../api/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
-import { IPreviewInfo } from '../../../Core/Interface/IPreview';
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
+import { IPreviewInfo } from '../../../api/Interface/IPreview';
+import { IColumn } from '../../../api/Interface/IColumn';
+import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../api/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';

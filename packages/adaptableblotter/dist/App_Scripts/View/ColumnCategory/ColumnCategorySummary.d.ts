@@ -3,7 +3,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../api/Interface/Interfaces";
 export interface ColumnCategorySummaryProps extends StrategySummaryProps<ColumnCategorySummaryComponent> {
     ColumnCategorys: IColumnCategory[];
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;

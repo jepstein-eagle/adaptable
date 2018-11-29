@@ -1,7 +1,7 @@
 import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";

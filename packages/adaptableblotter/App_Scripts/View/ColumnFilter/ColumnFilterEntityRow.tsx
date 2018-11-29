@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';

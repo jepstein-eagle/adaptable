@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
-import { InputAction } from '../../Core/Interface/IMessage';
+import { InputAction } from '../../Api/Interface/IMessage';
 import { ILayout } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 

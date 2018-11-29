@@ -1,14 +1,14 @@
 import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { IPercentBar } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ColorPicker } from "../ColorPicker";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 
 
 export interface PercentBarEntityRowProps extends SharedEntityExpressionRowProps<PercentBarEntityRow> {

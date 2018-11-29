@@ -11,11 +11,11 @@ import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions
 import { IColumnFilter, IUserFilter, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../../Api/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { IColumn } from "../../../Core/Interface/IColumn";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IColumn } from "../../../Api/Interface/IColumn";
+import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Utilities/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { IKeyValuePair } from '../../../Core/Interface/Interfaces';
+import { IKeyValuePair } from '../../../api/Interface/Interfaces';
 
 
 interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterFormComponent> {

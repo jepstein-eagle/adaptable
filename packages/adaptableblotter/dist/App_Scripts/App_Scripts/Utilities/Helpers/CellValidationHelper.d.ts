@@ -1,5 +1,5 @@
 import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 export declare module CellValidationHelper {
     function createCellValidationDescription(cellValidationRule: ICellValidationRule, columns: IColumn[]): string;
 }

@@ -20,7 +20,7 @@ const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class ChartPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {

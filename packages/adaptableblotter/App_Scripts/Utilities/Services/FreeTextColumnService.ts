@@ -3,7 +3,7 @@ import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
 import { IFreeTextColumn } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 
 export class FreeTextColumnService implements IFreeTextColumnService {
     constructor(private blotter: IAdaptableBlotter) {

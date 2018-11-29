@@ -20,7 +20,7 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IAdvancedSearch } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchName: string;

@@ -27,7 +27,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 
     constructor(props: CalculatedColumnSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

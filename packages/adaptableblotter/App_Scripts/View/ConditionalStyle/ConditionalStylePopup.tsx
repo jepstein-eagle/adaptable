@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { Well } from 'react-bootstrap';
@@ -24,7 +24,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../api/Interface/Interfaces";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
@@ -39,7 +39,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
 
     constructor(props: ConditionalStylePopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

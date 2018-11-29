@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard'
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard'
@@ -7,7 +7,7 @@ import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWi
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import {  IColumnCategory } from "../../../Core/Interface/Interfaces";
+import {  IColumnCategory } from "../../../api/Interface/Interfaces";
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
     ColorPalette: string[],

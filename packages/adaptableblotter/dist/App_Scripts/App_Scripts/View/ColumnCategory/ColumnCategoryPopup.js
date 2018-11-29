@@ -22,7 +22,7 @@ const ColumnCategoryWizard_1 = require("./Wizard/ColumnCategoryWizard");
 class ColumnCategoryPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (this.props.PopupParams == "New") {

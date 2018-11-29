@@ -31,7 +31,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
 
     constructor(props: AlertSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

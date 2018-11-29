@@ -16,7 +16,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
@@ -30,7 +30,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 
     constructor(props: ColumnFilterSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

@@ -3,12 +3,12 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
-import { ICellInfo } from '../Core/Interface/Interfaces';
+import { ICellInfo } from '../api/Interface/Interfaces';
 import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
-import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreview';
+import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';

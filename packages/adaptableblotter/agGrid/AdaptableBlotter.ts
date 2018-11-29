@@ -5,7 +5,7 @@ import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css'
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../App_Scripts/View/AdaptableBlotterView';
-import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../App_Scripts/api/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../App_Scripts/Utilities/Constants/StrategyConstants'
 import * as StyleConstants from '../App_Scripts/Utilities/Constants/StyleConstants'
 import * as ScreenPopups from '../App_Scripts/Utilities/Constants/ScreenPopups'
@@ -74,16 +74,16 @@ import { ColumnCategoryStrategy } from '../App_Scripts/Strategy/ColumnCategorySt
 import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
-import { IMenuItem } from '../App_Scripts/Core/Interface/IMenu';
-import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
-import { IUIConfirmation } from '../App_Scripts/Core/Interface/IMessage';
+import { IMenuItem } from '../App_Scripts/Api/Interface/IMenu';
+import { IEvent } from '../App_Scripts/Api/Interface/IEvent';
+import { IUIConfirmation } from '../App_Scripts/Api/Interface/IMessage';
 import { EventDispatcher } from '../App_Scripts/Utilities/EventDispatcher'
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../App_Scripts/Utilities/Enums'
 import { ObjectFactory } from '../App_Scripts/Utilities/ObjectFactory';
 import { Color } from '../App_Scripts/Utilities/color';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
-import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
+import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../App_Scripts/api/Interface/Interfaces';
+import { IColumn } from '../App_Scripts/Api/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';

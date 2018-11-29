@@ -1,5 +1,5 @@
 
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
 import {  ReportColumnScope } from '../../../Utilities/Enums'

@@ -1,5 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 export declare class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
     private DashboardState;

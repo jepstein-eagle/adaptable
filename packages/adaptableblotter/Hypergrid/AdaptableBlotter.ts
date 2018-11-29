@@ -12,8 +12,8 @@ import * as FreeTextColumnRedux from '../App_Scripts/Redux/ActionsReducers/FreeT
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../App_Scripts/Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../App_Scripts/Strategy/Interface/IStrategy';
-import { IMenuItem, } from '../App_Scripts/Core/Interface/IMenu';
-import { IAlert, IUIConfirmation } from '../App_Scripts/Core/Interface/IMessage';
+import { IMenuItem, } from '../App_Scripts/Api/Interface/IMenu';
+import { IAlert, IUIConfirmation } from '../App_Scripts/Api/Interface/IMessage';
 import * as StrategyConstants from '../App_Scripts/Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../App_Scripts/Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../App_Scripts/Strategy/SmartEditStrategy'
@@ -37,18 +37,18 @@ import { ThemeStrategy } from '../App_Scripts/Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../App_Scripts/Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../App_Scripts/Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../App_Scripts/Strategy/Interface/IColumnFilterStrategy';
-import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
+import { IEvent } from '../App_Scripts/Api/Interface/IEvent';
 import { EventDispatcher } from '../App_Scripts/Utilities/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SortOrder } from '../App_Scripts/Utilities/Enums'
-import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../App_Scripts/api/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../App_Scripts/Utilities/ObjectFactory';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../App_Scripts/View/UIInterfaces';
 import { BulkUpdateStrategy } from '../App_Scripts/Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
-import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
+import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../App_Scripts/api/Interface/Interfaces';
+import { IColumn } from '../App_Scripts/Api/Interface/IColumn';
 import { FilterFormReact } from '../App_Scripts/View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../App_Scripts/View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';

@@ -6,13 +6,13 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode, MessageType, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]

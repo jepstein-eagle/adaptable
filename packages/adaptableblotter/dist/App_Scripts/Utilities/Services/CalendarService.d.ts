@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 import { ICalendarService } from './Interface/ICalendarService';
 export declare class CalendarService implements ICalendarService {
     private blotter;

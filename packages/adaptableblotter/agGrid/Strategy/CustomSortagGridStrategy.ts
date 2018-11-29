@@ -1,5 +1,5 @@
 import { CustomSortStrategy } from '../../App_Scripts/Strategy/CustomSortStrategy';
-import { IAdaptableBlotter } from '../../App_Scripts/Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../App_Scripts/api/Interface/IAdaptableBlotter';
 import { RowNode } from "ag-grid"
 import { ICustomSort } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 

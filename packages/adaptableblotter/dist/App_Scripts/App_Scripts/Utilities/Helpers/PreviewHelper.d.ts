@@ -1,5 +1,5 @@
-import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../Core/Interface/IPreview";
-import { ICellInfo } from "../../Core/Interface/Interfaces";
+import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../api/Interface/IPreview";
+import { ICellInfo } from "../../api/Interface/Interfaces";
 export declare module PreviewHelper {
     function GetPreviewValidationSummary(previewResults: IPreviewResult[]): IPreviewValidationSummary;
     function GetValidationMessage(previewInfo: IPreviewInfo, newValue: string): string;

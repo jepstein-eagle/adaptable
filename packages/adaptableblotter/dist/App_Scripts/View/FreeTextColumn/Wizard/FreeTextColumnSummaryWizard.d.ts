@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../api/Interface/IColumn";
 import { IFreeTextColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface FreeTextColumnSummaryWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {
     Columns: IColumn[];

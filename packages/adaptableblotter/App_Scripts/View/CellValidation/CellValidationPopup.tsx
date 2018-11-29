@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -39,7 +39,7 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
 class CellValidationPopupComponent extends React.Component<CellValidationPopupProps, EditableConfigEntityState> {
     constructor(props: CellValidationPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {

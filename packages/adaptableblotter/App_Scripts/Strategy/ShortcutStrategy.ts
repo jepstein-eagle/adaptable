@@ -5,17 +5,17 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { StateChangedTrigger, DataType, MathOperation, ActionMode } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ICellInfo } from '../Core/Interface/Interfaces';
-import { IColumn } from '../Core/Interface/IColumn';
+import { ICellInfo } from '../api/Interface/Interfaces';
+import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { IShortcut, ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IUIConfirmation } from '../Core/Interface/IMessage';
+import { IUIConfirmation } from '../Api/Interface/IMessage';
 
 
 

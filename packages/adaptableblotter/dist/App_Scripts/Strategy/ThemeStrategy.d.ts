@@ -1,6 +1,6 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 export declare class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     private ThemeState;
     private style;

@@ -31,7 +31,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
     constructor(props: UserFilterSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

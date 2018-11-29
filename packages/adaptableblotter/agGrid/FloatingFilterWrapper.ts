@@ -3,7 +3,7 @@ import { IColumnFilterContext } from '../App_Scripts/Strategy/Interface/IColumnF
 import { AdaptableBlotter, } from './AdaptableBlotter'
 import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid/dist/lib/filter/floatingFilter";
 import { FloatingFilterFormReact } from "../App_Scripts/View/Components/FilterForm/FloatingFilterForm";
-import { IColumn } from "../App_Scripts/Core/Interface/IColumn";
+import { IColumn } from "../App_Scripts/Api/Interface/IColumn";
 import { DistinctCriteriaPairValue } from "../App_Scripts/Utilities/Enums";
 import { ColumnHelper } from "../App_Scripts/Utilities/Helpers/ColumnHelper";
 

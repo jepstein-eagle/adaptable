@@ -2,9 +2,9 @@ import { IAlertStrategy } from './Interface/IAlertStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { IAlertDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../Core/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 import { LeafExpressionOperator, StateChangedTrigger } from '../Utilities/Enums';

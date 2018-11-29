@@ -31,7 +31,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
     constructor(props: CellValidationSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

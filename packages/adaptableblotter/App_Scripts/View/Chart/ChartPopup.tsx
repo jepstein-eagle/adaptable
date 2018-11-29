@@ -8,7 +8,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ChartEntityRow } from './ChartEntityRow'
@@ -38,7 +38,7 @@ interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
 class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfigEntityState> {
     constructor(props: ChartPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

@@ -1,6 +1,6 @@
 import { ILayoutStrategy } from './Interface/ILayoutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { LayoutState } from '../Redux/ActionsReducers/Interface/IState';
 export declare class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
     CurrentLayout: string;

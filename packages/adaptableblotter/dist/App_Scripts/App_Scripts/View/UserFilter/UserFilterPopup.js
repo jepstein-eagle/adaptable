@@ -20,7 +20,7 @@ const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 class UserFilterPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {

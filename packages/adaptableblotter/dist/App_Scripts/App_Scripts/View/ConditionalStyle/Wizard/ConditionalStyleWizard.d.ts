@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumnCategory } from "../../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../../api/Interface/Interfaces";
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
     ColorPalette: string[];
     StyleClassNames: string[];

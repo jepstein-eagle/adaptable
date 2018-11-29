@@ -4,7 +4,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
 import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[];
     onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;

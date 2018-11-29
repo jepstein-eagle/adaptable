@@ -4,7 +4,7 @@ import { LeafExpressionOperator } from '../../Utilities/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon, Panel, Checkbox, Radio } from 'react-bootstrap';
-import { IColumn } from "../../Core/Interface/IColumn";
+import { IColumn } from "../../Api/Interface/IColumn";
 import { UIHelper } from "../UIHelper";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";

@@ -1,5 +1,5 @@
 import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 import { ICalendarService } from './Interface/ICalendarService';
 
 // Similar service to the one in WPF version

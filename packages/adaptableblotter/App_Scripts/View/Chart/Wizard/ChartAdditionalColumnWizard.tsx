@@ -6,12 +6,12 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
@@ -58,7 +58,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
                                 SelectionMode={SelectionMode.Single} />
                         </Col>
                         <Row>
-                            <Col xs={4} componentClass={ControlLabel}>X Axis Column Values:</Col>
+                            <Col xs={4} componentClass={ControlLabel}>Additional Column Values:</Col>
                             <Col xs={6} >
                                 <Radio inline value="All" checked={this.state.UseAllAdditionalColumnValues == true} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>All</Radio>
                                 <Radio inline value="Bespoke" checked={this.state.UseAllAdditionalColumnValues == false} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>Bespoke</Radio>

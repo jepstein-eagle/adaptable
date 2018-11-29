@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../api/Interface/IAdaptableBlotter';
 import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {

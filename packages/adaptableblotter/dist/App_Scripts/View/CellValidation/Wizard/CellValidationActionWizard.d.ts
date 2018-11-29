@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ActionMode } from '../../../Utilities/Enums';
 import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";

@@ -22,7 +22,7 @@ const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class LayoutPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (this.props.PopupParams == "New") {

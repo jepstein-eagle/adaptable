@@ -3,7 +3,7 @@ import * as Redux from 'redux'
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
@@ -17,7 +17,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
-import { IEntitlement, IKeyValuePair } from "../../Core/Interface/Interfaces";
+import { IEntitlement, IKeyValuePair } from "../../api/Interface/Interfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,

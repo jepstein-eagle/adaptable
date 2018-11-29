@@ -7,7 +7,7 @@ import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
@@ -37,7 +37,7 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
 
     constructor(props: UserFilterPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {

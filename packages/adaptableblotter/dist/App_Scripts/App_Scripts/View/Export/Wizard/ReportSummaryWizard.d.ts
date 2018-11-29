@@ -1,7 +1,7 @@
 import { IReport, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<IReport> {
     Columns: IColumn[];
     UserFilters: IUserFilter[];

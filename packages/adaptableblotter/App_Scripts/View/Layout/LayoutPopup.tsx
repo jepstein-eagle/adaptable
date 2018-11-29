@@ -17,7 +17,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IColumn } from "../../Core/Interface/IColumn";
+import { IColumn } from "../../Api/Interface/IColumn";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
@@ -37,7 +37,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
 class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
     constructor(props: LayoutPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

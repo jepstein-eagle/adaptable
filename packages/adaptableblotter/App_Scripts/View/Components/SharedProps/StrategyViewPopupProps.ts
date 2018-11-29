@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { IUserFilter, IGridSort, IColumnFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 import { AccessLevel } from "../../../Utilities/Enums";
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface

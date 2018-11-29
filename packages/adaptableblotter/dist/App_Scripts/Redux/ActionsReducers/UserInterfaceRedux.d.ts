@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { UserInterfaceState } from './Interface/IState';
-import { IPermittedColumnValues } from '../../Core/Interface/Interfaces';
+import { IPermittedColumnValues } from '../../api/Interface/Interfaces';
 export declare const COLOR_PALETTE_SET = "COLOR_PALETTE_SET";
 export declare const COLOR_PALETTE_ADD = "COLOR_PALETTE_ADD";
 export declare const STYLE_CLASSNAMES_ADD = "STYLE_CLASSNAMES_ADD";

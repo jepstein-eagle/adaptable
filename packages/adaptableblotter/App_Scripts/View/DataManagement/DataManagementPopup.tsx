@@ -18,7 +18,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
 
     constructor(props: DataManagementPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render() {

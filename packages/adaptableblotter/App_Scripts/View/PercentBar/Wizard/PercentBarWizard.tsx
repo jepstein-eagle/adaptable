@@ -1,6 +1,6 @@
 import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard'
 import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard'

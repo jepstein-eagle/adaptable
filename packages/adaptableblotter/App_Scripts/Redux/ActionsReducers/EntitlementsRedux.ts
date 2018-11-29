@@ -1,6 +1,6 @@
 import { EntitlementsState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IEntitlement } from '../../Core/Interface/Interfaces';
+import { IEntitlement } from '../../api/Interface/Interfaces';
 
 export const ENTITLEMENT_ADD_UPDATE = 'ENTITLEMENT_ADD_UPDATE';
 export const ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';

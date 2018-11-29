@@ -1,12 +1,12 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
+import { IKeyValuePair } from "../../../api/Interface/Interfaces";
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     Columns: IColumn[]

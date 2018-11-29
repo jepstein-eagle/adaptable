@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { FormControl, Row, Col, InputGroup, InputGroupButton, Glyphicon, MenuItem, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IUIPrompt } from '../../Core/Interface/IMessage';
+import { IUIPrompt } from '../../Api/Interface/IMessage';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
@@ -24,7 +24,7 @@ import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {

@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Checkbox, 
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { SortOrder, SelectionMode } from "../../../Utilities/Enums";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { GridSortRow } from '../GridSortRow'

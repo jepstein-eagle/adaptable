@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { MessageType } from "../../Utilities/Enums";

@@ -2,7 +2,7 @@ import { IAlertDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
 import { DataType, LeafExpressionOperator } from '../Enums';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
 export module AlertHelper {

@@ -10,7 +10,7 @@ import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IEntitlement } from "../../api/Interface/Interfaces";
 
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {

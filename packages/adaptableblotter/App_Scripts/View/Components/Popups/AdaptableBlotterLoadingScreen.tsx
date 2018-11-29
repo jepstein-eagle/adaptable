@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../api/Interface/IAdaptableBlotter';
 import * as React from "react";
 import { Modal } from 'react-bootstrap';
 import { UIHelper } from '../../UIHelper';

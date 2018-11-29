@@ -11,13 +11,13 @@ import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IMenuItem } from '../../Core/Interface/IMenu'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IMenuItem } from '../../Api/Interface/IMenu'
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Utilities/Enums";
-import { ISystemStatus } from "../../Core/Interface/Interfaces";
-import { IAlert, } from "../../Core/Interface/IMessage";
+import { ISystemStatus } from "../../api/Interface/Interfaces";
+import { IAlert, } from "../../Api/Interface/IMessage";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";

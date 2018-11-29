@@ -17,7 +17,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IColumn } from "../../Core/Interface/IColumn";
+import { IColumn } from "../../Api/Interface/IColumn";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
@@ -25,7 +25,7 @@ import { SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IColumnCategory } from "../../Core/Interface/Interfaces";
+import { IColumnCategory } from "../../api/Interface/Interfaces";
 import { ColumnCategoryEntityRow } from "./ColumnCategoryEntityRow";
 import { ColumnCategoryWizard } from "./Wizard/ColumnCategoryWizard";
 
@@ -39,7 +39,7 @@ interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategory
 class ColumnCategoryPopupComponent extends React.Component<ColumnCategoryPopupProps, EditableConfigEntityState> {
     constructor(props: ColumnCategoryPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

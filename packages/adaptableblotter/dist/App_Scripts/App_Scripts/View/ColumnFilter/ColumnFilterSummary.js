@@ -15,7 +15,7 @@ const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class ColumnFilterSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__columnfilter";

@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";

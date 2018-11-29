@@ -1,9 +1,9 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { LoggingHelper } from './LoggingHelper';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { DataType } from '../Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { IColumnCategory } from '../../Core/Interface/Interfaces';
+import { IColumnCategory } from '../../api/Interface/Interfaces';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
 export module ColumnHelper {

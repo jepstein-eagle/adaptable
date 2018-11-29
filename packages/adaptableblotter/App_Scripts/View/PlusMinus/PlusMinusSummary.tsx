@@ -31,7 +31,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
 
     constructor(props: PlusMinusSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
 
     }
     render(): any {

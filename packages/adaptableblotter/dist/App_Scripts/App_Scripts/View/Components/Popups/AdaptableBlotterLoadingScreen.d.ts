@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../api/Interface/IAdaptableBlotter';
 import * as React from "react";
 export interface IAdaptableBlotterLoadingScreenProps extends React.ClassAttributes<AdaptableBlotterLoadingScreen> {
     showLoadingScreen: boolean;

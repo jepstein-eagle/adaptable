@@ -30,7 +30,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<FreeTextColu
 
     constructor(props: FreeTextColumnSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

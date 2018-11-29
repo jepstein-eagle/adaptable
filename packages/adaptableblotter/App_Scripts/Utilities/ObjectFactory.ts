@@ -2,13 +2,13 @@ import { Helper } from './Helpers/Helper';
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
-import { IColumn } from '../Core/Interface/IColumn';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../Api/Interface/IColumn';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { Expression } from '../Api/Expression';
-import { IVendorGridInfo, IColumnCategory } from '../Core/Interface/Interfaces';
+import { IVendorGridInfo, IColumnCategory } from '../api/Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 
 export module ObjectFactory {

@@ -7,7 +7,7 @@ import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IMasterChildren } from "../../../Core/Interface/Interfaces";
+import { IMasterChildren } from "../../../api/Interface/Interfaces";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 export interface IMasterValue {

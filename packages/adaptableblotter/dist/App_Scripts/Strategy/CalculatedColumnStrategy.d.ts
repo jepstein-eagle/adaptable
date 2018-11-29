@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy";
-import { IColumn } from '../Core/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 export declare class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy {
     private CalculatedColumnState;
     constructor(blotter: IAdaptableBlotter);

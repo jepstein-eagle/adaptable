@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';

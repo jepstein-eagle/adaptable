@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { AB_HEADER } from "../../Utilities/Constants/StyleConstants";
 
 export module StyleHelper {

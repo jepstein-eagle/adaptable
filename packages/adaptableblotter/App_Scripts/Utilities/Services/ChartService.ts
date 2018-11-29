@@ -1,11 +1,11 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IChartService } from './Interface/IChartService';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 import { IChartDefinition, IColumnValueExpression } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../Enums';
-import { IKeyValuePair } from '../../Core/Interface/Interfaces';
+import { IKeyValuePair } from '../../api/Interface/Interfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';

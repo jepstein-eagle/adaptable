@@ -1,8 +1,8 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
 import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn } from '../Core/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 export declare abstract class FormatColumnStrategy extends AdaptableStrategyBase implements IFormatColumnStrategy {
     protected FormatColumnState: FormatColumnState;
     constructor(blotter: IAdaptableBlotter);

@@ -37,7 +37,7 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
 class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityState> {
     constructor(props: AdvancedSearchPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

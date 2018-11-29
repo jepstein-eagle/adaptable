@@ -1,13 +1,13 @@
 import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css';
 import { IAdaptableBlotterStore } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
-import { IEvent } from '../App_Scripts/Core/Interface/IEvent';
+import { IEvent } from '../App_Scripts/api/Interface/IEvent';
 import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher';
 import { DataType, DistinctCriteriaPairValue } from '../App_Scripts/Utilities/Enums';
-import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../App_Scripts/api/Interface/IAdaptableBlotter';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
-import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/Core/Interface/Interfaces';
-import { IColumn } from '../App_Scripts/Core/Interface/IColumn';
+import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/api/Interface/Interfaces';
+import { IColumn } from '../App_Scripts/api/Interface/IColumn';
 import { ICalculatedColumn, IStyle, IFreeTextColumn, IPercentBar } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';

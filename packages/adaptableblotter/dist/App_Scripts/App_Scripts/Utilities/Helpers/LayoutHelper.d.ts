@@ -1,6 +1,6 @@
 import { ILayout, IGridSort } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../../Core/Interface/IColumn';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../api/Interface/IColumn';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 export declare module LayoutHelper {
     function getLayoutDescription(layout: ILayout, columns: IColumn[]): string;
     function getGridSort(gridSorts: IGridSort[], columns: IColumn[]): string;

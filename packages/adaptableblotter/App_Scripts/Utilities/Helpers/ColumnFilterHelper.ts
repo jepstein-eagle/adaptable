@@ -1,9 +1,9 @@
 import { ExpressionHelper } from './ExpressionHelper'
 import { IColumnFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../../Core/Interface/IColumn';
-import { IKeyValuePair } from '../../Core/Interface/Interfaces';
+import { IColumn } from '../../Api/Interface/IColumn';
+import { IKeyValuePair } from '../../api/Interface/Interfaces';
 import { ColumnHelper } from './ColumnHelper';
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 
 export module ColumnFilterHelper {

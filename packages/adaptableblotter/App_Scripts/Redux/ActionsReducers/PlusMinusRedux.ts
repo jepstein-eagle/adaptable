@@ -1,6 +1,6 @@
 import { PlusMinusState } from './Interface/IState';
 import * as Redux from 'redux'
-import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { ICellInfo } from '../../api/Interface/Interfaces';
 import { IPlusMinusRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';

@@ -8,7 +8,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -20,7 +20,7 @@ import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IUIConfirmation } from "../../Core/Interface/IMessage";
+import { IUIConfirmation } from "../../Api/Interface/IMessage";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
@@ -40,7 +40,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
 class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, EditableConfigEntityState> {
     constructor(props: PlusMinusPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

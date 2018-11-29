@@ -1,8 +1,8 @@
 import { IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
 import { MathOperation } from '../../Utilities/Enums';
-import { IPreviewInfo } from '../../Core/Interface/IPreview';
-import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { IPreviewInfo } from '../../Api/Interface/IPreview';
+import { ICellInfo } from '../../api/Interface/Interfaces';
 
 export interface ISmartEditStrategy extends IStrategy {
     CheckCorrectCellSelection(): IStrategyActionReturn<boolean>;

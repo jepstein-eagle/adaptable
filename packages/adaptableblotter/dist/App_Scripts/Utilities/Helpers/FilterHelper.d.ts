@@ -1,5 +1,5 @@
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { IColumn } from "../../Core/Interface/IColumn";
+import { IColumn } from "../../api/Interface/IColumn";
 import { DataType } from "../../Utilities/Enums";
 export declare module FilterHelper {
     const BLANKS_SYSTEM_FILTER = "Blanks";
