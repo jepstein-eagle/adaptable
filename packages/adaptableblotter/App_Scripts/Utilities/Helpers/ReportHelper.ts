@@ -133,7 +133,11 @@ export module ReportHelper {
     function getRowValues(row: any, ReportColumns: IColumn[], blotter: IAdaptableBlotter): any[] {
         let newRow: any[] = [];
         ReportColumns.forEach(col => {
-            newRow.push(blotter.getDisplayValueFromRecord(row, col.ColumnId));
+            let columnValue: any =blotter.getDisplayValueFromRecord(row, col.ColumnId);
+            if (!isNaN(Number(columnValue))) {
+                columnValue = Number(columnValue).toString()
+            }
+            newRow.push(columnValue);
         })
         return newRow;
     }

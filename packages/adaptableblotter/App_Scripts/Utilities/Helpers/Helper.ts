@@ -80,7 +80,7 @@ export module Helper {
                 item = infoArray[i];
                 if (separator == ",") {
                     if (item != null && item != undefined) {
-                        if (item.indexOf && (item.indexOf(',') !== -1 || item.indexOf('"') !== -1)) {
+                        if (item.indexOf(',') !== -1 || item.indexOf('"') !== -1) {
                             item = '"' + item.replace(/"/g, '""') + '"';
                         }
                         // bit of a hack but we have a user where they have "+2502+S" as a value which Excel then thinks is a formula
