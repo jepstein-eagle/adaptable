@@ -675,7 +675,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
-        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue ) {
             let rowNodeSearch: RowNode
             //ag-grid doesn't support FindRow based on data
             // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
@@ -798,10 +798,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private useRawValueForColumn(columnId: string): boolean {
         // will add more in due course I'm sure but for now only percent bar columns return false...
-        return ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars, columnId);
-    }
+        if(ArrayExtensions.IsEmpty(this.getState().PercentBar.PercentBars)){
+            return false;
+        }
+        return ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars.map(pb => { return pb.ColumnId }), columnId);
+     }
 
     public getDisplayValue(id: any, columnId: string): string {
+       alert("here")
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue: string
@@ -820,6 +824,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return ""
         }
         let rawValue = this.gridOptions.api.getValue(columnId, row)
+        if(this.useRawValueForColumn(columnId)){
+            return rawValue;
+        }
         return this.getDisplayValueFromRawValue(columnId, rawValue);
     }
 
