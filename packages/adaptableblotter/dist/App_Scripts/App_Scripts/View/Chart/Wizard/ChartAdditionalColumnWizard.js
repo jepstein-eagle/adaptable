@@ -36,7 +36,7 @@ class ChartAdditionalColumnWizard extends React.Component {
                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
                             React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.AdditionalColumn], ColumnList: this.props.Columns, onColumnChange: columns => this.onAdditionalColumnChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })),
                         React.createElement(react_bootstrap_1.Row, null,
-                            React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "X Axis Column Values:"),
+                            React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column Values:"),
                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "All", checked: this.state.UseAllAdditionalColumnValues == true, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "All"),
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Bespoke", checked: this.state.UseAllAdditionalColumnValues == false, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "Bespoke"))))),

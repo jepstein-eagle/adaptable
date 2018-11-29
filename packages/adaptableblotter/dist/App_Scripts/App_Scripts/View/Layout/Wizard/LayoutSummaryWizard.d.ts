@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from "../../../api/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { ILayout } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: IColumn[];

@@ -58,7 +58,7 @@ const ColumnCategoryStrategy_1 = require("../App_Scripts/Strategy/ColumnCategory
 // components
 const FilterWrapper_1 = require("./FilterWrapper");
 const FloatingFilterWrapper_1 = require("./FloatingFilterWrapper");
-const EventDispatcher_1 = require("../App_Scripts/Core/EventDispatcher");
+const EventDispatcher_1 = require("../App_Scripts/Utilities/EventDispatcher");
 const Enums_1 = require("../App_Scripts/Utilities/Enums");
 const ObjectFactory_1 = require("../App_Scripts/Utilities/ObjectFactory");
 const color_1 = require("../App_Scripts/Utilities/color");
@@ -664,9 +664,13 @@ class AdaptableBlotter {
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...
-        return ArrayExtensions_1.ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars, columnId);
+        if (ArrayExtensions_1.ArrayExtensions.IsEmpty(this.getState().PercentBar.PercentBars)) {
+            return false;
+        }
+        return ArrayExtensions_1.ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars.map(pb => { return pb.ColumnId; }), columnId);
     }
     getDisplayValue(id, columnId) {
+        alert("here");
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue;
@@ -684,6 +688,9 @@ class AdaptableBlotter {
             return "";
         }
         let rawValue = this.gridOptions.api.getValue(columnId, row);
+        if (this.useRawValueForColumn(columnId)) {
+            return rawValue;
+        }
         return this.getDisplayValueFromRawValue(columnId, rawValue);
     }
     getDisplayValueFromRawValue(columnId, rawValue) {

@@ -1,5 +1,5 @@
-import { IMenuItem } from './Interface/IMenu';
 import * as Redux from 'redux';
+import { IMenuItem } from '../Api/Interface/IMenu';
 export declare class MenuItemDoReduxAction implements IMenuItem {
     Label: string;
     StrategyId: string;

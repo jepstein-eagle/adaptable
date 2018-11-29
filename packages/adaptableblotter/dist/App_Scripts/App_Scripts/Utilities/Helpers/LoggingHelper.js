@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
-const Enums_1 = require("../../Utilities/Enums");
+const Enums_1 = require("../Enums");
 var LoggingHelper;
 (function (LoggingHelper) {
     function LogAlert(message, messageType, ...optionalParams) {

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ExpressionHelper_1 = require("./ExpressionHelper");
 const ColumnHelper_1 = require("./ColumnHelper");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
-const Enums_1 = require("../../Utilities/Enums");
+const Enums_1 = require("../Enums");
 var CellValidationHelper;
 (function (CellValidationHelper) {
     function createCellValidationDescription(cellValidationRule, columns) {

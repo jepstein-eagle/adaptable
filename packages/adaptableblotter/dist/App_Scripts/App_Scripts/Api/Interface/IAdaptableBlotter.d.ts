@@ -1,10 +1,10 @@
-import { DistinctCriteriaPairValue } from '../Enums';
+import { DistinctCriteriaPairValue } from '../../Utilities/Enums';
 import { ICellInfo, IAdaptableStrategyCollection, IVendorGridInfo } from './Interfaces';
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
 import { IEvent } from './IEvent';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { EventDispatcher } from '../EventDispatcher';
+import { EventDispatcher } from '../../Utilities/EventDispatcher';
 import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Api/Interface/IStateEvents';

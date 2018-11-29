@@ -1,7 +1,7 @@
-import { LeafExpressionOperator, DataType } from '../../Utilities/Enums';
+import { LeafExpressionOperator, DataType } from '../Enums';
 import { IRange, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { Expression } from '../../Api/Expression';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
 export interface IRangeEvaluation {
     operand1: any;

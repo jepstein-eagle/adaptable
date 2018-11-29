@@ -1,4 +1,4 @@
-import { IEvent } from "../../api/Interface/IEvent";
+import { IEvent } from "./IEvent";
 import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
 import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";

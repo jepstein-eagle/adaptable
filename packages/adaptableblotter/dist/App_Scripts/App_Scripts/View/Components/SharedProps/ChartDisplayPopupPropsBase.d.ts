@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IColumn } from "../../../api/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { IAdaptableBlotterOptions } from "../../../Api/Interface/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
 import { IChartService } from "../../../Utilities/Services/Interface/IChartService";

@@ -1,7 +1,7 @@
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 import { ICellInfo } from '../api/Interface/Interfaces';
 export declare class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState;

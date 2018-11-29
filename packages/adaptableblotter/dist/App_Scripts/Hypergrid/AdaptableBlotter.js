@@ -8,6 +8,7 @@ const MenuRedux = require("../App_Scripts/Redux/ActionsReducers/MenuRedux");
 const GridRedux = require("../App_Scripts/Redux/ActionsReducers/GridRedux");
 const LayoutRedux = require("../App_Scripts/Redux/ActionsReducers/LayoutRedux");
 const PopupRedux = require("../App_Scripts/Redux/ActionsReducers/PopupRedux");
+const FreeTextColumnRedux = require("../App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux");
 const AdaptableBlotterStore_1 = require("../App_Scripts/Redux/Store/AdaptableBlotterStore");
 const StrategyConstants = require("../App_Scripts/Utilities/Constants/StrategyConstants");
 const CustomSortStrategy_1 = require("../App_Scripts/Strategy/CustomSortStrategy");
@@ -31,7 +32,7 @@ const LayoutStrategy_1 = require("../App_Scripts/Strategy/LayoutStrategy");
 const ThemeStrategy_1 = require("../App_Scripts/Strategy/ThemeStrategy");
 const DashboardStrategy_1 = require("../App_Scripts/Strategy/DashboardStrategy");
 const TeamSharingStrategy_1 = require("../App_Scripts/Strategy/TeamSharingStrategy");
-const EventDispatcher_1 = require("../App_Scripts/Core/EventDispatcher");
+const EventDispatcher_1 = require("../App_Scripts/Utilities/EventDispatcher");
 const Enums_1 = require("../App_Scripts/Utilities/Enums");
 const CustomSortDataSource_1 = require("./CustomSortDataSource");
 const FilterAndSearchDataSource_1 = require("./FilterAndSearchDataSource");
@@ -58,6 +59,8 @@ const CalendarService_1 = require("../App_Scripts/Utilities/Services/CalendarSer
 const AuditService_1 = require("../App_Scripts/Utilities/Services/AuditService");
 const ValidationService_1 = require("../App_Scripts/Utilities/Services/ValidationService");
 const CalculatedColumnExpressionService_1 = require("../App_Scripts/Utilities/Services/CalculatedColumnExpressionService");
+const FreeTextColumnStrategy_1 = require("../App_Scripts/Strategy/FreeTextColumnStrategy");
+const FreeTextColumnService_1 = require("../App_Scripts/Utilities/Services/FreeTextColumnService");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -104,6 +107,7 @@ class AdaptableBlotter {
             let column = this.getHypergridColumn(columnId);
             return this.valOrFunc(record, column);
         });
+        this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
@@ -124,6 +128,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy_1.FlashingCellsHypergridStrategy(this));
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnHypergridStrategy_1.FormatColumnHypergridStrategy(this));
@@ -389,12 +394,12 @@ class AdaptableBlotter {
                                     break;
                             }
                         }
+                        LoggingHelper_1.LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
                     }
                     /* falls through */
                     default:
                         break;
                 }
-                LoggingHelper_1.LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
                 return dataType;
             }
             let type = column.type;
@@ -434,6 +439,8 @@ class AdaptableBlotter {
             Record: null
         };
         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+        // it might be a free text column so we need to update the values
+        this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint();
     }
@@ -453,6 +460,7 @@ class AdaptableBlotter {
                 Record: null
             };
             dataChangedEvents.push(dataChangedEvent);
+            this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint();
@@ -465,6 +473,13 @@ class AdaptableBlotter {
     }
     cancelEdit() {
         this.hyperGrid.cancelEditing();
+    }
+    checkIfDataChangingColumnIsFreeText(dataChangedEvent) {
+        let freeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
+        if (freeTextColumn) {
+            let freeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue };
+            this.AdaptableBlotterStore.TheStore.dispatch(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
+        }
     }
     forAllRecordsDo(func) {
         //we use getData instead of this.hyperGrid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
@@ -812,7 +827,7 @@ class AdaptableBlotter {
         this.hyperGrid.behavior.changed();
     }
     addCalculatedColumnToGrid(calculatedColumn) {
-        let newSchema = {
+        let schema = {
             name: calculatedColumn.ColumnId,
             header: calculatedColumn.ColumnId,
             calculator: (dataRow) => {
@@ -823,17 +838,36 @@ class AdaptableBlotter {
                 return this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, dataRow);
             }
         };
-        this.hyperGrid.behavior.dataModel.schema.push(newSchema);
+        this.hyperGrid.behavior.dataModel.schema.push(schema);
         this.hyperGrid.behavior.addColumn({
             index: this.hyperGrid.behavior.getColumns().length,
-            header: newSchema.header,
-            calculator: newSchema.calculator
+            header: schema.header,
+            calculator: schema.calculator,
+            type: 'string'
         });
         this.hyperGrid.behavior.changed();
         this.setColumnIntoStore();
     }
     addFreeTextColumnToGrid(freeTextColumn) {
-        // to do
+        let schema = {
+            name: freeTextColumn.ColumnId,
+            header: freeTextColumn.ColumnId,
+            calculator: (dataRow) => {
+                //22/08/17: I think that's a bug that's been fixed in v2 of hypergrid but for now we need to return the header
+                if (Object.keys(dataRow).length == 0) {
+                    return freeTextColumn.ColumnId;
+                }
+                return this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, dataRow);
+            }
+        };
+        this.hyperGrid.behavior.dataModel.schema.push(schema);
+        this.hyperGrid.behavior.addColumn({
+            index: this.hyperGrid.behavior.getColumns().length,
+            header: schema.header,
+            calculator: schema.calculator,
+            type: 'string',
+            editor: 'textfield' // this is not quite right as it says undefined, but not sure how to get a cell editor added dynamically at runtime. 
+        });
     }
     isGroupRecord() {
         return false;
@@ -961,6 +995,18 @@ class AdaptableBlotter {
             let dataChangingEvent;
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
             dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
+            let freeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangingEvent.ColumnId);
+            if (freeTextColumn) {
+                let dataChangedEvent = {
+                    OldValue: null,
+                    NewValue: dataChangingEvent.NewValue,
+                    ColumnId: dataChangingEvent.ColumnId,
+                    IdentifierValue: dataChangingEvent.IdentifierValue,
+                    Timestamp: null,
+                    Record: null
+                };
+                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+            }
             let failedRules = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
                 // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyConstants.CellValidationStrategyId) as ICellValidationStrategy;

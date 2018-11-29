@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {

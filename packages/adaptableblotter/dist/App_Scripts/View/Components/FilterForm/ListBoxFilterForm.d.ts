@@ -2,7 +2,7 @@ import * as React from "react";
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { ListGroupProps } from 'react-bootstrap';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IColumn } from "../../../api/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface ListBoxFilterFormProps extends ListGroupProps {
     CurrentColumn: IColumn;

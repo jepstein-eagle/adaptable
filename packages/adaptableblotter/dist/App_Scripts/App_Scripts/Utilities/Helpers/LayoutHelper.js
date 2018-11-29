@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ColumnHelper_1 = require("./ColumnHelper");
-const Enums_1 = require("../../Utilities/Enums");
+const Enums_1 = require("../Enums");
 const ObjectFactory_1 = require("../ObjectFactory");
 const LayoutRedux = require("../../Redux/ActionsReducers/LayoutRedux");
 var LayoutHelper;

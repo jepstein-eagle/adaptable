@@ -1,5 +1,5 @@
 import { IAdaptableBlotter } from "../api/Interface/IAdaptableBlotter";
-import { IEvent } from "../api/Interface/IEvent";
+import { IEvent } from "./Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport } from "./Interface/IAdaptableBlotterObjects";

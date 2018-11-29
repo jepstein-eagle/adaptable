@@ -65,18 +65,18 @@ class FreeTextColumnPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
     }
     onFinishWizard() {
-        let FreeTextColumn = this.state.EditedAdaptableBlotterObject;
+        let freeTextColumn = this.state.EditedAdaptableBlotterObject;
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-            this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, FreeTextColumn);
+            this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, freeTextColumn);
         }
         else {
-            this.props.onAddFreeTextColumn(FreeTextColumn);
+            this.props.onAddFreeTextColumn(freeTextColumn);
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
     }
     canFinishWizard() {
-        let FreeTextColumn = this.state.EditedAdaptableBlotterObject;
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(FreeTextColumn.ColumnId);
+        let freeTextColumn = this.state.EditedAdaptableBlotterObject;
+        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(freeTextColumn.ColumnId);
     }
 }
 function mapStateToProps(state, ownProps) {

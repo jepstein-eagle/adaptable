@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
     Column: IColumn;

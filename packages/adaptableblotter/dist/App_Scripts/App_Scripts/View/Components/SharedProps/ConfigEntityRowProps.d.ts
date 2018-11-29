@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { IUserFilter, IAdaptableBlotterObject } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { IColItem } from "../../UIInterfaces";
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {

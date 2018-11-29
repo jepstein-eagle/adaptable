@@ -1,5 +1,5 @@
-import { IColumn } from '../../api/Interface/IColumn';
-import { DataType } from '../../Utilities/Enums';
+import { IColumn } from '../../Api/Interface/IColumn';
+import { DataType } from '../Enums';
 import { IColumnCategory } from '../../api/Interface/Interfaces';
 export declare module ColumnHelper {
     function isSpecialColumn(columnId: string): boolean;

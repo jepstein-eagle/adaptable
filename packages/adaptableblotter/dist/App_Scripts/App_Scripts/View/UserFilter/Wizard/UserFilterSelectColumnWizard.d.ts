@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {

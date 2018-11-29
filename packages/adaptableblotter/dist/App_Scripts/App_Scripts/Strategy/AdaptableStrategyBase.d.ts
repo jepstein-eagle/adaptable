@@ -1,10 +1,10 @@
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
-import { IMenuItem } from '../api/Interface/IMenu';
+import { IMenuItem } from '../Api/Interface/IMenu';
 import { Action } from 'redux';
 import { IEntitlement } from '../api/Interface/Interfaces';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 export declare abstract class AdaptableStrategyBase implements IStrategy {
     Id: string;

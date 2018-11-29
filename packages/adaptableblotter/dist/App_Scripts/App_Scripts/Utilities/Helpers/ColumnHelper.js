@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const LoggingHelper_1 = require("./LoggingHelper");
-const Enums_1 = require("../../Utilities/Enums");
+const Enums_1 = require("../Enums");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 var ColumnHelper;

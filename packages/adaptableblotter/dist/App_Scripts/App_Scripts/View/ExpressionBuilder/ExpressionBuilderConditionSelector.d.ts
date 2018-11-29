@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";

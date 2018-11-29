@@ -1,8 +1,8 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../api/Interface/IMessage';
-import { IMenuItem, IContextMenu } from '../../../api/Interface/IMenu';
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Api/Interface/IMessage';
+import { IMenuItem, IContextMenu } from '../../../Api/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
-import { IPreviewInfo } from '../../../api/Interface/IPreview';
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IPreviewInfo } from '../../../Api/Interface/IPreview';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../api/Interface/Interfaces';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';

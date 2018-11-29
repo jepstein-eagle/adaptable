@@ -1,13 +1,13 @@
 import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css';
 import { IAdaptableBlotterStore } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore';
-import { IEvent } from '../App_Scripts/api/Interface/IEvent';
-import { EventDispatcher } from '../App_Scripts/Core/EventDispatcher';
+import { IEvent } from '../App_Scripts/Api/Interface/IEvent';
+import { EventDispatcher } from '../App_Scripts/Utilities/EventDispatcher';
 import { DataType, DistinctCriteriaPairValue } from '../App_Scripts/Utilities/Enums';
 import { IAdaptableBlotter } from '../App_Scripts/api/Interface/IAdaptableBlotter';
 import { IPPStyle } from '../App_Scripts/Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
 import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../App_Scripts/api/Interface/Interfaces';
-import { IColumn } from '../App_Scripts/api/Interface/IColumn';
+import { IColumn } from '../App_Scripts/Api/Interface/IColumn';
 import { ICalculatedColumn, IStyle, IFreeTextColumn, IPercentBar } from '../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
@@ -19,6 +19,7 @@ import { IAuditService } from '../App_Scripts/Utilities/Services/Interface/IAudi
 import { ICalendarService } from '../App_Scripts/Utilities/Services/Interface/ICalendarService';
 import { IValidationService } from '../App_Scripts/Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../App_Scripts/Utilities/Services/AuditLogService';
+import { IFreeTextColumnService } from '../App_Scripts/Utilities/Services/Interface/IFreeTextColumnService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -29,6 +30,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     AuditLogService: AuditLogService;
     ChartService: IChartService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
+    FreeTextColumnService: IFreeTextColumnService;
     BlotterOptions: IAdaptableBlotterOptions;
     VendorGridName: any;
     EmbedColumnMenu: boolean;
@@ -69,6 +71,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setValueBatch(batchValues: ICellInfo[]): void;
     private ClearSelection;
     cancelEdit(): void;
+    private checkIfDataChangingColumnIsFreeText;
     forAllRecordsDo(func: (record: any) => any): any;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;

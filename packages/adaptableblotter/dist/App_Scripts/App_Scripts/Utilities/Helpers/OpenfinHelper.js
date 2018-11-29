@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoggingHelper_1 = require("./LoggingHelper");
-const EventDispatcher_1 = require("../../Core/EventDispatcher");
+const EventDispatcher_1 = require("../EventDispatcher");
 var OpenfinHelper;
 (function (OpenfinHelper) {
     let ExcelServiceStatus;

@@ -1,4 +1,4 @@
-import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../api/Interface/IPreview";
+import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../Api/Interface/IPreview";
 import { ICellInfo } from "../../api/Interface/Interfaces";
 export declare module PreviewHelper {
     function GetPreviewValidationSummary(previewResults: IPreviewResult[]): IPreviewValidationSummary;
