@@ -6,7 +6,7 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 const Enums_1 = require("../../../Utilities/Enums");
-const GeneralConstants = require("../../../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const SingleListBox_1 = require("../../Components/ListBox/SingleListBox");
 class ChartXAxisWizard extends React.Component {

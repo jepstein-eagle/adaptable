@@ -11,12 +11,12 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Core/Interface/IPreview";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
 import { StatusColour, MathOperation, AccessLevel } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";

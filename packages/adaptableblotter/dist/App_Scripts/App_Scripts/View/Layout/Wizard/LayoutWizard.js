@@ -7,7 +7,7 @@ const LayoutColumnWizard_1 = require("./LayoutColumnWizard");
 const LayoutSettingsWizard_1 = require("./LayoutSettingsWizard");
 const LayoutGridSortWizard_1 = require("./LayoutGridSortWizard");
 const LayoutSummaryWizard_1 = require("./LayoutSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class LayoutWizard extends React.Component {
     render() {
         let stepNames = ["Source", "Columns", "Sort", "Settings", "Summary"];

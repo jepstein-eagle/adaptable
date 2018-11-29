@@ -6,7 +6,7 @@ import { ExpressionHelper } from '../../App_Scripts/Utilities/Helpers/Expression
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { StringExtensions } from '../../App_Scripts/Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../App_Scripts/Utilities/Helpers/StyleHelper';
-import * as StrategyConstants from '../../App_Scripts/Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../App_Scripts/Utilities/Constants/StrategyConstants'
 import { IColumnCategory } from '../../App_Scripts/Core/Interface/Interfaces';
 import { ArrayExtensions } from '../../App_Scripts/Utilities/Extensions/ArrayExtensions';
 

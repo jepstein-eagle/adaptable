@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
@@ -11,7 +11,7 @@ import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 

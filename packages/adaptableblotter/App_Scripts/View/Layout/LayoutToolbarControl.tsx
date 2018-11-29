@@ -15,9 +15,9 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonUndo } from '../Components/Buttons/ButtonUndo';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";

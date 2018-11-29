@@ -7,11 +7,11 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Utilities/Enums");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const react_bootstrap_1 = require("react-bootstrap");
 const ColumnFilterHelper_1 = require("../../Utilities/Helpers/ColumnFilterHelper");
 class ColumnFilterToolbarControlComponent extends React.Component {

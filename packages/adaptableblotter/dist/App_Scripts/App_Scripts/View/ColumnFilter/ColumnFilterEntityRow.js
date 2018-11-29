@@ -7,7 +7,7 @@ const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const ButtonSave_1 = require("../Components/Buttons/ButtonSave");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
-const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
+const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 class ColumnFilterEntityRow extends React.Component {
     render() {
         let colItems = [].concat(this.props.colItems);

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ButtonBase_1 = require("./ButtonBase");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const Enums_1 = require("../../../Utilities/Enums");
 class ButtonDashboard extends React.Component {
     render() {

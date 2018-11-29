@@ -1,7 +1,7 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { Glyphicon, Label, Button } from 'react-bootstrap';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 
 export interface WizardLegendProps extends React.ClassAttributes<WizardLegend> {

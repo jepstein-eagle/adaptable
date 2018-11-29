@@ -8,7 +8,7 @@ const ColorPicker_1 = require("../ColorPicker");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const AdaptableBlotterForm_1 = require("./Forms/AdaptableBlotterForm");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class StyleComponent extends React.Component {
     constructor(props) {
         super(props);

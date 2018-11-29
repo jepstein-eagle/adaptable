@@ -15,8 +15,8 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Core/Interface/IPreview";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IUIConfirmation } from "../../Core/Interface/IMessage";
@@ -25,7 +25,7 @@ import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEvent } from "../../Core/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, StatusColour, AccessLevel } from "../../Utilities/Enums";

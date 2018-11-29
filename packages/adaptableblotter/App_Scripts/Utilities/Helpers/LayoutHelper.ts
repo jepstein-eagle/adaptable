@@ -1,4 +1,4 @@
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ILayout, IGridSort } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';

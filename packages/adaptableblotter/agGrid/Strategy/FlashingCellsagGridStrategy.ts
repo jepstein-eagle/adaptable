@@ -3,7 +3,7 @@ import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../../App_Scripts/Strategy/Interface/IFlashingCellsStrategy'
 import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService'
 import { DataType } from '../../App_Scripts/Utilities/Enums'
-import * as StyleConstants from '../../App_Scripts/Core/Constants/StyleConstants'
+import * as StyleConstants from '../../App_Scripts/Utilities/Constants/StyleConstants'
 import { IFlashingCell } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {

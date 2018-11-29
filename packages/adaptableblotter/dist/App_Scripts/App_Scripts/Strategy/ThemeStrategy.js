@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const themes_1 = require("../Styles/themes");
-const GeneralConstants = require("../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../Utilities/Constants/GeneralConstants");
 const Enums_1 = require("../Utilities/Enums");
 class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {

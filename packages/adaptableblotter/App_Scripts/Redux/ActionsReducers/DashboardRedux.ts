@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { DashboardState } from './Interface/IState'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../Utilities/Enums';
 

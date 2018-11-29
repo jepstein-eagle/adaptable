@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';

@@ -8,7 +8,7 @@ import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
@@ -17,7 +17,7 @@ import { StrategyProfile } from '../Components/StrategyProfile'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject, IFormatColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";

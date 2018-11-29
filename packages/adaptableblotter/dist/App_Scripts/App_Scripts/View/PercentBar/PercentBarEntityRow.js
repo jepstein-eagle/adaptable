@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const ColorPicker_1 = require("../ColorPicker");
 class PercentBarEntityRow extends React.Component {

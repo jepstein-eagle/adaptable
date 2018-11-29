@@ -4,7 +4,7 @@ const React = require("react");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const react_bootstrap_1 = require("react-bootstrap");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class AdaptableBlotterFormControlTextClear extends React.Component {
     render() {
         let size = (this.props.bsSize) ? this.props.bsSize : 'small';

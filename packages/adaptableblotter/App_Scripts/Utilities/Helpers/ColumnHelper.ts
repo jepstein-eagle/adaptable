@@ -1,4 +1,4 @@
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { LoggingHelper } from './LoggingHelper';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { DataType } from '../Enums';

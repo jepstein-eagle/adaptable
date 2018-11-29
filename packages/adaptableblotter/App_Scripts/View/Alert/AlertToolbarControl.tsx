@@ -9,8 +9,8 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { IAlert } from "../../Core/Interface/IMessage";
 import { AdaptablePopover } from "../AdaptablePopover";

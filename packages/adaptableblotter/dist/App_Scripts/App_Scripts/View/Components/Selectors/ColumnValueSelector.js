@@ -5,7 +5,7 @@ const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const react_bootstrap_typeahead_1 = require("react-bootstrap-typeahead");
 const Enums_1 = require("../../../Utilities/Enums");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 class ColumnValueSelector extends React.Component {
     componentWillReceiveProps(nextProps, nextContext) {

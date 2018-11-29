@@ -5,7 +5,7 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard'
 import { UserFilterExpressionWizard } from './UserFilterExpressionWizard'
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard'
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 

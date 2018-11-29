@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 class CalculatedColumnEntityRow extends React.Component {
     render() {
         let calculatedColumn = this.props.AdaptableBlotterObject;

@@ -5,8 +5,8 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as SelectedCellsRedux from '../../Redux/ActionsReducers/SelectedCellsRedux'
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/ToolbarStrategyViewPopupProps";
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
@@ -15,7 +15,7 @@ import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interfa
 import { SelectedCellOperation, AccessLevel } from "../../Utilities/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 
 interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SelectedCellsToolbarControlComponent> {

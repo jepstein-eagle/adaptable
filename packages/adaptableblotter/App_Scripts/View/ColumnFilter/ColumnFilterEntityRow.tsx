@@ -11,7 +11,7 @@ import { ButtonSave } from "../Components/Buttons/ButtonSave";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Utilities/Enums";
-import { DANGER_BSSTYLE } from "../../Core/Constants/StyleConstants";
+import { DANGER_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
     onClear: (columnFilter: IColumnFilter) => void;

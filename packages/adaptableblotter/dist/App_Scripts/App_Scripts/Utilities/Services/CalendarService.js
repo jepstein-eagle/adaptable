@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const CalendarConstants = require("../../Core/Constants/CalendarConstants");
+const CalendarConstants = require("../../Utilities/Constants/CalendarConstants");
 // Similar service to the one in WPF version
 // This service is responsible for reading the calendars and for making them available and also for doing data calculations
 // The breakdown of the various classes is as follows:

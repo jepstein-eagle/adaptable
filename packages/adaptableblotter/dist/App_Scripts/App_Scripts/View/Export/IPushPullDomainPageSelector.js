@@ -9,7 +9,7 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../../Utilities/Enums");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class IPushPullDomainPageSelectorComponent extends React.Component {
     constructor(props) {
         super(props);

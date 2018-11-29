@@ -8,14 +8,14 @@ import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";

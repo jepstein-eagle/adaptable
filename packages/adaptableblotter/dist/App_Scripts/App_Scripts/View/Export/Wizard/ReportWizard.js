@@ -7,7 +7,7 @@ const ReportColumnTypeWizard_1 = require("./ReportColumnTypeWizard");
 const ReportExpressionWizard_1 = require("./ReportExpressionWizard");
 const ReportSettingsWizard_1 = require("./ReportSettingsWizard");
 const ReportSummaryWizard_1 = require("./ReportSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class ReportWizard extends React.Component {
     render() {
         let stepNames = ["Type", "Columns", "Build Query", "Choose Name", "Summary"];

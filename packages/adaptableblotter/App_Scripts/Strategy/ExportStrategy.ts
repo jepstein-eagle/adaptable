@@ -1,6 +1,6 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { IExportStrategy, ILiveReport } from './Interface/IExportStrategy'

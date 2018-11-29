@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const FlashingCellsRedux = require("../Redux/ActionsReducers/FlashingCellsRedux");
 const Enums_1 = require("../Utilities/Enums");

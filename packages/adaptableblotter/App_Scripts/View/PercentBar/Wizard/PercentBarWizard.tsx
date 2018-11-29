@@ -4,7 +4,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard'
 import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { PercentBarSettingsWizard } from "./PercentBarSettingsWizard";
 

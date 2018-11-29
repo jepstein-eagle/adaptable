@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -18,7 +18,7 @@ import { AlertEntityRow } from './AlertEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IAlertDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { MessageType, AccessLevel } from "../../Utilities/Enums";

@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
 const ButtonBase_1 = require("./ButtonBase");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class ButtonDeleteComponent extends React.Component {
     render() {
         return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "Delete", bsStyle: StyleConstants.DANGER_BSSTYLE, bsSize: this.props.size, glyph: "trash", onClick: () => this.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.DELETE_BUTTON });

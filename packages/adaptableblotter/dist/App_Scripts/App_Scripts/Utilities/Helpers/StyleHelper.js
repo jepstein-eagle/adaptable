@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
+const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 var StyleHelper;
 (function (StyleHelper) {
     function CreateStyleName(strategyId, blotter) {

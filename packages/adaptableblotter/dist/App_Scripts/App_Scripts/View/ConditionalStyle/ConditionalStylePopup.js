@@ -4,7 +4,7 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const ConditionalStyleRedux = require("../../Redux/ActionsReducers/ConditionalStyleRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../Utilities/Enums");
 const ConditionalStyleEntityRow_1 = require("./ConditionalStyleEntityRow");
@@ -16,7 +16,7 @@ const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 class ConditionalStylePopupComponent extends React.Component {
     constructor(props) {

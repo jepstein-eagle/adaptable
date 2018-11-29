@@ -8,14 +8,14 @@ import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject, ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

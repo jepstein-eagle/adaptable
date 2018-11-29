@@ -11,10 +11,10 @@ const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const UIHelper_1 = require("../UIHelper");
 class FormatColumnPopupComponent extends React.Component {
     constructor(props) {

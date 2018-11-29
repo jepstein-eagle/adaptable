@@ -6,7 +6,7 @@ const Enums_1 = require("../../../Utilities/Enums");
 const ListBoxFilterSortComponent_1 = require("./ListBoxFilterSortComponent");
 const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class SingleListBox extends React.Component {
     constructor(props) {
         super(props);

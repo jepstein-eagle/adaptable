@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");

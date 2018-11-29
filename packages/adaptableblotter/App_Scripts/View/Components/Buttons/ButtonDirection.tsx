@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export class ButtonDirection extends React.Component<ButtonProps, {}> {
     render() {

@@ -12,12 +12,12 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IFreeTextColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
@@ -128,17 +128,18 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
     }
 
     onFinishWizard() {
-        let FreeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn
+        let freeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-            this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, FreeTextColumn)
+            this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, freeTextColumn)
           } else {
-            this.props.onAddFreeTextColumn(FreeTextColumn)
+            this.props.onAddFreeTextColumn(freeTextColumn)
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
     }
+
     canFinishWizard() {
-        let FreeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn
-        return StringExtensions.IsNotNullOrEmpty(FreeTextColumn.ColumnId)
+        let freeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn
+        return StringExtensions.IsNotNullOrEmpty(freeTextColumn.ColumnId)
     }
 }
 

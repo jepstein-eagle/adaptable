@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ExpressionHelper_1 = require("./Helpers/ExpressionHelper");
 const Enums_1 = require("../Utilities/Enums");
 const ColumnHelper_1 = require("./Helpers/ColumnHelper");
-const GeneralConstants = require("../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../Utilities/Constants/GeneralConstants");
 const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
 var ObjectFactory;
 (function (ObjectFactory) {

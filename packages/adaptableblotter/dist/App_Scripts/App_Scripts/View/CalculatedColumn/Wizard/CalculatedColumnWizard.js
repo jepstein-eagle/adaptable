@@ -5,7 +5,7 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const CalculatedColumnExpressionWizard_1 = require("./CalculatedColumnExpressionWizard");
 const CalculatedColumnSettingsWizard_1 = require("./CalculatedColumnSettingsWizard");
 const CalculatedColumnSummaryWizard_1 = require("./CalculatedColumnSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class CalculatedColumnWizard extends React.Component {
     render() {
         let stepNames = ["Create Column", "Write Expression", "Summary"];

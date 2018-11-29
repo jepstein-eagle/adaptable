@@ -3,7 +3,7 @@ import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface PanelWithImageProps extends PanelProps {
     glyphicon?: string

@@ -14,7 +14,7 @@ import { AdaptableBlotterStore } from '../App_Scripts/Redux/Store/AdaptableBlott
 import { IStrategy, } from '../App_Scripts/Strategy/Interface/IStrategy';
 import { IMenuItem, } from '../App_Scripts/Core/Interface/IMenu';
 import { IAlert, IUIConfirmation } from '../App_Scripts/Core/Interface/IMessage';
-import * as StrategyConstants from '../App_Scripts/Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../App_Scripts/Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../App_Scripts/Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../App_Scripts/Strategy/SmartEditStrategy'
 import { ShortcutStrategy } from '../App_Scripts/Strategy/ShortcutStrategy'

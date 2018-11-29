@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const CalculatedColumnRedux = require("../../Redux/ActionsReducers/CalculatedColumnRedux");
 const CalculatedColumnWizard_1 = require("./Wizard/CalculatedColumnWizard");
 const UIHelper_1 = require("../UIHelper");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class CalculatedColumnSummaryComponent extends React.Component {
     constructor(props) {

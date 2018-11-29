@@ -5,7 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
 import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";

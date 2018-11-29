@@ -18,7 +18,7 @@ import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { ButtonClose } from "../Buttons/ButtonClose";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Expression } from "../../../Api/Expression";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";

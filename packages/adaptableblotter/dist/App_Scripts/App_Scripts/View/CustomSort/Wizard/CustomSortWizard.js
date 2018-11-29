@@ -5,7 +5,7 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const CustomSortColumnWizard_1 = require("./CustomSortColumnWizard");
 const CustomSortValuesWizard_1 = require("./CustomSortValuesWizard");
 const CustomSortSummaryWizard_1 = require("./CustomSortSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class CustomSortWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Create Sort Order", "Summary"];

@@ -7,7 +7,7 @@ const UserFilterSettingsWizard_1 = require("./UserFilterSettingsWizard");
 const UserFilterExpressionWizard_1 = require("./UserFilterExpressionWizard");
 const UserFilterSelectColumnWizard_1 = require("./UserFilterSelectColumnWizard");
 const UserFilterSummaryWizard_1 = require("./UserFilterSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class UserFilterWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Build Query", "Settings", "Summary"];

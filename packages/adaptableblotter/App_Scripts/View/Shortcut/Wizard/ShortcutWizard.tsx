@@ -3,7 +3,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ShortcutSettingsWizard } from './ShortcutSettingsWizard'
 import { ShortcutSummaryWizard } from './ShortcutSummaryWizard'
 import { ShortcutTypeWizard } from './ShortcutTypeWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface ShortcutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ShortcutWizard> {

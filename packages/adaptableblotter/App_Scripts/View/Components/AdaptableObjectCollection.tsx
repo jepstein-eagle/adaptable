@@ -4,7 +4,7 @@ import { PanelWithRow } from './Panels/PanelWithRow';
 import { ListGroup } from 'react-bootstrap';
 import { IColItem } from "../UIInterfaces";
 import { SmartEditApply } from "../../Redux/ActionsReducers/SmartEditRedux";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 
 export interface AdaptableObjectCollectionProps extends React.ClassAttributes<AdaptableObjectCollection> {

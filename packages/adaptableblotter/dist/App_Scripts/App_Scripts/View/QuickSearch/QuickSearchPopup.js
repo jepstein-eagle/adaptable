@@ -12,9 +12,9 @@ const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const ColorPicker_1 = require("../ColorPicker");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const AdaptableBlotterFormControlTextClear_1 = require("../Components/Forms/AdaptableBlotterFormControlTextClear");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
-const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 class QuickSearchPopupComponent extends React.Component {
     constructor(props) {
         super(props);

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");

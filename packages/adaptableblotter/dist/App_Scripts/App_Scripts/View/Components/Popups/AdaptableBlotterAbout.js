@@ -9,7 +9,7 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const ColumnFilterHelper_1 = require("../../../Utilities/Helpers/ColumnFilterHelper");
 const react_bootstrap_1 = require("react-bootstrap");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const UIHelper_1 = require("../../UIHelper");
 class AdaptableBlotterAbout extends React.Component {
     render() {

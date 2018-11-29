@@ -24,8 +24,8 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
-import { DEFAULT_LAYOUT } from "../Core/Constants/GeneralConstants";
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../Core/Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Utilities/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';

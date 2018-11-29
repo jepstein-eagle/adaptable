@@ -4,7 +4,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { IAdvancedSearch } from "../../Api/Interface/IAdaptableBlotterObjects";
 

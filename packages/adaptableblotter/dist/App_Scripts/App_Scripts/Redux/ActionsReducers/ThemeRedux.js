@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const themes_1 = require("../../Styles/themes");
-const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 const THEME_SET_SYSTEM_THEMES = 'THEME_SET_SYSTEM_THEMES';
 const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
 const THEME_SELECT = 'THEME_SELECT';

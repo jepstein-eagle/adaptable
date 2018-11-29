@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const GeneralConstants = require("../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../Utilities/Constants/GeneralConstants");
 exports.DefaultAdaptableBlotterOptions = {
     vendorGrid: null,
     primaryKey: "",

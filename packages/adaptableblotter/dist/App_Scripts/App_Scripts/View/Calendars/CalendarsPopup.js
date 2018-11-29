@@ -9,7 +9,7 @@ const CalendarsEntryRow_1 = require("./CalendarsEntryRow");
 const CalendarEntryItem_1 = require("./CalendarEntryItem");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 class CalendarsPopupComponent extends React.Component {
     constructor(props) {
         super(props);

@@ -11,9 +11,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyProfile } from '../Components/StrategyProfile';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';

@@ -5,7 +5,7 @@ import { DistinctCriteriaPairValue } from '../../../Utilities/Enums'
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { UIHelper } from '../../UIHelper';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
 
 export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableBlotterChart> {

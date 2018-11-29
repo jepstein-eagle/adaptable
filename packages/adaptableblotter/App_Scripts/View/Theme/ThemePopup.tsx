@@ -6,7 +6,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IUserTheme } from "../../Api/Interface/IAdaptableBlotterObjects";
 

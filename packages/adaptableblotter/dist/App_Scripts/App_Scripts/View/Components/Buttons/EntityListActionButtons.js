@@ -5,7 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ButtonEdit_1 = require("./ButtonEdit");
 const ButtonDelete_1 = require("./ButtonDelete");
 const ButtonShare_1 = require("./ButtonShare");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const Enums_1 = require("../../../Utilities/Enums");
 class EntityListActionButtons extends React.Component {
     render() {

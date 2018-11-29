@@ -6,9 +6,9 @@ import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../App_Scripts/View/AdaptableBlotterView';
 import { IAdaptableBlotter } from '../App_Scripts/Core/Interface/IAdaptableBlotter';
-import * as StrategyConstants from '../App_Scripts/Core/Constants/StrategyConstants'
-import * as StyleConstants from '../App_Scripts/Core/Constants/StyleConstants'
-import * as ScreenPopups from '../App_Scripts/Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../App_Scripts/Utilities/Constants/StrategyConstants'
+import * as StyleConstants from '../App_Scripts/Utilities/Constants/StyleConstants'
+import * as ScreenPopups from '../App_Scripts/Utilities/Constants/ScreenPopups'
 // redux / store
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../App_Scripts/Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../App_Scripts/Redux/Store/AdaptableBlotterStore'

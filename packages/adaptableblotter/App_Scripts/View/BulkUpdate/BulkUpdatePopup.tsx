@@ -6,7 +6,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { MathOperation, MessageType, DataType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -23,7 +23,7 @@ import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Core/Constants/StyleConstants";
+import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const StyleVisualItem_1 = require("../../Components/StyleVisualItem");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class FormatColumnSummaryWizard extends React.Component {
     constructor(props) {

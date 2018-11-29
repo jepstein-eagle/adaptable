@@ -8,7 +8,7 @@ const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const Enums_1 = require("../../Utilities/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
 const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AlertHelper_1 = require("../../Utilities/Helpers/AlertHelper");
 class AlertEntityRow extends React.Component {
     render() {

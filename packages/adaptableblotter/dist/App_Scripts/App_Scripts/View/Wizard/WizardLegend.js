@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
 const react_bootstrap_1 = require("react-bootstrap");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class WizardLegend extends React.Component {
     render() {
         let count = this.props.StepNames.length - 1;

@@ -4,7 +4,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWizard'
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard'
 import { CalculatedColumnSummaryWizard } from './CalculatedColumnSummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CalculatedColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CalculatedColumnWizard> {

@@ -9,7 +9,7 @@ import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { Dashboard } from './Dashboard/Dashboard'
 import { AdaptableBlotterPopupConfirmation } from './Components/Popups/AdaptableBlotterPopupConfirmation'
-import * as StyleConstants from '../Core/Constants/StyleConstants';
+import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterPopupAlert } from "./Components/Popups/AdaptableBlotterPopupAlert";
 import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart";
 import { AdaptableBlotterLoadingScreen } from "./Components/Popups/AdaptableBlotterLoadingScreen";

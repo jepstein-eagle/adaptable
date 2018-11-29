@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
@@ -11,7 +11,7 @@ const SummaryRowItem_1 = require("../Components/StrategySummary/SummaryRowItem")
 const StrategyProfile_1 = require("../Components/StrategyProfile");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class ColumnFilterSummaryComponent extends React.Component {
     constructor(props) {
         super(props);

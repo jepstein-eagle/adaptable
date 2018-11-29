@@ -6,7 +6,7 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { Well } from 'react-bootstrap';
 import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
@@ -20,7 +20,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IConditionalStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

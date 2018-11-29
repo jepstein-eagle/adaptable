@@ -6,7 +6,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ICalculatedColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
+import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {

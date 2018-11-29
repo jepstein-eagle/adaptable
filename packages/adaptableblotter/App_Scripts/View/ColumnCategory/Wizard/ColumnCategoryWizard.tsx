@@ -3,7 +3,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ColumnCategorySettingsWizard } from './ColumnCategorySettingsWizard'
 import { ColumnCategoryColumnsWizard } from './ColumnCategoryColumnsWizard'
 import { ColumnCategorySummaryWizard } from './ColumnCategorySummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
 import { IColumnCategory } from "../../../Core/Interface/Interfaces";
 

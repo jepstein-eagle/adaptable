@@ -7,14 +7,14 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard'
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import { StrategyProfile } from '../Components/StrategyProfile'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject, IFreeTextColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 

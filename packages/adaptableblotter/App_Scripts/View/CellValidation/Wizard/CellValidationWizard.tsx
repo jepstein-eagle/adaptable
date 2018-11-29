@@ -9,7 +9,7 @@ import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
 import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CellValidationWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CellValidationWizard> {

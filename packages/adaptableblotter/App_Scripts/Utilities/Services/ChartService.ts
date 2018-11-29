@@ -1,4 +1,4 @@
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { IChartDefinition, IColumnValueExpression } from '../../Api/Interface/IAdaptableBlotterObjects';

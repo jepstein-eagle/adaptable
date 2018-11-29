@@ -5,7 +5,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IAdvancedSearch } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { PRIMARY_BSSTYLE } from "../../../Core/Constants/StyleConstants";
+import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[]

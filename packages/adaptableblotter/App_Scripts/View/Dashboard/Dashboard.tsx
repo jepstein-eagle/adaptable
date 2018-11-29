@@ -6,12 +6,12 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory, AdaptableDashboardPermanentToolbarFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
 import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Utilities/Enums";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
 import { IEntitlement } from "../../Core/Interface/Interfaces";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";

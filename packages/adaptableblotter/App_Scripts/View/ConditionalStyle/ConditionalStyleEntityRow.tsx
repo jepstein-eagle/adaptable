@@ -4,11 +4,11 @@ import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { IConditionalStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";

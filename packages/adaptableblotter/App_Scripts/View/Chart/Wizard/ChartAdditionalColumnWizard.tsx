@@ -10,7 +10,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
-import * as GeneralConstants from '../../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {

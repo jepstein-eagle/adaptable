@@ -5,8 +5,8 @@ const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
 const UIHelper_1 = require("../../UIHelper");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const GeneralConstants = require("../../../Core/Constants/GeneralConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
+const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
 const EntitlementHelper_1 = require("../../../Utilities/Helpers/EntitlementHelper");
 class AdaptableBlotterPopup extends React.Component {
     render() {

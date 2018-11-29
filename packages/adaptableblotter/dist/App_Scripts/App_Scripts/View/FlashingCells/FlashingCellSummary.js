@@ -4,10 +4,10 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const react_redux_1 = require("react-redux");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const FlashingCellRedux = require("../../Redux/ActionsReducers/FlashingCellsRedux");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class FlashingCellSummaryComponent extends React.Component {
     render() {

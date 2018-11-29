@@ -3,7 +3,7 @@ import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Utilities/Enums";
 import { IConditionalStyle, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";

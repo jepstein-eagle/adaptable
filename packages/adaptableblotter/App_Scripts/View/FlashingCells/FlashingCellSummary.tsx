@@ -5,13 +5,13 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Core/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IFlashingCell } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 

@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -13,7 +13,7 @@ import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 import { IEntitlement } from "../../Core/Interface/Interfaces";

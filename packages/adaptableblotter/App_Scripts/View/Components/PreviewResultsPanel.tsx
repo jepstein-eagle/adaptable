@@ -5,7 +5,7 @@ import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreview";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../Core/Interface/IColumn";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IUserFilter, ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 

@@ -3,7 +3,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { CustomSortSummaryWizard } from './CustomSortSummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
 

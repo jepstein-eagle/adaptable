@@ -11,7 +11,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { IPPDomain, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ExportDestination } from "../../Utilities/Enums";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 interface IPushPullDomainPageSelectorProps extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
     IPPDomainsPages: IPPDomain[]

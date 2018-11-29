@@ -6,7 +6,7 @@ import { IColumn } from "../../../Core/Interface/IColumn";
 import { Helper } from "../../../Utilities/Helpers/Helper";
 import { Sizes, InputGroup } from "react-bootstrap";
 import { CSSProperties } from "react";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonClear } from "../Buttons/ButtonClear";
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class AdvancedSearchSummaryWizard extends React.Component {
     constructor(props) {
         super(props);

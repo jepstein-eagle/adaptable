@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../../Utilities/Enums");
-const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.QUICK_SEARCH_APPLY = 'QUICK_SEARCH_APPLY';
 exports.QUICK_SEARCH_SET_OPERATOR = 'QUICK_SEARCH_SET_OPERATOR';
 exports.QUICK_SEARCH_SET_DISPLAY = 'QUICK_SEARCH_SET_DISPLAY';

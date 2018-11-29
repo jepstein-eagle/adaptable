@@ -11,12 +11,12 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

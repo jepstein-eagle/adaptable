@@ -4,7 +4,7 @@ import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListGroupItem, Row, ListGroup, Col, Button, Panel, Glyphicon, ButtonGroup, ControlLabel, Checkbox } from 'react-bootstrap';
 import { SortOrder } from '../../../Utilities/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonDirection } from "../Buttons/ButtonDirection";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IMasterChildren } from "../../../Core/Interface/Interfaces";

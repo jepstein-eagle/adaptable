@@ -10,12 +10,12 @@ const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
 const Enums_1 = require("../../Utilities/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonShowChart_1 = require("../Components/Buttons/ButtonShowChart");
 class ChartToolbarControlComponent extends React.Component {
     render() {

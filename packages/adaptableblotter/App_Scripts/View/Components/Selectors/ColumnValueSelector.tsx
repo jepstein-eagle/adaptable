@@ -5,7 +5,7 @@ import { Typeahead } from 'react-bootstrap-typeahead'
 import { IColumn } from '../../../Core/Interface/IColumn';
 import { SortOrder, SelectionMode, DistinctCriteriaPairValue, DataType } from '../../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 

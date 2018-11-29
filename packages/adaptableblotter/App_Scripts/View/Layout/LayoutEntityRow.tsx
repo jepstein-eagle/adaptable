@@ -4,9 +4,9 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
-import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
+import { DEFAULT_LAYOUT } from "../../Utilities/Constants/GeneralConstants";
 import { IColumn } from "../../Core/Interface/IColumn";
 import { SortOrder } from "../../Utilities/Enums";
 import { LayoutHelper } from "../../Utilities/Helpers/LayoutHelper";

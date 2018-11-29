@@ -45,7 +45,7 @@ import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
 import * as SelectedCellsRedux from '../ActionsReducers/SelectedCellsRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy'
@@ -55,15 +55,15 @@ import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants'
 import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DEFAULT_LAYOUT } from '../../Core/Constants/GeneralConstants';
+import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';

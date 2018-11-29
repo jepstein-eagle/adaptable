@@ -5,7 +5,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'
@@ -23,7 +23,7 @@ import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

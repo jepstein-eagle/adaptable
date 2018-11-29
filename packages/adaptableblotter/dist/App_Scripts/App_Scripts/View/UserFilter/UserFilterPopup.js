@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
@@ -15,7 +15,7 @@ const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 class UserFilterPopupComponent extends React.Component {
     constructor(props) {

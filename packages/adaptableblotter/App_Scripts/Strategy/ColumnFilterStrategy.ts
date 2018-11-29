@@ -1,7 +1,7 @@
 import { IColumnFilterStrategy } from './Interface/IColumnFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';

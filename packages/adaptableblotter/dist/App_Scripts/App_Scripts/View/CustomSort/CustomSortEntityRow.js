@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 class CustomSortEntityRow extends React.Component {
     render() {
         let customSort = this.props.AdaptableBlotterObject;

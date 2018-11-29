@@ -5,7 +5,7 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const ColumnCategorySettingsWizard_1 = require("./ColumnCategorySettingsWizard");
 const ColumnCategoryColumnsWizard_1 = require("./ColumnCategoryColumnsWizard");
 const ColumnCategorySummaryWizard_1 = require("./ColumnCategorySummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class ColumnCategoryWizard extends React.Component {
     render() {
         let stepNames = ["Name", "Columns", "Summary"];

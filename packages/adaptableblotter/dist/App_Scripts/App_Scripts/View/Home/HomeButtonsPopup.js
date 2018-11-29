@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const DualListBoxEditor_1 = require("../Components/ListBox/DualListBoxEditor");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");

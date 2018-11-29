@@ -6,7 +6,7 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 const Enums_1 = require("../../../Utilities/Enums");
 const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const react_bootstrap_1 = require("react-bootstrap");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
 class ColumnSelector extends React.Component {
     // _typeahead: any;

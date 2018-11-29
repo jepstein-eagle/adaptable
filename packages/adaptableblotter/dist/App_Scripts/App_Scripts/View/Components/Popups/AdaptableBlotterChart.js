@@ -4,7 +4,7 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
 const UIHelper_1 = require("../../UIHelper");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class AdaptableBlotterChart extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;

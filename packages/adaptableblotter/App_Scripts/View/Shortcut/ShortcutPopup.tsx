@@ -5,7 +5,7 @@ import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { DataType, AccessLevel } from '../../Utilities/Enums'
 import { MathOperation } from '../../Utilities/Enums'
@@ -18,7 +18,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IShortcut, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

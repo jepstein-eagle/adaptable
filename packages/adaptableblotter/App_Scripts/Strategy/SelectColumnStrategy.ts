@@ -1,5 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { ISelectColumnStrategy } from "./Interface/ISelectColumnStrategy";

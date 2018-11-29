@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const PercentBarRedux = require("../../Redux/ActionsReducers/PercentBarRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
@@ -14,7 +14,7 @@ const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const PercentBarEntityRow_1 = require("./PercentBarEntityRow");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class PercentBarPopupComponent extends React.Component {
     constructor(props) {

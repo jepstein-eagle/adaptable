@@ -5,7 +5,7 @@ import { DataType, MessageType, MathOperation } from '../../../Utilities/Enums';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
+import * as CalendarConstants from '../../../Utilities/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
 

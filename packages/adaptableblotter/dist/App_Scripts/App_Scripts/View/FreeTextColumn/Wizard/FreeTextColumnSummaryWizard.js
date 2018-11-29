@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 class FreeTextColumnSummaryWizard extends React.Component {

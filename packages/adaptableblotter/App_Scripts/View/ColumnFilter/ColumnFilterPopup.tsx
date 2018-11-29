@@ -7,7 +7,7 @@ import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedu
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Core/Interface/IColumn';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';

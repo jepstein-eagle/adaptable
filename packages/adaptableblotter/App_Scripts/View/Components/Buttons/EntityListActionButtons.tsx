@@ -4,7 +4,7 @@ import { ButtonToolbar, Sizes } from 'react-bootstrap';
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../../Utilities/Enums";
 

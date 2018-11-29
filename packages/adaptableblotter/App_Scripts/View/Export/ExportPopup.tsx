@@ -15,13 +15,13 @@ import { ReportEntityRow } from './ReportEntityRow'
 import { ReportWizard } from './Wizard/ReportWizard'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { encode } from "punycode";
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";

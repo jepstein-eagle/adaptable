@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const StyleHelper_1 = require("../Helpers/StyleHelper");
 const EnumExtensions_1 = require("../Extensions/EnumExtensions");
 const Enums_1 = require("../../Utilities/Enums");

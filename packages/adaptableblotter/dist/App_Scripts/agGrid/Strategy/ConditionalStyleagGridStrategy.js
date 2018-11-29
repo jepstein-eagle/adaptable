@@ -5,7 +5,7 @@ const Enums_1 = require("../../App_Scripts/Utilities/Enums");
 const ExpressionHelper_1 = require("../../App_Scripts/Utilities/Helpers/ExpressionHelper");
 const StringExtensions_1 = require("../../App_Scripts/Utilities/Extensions/StringExtensions");
 const StyleHelper_1 = require("../../App_Scripts/Utilities/Helpers/StyleHelper");
-const StrategyConstants = require("../../App_Scripts/Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../App_Scripts/Utilities/Constants/StrategyConstants");
 const ArrayExtensions_1 = require("../../App_Scripts/Utilities/Extensions/ArrayExtensions");
 class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {

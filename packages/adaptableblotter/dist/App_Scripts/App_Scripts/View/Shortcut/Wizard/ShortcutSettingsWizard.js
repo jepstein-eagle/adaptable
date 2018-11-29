@@ -6,7 +6,7 @@ const Enums_1 = require("../../../Utilities/Enums");
 const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const CalendarConstants = require("../../../Core/Constants/CalendarConstants");
+const CalendarConstants = require("../../../Utilities/Constants/CalendarConstants");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 class ShortcutSettingsWizard extends React.Component {
     constructor(props) {

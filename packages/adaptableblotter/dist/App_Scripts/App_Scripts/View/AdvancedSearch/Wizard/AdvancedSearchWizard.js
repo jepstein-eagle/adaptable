@@ -5,7 +5,7 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const AdvancedSearchSettingsWizard_1 = require("./AdvancedSearchSettingsWizard");
 const AdvancedSearchExpressionWizard_1 = require("./AdvancedSearchExpressionWizard");
 const AdvancedSearchSummaryWizard_1 = require("./AdvancedSearchSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class AdvancedSearchWizard extends React.Component {
     render() {
         let stepNames = ["Build Query", "Create Name", "Summary"];

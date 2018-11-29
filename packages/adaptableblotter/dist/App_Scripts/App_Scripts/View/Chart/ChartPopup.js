@@ -6,7 +6,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ChartEntityRow_1 = require("./ChartEntityRow");
@@ -16,7 +16,7 @@ const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class ChartPopupComponent extends React.Component {
     constructor(props) {
         super(props);

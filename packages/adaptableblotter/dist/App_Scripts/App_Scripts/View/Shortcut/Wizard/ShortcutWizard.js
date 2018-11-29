@@ -5,7 +5,7 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const ShortcutSettingsWizard_1 = require("./ShortcutSettingsWizard");
 const ShortcutSummaryWizard_1 = require("./ShortcutSummaryWizard");
 const ShortcutTypeWizard_1 = require("./ShortcutTypeWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class ShortcutWizard extends React.Component {
     render() {
         let stepNames = ["Column Type", "Settings", "Summary"];

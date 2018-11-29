@@ -6,7 +6,7 @@ const ConditionalStyleStyleWizard_1 = require("./ConditionalStyleStyleWizard");
 const ConditionalStyleScopeWizard_1 = require("./ConditionalStyleScopeWizard");
 const ConditionalStyleExpressionWizard_1 = require("./ConditionalStyleExpressionWizard");
 const ConditionalStyleSummaryWizard_1 = require("./ConditionalStyleSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class ConditionalStyleWizard extends React.Component {
     render() {
         let stepNames = ["Scope", "Create Style", "Build Query", "Summary"];

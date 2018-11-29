@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
@@ -15,7 +15,7 @@ const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const AlertEntityRow_1 = require("./AlertEntityRow");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class AlertPopupComponent extends React.Component {

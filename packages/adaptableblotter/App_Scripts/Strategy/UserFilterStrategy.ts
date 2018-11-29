@@ -1,7 +1,7 @@
 import { IUserFilterStrategy } from './Interface/IUserFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';

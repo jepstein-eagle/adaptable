@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ReportHelper_1 = require("../../../Utilities/Helpers/ReportHelper");
 class ReportSummaryWizard extends React.Component {
     constructor(props) {

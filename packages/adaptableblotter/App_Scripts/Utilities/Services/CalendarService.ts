@@ -1,4 +1,4 @@
-import * as CalendarConstants from '../../Core/Constants/CalendarConstants';
+import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { ICalendarService } from './Interface/ICalendarService';
 

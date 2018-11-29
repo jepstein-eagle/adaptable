@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FormatColumnStrategy_1 = require("../../App_Scripts/Strategy/FormatColumnStrategy");
 const StringExtensions_1 = require("../../App_Scripts/Utilities/Extensions/StringExtensions");
 const StyleHelper_1 = require("../../App_Scripts/Utilities/Helpers/StyleHelper");
-const StrategyConstants = require("../../App_Scripts/Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../App_Scripts/Utilities/Constants/StrategyConstants");
 class FormatColumnagGridStrategy extends FormatColumnStrategy_1.FormatColumnStrategy {
     constructor(blotterBypass) {
         super(blotterBypass);

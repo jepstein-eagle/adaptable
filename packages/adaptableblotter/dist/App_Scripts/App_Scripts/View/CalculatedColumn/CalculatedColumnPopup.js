@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const CalculatedColumnRedux = require("../../Redux/ActionsReducers/CalculatedColumnRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
@@ -16,7 +16,7 @@ const Enums_1 = require("../../Utilities/Enums");
 const CalculatedColumnEntityRow_1 = require("./CalculatedColumnEntityRow");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class CalculatedColumnPopupComponent extends React.Component {
     constructor(props) {
         super(props);

@@ -1,6 +1,6 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as GlyphConstants from '../Core/Constants/GlyphConstants'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as GlyphConstants from '../Utilities/Constants/GlyphConstants'
 import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'

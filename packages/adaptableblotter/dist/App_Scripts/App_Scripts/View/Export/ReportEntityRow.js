@@ -8,7 +8,7 @@ const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
 const OpenfinHelper_1 = require("../../Utilities/Helpers/OpenfinHelper");
 const iPushPullHelper_1 = require("../../Utilities/Helpers/iPushPullHelper");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 class ReportEntityRow extends React.Component {
     render() {
         let report = this.props.AdaptableBlotterObject;

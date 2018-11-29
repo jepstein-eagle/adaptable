@@ -8,8 +8,8 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { AccessLevel } from "../../Utilities/Enums";

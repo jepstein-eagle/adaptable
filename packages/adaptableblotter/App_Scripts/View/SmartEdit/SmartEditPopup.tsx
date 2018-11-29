@@ -6,7 +6,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { MathOperation, MessageType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -21,7 +21,7 @@ import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Core/Constants/StyleConstants";
+import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {

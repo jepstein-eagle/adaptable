@@ -8,7 +8,7 @@ const CellValidationExpressionWizard_1 = require("./CellValidationExpressionWiza
 const CellValidationRulesWizard_1 = require("./CellValidationRulesWizard");
 const CellValidationSummaryWizard_1 = require("./CellValidationSummaryWizard");
 const CellValidationSelectQueryWizard_1 = require("./CellValidationSelectQueryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class CellValidationWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Fail Action", "Validation", "Query", "Summary"];

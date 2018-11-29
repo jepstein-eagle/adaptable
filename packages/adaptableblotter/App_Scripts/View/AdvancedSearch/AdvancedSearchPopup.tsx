@@ -12,18 +12,18 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { PRIMARY_BSSTYLE } from "../../Core/Constants/StyleConstants";
+import { PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {

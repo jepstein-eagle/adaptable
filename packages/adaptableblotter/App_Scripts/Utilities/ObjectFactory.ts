@@ -6,7 +6,7 @@ import { IColumn } from '../Core/Interface/IColumn';
 import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
-import * as GeneralConstants from '../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { Expression } from '../Api/Expression';
 import { IVendorGridInfo, IColumnCategory } from '../Core/Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';

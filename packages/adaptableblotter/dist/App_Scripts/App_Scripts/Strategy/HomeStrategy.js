@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const GlyphConstants = require("../Core/Constants/GlyphConstants");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const GlyphConstants = require("../Utilities/Constants/GlyphConstants");
 const HomeRedux = require("../Redux/ActionsReducers/HomeRedux");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const Enums_1 = require("../Utilities/Enums");

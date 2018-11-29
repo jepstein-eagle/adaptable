@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const ButtonClose_1 = require("../Buttons/ButtonClose");
 const ButtonConfigure_1 = require("../Buttons/ButtonConfigure");
 const ButtonMinimise_1 = require("../Buttons/ButtonMinimise");

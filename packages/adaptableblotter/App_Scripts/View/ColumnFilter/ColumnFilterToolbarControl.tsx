@@ -9,11 +9,11 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType, AccessLevel } from '../../Utilities/Enums';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";

@@ -6,12 +6,12 @@ const Helper_1 = require("../../Utilities/Helpers/Helper");
 const AlertWizard_1 = require("./Wizard/AlertWizard");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const AlertHelper_1 = require("../../Utilities/Helpers/AlertHelper");
 class AlertSummaryComponent extends React.Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ICalculatedColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 

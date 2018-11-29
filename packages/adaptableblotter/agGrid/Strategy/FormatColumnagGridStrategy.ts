@@ -1,10 +1,10 @@
 import { IFormatColumnStrategy } from '../../App_Scripts/Strategy/Interface/IFormatColumnStrategy';
 import { FormatColumnStrategy } from '../../App_Scripts/Strategy/FormatColumnStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter'
-import * as StyleConstants from '../../App_Scripts/Core/Constants/StyleConstants'
+import * as StyleConstants from '../../App_Scripts/Utilities/Constants/StyleConstants'
 import { StringExtensions } from '../../App_Scripts/Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../App_Scripts/Utilities/Helpers/StyleHelper';
-import * as StrategyConstants from '../../App_Scripts/Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../App_Scripts/Utilities/Constants/StrategyConstants'
 
 export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {

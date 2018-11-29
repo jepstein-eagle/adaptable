@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IEntitlement } from "../../../Core/Interface/Interfaces";
 import { AccessLevel } from "../../../Utilities/Enums";

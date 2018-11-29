@@ -3,7 +3,7 @@ import { PanelProps, Panel, Row, Col, Button, Glyphicon, Radio } from 'react-boo
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { MessageType, ContextMenuTab } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 
 export interface FilterFormPanelProps extends PanelProps {

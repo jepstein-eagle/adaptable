@@ -4,7 +4,7 @@ const React = require("react");
 const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const PercentBarSelectColumnWizard_1 = require("././PercentBarSelectColumnWizard");
 const PercentBarSummaryWizard_1 = require("././PercentBarSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const PercentBarSettingsWizard_1 = require("./PercentBarSettingsWizard");
 class PercentBarWizard extends React.Component {
     render() {

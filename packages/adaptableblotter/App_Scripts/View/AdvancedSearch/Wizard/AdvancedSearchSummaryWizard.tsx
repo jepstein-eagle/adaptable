@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Core/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdvancedSearch, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IKeyValuePair } from "../../../Core/Interface/Interfaces";
 

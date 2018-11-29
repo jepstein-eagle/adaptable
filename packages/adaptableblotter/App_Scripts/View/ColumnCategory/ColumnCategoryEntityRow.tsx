@@ -2,7 +2,7 @@ import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";

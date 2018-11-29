@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';

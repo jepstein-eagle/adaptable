@@ -4,7 +4,7 @@ import { SortOrder, SelectionMode } from '../../../Utilities/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>

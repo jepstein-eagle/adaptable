@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const UIHelper_1 = require("../UIHelper");
 const ButtonClear_1 = require("./Buttons/ButtonClear");
 const ButtonPreviewDelete_1 = require("./Buttons/ButtonPreviewDelete");

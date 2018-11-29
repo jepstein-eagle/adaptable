@@ -1,5 +1,5 @@
-import * as StyleConstants from '../../Core/Constants/StyleConstants'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { FlashingCellState, ConditionalStyleState, QuickSearchState, FormatColumnState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';

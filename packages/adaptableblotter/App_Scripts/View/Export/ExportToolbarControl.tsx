@@ -17,13 +17,13 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { ExportDestination, SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IReport } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";

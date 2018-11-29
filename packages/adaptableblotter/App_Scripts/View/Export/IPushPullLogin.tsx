@@ -9,7 +9,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
     onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;

@@ -8,7 +8,7 @@ import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -17,7 +17,7 @@ import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IConditionalStyle, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { IColumnCategory } from "../../Core/Interface/Interfaces";

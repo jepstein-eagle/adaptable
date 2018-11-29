@@ -5,7 +5,7 @@ const AdaptableWizard_1 = require("../../Wizard/AdaptableWizard");
 const FormatColumnScopeWizard_1 = require("./FormatColumnScopeWizard");
 const FormatColumnStyleWizard_1 = require("./FormatColumnStyleWizard");
 const FormatColumnSummaryWizard_1 = require("./FormatColumnSummaryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class FormatColumnWizard extends React.Component {
     render() {
         let stepNames = ["Select Column", "Create Style", "Summary"];

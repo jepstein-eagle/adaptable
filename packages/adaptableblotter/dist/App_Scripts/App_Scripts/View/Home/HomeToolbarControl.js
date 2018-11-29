@@ -7,13 +7,13 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const ColumnChooserRedux = require("../../Redux/ActionsReducers/ColumnChooserRedux");
 const react_bootstrap_1 = require("react-bootstrap");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonDashboard_1 = require("../Components/Buttons/ButtonDashboard");
 const Enums_1 = require("../../Utilities/Enums");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
-const StyleConstants_1 = require("../../Core/Constants/StyleConstants");
+const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class HomeToolbarControlComponent extends React.Component {

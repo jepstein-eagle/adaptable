@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Glyphicon, Label, ListGroupItem, ListGroup, InputGroup } from "react-bootstrap";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAlert } from "../../Core/Interface/IMessage";
 import { UIHelper } from "../UIHelper";
 import { ButtonClear } from "./Buttons/ButtonClear";

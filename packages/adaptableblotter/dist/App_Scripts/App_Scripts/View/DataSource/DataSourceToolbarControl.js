@@ -7,8 +7,8 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
 const react_bootstrap_1 = require("react-bootstrap");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 class DataSourceToolbarControlComponent extends React.Component {

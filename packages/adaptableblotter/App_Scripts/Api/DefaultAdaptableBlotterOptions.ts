@@ -1,4 +1,4 @@
-import * as GeneralConstants from '../Core/Constants/GeneralConstants'
+import * as GeneralConstants from '../Utilities/Constants/GeneralConstants'
 import { IAdaptableBlotterOptions } from './Interface/IAdaptableBlotterOptions';
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {

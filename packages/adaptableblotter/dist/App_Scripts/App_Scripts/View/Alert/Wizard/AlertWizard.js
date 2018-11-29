@@ -7,7 +7,7 @@ const AlertExpressionWizard_1 = require("./AlertExpressionWizard");
 const AlertRulesWizard_1 = require("./AlertRulesWizard");
 const AlertSummaryWizard_1 = require("./AlertSummaryWizard");
 const AlertSelectQueryWizard_1 = require("./AlertSelectQueryWizard");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const AlertTypeWizard_1 = require("./AlertTypeWizard");
 class AlertWizard extends React.Component {
     render() {

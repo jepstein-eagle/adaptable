@@ -2,7 +2,7 @@ import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
 import * as React from "react";
 import { Modal } from 'react-bootstrap';
 import { UIHelper } from '../../UIHelper';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface IAdaptableBlotterLoadingScreenProps extends React.ClassAttributes<AdaptableBlotterLoadingScreen> {
   showLoadingScreen: boolean;

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const igr_category_chart_1 = require("igniteui-react-charts/ES2015/igr-category-chart");
 const igr_category_chart_module_1 = require("igniteui-react-charts/ES2015/igr-category-chart-module");

@@ -5,7 +5,7 @@ import { AlertExpressionWizard } from './AlertExpressionWizard'
 import { AlertRulesWizard } from './AlertRulesWizard'
 import { AlertSummaryWizard } from './AlertSummaryWizard'
 import { AlertSelectQueryWizard } from './AlertSelectQueryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from "./AlertTypeWizard";
 

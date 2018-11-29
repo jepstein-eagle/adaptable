@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const WizardLegend_1 = require("./WizardLegend");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ButtonCancel_1 = require("../Components/Buttons/ButtonCancel");
 const ButtonWizardAction_1 = require("../Components/Buttons/ButtonWizardAction");
 const Enums_1 = require("../../Utilities/Enums");

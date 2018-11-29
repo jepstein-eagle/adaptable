@@ -6,7 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Core/Interface/IColumn';
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IColumnCategory, IMasterChildren } from "../../Core/Interface/Interfaces";

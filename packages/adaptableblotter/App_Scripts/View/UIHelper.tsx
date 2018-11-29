@@ -6,7 +6,7 @@ import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOpti
 import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Api/Expression';
-import { PRIMARY_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Core/Constants/StyleConstants';
+import { PRIMARY_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
 
 
 export module UIHelper {
