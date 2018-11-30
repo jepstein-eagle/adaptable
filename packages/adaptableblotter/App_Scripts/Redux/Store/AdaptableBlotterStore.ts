@@ -663,7 +663,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             blotter.removePercentBar(editedCellRender);
           }
           let returnAction = next(action);
-         
+
           // add new one
           blotter.addPercentBar(actionTyped.PercentBar);
           blotter.redraw();
@@ -671,16 +671,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         }
 
         case PercentBarRedux.PERCENT_BAR_DELETE: {
-         let PercentBarState = middlewareAPI.getState().PercentBar;
+          let PercentBarState = middlewareAPI.getState().PercentBar;
           let actionTyped = <PercentBarRedux.PercentBarDeleteAction>action
           let PercentBar: IPercentBar = PercentBarState.PercentBars[actionTyped.Index];
           blotter.removePercentBar(PercentBar);
-           let returnAction = next(action);
-           blotter.redraw();
+          let returnAction = next(action);
+          blotter.redraw();
           return returnAction;
         }
 
-        case PercentBarRedux.PERCENT_BAR_CHANGE_POSITIVE_COLOR:{
+        case PercentBarRedux.PERCENT_BAR_CHANGE_POSITIVE_COLOR: {
           let returnAction = next(action);
           let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangePositiveColorAction>action).PercentBar;
           let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
@@ -699,6 +699,24 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         }
 
         /*
+        Column Categories
+        */
+       // Use case: deleting a column category might involve a conditional style that uses it
+        case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
+          let returnAction = next(action);
+          let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action
+          let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
+          conditionalStyleState.ConditionalStyles.forEach((cs: IConditionalStyle, index: number) => {
+            if (cs.ColumnCategoryId == actionTyped.ColumnCategory.ColumnCategoryId) {
+              // some warning?
+              middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(index, cs))
+            }
+          })
+          return returnAction;
+        }
+
+
+        /*
         Layout
         */
         case LayoutRedux.LAYOUT_SELECT: {
@@ -710,8 +728,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             // set columns
             let blotterColumns: IColumn[] = []
             currentLayout.Columns.forEach(c => {
-               let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
-             if (column) {
+              let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
+              if (column) {
                 blotterColumns.push(column);
               } else {
                 LoggingHelper.LogWarning("Column '" + c + "' not found")
@@ -987,6 +1005,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return next(action);
         }
 
+        /*
+        Column Chooser 
+        */
+        case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
+        let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
+        //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
+        //Time will tell I guess
+        blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
+        return next(action);
+
         //We rebuild the menu from scratch
         //the difference between the two is that RESET_STATE is handled before and set the state to undefined
         case INIT_STATE:
@@ -1028,12 +1056,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           blotter.InitAuditService()
           return returnAction;
         }
-        case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
-          let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
-          //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
-          //Time will tell I guess
-          blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
-          return next(action);
+       
         default:
           return next(action);
       }

@@ -229,5 +229,14 @@ export module Helper {
             return true;
         };
     }
+
+
+
+    export function StringifyValue(value: any): string {
+
+    if (!isNaN(Number(value))) {
+     return Number(value).toString()
+    }
+}
 }
 

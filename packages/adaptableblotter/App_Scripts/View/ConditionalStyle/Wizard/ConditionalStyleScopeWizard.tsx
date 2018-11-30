@@ -73,7 +73,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory &&
                     <Col xs={12} className="ab_large_margin">
                         <FormControl componentClass="select" placeholder="select" value={this.state.ColumnCategoryId} onChange={(x) => this.onColumnCategorySelectedChanged(x)} >
-                            <option value="select" key="select">Select a Column Category group</option>
+                            <option value="select" key="select">Select a Column Category</option>
                             {optionColumnCategorys}
                         </FormControl>
                     </Col>

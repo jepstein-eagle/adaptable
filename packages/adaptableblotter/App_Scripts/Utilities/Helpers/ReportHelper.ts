@@ -6,6 +6,7 @@ import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISele
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
 import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { Helper } from './Helper';
 
 
 export module ReportHelper {
@@ -134,9 +135,7 @@ export module ReportHelper {
         let newRow: any[] = [];
         ReportColumns.forEach(col => {
             let columnValue: any =blotter.getDisplayValueFromRecord(row, col.ColumnId);
-            if (!isNaN(Number(columnValue))) {
-                columnValue = Number(columnValue).toString()
-            }
+         //  columnValue=Helper.StringifyValue(columnValue)
             newRow.push(columnValue);
         })
         return newRow;
