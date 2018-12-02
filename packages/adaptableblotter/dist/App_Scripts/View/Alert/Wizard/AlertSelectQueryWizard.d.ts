@@ -16,7 +16,7 @@ export declare class AlertSelectQueryWizard extends React.Component<AlertSelectQ
     canBack(): boolean;
     Next(): void;
     Back(): void;
-    GetIndexStepIncrement(): 2 | 1;
+    GetIndexStepIncrement(): 1 | 2;
     GetIndexStepDecrement(): number;
     StepName: string;
 }

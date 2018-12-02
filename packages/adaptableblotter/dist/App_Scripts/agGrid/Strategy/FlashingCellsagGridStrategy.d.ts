@@ -1,8 +1,8 @@
-import { FlashingCellsStrategy } from '../../App_Scripts/Strategy/FlashingCellsStrategy';
+import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter';
-import { IFlashingCellsStrategy } from '../../App_Scripts/Strategy/Interface/IFlashingCellsStrategy';
-import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService';
-import { IFlashingCell } from '../../App_Scripts/Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
+import { IDataChangedEvent } from '../../Utilities/Services/Interface/IAuditService';
+import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
 export declare class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter);
     private currentFlashing;

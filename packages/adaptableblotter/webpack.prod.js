@@ -6,8 +6,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        'adaptableblotterhypergrid': ["./Hypergrid/AdaptableBlotter.ts"],
-        'adaptableblotteraggrid': ["./agGrid/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblotteraggrid': ["./App_Scripts/agGrid/AdaptableBlotter.ts"],
     },
     output: {
         path: __dirname + '/dist',

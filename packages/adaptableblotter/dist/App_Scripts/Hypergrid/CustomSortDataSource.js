@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../App_Scripts/Utilities/Enums");
+const Enums_1 = require("../Utilities/Enums");
 const DataSourceIndexed_1 = require("./DataSourceIndexed");
-const SortHelper_1 = require("../App_Scripts/Utilities/Helpers/SortHelper");
-const ArrayExtensions_1 = require("../App_Scripts/Utilities/Extensions/ArrayExtensions");
+const SortHelper_1 = require("../Utilities/Helpers/SortHelper");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 //All custom pipelines should extend from pipelineBase
 exports.CustomSortDataSource = (blotter) => DataSourceIndexed_1.DataSourceIndexed.extend('CustomSortDataSource', {
     blotter: blotter,

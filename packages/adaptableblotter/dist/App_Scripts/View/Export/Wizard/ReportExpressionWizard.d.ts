@@ -6,6 +6,6 @@ export declare class ReportExpressionWizard extends ExpressionBuilderPage implem
     constructor(props2: ExpressionWizardProps<IReport>);
     Next(): void;
     Back(): void;
-    GetIndexStepDecrement(): 2 | 1;
+    GetIndexStepDecrement(): 1 | 2;
     StepName: string;
 }

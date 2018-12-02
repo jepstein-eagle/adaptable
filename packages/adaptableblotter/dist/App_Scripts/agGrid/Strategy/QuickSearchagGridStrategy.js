@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const QuickSearchStrategy_1 = require("../../App_Scripts/Strategy/QuickSearchStrategy");
+const QuickSearchStrategy_1 = require("../../Strategy/QuickSearchStrategy");
 class QuickSearchagGridStrategy extends QuickSearchStrategy_1.QuickSearchStrategy {
     constructor(blotter) {
         super(blotter);

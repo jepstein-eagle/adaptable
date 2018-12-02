@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const CustomSortStrategy_1 = require("../../App_Scripts/Strategy/CustomSortStrategy");
+const CustomSortStrategy_1 = require("../../Strategy/CustomSortStrategy");
 class CustomSortagGridStrategy extends CustomSortStrategy_1.CustomSortStrategy {
     constructor(blotter) {
         super(blotter);

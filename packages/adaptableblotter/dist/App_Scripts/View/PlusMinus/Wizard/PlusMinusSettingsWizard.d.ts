@@ -16,7 +16,7 @@ export declare class PlusMinusSettingsWizard extends React.Component<PlusMinusSe
     canBack(): boolean;
     Next(): void;
     Back(): void;
-    GetIndexStepIncrement(): 2 | 1;
+    GetIndexStepIncrement(): 1 | 2;
     GetIndexStepDecrement(): number;
     StepName: string;
 }

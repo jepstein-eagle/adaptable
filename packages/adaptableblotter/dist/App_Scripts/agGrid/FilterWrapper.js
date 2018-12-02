@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ReactDOM = require("react-dom");
-const FilterForm_1 = require("../App_Scripts/View/Components/FilterForm/FilterForm");
-const ColumnHelper_1 = require("../App_Scripts/Utilities/Helpers/ColumnHelper");
+const FilterForm_1 = require("../View/Components/FilterForm/FilterForm");
+const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 exports.FilterWrapperFactory = (blotter) => {
     return class FilterWrapper {
         init(params) {

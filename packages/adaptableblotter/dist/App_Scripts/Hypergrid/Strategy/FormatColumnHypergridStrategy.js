@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const FormatColumnStrategy_1 = require("../../App_Scripts/Strategy/FormatColumnStrategy");
+const FormatColumnStrategy_1 = require("../../Strategy/FormatColumnStrategy");
 class FormatColumnHypergridStrategy extends FormatColumnStrategy_1.FormatColumnStrategy {
     constructor(blotterBypass) {
         super(blotterBypass);

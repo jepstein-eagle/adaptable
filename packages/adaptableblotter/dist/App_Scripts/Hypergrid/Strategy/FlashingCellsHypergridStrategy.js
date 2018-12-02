@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const FlashingCellsStrategy_1 = require("../../App_Scripts/Strategy/FlashingCellsStrategy");
+const FlashingCellsStrategy_1 = require("../../Strategy/FlashingCellsStrategy");
 class FlashingCellsHypergridStrategy extends FlashingCellsStrategy_1.FlashingCellsStrategy {
     constructor(blotter) {
         super(blotter);

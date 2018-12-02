@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const DataSourceIndexed_1 = require("./DataSourceIndexed");
-const StringExtensions_1 = require("../App_Scripts/Utilities/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../App_Scripts/Utilities/Helpers/ExpressionHelper");
-const Enums_1 = require("../App_Scripts/Utilities/Enums");
-const ArrayExtensions_1 = require("../App_Scripts/Utilities/Extensions/ArrayExtensions");
+const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../Utilities/Helpers/ExpressionHelper");
+const Enums_1 = require("../Utilities/Enums");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 /* There are 3 possible reasons why we might need to filter / search the grid:
 1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)
 2. If there are any Column Filters applied

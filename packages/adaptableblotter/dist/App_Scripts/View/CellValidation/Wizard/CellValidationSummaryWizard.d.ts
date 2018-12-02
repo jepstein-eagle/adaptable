@@ -14,6 +14,6 @@ export declare class CellValidationSummaryWizard extends React.Component<CellVal
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): 2 | 1;
+    GetIndexStepDecrement(): 1 | 2;
     StepName: string;
 }

@@ -1,6 +1,6 @@
-import { IConditionalStyleStrategy } from '../../App_Scripts/Strategy/Interface/IConditionalStyleStrategy';
-import { ConditionalStyleStrategy } from '../../App_Scripts/Strategy/ConditionalStyleStrategy';
-import { IDataChangedEvent } from '../../App_Scripts/Utilities/Services/Interface/IAuditService';
+import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
+import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
+import { IDataChangedEvent } from '../../Utilities/Services/Interface/IAuditService';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 export declare class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter);

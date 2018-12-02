@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ConditionalStyleStrategy_1 = require("../../App_Scripts/Strategy/ConditionalStyleStrategy");
-const Enums_1 = require("../../App_Scripts/Utilities/Enums");
-const ExpressionHelper_1 = require("../../App_Scripts/Utilities/Helpers/ExpressionHelper");
-const StringExtensions_1 = require("../../App_Scripts/Utilities/Extensions/StringExtensions");
-const StyleHelper_1 = require("../../App_Scripts/Utilities/Helpers/StyleHelper");
-const StrategyConstants = require("../../App_Scripts/Utilities/Constants/StrategyConstants");
-const ArrayExtensions_1 = require("../../App_Scripts/Utilities/Extensions/ArrayExtensions");
+const ConditionalStyleStrategy_1 = require("../../Strategy/ConditionalStyleStrategy");
+const Enums_1 = require("../../Utilities/Enums");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const StyleHelper_1 = require("../../Utilities/Helpers/StyleHelper");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
         super(blotter);

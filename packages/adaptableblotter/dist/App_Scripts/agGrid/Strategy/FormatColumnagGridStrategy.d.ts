@@ -1,5 +1,5 @@
-import { IFormatColumnStrategy } from '../../App_Scripts/Strategy/Interface/IFormatColumnStrategy';
-import { FormatColumnStrategy } from '../../App_Scripts/Strategy/FormatColumnStrategy';
+import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStrategy';
+import { FormatColumnStrategy } from '../../Strategy/FormatColumnStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 export declare class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
     private blotterBypass;

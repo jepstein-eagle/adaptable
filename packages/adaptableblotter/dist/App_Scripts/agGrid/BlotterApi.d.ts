@@ -1,6 +1,6 @@
-import { BlotterApiBase } from "../App_Scripts/Api/BlotterApiBase";
+import { BlotterApiBase } from "../Api/BlotterApiBase";
 import { AdaptableBlotter } from "./AdaptableBlotter";
-import { IBlotterApi } from "../App_Scripts/Api/Interface/IBlotterApi";
+import { IBlotterApi } from "../Api/Interface/IBlotterApi";
 export declare class BlotterApi extends BlotterApiBase implements IBlotterApi {
     constructor(blotter: AdaptableBlotter);
     setGridData(dataSource: any): void;
