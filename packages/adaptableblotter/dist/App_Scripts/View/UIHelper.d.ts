@@ -8,7 +8,7 @@ export declare module UIHelper {
     function getEmptyConfigState(): EditableConfigEntityState;
     function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState;
     function getExpressionBuilderStateWithColumn(expression: Expression, columnId: string): ExpressionBuilderPageState;
-    function getDescriptionForDataType(dataType: DataType): "date" | "number" | "string";
+    function getDescriptionForDataType(dataType: DataType): "date" | "string" | "number";
     function getPlaceHolderforDataType(dataType: DataType): "Enter Number" | "Enter Date" | "Enter Value";
     function getModalContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement;
     function IsNotEmptyStyle(style: IStyle): boolean;

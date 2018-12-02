@@ -70,10 +70,11 @@ const ColumnHelper_1 = require("../App_Scripts/Utilities/Helpers/ColumnHelper");
 const StyleHelper_1 = require("../App_Scripts/Utilities/Helpers/StyleHelper");
 const LayoutHelper_1 = require("../App_Scripts/Utilities/Helpers/LayoutHelper");
 const ExpressionHelper_1 = require("../App_Scripts/Utilities/Helpers/ExpressionHelper");
-const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
 const LoggingHelper_1 = require("../App_Scripts/Utilities/Helpers/LoggingHelper");
 const StringExtensions_1 = require("../App_Scripts/Utilities/Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../App_Scripts/Utilities/Extensions/ArrayExtensions");
+const Helper_1 = require("../App_Scripts/Utilities/Helpers/Helper");
+const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this.calculatedColumnPathMap = new Map();
@@ -649,7 +650,7 @@ class AdaptableBlotter {
                 if (!rowNode.group) {
                     let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
                     let displayValue = (useRawValue) ?
-                        rawValue :
+                        Helper_1.Helper.StringifyValue(rawValue) :
                         this.getDisplayValueFromRecord(rowNode, columnId);
                     if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
                         returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
@@ -689,7 +690,7 @@ class AdaptableBlotter {
         }
         let rawValue = this.gridOptions.api.getValue(columnId, row);
         if (this.useRawValueForColumn(columnId)) {
-            return rawValue;
+            return Helper_1.Helper.StringifyValue(rawValue);
         }
         return this.getDisplayValueFromRawValue(columnId, rawValue);
     }

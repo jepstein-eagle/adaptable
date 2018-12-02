@@ -599,6 +599,22 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     return returnAction;
                 }
                 /*
+                Column Categories
+                */
+                // Use case: deleting a column category might involve a conditional style that uses it
+                case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
+                    let returnAction = next(action);
+                    let actionTyped = action;
+                    let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
+                    conditionalStyleState.ConditionalStyles.forEach((cs, index) => {
+                        if (cs.ColumnCategoryId == actionTyped.ColumnCategory.ColumnCategoryId) {
+                            // some warning?
+                            middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(index, cs));
+                        }
+                    });
+                    return returnAction;
+                }
+                /*
                 Layout
                 */
                 case LayoutRedux.LAYOUT_SELECT: {
@@ -868,6 +884,15 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     }
                     return next(action);
                 }
+                /*
+                Column Chooser
+                */
+                case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
+                    let actionTyped = action;
+                    //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
+                    //Time will tell I guess
+                    blotter.setNewColumnListOrder(actionTyped.VisibleColumnList);
+                    return next(action);
                 //We rebuild the menu from scratch
                 //the difference between the two is that RESET_STATE is handled before and set the state to undefined
                 case INIT_STATE:
@@ -902,12 +927,6 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     blotter.InitAuditService();
                     return returnAction;
                 }
-                case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
-                    let actionTyped = action;
-                    //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
-                    //Time will tell I guess
-                    blotter.setNewColumnListOrder(actionTyped.VisibleColumnList);
-                    return next(action);
                 default:
                     return next(action);
             }

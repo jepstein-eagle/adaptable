@@ -51,7 +51,7 @@ class ConditionalStyleScopeWizard extends React.Component {
                 ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && this.state.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory &&
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: this.state.ColumnCategoryId, onChange: (x) => this.onColumnCategorySelectedChanged(x) },
-                            React.createElement("option", { value: "select", key: "select" }, "Select a Column Category group"),
+                            React.createElement("option", { value: "select", key: "select" }, "Select a Column Category"),
                             optionColumnCategorys))));
     }
     onColumnSelectedChanged(columns) {

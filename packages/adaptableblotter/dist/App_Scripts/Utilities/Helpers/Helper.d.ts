@@ -14,4 +14,5 @@ export declare module Helper {
     function IsInputNotNullOrEmpty(itemToCheck: any): boolean;
     function ReadFileContents(fileName: string): string;
     function areObjectsEqual(obj1: any, obj2: any): boolean;
+    function StringifyValue(value: any): string;
 }

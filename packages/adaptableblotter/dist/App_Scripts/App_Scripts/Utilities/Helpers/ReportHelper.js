@@ -117,7 +117,9 @@ var ReportHelper;
     function getRowValues(row, ReportColumns, blotter) {
         let newRow = [];
         ReportColumns.forEach(col => {
-            newRow.push(blotter.getDisplayValueFromRecord(row, col.ColumnId));
+            let columnValue = blotter.getDisplayValueFromRecord(row, col.ColumnId);
+            //  columnValue=Helper.StringifyValue(columnValue)
+            newRow.push(columnValue);
         });
         return newRow;
     }

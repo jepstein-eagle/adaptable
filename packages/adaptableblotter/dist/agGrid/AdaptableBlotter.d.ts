@@ -20,8 +20,8 @@ import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentBar } from '../A
 import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
-import { RowNode } from "ag-grid";
 import { IRawValueDisplayValuePair } from '../App_Scripts/View/UIInterfaces';
+import { RowNode } from "ag-grid";
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
