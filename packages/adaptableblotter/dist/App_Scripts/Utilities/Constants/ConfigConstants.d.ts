@@ -1,0 +1,9 @@
+export declare const SYSTEM = "System";
+export declare const GRID = "Grid";
+export declare const MENU = "Menu";
+export declare const POPUP = "Popup";
+export declare const TEAMSHARING = "TeamSharing";
+export declare const BULK_UPDATE = "BulkUpdate";
+export declare const USER_INTERFACE = "UserInterface";
+export declare const ENTITLEMENTS = "Entitlements";
+export declare const APPLICATION = "Application";
