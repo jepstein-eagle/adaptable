@@ -1,7 +1,6 @@
 ﻿// import styles - ab and 2 default agGrid
 import '../App_Scripts/Styles/stylesheets/adaptableblotter-style.css'
 
-
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../App_Scripts/View/AdaptableBlotterView';
@@ -32,7 +31,6 @@ import { ValidationService } from '../App_Scripts/Utilities/Services/ValidationS
 import { ChartService } from '../App_Scripts/Utilities/Services/ChartService';
 import { FreeTextColumnService } from '../App_Scripts/Utilities/Services/FreeTextColumnService';
 import { CalculatedColumnExpressionService } from '../App_Scripts/Utilities/Services/CalculatedColumnExpressionService';
-
 // strategies
 import { IStrategy } from '../App_Scripts/Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../App_Scripts/Strategy/Interface/IConditionalStyleStrategy';
@@ -69,7 +67,6 @@ import { FreeTextColumnStrategy } from '../App_Scripts/Strategy/FreeTextColumnSt
 import { ChartStrategy } from '../App_Scripts/Strategy/ChartStrategy';
 import { PercentBarStrategy } from '../App_Scripts/Strategy/PercentBarStrategy';
 import { ColumnCategoryStrategy } from '../App_Scripts/Strategy/ColumnCategoryStrategy';
-
 // components
 import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
@@ -90,6 +87,7 @@ import { IBlotterApi } from '../App_Scripts/Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../App_Scripts/Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../App_Scripts/Api/Interface/IStateEvents';
 import { ISelectedCell, ISelectedCellInfo } from '../App_Scripts/Strategy/Interface/ISelectedCellsStrategy';
+import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../App_Scripts/View/UIInterfaces';
 // Helpers
 import { DefaultAdaptableBlotterOptions } from '../App_Scripts/Api/DefaultAdaptableBlotterOptions';
 import { iPushPullHelper } from '../App_Scripts/Utilities/Helpers/iPushPullHelper';
@@ -97,6 +95,10 @@ import { ColumnHelper } from '../App_Scripts/Utilities/Helpers/ColumnHelper';
 import { StyleHelper } from '../App_Scripts/Utilities/Helpers/StyleHelper';
 import { LayoutHelper } from '../App_Scripts/Utilities/Helpers/LayoutHelper';
 import { ExpressionHelper } from '../App_Scripts/Utilities/Helpers/ExpressionHelper';
+import { LoggingHelper } from '../App_Scripts/Utilities/Helpers/LoggingHelper';
+import { StringExtensions } from '../App_Scripts/Utilities/Extensions/StringExtensions';
+import { ArrayExtensions } from '../App_Scripts/Utilities/Extensions/ArrayExtensions';
+import { Helper } from '../App_Scripts/Utilities/Helpers/Helper';
 
 // ag-Grid 
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
@@ -104,11 +106,6 @@ import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICe
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
-import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../App_Scripts/View/UIInterfaces';
-import { LoggingHelper } from '../App_Scripts/Utilities/Helpers/LoggingHelper';
-import { StringExtensions } from '../App_Scripts/Utilities/Extensions/StringExtensions';
-import { ArrayExtensions } from '../App_Scripts/Utilities/Extensions/ArrayExtensions';
-import { Helper } from '../App_Scripts/Utilities/Helpers/Helper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 

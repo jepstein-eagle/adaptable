@@ -10,7 +10,7 @@ function runQuickSearch() {
 }
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(1000);
+  trades = dataGen.getTrades(400);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -140,34 +140,31 @@ function getTradeSchema() {
     type: "abColDefNumber"
   });
   schema.push({
+    headerName: "Pct Change",
+    field: "percentChange",
+    editable: true,
+    filter: 'text'
+  });
+ schema.push({
     headerName: "Notional",
     field: "notional",
     enableValue: true,
     editable: true,
-    valueFormatter: notionalFormatter,
+   // valueFormatter: notionalFormatter,
     suppressSorting: true,
     cellClass: 'number-cell'
   });
-  schema.push({
-    headerName: "Desk No.",
-    field: "deskId",
-    editable: true,
-    // cellRenderer: percentCellRenderer,
-    enableRowGroup: true,
-    suppressSorting: false,
-    suppressFilter: true
-  });
-  schema.push({
+   schema.push({
     headerName: "Counterparty",
     field: "counterparty",
     editable: true,
     enableRowGroup: true
   });
+     
   schema.push({
-    headerName: "Country",
-    field: "country",
-    editable: true,
-    enableRowGroup: true
+    headerName: "Change On Year",
+    field: "changeOnYear",
+    editable: true
   });
   schema.push({
     headerName: "Currency",
@@ -176,26 +173,19 @@ function getTradeSchema() {
     enableRowGroup: true,
     filter: 'agTextColumnFilter'
   });
-  
-  schema.push({
-    headerName: "Change On Year",
-    field: "changeOnYear",
-    editable: true
+   schema.push({
+    headerName: "Status",
+    field: "status",
+    editable: true,
+    enableRowGroup: true
   });
-
-  schema.push({
+ schema.push({
     headerName: "B/O Spread",
     field: "bidOfferSpread",
     columnGroupShow: 'open',
     enableValue: true,
     editable: true,
     cellClass: 'number-cell'
-  });
-  schema.push({
-    headerName: "Status",
-    field: "status",
-    editable: true,
-    enableRowGroup: true
   });
   schema.push({
     headerName: "Price",
@@ -208,6 +198,21 @@ function getTradeSchema() {
     filter: 'agNumberColumnFilter'
   });
   schema.push({
+    headerName: "Country",
+    field: "country",
+    editable: true,
+    enableRowGroup: true
+  });
+schema.push({
+    headerName: "Desk No.",
+    field: "deskId",
+    editable: true,
+    // cellRenderer: percentCellRenderer,
+    enableRowGroup: true,
+    suppressSorting: false,
+    suppressFilter: true
+  });
+schema.push({
     headerName: "Ask",
     field: "ask",
     columnGroupShow: 'closed',
@@ -265,14 +270,7 @@ function getTradeSchema() {
     },
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid
-  });
-  schema.push({
-    headerName: "Pct Change",
-    field: "percentChange",
-    filter: 'text'
-  });
-
-  
+  });  
   schema.push({
     headerName: "Last Updated By",
     field: "lastUpdatedBy",
