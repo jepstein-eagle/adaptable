@@ -43,13 +43,12 @@ export class FreeTextColumnSummaryComponent extends React.Component<FreeTextColu
         let FreeTextColumnRow: any;
 
         if (!noFreeTextColumn) {
-            let description: string =  (ArrayExtensions.IsNotEmpty(freeTextColumn.FreeTextStoredValues)) ? " Stored values: " + freeTextColumn.FreeTextStoredValues.length : "No stored values"
+            let description: string = (ArrayExtensions.IsNotEmpty(freeTextColumn.FreeTextStoredValues)) ? " Stored values: " + freeTextColumn.FreeTextStoredValues.length : "No stored values"
             let index = this.props.FreeTextColumns.findIndex(ftc => ftc.ColumnId == this.props.SummarisedColumn.ColumnId);
             FreeTextColumnRow = <StrategyDetail
                 key={StrategyConstants.FreeTextColumnStrategyName}
                 cssClassName={this.props.cssClassName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName}
-                    StrategyId={StrategyConstants.FreeTextColumnStrategyId} />}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.FreeTextColumnStrategyId} />}
                 Item2={description}
                 ConfigEnity={freeTextColumn}
                 showShare={this.props.TeamSharingActivated}

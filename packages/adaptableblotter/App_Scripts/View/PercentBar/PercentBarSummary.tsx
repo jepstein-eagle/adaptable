@@ -66,7 +66,7 @@ export class PercentBarSummaryComponent extends React.Component<PercentBarSummar
                 ConfigEnity={percentBar}
                 showShare={this.props.TeamSharingActivated}
                 EntityName={StrategyConstants.PercentBarStrategyName}
-                onEdit={() => this.onEdit(percentBar)}
+                onEdit={() => this.onEdit(percentBarIndex, percentBar)}
                 onShare={() => this.props.onShare(percentBar)}
                 onDelete={PercentBarRedux.PercentBarDelete(percentBarIndex)}
                 showBold={true}
@@ -103,9 +103,9 @@ export class PercentBarSummaryComponent extends React.Component<PercentBarSummar
         this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
-    onEdit(percentBar: IPercentBar) {
-        let clonedObject: IPercentBar = Helper.cloneObject(percentBar);
-        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
+    onEdit(index: number, renderedColumn: IPercentBar) {
+        let clonedObject: IPercentBar = Helper.cloneObject(renderedColumn);
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
