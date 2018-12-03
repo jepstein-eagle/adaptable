@@ -1,6 +1,6 @@
 import { IAuditService, IDataChangedEvent, IDataChangingEvent } from "./Interface/IAuditService";
 import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
-import { IEvent } from "../../Api/Interface/IEvent";
+import { IEvent } from "../../api/Interface/IEvent";
 export declare class AuditService implements IAuditService {
     private blotter;
     private _columnDataValueList;

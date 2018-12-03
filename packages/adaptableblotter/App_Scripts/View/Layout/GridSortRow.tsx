@@ -3,12 +3,12 @@ import { FormControl } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IColumn } from "../../Api/Interface/IColumn";
+import { IColumn } from "../../api/Interface/IColumn";
 import { SelectionMode, SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IGridSort } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IGridSort } from "../../api/Interface/IAdaptableBlotterObjects";
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
     GridSort: IGridSort

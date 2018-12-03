@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Utilities/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../api/Interface/IAdaptableBlotterObjects";
 import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 

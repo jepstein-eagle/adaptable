@@ -1,11 +1,11 @@
 import * as React from "react";
 import { FormGroup, FormControl, Col, Panel, ControlLabel, Row, Checkbox } from 'react-bootstrap';
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../api/Interface/IAdaptableBlotterObjects";
 import { ColorPicker } from "../../ColorPicker";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 

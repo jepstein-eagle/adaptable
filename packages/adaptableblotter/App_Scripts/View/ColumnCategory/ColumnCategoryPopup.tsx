@@ -17,7 +17,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { IColumnCategory } from "../../api/Interface/Interfaces";
 import { ColumnCategoryEntityRow } from "./ColumnCategoryEntityRow";

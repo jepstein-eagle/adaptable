@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { ChartState } from './Interface/IState'
-import { IChartDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IChartDefinition } from '../../api/Interface/IAdaptableBlotterObjects';
 
 export const CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
 export const CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';

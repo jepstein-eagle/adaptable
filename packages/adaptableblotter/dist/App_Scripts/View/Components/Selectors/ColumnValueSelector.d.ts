@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
     SelectedColumn: IColumn;

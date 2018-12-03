@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 export declare class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
     private GridSorts;
     private GridState;

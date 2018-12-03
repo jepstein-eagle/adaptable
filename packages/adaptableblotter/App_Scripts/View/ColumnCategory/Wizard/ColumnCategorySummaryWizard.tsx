@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IColumnCategory, IKeyValuePair } from "../../../api/Interface/Interfaces";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../api/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 

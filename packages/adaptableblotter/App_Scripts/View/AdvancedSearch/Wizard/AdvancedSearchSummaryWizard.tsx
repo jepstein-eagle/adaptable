@@ -2,10 +2,10 @@ import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../api/Interface/IColumn";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IAdvancedSearch, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch, IUserFilter } from "../../../api/Interface/IAdaptableBlotterObjects";
 import { IKeyValuePair } from "../../../api/Interface/Interfaces";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {

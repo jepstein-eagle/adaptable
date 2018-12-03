@@ -1,8 +1,8 @@
 import * as React from "react";
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { LeafExpressionOperator } from '../../../Utilities/Enums';
-import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../api/Interface/IAdaptableBlotterObjects";
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>;
 }

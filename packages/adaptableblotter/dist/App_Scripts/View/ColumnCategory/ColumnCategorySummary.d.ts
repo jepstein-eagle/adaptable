@@ -2,7 +2,7 @@ import * as React from "react";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
 import { IColumnCategory } from "../../api/Interface/Interfaces";
 export interface ColumnCategorySummaryProps extends StrategySummaryProps<ColumnCategorySummaryComponent> {
     ColumnCategorys: IColumnCategory[];

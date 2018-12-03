@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 
 export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
 

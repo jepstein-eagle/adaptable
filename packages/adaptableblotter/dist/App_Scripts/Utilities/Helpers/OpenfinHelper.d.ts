@@ -1,5 +1,5 @@
 import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';
-import { IEvent } from '../../Api/Interface/IEvent';
+import { IEvent } from '../../api/Interface/IEvent';
 export declare module OpenfinHelper {
     function OnExcelDisconnected(): IEvent<any, any>;
     function OnWorkbookDisconnected(): IEvent<any, ExcelWorkbook>;

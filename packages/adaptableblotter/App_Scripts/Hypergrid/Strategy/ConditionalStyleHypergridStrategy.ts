@@ -4,7 +4,7 @@ import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
-import { IConditionalStyle } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IConditionalStyle } from '../../api/Interface/IAdaptableBlotterObjects';
 import { IColumnCategory } from '../../api/Interface/Interfaces';
 import { IDataChangedEvent } from '../../Utilities/Services/Interface/IAuditService';
 

@@ -1,4 +1,4 @@
-import {IColumn} from '../../Api/Interface/IColumn';
+import {IColumn} from '../../api/Interface/IColumn';
 import * as Redux from 'redux'
 
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';

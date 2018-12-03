@@ -1,4 +1,4 @@
-import { IEvent } from '../Api/Interface/IEvent';
+import { IEvent } from '../api/Interface/IEvent';
 export declare class EventDispatcher<TSender, TArgs> implements IEvent<TSender, TArgs> {
     private _subscriptions;
     Subscribe(fn: (sender: TSender, args: TArgs) => void): void;

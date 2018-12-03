@@ -3,10 +3,10 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy";
-import { ICalculatedColumn } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn } from '../api/Interface/IAdaptableBlotterObjects';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 
 export class CalculatedColumnStrategy extends AdaptableStrategyBase implements ICalculatedColumnStrategy {
     private CalculatedColumnState: CalculatedColumnState

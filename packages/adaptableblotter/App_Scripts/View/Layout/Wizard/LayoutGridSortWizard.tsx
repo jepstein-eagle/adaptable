@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Checkbox, 
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../api/Interface/IColumn";
 import { SortOrder, SelectionMode } from "../../../Utilities/Enums";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { GridSortRow } from '../GridSortRow'
@@ -12,7 +12,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
-import { ILayout, IGridSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { ILayout, IGridSort } from "../../../api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {

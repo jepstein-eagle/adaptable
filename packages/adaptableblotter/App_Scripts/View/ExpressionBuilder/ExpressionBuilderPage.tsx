@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -11,10 +11,10 @@ import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Api/Expression";
-import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
-import { IBlotterApi } from "../../Api/Interface/IBlotterApi";
+import { IUserFilter } from "../../api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../api/Expression";
+import { IAdaptableBlotterOptions } from "../../api/Interface/IAdaptableBlotterOptions";
+import { IBlotterApi } from "../../api/Interface/IBlotterApi";
 import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 
 

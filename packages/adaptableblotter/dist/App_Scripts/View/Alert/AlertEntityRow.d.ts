@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../api/Interface/IAdaptableBlotterObjects";
 import { MessageType } from "../../Utilities/Enums";
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
     Column: IColumn;

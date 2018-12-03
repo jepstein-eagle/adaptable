@@ -3,8 +3,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
-import { IAlertDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IAlertDefinition } from '../api/Interface/IAdaptableBlotterObjects';
+import { IColumn } from '../api/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 import { LeafExpressionOperator, StateChangedTrigger } from '../Utilities/Enums';

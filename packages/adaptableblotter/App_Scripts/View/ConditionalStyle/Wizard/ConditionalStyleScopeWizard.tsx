@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Radio, Col, Panel, FormControl } from 'react-bootstrap';
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IConditionalStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle } from "../../../api/Interface/IAdaptableBlotterObjects";
 import {  IColumnCategory } from "../../../api/Interface/Interfaces";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 

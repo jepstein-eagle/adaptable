@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { ButtonProps } from './ButtonBase';
-import { IUIConfirmation } from '../../../Api/Interface/IMessage';
+import { IUIConfirmation } from '../../../api/Interface/IMessage';
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
     ConfirmAction: Redux.Action;

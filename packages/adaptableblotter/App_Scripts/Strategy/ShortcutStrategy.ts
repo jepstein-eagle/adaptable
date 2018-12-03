@@ -9,13 +9,13 @@ import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { StateChangedTrigger, DataType, MathOperation, ActionMode } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../api/Interface/Interfaces';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IShortcut, ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IShortcut, ICellValidationRule } from '../api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IUIConfirmation } from '../Api/Interface/IMessage';
+import { IUIConfirmation } from '../api/Interface/IMessage';
 
 
 

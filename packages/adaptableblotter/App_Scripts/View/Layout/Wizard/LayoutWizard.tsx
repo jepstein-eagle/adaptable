@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { LayoutSelectionWizard } from './LayoutSelectionWizard'
 import { LayoutColumnWizard } from './LayoutColumnWizard'
@@ -8,7 +8,7 @@ import { LayoutGridSortWizard } from './LayoutGridSortWizard'
 import { LayoutSummaryWizard } from './LayoutSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
-import { IGridSort, ILayout } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IGridSort, ILayout } from "../../../api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {

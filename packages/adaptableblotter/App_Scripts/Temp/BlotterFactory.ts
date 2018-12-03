@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from "./../Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "./../api/Interface/IAdaptableBlotterOptions";
 import { IAdaptableBlotter } from "../api/Interface/IAdaptableBlotter";
 import { BlotterFactoryAgGrid } from "../agGrid/BlotterFactoryAgGrid";
 import { BlotterFactoryHypergrid } from "../Hypergrid/BlotterFactoryHypergrid";

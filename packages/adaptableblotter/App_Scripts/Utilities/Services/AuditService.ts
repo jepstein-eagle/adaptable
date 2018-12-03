@@ -1,7 +1,7 @@
 import { IAuditService, IDataChangedInfo, IDataChangedEvent, IDataChangingEvent } from "./Interface/IAuditService";
 import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { EventDispatcher } from "../EventDispatcher";
-import { IEvent } from "../../Api/Interface/IEvent";
+import { IEvent } from "../../api/Interface/IEvent";
 
 
 

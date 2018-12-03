@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { FormatColumnScopeWizard } from './FormatColumnScopeWizard'
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard'

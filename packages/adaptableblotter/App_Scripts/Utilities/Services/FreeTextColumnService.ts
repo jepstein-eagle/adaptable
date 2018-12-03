@@ -1,6 +1,6 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { IFreeTextColumn } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IFreeTextColumn } from '../../api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';

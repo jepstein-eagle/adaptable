@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter'
 import { IColumnInfoStrategy } from './Interface/IColumnInfoStrategy'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {

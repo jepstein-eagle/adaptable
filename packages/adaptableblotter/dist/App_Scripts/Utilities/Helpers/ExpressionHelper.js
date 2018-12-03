@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const FilterHelper_1 = require("./FilterHelper");
 const Enums_1 = require("../Enums");
-const Expression_1 = require("../../Api/Expression");
+const Expression_1 = require("../../api/Expression");
 const ColumnHelper_1 = require("./ColumnHelper");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 const LoggingHelper_1 = require("./LoggingHelper");

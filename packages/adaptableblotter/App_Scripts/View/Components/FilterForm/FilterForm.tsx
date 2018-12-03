@@ -7,33 +7,33 @@ import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux
 import * as SystemFilterRedux from '../../../Redux/ActionsReducers/SystemFilterRedux'
 import * as HomeRedux from '../../../Redux/ActionsReducers/HomeRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Utilities/Enums';
-import { IUserFilter, IColumnFilter, IRange } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, IRange } from '../../../api/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { Expression } from "../../../Api/Expression";
+import { Expression } from "../../../api/Expression";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
-import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../api/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
+import { IBlotterApi } from "../../../api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
 import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem, Well } from 'react-bootstrap';
-import { IMenuItem } from "../../../Api/Interface/IMenu";
+import { IMenuItem } from "../../../api/Interface/IMenu";
 import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
-import { IUIPrompt } from "../../../Api/Interface/IMessage";
+import { IUIPrompt } from "../../../api/Interface/IMessage";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 
 

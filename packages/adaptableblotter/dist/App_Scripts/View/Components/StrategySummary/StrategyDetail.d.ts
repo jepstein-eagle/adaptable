@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IAdaptableBlotterObject } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../../api/Interface/IAdaptableBlotterObjects";
 export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetail> {
     key: string;
     Item1: any;

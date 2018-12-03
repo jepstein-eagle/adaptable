@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IPercentBar } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../api/Interface/IAdaptableBlotterObjects";
 export interface PercentBarEntityRowProps extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
     Column: IColumn;
     ColorPalette: string[];

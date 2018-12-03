@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "../../api/Interface/IAdaptableBlotterOptions";
 import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { IDataChangedEvent } from "./Interface/IAuditService";
 export declare class AuditLogService {

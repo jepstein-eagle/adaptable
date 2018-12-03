@@ -6,7 +6,7 @@ import { IPercentBarStrategy } from './Interface/IPercentBarStrategy'
 import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 
 export  class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
     protected PercentBarState: PercentBarState

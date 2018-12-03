@@ -5,14 +5,14 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IUIConfirmation } from '../Api/Interface/IMessage';
+import { IUIConfirmation } from '../api/Interface/IMessage';
 import { DataType, StateChangedTrigger } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../api/Interface/Interfaces';
-import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../api/Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';

@@ -54,14 +54,14 @@ import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStra
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIConfirmation, InputAction } from '../../Api/Interface/IMessage';
+import { IUIConfirmation, InputAction } from '../../api/Interface/IMessage';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants'
 import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../api/Interface/IAdaptableBlotterObjects';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';

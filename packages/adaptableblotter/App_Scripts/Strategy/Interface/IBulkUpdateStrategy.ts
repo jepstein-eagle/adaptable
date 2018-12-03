@@ -1,6 +1,6 @@
 import { IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
-import { IPreviewInfo } from '../../Api/Interface/IPreview';
+import { IPreviewInfo } from '../../api/Interface/IPreview';
 import { ICellInfo } from '../../api/Interface/Interfaces';
 
 export interface IBulkUpdateStrategy extends IStrategy {

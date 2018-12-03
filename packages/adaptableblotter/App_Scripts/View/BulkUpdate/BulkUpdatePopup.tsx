@@ -13,11 +13,11 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUIConfirmation } from '../../Api/Interface/IMessage';
+import { IUIConfirmation } from '../../api/Interface/IMessage';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Api/Interface/IPreview";
+import { IPreviewResult, IPreviewInfo } from "../../api/Interface/IPreview";
 import { UIHelper } from "../UIHelper";
-import { IColumn } from "../../Api/Interface/IColumn";
+import { IColumn } from "../../api/Interface/IColumn";
 import { isNumber, isDate } from "util";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";

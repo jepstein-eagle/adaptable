@@ -1,9 +1,9 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState';
 import { DataType, StatusColour, MessageType } from '../Utilities/Enums';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
-import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IAdaptableBlotterOptions } from '../api/Interface/IAdaptableBlotterOptions';
+import { IStyle } from '../api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../Api/Expression';
+import { Expression } from '../api/Expression';
 export declare module UIHelper {
     function getEmptyConfigState(): EditableConfigEntityState;
     function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState;

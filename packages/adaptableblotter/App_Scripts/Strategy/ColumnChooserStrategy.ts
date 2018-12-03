@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter'
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {

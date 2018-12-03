@@ -1,5 +1,5 @@
 import { IStrategy } from './IStrategy';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 
 export interface ISelectedCellsStrategy extends IStrategy {
     CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary

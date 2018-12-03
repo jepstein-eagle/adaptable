@@ -6,7 +6,7 @@ import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy'
 import { FreeTextColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 
 export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IFreeTextColumnStrategy {
     protected FreeTextColumnState: FreeTextColumnState

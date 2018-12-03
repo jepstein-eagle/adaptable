@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
@@ -10,8 +10,8 @@ import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode, Que
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
-import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Api/Expression";
+import { IUserFilter, IRange } from "../../api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../api/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { Helper } from "../../Utilities/Helpers/Helper";

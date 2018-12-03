@@ -1,6 +1,6 @@
 import { IStrategy } from './IStrategy';
 import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 export interface IColumnFilterStrategy extends IStrategy {
 }
 export interface IColumnFilterContext {

@@ -3,7 +3,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { IUserFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter, IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
     onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;

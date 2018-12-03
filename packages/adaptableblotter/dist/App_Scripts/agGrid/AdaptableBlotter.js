@@ -63,7 +63,7 @@ const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const color_1 = require("../Utilities/color");
 const BlotterApi_1 = require("./BlotterApi");
 // Helpers
-const DefaultAdaptableBlotterOptions_1 = require("../Api/DefaultAdaptableBlotterOptions");
+const DefaultAdaptableBlotterOptions_1 = require("../api/DefaultAdaptableBlotterOptions");
 const iPushPullHelper_1 = require("../Utilities/Helpers/iPushPullHelper");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 const StyleHelper_1 = require("../Utilities/Helpers/StyleHelper");

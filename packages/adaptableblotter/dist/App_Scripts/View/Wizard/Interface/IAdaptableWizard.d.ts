@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { IColumn } from '../../../Api/Interface/IColumn';
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IColumn } from '../../../api/Interface/IColumn';
+import { IUserFilter, IAdaptableBlotterObject } from '../../../api/Interface/IAdaptableBlotterObjects';
 import { IAdaptableBlotter } from '../../../api/Interface/IAdaptableBlotter';
 export interface AdaptableWizardStep {
     StepName: string;

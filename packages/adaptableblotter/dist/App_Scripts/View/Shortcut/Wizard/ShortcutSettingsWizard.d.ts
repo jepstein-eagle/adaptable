@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { MathOperation } from '../../../Utilities/Enums';
-import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../../api/Interface/IAdaptableBlotterObjects";
 export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
     NumericKeysAvailable: Array<string>;
     DateKeysAvailable: Array<string>;

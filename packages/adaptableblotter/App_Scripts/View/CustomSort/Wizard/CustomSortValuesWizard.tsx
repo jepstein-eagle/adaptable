@@ -1,10 +1,10 @@
 import * as React from "react";
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
-import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 

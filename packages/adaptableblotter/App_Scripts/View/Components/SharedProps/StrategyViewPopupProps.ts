@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IColumn } from "../../../Api/Interface/IColumn";
-import { IUserFilter, IGridSort, IColumnFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from "../../../api/Interface/IColumn";
+import { IUserFilter, IGridSort, IColumnFilter } from "../../../api/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
 import { AccessLevel } from "../../../Utilities/Enums";
 

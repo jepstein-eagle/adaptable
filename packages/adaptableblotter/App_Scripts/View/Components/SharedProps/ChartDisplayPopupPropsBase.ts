@@ -2,9 +2,9 @@ import * as React from "react";
 import { DistinctCriteriaPairValue } from '../../../Utilities/Enums'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IColumn } from "../../../Api/Interface/IColumn";
-import { IAdaptableBlotterOptions } from "../../../Api/Interface/IAdaptableBlotterOptions";
-import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
+import { IColumn } from "../../../api/Interface/IColumn";
+import { IAdaptableBlotterOptions } from "../../../api/Interface/IAdaptableBlotterOptions";
+import { IBlotterApi } from "../../../api/Interface/IBlotterApi";
 import { IChartService } from "../../../Utilities/Services/Interface/IChartService";
 
 export interface ChartDisplayPopupPropsBase<View> extends React.ClassAttributes<View> {

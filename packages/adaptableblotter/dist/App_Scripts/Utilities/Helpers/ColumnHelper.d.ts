@@ -1,4 +1,4 @@
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { DataType } from '../Enums';
 import { IColumnCategory } from '../../api/Interface/Interfaces';
 export declare module ColumnHelper {

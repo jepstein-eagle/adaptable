@@ -1,6 +1,6 @@
 import { BulkUpdateState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IPreviewInfo } from '../../Api/Interface/IPreview';
+import { IPreviewInfo } from '../../api/Interface/IPreview';
 
 export const BULK_UPDATE_APPLY = 'BULK_UPDATE_APPLY';
 export const BULK_UPDATE_CHANGE_VALUE = 'BULK_UPDATE_CHANGE_VALUE';

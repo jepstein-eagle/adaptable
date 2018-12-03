@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
 import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 export declare class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
     protected PercentBarState: PercentBarState;
     constructor(blotter: IAdaptableBlotter);

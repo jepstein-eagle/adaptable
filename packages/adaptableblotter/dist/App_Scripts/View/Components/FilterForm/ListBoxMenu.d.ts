@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { ListGroupProps } from 'react-bootstrap';
-import { IMenuItem } from "../../../Api/Interface/IMenu";
+import { IMenuItem } from "../../../api/Interface/IMenu";
 export interface ListBoxMenuProps extends ListGroupProps {
     ContextMenuItems: IMenuItem[];
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action;

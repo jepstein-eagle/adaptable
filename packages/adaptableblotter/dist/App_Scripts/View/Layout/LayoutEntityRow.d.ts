@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../api/Interface/IAdaptableBlotterObjects";
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {
     IsCurrentLayout: boolean;
     onSelect: (Layout: ILayout) => void;

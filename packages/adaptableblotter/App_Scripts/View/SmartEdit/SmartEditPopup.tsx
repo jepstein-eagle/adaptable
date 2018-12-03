@@ -10,17 +10,17 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { MathOperation, MessageType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUIConfirmation } from '../../Api/Interface/IMessage';
+import { IUIConfirmation } from '../../api/Interface/IMessage';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Api/Interface/IPreview";
+import { IPreviewResult, IPreviewInfo } from "../../api/Interface/IPreview";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../api/Interface/IAdaptableBlotterObjects";
 import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 

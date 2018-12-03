@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IConditionalStyle, IStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle, IStyle } from "../../../api/Interface/IAdaptableBlotterObjects";
 export interface ConditionalStyleStyleWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     ColorPalette: string[];
     StyleClassNames: string[];

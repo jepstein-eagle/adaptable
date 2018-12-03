@@ -3,10 +3,10 @@ import { ControlLabel, FormGroup, Col, Panel, Checkbox, Row, Well, Radio } from 
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode, MessageType, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../api/Interface/IColumn";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";

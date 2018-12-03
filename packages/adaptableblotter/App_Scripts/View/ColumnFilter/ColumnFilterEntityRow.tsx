@@ -1,11 +1,11 @@
 import * as React from "react";
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../api/Interface/IColumn';
 import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { IColumnFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter } from "../../api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ButtonSave } from "../Components/Buttons/ButtonSave";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";

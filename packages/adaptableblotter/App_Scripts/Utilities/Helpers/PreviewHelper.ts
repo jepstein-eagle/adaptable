@@ -1,4 +1,4 @@
-import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../Api/Interface/IPreview";
+import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../api/Interface/IPreview";
 import { ActionMode } from "../Enums";
 import { StringExtensions } from "../Extensions/StringExtensions";
 import { ICellInfo } from "../../api/Interface/Interfaces";

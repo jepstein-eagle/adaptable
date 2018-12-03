@@ -71,25 +71,25 @@ import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
-import { IMenuItem } from '../Api/Interface/IMenu';
-import { IEvent } from '../Api/Interface/IEvent';
-import { IUIConfirmation } from '../Api/Interface/IMessage';
+import { IMenuItem } from '../api/Interface/IMenu';
+import { IEvent } from '../api/Interface/IEvent';
+import { IUIConfirmation } from '../api/Interface/IMessage';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../api/Interface/Interfaces';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../api/Interface/IStateEvents';
 import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../View/UIInterfaces';
 // Helpers
-import { DefaultAdaptableBlotterOptions } from '../Api/DefaultAdaptableBlotterOptions';
+import { DefaultAdaptableBlotterOptions } from '../api/DefaultAdaptableBlotterOptions';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { StyleHelper } from '../Utilities/Helpers/StyleHelper';
