@@ -33,7 +33,7 @@ class FreeTextColumnPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__FreeTextcolumn";
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__FreeTextcolumn";
-        let infoBody = ["A FreeText Column is one where you can insert any values you wish.", React.createElement("br", null), React.createElement("br", null), "These values are stored with your setting and not with the rest of the data in the grid."];
+        let infoBody = ["A FreeText Column is one where you can insert any values you wish (e.g.comments).", React.createElement("br", null), React.createElement("br", null), "These values are stored with your settings and not with the rest of the data in the grid."];
         let colItems = [
             { Content: "Column", Size: 3 },
             { Content: "Default Value", Size: 3 },

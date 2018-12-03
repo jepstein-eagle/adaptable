@@ -24,6 +24,8 @@ const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const EntitlementHelper_1 = require("../../Utilities/Helpers/EntitlementHelper");
 const ColumnCategorySummary_1 = require("../ColumnCategory/ColumnCategorySummary");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const PercentBarSummary_1 = require("../PercentBar/PercentBarSummary");
+const FreeTextColumnSummary_1 = require("../FreeTextColumn/FreeTextColumnSummary");
 class ColumnInfoPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -73,6 +75,14 @@ class ColumnInfoPopupComponent extends React.Component {
         if (this.isStrategyVisible(StrategyConstants.FormatColumnStrategyId)) {
             summaries.push(React.createElement("div", { key: StrategyConstants.FormatColumnStrategyId, className: this.isStrategyReadOnly(StrategyConstants.FormatColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(FormatColumnSummary_1.FormatColumnSummary, { key: StrategyConstants.FormatColumnStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, AccessLevel: this.getAccessLevel(StrategyConstants.FormatColumnStrategyId) })));
+        }
+        if (this.isStrategyVisible(StrategyConstants.FreeTextColumnStrategyId)) {
+            summaries.push(React.createElement("div", { key: StrategyConstants.FreeTextColumnStrategyId, className: this.isStrategyReadOnly(StrategyConstants.FreeTextColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(FreeTextColumnSummary_1.FreeTextColumnSummary, { key: StrategyConstants.FormatColumnStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, AccessLevel: this.getAccessLevel(StrategyConstants.FormatColumnStrategyId) })));
+        }
+        if (this.isStrategyVisible(StrategyConstants.PercentBarStrategyId) && this.state.SelectedColumn.DataType == Enums_1.DataType.Number) {
+            summaries.push(React.createElement("div", { key: StrategyConstants.PercentBarStrategyId, className: this.isStrategyReadOnly(StrategyConstants.PercentBarStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
+                React.createElement(PercentBarSummary_1.PercentBarSummary, { key: StrategyConstants.FormatColumnStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, AccessLevel: this.getAccessLevel(StrategyConstants.FormatColumnStrategyId) })));
         }
         if (this.state.SelectedColumn) {
             if (this.isStrategyVisible(StrategyConstants.PlusMinusStrategyId) && this.state.SelectedColumn.DataType == Enums_1.DataType.Number) {
