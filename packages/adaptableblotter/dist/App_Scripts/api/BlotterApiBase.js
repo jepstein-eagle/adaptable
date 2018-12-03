@@ -560,13 +560,21 @@ class BlotterApiBase {
         let index = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
         this.percentBarEditByIndex(index, percentBar);
     }
+<<<<<<< HEAD
     percentBarEditPositiveColor(positiveColor, columnId) {
+=======
+    percentBarEdiPositiveColor(positiveColor, columnId) {
+>>>>>>> 165f57e86a3465147055cd0c8942f964b5a3998f
         let percentBar = this.percentBarGetByColumn(columnId);
         percentBar.PositiveColor = positiveColor;
         let index = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
         this.percentBarEditByIndex(index, percentBar);
     }
+<<<<<<< HEAD
     percentBarEditNegativeColor(negativeColor, columnId) {
+=======
+    percentBarEdiNegativeColor(negativeColor, columnId) {
+>>>>>>> 165f57e86a3465147055cd0c8942f964b5a3998f
         let percentBar = this.percentBarGetByColumn(columnId);
         percentBar.NegativeColor = negativeColor;
         let index = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
