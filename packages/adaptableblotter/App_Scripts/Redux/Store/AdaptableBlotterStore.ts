@@ -655,13 +655,20 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         /*
       PercentBar
        */
-        case PercentBarRedux.PERCENT_BAR_ADD_UPDATE: {
-          let actionTyped = <PercentBarRedux.PercentBarAddUpdateAction>action
+        case PercentBarRedux.PERCENT_BAR_ADD: {
+          let actionTyped = <PercentBarRedux.PercentBarAddAction>action
 
-          if (actionTyped.Index >= 0) { // edit so first remove before doing anything
-            let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars[actionTyped.Index];
-            blotter.removePercentBar(editedCellRender);
-          }
+          let returnAction = next(action);
+
+          blotter.addPercentBar(actionTyped.PercentBar);
+          blotter.redraw();
+          return returnAction;
+        }
+
+        case PercentBarRedux.PERCENT_BAR_EDIT: {
+          let actionTyped = <PercentBarRedux.PercentBarEditAction>action
+          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars[actionTyped.Index];
+          blotter.removePercentBar(editedCellRender);
           let returnAction = next(action);
 
           // add new one
@@ -680,6 +687,23 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
+        case PercentBarRedux.PERCENT_BAR_CHANGE_MINIMUM_VALUE: {
+          let returnAction = next(action);
+          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangeMinimumValueAction>action).PercentBar;
+          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
+          blotter.editPercentBar(editedCellRender);
+          blotter.redraw();
+          return returnAction;
+        }
+
+        case PercentBarRedux.PERCENT_BAR_CHANGE_MAXIMUM_VALUE: {
+          let returnAction = next(action);
+          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangeMaximumValueAction>action).PercentBar;
+          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
+          blotter.editPercentBar(editedCellRender);
+          blotter.redraw();
+          return returnAction;
+        }
         case PercentBarRedux.PERCENT_BAR_CHANGE_POSITIVE_COLOR: {
           let returnAction = next(action);
           let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangePositiveColorAction>action).PercentBar;
@@ -701,7 +725,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         /*
         Column Categories
         */
-       // Use case: deleting a column category might involve a conditional style that uses it
+        // Use case: deleting a column category might involve a conditional style that uses it
         case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
           let returnAction = next(action);
           let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action
@@ -1009,11 +1033,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         Column Chooser 
         */
         case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
-        let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
-        //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
-        //Time will tell I guess
-        blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
-        return next(action);
+          let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
+          //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
+          //Time will tell I guess
+          blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
+          return next(action);
 
         //We rebuild the menu from scratch
         //the difference between the two is that RESET_STATE is handled before and set the state to undefined
@@ -1056,7 +1080,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           blotter.InitAuditService()
           return returnAction;
         }
-       
+
         default:
           return next(action);
       }

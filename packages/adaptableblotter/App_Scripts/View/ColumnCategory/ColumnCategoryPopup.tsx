@@ -6,8 +6,6 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-//import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard'
-//import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow'
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -17,14 +15,10 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IColumn } from "../../Api/Interface/IColumn";
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { IColumnCategory } from "../../api/Interface/Interfaces";
 import { ColumnCategoryEntityRow } from "./ColumnCategoryEntityRow";
 import { ColumnCategoryWizard } from "./Wizard/ColumnCategoryWizard";
@@ -51,8 +45,6 @@ class ColumnCategoryPopupComponent extends React.Component<ColumnCategoryPopupPr
     render() {
         let cssClassName: string = this.props.cssClassName + "__ColumnCategory";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__ColumnCategory";
-
-
 
         let infoBody: any[] = ["Column Categories allow you to link different columns, primarily for use in Conditional Styles.", <br />, <br />,
             "They are also used in Column Chooser to make it easier to find and manage large column sets."]

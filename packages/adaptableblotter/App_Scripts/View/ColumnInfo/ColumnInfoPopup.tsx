@@ -29,6 +29,8 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { PercentBarSummary } from "../PercentBar/PercentBarSummary";
+import { FreeTextColumnSummary } from "../FreeTextColumn/FreeTextColumnSummary";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -149,6 +151,30 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             summaries.push(
                 <div key={StrategyConstants.FormatColumnStrategyId} className={this.isStrategyReadOnly(StrategyConstants.FormatColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
                     <FormatColumnSummary
+                        key={StrategyConstants.FormatColumnStrategyId}
+                        SummarisedColumn={this.state.SelectedColumn}
+                        TeamSharingActivated={this.props.TeamSharingActivated}
+                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                        AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+                    />
+                </div>)
+        }
+        if (this.isStrategyVisible(StrategyConstants.FreeTextColumnStrategyId)) {
+            summaries.push(
+                <div key={StrategyConstants.FreeTextColumnStrategyId} className={this.isStrategyReadOnly(StrategyConstants.FreeTextColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <FreeTextColumnSummary
+                        key={StrategyConstants.FormatColumnStrategyId}
+                        SummarisedColumn={this.state.SelectedColumn}
+                        TeamSharingActivated={this.props.TeamSharingActivated}
+                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                        AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+                    />
+                </div>)
+        }
+        if (this.isStrategyVisible(StrategyConstants.PercentBarStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
+            summaries.push(
+                <div key={StrategyConstants.PercentBarStrategyId} className={this.isStrategyReadOnly(StrategyConstants.PercentBarStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <PercentBarSummary
                         key={StrategyConstants.FormatColumnStrategyId}
                         SummarisedColumn={this.state.SelectedColumn}
                         TeamSharingActivated={this.props.TeamSharingActivated}

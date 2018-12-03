@@ -1,8 +1,8 @@
 import { IEvent } from "./IEvent";
 import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
-import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn } from "./IAdaptableBlotterObjects";
-import { IEntitlement } from "../../api/Interface/Interfaces";
+import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSort, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IFreeTextColumn, IPercentBar } from "./IAdaptableBlotterObjects";
+import { IEntitlement, IColumnCategory } from "../../api/Interface/Interfaces";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
 
@@ -174,6 +174,35 @@ export interface IBlotterApi {
   calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void
   calculatedColumnEditExpression(column: string, columnExpression: string): void
   calculatedColumnDelete(column: string): void
+
+  //  Colummn Category
+  columnCategoryGetAll(): IColumnCategory[];
+  columnCategoryAdd(columnCategory: IColumnCategory): void;
+  columnCategoryCreate(columnCategoryId: string, columns: string[]): void;
+  columnCategoryEdit(previousColumnCategoryId: string, columnCategory: IColumnCategory): void;
+  columnCategoryDelete(columnCategoryId: string): void;
+  columnCategoryAddColumns(columnCategoryId: string, columns: string[]): void;
+  columnCategoryRemoveColumns(columnCategoryId: string, columns: string[]): void;
+
+  // Free Text Column api methods
+  freeTextColumnGetAll(): IFreeTextColumn[];
+  freeTextColumnAdd(freeTextColumn: IFreeTextColumn): void;
+  freeTextColumnCreate(columnId: string, defaultValue: string): void;
+  freeTextColumnDelete(columnId: string): void;
+
+  // Percent Bars api methods
+  percentBarGetAll(): IPercentBar[];
+  percentBarGetByColumn(columnId: string): IPercentBar;
+  percentBarAdd(percentBar: IPercentBar): void;
+  percentBarCreate(columnId: string, minValue: number, maxValue: number, positiveColor: string, negativeColor: string, showValue: boolean): void;
+  percentBarEditByIndex(index: number, percentBar: IPercentBar): void;
+  percentBarEdit(percentBar: IPercentBar): void;
+  percentBarEditMinValue(minValue: number, columnId: string): void;
+  percentBarEditMaxValue(maxValue: number, columnId: string): void;
+  percentBarEdiPositiveColor(positiveColor: string, columnId: string): void;
+  percentBarEdiNegativeColor(negativeColor: string, columnId: string): void;
+  percentBarEditShowValue(showValue: boolean, columnId: string): void;
+  percentBarDelete(columnId: string): void
 
 
   // CellValidation State

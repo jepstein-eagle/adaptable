@@ -22,8 +22,6 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject, IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Utilities/Enums";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
     onAddUpdateUserFilter: (index: number, userFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction

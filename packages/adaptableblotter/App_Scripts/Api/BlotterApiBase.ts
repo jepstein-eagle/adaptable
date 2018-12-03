@@ -6,6 +6,9 @@ import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
 import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux'
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
+import * as ColumnCategoryRedux from '../Redux/ActionsReducers/ColumnCategoryRedux'
+import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRedux'
+import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux'
 import * as EntitlementsRedux from '../Redux/ActionsReducers/EntitlementsRedux'
 import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux'
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
@@ -23,10 +26,10 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
-import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort } from "./Interface/IAdaptableBlotterObjects";
+import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort, IFreeTextColumn, IPercentBar } from "./Interface/IAdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IEntitlement, ISystemStatus, IPermittedColumnValues } from "../api/Interface/Interfaces";
+import { IEntitlement, ISystemStatus, IPermittedColumnValues, IColumnCategory } from "../api/Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Utilities/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
@@ -151,7 +154,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   public dashboardHideFunctionsDropdown(): void {
     this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown())
   }
-  
+
   public dashboardShowColumnsDropdown(): void {
     this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown())
   }
@@ -581,6 +584,152 @@ export abstract class BlotterApiBase implements IBlotterApi {
 
   public exportLiveReportsGetAll(): ILiveReport[] {
     return this.getState().System.CurrentLiveReports;
+  }
+
+  // column category api methods
+  public columnCategoryGetAll(): IColumnCategory[] {
+    return this.getState().ColumnCategory.ColumnCategories;
+  }
+
+  public columnCategoryAdd(columnCategory: IColumnCategory): void {
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryAdd(columnCategory))
+  }
+
+  public columnCategoryCreate(columnCategoryId: string, columns: string[]): void {
+    let columnCategory: IColumnCategory = {
+      ColumnCategoryId: columnCategoryId,
+      ColumnIds: columns
+    }
+    this.columnCategoryAdd(columnCategory);
+  }
+
+  public columnCategoryEdit(previousColumnCategoryId: string, columnCategory: IColumnCategory): void {
+    let index: number = this.columnCategoryGetAll().findIndex(cc => cc.ColumnCategoryId == previousColumnCategoryId)
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory))
+  }
+
+  public columnCategoryAddColumns(columnCategoryId: string, columns: string[]): void {
+    let columnCategory: IColumnCategory = this.columnCategoryGetAll().find(cc => cc.ColumnCategoryId == columnCategoryId)
+    let index: number = this.columnCategoryGetAll().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
+    columns.forEach(c => {
+      columnCategory.ColumnIds.push(c);
+    })
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory))
+  }
+
+  public columnCategoryRemoveColumns(columnCategoryId: string, columns: string[]): void {
+    let columnCategory: IColumnCategory = this.columnCategoryGetAll().find(cc => cc.ColumnCategoryId == columnCategoryId)
+    let index: number = this.columnCategoryGetAll().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
+    columns.forEach(c => {
+      let ccIndex = columnCategory.ColumnIds.findIndex(cc => cc == c)
+      columnCategory.ColumnIds.splice(ccIndex, 1);
+    })
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory))
+  }
+
+
+  public columnCategoryDelete(columnCategoryId: string): void {
+    let columnCategory: IColumnCategory = this.columnCategoryGetAll().find(cc => cc.ColumnCategoryId == columnCategoryId)
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryDelete(columnCategory))
+  }
+
+  // Free Text Column api methods
+  public freeTextColumnGetAll(): IFreeTextColumn[] {
+    return this.getState().FreeTextColumn.FreeTextColumns;
+  }
+
+  public freeTextColumnAdd(freeTextColumn: IFreeTextColumn): void {
+    this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAdd(freeTextColumn))
+  }
+
+  public freeTextColumnCreate(columnId: string, defaultValue: string = null): void {
+    let freeTextColumn: IFreeTextColumn = {
+      ColumnId: columnId,
+      DefaultValue: defaultValue,
+      FreeTextStoredValues: []
+    }
+    this.freeTextColumnAdd(freeTextColumn);
+  }
+
+  public freeTextColumnDelete(columnId: string): void {
+    let freeTextColumn: IFreeTextColumn = this.freeTextColumnGetAll().find(ftc => ftc.ColumnId == columnId);
+    this.dispatchAction(FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn))
+  }
+
+
+  // Percent Bars api methods
+  public percentBarGetAll(): IPercentBar[] {
+    return this.getState().PercentBar.PercentBars;
+  }
+
+  public percentBarGetByColumn(columnId: string): IPercentBar {
+    let percentBar: IPercentBar = this.getState().PercentBar.PercentBars.find(pcb => pcb.ColumnId == columnId);
+    return percentBar;
+  }
+
+  public percentBarAdd(percentBar: IPercentBar): void {
+    this.dispatchAction(PercentBarRedux.PercentBarAdd( percentBar))
+  }
+
+  public percentBarCreate(columnId: string, minValue: number, maxValue: number, positiveColor: string, negativeColor: string, showValue: boolean): void {
+    let percentBar: IPercentBar = {
+      ColumnId: columnId,
+      MinValue: minValue,
+      MaxValue: maxValue,
+      PositiveColor: positiveColor,
+      NegativeColor: negativeColor,
+      ShowValue: showValue
+    }
+    this.percentBarAdd(percentBar);
+  }
+
+  public percentBarEditByIndex(index: number, percentBar: IPercentBar): void {
+    this.dispatchAction(PercentBarRedux.PercentBarEdit(index, percentBar))
+  }
+  
+  public percentBarEdit(percentBar: IPercentBar): void {
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+   this.percentBarEditByIndex(index, percentBar);
+  }
+
+  public percentBarEditMinValue(minValue: number, columnId: string): void {
+   let percentBar = this.percentBarGetByColumn(columnId);
+    percentBar.MinValue = minValue;
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    this.percentBarEditByIndex(index, percentBar);
+    }
+
+  public percentBarEditMaxValue(maxValue: number, columnId: string): void {
+    let percentBar = this.percentBarGetByColumn(columnId);
+    percentBar.MaxValue = maxValue;
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    this.percentBarEditByIndex(index, percentBar);
+ }
+
+  public percentBarEdiPositiveColor(positiveColor: string, columnId: string): void {
+    let percentBar = this.percentBarGetByColumn(columnId);
+    percentBar.PositiveColor = positiveColor;
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    this.percentBarEditByIndex(index, percentBar);
+ }
+
+  public percentBarEdiNegativeColor(negativeColor: string, columnId: string): void {
+    let percentBar = this.percentBarGetByColumn(columnId);
+    percentBar.NegativeColor = negativeColor;
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    this.percentBarEditByIndex(index, percentBar);
+  }
+
+  public percentBarEditShowValue(showValue: boolean, columnId: string): void {
+    let percentBar = this.percentBarGetByColumn(columnId);
+    percentBar.ShowValue = showValue;
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    this.percentBarEditByIndex(index, percentBar);
+  }
+
+  public percentBarDelete(columnId: string): void {
+    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == columnId);
+    this.dispatchAction(PercentBarRedux.PercentBarDelete(index))
   }
 
 

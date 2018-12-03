@@ -17,11 +17,12 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject, IFreeTextColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 
 export interface FreeTextColumnSummaryProps extends StrategySummaryProps<FreeTextColumnSummaryComponent> {
     FreeTextColumns: IFreeTextColumn[]
-     onAddFreeTextColumn: (FreeTextColumn: IFreeTextColumn) => FreeTextColumnRedux.FreeTextColumnAddAction
+    onAddFreeTextColumn: (FreeTextColumn: IFreeTextColumn) => FreeTextColumnRedux.FreeTextColumnAddAction
     onEditFreeTextColumn: (FreeTextColumn: IFreeTextColumn) => FreeTextColumnRedux.FreeTextColumnEditAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -41,24 +42,15 @@ export class FreeTextColumnSummaryComponent extends React.Component<FreeTextColu
 
         let FreeTextColumnRow: any;
 
-        if (noFreeTextColumn) {
-            FreeTextColumnRow = <StrategyHeader
-                key={StrategyConstants.FreeTextColumnStrategyName}
-                cssClassName={this.props.cssClassName}
-                StrategyId={StrategyConstants.FreeTextColumnStrategyId}
-                StrategySummary={"No FreeText Column Set"}
-                onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyConstants.FreeTextColumnStrategyName}
-                AccessLevel={this.props.AccessLevel}
-            />
-        } else {
-          
-          let index = this.props.FreeTextColumns.findIndex(ftc=>ftc.ColumnId== this.props.SummarisedColumn.ColumnId);
+        if (!noFreeTextColumn) {
+            let description: string =  (ArrayExtensions.IsNotEmpty(freeTextColumn.FreeTextStoredValues)) ? " Stored values: " + freeTextColumn.FreeTextStoredValues.length : "No stored values"
+            let index = this.props.FreeTextColumns.findIndex(ftc => ftc.ColumnId == this.props.SummarisedColumn.ColumnId);
             FreeTextColumnRow = <StrategyDetail
                 key={StrategyConstants.FreeTextColumnStrategyName}
                 cssClassName={this.props.cssClassName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.FreeTextColumnStrategyId} />}
-                Item2={freeTextColumn.ColumnId}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName}
+                    StrategyId={StrategyConstants.FreeTextColumnStrategyId} />}
+                Item2={description}
                 ConfigEnity={freeTextColumn}
                 showShare={this.props.TeamSharingActivated}
                 EntityName={StrategyConstants.FreeTextColumnStrategyName}
@@ -98,9 +90,9 @@ export class FreeTextColumnSummaryComponent extends React.Component<FreeTextColu
         this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
-    onEdit(index: number,FreeTextColumn: IFreeTextColumn) {
+    onEdit(index: number, FreeTextColumn: IFreeTextColumn) {
         let clonedObject: IFreeTextColumn = Helper.cloneObject(FreeTextColumn);
-        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0,  EditedAdaptableBlotterObjectIndex: index });
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
@@ -123,7 +115,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<FreeTextColu
     }
 
 }
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {    
+function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Columns: state.Grid.Columns,
         FreeTextColumns: state.FreeTextColumn.FreeTextColumns,

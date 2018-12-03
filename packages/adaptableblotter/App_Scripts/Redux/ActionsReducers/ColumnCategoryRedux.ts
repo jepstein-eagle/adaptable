@@ -46,8 +46,8 @@ export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (state:
 
     switch (action.type) {
         case COLUMN_CATEGORY_ADD:
-        columnCategories = [].concat(state.ColumnCategories);
-        columnCategories.push((<ColumnCategoryAddAction>action).ColumnCategory);
+            columnCategories = [].concat(state.ColumnCategories);
+            columnCategories.push((<ColumnCategoryAddAction>action).ColumnCategory);
             return Object.assign({}, state, { ColumnCategories: columnCategories });
 
         case COLUMN_CATEGORY_EDIT: {
@@ -62,7 +62,7 @@ export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (state:
             columnCategories.splice(index, 1);
             return Object.assign({}, state, { ColumnCategories: columnCategories });
         }
-             default:
+        default:
             return state
     }
 }
