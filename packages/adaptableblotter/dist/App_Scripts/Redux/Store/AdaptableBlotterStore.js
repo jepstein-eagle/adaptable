@@ -561,12 +561,17 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 /*
               PercentBar
                */
-                case PercentBarRedux.PERCENT_BAR_ADD_UPDATE: {
+                case PercentBarRedux.PERCENT_BAR_ADD: {
                     let actionTyped = action;
-                    if (actionTyped.Index >= 0) { // edit so first remove before doing anything
-                        let editedCellRender = middlewareAPI.getState().PercentBar.PercentBars[actionTyped.Index];
-                        blotter.removePercentBar(editedCellRender);
-                    }
+                    let returnAction = next(action);
+                    blotter.addPercentBar(actionTyped.PercentBar);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                case PercentBarRedux.PERCENT_BAR_EDIT: {
+                    let actionTyped = action;
+                    let editedCellRender = middlewareAPI.getState().PercentBar.PercentBars[actionTyped.Index];
+                    blotter.removePercentBar(editedCellRender);
                     let returnAction = next(action);
                     // add new one
                     blotter.addPercentBar(actionTyped.PercentBar);
@@ -579,6 +584,22 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let PercentBar = PercentBarState.PercentBars[actionTyped.Index];
                     blotter.removePercentBar(PercentBar);
                     let returnAction = next(action);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                case PercentBarRedux.PERCENT_BAR_CHANGE_MINIMUM_VALUE: {
+                    let returnAction = next(action);
+                    let PercentBar = action.PercentBar;
+                    let editedCellRender = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
+                    blotter.editPercentBar(editedCellRender);
+                    blotter.redraw();
+                    return returnAction;
+                }
+                case PercentBarRedux.PERCENT_BAR_CHANGE_MAXIMUM_VALUE: {
+                    let returnAction = next(action);
+                    let PercentBar = action.PercentBar;
+                    let editedCellRender = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
+                    blotter.editPercentBar(editedCellRender);
                     blotter.redraw();
                     return returnAction;
                 }

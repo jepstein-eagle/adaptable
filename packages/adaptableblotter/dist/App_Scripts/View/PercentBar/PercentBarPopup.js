@@ -37,20 +37,21 @@ class PercentBarPopupComponent extends React.Component {
         }
     }
     render() {
-        let cssClassName = this.props.cssClassName + "__PercentBar";
-        let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
-        let infoBody = ["To Do."];
+        let cssClassName = this.props.cssClassName + "__percentBar";
+        let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__percentBar";
+        let infoBody = ["Use Percent Bars to render numeric columns with a coloured bar, the length of which is dependent on the column value", React.createElement("br", null), React.createElement("br", null),
+            "For each Percent Bar you can select the colours and range boundaries."];
         let colItems = [
-            { Content: "Column", Size: 3 },
-            { Content: "Min", Size: 1 },
-            { Content: "Max", Size: 1 },
+            { Content: "Column", Size: 2 },
+            { Content: "Min", Size: 2 },
+            { Content: "Max", Size: 2 },
             { Content: "Positive", Size: 2 },
             { Content: "Negative", Size: 2 },
             { Content: "", Size: 2 },
         ];
         let PercentBarItems = this.props.PercentBars.map((PercentBar, index) => {
             let column = ColumnHelper_1.ColumnHelper.getColumnFromId(PercentBar.ColumnId, this.props.Columns);
-            return React.createElement(PercentBarEntityRow_1.PercentBarEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: PercentBar, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, ColorPalette: this.props.ColorPalette, Index: index, onEdit: (index, object) => this.onEdit(index, PercentBar), onShare: () => this.props.onShare(PercentBar), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: PercentBarRedux.PercentBarDelete(index), onPositiveColorChanged: (PercentBar, positiveColor) => this.props.onPositiveColorChanged(PercentBar, positiveColor), onNegativeColorChanged: (PercentBar, negativeColor) => this.props.onNegativeColorChanged(PercentBar, negativeColor) });
+            return React.createElement(PercentBarEntityRow_1.PercentBarEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: PercentBar, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, ColorPalette: this.props.ColorPalette, Index: index, onEdit: (index, object) => this.onEdit(index, PercentBar), onShare: () => this.props.onShare(PercentBar), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: PercentBarRedux.PercentBarDelete(index), onMinimumValueChanged: (PercentBar, minimumValue) => this.props.onMinimumValueChanged(PercentBar, minimumValue), onMaximumValueChanged: (PercentBar, maximumValue) => this.props.onMaximumValueChanged(PercentBar, maximumValue), onPositiveColorChanged: (PercentBar, positiveColor) => this.props.onPositiveColorChanged(PercentBar, positiveColor), onNegativeColorChanged: (PercentBar, negativeColor) => this.props.onNegativeColorChanged(PercentBar, negativeColor) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Percent Bar ", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
@@ -76,7 +77,13 @@ class PercentBarPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
     onFinishWizard() {
-        this.props.onAddEditPercentBar(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject);
+        let percentBar = Helper_1.Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+        if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+            this.props.onEditPercentBar(this.state.EditedAdaptableBlotterObjectIndex, percentBar);
+        }
+        else {
+            this.props.onAddPercentBar(percentBar);
+        }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
     canFinishWizard() {
@@ -91,8 +98,11 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onAddEditPercentBar: (index, PercentBar) => dispatch(PercentBarRedux.PercentBarAddUpdate(index, PercentBar)),
+        onAddPercentBar: (PercentBar) => dispatch(PercentBarRedux.PercentBarAdd(PercentBar)),
+        onEditPercentBar: (Index, PercentBar) => dispatch(PercentBarRedux.PercentBarEdit(Index, PercentBar)),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+        onMinimumValueChanged: (PercentBar, minimumValue) => dispatch(PercentBarRedux.PercentBarChangeMinimumValue(PercentBar, minimumValue)),
+        onMaximumValueChanged: (PercentBar, maximumValue) => dispatch(PercentBarRedux.PercentBarChangeMaximumValue(PercentBar, maximumValue)),
         onPositiveColorChanged: (PercentBar, positiveColor) => dispatch(PercentBarRedux.PercentBarChangePositiveColor(PercentBar, positiveColor)),
         onNegativeColorChanged: (PercentBar, negativeColor) => dispatch(PercentBarRedux.PercentBarChangeNegativeColor(PercentBar, negativeColor))
     };

@@ -6,8 +6,6 @@ const react_bootstrap_1 = require("react-bootstrap");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ColumnCategoryRedux = require("../../Redux/ActionsReducers/ColumnCategoryRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-//import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard'
-//import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow'
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");

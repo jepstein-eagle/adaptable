@@ -1,8 +1,11 @@
+declare var require: any;
+
 import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 
-import * as ReactDOM from 'adaptableblotter/node_modules/react-dom';
 import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
+
+const ReactDOM = require('react-dom') || require('adaptableblotter/node_modules/react-dom');
 
 @Component({
   selector: 'adaptable-blotter',
