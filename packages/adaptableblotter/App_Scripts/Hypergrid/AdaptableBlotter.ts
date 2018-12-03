@@ -12,8 +12,8 @@ import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRed
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../Strategy/Interface/IStrategy';
-import { IMenuItem, } from '../Api/Interface/IMenu';
-import { IAlert, IUIConfirmation } from '../Api/Interface/IMessage';
+import { IMenuItem, } from '../api/Interface/IMenu';
+import { IAlert, IUIConfirmation } from '../api/Interface/IMessage';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -37,7 +37,7 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
-import { IEvent } from '../Api/Interface/IEvent';
+import { IEvent } from '../api/Interface/IEvent';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter'
@@ -48,20 +48,20 @@ import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../api/Interface/Interfaces';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../api/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../api/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
 import { SelectedCellsStrategy } from '../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
-import { DefaultAdaptableBlotterOptions } from '../Api/DefaultAdaptableBlotterOptions';
+import { DefaultAdaptableBlotterOptions } from '../api/DefaultAdaptableBlotterOptions';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { ChartService } from '../Utilities/Services/ChartService';
