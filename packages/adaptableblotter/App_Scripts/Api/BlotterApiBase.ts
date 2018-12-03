@@ -706,14 +706,14 @@ export abstract class BlotterApiBase implements IBlotterApi {
     this.percentBarEditByIndex(index, percentBar);
  }
 
-  public percentBarEdiPositiveColor(positiveColor: string, columnId: string): void {
+  public percentBarEditPositiveColor(positiveColor: string, columnId: string): void {
     let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.PositiveColor = positiveColor;
     let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
     this.percentBarEditByIndex(index, percentBar);
  }
 
-  public percentBarEdiNegativeColor(negativeColor: string, columnId: string): void {
+  public percentBarEditNegativeColor(negativeColor: string, columnId: string): void {
     let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.NegativeColor = negativeColor;
     let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);

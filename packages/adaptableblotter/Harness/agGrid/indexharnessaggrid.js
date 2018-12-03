@@ -563,29 +563,13 @@ let categoryJson = {
         "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
       },
       {
-        "ColumnCategoryId": "Strings",
+        "ColumnCategoryId": "Misc.",
         "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
       },
       {
-        "ColumnCategoryId": "Others",
-        "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
+        "ColumnCategoryId": "Dates",
+        "ColumnIds": ["lastUpdated", "tradeDate", "settlementDate"]
       }
-    ]
-  },
-  "Entitlements": {
-		"FunctionEntitlements": [
-			{
-				"FunctionName": "QuickSearch",
-				"AccessLevel": "ReadOnly"
-			},
-			{
-				"FunctionName": "PlusMinus",
-				"AccessLevel": "Hidden"
-			},
-			{
-				"FunctionName": "SmartEdit",
-				"AccessLevel": "ReadOnly"
-			}
 		]
 	}
 }

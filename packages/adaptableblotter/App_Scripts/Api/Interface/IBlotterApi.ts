@@ -199,8 +199,8 @@ export interface IBlotterApi {
   percentBarEdit(percentBar: IPercentBar): void;
   percentBarEditMinValue(minValue: number, columnId: string): void;
   percentBarEditMaxValue(maxValue: number, columnId: string): void;
-  percentBarEdiPositiveColor(positiveColor: string, columnId: string): void;
-  percentBarEdiNegativeColor(negativeColor: string, columnId: string): void;
+  percentBarEditPositiveColor(positiveColor: string, columnId: string): void;
+  percentBarEditNegativeColor(negativeColor: string, columnId: string): void;
   percentBarEditShowValue(showValue: boolean, columnId: string): void;
   percentBarDelete(columnId: string): void
 
