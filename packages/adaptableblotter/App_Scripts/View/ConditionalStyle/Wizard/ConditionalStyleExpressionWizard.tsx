@@ -1,8 +1,8 @@
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IConditionalStyle } from '../../../api/Interface/IAdaptableBlotterObjects';
+import { IConditionalStyle } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../UIHelper';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

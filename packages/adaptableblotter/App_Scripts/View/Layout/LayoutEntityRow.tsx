@@ -7,10 +7,10 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { DEFAULT_LAYOUT } from "../../Utilities/Constants/GeneralConstants";
-import { IColumn } from "../../api/Interface/IColumn";
+import { IColumn } from "../../Api/Interface/IColumn";
 import { SortOrder } from "../../Utilities/Enums";
 import { LayoutHelper } from "../../Utilities/Helpers/LayoutHelper";
-import { ILayout } from "../../api/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface LayoutEntityRowProps<LayoutEntityRow> extends SharedEntityExpressionRowProps<LayoutEntityRow> {

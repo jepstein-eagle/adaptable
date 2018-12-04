@@ -8,14 +8,14 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
-import { IColumnFilter, IUserFilter, IRange } from "../../../api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../../api/Expression";
+import { IColumnFilter, IUserFilter, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../../Api/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { IColumn } from "../../../api/Interface/IColumn";
-import { IAdaptableBlotter } from "../../../api/Interface/IAdaptableBlotter";
+import { IColumn } from "../../../Api/Interface/IColumn";
+import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Utilities/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { IKeyValuePair } from '../../../api/Interface/Interfaces';
+import { IKeyValuePair } from '../../../Api/Interface/Interfaces';
 
 
 interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterFormComponent> {

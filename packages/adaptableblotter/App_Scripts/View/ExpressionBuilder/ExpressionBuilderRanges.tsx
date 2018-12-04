@@ -4,13 +4,13 @@ import { LeafExpressionOperator } from '../../Utilities/Enums'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { DropdownButton, MenuItem, InputGroup, FormControl, Button, FormGroup, OverlayTrigger, Tooltip, Glyphicon, Panel, Checkbox, Radio } from 'react-bootstrap';
-import { IColumn } from "../../api/Interface/IColumn";
+import { IColumn } from "../../Api/Interface/IColumn";
 import { UIHelper } from "../UIHelper";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ObjectFactory } from '../../Utilities/ObjectFactory'
-import { IRange } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends React.ClassAttributes<ExpressionBuilderRanges> {
     SelectedColumn: IColumn

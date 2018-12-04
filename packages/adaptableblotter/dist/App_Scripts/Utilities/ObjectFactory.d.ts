@@ -1,11 +1,11 @@
 import { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar } from '../api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, RangeOperandType, ActionMode } from './Enums';
-import { IColumn } from '../api/Interface/IColumn';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IColumn } from '../Api/Interface/IColumn';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
-import { Expression } from '../api/Expression';
-import { IVendorGridInfo, IColumnCategory } from '../api/Interface/Interfaces';
+import { Expression } from '../Api/Expression';
+import { IVendorGridInfo, IColumnCategory } from '../Api/Interface/Interfaces';
 export declare module ObjectFactory {
     function CreateEmptyCustomSort(): ICustomSort;
     function CreateEmptyChartDefinition(): IChartDefinition;

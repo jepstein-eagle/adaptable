@@ -1,16 +1,16 @@
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
-import { IMenuItem } from '../api/Interface/IMenu';
+import { IMenuItem } from '../Api/Interface/IMenu';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { IEntitlement } from '../api/Interface/Interfaces';
+import { IEntitlement } from '../Api/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../api/Interface/IStateEvents';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IAdvancedSearch } from '../api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../api/Interface/IColumn';
+import { IAdvancedSearch } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';

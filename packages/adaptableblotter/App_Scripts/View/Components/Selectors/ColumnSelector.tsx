@@ -2,7 +2,7 @@ import * as React from "react";
 import { Typeahead } from 'react-bootstrap-typeahead'
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { SelectionMode, SortOrder } from "../../../Utilities/Enums";
-import { IColumn } from "../../../api/Interface/IColumn";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { Helper } from "../../../Utilities/Helpers/Helper";
 import { Sizes, InputGroup } from "react-bootstrap";
 import { CSSProperties } from "react";

@@ -15,7 +15,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IStyle } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { QUICK_SEARCH_DEFAULT_BACK_COLOR, QUICK_SEARCH_DEFAULT_FORE_COLOR } from "../../Utilities/Constants/GeneralConstants";
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {

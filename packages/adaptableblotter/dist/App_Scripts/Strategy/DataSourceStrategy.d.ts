@@ -1,5 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';
 export declare class DataSourceStrategy extends AdaptableStrategyBase implements IDataSourceStrategy {
     private DataSourceState;

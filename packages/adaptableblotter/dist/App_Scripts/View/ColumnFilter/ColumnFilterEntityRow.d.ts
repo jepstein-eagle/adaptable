@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColumnFilter } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
     onClear: (columnFilter: IColumnFilter) => void;

@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
 import { PopupState } from '../Redux/ActionsReducers/Interface/IState';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { Dashboard } from './Dashboard/Dashboard'

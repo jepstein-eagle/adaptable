@@ -5,7 +5,7 @@ import { DropdownButton, MenuItem, SplitButton, OverlayTrigger, Tooltip, Glyphic
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -24,10 +24,10 @@ import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IReport } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../api/Interface/Interfaces";
+import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {

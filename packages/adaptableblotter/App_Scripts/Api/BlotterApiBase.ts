@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from "../api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../Api/Interface/IAdaptableBlotter";
 import { IEvent } from "./Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
@@ -29,7 +29,7 @@ import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort, IFreeTextColumn, IPercentBar } from "./Interface/IAdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IEntitlement, ISystemStatus, IPermittedColumnValues, IColumnCategory } from "../api/Interface/Interfaces";
+import { IEntitlement, ISystemStatus, IPermittedColumnValues, IColumnCategory } from "../Api/Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Utilities/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
@@ -686,7 +686,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   public percentBarEditByIndex(index: number, percentBar: IPercentBar): void {
     this.dispatchAction(PercentBarRedux.PercentBarEdit(index, percentBar))
   }
-  
+
   public percentBarEdit(percentBar: IPercentBar): void {
     let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
    this.percentBarEditByIndex(index, percentBar);

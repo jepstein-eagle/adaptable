@@ -1,7 +1,7 @@
-import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../api/Interface/IPreview";
+import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../../Api/Interface/IPreview";
 import { ActionMode } from "../Enums";
 import { StringExtensions } from "../Extensions/StringExtensions";
-import { ICellInfo } from "../../api/Interface/Interfaces";
+import { ICellInfo } from "../../Api/Interface/Interfaces";
 
 
 export module PreviewHelper {

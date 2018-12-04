@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SortOrder } from '../../../Utilities/Enums';
-import { IMasterChildren } from "../../../api/Interface/Interfaces";
+import { IMasterChildren } from "../../../Api/Interface/Interfaces";
 export interface IMasterValue {
     value: string;
     isOpen: boolean;

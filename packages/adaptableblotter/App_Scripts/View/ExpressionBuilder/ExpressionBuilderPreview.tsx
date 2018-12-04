@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IColumn } from '../../api/Interface/IColumn'
+import { IColumn } from '../../Api/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -12,8 +12,8 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter, IRange } from "../../api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../api/Expression";
+import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { Expression } from "../../Api/Expression";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning

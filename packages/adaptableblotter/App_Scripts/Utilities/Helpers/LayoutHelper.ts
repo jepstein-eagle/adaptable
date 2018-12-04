@@ -1,9 +1,9 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { ILayout, IGridSort } from '../../api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../../api/Interface/IColumn';
+import { ILayout, IGridSort } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../Enums';
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { LayoutState, GridState } from '../../Redux/ActionsReducers/Interface/IState';
 import { ObjectFactory } from '../ObjectFactory';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'

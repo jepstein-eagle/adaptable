@@ -1,8 +1,8 @@
-import { IUserFilter } from "../../api/Interface/IAdaptableBlotterObjects";
-import { IColumn } from "../../api/Interface/IColumn";
+import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from "../../Api/Interface/IColumn";
 import { DataType } from "../Enums";
 import { Helper } from "./Helper";
-import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 
 export module FilterHelper {
 

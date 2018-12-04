@@ -2,11 +2,11 @@ import { IUserFilterStrategy } from './Interface/IUserFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
     private userFilters: IUserFilter[]

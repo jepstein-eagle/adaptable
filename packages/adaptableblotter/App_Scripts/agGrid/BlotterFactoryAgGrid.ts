@@ -1,5 +1,5 @@
 import { AdaptableBlotter } from "./AdaptableBlotter";
-import { IAdaptableBlotterOptions } from "../api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "../Api/Interface/IAdaptableBlotterOptions";
 
 export module BlotterFactoryAgGrid {
 

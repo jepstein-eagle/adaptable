@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IPlusMinusRule } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
 }
 export interface PlusMinusSettingsWizardState {

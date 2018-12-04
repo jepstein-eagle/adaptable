@@ -8,7 +8,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -20,10 +20,10 @@ import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IUIConfirmation } from "../../api/Interface/IMessage";
+import { IUIConfirmation } from "../../Api/Interface/IMessage";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
-import { IPlusMinusRule, IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { AccessLevel } from "../../Utilities/Enums";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";

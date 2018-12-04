@@ -1,13 +1,13 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { ICellValidationRule, IUserFilter } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../../Utilities/Helpers/CellValidationHelper";
-import { IKeyValuePair } from "../../../api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

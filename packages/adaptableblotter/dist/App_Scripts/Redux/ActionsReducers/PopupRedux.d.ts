@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
-import { IUIConfirmation, IUIPrompt, InputAction, IAlert } from '../../api/Interface/IMessage';
+import { IUIConfirmation, IUIPrompt, InputAction, IAlert } from '../../Api/Interface/IMessage';
 export declare const POPUP_SHOW_SCREEN = "POPUP_SHOW_SCREEN";
 export declare const POPUP_HIDE_SCREEN = "POPUP_HIDE_SCREEN";
 export declare const POPUP_SHOW_CHART = "POPUP_SHOW_CHART";

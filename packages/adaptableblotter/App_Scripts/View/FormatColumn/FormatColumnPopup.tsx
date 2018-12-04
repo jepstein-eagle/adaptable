@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { Well } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
@@ -20,7 +20,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
-import { IFormatColumn, IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 

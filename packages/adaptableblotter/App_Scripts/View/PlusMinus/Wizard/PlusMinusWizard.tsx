@@ -1,11 +1,11 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard'
-import { IUserFilter } from '../../../api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataType } from "../../../Utilities/Enums";

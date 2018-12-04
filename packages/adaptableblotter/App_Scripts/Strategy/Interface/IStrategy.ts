@@ -1,6 +1,6 @@
-import { IMenuItem } from '../../api/Interface/IMenu'
-import { IEntitlement } from '../../api/Interface/Interfaces';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IMenuItem } from '../../Api/Interface/IMenu'
+import { IEntitlement } from '../../Api/Interface/Interfaces';
+import { IColumn } from '../../Api/Interface/IColumn';
 
 export interface IStrategy {
     Id: string

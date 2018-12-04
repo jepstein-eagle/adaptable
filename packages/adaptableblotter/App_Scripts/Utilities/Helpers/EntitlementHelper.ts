@@ -1,4 +1,4 @@
-import { IEntitlement } from "../../api/Interface/Interfaces";
+import { IEntitlement } from "../../Api/Interface/Interfaces";
 import { AccessLevel } from "../Enums";
 import { ArrayExtensions } from "../Extensions/ArrayExtensions";
 

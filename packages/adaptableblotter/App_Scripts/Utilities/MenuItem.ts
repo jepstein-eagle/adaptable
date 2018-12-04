@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import { IMenuItem } from '../api/Interface/IMenu';
+import { IMenuItem } from '../Api/Interface/IMenu';
 
 export class MenuItemDoReduxAction implements IMenuItem {
 

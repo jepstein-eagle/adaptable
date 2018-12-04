@@ -1,10 +1,10 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {

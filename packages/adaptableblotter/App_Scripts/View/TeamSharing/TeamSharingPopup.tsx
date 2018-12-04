@@ -5,7 +5,7 @@ import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, To
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
@@ -16,7 +16,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../Utilities/Enums";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";

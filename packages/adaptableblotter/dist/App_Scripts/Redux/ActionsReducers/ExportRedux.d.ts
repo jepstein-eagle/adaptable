@@ -2,7 +2,7 @@ import { ExportState } from './Interface/IState';
 import { IPPDomain } from '../../Strategy/Interface/IExportStrategy';
 import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux';
-import { IReport } from '../../api/Interface/IAdaptableBlotterObjects';
+import { IReport } from '../../Api/Interface/IAdaptableBlotterObjects';
 export declare const EXPORT_APPLY = "EXPORT_APPLY";
 export declare const IPP_LOGIN = "IPP_LOGIN";
 export declare const SET_DOMAIN_PAGES = "SET_DOMAIN_PAGES";

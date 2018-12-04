@@ -5,7 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ICustomSort } from "../../api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSortEntityRow> {
     ColumnLabel: string

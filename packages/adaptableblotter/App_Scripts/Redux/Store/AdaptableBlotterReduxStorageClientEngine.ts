@@ -1,6 +1,6 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 
 interface IAdaptableBlotterReduxStorageClientEngine extends ReduxStorage.StorageEngine { }
 

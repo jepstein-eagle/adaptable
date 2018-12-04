@@ -26,7 +26,7 @@ var ipushpull;
         }
         ConfigProvider.prototype.set = function (config) {
             var defaults = {
-                api_url: "https://www.ipushpull.com/api/1.0",
+                api_url: "https://www.ipushpull.com/Api/1.0",
                 ws_url: "https://www.ipushpull.com",
                 storage_prefix: "",
             };

@@ -2,7 +2,7 @@ import { ITeamSharingStrategy } from './Interface/ITeamSharingStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
     constructor(blotter: IAdaptableBlotter) {

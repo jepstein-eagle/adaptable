@@ -1,4 +1,4 @@
-import { IShortcut } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {

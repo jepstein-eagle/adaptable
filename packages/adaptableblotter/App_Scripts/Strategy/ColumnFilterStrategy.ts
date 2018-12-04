@@ -3,10 +3,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
-import { IColumnFilter } from '../api/Interface/IAdaptableBlotterObjects';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {

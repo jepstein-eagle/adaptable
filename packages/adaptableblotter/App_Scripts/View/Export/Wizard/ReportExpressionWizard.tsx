@@ -1,9 +1,9 @@
 
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
 import {  ReportColumnScope } from '../../../Utilities/Enums'
-import { IReport } from '../../../api/Interface/IAdaptableBlotterObjects';
+import { IReport } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../UIHelper';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

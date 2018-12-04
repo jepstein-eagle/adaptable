@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from '../../../api/Interface/IColumn';
-import { IPlusMinusRule } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from '../../../Api/Interface/IColumn';
+import { IPlusMinusRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
     Columns: Array<IColumn>;
 }

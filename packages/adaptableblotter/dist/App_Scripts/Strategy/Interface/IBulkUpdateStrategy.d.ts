@@ -1,7 +1,7 @@
 import { IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
-import { IPreviewInfo } from '../../api/Interface/IPreview';
-import { ICellInfo } from '../../api/Interface/Interfaces';
+import { IPreviewInfo } from '../../Api/Interface/IPreview';
+import { ICellInfo } from '../../Api/Interface/Interfaces';
 export interface IBulkUpdateStrategy extends IStrategy {
     CheckCorrectCellSelection(): IStrategyActionReturn<boolean>;
     BuildPreviewValues(BulkUpdateValue: any): IPreviewInfo;

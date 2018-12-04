@@ -3,10 +3,10 @@ import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { StateChangedTrigger } from '../Utilities/Enums';
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 

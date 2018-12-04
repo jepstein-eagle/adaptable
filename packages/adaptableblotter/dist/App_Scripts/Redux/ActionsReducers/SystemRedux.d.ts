@@ -1,9 +1,9 @@
 import * as Redux from 'redux';
 import { SystemState } from './Interface/IState';
-import { ISystemStatus } from '../../api/Interface/Interfaces';
-import { IAlert } from '../../api/Interface/IMessage';
+import { ISystemStatus } from '../../Api/Interface/Interfaces';
+import { IAlert } from '../../Api/Interface/IMessage';
 import { ExportDestination } from '../../Utilities/Enums';
-import { IPreviewInfo } from '../../api/Interface/IPreview';
+import { IPreviewInfo } from '../../Api/Interface/IPreview';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";
 export declare const SYSTEM_ALERT_ADD = "SYSTEM_ALERT_ADD";

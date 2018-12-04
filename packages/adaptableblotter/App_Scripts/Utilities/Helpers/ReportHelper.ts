@@ -1,11 +1,11 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IReport, IUserFilter } from '../../api/Interface/IAdaptableBlotterObjects';
+import { IReport, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
-import { Expression } from '../../api/Expression';
+import { Expression } from '../../Api/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { Helper } from './Helper';
 
 

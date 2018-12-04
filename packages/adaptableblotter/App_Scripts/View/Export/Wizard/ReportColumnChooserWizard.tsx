@@ -2,12 +2,12 @@ import * as React from "react";
 import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
-import { IReport } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
     Columns: Array<IColumn>

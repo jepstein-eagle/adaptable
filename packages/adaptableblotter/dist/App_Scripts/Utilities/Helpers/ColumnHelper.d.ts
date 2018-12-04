@@ -1,6 +1,6 @@
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { DataType } from '../Enums';
-import { IColumnCategory } from '../../api/Interface/Interfaces';
+import { IColumnCategory } from '../../Api/Interface/Interfaces';
 export declare module ColumnHelper {
     function isSpecialColumn(columnId: string): boolean;
     function getColumnDataTypeFromColumnId(columnId: string, columns: IColumn[]): DataType;

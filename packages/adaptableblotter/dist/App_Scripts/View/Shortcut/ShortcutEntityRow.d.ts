@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MathOperation } from '../../Utilities/Enums';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IShortcut } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
     onChangeResult: (shortcut: IShortcut, NewShortcutResult: any) => void;

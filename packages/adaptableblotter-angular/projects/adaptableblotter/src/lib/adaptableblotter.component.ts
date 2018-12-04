@@ -4,10 +4,13 @@ import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@ang
 
 import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
-// jw - putting this back temporarily to have a new build but need to fix
-import * as ReactDOM from 'adaptableblotter/node_modules/react-dom';
-// commenting this out temporarily so that we can build...
-// const ReactDOM = require('react-dom') || require('adaptableblotter/node_modules/react-dom');
+
+let ReactDOM;
+try {
+  ReactDOM = require('react-dom');
+} catch (ignored) {
+  ReactDOM = require('adaptableblotter/node_modules/react-dom');
+}
 
 @Component({
   selector: 'adaptable-blotter',

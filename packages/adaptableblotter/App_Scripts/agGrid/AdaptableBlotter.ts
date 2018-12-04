@@ -4,7 +4,7 @@ import '../Styles/stylesheets/adaptableblotter-style.css'
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as StyleConstants from '../Utilities/Constants/StyleConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
@@ -71,25 +71,25 @@ import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
-import { IMenuItem } from '../api/Interface/IMenu';
-import { IEvent } from '../api/Interface/IEvent';
-import { IUIConfirmation } from '../api/Interface/IMessage';
+import { IMenuItem } from '../Api/Interface/IMenu';
+import { IEvent } from '../Api/Interface/IEvent';
+import { IUIConfirmation } from '../Api/Interface/IMessage';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../api/Interface/Interfaces';
-import { IColumn } from '../api/Interface/IColumn';
+import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../Api/Interface/Interfaces';
+import { IColumn } from '../Api/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../api/Interface/IAdaptableBlotterObjects';
-import { IBlotterApi } from '../api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../api/Interface/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../api/Interface/IStateEvents';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IBlotterApi } from '../Api/Interface/IBlotterApi';
+import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../View/UIInterfaces';
 // Helpers
-import { DefaultAdaptableBlotterOptions } from '../api/DefaultAdaptableBlotterOptions';
+import { DefaultAdaptableBlotterOptions } from '../Api/DefaultAdaptableBlotterOptions';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { StyleHelper } from '../Utilities/Helpers/StyleHelper';
@@ -100,7 +100,7 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
 
-// ag-Grid 
+// ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
 import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc } from "ag-grid"
 import { Events } from "ag-grid/dist/lib/eventKeys"
@@ -195,14 +195,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
                     LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
-                    //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
+                    //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                 })
             .then(
                 () => this.initInternalGridLogic(),
                 (e) => {
                     LoggingHelper.LogError('Failed to Init Strategies : ', e);
-                    //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
+                    //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
                     this.initInternalGridLogic()
                 })
             .then(() => {
@@ -311,7 +311,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let allColumns = this.gridOptions.columnApi.getAllGridColumns()
         let startIndex: number = 0;
 
-        //  this is not quite right as it assumes that only the first column can be grouped 
+        //  this is not quite right as it assumes that only the first column can be grouped
         //  but lets do this for now and then refine and refactor later to deal with weirder use cases
         if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
             startIndex++;
@@ -1149,7 +1149,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // vendorGrid.api.addGlobalListener((type: string, event: any) => {
         //     //console.log(event)
         // });
-        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
+        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
         //since there are many events and we want them to behave the same
         let columnEventsThatTriggersStateChange = [
             Events.EVENT_COLUMN_MOVED,
@@ -1399,7 +1399,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
-            //couldnt find a way to listen for menu close. There is a Menu Item Select 
+            //couldnt find a way to listen for menu close. There is a Menu Item Select
             //but you can also clsoe the menu from filter and clicking outside the menu....
             //    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
             let colId: string = params.column.getColId()
@@ -1437,7 +1437,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
                 LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
-                //for now i'm still initializing the strategies even if loading state has failed.... 
+                //for now i'm still initializing the strategies even if loading state has failed....
                 //we may revisit that later
                 this.Strategies.forEach(strat => strat.InitializeWithRedux());
 
@@ -1461,7 +1461,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let percentagePositiveValue = ((100 / maxValue) * value);
                 let percentageNegativeValue = ((100 / (minValue * -1)) * value);
 
-                //    let dualValue 
+                //    let dualValue
 
 
                 if (showNegatives && showPositives) { // if need both then half the space
@@ -1681,7 +1681,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to 
+    // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
     // not sure why as its not in the api
     private setColumnVisible(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
         columnApi.setColumnVisible(col, isVisible, columnEventType)
@@ -1739,7 +1739,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.floatingFilter = false;
         //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
         //       this.deleteFloatingFilterWrapper(col);
-        //   }); 
+        //   });
         this.gridOptions.api.refreshHeader();
     }
 

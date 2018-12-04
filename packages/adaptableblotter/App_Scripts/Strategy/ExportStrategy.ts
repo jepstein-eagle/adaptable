@@ -5,14 +5,14 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { IExportStrategy, ILiveReport } from './Interface/IExportStrategy'
 import { ExportDestination, MessageType, StateChangedTrigger } from '../Utilities/Enums';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
-import { IReport } from '../api/Interface/IAdaptableBlotterObjects';
+import { IReport } from '../Api/Interface/IAdaptableBlotterObjects';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 

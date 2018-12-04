@@ -1,7 +1,7 @@
 import { AdaptableBlotter } from './AdaptableBlotter'
 import { SortOrder } from '../Utilities/Enums'
 import { DataSourceIndexed } from './DataSourceIndexed'
-import { IGridSort } from '../api/Interface/IAdaptableBlotterObjects';
+import { IGridSort } from '../Api/Interface/IAdaptableBlotterObjects';
 import * as _ from 'lodash'
 import { SortHelper } from "../Utilities/Helpers/SortHelper";
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
