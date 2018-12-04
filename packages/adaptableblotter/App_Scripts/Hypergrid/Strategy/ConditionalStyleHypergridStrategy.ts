@@ -32,7 +32,6 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                     } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
                         let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
                         columnCategory.ColumnIds.forEach(cc => {
-                      //      alert('ouch')
                             theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
                         })
                     } else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
@@ -45,7 +44,6 @@ export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy 
                     if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
                         theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                     } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                   //     alert("here")
                         let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
                         columnCategory.ColumnIds.forEach(cc => {
                             theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })

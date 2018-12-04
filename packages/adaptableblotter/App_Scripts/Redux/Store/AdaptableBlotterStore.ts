@@ -130,7 +130,6 @@ export const LoadState = (State: { [s: string]: IState }): LoadStateAction => ({
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
   switch (action.type) {
     case RESET_STATE:
-      //   alert("in top")
       //This trigger the persist of the state with nothing
       state.AdvancedSearch = undefined
       state.Alert = undefined

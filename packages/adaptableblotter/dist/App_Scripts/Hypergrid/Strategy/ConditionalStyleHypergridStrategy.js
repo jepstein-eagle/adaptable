@@ -26,7 +26,6 @@ class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy_1.Condi
                     else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
                         let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
                         columnCategory.ColumnIds.forEach(cc => {
-                            //      alert('ouch')
                             theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style });
                         });
                     }
@@ -41,7 +40,6 @@ class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy_1.Condi
                         theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style });
                     }
                     else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                        //     alert("here")
                         let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
                         columnCategory.ColumnIds.forEach(cc => {
                             theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style });

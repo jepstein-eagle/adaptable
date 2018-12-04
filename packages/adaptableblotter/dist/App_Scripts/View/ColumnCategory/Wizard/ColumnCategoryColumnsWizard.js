@@ -37,8 +37,6 @@ class ColumnCategoryColumnsWizard extends React.Component {
                 React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.state.AvailableColumns, cssClassName: cssClassName, SelectedValues: this.state.SelectedColumns, HeaderAvailable: "Available Columns", HeaderSelected: "Selected Columns", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), ReducedDisplay: true })));
     }
     OnSelectedValuesChange(newValues) {
-        //   let selectedColumns: string[] = ColumnHelper.getFriendlyNamesFromColumnIds(newValues, this.props.Columns);
-        console.log("from method: " + newValues);
         this.setState({ SelectedColumns: newValues }, () => this.props.UpdateGoBackState());
     }
     canNext() { return this.state.SelectedColumns.length > 0; }

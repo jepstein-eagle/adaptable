@@ -5,9 +5,6 @@ const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 var EntitlementHelper;
 (function (EntitlementHelper) {
     function getEntitlementAccessLevelForStrategy(entitlements, strategyId) {
-        if (ArrayExtensions_1.ArrayExtensions.IsNull(entitlements)) {
-            //    alert(strategyId)
-        }
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(entitlements)) {
             let entitlement = entitlements.find(e => e.FunctionName == strategyId);
             if (entitlement) {

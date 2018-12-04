@@ -804,7 +804,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        alert("here")
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue: string

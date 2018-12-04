@@ -670,7 +670,6 @@ class AdaptableBlotter {
         return ArrayExtensions_1.ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars.map(pb => { return pb.ColumnId; }), columnId);
     }
     getDisplayValue(id, columnId) {
-        alert("here");
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue;

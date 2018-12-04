@@ -22,7 +22,6 @@ class CellValidationSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
         let strategySummaries = [];
-        //   alert("AccessLevel for cv: " + this.props.AccessLevel)
         // title row
         let titleRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.CellValidationStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.CellValidationStrategyId, StrategySummary: Helper_1.Helper.ReturnItemCount(this.props.CellValidations.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.CellValidationStrategyName), onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.CellValidationStrategyName, AccessLevel: this.props.AccessLevel });
         strategySummaries.push(titleRow);

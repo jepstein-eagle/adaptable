@@ -65,8 +65,6 @@ export class ColumnCategoryColumnsWizard extends React.Component<ColumnCategoryC
     }
 
     OnSelectedValuesChange(newValues: Array<string>) {
-        //   let selectedColumns: string[] = ColumnHelper.getFriendlyNamesFromColumnIds(newValues, this.props.Columns);
-        console.log("from method: " + newValues)
         this.setState({ SelectedColumns: newValues } as ColumnCategoryColumnsWizardState, () => this.props.UpdateGoBackState())
     }
 
