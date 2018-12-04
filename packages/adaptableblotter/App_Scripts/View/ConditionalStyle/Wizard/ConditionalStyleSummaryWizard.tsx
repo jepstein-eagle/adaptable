@@ -1,14 +1,14 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Utilities/Enums";
-import { IConditionalStyle, IUserFilter } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
 
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: IColumn[]

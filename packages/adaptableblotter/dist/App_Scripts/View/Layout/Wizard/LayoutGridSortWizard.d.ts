@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from "../../../api/Interface/IColumn";
-import { ILayout, IGridSort } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from "../../../Api/Interface/IColumn";
+import { ILayout, IGridSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: Array<IColumn>;
 }

@@ -3,10 +3,10 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IColumn } from "../../../api/Interface/IColumn";
-import { IFormatColumn } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from "../../../Api/Interface/IColumn";
+import { IFormatColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
 
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {

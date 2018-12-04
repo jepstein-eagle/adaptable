@@ -13,9 +13,9 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../api/Interface/IPreview";
-import { IUIConfirmation } from "../../api/Interface/IMessage";
-import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
+import { IPreviewInfo } from "../../Api/Interface/IPreview";
+import { IUIConfirmation } from "../../Api/Interface/IMessage";
+import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
 import { StatusColour, MathOperation, AccessLevel } from "../../Utilities/Enums";
@@ -24,7 +24,7 @@ import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../api/Interface/Interfaces";
+import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;

@@ -1,8 +1,8 @@
 import { ExpressionHelper } from './ExpressionHelper'
-import { ICellValidationRule } from '../../api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { LeafExpressionOperator, DataType } from '../Enums';
 
 

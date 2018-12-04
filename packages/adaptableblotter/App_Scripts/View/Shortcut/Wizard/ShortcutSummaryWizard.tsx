@@ -2,8 +2,8 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IShortcut } from "../../../api/Interface/IAdaptableBlotterObjects";
-import { IKeyValuePair } from "../../../api/Interface/Interfaces";
+import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
 
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }

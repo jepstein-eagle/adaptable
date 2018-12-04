@@ -2,13 +2,13 @@ import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { ICellValidationRule } from "../../api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ActionMode } from "../../Utilities/Enums";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";

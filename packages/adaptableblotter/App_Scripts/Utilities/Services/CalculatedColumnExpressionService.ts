@@ -1,7 +1,7 @@
 import { ICalculatedColumnExpressionService } from "./Interface/ICalculatedColumnExpressionService";
 import * as math from 'mathjs'
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {

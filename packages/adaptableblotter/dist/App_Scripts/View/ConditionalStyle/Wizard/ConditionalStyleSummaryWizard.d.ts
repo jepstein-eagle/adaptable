@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IConditionalStyle, IUserFilter } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
     Columns: IColumn[];
     UserFilters: IUserFilter[];

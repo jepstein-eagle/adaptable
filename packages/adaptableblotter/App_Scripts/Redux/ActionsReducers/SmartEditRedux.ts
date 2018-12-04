@@ -1,7 +1,7 @@
 import { SmartEditState } from './Interface/IState';
 import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
-import { IPreviewInfo } from '../../api/Interface/IPreview';
+import { IPreviewInfo } from '../../Api/Interface/IPreview';
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';

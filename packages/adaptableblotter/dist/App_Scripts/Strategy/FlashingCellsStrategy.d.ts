@@ -1,10 +1,10 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn } from '../api/Interface/IColumn';
+import { IColumn } from '../Api/Interface/IColumn';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
-import { IFlashingCell } from '../api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
 export declare abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState;
     constructor(blotter: IAdaptableBlotter);

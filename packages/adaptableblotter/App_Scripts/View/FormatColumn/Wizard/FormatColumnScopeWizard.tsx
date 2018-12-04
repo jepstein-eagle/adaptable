@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Col, Panel } from 'react-bootstrap';
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { SelectionMode } from '../../../Utilities/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IFormatColumn } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     Columns: Array<IColumn>

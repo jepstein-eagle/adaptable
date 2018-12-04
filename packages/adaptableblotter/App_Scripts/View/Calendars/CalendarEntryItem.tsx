@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
-import { ICalendarEntry } from "../../api/Interface/IAdaptableBlotterObjects";
+import { ICalendarEntry } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface CalendarEntryItemProps extends React.ClassAttributes<CalendarEntryItem> {
     CalendarEntry: ICalendarEntry;

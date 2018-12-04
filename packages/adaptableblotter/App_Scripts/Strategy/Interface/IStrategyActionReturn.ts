@@ -1,4 +1,4 @@
-import {  IAlert } from '../../api/Interface/IMessage'
+import {  IAlert } from '../../Api/Interface/IMessage'
 
 
 export interface IStrategyActionReturn<T> {

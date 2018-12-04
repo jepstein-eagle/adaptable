@@ -3,7 +3,7 @@ import {  IColItem } from "../UIInterfaces";
 import { WizardSummaryRow } from "./WizardSummaryRow";
 import { Panel } from "react-bootstrap";
 import { AdaptableObjectCollection } from "./AdaptableObjectCollection";
-import { IKeyValuePair } from "../../api/Interface/Interfaces";
+import { IKeyValuePair } from "../../Api/Interface/Interfaces";
 
 
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {

@@ -1,9 +1,9 @@
-import { IAdaptableBlotter } from "../api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../Api/Interface/IAdaptableBlotter";
 import { IEvent } from "./Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IFreeTextColumn, IPercentBar } from "./Interface/IAdaptableBlotterObjects";
-import { IEntitlement, IColumnCategory } from "../api/Interface/Interfaces";
+import { IEntitlement, IColumnCategory } from "../Api/Interface/Interfaces";
 import { ExportDestination } from "../Utilities/Enums";
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
 import { ILiveReport } from "../Strategy/Interface/IExportStrategy";

@@ -3,13 +3,13 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
-import { IPreviewInfo, IPreviewResult } from '../api/Interface/IPreview';
-import { ICellInfo } from '../api/Interface/Interfaces';
+import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
+import { ICellInfo } from '../Api/Interface/Interfaces';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {

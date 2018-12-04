@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
-import { IColumnCategory } from "../../api/Interface/Interfaces";
+import { IColumnCategory } from "../../Api/Interface/Interfaces";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 

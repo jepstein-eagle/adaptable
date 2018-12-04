@@ -1,6 +1,6 @@
 import { EntitlementsState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IEntitlement } from '../../api/Interface/Interfaces';
+import { IEntitlement } from '../../Api/Interface/Interfaces';
 export declare const ENTITLEMENT_ADD_UPDATE = "ENTITLEMENT_ADD_UPDATE";
 export declare const ENTITLEMENT_DELETE = "ENTITLEMENT_DELETE";
 export interface EntitlementAddUpdateAction extends Redux.Action {

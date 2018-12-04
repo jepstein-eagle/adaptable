@@ -8,7 +8,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/ToolbarStrategyViewPopupProps";
-import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
@@ -16,7 +16,7 @@ import { SelectedCellOperation, AccessLevel } from "../../Utilities/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IEntitlement } from "../../api/Interface/Interfaces";
+import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SelectedCellsToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo

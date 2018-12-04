@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IPercentBar } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
 export interface PercentBarsWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     Columns: Array<IColumn>;
     ColorPalette: Array<string>;

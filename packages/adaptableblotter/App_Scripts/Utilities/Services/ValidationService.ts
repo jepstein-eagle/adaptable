@@ -2,15 +2,15 @@
 import { IDataChangingEvent } from './Interface/IAuditService';
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { ICellValidationRule } from '../../api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode } from '../Enums';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export class ValidationService implements IValidationService {

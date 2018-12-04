@@ -1,5 +1,5 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary } from "./Interface/ISelectedCellsStrategy";
 export declare class SelectedCellsStrategy extends AdaptableStrategyBase implements ISelectedCellsStrategy {
     private SelectedCellsState;

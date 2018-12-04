@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAlertDefinition, IRange } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {

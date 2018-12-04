@@ -17,10 +17,10 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IColumnCategory } from "../../api/Interface/Interfaces";
+import { IColumnCategory } from "../../Api/Interface/Interfaces";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { StrategyProfile } from "../Components/StrategyProfile";
 

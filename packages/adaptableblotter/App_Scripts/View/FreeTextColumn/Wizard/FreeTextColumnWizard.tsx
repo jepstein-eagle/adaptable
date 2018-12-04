@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { FreeTextColumnSettingsWizard } from './FreeTextColumnSettingsWizard'
 import { FreeTextColumnSummaryWizard } from './FreeTextColumnSummaryWizard'

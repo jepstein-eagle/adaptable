@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { Well } from 'react-bootstrap';
@@ -22,9 +22,9 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IConditionalStyle } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IConditionalStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IColumnCategory } from "../../api/Interface/Interfaces";
+import { IColumnCategory } from "../../Api/Interface/Interfaces";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]

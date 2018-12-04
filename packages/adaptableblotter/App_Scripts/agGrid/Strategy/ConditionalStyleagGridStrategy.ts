@@ -7,7 +7,7 @@ import { AdaptableBlotter } from '../AdaptableBlotter'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IColumnCategory } from '../../api/Interface/Interfaces';
+import { IColumnCategory } from '../../Api/Interface/Interfaces';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {

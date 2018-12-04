@@ -1,8 +1,8 @@
 import { LeafExpressionOperator, DataType } from '../Enums';
-import { IRange, IUserFilter } from '../../api/Interface/IAdaptableBlotterObjects';
-import { Expression } from '../../api/Expression';
-import { IColumn } from '../../api/Interface/IColumn';
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IRange, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { Expression } from '../../Api/Expression';
+import { IColumn } from '../../Api/Interface/IColumn';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 export interface IRangeEvaluation {
     operand1: any;
     operand2: any;

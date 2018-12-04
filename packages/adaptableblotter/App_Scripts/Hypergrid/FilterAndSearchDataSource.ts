@@ -3,7 +3,7 @@ import { DataSourceIndexed } from './DataSourceIndexed'
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, DisplayAction } from '../Utilities/Enums'
-import { IAdvancedSearch, IColumnFilter } from '../api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 
 /* There are 3 possible reasons why we might need to filter / search the grid:

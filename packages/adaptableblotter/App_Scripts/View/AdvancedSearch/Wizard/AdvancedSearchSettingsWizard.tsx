@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'rea
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAdvancedSearch } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 

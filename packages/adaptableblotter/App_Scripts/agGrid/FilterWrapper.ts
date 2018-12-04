@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from './AdaptableBlotter'
 import { FilterFormReact } from "../View/Components/FilterForm/FilterForm";
-import { IColumn } from "../api/Interface/IColumn";
+import { IColumn } from "../Api/Interface/IColumn";
 import { ColumnHelper } from "../Utilities/Helpers/ColumnHelper";
 
 export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {

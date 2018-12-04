@@ -1,6 +1,6 @@
-import { IAuditLogEntry } from "../../api/Interface/IAuditLogEntry";
-import { IAdaptableBlotterOptions } from "../../api/Interface/IAdaptableBlotterOptions";
-import { IAdaptableBlotter } from "../../api/Interface/IAdaptableBlotter";
+import { IAuditLogEntry } from "../../Api/Interface/IAuditLogEntry";
+import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { IDataChangedEvent } from "./Interface/IAuditService";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";

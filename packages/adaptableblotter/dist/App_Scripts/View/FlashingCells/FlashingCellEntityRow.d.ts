@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IFlashingCell } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
     FlashingCellDurations: any[];
     ColorPalette: string[];

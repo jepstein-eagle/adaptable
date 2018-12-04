@@ -7,7 +7,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IStyle } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {

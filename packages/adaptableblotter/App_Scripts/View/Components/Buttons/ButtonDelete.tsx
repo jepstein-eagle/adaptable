@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import { IUIConfirmation } from '../../../api/Interface/IMessage';
+import { IUIConfirmation } from '../../../Api/Interface/IMessage';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface DeleteButtonProps extends ButtonProps {

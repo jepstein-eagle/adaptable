@@ -9,7 +9,7 @@ import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IReport } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../Api/Interface/IAdaptableBlotterObjects";
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {

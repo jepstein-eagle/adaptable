@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { UserInterfaceState } from './Interface/IState'
-import { IPermittedColumnValues } from '../../api/Interface/Interfaces';
+import { IPermittedColumnValues } from '../../Api/Interface/Interfaces';
 
 
 export const COLOR_PALETTE_SET = 'COLOR_PALETTE_SET';

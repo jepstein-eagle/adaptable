@@ -2,8 +2,8 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IColumnCategory, IKeyValuePair } from "../../../api/Interface/Interfaces";
-import { IColumn } from "../../../api/Interface/IColumn";
+import { IColumnCategory, IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IColumn } from "../../../Api/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 

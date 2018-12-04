@@ -2,7 +2,7 @@ import * as React from "react";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
-import { IFlashingCell } from "../../api/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[];
     onSelectFlashingCell: (flashingCell: IFlashingCell) => FlashingCellRedux.FlashingCellSelectAction;

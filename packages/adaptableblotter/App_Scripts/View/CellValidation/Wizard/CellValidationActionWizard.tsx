@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Radio, Col, Panel,  HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { MessageType, ActionMode } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
 
 export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>

@@ -63,7 +63,7 @@ const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const color_1 = require("../Utilities/color");
 const BlotterApi_1 = require("./BlotterApi");
 // Helpers
-const DefaultAdaptableBlotterOptions_1 = require("../api/DefaultAdaptableBlotterOptions");
+const DefaultAdaptableBlotterOptions_1 = require("../Api/DefaultAdaptableBlotterOptions");
 const iPushPullHelper_1 = require("../Utilities/Helpers/iPushPullHelper");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 const StyleHelper_1 = require("../Utilities/Helpers/StyleHelper");
@@ -146,12 +146,12 @@ class AdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
-            //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?) 
+            //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         })
             .then(() => this.initInternalGridLogic(), (e) => {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
-            //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?) 
+            //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
             this.initInternalGridLogic();
         })
             .then(() => {
@@ -232,7 +232,7 @@ class AdaptableBlotter {
     setNewColumnListOrder(VisibleColumnList) {
         let allColumns = this.gridOptions.columnApi.getAllGridColumns();
         let startIndex = 0;
-        //  this is not quite right as it assumes that only the first column can be grouped 
+        //  this is not quite right as it assumes that only the first column can be grouped
         //  but lets do this for now and then refine and refactor later to deal with weirder use cases
         if (ColumnHelper_1.ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
             startIndex++;
@@ -981,7 +981,7 @@ class AdaptableBlotter {
         // vendorGrid.api.addGlobalListener((type: string, event: any) => {
         //     //console.log(event)
         // });
-        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type 
+        //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
         //since there are many events and we want them to behave the same
         let columnEventsThatTriggersStateChange = [
             eventKeys_1.Events.EVENT_COLUMN_MOVED,
@@ -1220,7 +1220,7 @@ class AdaptableBlotter {
         });
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
         this.gridOptions.getMainMenuItems = (params) => {
-            //couldnt find a way to listen for menu close. There is a Menu Item Select 
+            //couldnt find a way to listen for menu close. There is a Menu Item Select
             //but you can also clsoe the menu from filter and clicking outside the menu....
             //    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
             let colId = params.column.getColId();
@@ -1256,7 +1256,7 @@ class AdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
-            //for now i'm still initializing the strategies even if loading state has failed.... 
+            //for now i'm still initializing the strategies even if loading state has failed....
             //we may revisit that later
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         });
@@ -1276,7 +1276,7 @@ class AdaptableBlotter {
                 }
                 let percentagePositiveValue = ((100 / maxValue) * value);
                 let percentageNegativeValue = ((100 / (minValue * -1)) * value);
-                //    let dualValue 
+                //    let dualValue
                 if (showNegatives && showPositives) { // if need both then half the space
                     percentagePositiveValue = percentagePositiveValue / 2;
                     percentageNegativeValue = percentageNegativeValue / 2;
@@ -1468,7 +1468,7 @@ class AdaptableBlotter {
             }
         }
     }
-    // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to 
+    // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
     // not sure why as its not in the api
     setColumnVisible(columnApi, col, isVisible, columnEventType) {
         columnApi.setColumnVisible(col, isVisible, columnEventType);
@@ -1517,7 +1517,7 @@ class AdaptableBlotter {
         this.gridOptions.floatingFilter = false;
         //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
         //       this.deleteFloatingFilterWrapper(col);
-        //   }); 
+        //   });
         this.gridOptions.api.refreshHeader();
     }
     applyLightTheme() {

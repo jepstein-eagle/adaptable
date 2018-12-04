@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -21,7 +21,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
-import { ICellValidationRule, IAdaptableBlotterObject } from "../../api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AccessLevel } from "../../Utilities/Enums";
 import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";

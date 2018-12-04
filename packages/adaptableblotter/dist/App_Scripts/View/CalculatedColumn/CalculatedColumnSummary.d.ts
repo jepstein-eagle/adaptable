@@ -3,7 +3,7 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { ICalculatedColumn } from "../../api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[];
     onEdit: (index: number, calculatedColumn: ICalculatedColumn) => void;

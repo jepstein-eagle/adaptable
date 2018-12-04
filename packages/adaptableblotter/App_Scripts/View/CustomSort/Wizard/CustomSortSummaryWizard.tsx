@@ -1,11 +1,11 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../api/Interface/IColumn';
+import { IColumn } from '../../../Api/Interface/IColumn';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { ICustomSort } from "../../../api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
 
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {

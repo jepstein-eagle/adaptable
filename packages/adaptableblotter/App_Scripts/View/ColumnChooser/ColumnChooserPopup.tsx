@@ -3,13 +3,13 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../api/Interface/IColumn';
+import { IColumn } from '../../Api/Interface/IColumn';
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { IColumnCategory, IMasterChildren } from "../../api/Interface/Interfaces";
+import { IColumnCategory, IMasterChildren } from "../../Api/Interface/Interfaces";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 

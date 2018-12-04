@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 export declare class StyleService {
     private blotter;
     private FlashingCellState;

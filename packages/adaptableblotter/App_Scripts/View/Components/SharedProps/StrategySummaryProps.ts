@@ -1,7 +1,7 @@
-import {IColumn} from '../../../api/Interface/IColumn';
+import {IColumn} from '../../../Api/Interface/IColumn';
 import { StrategyViewPopupProps } from './StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../../Redux/ActionsReducers/TeamSharingRedux'
-import { IAdaptableBlotterObject } from '../../../api/Interface/IAdaptableBlotterObjects';
+import { IAdaptableBlotterObject } from '../../../Api/Interface/IAdaptableBlotterObjects';
 
 
 

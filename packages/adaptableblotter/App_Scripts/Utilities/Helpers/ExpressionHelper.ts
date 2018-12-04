@@ -1,11 +1,11 @@
 import { FilterHelper } from './FilterHelper'
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue, RangeOperandType } from '../Enums';
-import { IRange, IColumnValueExpression, IRangeExpression, IUserFilter } from '../../api/Interface/IAdaptableBlotterObjects';
-import { Expression } from '../../api/Expression';
-import { IColumn } from '../../api/Interface/IColumn';
+import { IRange, IColumnValueExpression, IRangeExpression, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { Expression } from '../../Api/Expression';
+import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAdaptableBlotter } from '../../api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
