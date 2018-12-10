@@ -5,6 +5,7 @@ import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as ChartInternalRedux from '../../Redux/ActionsReducers/ChartInternalRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -29,9 +30,9 @@ import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onSelectChartDefinition: (SelectedSearchName: string) => ChartRedux.ChartDefinitionSelectAction,
-    onShowChart: () => PopupRedux.PopupShowChartAction;
+    onShowChart: () => ChartInternalRedux.ChartInternalShowChartAction;
     ChartDefinitions: Array<IChartDefinition>
-    CurrentChartName: string
+    CurrentChart: string
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -48,9 +49,9 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 this.onNew()
             }
             if (this.props.PopupParams == "Edit") {
-                let editChart = this.props.ChartDefinitions.find(x => x.Name == this.props.CurrentChartName)
+                let editChart = this.props.ChartDefinitions.find(x => x.Title == this.props.CurrentChart)
                 if (editChart) {
-                    let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Name == editChart.Name)
+                    let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == editChart.Title)
                     this.onEdit(index, editChart)
                 }
             }
@@ -64,8 +65,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         let infoBody: any[] = ["Use Charts to see youyr grid data visually."]
 
         let colItems: IColItem[] = [
-            { Content: "Name", Size: 4 },
-            { Content: "Type", Size: 4 },
+            { Content: "Title", Size: 4 },
+            { Content: "Subtitle", Size: 4 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 3 },
         ]
@@ -75,7 +76,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 cssClassName={cssClassName}
                 colItems={colItems}
                 AdaptableBlotterObject={Chart}
-                key={Chart.Name}
+                key={Chart.Title}
                 Index={index}
                 onEdit={(index, Chart) => this.onEdit(index, Chart as IChartDefinition)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
@@ -146,19 +147,19 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onFinishWizard() {
-        let searchIndex: number = this.state.EditedAdaptableBlotterObjectIndex;
-        let currentSearchIndex: number = this.props.ChartDefinitions.findIndex(as => as.Name == this.props.CurrentChartName)
+        let index: number = this.state.EditedAdaptableBlotterObjectIndex;
+        let currentChartIndex: number = this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChart)
         let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-        if (searchIndex == -1 || searchIndex == currentSearchIndex) {// its new so make it the new search or we are editing the current search (but might have changed the name)
-            this.props.onSelectChartDefinition(clonedObject.Name);
+        if (index == -1 || index == currentChartIndex) {// its new so make it the new search or we are editing the current search (but might have changed the name)
+            this.props.onSelectChartDefinition(clonedObject.Title);
         }
     }
 
     canFinishWizard() {
         let Chart = this.state.EditedAdaptableBlotterObject as IChartDefinition
-        return StringExtensions.IsNotNullOrEmpty(Chart.Name);
+        return StringExtensions.IsNotNullOrEmpty(Chart.Title);
     }
 
 }
@@ -166,7 +167,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartName: state.Chart.CurrentChartName
+        CurrentChart: state.Chart.CurrentChart
     };
 }
 
@@ -175,7 +176,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
         onSelectChartDefinition: (selectedChartDefinitionName: string) => dispatch(ChartRedux.ChartDefinitionSelect(selectedChartDefinitionName)),
-        onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
+        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))
     };

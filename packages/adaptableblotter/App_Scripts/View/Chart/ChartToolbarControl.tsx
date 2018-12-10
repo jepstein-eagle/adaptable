@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as ChartInternalRedux from '../../Redux/ActionsReducers/ChartInternalRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
@@ -19,17 +20,15 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
-    CurrentChartName: string
+    CurrentChart: string
      onSelectChartDefinition: (chartDefinitionName: string) => ChartRedux.ChartDefinitionSelectAction;
     onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
-    onShowChart: () => PopupRedux.PopupShowChartAction;
+    onShowChart: () => ChartInternalRedux.ChartInternalShowChartAction;
 }
 
 
@@ -44,15 +43,15 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     render() {
         const selectSearchString: string = "Select a Chart"
         let cssClassName: string = this.props.cssClassName + "__Chart";
-        let savedSearch: IChartDefinition = this.props.ChartDefinitions.find(s => s.Name == this.props.CurrentChartName);
+        let savedSearch: IChartDefinition = this.props.ChartDefinitions.find(s => s.Title == this.props.CurrentChart);
 
-        let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentChartName) ?
-            selectSearchString : this.props.CurrentChartName
+        let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentChart) ?
+            selectSearchString : this.props.CurrentChart
 
-        let sortedChartes: IChartDefinition[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ChartDefinitions, "Name")
+        let sortedChartes: IChartDefinition[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ChartDefinitions, "Title")
 
-        let availablechartDefinitions: any[] = sortedChartes.filter(s => s.Name != this.props.CurrentChartName).map((chartDefinition, index) => {
-            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Name)} >{chartDefinition.Name}</MenuItem>
+        let availablechartDefinitions: any[] = sortedChartes.filter(s => s.Title != this.props.CurrentChart).map((chartDefinition, index) => {
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Title)} >{chartDefinition.Title}</MenuItem>
         })
         let content = <span>
 
@@ -127,7 +126,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentChartName: state.Chart.CurrentChartName,
+        CurrentChart: state.Chart.CurrentChart,
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }
@@ -137,7 +136,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onSelectChartDefinition: (ChartName: string) => dispatch(ChartRedux.ChartDefinitionSelect(ChartName)),
          onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId,ScreenPopups.ChartPopup,  "New")),
         onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId,ScreenPopups.ChartPopup,  "Edit")),
-        onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
+        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId,ScreenPopups.ChartPopup))
     };

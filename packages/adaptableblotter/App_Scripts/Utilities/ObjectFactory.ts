@@ -1,4 +1,3 @@
-import { Helper } from './Helpers/Helper';
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
@@ -19,8 +18,8 @@ export module ObjectFactory {
 
     export function CreateEmptyChartDefinition(): IChartDefinition {
         return {
-            Name: "",
-            Type: ChartType.BarChart,
+            Title: "",
+            SubTitle: "",
             YAxisColumnId: "",
             XAxisColumnId: "",
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]

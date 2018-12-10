@@ -73,8 +73,8 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
 
 
 export interface IChartDefinition extends IAdaptableBlotterObject {
-  Type: 'Bar Chart' | 'Line Chart';
-  Name: string
+  Title: string
+  SubTitle: string
   YAxisColumnId: string
   XAxisColumnId: string
   XAxisColumnValues: string[]

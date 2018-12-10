@@ -254,9 +254,25 @@ export enum SelectedCellOperation {
 }
 
 export enum ChartType {
-    BarChart = 'Bar Chart',
-    LineChart = 'Line Chart',
+    Column = 'Column',
+    Area='Area',
+    Line='Line',
+    Point='Point',
+    Spline='Spline',
+    StepArea='StepArea',
+    StepLine='StepLine',
+
 }
+
+export enum ChartCrosshairsMode {
+    Default = 'Default',
+    None='None',
+    Horizontal='Horizontal',
+    Vertical='Vertical',
+    Both='Both',
+
+}
+
 
 export enum PinnedColumnDirection {
     Left = 'Leftt',

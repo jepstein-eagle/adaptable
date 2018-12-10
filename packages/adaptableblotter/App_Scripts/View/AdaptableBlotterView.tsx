@@ -2,8 +2,9 @@
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
+import * as ChartInternalRedux from '../Redux/ActionsReducers/ChartInternalRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
-import { PopupState } from '../Redux/ActionsReducers/Interface/IState';
+import { PopupState, ChartInternalState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
@@ -18,6 +19,7 @@ import { AdaptableBlotterAbout } from "./Components/Popups/AdaptableBlotterAbout
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
+    ChartInternalState: ChartInternalState;
     Blotter: IAdaptableBlotter;
     showPopup: (ComponentStrategy: string, ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowScreenAction;
     onCloseScreenPopup: () => PopupRedux.PopupHideScreenAction;
@@ -27,8 +29,8 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
     onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
-    onCloseChartPopup: () => PopupRedux.PopupHideChartAction;
-    onCloseLoadingPopup: () => PopupRedux.PopupHideChartAction;
+    onCloseChartPopup: () => ChartInternalRedux.ChartInternalHideChartAction;
+    onCloseLoadingPopup: () => PopupRedux.PopupHideLoadingAction;
     onCloseAboutPopup: () => PopupRedux.PopupHideAboutAction;
 }
 
@@ -39,17 +41,20 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard Blotter={this.props.Blotter} />
 
-                <AdaptableBlotterChart
-                    AdaptableBlotter={this.props.Blotter}
-                    onClose={this.props.onCloseChartPopup}
-                    showChart={this.props.PopupState.ChartPopup.ShowChartPopup}
-                />
+                {this.props.ChartInternalState.ChartVisible &&
+                    <AdaptableBlotterChart
+                        AdaptableBlotter={this.props.Blotter}
+                        onClose={this.props.onCloseChartPopup}
+                        showChart={this.props.ChartInternalState.ChartVisible}
+                        showModal={false}
+                    />
+                }
 
                 <AdaptableBlotterAbout
                     AdaptableBlotter={this.props.Blotter}
                     onClose={this.props.onCloseAboutPopup}
-                     showAbout={this.props.PopupState.AboutPopup.ShowAboutPopup}
-                 />
+                    showAbout={this.props.PopupState.AboutPopup.ShowAboutPopup}
+                />
 
                 <AdaptableBlotterLoadingScreen
                     AdaptableBlotter={this.props.Blotter}
@@ -90,7 +95,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     ComponentName={this.props.PopupState.ScreenPopup.ComponentName}
                     ComponentStrategy={this.props.PopupState.ScreenPopup.ComponentStrategy}
                     onHide={this.props.onCloseScreenPopup}
-                     Blotter={this.props.Blotter}
+                    Blotter={this.props.Blotter}
                     onClearPopupParams={() => this.props.onClearPopupParams()}
                     PopupParams={this.props.PopupState.ScreenPopup.Params}
                 />
@@ -103,6 +108,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         PopupState: state.Popup,
+        ChartInternalState: state.ChartInternal,
         AdaptableBlotter: ownProps.Blotter,
     };
 }
@@ -112,7 +118,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
         onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
         onCloseAboutPopup: () => dispatch(PopupRedux.PopupHideAbout()),
-        onCloseChartPopup: () => dispatch(PopupRedux.PopupHideChart()),
+        onCloseChartPopup: () => dispatch(ChartInternalRedux.ChartInternalHideChart()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),

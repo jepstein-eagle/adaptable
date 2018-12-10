@@ -171,7 +171,7 @@ const initialSystemState: SystemState = {
     IsValidSmartEditSelection: false,
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
-    BulkUpdatePreviewInfo: null
+    BulkUpdatePreviewInfo: null,
 }
 
 export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = initialSystemState, action: Redux.Action): SystemState => {

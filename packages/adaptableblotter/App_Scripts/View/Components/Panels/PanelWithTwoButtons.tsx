@@ -8,11 +8,11 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface PanelWithTwoButtonsProps extends PanelProps {
 
-    clearFilterButtonContent?: React.ReactNode;
-    clearFilterButton?: React.ReactElement<any>;
+    firstButtonContent?: React.ReactNode;
+    firstButton?: React.ReactElement<any>;
 
-    closeButtonContent?: React.ReactNode;
-    closeButton?: React.ReactElement<any>;
+    secondButtonContent?: React.ReactNode;
+    secondButton?: React.ReactElement<any>;
 
     cssClassName: string
 
@@ -49,10 +49,10 @@ export class PanelWithTwoButtons extends React.Component<PanelWithTwoButtonsProp
                 }
 
                 <Col xs={2}>
-                    {this.props.clearFilterButton && this.props.ContextMenuTab == ContextMenuTab.Filter && React.cloneElement(this.props.clearFilterButton, { style: { float: 'right' } })}
+                    {this.props.firstButton && this.props.ContextMenuTab == ContextMenuTab.Filter && React.cloneElement(this.props.firstButton, { style: { float: 'right' } })}
                 </Col>
                 <Col xs={2}>
-                    {this.props.closeButton && React.cloneElement(this.props.closeButton, { style: { float: 'right' } })}
+                    {this.props.secondButton && React.cloneElement(this.props.secondButton, { style: { float: 'right' } })}
                 </Col>
             </Row>
         </AdaptableBlotterForm>;

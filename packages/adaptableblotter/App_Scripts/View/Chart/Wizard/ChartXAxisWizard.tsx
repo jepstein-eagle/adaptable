@@ -80,7 +80,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
 
                 {StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumn) && this.state.UseAllXAsisColumnValues == false &&
                     <Row>
-                        <Col xs={3}></Col>
+                        <Col xs={4}></Col>
                         <Col xs={6}>
                             <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
                                 <SingleListBox
@@ -95,7 +95,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
                                 </SingleListBox>
                             </Panel>
                         </Col>
-                        <Col xs={3}></Col>
+                        <Col xs={2}></Col>
                     </Row>
                 }
 

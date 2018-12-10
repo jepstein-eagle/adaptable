@@ -9,6 +9,7 @@ export interface PanelWithImageProps extends PanelProps {
     glyphicon?: string
     infoBody?: any[]
     cssClassName: string
+    button?: React.ReactElement<any>;
 }
 
 
@@ -21,7 +22,7 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
         
         let headerRow = <AdaptableBlotterForm inline>
             <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={12}>
+                <Col xs={9}>
                     {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
                     {this.props.header}
                     {' '}
@@ -31,6 +32,9 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
                             <span>  {' '} <AdaptablePopover  cssClassName={cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} /></span>
                         </span>
                     }
+                </Col>
+                <Col xs={3}>
+                     {this.props.button && React.cloneElement(this.props.button, { style: { float: 'right' } })}
                 </Col>
             </Row>
         </AdaptableBlotterForm>;

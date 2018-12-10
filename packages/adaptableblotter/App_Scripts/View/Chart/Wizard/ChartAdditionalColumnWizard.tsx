@@ -46,12 +46,12 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
             <Panel header="X Axis Additional Column" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="additionalColumn">
-                        <Col xs={3} />
-                        <Col xs={7}>
+                        <Col xs={4} />
+                        <Col xs={6}>
                             <Well>You can, optionally, segment the X Axis further by grouping totals against the values in another column</Well>
                         </Col>
-                        <Col xs={3} componentClass={ControlLabel}>Additional Column: </Col>
-                        <Col xs={7}>
+                        <Col xs={4} componentClass={ControlLabel}>Additional Column: </Col>
+                        <Col xs={6}>
                             <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.state.AdditionalColumn]}
                                 ColumnList={this.props.Columns}
                                 onColumnChange={columns => this.onAdditionalColumnChanged(columns)}
@@ -69,7 +69,9 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
                 </AdaptableBlotterForm>
 
                 {StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumn) && this.state.UseAllAdditionalColumnValues == false &&
-                    <div>
+                   <Row>
+                   <Col xs={4}></Col>
+                   <Col xs={6}>
                         <SingleListBox Values={this.state.AvailableAdditionalColumnValues}
                             cssClassName={cssClassName}
                             UiSelectedValues={this.state.AdditionalColumnValues}
@@ -79,7 +81,9 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
                             onSelectedChange={(list) => this.onColumnValuesChange(list)}
                             SelectionMode={SelectionMode.Multi}>
                         </SingleListBox>
-                    </div>
+                        </Col>
+                        <Col xs={2 }></Col>
+                    </Row>
                 }
 
             </Panel>

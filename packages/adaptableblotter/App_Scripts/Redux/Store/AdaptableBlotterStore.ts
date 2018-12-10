@@ -12,6 +12,7 @@ import filter from 'redux-storage-decorator-filter'
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as ChartRedux from '../ActionsReducers/ChartRedux'
+import * as ChartInternalRedux from '../ActionsReducers/ChartInternalRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as BulkUpdateRedux from '../ActionsReducers/BulkUpdateRedux'
@@ -74,6 +75,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Menu: MenuRedux.MenuReducer,
   Alert: AlertRedux.AlertReducer,
   Chart: ChartRedux.ChartReducer,
+  ChartInternal: ChartInternalRedux.ChartInternalReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
   CustomSort: CustomSortRedux.CustomSortReducer,
@@ -210,7 +212,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.GRID,
       ConfigConstants.MENU,
       ConfigConstants.POPUP,
-      ConfigConstants.TEAMSHARING,
+      ConfigConstants.TEAM_SHARING,
+      ConfigConstants.CHART_INTERNAL,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
@@ -226,7 +229,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_HIDE_SCREEN,
       PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_HIDE_PROMPT,
       PopupRedux.POPUP_SHOW_ALERT, PopupRedux.POPUP_HIDE_ALERT,
-      PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
       PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
       ]);
 

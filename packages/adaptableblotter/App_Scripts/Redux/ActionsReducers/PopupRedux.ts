@@ -5,8 +5,6 @@ import { MessageType } from '../../Utilities/Enums';
 
 export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
-export const POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
-export const POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
 export const POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
 export const POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
 export const POPUP_SHOW_ABOUT = 'POPUP_SHOW_ABOUT';
@@ -28,10 +26,6 @@ export interface PopupShowScreenAction extends Redux.Action {
 }
 
 export interface PopupHideScreenAction extends Redux.Action { }
-
-export interface PopupShowChartAction extends Redux.Action { }
-
-export interface PopupHideChartAction extends Redux.Action { }
 
 export interface PopupShowLoadingAction extends Redux.Action { }
 
@@ -82,14 +76,6 @@ export const PopupShowAlert = (Alert: IAlert): PopupShowAlertAction => ({
 
 export const PopupHideAlert = (): PopupHideAlertAction => ({
   type: POPUP_HIDE_ALERT
-})
-
-export const PopupShowChart = (): PopupShowChartAction => ({
-  type: POPUP_SHOW_CHART,
-})
-
-export const PopupHideChart = (): PopupHideChartAction => ({
-  type: POPUP_HIDE_CHART
 })
 
 export const PopupShowLoading = (): PopupShowLoadingAction => ({
@@ -147,9 +133,7 @@ const initialPopupState: PopupState = {
     ComponentName: "",
     Params: null
   },
-  ChartPopup: {
-    ShowChartPopup: false,
-  },
+
   LoadingPopup: {
     ShowLoadingPopup: true,
   },
@@ -267,15 +251,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       let newAlertPopup: IAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", MessageType: MessageType.Info }
       return Object.assign({}, state, { AlertPopup: newAlertPopup })
     }
-    case POPUP_SHOW_CHART: {
-      let newChartPopup: IChartPopup = { ShowChartPopup: true }
-      return Object.assign({}, state, { ChartPopup: newChartPopup })
-    }
-    case POPUP_HIDE_CHART: {
-      let newChartPopup: IChartPopup = { ShowChartPopup: false }
-      return Object.assign({}, state, { ChartPopup: newChartPopup })
-    }
-    case POPUP_SHOW_LOADING: {
+       case POPUP_SHOW_LOADING: {
       let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: true }
       return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
     }

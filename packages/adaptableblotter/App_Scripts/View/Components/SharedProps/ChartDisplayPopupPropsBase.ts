@@ -15,4 +15,6 @@ export interface ChartDisplayPopupPropsBase<View> extends React.ClassAttributes<
     BlotterOptions: IAdaptableBlotterOptions
     BlotterApi: IBlotterApi
     ChartService: IChartService
+    onClose?: Function;
+    showModal: boolean;
 }

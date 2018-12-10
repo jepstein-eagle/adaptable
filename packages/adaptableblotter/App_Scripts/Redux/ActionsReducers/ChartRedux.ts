@@ -30,18 +30,17 @@ export const ChartDefinitionDelete = (ChartDefinition: IChartDefinition): ChartD
 })
 
 export interface ChartDefinitionSelectAction extends Redux.Action {
-    SelectedChartDefinitionName: string
+    SelectedChartDefinitionTitle: string
 }
 
-export const ChartDefinitionSelect = (SelectedChartDefinitionName: string): ChartDefinitionSelectAction => ({
+export const ChartDefinitionSelect = (SelectedChartDefinitionTitle: string): ChartDefinitionSelectAction => ({
     type: CHART_DEFINITION_SELECT,
-    SelectedChartDefinitionName
+    SelectedChartDefinitionTitle
 })
 
 const initialChartState: ChartState = {
     ChartDefinitions: [],
-    CurrentChartName: '',
-    ChartData: null
+    CurrentChart: '',
 }
 
 export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = initialChartState, action: Redux.Action): ChartState => {
@@ -61,16 +60,15 @@ export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = init
 
         case CHART_DEFINITION_DELETE:
             chartDefinitions = [].concat(state.ChartDefinitions);
-            let index = chartDefinitions.findIndex(x => x.Name == (<ChartDefinitionDeleteAction>action).ChartDefinition.Name)
+            let index = chartDefinitions.findIndex(x => x.Title == (<ChartDefinitionDeleteAction>action).ChartDefinition.Title)
             chartDefinitions.splice(index, 1);
             return Object.assign({}, state, {
                 ChartDefinitions: chartDefinitions
             });
 
         case CHART_DEFINITION_SELECT:
-            return Object.assign({}, state, { CurrentChartName: (<ChartDefinitionSelectAction>action).SelectedChartDefinitionName })
+            return Object.assign({}, state, { CurrentChart: (<ChartDefinitionSelectAction>action).SelectedChartDefinitionTitle })
 
-       
         default:
             return state
     }

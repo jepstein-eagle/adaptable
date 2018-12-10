@@ -52,8 +52,7 @@ export interface MenuState extends ISystemState {
 
 export interface PopupState extends ISystemState {
     ScreenPopup: IScreenPopup;
-    ChartPopup: IChartPopup;
-    AlertPopup: IAlertPopup;
+     AlertPopup: IAlertPopup;
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
     LoadingPopup: ILoadingPopup;
@@ -67,6 +66,12 @@ export interface TeamSharingState extends ISystemState {
 
 export interface HomeState extends ISystemState {
     
+}
+
+export interface ChartInternalState extends ISystemState {
+    ChartData: any;
+    ChartVisible: boolean;
+  
 }
 
 /*
@@ -130,8 +135,7 @@ export interface PercentBarState extends IUserState {
 
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    CurrentChartName: string;
-    ChartData: any;
+    CurrentChart: string;
 }
 
 export interface ConditionalStyleState extends IUserState {
