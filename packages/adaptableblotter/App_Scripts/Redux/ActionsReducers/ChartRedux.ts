@@ -2,7 +2,6 @@ import * as Redux from 'redux';
 import { ChartState } from './Interface/IState'
 import { IChartDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
 
-export const CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
 export const CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
 export const CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
 export const CHART_DEFINITION_DELETE = 'CHART_DEFINITION_DELETE';
@@ -29,18 +28,10 @@ export const ChartDefinitionDelete = (ChartDefinition: IChartDefinition): ChartD
     ChartDefinition
 })
 
-export interface ChartDefinitionSelectAction extends Redux.Action {
-    SelectedChartDefinitionTitle: string
-}
 
-export const ChartDefinitionSelect = (SelectedChartDefinitionTitle: string): ChartDefinitionSelectAction => ({
-    type: CHART_DEFINITION_SELECT,
-    SelectedChartDefinitionTitle
-})
 
 const initialChartState: ChartState = {
-    ChartDefinitions: [],
-    CurrentChart: '',
+    ChartDefinitions: []
 }
 
 export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = initialChartState, action: Redux.Action): ChartState => {
@@ -66,9 +57,7 @@ export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = init
                 ChartDefinitions: chartDefinitions
             });
 
-        case CHART_DEFINITION_SELECT:
-            return Object.assign({}, state, { CurrentChart: (<ChartDefinitionSelectAction>action).SelectedChartDefinitionTitle })
-
+       
         default:
             return state
     }

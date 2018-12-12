@@ -29,10 +29,10 @@ import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
-    onSelectChartDefinition: (SelectedSearchName: string) => ChartRedux.ChartDefinitionSelectAction,
+    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction,
     onShowChart: () => ChartInternalRedux.ChartInternalShowChartAction;
     ChartDefinitions: Array<IChartDefinition>
-    CurrentChart: string
+    CurrentChartDefinition: IChartDefinition
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
 
@@ -49,11 +49,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 this.onNew()
             }
             if (this.props.PopupParams == "Edit") {
-                let editChart = this.props.ChartDefinitions.find(x => x.Title == this.props.CurrentChart)
-                if (editChart) {
-                    let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == editChart.Title)
-                    this.onEdit(index, editChart)
-                }
+                let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.props.CurrentChartDefinition.Title)
+                this.onEdit(index, this.props.CurrentChartDefinition)
             }
         }
     }
@@ -61,7 +58,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     render() {
         let cssClassName: string = this.props.cssClassName + "__Chart";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Chart";
-       
+
         let infoBody: any[] = ["Use Charts to see youyr grid data visually."]
 
         let colItems: IColItem[] = [
@@ -90,9 +87,9 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Chart Definition"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
@@ -128,7 +125,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
 
     onShowChart(chartName: string) {
-        this.props.onSelectChartDefinition(chartName)
+        let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartName);
+        this.props.onSelectChartDefinition(chartDefinition)
         this.props.onShowChart();
     }
 
@@ -148,12 +146,15 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
     onFinishWizard() {
         let index: number = this.state.EditedAdaptableBlotterObjectIndex;
-        let currentChartIndex: number = this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChart)
         let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
+        let currentChartIndex: number = (this.props.CurrentChartDefinition == null) ?
+            -1 :
+            this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChartDefinition.Title)
+
         if (index == -1 || index == currentChartIndex) {// its new so make it the new search or we are editing the current search (but might have changed the name)
-            this.props.onSelectChartDefinition(clonedObject.Title);
+            this.props.onSelectChartDefinition(clonedObject);
         }
     }
 
@@ -167,7 +168,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChart: state.Chart.CurrentChart
+        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition
     };
 }
 
@@ -175,7 +176,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
-        onSelectChartDefinition: (selectedChartDefinitionName: string) => dispatch(ChartRedux.ChartDefinitionSelect(selectedChartDefinitionName)),
+        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
         onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))

@@ -12,6 +12,7 @@ module.exports = {
                 'fin-hypergrid-data-source-base',
                 'igniteui-react-charts/ES5/igr-category-chart-module',
                 'igniteui-react-charts/ES5/igr-category-chart-core-module',
+                'igniteui-react-charts/ES5/igr-data-chart-annotation-module',
                 'isomorphic-fetch',
                 'lodash',
                 'mathjs',

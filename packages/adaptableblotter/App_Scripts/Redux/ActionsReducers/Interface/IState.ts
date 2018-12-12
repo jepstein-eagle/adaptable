@@ -4,7 +4,7 @@ import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy'
 import { IPreviewInfo } from '../../../Api/Interface/IPreview';
 import { IColumn } from '../../../Api/Interface/IColumn';
 import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Api/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn,  IPercentBar } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 
@@ -52,7 +52,7 @@ export interface MenuState extends ISystemState {
 
 export interface PopupState extends ISystemState {
     ScreenPopup: IScreenPopup;
-     AlertPopup: IAlertPopup;
+    AlertPopup: IAlertPopup;
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
     LoadingPopup: ILoadingPopup;
@@ -65,13 +65,13 @@ export interface TeamSharingState extends ISystemState {
 }
 
 export interface HomeState extends ISystemState {
-    
+
 }
 
 export interface ChartInternalState extends ISystemState {
     ChartData: any;
     ChartVisible: boolean;
-  
+    CurrentChartDefinition: IChartDefinition
 }
 
 /*
@@ -135,7 +135,6 @@ export interface PercentBarState extends IUserState {
 
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    CurrentChart: string;
 }
 
 export interface ConditionalStyleState extends IUserState {

@@ -53,7 +53,7 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
                         <Col xs={3} componentClass={ControlLabel}>Sub title:</Col>
                         <Col xs={7}>
                             <FormGroup controlId="formInlineName" validationState={validationState}>
-                                <FormControl value={this.state.Title} type="string" placeholder="Enter chart subtitle (optional)"
+                                <FormControl value={this.state.SubTitle} type="string" placeholder="Enter chart subtitle (optional)"
                                     onChange={(e) => this.onChartSubTitleChange(e)} />
                             </FormGroup>
                         </Col>

@@ -1,10 +1,12 @@
 
 import * as Redux from 'redux';
 import { ChartInternalState } from './Interface/IState';
+import { IChartDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 const CHART_INTERNAL_SHOW_CHART = 'CHART_INTERNAL_SHOW_CHART';
 const CHART_INTERNAL_HIDE_CHART = 'CHART_INTERNAL_HIDE_CHART';
 const CHART_INTERNAL_SET_CHART_DATA = 'CHART_INTERNAL_SET_CHART_DATA';
+const CHART_INTERNAL_DEFINITION_SELECT = 'CHART_INTERNAL_DEFINITION_SELECT';
 
 
 
@@ -33,9 +35,19 @@ export const ChartInternalSetChartData = (chartData: any): ChartInternalSetChart
     chartData
 })
 
+export interface ChartDefinitionSelectAction extends Redux.Action {
+    CurrentChartDefinition: IChartDefinition
+}
+
+export const ChartDefinitionSelect = (CurrentChartDefinition: IChartDefinition): ChartDefinitionSelectAction => ({
+    type: CHART_INTERNAL_DEFINITION_SELECT,
+    CurrentChartDefinition
+})
+
 const initialChartInternalState: ChartInternalState = {
     ChartData: null,
-    ChartVisible: false
+    ChartVisible: false,
+    CurrentChartDefinition: null
 }
 
 export const ChartInternalReducer: Redux.Reducer<ChartInternalState> = (state: ChartInternalState = initialChartInternalState, action: Redux.Action): ChartInternalState => {
@@ -46,6 +58,8 @@ export const ChartInternalReducer: Redux.Reducer<ChartInternalState> = (state: C
             return Object.assign({}, state, { ChartVisible: false })
         case CHART_INTERNAL_SET_CHART_DATA:
             return Object.assign({}, state, { ChartData: (<ChartInternalSetChartDataAction>action).chartData })
+        case CHART_INTERNAL_DEFINITION_SELECT:
+            return Object.assign({}, state, { CurrentChartDefinition: (<ChartDefinitionSelectAction>action).CurrentChartDefinition })
         default:
             return state
     }

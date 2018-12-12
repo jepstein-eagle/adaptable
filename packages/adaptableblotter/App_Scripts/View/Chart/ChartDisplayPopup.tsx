@@ -8,28 +8,32 @@ import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { Row, Col, FormGroup, ControlLabel, FormControl, Button } from "react-bootstrap";
+import { Row, Col, FormGroup, ControlLabel, FormControl, Button, Checkbox, Panel } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { ChartType, ChartCrosshairsMode } from "../../Utilities/Enums";
+import { ChartType, ChartCrosshairsMode, ChartSize } from "../../Utilities/Enums";
 import { PanelWithImageTwoButtons } from "../Components/Panels/PanelWithIImageTwoButtons";
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 // ig chart imports
 import { IgrCategoryChart } from 'igniteui-react-charts/ES5/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES5/igr-category-chart-module';
-//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES5/igr-data-chart-annotation-module';
-//import { EasingFunctions } from 'igniteui-react-core/ES5/EasingFunctions';
+import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES5/igr-data-chart-annotation-module';
+import { EasingFunctions } from 'igniteui-react-core/ES5/EasingFunctions';
+
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[]
-    CurrentChart: string
+    CurrentChartDefinition: IChartDefinition
     ChartData: any
 }
 
 export interface ChartDisplayPopupWizardState {
     ChartType: ChartType,
     ChartCrosshairsMode: ChartCrosshairsMode,
-    CurrentChartDefinition: IChartDefinition,
+    ChartSize: ChartSize,
+    SpanCrossHairsToData: boolean,
+    EnableCrosshairsAnnotations: boolean,
+    EnableFinalValueAnnotations: boolean,
     IsMinimised: boolean
 
 }
@@ -38,16 +42,18 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     constructor(props: ChartDisplayPopupProps) {
         super(props);
-        let currentChartDefinition: IChartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == this.props.CurrentChart);
-
+       
         this.state = {
-            CurrentChartDefinition: currentChartDefinition,
             ChartType: ChartType.Column,
+            ChartSize: ChartSize.Medium,
+            SpanCrossHairsToData: false,
+            EnableCrosshairsAnnotations: false,
+            EnableFinalValueAnnotations: false,
             IsMinimised: false,
-            ChartCrosshairsMode: ChartCrosshairsMode.Default
+            ChartCrosshairsMode: ChartCrosshairsMode.None
         }
         IgrCategoryChartModule.register();
-      //  IgrDataChartAnnotationModule.register();
+        IgrDataChartAnnotationModule.register();
     }
 
     render() {
@@ -86,35 +92,51 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                     hideToolTip={true}
                 />
 
-        let chartData = (this.state.IsMinimised == false && this.props.ChartData != null && StringExtensions.IsNotEmpty(this.props.CurrentChart)) ?
+        let chartWidth: string = this.setChartWidth();
+        let chartHeight: string = this.setChartHeight();
+        let panelWidth: string = this.setPanelWidth();
+        let chartColumnSize: number = this.setChartColumnSize();
+        let legendColumnSize: number = this.setLegendColumnSize();
+
+        let chartData = (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
             <IgrCategoryChart
-               // size
-            width="900px"
-                height="500px"
-                // titles
-                chartTitle={this.props.CurrentChart}
-
-                yAxisMinimumValue={0}
+                // datasource
+                dataSource={this.props.ChartData}
+                // chart type
                 chartType={this.state.ChartType}
-               
-                yAxisTitle={this.state.CurrentChartDefinition.YAxisColumnId}
-                xAxisTitle={this.state.CurrentChartDefinition.XAxisColumnId}
-                
-                dataSource={this.props.ChartData} 
+                // size
+                width={chartWidth}
+                height={chartHeight}
+                // titles
+                chartTitle={this.props.CurrentChartDefinition.Title}
+                subtitle={this.props.CurrentChartDefinition.SubTitle}
+                // yAxis
+                // yAxisMinimumValue={0}  // need this?
+                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnId}
+                // xAxis
+                xAxisTitle={this.props.CurrentChartDefinition.XAxisColumnId}
+                // crosshairs
                 crosshairsDisplayMode={this.state.ChartCrosshairsMode}
-                crosshairsSnapToData={true}
-                crosshairsAnnotationEnabled={true}
+                crosshairsSnapToData={this.state.SpanCrossHairsToData}
+                crosshairsAnnotationEnabled={this.state.EnableCrosshairsAnnotations}
+                // transitions
                 isTransitionInEnabled={true}
-              //  transitionInEasingFunction={EasingFunctions.cubicEase}
+                transitionInEasingFunction={EasingFunctions.cubicEase}
                 transitionInDuration={1000}
-                finalValueAnnotationsVisible={true}
+                finalValueAnnotationsVisible={this.state.EnableFinalValueAnnotations}
 
-               // calloutsVisible={true}
-               // calloutsXMemberPath="index"
-               // calloutsYMemberPath="yValue"
-               // calloutsLabelMemberPath="content"
-               // calloutsContentMemberPath="yValue"
-                />
+            // callouts - not doing yet as not sure how we can with dynamic data...
+            // calloutsVisible={true}
+            // calloutsXMemberPath="index"
+            // calloutsYMemberPath="yValue"
+            // calloutsLabelMemberPath="content"
+            // calloutsContentMemberPath="yValue"
+
+
+            // properties used in ig example
+            //    xAxisFormatLabel={this.formatDateLabel}
+
+            />
             :
             null;
 
@@ -126,69 +148,99 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             return <option key={enumName} value={enumName}>{enumName as ChartCrosshairsMode}</option>
         })
 
+        let optionChartSizes = EnumExtensions.getNames(ChartSize).map((enumName) => {
+            return <option key={enumName} value={enumName}>{enumName as ChartSize}</option>
+        })
+
         return <div className={cssClassName}>
             <PanelWithImageTwoButtons
                 cssClassName={cssClassName}
                 header={StrategyConstants.ChartStrategyName}
-                style={{ width: '1500px' }}
-                bsStyle="primary"
+                style={{ width: panelWidth }}
+                bsStyle={PRIMARY_BSSTYLE}
                 glyphicon={StrategyConstants.ChartGlyph}
                 secondButton={minmaxButton}
                 firstButton={closeButton}
             >
                 {this.state.IsMinimised == false &&
                     <Row>
-                        <Col xs={9}>
+                        <Col xs={chartColumnSize}>
                             {this.props.ChartData != null &&
                                 chartData
                             }
                         </Col>
-                        <Col xs={3}>
-                            <Row>
-                                <Col xs={10}>
-                                    <h4>Chart Settings</h4>
-                                </Col>
-                            </Row>
-                            <FormGroup controlId="formChartType">
-
+                        <Col xs={legendColumnSize}>
+                            <Panel>
                                 <Row>
-                                    <Col xs={3}>
-                                        <ControlLabel>Type:</ControlLabel>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartType} onChange={(x) => this.onChartTypeChange(x)} >
-                                            {optionChartTypes}
-                                        </FormControl>
+                                    <Col xs={10}>
+                                        <h4>Chart Settings</h4>
                                     </Col>
                                 </Row>
-                            </FormGroup>
-                            <FormGroup controlId="formCrosshairs">
+                                <FormGroup controlId="formChartType">
 
-                                <Row>
-                                    <Col xs={3}>
-                                        <ControlLabel>CrossHairs:</ControlLabel>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
-                                            {optionCrossHairModeTypes}
-                                        </FormControl>
-                                    </Col>
-                                </Row>
-                            </FormGroup>
-                            <FormGroup>
-                                <Row>
-                                    <Col xs={3}>
-                                        <ControlLabel>Value:</ControlLabel>
-                                    </Col>
-                                    <Col xs={6}>
-                                        <FormControl
-                                            type="number"
-                                            placeholder="Enter Number"
+                                    <Row>
+                                        <Col xs={4}>
+                                            <ControlLabel>Type</ControlLabel>
+                                        </Col>
+                                        <Col xs={8}>
+                                            <FormControl componentClass="select" placeholder="select" value={this.state.ChartType} onChange={(x) => this.onChartTypeChange(x)} >
+                                                {optionChartTypes}
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                <FormGroup controlId="formSize">
+                                    <Row>
+                                        <Col xs={4}>
+                                            <ControlLabel>Size</ControlLabel>
+                                        </Col>
+                                        <Col xs={8}>
+                                            <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
+                                                {optionChartSizes}
+                                            </FormControl>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                <FormGroup controlId="formFinalValueAnnotations">
+                                    <Row>
+                                        <Col xs={4}>
+                                        </Col>
+                                        <Col xs={8}>
+                                            <Checkbox inline onChange={(e) => this.onEnableFinalValueAnnotationsOptionChanged(e)} checked={this.state.EnableFinalValueAnnotations} >Show Annotations</Checkbox>
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                                {this.state.ChartSize != ChartSize.XSmall &&
+                                    <FormGroup controlId="formCrosshairs">
 
-                                        />
-                                    </Col>
-                                </Row>
-                            </FormGroup>
+                                        <Row>
+                                            <Col xs={4}>
+                                                <ControlLabel>Crosshairs</ControlLabel>
+                                            </Col>
+                                            <Col xs={8}>
+                                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
+                                                    {optionCrossHairModeTypes}
+                                                </FormControl>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={4}>
+                                            </Col>
+                                            <Col xs={7}>
+                                                <Checkbox disabled={this.state.ChartCrosshairsMode == ChartCrosshairsMode.None} onChange={(e) => this.onSpanCrossHairsToDataOptionChanged(e)} checked={this.state.SpanCrossHairsToData} >Snap to Data</Checkbox>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={4}>
+                                            </Col>
+                                            <Col xs={7}>
+                                                <Checkbox inline disabled={this.state.ChartCrosshairsMode == ChartCrosshairsMode.None} onChange={(e) => this.onEnableCrosshairsAnnotationsOptionChanged(e)} checked={this.state.EnableCrosshairsAnnotations} >Crosshair Legend</Checkbox>
+                                            </Col>
+                                        </Row>
+
+                                    </FormGroup>
+                                }
+                            </Panel>
                         </Col>
 
                     </Row>
@@ -213,16 +265,107 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.setState({ ChartType: e.value, } as ChartDisplayPopupWizardState)
     }
 
+    onChartSizeChange(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ ChartSize: e.value, } as ChartDisplayPopupWizardState)
+    }
+
     onCrosshairsModeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ ChartCrosshairsMode: e.value, } as ChartDisplayPopupWizardState)
+    }
+
+    private onSpanCrossHairsToDataOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ SpanCrossHairsToData: e.checked } as ChartDisplayPopupWizardState)
+    }
+
+    private onEnableCrosshairsAnnotationsOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ EnableCrosshairsAnnotations: e.checked } as ChartDisplayPopupWizardState)
+    }
+
+    private onEnableFinalValueAnnotationsOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ EnableFinalValueAnnotations: e.checked } as ChartDisplayPopupWizardState)
+    }
+
+    setChartHeight(): string {
+        switch (this.state.ChartSize) {
+            case ChartSize.XSmall:
+                return '350px';
+            case ChartSize.Small:
+                return '450px';
+            case ChartSize.Medium:
+                return '600px';
+            case ChartSize.Large:
+                return '750px';
+            case ChartSize.XLarge:
+                return '850px';
+        }
+    }
+
+    setChartWidth(): string {
+        switch (this.state.ChartSize) {
+            case ChartSize.XSmall:
+                return '350px';
+            case ChartSize.Small:
+                return '600px';
+            case ChartSize.Medium:
+                return '800px';
+            case ChartSize.Large:
+                return '1000px';
+            case ChartSize.XLarge:
+                return '1100px';
+        }
+    }
+
+    setPanelWidth(): string {
+        switch (this.state.ChartSize) {
+            case ChartSize.XSmall:
+                return '600px';
+            case ChartSize.Small:
+                return '900px';
+            case ChartSize.Medium:
+                return '1200px';
+            case ChartSize.Large:
+                return '1350px';
+            case ChartSize.XLarge:
+                return '1500px';
+        }
+    }
+
+    setChartColumnSize(): number {
+        switch (this.state.ChartSize) {
+            case ChartSize.XSmall:
+                return 7;
+            case ChartSize.Small:
+            case ChartSize.Medium:
+                return 8;
+            case ChartSize.Large:
+            case ChartSize.XLarge:
+                return 9;
+        }
+    }
+
+    setLegendColumnSize(): number {
+        switch (this.state.ChartSize) {
+            case ChartSize.XSmall:
+                return 5;
+            case ChartSize.Small:
+            case ChartSize.Medium:
+                return 4;
+            case ChartSize.Large:
+            case ChartSize.XLarge:
+                return 3;
+        }
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChart: state.Chart.CurrentChart,
+        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition,
         ChartService: ownProps.ChartService,
         ChartData: state.ChartInternal.ChartData
     };
