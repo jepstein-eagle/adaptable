@@ -1,4 +1,4 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Api/Interface/IMessage';
+import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Api/Interface/IMessage';
 import { IMenuItem, IContextMenu } from '../../../Api/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Api/Interface/IPreview';
@@ -37,7 +37,6 @@ export interface MenuState extends ISystemState {
 }
 export interface PopupState extends ISystemState {
     ScreenPopup: IScreenPopup;
-    ChartPopup: IChartPopup;
     AlertPopup: IAlertPopup;
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
@@ -49,6 +48,11 @@ export interface TeamSharingState extends ISystemState {
     SharedEntities: ISharedEntity[];
 }
 export interface HomeState extends ISystemState {
+}
+export interface ChartInternalState extends ISystemState {
+    ChartData: any;
+    ChartVisible: boolean;
+    CurrentChartDefinition: IChartDefinition;
 }
 export interface EntitlementsState extends IDesignTimeState {
     FunctionEntitlements: IEntitlement[];
@@ -90,8 +94,6 @@ export interface PercentBarState extends IUserState {
 }
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    CurrentChartName: string;
-    ChartData: any;
 }
 export interface ConditionalStyleState extends IUserState {
     ConditionalStyles: IConditionalStyle[];

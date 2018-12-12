@@ -85,7 +85,7 @@ const initialSystemState = {
     IsValidSmartEditSelection: false,
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
-    BulkUpdatePreviewInfo: null
+    BulkUpdatePreviewInfo: null,
 };
 exports.SystemReducer = (state = initialSystemState, action) => {
     let alerts;

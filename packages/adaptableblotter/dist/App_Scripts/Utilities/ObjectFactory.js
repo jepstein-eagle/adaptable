@@ -13,8 +13,8 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
     function CreateEmptyChartDefinition() {
         return {
-            Name: "",
-            Type: Enums_1.ChartType.BarChart,
+            Title: "",
+            SubTitle: "",
             YAxisColumnId: "",
             XAxisColumnId: "",
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]

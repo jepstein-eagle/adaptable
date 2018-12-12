@@ -3,8 +3,6 @@ import { PopupState } from './Interface/IState';
 import { IUIConfirmation, IUIPrompt, InputAction, IAlert } from '../../Api/Interface/IMessage';
 export declare const POPUP_SHOW_SCREEN = "POPUP_SHOW_SCREEN";
 export declare const POPUP_HIDE_SCREEN = "POPUP_HIDE_SCREEN";
-export declare const POPUP_SHOW_CHART = "POPUP_SHOW_CHART";
-export declare const POPUP_HIDE_CHART = "POPUP_HIDE_CHART";
 export declare const POPUP_SHOW_LOADING = "POPUP_SHOW_LOADING";
 export declare const POPUP_HIDE_LOADING = "POPUP_HIDE_LOADING";
 export declare const POPUP_SHOW_ABOUT = "POPUP_SHOW_ABOUT";
@@ -24,10 +22,6 @@ export interface PopupShowScreenAction extends Redux.Action {
     Params?: string;
 }
 export interface PopupHideScreenAction extends Redux.Action {
-}
-export interface PopupShowChartAction extends Redux.Action {
-}
-export interface PopupHideChartAction extends Redux.Action {
 }
 export interface PopupShowLoadingAction extends Redux.Action {
 }
@@ -65,8 +59,6 @@ export declare const PopupShowScreen: (ComponentStrategy: string, ComponentName:
 export declare const PopupHideScreen: () => PopupHideScreenAction;
 export declare const PopupShowAlert: (Alert: IAlert) => PopupShowAlertAction;
 export declare const PopupHideAlert: () => PopupHideAlertAction;
-export declare const PopupShowChart: () => PopupShowChartAction;
-export declare const PopupHideChart: () => PopupHideChartAction;
 export declare const PopupShowLoading: () => PopupShowLoadingAction;
 export declare const PopupHideLoading: () => PopupHideLoadingAction;
 export declare const PopupShowAbout: () => PopupShowAboutAction;

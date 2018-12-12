@@ -5,15 +5,15 @@ export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChar
     ChartDefinitions: IChartDefinition[];
 }
 export interface ChartSettingsWizardState {
-    ChartName: string;
-    ChartType: 'Bar Chart' | 'Line Chart';
+    Title: string;
+    SubTitle: string;
     ErrorMessage: string;
 }
 export declare class ChartSettingsWizard extends React.Component<ChartSettingsWizardProps, ChartSettingsWizardState> implements AdaptableWizardStep {
     constructor(props: ChartSettingsWizardProps);
     render(): any;
-    onChartNameChange(event: React.FormEvent<any>): void;
-    onChartTypeChange(event: React.FormEvent<any>): void;
+    onChartTitleChange(event: React.FormEvent<any>): void;
+    onChartSubTitleChange(event: React.FormEvent<any>): void;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

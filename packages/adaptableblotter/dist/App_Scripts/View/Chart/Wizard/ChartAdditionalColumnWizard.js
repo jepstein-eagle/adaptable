@@ -29,11 +29,11 @@ class ChartAdditionalColumnWizard extends React.Component {
             React.createElement(react_bootstrap_1.Panel, { header: "X Axis Additional Column", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "additionalColumn" },
-                        React.createElement(react_bootstrap_1.Col, { xs: 3 }),
-                        React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                        React.createElement(react_bootstrap_1.Col, { xs: 4 }),
+                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
                             React.createElement(react_bootstrap_1.Well, null, "You can, optionally, segment the X Axis further by grouping totals against the values in another column")),
-                        React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column: "),
-                        React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                        React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column: "),
+                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
                             React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.AdditionalColumn], ColumnList: this.props.Columns, onColumnChange: columns => this.onAdditionalColumnChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column Values:"),
@@ -41,8 +41,11 @@ class ChartAdditionalColumnWizard extends React.Component {
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "All", checked: this.state.UseAllAdditionalColumnValues == true, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "All"),
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Bespoke", checked: this.state.UseAllAdditionalColumnValues == false, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "Bespoke"))))),
                 StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumn) && this.state.UseAllAdditionalColumnValues == false &&
-                    React.createElement("div", null,
-                        React.createElement(SingleListBox_1.SingleListBox, { Values: this.state.AvailableAdditionalColumnValues, cssClassName: cssClassName, UiSelectedValues: this.state.AdditionalColumnValues, DisplayMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], ValueMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], SortMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue], onSelectedChange: (list) => this.onColumnValuesChange(list), SelectionMode: Enums_1.SelectionMode.Multi }))));
+                    React.createElement(react_bootstrap_1.Row, null,
+                        React.createElement(react_bootstrap_1.Col, { xs: 4 }),
+                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                            React.createElement(SingleListBox_1.SingleListBox, { Values: this.state.AvailableAdditionalColumnValues, cssClassName: cssClassName, UiSelectedValues: this.state.AdditionalColumnValues, DisplayMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], ValueMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], SortMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue], onSelectedChange: (list) => this.onColumnValuesChange(list), SelectionMode: Enums_1.SelectionMode.Multi })),
+                        React.createElement(react_bootstrap_1.Col, { xs: 2 }))));
     }
     onUseAllColumnValuesChanged(event) {
         let e = event.target;

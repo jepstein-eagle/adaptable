@@ -13,8 +13,8 @@ class ChartSummaryWizard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "-summary";
         let keyValuePairs = [
-            { Key: "Name", Value: this.props.Data.Name },
-            { Key: "Type", Value: this.props.Data.Type },
+            { Key: "Title", Value: this.props.Data.Title },
+            { Key: "Sub title", Value: this.props.Data.SubTitle },
             { Key: "Y Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumnId, this.props.Columns) },
             { Key: "X Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
             { Key: "X Axis Values", Value: this.getColumnValuesList(this.props.Data.XAxisColumnValues) },

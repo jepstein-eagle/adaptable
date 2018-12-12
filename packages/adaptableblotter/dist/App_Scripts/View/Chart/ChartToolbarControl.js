@@ -2,10 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
+const ChartInternalRedux = require("../../Redux/ActionsReducers/ChartInternalRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
@@ -19,29 +18,29 @@ const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonShowChart_1 = require("../Components/Buttons/ButtonShowChart");
 class ChartToolbarControlComponent extends React.Component {
     render() {
-        const selectSearchString = "Select a Chart";
+        const selectChartString = "Select a Chart";
         let cssClassName = this.props.cssClassName + "__Chart";
-        let savedSearch = this.props.ChartDefinitions.find(s => s.Name == this.props.CurrentChartName);
-        let currentSearchName = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentChartName) ?
-            selectSearchString : this.props.CurrentChartName;
-        let sortedChartes = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ChartDefinitions, "Name");
-        let availablechartDefinitions = sortedChartes.filter(s => s.Name != this.props.CurrentChartName).map((chartDefinition, index) => {
-            return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedChartDefinitionChanged(chartDefinition.Name) }, chartDefinition.Name);
+        let currentChartDefinitionName = this.props.CurrentChartDefinition == null ?
+            selectChartString : this.props.CurrentChartDefinition.Title;
+        let sortedChartDefinitions = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ChartDefinitions, "Title");
+        let availablechartDefinitions = sortedChartDefinitions.filter(s => s.Title != currentChartDefinitionName).map((chartDefinition, index) => {
+            return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedChartDefinitionChanged(chartDefinition.Title) }, chartDefinition.Title);
         });
         let content = React.createElement("span", null,
             React.createElement(react_bootstrap_1.InputGroup, null,
-                React.createElement(react_bootstrap_1.DropdownButton, { disabled: availablechartDefinitions.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentSearchName, id: "Chart", componentClass: react_bootstrap_1.InputGroup.Button }, availablechartDefinitions),
-                currentSearchName != selectSearchString &&
+                React.createElement(react_bootstrap_1.DropdownButton, { disabled: availablechartDefinitions.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: currentChartDefinitionName, id: "Chart", componentClass: react_bootstrap_1.InputGroup.Button }, availablechartDefinitions),
+                currentChartDefinitionName != selectChartString &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
-                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedChartDefinitionChanged(""), size: "small", overrideTooltip: "Clear Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))),
+                        React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedChartDefinitionChanged(""), size: "small", overrideTooltip: "Clear Chart", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))),
             React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
-                React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewChartDefinition(), size: "small", overrideTooltip: "Create New Chart Definition", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
-                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentSearchName == selectSearchString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel })));
+                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel })));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, glyphicon: StrategyConstants.ChartGlyph, onClose: () => this.props.onClose(StrategyConstants.ChartStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedChartDefinitionChanged(chartDefinitionName) {
-        this.props.onSelectChartDefinition(chartDefinitionName);
+        let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
+        this.props.onSelectChartDefinition(chartDefinition);
     }
     onShowChart() {
         this.props.onShowChart();
@@ -49,16 +48,16 @@ class ChartToolbarControlComponent extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        CurrentChartName: state.Chart.CurrentChartName,
+        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition,
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onSelectChartDefinition: (ChartName) => dispatch(ChartRedux.ChartDefinitionSelect(ChartName)),
+        onSelectChartDefinition: (chartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
         onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
-        onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
+        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup))
     };

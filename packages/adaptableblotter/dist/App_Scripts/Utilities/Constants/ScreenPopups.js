@@ -10,6 +10,7 @@ exports.CalendarsPopup = "CalendarsPopup";
 exports.CellValidationPopup = "CellValidationPopup";
 exports.PercentBarPopup = "PercentBarPopup";
 exports.ChartPopup = "ChartPopup";
+exports.ChartDisplayPopup = "ChartDisplayPopup";
 exports.ColumnChooserPopup = "ColumnChooserPopup";
 exports.ColumnFilterPopup = "ColumnFilterPopup";
 exports.ColumnInfoPopup = "ColumnInfoPopup";

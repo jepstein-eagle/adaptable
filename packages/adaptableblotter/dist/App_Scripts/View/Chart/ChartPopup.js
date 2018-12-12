@@ -5,6 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
+const ChartInternalRedux = require("../../Redux/ActionsReducers/ChartInternalRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
@@ -28,11 +29,8 @@ class ChartPopupComponent extends React.Component {
                 this.onNew();
             }
             if (this.props.PopupParams == "Edit") {
-                let editChart = this.props.ChartDefinitions.find(x => x.Name == this.props.CurrentChartName);
-                if (editChart) {
-                    let index = this.props.ChartDefinitions.findIndex(cd => cd.Name == editChart.Name);
-                    this.onEdit(index, editChart);
-                }
+                let index = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.props.CurrentChartDefinition.Title);
+                this.onEdit(index, this.props.CurrentChartDefinition);
             }
         }
     }
@@ -41,13 +39,13 @@ class ChartPopupComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Chart";
         let infoBody = ["Use Charts to see youyr grid data visually."];
         let colItems = [
-            { Content: "Name", Size: 4 },
-            { Content: "Type", Size: 4 },
+            { Content: "Title", Size: 4 },
+            { Content: "Subtitle", Size: 4 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 3 },
         ];
         let Charts = this.props.ChartDefinitions.map((Chart, index) => {
-            return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Name, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });
+            return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Title, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Chart Definition", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
@@ -60,7 +58,8 @@ class ChartPopupComponent extends React.Component {
                     React.createElement(ChartWizard_1.ChartWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onShowChart(chartName) {
-        this.props.onSelectChartDefinition(chartName);
+        let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartName);
+        this.props.onSelectChartDefinition(chartDefinition);
         this.props.onShowChart();
     }
     onEdit(index, Chart) {
@@ -75,31 +74,33 @@ class ChartPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
     onFinishWizard() {
-        let searchIndex = this.state.EditedAdaptableBlotterObjectIndex;
-        let currentSearchIndex = this.props.ChartDefinitions.findIndex(as => as.Name == this.props.CurrentChartName);
+        let index = this.state.EditedAdaptableBlotterObjectIndex;
         let clonedObject = Helper_1.Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-        if (searchIndex == -1 || searchIndex == currentSearchIndex) { // its new so make it the new search or we are editing the current search (but might have changed the name)
-            this.props.onSelectChartDefinition(clonedObject.Name);
+        let currentChartIndex = (this.props.CurrentChartDefinition == null) ?
+            -1 :
+            this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChartDefinition.Title);
+        if (index == -1 || index == currentChartIndex) { // its new so make it the new search or we are editing the current search (but might have changed the name)
+            this.props.onSelectChartDefinition(clonedObject);
         }
     }
     canFinishWizard() {
         let Chart = this.state.EditedAdaptableBlotterObject;
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(Chart.Name);
+        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(Chart.Title);
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartName: state.Chart.CurrentChartName
+        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateChartDefinition: (index, chartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
-        onSelectChartDefinition: (selectedChartDefinitionName) => dispatch(ChartRedux.ChartDefinitionSelect(selectedChartDefinitionName)),
-        onShowChart: () => dispatch(PopupRedux.PopupShowChart()),
+        onSelectChartDefinition: (chartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
+        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))
     };

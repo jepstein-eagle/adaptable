@@ -8,6 +8,7 @@ export declare const CalendarsPopup: string;
 export declare const CellValidationPopup: string;
 export declare const PercentBarPopup: string;
 export declare const ChartPopup: string;
+export declare const ChartDisplayPopup: string;
 export declare const ColumnChooserPopup: string;
 export declare const ColumnFilterPopup: string;
 export declare const ColumnInfoPopup: string;

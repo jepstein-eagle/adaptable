@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../../Utilities/Enums");
 exports.POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 exports.POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
-exports.POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
-exports.POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
 exports.POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
 exports.POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
 exports.POPUP_SHOW_ABOUT = 'POPUP_SHOW_ABOUT';
@@ -33,12 +31,6 @@ exports.PopupShowAlert = (Alert) => ({
 });
 exports.PopupHideAlert = () => ({
     type: exports.POPUP_HIDE_ALERT
-});
-exports.PopupShowChart = () => ({
-    type: exports.POPUP_SHOW_CHART,
-});
-exports.PopupHideChart = () => ({
-    type: exports.POPUP_HIDE_CHART
 });
 exports.PopupShowLoading = () => ({
     type: exports.POPUP_SHOW_LOADING,
@@ -83,9 +75,6 @@ const initialPopupState = {
         ComponentStrategy: "",
         ComponentName: "",
         Params: null
-    },
-    ChartPopup: {
-        ShowChartPopup: false,
     },
     LoadingPopup: {
         ShowLoadingPopup: true,
@@ -201,14 +190,6 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
         case exports.POPUP_HIDE_ALERT: {
             let newAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", MessageType: Enums_1.MessageType.Info };
             return Object.assign({}, state, { AlertPopup: newAlertPopup });
-        }
-        case exports.POPUP_SHOW_CHART: {
-            let newChartPopup = { ShowChartPopup: true };
-            return Object.assign({}, state, { ChartPopup: newChartPopup });
-        }
-        case exports.POPUP_HIDE_CHART: {
-            let newChartPopup = { ShowChartPopup: false };
-            return Object.assign({}, state, { ChartPopup: newChartPopup });
         }
         case exports.POPUP_SHOW_LOADING: {
             let newLoadingPopup = { ShowLoadingPopup: true };

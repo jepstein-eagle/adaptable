@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
 exports.CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
 exports.CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
 exports.CHART_DEFINITION_DELETE = 'CHART_DEFINITION_DELETE';
@@ -13,14 +12,8 @@ exports.ChartDefinitionDelete = (ChartDefinition) => ({
     type: exports.CHART_DEFINITION_DELETE,
     ChartDefinition
 });
-exports.ChartDefinitionSelect = (SelectedChartDefinitionName) => ({
-    type: exports.CHART_DEFINITION_SELECT,
-    SelectedChartDefinitionName
-});
 const initialChartState = {
-    ChartDefinitions: [],
-    CurrentChartName: '',
-    ChartData: null
+    ChartDefinitions: []
 };
 exports.ChartReducer = (state = initialChartState, action) => {
     let chartDefinitions;
@@ -37,13 +30,11 @@ exports.ChartReducer = (state = initialChartState, action) => {
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions }); //, CurrentAdvancedSearch: currentSearchName })
         case exports.CHART_DEFINITION_DELETE:
             chartDefinitions = [].concat(state.ChartDefinitions);
-            let index = chartDefinitions.findIndex(x => x.Name == action.ChartDefinition.Name);
+            let index = chartDefinitions.findIndex(x => x.Title == action.ChartDefinition.Title);
             chartDefinitions.splice(index, 1);
             return Object.assign({}, state, {
                 ChartDefinitions: chartDefinitions
             });
-        case exports.CHART_DEFINITION_SELECT:
-            return Object.assign({}, state, { CurrentChartName: action.SelectedChartDefinitionName });
         default:
             return state;
     }

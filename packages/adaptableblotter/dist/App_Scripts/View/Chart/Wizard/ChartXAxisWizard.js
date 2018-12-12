@@ -45,11 +45,11 @@ class ChartXAxisWizard extends React.Component {
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Bespoke", checked: this.state.UseAllXAsisColumnValues == false, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "Bespoke"))))),
                 StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumn) && this.state.UseAllXAsisColumnValues == false &&
                     React.createElement(react_bootstrap_1.Row, null,
-                        React.createElement(react_bootstrap_1.Col, { xs: 3 }),
+                        React.createElement(react_bootstrap_1.Col, { xs: 4 }),
                         React.createElement(react_bootstrap_1.Col, { xs: 6 },
                             React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel", style: divStyle },
                                 React.createElement(SingleListBox_1.SingleListBox, { Values: this.state.AvailableXAxisColumnValues, cssClassName: cssClassName, UiSelectedValues: this.state.XAxisColumnValues, DisplayMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], ValueMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], SortMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue], onSelectedChange: (list) => this.onColumnValuesChange(list), SelectionMode: Enums_1.SelectionMode.Multi }))),
-                        React.createElement(react_bootstrap_1.Col, { xs: 3 }))));
+                        React.createElement(react_bootstrap_1.Col, { xs: 2 }))));
     }
     onUseAllColumnValuesChanged(event) {
         let e = event.target;

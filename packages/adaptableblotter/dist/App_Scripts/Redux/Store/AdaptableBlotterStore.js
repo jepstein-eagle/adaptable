@@ -13,6 +13,7 @@ const redux_storage_decorator_filter_1 = require("redux-storage-decorator-filter
 const MenuRedux = require("../ActionsReducers/MenuRedux");
 const PopupRedux = require("../ActionsReducers/PopupRedux");
 const ChartRedux = require("../ActionsReducers/ChartRedux");
+const ChartInternalRedux = require("../ActionsReducers/ChartInternalRedux");
 const AlertRedux = require("../ActionsReducers/AlertRedux");
 const SmartEditRedux = require("../ActionsReducers/SmartEditRedux");
 const BulkUpdateRedux = require("../ActionsReducers/BulkUpdateRedux");
@@ -61,6 +62,7 @@ const rootReducer = Redux.combineReducers({
     Menu: MenuRedux.MenuReducer,
     Alert: AlertRedux.AlertReducer,
     Chart: ChartRedux.ChartReducer,
+    ChartInternal: ChartInternalRedux.ChartInternalReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
@@ -180,7 +182,8 @@ class AdaptableBlotterStore {
             ConfigConstants.GRID,
             ConfigConstants.MENU,
             ConfigConstants.POPUP,
-            ConfigConstants.TEAMSHARING,
+            ConfigConstants.TEAM_SHARING,
+            ConfigConstants.CHART_INTERNAL,
             // Config State - set ONLY in PredefinedConfig and never changed at runtime
             ConfigConstants.USER_INTERFACE,
             ConfigConstants.ENTITLEMENTS,
@@ -194,7 +197,6 @@ class AdaptableBlotterStore {
             PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_HIDE_SCREEN,
             PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_HIDE_PROMPT,
             PopupRedux.POPUP_SHOW_ALERT, PopupRedux.POPUP_HIDE_ALERT,
-            PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
             PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
         ]);
         //here we use our own merger function which is derived from redux simple merger

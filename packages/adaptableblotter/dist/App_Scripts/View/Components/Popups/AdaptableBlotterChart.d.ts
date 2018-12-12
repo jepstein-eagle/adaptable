@@ -4,6 +4,7 @@ export interface IAdaptableBlotterChartProps extends React.ClassAttributes<Adapt
     showChart: boolean;
     onClose?: Function;
     AdaptableBlotter: IAdaptableBlotter;
+    showModal: boolean;
 }
 export declare class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChartProps, {}> {
     render(): JSX.Element;
