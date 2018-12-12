@@ -15,10 +15,10 @@ import { PanelWithImageTwoButtons } from "../Components/Panels/PanelWithIImageTw
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 // ig chart imports
-import { IgrCategoryChart } from 'igniteui-react-charts/ES5/igr-category-chart';
-import { IgrCategoryChartModule } from 'igniteui-react-charts/ES5/igr-category-chart-module';
-//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES5/igr-data-chart-annotation-module';
-//import { EasingFunctions } from 'igniteui-react-core/ES5/EasingFunctions';
+import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
+import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
+//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
+//import { EasingFunctions } from 'igniteui-react-core/ES2015/EasingFunctions';
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {

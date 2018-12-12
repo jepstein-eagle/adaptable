@@ -12,10 +12,8 @@ const PanelWithIImageTwoButtons_1 = require("../Components/Panels/PanelWithIImag
 const ButtonMinimise_1 = require("../Components/Buttons/ButtonMinimise");
 const ButtonMaximise_1 = require("../Components/Buttons/ButtonMaximise");
 // ig chart imports
-const igr_category_chart_1 = require("igniteui-react-charts/ES5/igr-category-chart");
-const igr_category_chart_module_1 = require("igniteui-react-charts/ES5/igr-category-chart-module");
-const igr_data_chart_annotation_module_1 = require("igniteui-react-charts/ES5/igr-data-chart-annotation-module");
-const EasingFunctions_1 = require("igniteui-react-core/ES5/EasingFunctions");
+const igr_category_chart_1 = require("igniteui-react-charts/ES2015/igr-category-chart");
+const igr_category_chart_module_1 = require("igniteui-react-charts/ES2015/igr-category-chart-module");
 class ChartDisplayPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +27,7 @@ class ChartDisplayPopupComponent extends React.Component {
             ChartCrosshairsMode: Enums_1.ChartCrosshairsMode.None
         };
         igr_category_chart_module_1.IgrCategoryChartModule.register();
-        igr_data_chart_annotation_module_1.IgrDataChartAnnotationModule.register();
+        //    IgrDataChartAnnotationModule.register();
     }
     render() {
         let cssClassName = this.props.cssClassName + "__Charts";
@@ -67,7 +65,9 @@ class ChartDisplayPopupComponent extends React.Component {
                 // crosshairs
                 crosshairsDisplayMode: this.state.ChartCrosshairsMode, crosshairsSnapToData: this.state.SpanCrossHairsToData, crosshairsAnnotationEnabled: this.state.EnableCrosshairsAnnotations, 
                 // transitions
-                isTransitionInEnabled: true, transitionInEasingFunction: EasingFunctions_1.EasingFunctions.cubicEase, transitionInDuration: 1000, finalValueAnnotationsVisible: this.state.EnableFinalValueAnnotations })
+                isTransitionInEnabled: true, 
+                // transitionInEasingFunction={EasingFunctions.cubicEase}
+                transitionInDuration: 1000, finalValueAnnotationsVisible: this.state.EnableFinalValueAnnotations })
             :
                 null;
         let optionChartTypes = EnumExtensions_1.EnumExtensions.getNames(Enums_1.ChartType).map((enumName) => {

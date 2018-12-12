@@ -52,7 +52,6 @@ const SelectedCellsStrategy_1 = require("../Strategy/SelectedCellsStrategy");
 const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
 const HomeStrategy_1 = require("../Strategy/HomeStrategy");
 const FreeTextColumnStrategy_1 = require("../Strategy/FreeTextColumnStrategy");
-const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const PercentBarStrategy_1 = require("../Strategy/PercentBarStrategy");
 const ColumnCategoryStrategy_1 = require("../Strategy/ColumnCategoryStrategy");
 // components
@@ -118,7 +117,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy_1.PercentBarStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
+        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
