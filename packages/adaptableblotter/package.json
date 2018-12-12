@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "2.7.1",
+  "version": "2.7.2",
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -32,7 +32,7 @@
     "express": "^4.16.3",
     "fin-hypergrid-data-source-base": "^0.4.11",
     "increase-memory-limit": "^1.0.6",
-     "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.10",
     "mathjs": "^5.1.1",
     "prop-types": "^15.6.2",
