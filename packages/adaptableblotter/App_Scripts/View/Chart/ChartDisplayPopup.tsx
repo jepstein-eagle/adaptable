@@ -17,8 +17,8 @@ import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 // ig chart imports
 import { IgrCategoryChart } from 'igniteui-react-charts/ES5/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES5/igr-category-chart-module';
-import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES5/igr-data-chart-annotation-module';
-import { EasingFunctions } from 'igniteui-react-core/ES5/EasingFunctions';
+//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES5/igr-data-chart-annotation-module';
+//import { EasingFunctions } from 'igniteui-react-core/ES5/EasingFunctions';
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -53,7 +53,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             ChartCrosshairsMode: ChartCrosshairsMode.None
         }
         IgrCategoryChartModule.register();
-        IgrDataChartAnnotationModule.register();
+    //    IgrDataChartAnnotationModule.register();
     }
 
     render() {
@@ -121,7 +121,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 crosshairsAnnotationEnabled={this.state.EnableCrosshairsAnnotations}
                 // transitions
                 isTransitionInEnabled={true}
-                transitionInEasingFunction={EasingFunctions.cubicEase}
+               // transitionInEasingFunction={EasingFunctions.cubicEase}
                 transitionInDuration={1000}
                 finalValueAnnotationsVisible={this.state.EnableFinalValueAnnotations}
 
