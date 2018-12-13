@@ -11,9 +11,6 @@ const Enums_1 = require("../../Utilities/Enums");
 const PanelWithIImageTwoButtons_1 = require("../Components/Panels/PanelWithIImageTwoButtons");
 const ButtonMinimise_1 = require("../Components/Buttons/ButtonMinimise");
 const ButtonMaximise_1 = require("../Components/Buttons/ButtonMaximise");
-// ig chart imports
-const igr_category_chart_1 = require("igniteui-react-charts/ES2015/igr-category-chart");
-const igr_category_chart_module_1 = require("igniteui-react-charts/ES2015/igr-category-chart-module");
 class ChartDisplayPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -26,7 +23,7 @@ class ChartDisplayPopupComponent extends React.Component {
             IsMinimised: false,
             ChartCrosshairsMode: Enums_1.ChartCrosshairsMode.None
         };
-        igr_category_chart_module_1.IgrCategoryChartModule.register();
+        //    IgrCategoryChartModule.register();
         //    IgrDataChartAnnotationModule.register();
     }
     render() {
@@ -45,31 +42,50 @@ class ChartDisplayPopupComponent extends React.Component {
         let panelWidth = this.setPanelWidth();
         let chartColumnSize = this.setChartColumnSize();
         let legendColumnSize = this.setLegendColumnSize();
-        let chartData = (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
-            React.createElement(igr_category_chart_1.IgrCategoryChart
-            // datasource
-            , { 
+        let chartData = null; // (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
+        //  null
+        /*
+        <IgrCategoryChart
                 // datasource
-                dataSource: this.props.ChartData, 
+                dataSource={this.props.ChartData}
                 // chart type
-                chartType: this.state.ChartType, 
+                chartType={this.state.ChartType}
                 // size
-                width: chartWidth, height: chartHeight, 
+                width={chartWidth}
+                height={chartHeight}
                 // titles
-                chartTitle: this.props.CurrentChartDefinition.Title, subtitle: this.props.CurrentChartDefinition.SubTitle, 
+                chartTitle={this.props.CurrentChartDefinition.Title}
+                subtitle={this.props.CurrentChartDefinition.SubTitle}
                 // yAxis
                 // yAxisMinimumValue={0}  // need this?
-                yAxisTitle: this.props.CurrentChartDefinition.YAxisColumnId, 
+                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnId}
                 // xAxis
-                xAxisTitle: this.props.CurrentChartDefinition.XAxisColumnId, 
+                xAxisTitle={this.props.CurrentChartDefinition.XAxisColumnId}
                 // crosshairs
-                crosshairsDisplayMode: this.state.ChartCrosshairsMode, crosshairsSnapToData: this.state.SpanCrossHairsToData, crosshairsAnnotationEnabled: this.state.EnableCrosshairsAnnotations, 
+                crosshairsDisplayMode={this.state.ChartCrosshairsMode}
+                crosshairsSnapToData={this.state.SpanCrossHairsToData}
+                crosshairsAnnotationEnabled={this.state.EnableCrosshairsAnnotations}
                 // transitions
-                isTransitionInEnabled: true, 
-                // transitionInEasingFunction={EasingFunctions.cubicEase}
-                transitionInDuration: 1000, finalValueAnnotationsVisible: this.state.EnableFinalValueAnnotations })
-            :
-                null;
+                isTransitionInEnabled={true}
+               // transitionInEasingFunction={EasingFunctions.cubicEase}
+                transitionInDuration={1000}
+                finalValueAnnotationsVisible={this.state.EnableFinalValueAnnotations}
+
+            // callouts - not doing yet as not sure how we can with dynamic data...
+            // calloutsVisible={true}
+            // calloutsXMemberPath="index"
+            // calloutsYMemberPath="yValue"
+            // calloutsLabelMemberPath="content"
+            // calloutsContentMemberPath="yValue"
+
+
+            // properties used in ig example
+            //    xAxisFormatLabel={this.formatDateLabel}
+
+            />
+            */
+        //   :
+        //   null;
         let optionChartTypes = EnumExtensions_1.EnumExtensions.getNames(Enums_1.ChartType).map((enumName) => {
             return React.createElement("option", { key: enumName, value: enumName }, enumName);
         });
