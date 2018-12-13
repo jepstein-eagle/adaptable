@@ -11,33 +11,37 @@ var iPushPullHelper;
         ServiceStatus["Error"] = "Error";
     })(ServiceStatus = iPushPullHelper.ServiceStatus || (iPushPullHelper.ServiceStatus = {}));
     iPushPullHelper.IPPStatus = ServiceStatus.Unknown;
-    let iPushPullApp;
+    let iPushPullApp; //angular.IModule
     function isIPushPullLoaded(iPPConfig) {
-        try {
-            let angular = window.angular;
-            // if no ipushpullconfig then return
-            if (!iPPConfig) {
-                return false;
-            }
-            //first we check if angular is loaded (dependency from ipushpull)
-            if (typeof angular == 'undefined') {
-                return false;
-            }
-            //we try to create the angular module
-            if (!iPushPullApp) {
-                iPushPullApp = angular.module("myApp", ["ipushpull"]);
-                iPushPullApp.config(["ippConfigProvider", (ippConfigProvider) => {
-                        ippConfigProvider.set(iPPConfig);
-                    }]);
-                angular.bootstrap(document, ['myApp']);
-            }
-        }
-        catch (ex) {
-            iPushPullApp = null;
-        }
-        finally {
-            return iPushPullApp != null;
-        }
+        return false;
+        /*
+          try {
+              let angular = (<any>window).angular
+  
+              // if no ipushpullconfig then return
+              if(!iPPConfig){
+                  return false;
+              }
+              
+              //first we check if angular is loaded (dependency from ipushpull)
+              if (typeof angular == 'undefined') {
+                  return false;
+              }
+              //we try to create the angular module
+              if (!iPushPullApp) {
+                  iPushPullApp = angular.module("myApp", ["ipushpull"])
+                  iPushPullApp.config(["ippConfigProvider", (ippConfigProvider: any) => {
+                      ippConfigProvider.set(iPPConfig);
+                  }]);
+                  angular.bootstrap(document, ['myApp']);
+              }
+          }
+          catch (ex) {
+              iPushPullApp = null;
+          } finally {
+              return iPushPullApp != null;
+          }
+          */
     }
     iPushPullHelper.isIPushPullLoaded = isIPushPullLoaded;
     function Login(login, password) {
