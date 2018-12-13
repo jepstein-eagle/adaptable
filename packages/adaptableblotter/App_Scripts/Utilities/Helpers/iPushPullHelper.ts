@@ -1,5 +1,4 @@
 import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
-import { IPP_LOGIN } from "../../Redux/ActionsReducers/ExportRedux";
 import { LoggingHelper } from "./LoggingHelper";
 
 
@@ -10,9 +9,12 @@ export module iPushPullHelper {
         Connected = "Connected",
         Error = "Error"
     }
+    
     export var IPPStatus: ServiceStatus = ServiceStatus.Unknown
-    let iPushPullApp: angular.IModule
+    let iPushPullApp: any;//angular.IModule
     export function isIPushPullLoaded(iPPConfig?: any) {
+      return false;
+      /*
         try {
             let angular = (<any>window).angular
 
@@ -39,6 +41,7 @@ export module iPushPullHelper {
         } finally {
             return iPushPullApp != null;
         }
+        */
     }
 
     export function Login(login: string, password: string): Promise<any> {
