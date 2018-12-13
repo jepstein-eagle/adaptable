@@ -3,13 +3,13 @@
 0 silly argv   lernaVersion: '3.2.1',
 0 silly argv   '$0': 'lerna' }
 1 notice cli v3.2.1
-2 verbose rootPath /Users/adaptabletools/Code/lernanew/adaptableblotter
+2 verbose rootPath /Users/adaptabletools/Code/lerna/adaptableblotter
 3 info versioning independent
 4 silly argv { _: [ 'publish' ],
 4 silly argv   composed: 'publish',
 4 silly argv   lernaVersion: '3.2.1',
 4 silly argv   '$0': 'lerna' }
-5 verbose rootPath /Users/adaptabletools/Code/lernanew/adaptableblotter
+5 verbose rootPath /Users/adaptabletools/Code/lerna/adaptableblotter
 6 silly isAnythingCommitted
 7 verbose isAnythingCommitted 1
 8 silly currentBranch
@@ -18,591 +18,30 @@
 11 silly isBehindUpstream master is behind origin/master by 0 commit(s) and ahead by 0
 12 silly hasTags
 13 verbose hasTags true
-14 silly git-describe.sync "adaptableblotter-angular-test@0.1.31-4-gab075cf5" => {"lastTagName":"adaptableblotter-angular-test@0.1.31","lastVersion":"0.1.31","refCount":"4","sha":"ab075cf5","isDirty":false}
-15 info Looking for changed packages since adaptableblotter-angular-test@0.1.31
-16 silly diffSinceIn adaptableblotter-angular-test@0.1.31 packages/adaptableblotter-angular
+14 silly git-describe.sync "adaptableblotter-angular-test@0.1.33-2-g0aec0414" => {"lastTagName":"adaptableblotter-angular-test@0.1.33","lastVersion":"0.1.33","refCount":"2","sha":"0aec0414","isDirty":false}
+15 info Looking for changed packages since adaptableblotter-angular-test@0.1.33
+16 silly diffSinceIn adaptableblotter-angular-test@0.1.33 packages/adaptableblotter-angular
 17 silly diff packages/adaptableblotter-angular/package-lock.json
-17 silly diff packages/adaptableblotter-angular/projects/adaptableblotter/src/lib/adaptableblotter.component.ts
-17 silly diff packages/adaptableblotter-angular/tsconfig.json
-18 silly diffSinceIn adaptableblotter-angular-test@0.1.31 packages/adaptableblotter-react-test
-19 silly diff packages/adaptableblotter-react-test/config/env.js
+18 silly diffSinceIn adaptableblotter-angular-test@0.1.33 packages/adaptableblotter-react-test
 19 silly diff packages/adaptableblotter-react-test/package-lock.json
-19 silly diff packages/adaptableblotter-react-test/src/DataGenerator.ts
-20 silly diffSinceIn adaptableblotter-angular-test@0.1.31 packages/adaptableblotter-react
+20 silly diffSinceIn adaptableblotter-angular-test@0.1.33 packages/adaptableblotter-react
 21 silly diff packages/adaptableblotter-react/package-lock.json
-22 silly diffSinceIn adaptableblotter-angular-test@0.1.31 packages/adaptableblotter
-23 silly diff packages/adaptableblotter/App_Scripts/Api/BlotterApiBase.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Api/Interface/IAdaptableBlotter.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Api/Interface/IAdaptableBlotterObjects.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Api/Interface/IBlotterApi.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/AdaptableBlotter.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/BlotterApi.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/BlotterFactoryHypergrid.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/CustomSortDataSource.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/FilterAndSearchDataSource.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/Strategy/ConditionalStyleHypergridStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Hypergrid/Strategy/FlashingCellsHypergridStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/AdvancedSearchRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/AlertRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/BulkUpdateRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/CalculatedColumnRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/CellValidationRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ChartRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ColumnCategoryRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ColumnChooserRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ColumnFilterRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ConditionalStyleRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/CustomSortRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/EntitlementsRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ExportRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/FlashingCellsRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/FormatColumnRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/GridRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/Interface/IState.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/LayoutRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/MenuRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/PercentBarRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/PlusMinusRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/PopupRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/QuickSearchRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/ShortcutRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/SmartEditRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/SystemRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/TeamSharingRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/UserFilterRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/ActionsReducers/UserInterfaceRedux.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/Store/AdaptableBlotterReduxStorageClientEngine.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Redux/Store/AdaptableBlotterStore.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/AdaptableStrategyBase.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/AdvancedSearchStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/AlertStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ApplicationStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/BulkUpdateStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/CalculatedColumnStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/CalendarStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/CellValidationStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ChartStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ColumnCategoryStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ColumnChooserStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ColumnFilterStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ColumnInfoStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ConditionalStyleStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/CustomSortStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/DashboardStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/DataManagementStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/DataSourceStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ExportStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/FlashingCellsStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/FormatColumnStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/FreeTextColumnStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/HomeStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/IBulkUpdateStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/IColumnFilterStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/IPlusMinusStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/ISelectedCellsStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/IShortcutStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/ISmartEditStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/IStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/IStrategyActionReturn.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/Interface/ITeamSharingStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/LayoutStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/PercentBarStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/PlusMinusStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/QuickSearchStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/SelectColumnStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/SelectedCellsStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ShortcutStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/SmartEditStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/TeamSharingStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/ThemeStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Strategy/UserFilterStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Temp/BlotterFactory.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/EventDispatcher.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/AlertHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/CalendarHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/CellValidationHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/ColumnFilterHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/ColumnHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/EntitlementHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/ExpressionHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/FilterHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/LayoutHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/OpenfinHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/PreviewHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/ReportHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Helpers/StyleHelper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/MenuItem.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/ObjectFactory.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/AuditLogService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/AuditService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/CalculatedColumnExpressionService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/CalendarService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/ChartService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/FreeTextColumnService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/Interface/IAuditService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/Interface/IChartService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/Interface/IFreeTextColumnService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/Interface/IValidationService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/StyleService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/Utilities/Services/ValidationService.ts
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdaptableBlotterView.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/AdvancedSearchEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/AdvancedSearchPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/AdvancedSearchToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/AlertEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/AlertPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/AlertSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/AlertToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/Wizard/AlertExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/Wizard/AlertRulesWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/Wizard/AlertSelectColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/Wizard/AlertSelectQueryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/Wizard/AlertSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Alert/Wizard/AlertTypeWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/BulkUpdate/BulkUpdatePopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/BulkUpdate/BulkUpdateToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/CalculatedColumnEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/CalculatedColumnPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/CalculatedColumnSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Calendars/CalendarEntryItem.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Calendars/CalendarsEntryRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Calendars/CalendarsPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/CellValidationEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/CellValidationPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/CellValidationSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationActionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationRulesWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationSelectColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationSelectQueryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CellValidation/Wizard/CellValidationWizard.tsx
+22 silly diffSinceIn adaptableblotter-angular-test@0.1.33 packages/adaptableblotter
 23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/ChartDisplayPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/ChartEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/ChartPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/ChartToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/Wizard/ChartSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/Wizard/ChartWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/Wizard/ChartXAxisWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Chart/Wizard/ChartYAxisWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/ColumnCategoryEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/ColumnCategoryPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/ColumnCategorySummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/Wizard/ColumnCategoryColumnsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/Wizard/ColumnCategorySettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/Wizard/ColumnCategorySummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnCategory/Wizard/ColumnCategoryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnChooser/ColumnChooserPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnFilter/ColumnFilterEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnFilter/ColumnFilterPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnFilter/ColumnFilterSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnFilter/ColumnFilterToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ColumnInfo/ColumnInfoPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/AlertsPanel.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Buttons/ButtonBase.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Buttons/ButtonDelete.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Buttons/EntityListActionButtons.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/FilterForm/FilterForm.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/FilterForm/FloatingFilterForm.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/FilterForm/ListBoxFilterForm.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/FilterForm/ListBoxMenu.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/ListBox/DualListBoxEditor.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Popups/AdaptableBlotterAbout.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Popups/AdaptableBlotterChart.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Popups/AdaptableBlotterLoadingScreen.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Popups/AdaptableBlotterPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/PreviewResultsPanel.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Selectors/ColumnSelector.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/Selectors/ColumnValueSelector.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.ts
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/SharedProps/ConfigEntityRowProps.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/SharedProps/EditableConfigEntityState.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/SharedProps/StrategySummaryProps.ts
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/SharedProps/StrategyViewPopupProps.ts
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/StrategySummary/StrategyDetail.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/StyleComponent.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/StyleVisualItem.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Components/WizardSummaryPage.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/ConditionalStyleEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/ConditionalStylePopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/ConditionalStyleSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleScopeWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleStyleWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/CustomSortEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/CustomSortPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/CustomSortSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/Wizard/CustomSortColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/Wizard/CustomSortSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/Wizard/CustomSortValuesWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/CustomSort/Wizard/CustomSortWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Dashboard/Dashboard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Dashboard/DashboardPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/DataSource/DataSourceToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/ExportPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/ExportToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/ReportEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/Wizard/ReportColumnChooserWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/Wizard/ReportColumnTypeWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/Wizard/ReportExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/Wizard/ReportSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/Wizard/ReportSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Export/Wizard/ReportWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ExpressionBuilder/ExpressionBuilderConditionSelector.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPage.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPreview.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/ExpressionBuilder/ExpressionBuilderRanges.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FlashingCells/FlashingCellEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FlashingCells/FlashingCellSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FlashingCells/FlashingCellsPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/FormatColumnEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/FormatColumnPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/FormatColumnSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/Wizard/FormatColumnScopeWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/Wizard/FormatColumnStyleWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/Wizard/FormatColumnSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FormatColumn/Wizard/FormatColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FreeTextColumn/FreeTextColumnEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FreeTextColumn/FreeTextColumnPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FreeTextColumn/FreeTextColumnSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Home/HomeToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/GridSortRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/LayoutEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/LayoutPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/LayoutToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/Wizard/LayoutColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/Wizard/LayoutGridSortWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/Wizard/LayoutSelectionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/Wizard/LayoutSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/Wizard/LayoutSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Layout/Wizard/LayoutWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/PercentBarEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/PercentBarPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/PercentBarSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/Wizard/PercentBarSelectColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/Wizard/PercentBarSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/Wizard/PercentBarSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PercentBar/Wizard/PercentBarWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/PlusMinusEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/PlusMinusPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/PlusMinusSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/Wizard/PlusMinusColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/Wizard/PlusMinusExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/Wizard/PlusMinusSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/Wizard/PlusMinusSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/PlusMinus/Wizard/PlusMinusWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/QuickSearch/QuickSearchPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/SelectedCells/SelectedCellsToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Shortcut/ShortcutEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Shortcut/ShortcutPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Shortcut/Wizard/ShortcutSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Shortcut/Wizard/ShortcutSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Shortcut/Wizard/ShortcutTypeWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/SmartEdit/SmartEditPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/SmartEdit/SmartEditToolbarControl.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/TeamSharing/TeamSharingPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Theme/ThemePopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UIHelper.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/UserFilterEntityRow.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/UserFilterPopup.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/UserFilterSummary.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/Wizard/UserFilterExpressionWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/Wizard/UserFilterSelectColumnWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/Wizard/UserFilterSettingsWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/UserFilter/Wizard/UserFilterSummaryWizard.tsx
-23 silly diff packages/adaptableblotter/App_Scripts/View/Wizard/Interface/IAdaptableWizard.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/AdaptableBlotter.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/BlotterApi.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/BlotterFactoryAgGrid.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/FilterWrapper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/FloatingFilterWrapper.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/Strategy/ConditionalStyleagGridStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/Strategy/CustomSortagGridStrategy.ts
-23 silly diff packages/adaptableblotter/App_Scripts/agGrid/Strategy/FlashingCellsagGridStrategy.ts
-23 silly diff packages/adaptableblotter/ExtLibs/ABVendorsDist/abvendors.bundle.js
-23 silly diff packages/adaptableblotter/ExtLibs/AdaptableGrid/adaptablegrid.js
-23 silly diff packages/adaptableblotter/ExtLibs/iPushPull/ng-ipushpull-standalone.js
-23 silly diff packages/adaptableblotter/ExtLibs/iPushPull/ng-ipushpull-standalone.min.js
-23 silly diff packages/adaptableblotter/ExtLibs/iPushPull/ng-ipushpull.js
-23 silly diff packages/adaptableblotter/ExtLibs/iPushPull/ng-ipushpull.min.js
-23 silly diff packages/adaptableblotter/ExtLibs/kendo/kendo.all.min.js
-23 silly diff packages/adaptableblotter/Harness/DataGenerator.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/AdaptableBlotter.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/AdaptableBlotter.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/BlotterApi.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/BlotterApi.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/BlotterFactoryHypergrid.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/Strategy/ConditionalStyleHypergridStrategy.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Hypergrid/Strategy/FlashingCellsHypergridStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/AdvancedSearchRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/AlertRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/CalculatedColumnRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/CellValidationRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ChartRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ColumnCategoryRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ColumnChooserRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ColumnFilterRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ConditionalStyleRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/CustomSortRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/EntitlementsRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ExportRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/FlashingCellsRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/FormatColumnRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/FreeTextColumnRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/GridRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/Interface/IState.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/LayoutRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/MenuRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/PercentBarRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/PlusMinusRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/PopupRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/QuickSearchRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/ShortcutRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/SystemRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/TeamSharingRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/UserFilterRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/ActionsReducers/UserInterfaceRedux.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/Store/AdaptableBlotterReduxStorageClientEngine.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/Store/AdaptableBlotterStore.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Redux/Store/AdaptableBlotterStore.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/AdaptableStrategyBase.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/AdvancedSearchStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/AlertStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ApplicationStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/BulkUpdateStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/CalculatedColumnStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/CalendarStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/CellValidationStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ChartStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ColumnCategoryStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ColumnChooserStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ColumnFilterStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ColumnInfoStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ConditionalStyleStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/CustomSortStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/DashboardStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/DataManagementStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/DataSourceStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ExportStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/FlashingCellsStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/FormatColumnStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/FreeTextColumnStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/HomeStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IBulkUpdateStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IColumnFilterStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IPlusMinusStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/ISelectedCellsStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IShortcutStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/ISmartEditStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/IStrategyActionReturn.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/Interface/ITeamSharingStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/LayoutStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/PercentBarStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/PlusMinusStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/QuickSearchStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/SelectColumnStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/SelectedCellsStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ShortcutStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/SmartEditStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/TeamSharingStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/ThemeStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Strategy/UserFilterStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Temp/BlotterFactory.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/EventDispatcher.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/AlertHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/CalendarHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/CellValidationHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/ColumnFilterHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/ColumnHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/EntitlementHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/EntitlementHelper.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/ExpressionHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/ExpressionHelper.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/FilterHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/LayoutHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/OpenfinHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/PreviewHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/ReportHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Helpers/StyleHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/MenuItem.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/ObjectFactory.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/AuditLogService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/AuditService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/CalculatedColumnExpressionService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/CalendarService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/ChartService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/FreeTextColumnService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/Interface/IAuditService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/Interface/IChartService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/Interface/IFreeTextColumnService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/Interface/IValidationService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/StyleService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/Utilities/Services/ValidationService.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/AdaptableBlotterView.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/AdvancedSearch/AdvancedSearchEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/AdvancedSearch/Wizard/AdvancedSearchSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/AlertEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/AlertSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/Wizard/AlertExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/Wizard/AlertRulesWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/Wizard/AlertSelectColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/Wizard/AlertSelectQueryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/Wizard/AlertSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Alert/Wizard/AlertTypeWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CalculatedColumn/CalculatedColumnSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CalculatedColumn/Wizard/CalculatedColumnSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Calendars/CalendarEntryItem.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Calendars/CalendarsEntryRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/CellValidationEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/CellValidationSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/CellValidationSummary.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/Wizard/CellValidationActionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/Wizard/CellValidationExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/Wizard/CellValidationRulesWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/Wizard/CellValidationSelectColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/Wizard/CellValidationSelectQueryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CellValidation/Wizard/CellValidationSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Chart/Wizard/ChartSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Chart/Wizard/ChartXAxisWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Chart/Wizard/ChartYAxisWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnCategory/ColumnCategorySummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnCategory/Wizard/ColumnCategoryColumnsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnCategory/Wizard/ColumnCategoryColumnsWizard.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnCategory/Wizard/ColumnCategorySettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnCategory/Wizard/ColumnCategorySummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnCategory/Wizard/ColumnCategoryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnFilter/ColumnFilterEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnFilter/ColumnFilterSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ColumnInfo/ColumnInfoPopup.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/AlertsPanel.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Buttons/ButtonDelete.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/FilterForm/FloatingFilterForm.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/FilterForm/ListBoxFilterForm.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/FilterForm/ListBoxMenu.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/ListBox/DualListBoxEditor.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Popups/AdaptableBlotterAbout.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Popups/AdaptableBlotterLoadingScreen.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopup.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/PreviewResultsPanel.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Selectors/ColumnSelector.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/Selectors/ColumnValueSelector.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/SharedProps/ConfigEntityRowProps.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/SharedProps/EditableConfigEntityState.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/SharedProps/StrategySummaryProps.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/SharedProps/StrategyViewPopupProps.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/StrategySummary/StrategyDetail.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/StyleComponent.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/StyleVisualItem.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Components/WizardSummaryPage.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ConditionalStyle/ConditionalStyleSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleScopeWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleStyleWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ConditionalStyle/Wizard/ConditionalStyleWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CustomSort/CustomSortSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CustomSort/Wizard/CustomSortColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CustomSort/Wizard/CustomSortSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/CustomSort/Wizard/CustomSortValuesWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Export/Wizard/ReportColumnChooserWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Export/Wizard/ReportColumnTypeWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Export/Wizard/ReportExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Export/Wizard/ReportSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Export/Wizard/ReportSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderConditionSelector.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPage.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderPreview.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/ExpressionBuilder/ExpressionBuilderRanges.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FlashingCells/FlashingCellEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FlashingCells/FlashingCellSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/FormatColumnSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnScopeWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnStyleWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FormatColumn/Wizard/FormatColumnSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/FreeTextColumnSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/FreeTextColumn/Wizard/FreeTextColumnSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/GridSortRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/LayoutEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/Wizard/LayoutColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/Wizard/LayoutGridSortWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/Wizard/LayoutSelectionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/Wizard/LayoutSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/Wizard/LayoutSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Layout/Wizard/LayoutWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PercentBar/PercentBarEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PercentBar/PercentBarSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PercentBar/Wizard/PercentBarSelectColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PercentBar/Wizard/PercentBarSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PercentBar/Wizard/PercentBarSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PlusMinus/PlusMinusEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PlusMinus/PlusMinusSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/PlusMinus/Wizard/PlusMinusSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Shortcut/ShortcutEntityRow.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Shortcut/Wizard/ShortcutSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Shortcut/Wizard/ShortcutSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Shortcut/Wizard/ShortcutTypeWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/UIHelper.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/UserFilter/UserFilterSummary.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/UserFilter/Wizard/UserFilterExpressionWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/UserFilter/Wizard/UserFilterSelectColumnWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/UserFilter/Wizard/UserFilterSettingsWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/UserFilter/Wizard/UserFilterSummaryWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Wizard/Interface/IAdaptableWizard.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/AdaptableBlotter.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/AdaptableBlotter.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/BlotterApi.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/BlotterApi.js
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/BlotterFactoryAgGrid.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/Strategy/CustomSortagGridStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/agGrid/Strategy/FlashingCellsagGridStrategy.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/api/BlotterApiBase.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/api/Interface/IAdaptableBlotter.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/api/Interface/IAdaptableBlotterObjects.d.ts
-23 silly diff packages/adaptableblotter/dist/App_Scripts/api/Interface/IBlotterApi.d.ts
+23 silly diff packages/adaptableblotter/dist/App_Scripts/View/Chart/ChartDisplayPopup.js
 23 silly diff packages/adaptableblotter/dist/adaptableblotteraggrid-bundle.min.js
 23 silly diff packages/adaptableblotter/dist/adaptableblotteraggrid-bundle.min.js.map
 23 silly diff packages/adaptableblotter/dist/adaptableblotterhypergrid-bundle.min.js
 23 silly diff packages/adaptableblotter/dist/adaptableblotterhypergrid-bundle.min.js.map
 23 silly diff packages/adaptableblotter/package-lock.json
-23 silly diff packages/adaptableblotter/package.json
-23 silly diff packages/adaptableblotter/types.d.ts
-24 silly diffSinceIn adaptableblotter-angular-test@0.1.31 packages/adaptableblotter-angular/dist/adaptableblotter
+24 silly diffSinceIn adaptableblotter-angular-test@0.1.33 packages/adaptableblotter-angular/dist/adaptableblotter
 25 silly diff
 26 verbose updated adaptableblotter-angular-test
 27 verbose updated adaptableblotter-react-test
 28 verbose updated adaptableblotter-react
 29 verbose updated adaptableblotter
-30 verbose git-describe undefined => "adaptableblotter-angular-test@0.1.31-4-gab075cf5"
-31 silly git-describe parsed => {"lastTagName":"adaptableblotter-angular-test@0.1.31","lastVersion":"0.1.31","refCount":"4","sha":"ab075cf5","isDirty":false}
+30 verbose git-describe undefined => "adaptableblotter-angular-test@0.1.33-2-g0aec0414"
+31 silly git-describe parsed => {"lastTagName":"adaptableblotter-angular-test@0.1.33","lastVersion":"0.1.33","refCount":"2","sha":"0aec0414","isDirty":false}
 32 silly batched [ PackageGraphNode {
 32 silly batched     name: 'adaptableblotter',
 32 silly batched     externalDependencies:
@@ -669,7 +108,6 @@
 32 silly batched        'express' => [Object],
 32 silly batched        'fin-hypergrid-data-source-base' => [Object],
 32 silly batched        'increase-memory-limit' => [Object],
-32 silly batched        'ipushpull-js' => [Object],
 32 silly batched        'isomorphic-fetch' => [Object],
 32 silly batched        'lodash' => [Object],
 32 silly batched        'mathjs' => [Object],
@@ -836,39 +274,39 @@
 34 silly batched        'whatwg-fetch' => [Object] },
 34 silly batched     localDependencies: Map {},
 34 silly batched     localDependents: Map {} } ]
-35 silly gitAdd [ '/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter/package.json',
-35 silly gitAdd   '/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-angular/package.json',
-35 silly gitAdd   '/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-react/package.json',
-35 silly gitAdd   '/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-react-test/package.json' ]
+35 silly gitAdd [ '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter/package.json',
+35 silly gitAdd   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-angular/package.json',
+35 silly gitAdd   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react/package.json',
+35 silly gitAdd   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react-test/package.json' ]
 36 silly gitCommit Publish
 36 silly gitCommit
-36 silly gitCommit  - adaptableblotter-angular-test@0.1.32
-36 silly gitCommit  - adaptableblotter-react-test@0.2.30
-36 silly gitCommit  - adaptableblotter-react@0.2.32
-36 silly gitCommit  - adaptableblotter@2.7.1
+36 silly gitCommit  - adaptableblotter-angular-test@0.1.34
+36 silly gitCommit  - adaptableblotter-react-test@0.2.32
+36 silly gitCommit  - adaptableblotter-react@0.2.34
+36 silly gitCommit  - adaptableblotter@2.7.3
 37 verbose git [ 'commit',
 37 verbose git   '-F',
-37 verbose git   '/private/var/folders/sg/5_c_f9hx4pbgyszg17sp_5t80000gn/T/5361264b-8334-485d-b146-4d83c10bd998/lerna-commit.txt' ]
-38 silly gitTag adaptableblotter-angular-test@0.1.32
+37 verbose git   '/private/var/folders/sg/5_c_f9hx4pbgyszg17sp_5t80000gn/T/9bd528c0-a72c-4719-91b8-d512c7ad1379/lerna-commit.txt' ]
+38 silly gitTag adaptableblotter-angular-test@0.1.34
 39 verbose git [ 'tag',
-39 verbose git   'adaptableblotter-angular-test@0.1.32',
+39 verbose git   'adaptableblotter-angular-test@0.1.34',
 39 verbose git   '-m',
-39 verbose git   'adaptableblotter-angular-test@0.1.32' ]
-40 silly gitTag adaptableblotter-react-test@0.2.30
+39 verbose git   'adaptableblotter-angular-test@0.1.34' ]
+40 silly gitTag adaptableblotter-react-test@0.2.32
 41 verbose git [ 'tag',
-41 verbose git   'adaptableblotter-react-test@0.2.30',
+41 verbose git   'adaptableblotter-react-test@0.2.32',
 41 verbose git   '-m',
-41 verbose git   'adaptableblotter-react-test@0.2.30' ]
-42 silly gitTag adaptableblotter-react@0.2.32
+41 verbose git   'adaptableblotter-react-test@0.2.32' ]
+42 silly gitTag adaptableblotter-react@0.2.34
 43 verbose git [ 'tag',
-43 verbose git   'adaptableblotter-react@0.2.32',
+43 verbose git   'adaptableblotter-react@0.2.34',
 43 verbose git   '-m',
-43 verbose git   'adaptableblotter-react@0.2.32' ]
-44 silly gitTag adaptableblotter@2.7.1
+43 verbose git   'adaptableblotter-react@0.2.34' ]
+44 silly gitTag adaptableblotter@2.7.3
 45 verbose git [ 'tag',
-45 verbose git   'adaptableblotter@2.7.1',
+45 verbose git   'adaptableblotter@2.7.3',
 45 verbose git   '-m',
-45 verbose git   'adaptableblotter@2.7.1' ]
+45 verbose git   'adaptableblotter@2.7.3' ]
 46 info git Pushing tags...
 47 silly gitPush origin master
 48 silly batched [ PackageGraphNode {
@@ -902,7 +340,6 @@
 48 silly batched        'express' => [Object],
 48 silly batched        'fin-hypergrid-data-source-base' => [Object],
 48 silly batched        'increase-memory-limit' => [Object],
-48 silly batched        'ipushpull-js' => [Object],
 48 silly batched        'isomorphic-fetch' => [Object],
 48 silly batched        'lodash' => [Object],
 48 silly batched        'mathjs' => [Object],
@@ -931,22 +368,22 @@
 49 silly batched     localDependents: Map {} } ]
 50 info publish Publishing packages to npm...
 51 silly verifyNpmRegistry
-52 silly getExecOpts /Users/adaptabletools/Code/lernanew/adaptableblotter undefined
+52 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter undefined
 53 silly verifyNpmPackageAccess
-54 silly getExecOpts /Users/adaptabletools/Code/lernanew/adaptableblotter undefined
+54 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter undefined
 55 silly getCurrentSHA
-56 verbose getCurrentSHA be0fe5b3b37ac2431221ab6ceffb1b2c51611b40
-57 silly getExecOpts /Users/adaptabletools/Code/lernanew/adaptableblotter undefined
-58 silly exec npm options { cwd: '/Users/adaptabletools/Code/lernanew/adaptableblotter',
+56 verbose getCurrentSHA eeb66897986176f05193a2a19908d8486d35cec6
+57 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter undefined
+58 silly exec npm options { cwd: '/Users/adaptabletools/Code/lerna/adaptableblotter',
 58 silly exec   env: { npm_config_json: true },
 58 silly exec   stdio: [ 'ignore', 'pipe', 'inherit' ] }
 59 verbose pack [ 'adaptableblotter' ]
 60 silly exec npm [ 'pack',
-60 silly exec   '/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter' ]
+60 silly exec   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter' ]
 61 notice
-62 notice 📦  adaptableblotter@2.7.1
+62 notice 📦  adaptableblotter@2.7.3
 63 notice === Tarball Contents ===
-64 notice 4.9kB   package.json
+64 notice 4.8kB   package.json
 64 notice 1.1kB   .travis.yml
 64 notice 435B    factory.js
 64 notice 304B    index.js
@@ -955,14 +392,14 @@
 64 notice 430B    tslint.json
 64 notice 190B    types.d.ts
 64 notice 381B    webpack.styles.js
-64 notice 2.4kB   webpack.vendor.js
+64 notice 2.5kB   webpack.vendor.js
 64 notice 182.5kB yarn.lock
 64 notice 5.5kB   configserver/configserver.ts
 64 notice 108.7kB dist/89889688147bd7575d6327160d64e760.svg
-64 notice 3.7MB   dist/adaptableblotteraggrid-bundle.min.js
-64 notice 23.3MB  dist/adaptableblotteraggrid-bundle.min.js.map
-64 notice 3.7MB   dist/adaptableblotterhypergrid-bundle.min.js
-64 notice 23.3MB  dist/adaptableblotterhypergrid-bundle.min.js.map
+64 notice 2.6MB   dist/adaptableblotteraggrid-bundle.min.js
+64 notice 16.0MB  dist/adaptableblotteraggrid-bundle.min.js.map
+64 notice 2.6MB   dist/adaptableblotterhypergrid-bundle.min.js
+64 notice 15.9MB  dist/adaptableblotterhypergrid-bundle.min.js.map
 64 notice 7.3kB   dist/App_Scripts/agGrid/AdaptableBlotter.d.ts
 64 notice 80.9kB  dist/App_Scripts/agGrid/AdaptableBlotter.js
 64 notice 337B    dist/App_Scripts/agGrid/BlotterApi.d.ts
@@ -1045,8 +482,10 @@
 64 notice 546B    dist/App_Scripts/Redux/ActionsReducers/CalendarRedux.js
 64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/CellValidationRedux.d.ts
 64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/CellValidationRedux.js
-64 notice 1.2kB   dist/App_Scripts/Redux/ActionsReducers/ChartRedux.d.ts
-64 notice 2.1kB   dist/App_Scripts/Redux/ActionsReducers/ChartRedux.js
+64 notice 982B    dist/App_Scripts/Redux/ActionsReducers/ChartInternalRedux.d.ts
+64 notice 1.5kB   dist/App_Scripts/Redux/ActionsReducers/ChartInternalRedux.js
+64 notice 935B    dist/App_Scripts/Redux/ActionsReducers/ChartRedux.d.ts
+64 notice 1.7kB   dist/App_Scripts/Redux/ActionsReducers/ChartRedux.js
 64 notice 1.1kB   dist/App_Scripts/Redux/ActionsReducers/ColumnCategoryRedux.d.ts
 64 notice 1.8kB   dist/App_Scripts/Redux/ActionsReducers/ColumnCategoryRedux.js
 64 notice 381B    dist/App_Scripts/Redux/ActionsReducers/ColumnChooserRedux.d.ts
@@ -1075,7 +514,7 @@
 64 notice 2.6kB   dist/App_Scripts/Redux/ActionsReducers/GridRedux.js
 64 notice 748B    dist/App_Scripts/Redux/ActionsReducers/HomeRedux.d.ts
 64 notice 650B    dist/App_Scripts/Redux/ActionsReducers/HomeRedux.js
-64 notice 6.2kB   dist/App_Scripts/Redux/ActionsReducers/Interface/IState.d.ts
+64 notice 6.3kB   dist/App_Scripts/Redux/ActionsReducers/Interface/IState.d.ts
 64 notice 77B     dist/App_Scripts/Redux/ActionsReducers/Interface/IState.js
 64 notice 1.4kB   dist/App_Scripts/Redux/ActionsReducers/LayoutRedux.d.ts
 64 notice 1.9kB   dist/App_Scripts/Redux/ActionsReducers/LayoutRedux.js
@@ -1085,8 +524,8 @@
 64 notice 5.2kB   dist/App_Scripts/Redux/ActionsReducers/PercentBarRedux.js
 64 notice 1.6kB   dist/App_Scripts/Redux/ActionsReducers/PlusMinusRedux.d.ts
 64 notice 2.5kB   dist/App_Scripts/Redux/ActionsReducers/PlusMinusRedux.js
-64 notice 4.0kB   dist/App_Scripts/Redux/ActionsReducers/PopupRedux.d.ts
-64 notice 9.5kB   dist/App_Scripts/Redux/ActionsReducers/PopupRedux.js
+64 notice 3.7kB   dist/App_Scripts/Redux/ActionsReducers/PopupRedux.d.ts
+64 notice 8.9kB   dist/App_Scripts/Redux/ActionsReducers/PopupRedux.js
 64 notice 1.5kB   dist/App_Scripts/Redux/ActionsReducers/QuickSearchRedux.d.ts
 64 notice 1.9kB   dist/App_Scripts/Redux/ActionsReducers/QuickSearchRedux.js
 64 notice 584B    dist/App_Scripts/Redux/ActionsReducers/SelectedCellsRedux.d.ts
@@ -1114,8 +553,8 @@
 64 notice 266B    dist/App_Scripts/Redux/Store/AdaptableBlotterReduxStorageClientEngine.d.ts
 64 notice 1.9kB   dist/App_Scripts/Redux/Store/AdaptableBlotterReduxStorageClientEngine.js
 64 notice 905B    dist/App_Scripts/Redux/Store/AdaptableBlotterStore.d.ts
-64 notice 58.3kB  dist/App_Scripts/Redux/Store/AdaptableBlotterStore.js
-64 notice 2.2kB   dist/App_Scripts/Redux/Store/Interface/IAdaptableStore.d.ts
+64 notice 58.4kB  dist/App_Scripts/Redux/Store/AdaptableBlotterStore.js
+64 notice 2.3kB   dist/App_Scripts/Redux/Store/Interface/IAdaptableStore.d.ts
 64 notice 77B     dist/App_Scripts/Redux/Store/Interface/IAdaptableStore.js
 64 notice 1.7kB   dist/App_Scripts/Strategy/AdaptableStrategyBase.d.ts
 64 notice 6.6kB   dist/App_Scripts/Strategy/AdaptableStrategyBase.js
@@ -1133,8 +572,8 @@
 64 notice 1.1kB   dist/App_Scripts/Strategy/CalendarStrategy.js
 64 notice 579B    dist/App_Scripts/Strategy/CellValidationStrategy.d.ts
 64 notice 1.5kB   dist/App_Scripts/Strategy/CellValidationStrategy.js
-64 notice 435B    dist/App_Scripts/Strategy/ChartStrategy.d.ts
-64 notice 1.1kB   dist/App_Scripts/Strategy/ChartStrategy.js
+64 notice 771B    dist/App_Scripts/Strategy/ChartStrategy.d.ts
+64 notice 4.1kB   dist/App_Scripts/Strategy/ChartStrategy.js
 64 notice 619B    dist/App_Scripts/Strategy/ColumnCategoryStrategy.d.ts
 64 notice 1.2kB   dist/App_Scripts/Strategy/ColumnCategoryStrategy.js
 64 notice 509B    dist/App_Scripts/Strategy/ColumnChooserStrategy.d.ts
@@ -1269,20 +708,20 @@
 64 notice 1.6kB   dist/App_Scripts/Utilities/color.js
 64 notice 244B    dist/App_Scripts/Utilities/Constants/CalendarConstants.d.ts
 64 notice 297B    dist/App_Scripts/Utilities/Constants/CalendarConstants.js
-64 notice 406B    dist/App_Scripts/Utilities/Constants/ConfigConstants.d.ts
-64 notice 394B    dist/App_Scripts/Utilities/Constants/ConfigConstants.js
+64 notice 462B    dist/App_Scripts/Utilities/Constants/ConfigConstants.d.ts
+64 notice 437B    dist/App_Scripts/Utilities/Constants/ConfigConstants.js
 64 notice 572B    dist/App_Scripts/Utilities/Constants/GeneralConstants.d.ts
 64 notice 537B    dist/App_Scripts/Utilities/Constants/GeneralConstants.js
 64 notice 82B     dist/App_Scripts/Utilities/Constants/GlyphConstants.d.ts
 64 notice 141B    dist/App_Scripts/Utilities/Constants/GlyphConstants.js
-64 notice 1.5kB   dist/App_Scripts/Utilities/Constants/ScreenPopups.d.ts
+64 notice 1.6kB   dist/App_Scripts/Utilities/Constants/ScreenPopups.d.ts
 64 notice 1.6kB   dist/App_Scripts/Utilities/Constants/ScreenPopups.js
 64 notice 5.2kB   dist/App_Scripts/Utilities/Constants/StrategyConstants.d.ts
 64 notice 13.6kB  dist/App_Scripts/Utilities/Constants/StrategyConstants.js
 64 notice 3.1kB   dist/App_Scripts/Utilities/Constants/StyleConstants.d.ts
 64 notice 3.4kB   dist/App_Scripts/Utilities/Constants/StyleConstants.js
-64 notice 5.5kB   dist/App_Scripts/Utilities/Enums.d.ts
-64 notice 11.9kB  dist/App_Scripts/Utilities/Enums.js
+64 notice 5.9kB   dist/App_Scripts/Utilities/Enums.d.ts
+64 notice 12.6kB  dist/App_Scripts/Utilities/Enums.js
 64 notice 351B    dist/App_Scripts/Utilities/EventDispatcher.d.ts
 64 notice 597B    dist/App_Scripts/Utilities/EventDispatcher.js
 64 notice 859B    dist/App_Scripts/Utilities/Extensions/ArrayExtensions.d.ts
@@ -1358,7 +797,7 @@
 64 notice 594B    dist/App_Scripts/Utilities/Services/ValidationService.d.ts
 64 notice 6.3kB   dist/App_Scripts/Utilities/Services/ValidationService.js
 64 notice 231B    dist/App_Scripts/View/AdaptableBlotterView.d.ts
-64 notice 5.3kB   dist/App_Scripts/View/AdaptableBlotterView.js
+64 notice 5.5kB   dist/App_Scripts/View/AdaptableBlotterView.js
 64 notice 473B    dist/App_Scripts/View/AdaptablePopover.d.ts
 64 notice 2.2kB   dist/App_Scripts/View/AdaptablePopover.js
 64 notice 371B    dist/App_Scripts/View/AdaptableViewFactory.d.ts
@@ -1447,17 +886,17 @@
 64 notice 2.1kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationSummaryWizard.js
 64 notice 404B    dist/App_Scripts/View/CellValidation/Wizard/CellValidationWizard.d.ts
 64 notice 2.9kB   dist/App_Scripts/View/CellValidation/Wizard/CellValidationWizard.js
-64 notice 102B    dist/App_Scripts/View/Chart/ChartDisplayPopup.d.ts
-64 notice 2.2kB   dist/App_Scripts/View/Chart/ChartDisplayPopup.js
+64 notice 478B    dist/App_Scripts/View/Chart/ChartDisplayPopup.d.ts
+64 notice 14.0kB  dist/App_Scripts/View/Chart/ChartDisplayPopup.js
 64 notice 438B    dist/App_Scripts/View/Chart/ChartEntityRow.d.ts
 64 notice 1.5kB   dist/App_Scripts/View/Chart/ChartEntityRow.js
 64 notice 95B     dist/App_Scripts/View/Chart/ChartPopup.d.ts
-64 notice 7.2kB   dist/App_Scripts/View/Chart/ChartPopup.js
+64 notice 7.4kB   dist/App_Scripts/View/Chart/ChartPopup.js
 64 notice 104B    dist/App_Scripts/View/Chart/ChartToolbarControl.d.ts
 64 notice 5.8kB   dist/App_Scripts/View/Chart/ChartToolbarControl.js
 64 notice 1.4kB   dist/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.d.ts
-64 notice 6.4kB   dist/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.js
-64 notice 1.0kB   dist/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.d.ts
+64 notice 6.7kB   dist/App_Scripts/View/Chart/Wizard/ChartAdditionalColumnWizard.js
+64 notice 995B    dist/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.d.ts
 64 notice 4.2kB   dist/App_Scripts/View/Chart/Wizard/ChartSettingsWizard.js
 64 notice 808B    dist/App_Scripts/View/Chart/Wizard/ChartSummaryWizard.d.ts
 64 notice 2.5kB   dist/App_Scripts/View/Chart/Wizard/ChartSummaryWizard.js
@@ -1575,18 +1014,20 @@
 64 notice 3.2kB   dist/App_Scripts/View/Components/Panels/PanelDashboard.js
 64 notice 514B    dist/App_Scripts/View/Components/Panels/PanelWithButton.d.ts
 64 notice 3.1kB   dist/App_Scripts/View/Components/Panels/PanelWithButton.js
-64 notice 326B    dist/App_Scripts/View/Components/Panels/PanelWithImage.d.ts
-64 notice 2.1kB   dist/App_Scripts/View/Components/Panels/PanelWithImage.js
+64 notice 528B    dist/App_Scripts/View/Components/Panels/PanelWithIImageTwoButtons.d.ts
+64 notice 2.7kB   dist/App_Scripts/View/Components/Panels/PanelWithIImageTwoButtons.js
+64 notice 364B    dist/App_Scripts/View/Components/Panels/PanelWithImage.d.ts
+64 notice 2.2kB   dist/App_Scripts/View/Components/Panels/PanelWithImage.js
 64 notice 298B    dist/App_Scripts/View/Components/Panels/PanelWithInfo.d.ts
 64 notice 1.4kB   dist/App_Scripts/View/Components/Panels/PanelWithInfo.js
 64 notice 347B    dist/App_Scripts/View/Components/Panels/PanelWithRow.d.ts
 64 notice 1.5kB   dist/App_Scripts/View/Components/Panels/PanelWithRow.js
-64 notice 711B    dist/App_Scripts/View/Components/Panels/PanelWithTwoButtons.d.ts
+64 notice 701B    dist/App_Scripts/View/Components/Panels/PanelWithTwoButtons.d.ts
 64 notice 2.8kB   dist/App_Scripts/View/Components/Panels/PanelWithTwoButtons.js
 64 notice 615B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterAbout.d.ts
 64 notice 6.0kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterAbout.js
-64 notice 432B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.d.ts
-64 notice 2.3kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.js
+64 notice 456B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.d.ts
+64 notice 2.7kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterChart.js
 64 notice 472B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterLoadingScreen.d.ts
 64 notice 1.5kB   dist/App_Scripts/View/Components/Popups/AdaptableBlotterLoadingScreen.js
 64 notice 642B    dist/App_Scripts/View/Components/Popups/AdaptableBlotterPopup.d.ts
@@ -1605,7 +1046,7 @@
 64 notice 3.6kB   dist/App_Scripts/View/Components/Selectors/ColumnSelector.js
 64 notice 763B    dist/App_Scripts/View/Components/Selectors/ColumnValueSelector.d.ts
 64 notice 3.5kB   dist/App_Scripts/View/Components/Selectors/ColumnValueSelector.js
-64 notice 897B    dist/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.d.ts
+64 notice 945B    dist/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.d.ts
 64 notice 77B     dist/App_Scripts/View/Components/SharedProps/ChartDisplayPopupPropsBase.js
 64 notice 1.1kB   dist/App_Scripts/View/Components/SharedProps/ConfigEntityRowProps.d.ts
 64 notice 77B     dist/App_Scripts/View/Components/SharedProps/ConfigEntityRowProps.js
@@ -1849,19 +1290,19 @@
 64 notice 1.6kB   dist/App_Scripts/View/Wizard/WizardLegend.js
 65 notice === Tarball Details ===
 66 notice name:          adaptableblotter
-66 notice version:       2.7.1
-66 notice filename:      adaptableblotter-2.7.1.tgz
-66 notice package size:  11.1 MB
-66 notice unpacked size: 56.8 MB
-66 notice shasum:        90410c6dfd9e3934a597e1f5bef6c92078dd4a4a
-66 notice integrity:     sha512-u0yyAtXU8T1I5[...]5X4Dxo9dUWMyQ==
-66 notice total files:   901
+66 notice version:       2.7.3
+66 notice filename:      adaptableblotter-2.7.3.tgz
+66 notice package size:  8.1 MB
+66 notice unpacked size: 39.9 MB
+66 notice shasum:        bdaa7d943fa436875f2d8f89adc78539288a5c3e
+66 notice integrity:     sha512-uxTa3o1fOGrgb[...]qY6wHPnLTa9/g==
+66 notice total files:   905
 67 notice
 68 verbose pack [ 'adaptableblotter-react' ]
 69 silly exec npm [ 'pack',
-69 silly exec   '/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-react' ]
+69 silly exec   '/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react' ]
 70 notice
-71 notice 📦  adaptableblotter-react@0.2.32
+71 notice 📦  adaptableblotter-react@0.2.34
 72 notice === Tarball Contents ===
 73 notice 3.9kB   package.json
 73 notice 23.2kB  LICENSE.md
@@ -1874,8 +1315,8 @@
 73 notice 23.4kB  dist/fonts/glyphicons-halflings-regular.woff
 73 notice 18.0kB  dist/fonts/glyphicons-halflings-regular.woff2
 73 notice 263B    dist/index.d.ts
-73 notice 8.5MB   dist/index.es5.js
-73 notice 8.7MB   dist/index.umd.js
+73 notice 6.7MB   dist/index.es5.js
+73 notice 6.8MB   dist/index.umd.js
 73 notice 938B    dist/lib/AdaptableBlotter.js
 73 notice 656B    dist/lib/AdaptableBlotter.js.map
 73 notice 1.3kB   dist/lib/AdaptableBlotterAgGrid.js
@@ -1885,31 +1326,31 @@
 73 notice 130.8kB dist/styles/adaptableblotter-style.css
 74 notice === Tarball Details ===
 75 notice name:          adaptableblotter-react
-75 notice version:       0.2.32
-75 notice filename:      adaptableblotter-react-0.2.32.tgz
-75 notice package size:  3.5 MB
-75 notice unpacked size: 17.6 MB
-75 notice shasum:        c3bc7e704865e4a56a94438610c3aab39035a753
-75 notice integrity:     sha512-eR2+wBiALnyzR[...]8g2FqSYyqi+yQ==
+75 notice version:       0.2.34
+75 notice filename:      adaptableblotter-react-0.2.34.tgz
+75 notice package size:  2.9 MB
+75 notice unpacked size: 13.8 MB
+75 notice shasum:        29a651600e5cfddad85cb09efc7fb7c4d30dce1c
+75 notice integrity:     sha512-Tlncm0HPBNQwa[...]5+cCPN1655v4g==
 75 notice total files:   20
 76 notice
 77 verbose publish adaptableblotter
-78 silly getExecOpts /Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter undefined
-79 silly exec npm [ 'publish', '--ignore-scripts', 'adaptableblotter-2.7.1.tgz' ]
-80 info published adaptableblotter 2.7.1
+78 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter undefined
+79 silly exec npm [ 'publish', '--ignore-scripts', 'adaptableblotter-2.7.3.tgz' ]
+80 info published adaptableblotter 2.7.3
 81 verbose publish adaptableblotter-react
-82 silly getExecOpts /Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-react undefined
+82 silly getExecOpts /Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react undefined
 83 silly exec npm [ 'publish',
 83 silly exec   '--ignore-scripts',
-83 silly exec   'adaptableblotter-react-0.2.32.tgz' ]
+83 silly exec   'adaptableblotter-react-0.2.34.tgz' ]
 84 silly run-lifecycle postpublish adaptableblotter-react
-85 info lifecycle adaptableblotter-react@0.2.32~postpublish: adaptableblotter-react@0.2.32
-86 verbose lifecycle adaptableblotter-react@0.2.32~postpublish: unsafe-perm in lifecycle true
-87 verbose lifecycle adaptableblotter-react@0.2.32~postpublish: PATH: /usr/local/lib/node_modules/lerna/node_modules/npm-lifecycle/node-gyp-bin:/Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-react/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-88 verbose lifecycle adaptableblotter-react@0.2.32~postpublish: CWD: /Users/adaptabletools/Code/lernanew/adaptableblotter/packages/adaptableblotter-react
-89 silly lifecycle adaptableblotter-react@0.2.32~postpublish: Args: [ '-c', 'npm run gh-pages' ]
-90 silly lifecycle adaptableblotter-react@0.2.32~postpublish: Returned: code: 0  signal: null
-91 info published adaptableblotter-react 0.2.32
+85 info lifecycle adaptableblotter-react@0.2.34~postpublish: adaptableblotter-react@0.2.34
+86 verbose lifecycle adaptableblotter-react@0.2.34~postpublish: unsafe-perm in lifecycle true
+87 verbose lifecycle adaptableblotter-react@0.2.34~postpublish: PATH: /usr/local/lib/node_modules/lerna/node_modules/npm-lifecycle/node-gyp-bin:/Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+88 verbose lifecycle adaptableblotter-react@0.2.34~postpublish: CWD: /Users/adaptabletools/Code/lerna/adaptableblotter/packages/adaptableblotter-react
+89 silly lifecycle adaptableblotter-react@0.2.34~postpublish: Args: [ '-c', 'npm run gh-pages' ]
+90 silly lifecycle adaptableblotter-react@0.2.34~postpublish: Returned: code: 0  signal: null
+91 info published adaptableblotter-react 0.2.34
 92 silly gitCheckout packages/*/package.json
 93 silly gitCheckout packages/adaptableblotter-angular/dist/adaptableblotter/package.json
 94 error Error: Command failed: git checkout -- packages/adaptableblotter-angular/dist/adaptableblotter/package.json
