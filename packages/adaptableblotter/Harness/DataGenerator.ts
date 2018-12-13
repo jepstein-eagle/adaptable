@@ -1,5 +1,13 @@
 ﻿/// <reference path="trade.d.ts" />
 
+export interface IFtse {
+    date: Date;
+    start: number;
+    end: number;
+    low: number;
+    high: number;
+}
+
 export interface IBond {
     tradeId: number;
     buySell: string;
@@ -34,6 +42,14 @@ export interface IFX {
 }
 
 export class DataGenerator {
+
+    getFtseData(count: number): IFtse[] {
+        let ftseRows: IFtse[] = [];
+        for (let i = 1; i <= count; i++) {
+            ftseRows.push(this.createIFtse(i));
+        }
+        return ftseRows;
+    }
 
     getTrades(count: number): ITrade[] {
         let trades: ITrade[] = [];
@@ -128,6 +144,19 @@ export class DataGenerator {
 
             });
         }, 1000)
+    }
+
+    createIFtse(i: number): IFtse {
+         let ftsDate = this.generateRandomDateAndTime(-1000, 1000);
+        let ftse =
+        {
+            "date": ftsDate,
+            "start": 2,
+            "end": 3,
+            "low": 1,
+            "high": 4,
+                 };
+        return ftse;
     }
 
     createBond(i: number): IBond {

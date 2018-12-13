@@ -10,17 +10,19 @@ function runQuickSearch() {
 }
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(400);
+  // trades = dataGen.getTrades(400);
+  trades = dataGen.getFtseData(30);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
   let gridOptions = {
-    columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
+    // columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
+    columnDefs: getFTSESchema(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-  //  floatingFilter: true,
+    //  floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
     columnTypes: { // not required but helpful for column data type identification
@@ -131,6 +133,47 @@ function getValuesForColumn(columnName) {
   }
 }
 
+function getFTSESchema() {
+  var schema = []
+  schema.push({
+    headerName: "Date",
+    field: "date",
+    editable: false,
+    cellEditorParams: {
+      useFormatter: true
+    },
+    valueParser: dateParseragGrid,
+    valueFormatter: shortDateFormatteragGrid
+  });
+
+  schema.push({
+    headerName: "start",
+    field: "start",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "end",
+    field: "end",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "low",
+    field: "low",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "high",
+    field: "high",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+
+  return schema;
+}
+
 function getTradeSchema() {
   var schema = []
   schema.push({
@@ -145,22 +188,22 @@ function getTradeSchema() {
     editable: true,
     filter: 'text'
   });
- schema.push({
+  schema.push({
     headerName: "Notional",
     field: "notional",
     enableValue: true,
     editable: true,
-   // valueFormatter: notionalFormatter,
+    // valueFormatter: notionalFormatter,
     suppressSorting: true,
     cellClass: 'number-cell'
   });
-   schema.push({
+  schema.push({
     headerName: "Counterparty",
     field: "counterparty",
     editable: true,
     enableRowGroup: true
   });
-     
+
   schema.push({
     headerName: "Change On Year",
     field: "changeOnYear",
@@ -173,13 +216,13 @@ function getTradeSchema() {
     enableRowGroup: true,
     filter: 'agTextColumnFilter'
   });
-   schema.push({
+  schema.push({
     headerName: "Status",
     field: "status",
     editable: true,
     enableRowGroup: true
   });
- schema.push({
+  schema.push({
     headerName: "B/O Spread",
     field: "bidOfferSpread",
     columnGroupShow: 'open',
@@ -203,7 +246,7 @@ function getTradeSchema() {
     editable: true,
     enableRowGroup: true
   });
-schema.push({
+  schema.push({
     headerName: "Desk No.",
     field: "deskId",
     editable: true,
@@ -212,7 +255,7 @@ schema.push({
     suppressSorting: false,
     suppressFilter: true
   });
-schema.push({
+  schema.push({
     headerName: "Ask",
     field: "ask",
     columnGroupShow: 'closed',
@@ -249,7 +292,7 @@ schema.push({
     editable: true,
     filter: 'text'
   });
- 
+
   schema.push({
     headerName: "Trade Date",
     field: "tradeDate",
@@ -270,7 +313,7 @@ schema.push({
     },
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid
-  });  
+  });
   schema.push({
     headerName: "Last Updated By",
     field: "lastUpdatedBy",
@@ -570,8 +613,8 @@ let categoryJson = {
         "ColumnCategoryId": "Dates",
         "ColumnIds": ["lastUpdated", "tradeDate", "settlementDate"]
       }
-		]
-	}
+    ]
+  }
 }
 
 

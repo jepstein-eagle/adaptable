@@ -15,7 +15,7 @@ export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdapt
 export class ChartWizard extends React.Component<ChartWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Settings", "Y Axis", "X Axis", "Segemented", "Summary"]
+        let stepNames: string[] = ["Y Axis", "X Axis", "Segemented", "Settings", "Summary"]
         let Charts: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard

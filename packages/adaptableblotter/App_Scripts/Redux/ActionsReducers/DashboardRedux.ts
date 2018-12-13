@@ -207,7 +207,7 @@ const initialDashboardState: DashboardState = {
         StrategyConstants.SelectedCellsStrategyId,
         StrategyConstants.ApplicationStrategyId,
         StrategyConstants.AlertStrategyId,
-      // StrategyConstants.ChartStrategyId,
+        StrategyConstants.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyConstants.AdvancedSearchStrategyId,
@@ -327,7 +327,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (state: Dashboard
 
         case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
             let actionTyped = <DashboardSetApplicationToolbarTitleAction>action;
-             return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
+            return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
         }
 
         default:

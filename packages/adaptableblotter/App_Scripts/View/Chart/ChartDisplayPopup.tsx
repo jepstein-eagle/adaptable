@@ -15,10 +15,10 @@ import { PanelWithImageTwoButtons } from "../Components/Panels/PanelWithIImageTw
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 // ig chart imports
-//import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
-//import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
-//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
-//import { EasingFunctions } from 'igniteui-react-core/ES2015/EasingFunctions';
+import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
+import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
+import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
+import { EasingFunctions } from 'igniteui-react-core/ES2015/EasingFunctions';
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -42,7 +42,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     constructor(props: ChartDisplayPopupProps) {
         super(props);
-       
+
         this.state = {
             ChartType: ChartType.Column,
             ChartSize: ChartSize.Medium,
@@ -52,8 +52,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             IsMinimised: false,
             ChartCrosshairsMode: ChartCrosshairsMode.None
         }
-    //    IgrCategoryChartModule.register();
-    //    IgrDataChartAnnotationModule.register();
+        IgrCategoryChartModule.register();
+        IgrDataChartAnnotationModule.register();
     }
 
     render() {
@@ -98,10 +98,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let chartColumnSize: number = this.setChartColumnSize();
         let legendColumnSize: number = this.setLegendColumnSize();
 
-        let chartData =null;// (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
-      //  null
-        /*  
-        <IgrCategoryChart
+        console.log(this.props.ChartData);
+        let chartData = (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
+
+            <IgrCategoryChart
                 // datasource
                 dataSource={this.props.ChartData}
                 // chart type
@@ -123,7 +123,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 crosshairsAnnotationEnabled={this.state.EnableCrosshairsAnnotations}
                 // transitions
                 isTransitionInEnabled={true}
-               // transitionInEasingFunction={EasingFunctions.cubicEase}
+                // transitionInEasingFunction={EasingFunctions.cubicEase}
                 transitionInDuration={1000}
                 finalValueAnnotationsVisible={this.state.EnableFinalValueAnnotations}
 
@@ -139,9 +139,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             //    xAxisFormatLabel={this.formatDateLabel}
 
             />
-            */
-         //   :
-         //   null;
+            :
+            null;
 
         let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as ChartType}</option>
