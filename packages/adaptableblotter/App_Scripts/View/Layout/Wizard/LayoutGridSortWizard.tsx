@@ -80,7 +80,6 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
     addSort(): any {
         let sorts: IGridSort[] = [].concat(this.state.GridSorts, ObjectFactory.CreateEmptyGridSort())
         this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () => this.props.UpdateGoBackState())
-
     }
 
     private onColumnSelectedChanged(index: number, column: IColumn) {

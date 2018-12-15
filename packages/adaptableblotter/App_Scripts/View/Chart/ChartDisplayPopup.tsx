@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition, IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
@@ -14,17 +14,26 @@ import { ChartType, ChartCrosshairsMode, ChartSize } from "../../Utilities/Enums
 import { PanelWithImageTwoButtons } from "../Components/Panels/PanelWithIImageTwoButtons";
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
+import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
+import * as ChartInternalRedux from '../../Redux/ActionsReducers/ChartInternalRedux'
 // ig chart imports
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
 import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
 import { EasingFunctions } from 'igniteui-react-core/ES2015/EasingFunctions';
+import { ChartWizard } from "./Wizard/ChartWizard";
+import { IColumn } from "../../Api/Interface/IColumn";
+import { Helper } from "../../Utilities/Helpers/Helper";
+import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartDefinition: IChartDefinition
     ChartData: any
+    onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
+    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction,
+  
 }
 
 export interface ChartDisplayPopupWizardState {
@@ -35,7 +44,7 @@ export interface ChartDisplayPopupWizardState {
     EnableCrosshairsAnnotations: boolean,
     EnableFinalValueAnnotations: boolean,
     IsMinimised: boolean
-
+    EditedChartDefinition: IChartDefinition
 }
 
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupWizardState> {
@@ -50,7 +59,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             EnableCrosshairsAnnotations: false,
             EnableFinalValueAnnotations: false,
             IsMinimised: false,
-            ChartCrosshairsMode: ChartCrosshairsMode.None
+            ChartCrosshairsMode: ChartCrosshairsMode.None,
+            EditedChartDefinition: null
+
         }
         IgrCategoryChartModule.register();
         IgrDataChartAnnotationModule.register();
@@ -65,6 +76,16 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             <ButtonClose
                 cssClassName={cssClassName}
                 onClick={() => this.props.onClose()}
+                bsStyle={PRIMARY_BSSTYLE}
+                size={"small"}
+                DisplayMode="Glyph"
+                hideToolTip={true}
+            />
+
+        let editButton =
+            <ButtonEdit
+                cssClassName={cssClassName}
+                onClick={() => this.onEdit()}
                 bsStyle={PRIMARY_BSSTYLE}
                 size={"small"}
                 DisplayMode="Glyph"
@@ -113,8 +134,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 chartTitle={this.props.CurrentChartDefinition.Title}
                 subtitle={this.props.CurrentChartDefinition.SubTitle}
                 // yAxis
-                // yAxisMinimumValue={0}  // need this?
-                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnId}
+                //yAxisMinimumValue={0}  // need this?
+                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnIds[0]}
                 // xAxis
                 xAxisTitle={this.props.CurrentChartDefinition.XAxisColumnId}
                 // crosshairs
@@ -164,6 +185,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 secondButton={minmaxButton}
                 firstButton={closeButton}
             >
+                {editButton}
                 {this.state.IsMinimised == false &&
                     <Row>
                         <Col xs={chartColumnSize}>
@@ -197,7 +219,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                             <ControlLabel>Size</ControlLabel>
                                         </Col>
                                         <Col xs={8}>
-                                            <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
+                                            <FormControl componentClass="select" placeholder="select" value={this.state.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
                                                 {optionChartSizes}
                                             </FormControl>
                                         </Col>
@@ -249,9 +271,28 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 }
             </PanelWithImageTwoButtons>
 
-
+            {this.state.EditedChartDefinition &&
+                <ChartWizard
+                    cssClassName={cssClassName}
+                    EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                    ConfigEntities={this.props.ChartDefinitions}
+                    ModalContainer={this.props.ModalContainer}
+                    Columns={this.props.Columns}
+                    UserFilters={this.props.UserFilters}
+                    SystemFilters={this.props.SystemFilters}
+                    Blotter={this.props.Blotter}
+                    WizardStartIndex={0}
+                    onCloseWizard={() => this.onCloseWizard()}
+                    onFinishWizard={() => this.onFinishWizard()}
+                    canFinishWizard={() => this.canFinishWizard()}
+                />
+            }
 
         </div>
+    }
+
+    onEdit(): void {
+        this.setState({ EditedChartDefinition: Helper.cloneObject(this.props.CurrentChartDefinition) });
     }
 
     onChartMinimised() {
@@ -290,6 +331,25 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onEnableFinalValueAnnotationsOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ EnableFinalValueAnnotations: e.checked } as ChartDisplayPopupWizardState)
+    }
+
+    onCloseWizard() {
+        this.setState({ EditedChartDefinition: null });
+    }
+
+    onFinishWizard() {
+        let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedChartDefinition);
+        let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.state.EditedChartDefinition.Title);
+        this.props.onAddUpdateChartDefinition(index, clonedObject);
+        this.setState({ EditedChartDefinition: null });
+             this.props.onSelectChartDefinition(clonedObject);
+    }
+
+    canFinishWizard() {
+        //  let Chart = this.props.cu
+        //  return StringExtensions.IsNotNullOrEmpty(Chart.Title);
+        // todo?? 
+        return true;
     }
 
     setChartHeight(): string {
@@ -368,14 +428,16 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
         CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition,
-        ChartService: ownProps.ChartService,
-        ChartData: state.ChartInternal.ChartData
+        ChartData: state.ChartInternal.ChartData,
+
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-
+        onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
+        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
+      
     };
 }
 

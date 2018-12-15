@@ -20,7 +20,7 @@ export module ObjectFactory {
         return {
             Title: "",
             SubTitle: "",
-            YAxisColumnId: "",
+            YAxisColumnIds: [],
             XAxisColumnId: "",
             XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]
         }

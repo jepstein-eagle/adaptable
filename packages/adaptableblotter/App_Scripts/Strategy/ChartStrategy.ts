@@ -8,6 +8,7 @@ import { ChartState, ChartInternalState } from '../Redux/ActionsReducers/Interfa
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import * as _ from 'lodash'
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 
@@ -63,7 +64,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         if (this.ChartInternalState != null && this.ChartInternalState.ChartVisible && this.ChartInternalState.CurrentChartDefinition != null) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedEvent.ColumnId;
-            if (this.ChartInternalState.CurrentChartDefinition.YAxisColumnId == columnChangedId ||
+            if (ArrayExtensions.ContainsItem(this.ChartInternalState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 this.ChartInternalState.CurrentChartDefinition.XAxisColumnId == columnChangedId ||
                 this.ChartInternalState.CurrentChartDefinition.AdditionalColumnId == columnChangedId) {
                 this.debouncedSetChartData();

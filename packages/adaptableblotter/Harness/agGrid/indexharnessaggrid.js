@@ -11,7 +11,7 @@ function runQuickSearch() {
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
   // trades = dataGen.getTrades(400);
-  trades = dataGen.getFtseData(30);
+  trades = dataGen.getFtseData(10);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
@@ -147,25 +147,25 @@ function getFTSESchema() {
   });
 
   schema.push({
-    headerName: "start",
+    headerName: "Start",
     field: "start",
     editable: true,
     cellClass: 'number-cell'
   });
   schema.push({
-    headerName: "end",
+    headerName: "End",
     field: "end",
     editable: true,
     cellClass: 'number-cell'
   });
   schema.push({
-    headerName: "low",
+    headerName: "Low",
     field: "low",
     editable: true,
     cellClass: 'number-cell'
   });
   schema.push({
-    headerName: "high",
+    headerName: "High",
     field: "high",
     editable: true,
     cellClass: 'number-cell'

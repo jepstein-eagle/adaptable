@@ -18,7 +18,7 @@ export class ChartService implements IChartService {
 
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
 
-        let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnId, columns)
+      //  let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnIds[0], columns)
         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
 
         let xAxisColValues: string[] = chartDefinition.XAxisColumnValues.length > 0 && chartDefinition.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
@@ -32,17 +32,24 @@ export class ChartService implements IChartService {
             chartDataRow[xAxisColumnName] = cv
 
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
-
+ 
+            // need to revisit and see if we really do want always group...
+            // if we have additional column values then do those 
+            // NB: currently only doing first - want to? or all?
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
                     let columnValueKVP: IKeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
-                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP, columnValueKVP], columns)
+                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns)
                     chartDataRow[columnValue] = groupedTotal
                 })
-            } else { // just do the first one
-                let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnId, [xAxisKVP], columns)
-                chartDataRow[yAxisColumnName] = groupedTotal
-            }
+            } else { // otherwise do the y cols
+               chartDefinition.YAxisColumnIds.forEach(colID=>{
+                let groupedTotal = this.buildGroupedTotal(colID, [xAxisKVP], columns)
+                let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
+                chartDataRow[colName] = groupedTotal
+   
+               })
+             }
             return chartDataRow
         })
         return chartData

@@ -41,12 +41,25 @@ export interface IFX {
 
 }
 
+function addDays(date: Date, days: number): Date {
+    let newDate = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+    newDate.setDate(newDate.getDate() + days);
+    return newDate
+}
+
 export class DataGenerator {
 
     getFtseData(count: number): IFtse[] {
         let ftseRows: IFtse[] = [];
+        let todayDate: Date = new Date();
+        let startDate: Date = addDays(todayDate, ((-count)))
+        let start: number = 125;
+        let end: number = start + this.generateRandomInt(-10, 10);
+        ftseRows.push(this.createIFtse(startDate, 0, start, end));
         for (let i = 1; i <= count; i++) {
-            ftseRows.push(this.createIFtse(i));
+            let newStart: number = end;
+            end = newStart + this.generateRandomInt(-10, 10);
+            ftseRows.push(this.createIFtse(startDate, i, newStart, end));
         }
         return ftseRows;
     }
@@ -146,16 +159,18 @@ export class DataGenerator {
         }, 1000)
     }
 
-    createIFtse(i: number): IFtse {
-         let ftsDate = this.generateRandomDateAndTime(-1000, 1000);
+    createIFtse(date: Date, index: number, start: number, end: number): IFtse {
+        let newDate: Date = addDays(date, index)
+        let low: number = (start > end) ? end - this.generateRandomInt(0, 10) : start - this.generateRandomInt(0, 10);
+        let high = (start > end) ? start + this.generateRandomInt(0, 10) : end + this.generateRandomInt(0, 10)
         let ftse =
         {
-            "date": ftsDate,
-            "start": 2,
-            "end": 3,
-            "low": 1,
-            "high": 4,
-                 };
+            "date": newDate,
+            "start": start,
+            "end": end,
+            "low": low,
+            "high": high
+        };
         return ftse;
     }
 
@@ -223,7 +238,7 @@ export class DataGenerator {
         let trade =
         {
             "tradeId": i,
-            "notional": this.generateRandomInt(0,1000),// this.getRandomItem(this.getNotionals()),
+            "notional": this.generateRandomInt(0, 1000),// this.getRandomItem(this.getNotionals()),
             "deskId": this.generateRandomInt(0, 400),
             "counterparty": this.getRandomItem(this.getCounterparties()),
             "currency": tradeCurrency,
@@ -244,7 +259,7 @@ export class DataGenerator {
             "bloombergAsk": this.getSimilarNumber(ask),
             "bloombergBid": this.getSimilarNumber(bid),
             "percentChange": this.generateRandomInt(0, 100), // this.generateRandomNullableDouble(),
-             "lastUpdated": this.generateRandomDateAndTime(-7, 0),
+            "lastUpdated": this.generateRandomDateAndTime(-7, 0),
             "lastUpdatedBy": this.getRandomItem(this.getNames()),
             /*
              "extraCol1": "1",
@@ -346,7 +361,7 @@ export class DataGenerator {
     }
 
     protected getMeaningfulPositiveNegativeInteger(seed: number): number {
-        return this.generateRandomInt(-seed, seed) 
+        return this.generateRandomInt(-seed, seed)
     }
 
     protected removeDecimalPoints(val: number): number {

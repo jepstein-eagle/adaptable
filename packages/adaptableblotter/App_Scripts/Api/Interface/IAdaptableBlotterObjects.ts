@@ -61,7 +61,6 @@ export interface IRange {
 }
 
 
-
 // Core objects for Strategies
 export interface IAlertDefinition extends IAdaptableBlotterObject {
   ColumnId: string;
@@ -75,13 +74,12 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
 export interface IChartDefinition extends IAdaptableBlotterObject {
   Title: string
   SubTitle: string
-  YAxisColumnId: string
+  YAxisColumnIds: string[]
   XAxisColumnId: string
   XAxisColumnValues: string[]
   AdditionalColumnId?: string
   AdditionalColumnValues?: string[]
 }
-
 
 
 export interface IAdvancedSearch extends IAdaptableBlotterObject {

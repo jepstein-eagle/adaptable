@@ -16,7 +16,7 @@ import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
     Columns: IColumn[]
-   Blotter : IAdaptableBlotter
+    Blotter: IAdaptableBlotter
 }
 
 export interface ChartAdditionalColumnWizardState {
@@ -46,17 +46,21 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
             <Panel header="X Axis Additional Column" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="additionalColumn">
-                        <Col xs={4} />
-                        <Col xs={6}>
-                            <Well>You can, optionally, segment the X Axis further by grouping totals against the values in another column</Well>
-                        </Col>
-                        <Col xs={4} componentClass={ControlLabel}>Additional Column: </Col>
-                        <Col xs={6}>
-                            <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.state.AdditionalColumn]}
-                                ColumnList={this.props.Columns}
-                                onColumnChange={columns => this.onAdditionalColumnChanged(columns)}
-                                SelectionMode={SelectionMode.Single} />
-                        </Col>
+                        <Row>  <Col xs={1} />
+                            <Col xs={10}>
+                                <Well>You can, optionally, segment the X Axis further by grouping totals against the values in another column</Well>
+                            </Col>
+                            <Col xs={1} />
+                        </Row>
+                        <Row>
+                            <Col xs={4} componentClass={ControlLabel}>Additional Column: </Col>
+                            <Col xs={6}>
+                                <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.state.AdditionalColumn]}
+                                    ColumnList={this.props.Columns}
+                                    onColumnChange={columns => this.onAdditionalColumnChanged(columns)}
+                                    SelectionMode={SelectionMode.Single} />
+                            </Col>
+                        </Row>
                         <Row>
                             <Col xs={4} componentClass={ControlLabel}>Additional Column Values:</Col>
                             <Col xs={6} >
@@ -69,20 +73,20 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
                 </AdaptableBlotterForm>
 
                 {StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumn) && this.state.UseAllAdditionalColumnValues == false &&
-                   <Row>
-                   <Col xs={4}></Col>
-                   <Col xs={6}>
-                        <SingleListBox Values={this.state.AvailableAdditionalColumnValues}
-                            cssClassName={cssClassName}
-                            UiSelectedValues={this.state.AdditionalColumnValues}
-                            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-                            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-                            onSelectedChange={(list) => this.onColumnValuesChange(list)}
-                            SelectionMode={SelectionMode.Multi}>
-                        </SingleListBox>
+                    <Row>
+                        <Col xs={4}></Col>
+                        <Col xs={6}>
+                            <SingleListBox Values={this.state.AvailableAdditionalColumnValues}
+                                cssClassName={cssClassName}
+                                UiSelectedValues={this.state.AdditionalColumnValues}
+                                DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                                ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+                                SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+                                onSelectedChange={(list) => this.onColumnValuesChange(list)}
+                                SelectionMode={SelectionMode.Multi}>
+                            </SingleListBox>
                         </Col>
-                        <Col xs={2 }></Col>
+                        <Col xs={2}></Col>
                     </Row>
                 }
 
