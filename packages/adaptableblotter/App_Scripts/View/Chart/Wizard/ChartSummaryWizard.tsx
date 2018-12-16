@@ -7,6 +7,8 @@ import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObject
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { Expression } from "../../../Api/Expression";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 
 export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
@@ -19,21 +21,21 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
-        let friendlyNames = this.props.Data.YAxisColumnIds.map(c=>{
+        let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
             return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns)
         })
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Title", Value: this.props.Data.Title },
             { Key: "Sub title", Value: this.props.Data.SubTitle },
-            { Key: "Y Axis Column(s)", Value: friendlyNames },
+            { Key: "Y Axis Column(s)", Value: friendlyNames.join(', ') },
             { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
-            { Key: "X Axis Values", Value: this.getColumnValuesList( this.props.Data.XAxisColumnValues) },
+            { Key: "X Axis Values", Value: this.getExpressionString(this.props.Data.XAxisExpression) },
             {
                 Key: "Additional Column", Value: (this.props.Data.AdditionalColumnId) ?
                     ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumnId, this.props.Columns) :
                     "None"
             },
-            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.getColumnValuesList( this.props.Data.AdditionalColumnValues) : "n/a" },
+            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.getColumnValuesList(this.props.Data.AdditionalColumnValues) : "n/a" },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />
@@ -47,6 +49,14 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             return "All Column Values"
         } else {
             return columnValueArray.join(', ')
+        }
+    }
+
+    private getExpressionString(expression: Expression): string {
+        if  ( ExpressionHelper.IsEmptyExpression(expression) ) {
+            return "All Column Values"
+        } else {
+            return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false)
         }
     }
 

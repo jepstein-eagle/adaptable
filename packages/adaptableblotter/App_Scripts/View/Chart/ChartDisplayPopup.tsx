@@ -25,6 +25,8 @@ import { ChartWizard } from "./Wizard/ChartWizard";
 import { IColumn } from "../../Api/Interface/IColumn";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { PanelWithImageThreeButtons } from "../Components/Panels/PanelWithIImageThreeButtons";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -33,18 +35,20 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     ChartData: any
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction,
-  
+
 }
 
 export interface ChartDisplayPopupWizardState {
-    ChartType: ChartType,
-    ChartCrosshairsMode: ChartCrosshairsMode,
-    ChartSize: ChartSize,
-    SpanCrossHairsToData: boolean,
-    EnableCrosshairsAnnotations: boolean,
-    EnableFinalValueAnnotations: boolean,
-    IsMinimised: boolean
-    EditedChartDefinition: IChartDefinition
+    ChartType: ChartType;
+    ChartCrosshairsMode: ChartCrosshairsMode;
+    ChartSize: ChartSize;
+    SpanCrossHairsToData: boolean;
+    EnableCrosshairsAnnotations: boolean;
+    EnableFinalValueAnnotations: boolean;
+    SetYAxisMinimumValue: boolean;
+    YAxisMinimumValue?: number;
+    IsMinimised: boolean;
+    EditedChartDefinition: IChartDefinition;
 }
 
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupWizardState> {
@@ -58,6 +62,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             SpanCrossHairsToData: false,
             EnableCrosshairsAnnotations: false,
             EnableFinalValueAnnotations: false,
+            SetYAxisMinimumValue: false,
+            YAxisMinimumValue: undefined,
             IsMinimised: false,
             ChartCrosshairsMode: ChartCrosshairsMode.None,
             EditedChartDefinition: null
@@ -82,15 +88,19 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 hideToolTip={true}
             />
 
-        let editButton =
+        let editButton = (this.state.IsMinimised) ?
+            null :
             <ButtonEdit
                 cssClassName={cssClassName}
+                style={{ marginRight: "5px" }}
                 onClick={() => this.onEdit()}
                 bsStyle={PRIMARY_BSSTYLE}
                 size={"small"}
-                DisplayMode="Glyph"
+                DisplayMode="Glyph+Text"
+                overrideText="Edit Chart"
                 hideToolTip={true}
             />
+            ;
 
         let minmaxButton = (this.props.showModal) ?
             null :
@@ -134,10 +144,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 chartTitle={this.props.CurrentChartDefinition.Title}
                 subtitle={this.props.CurrentChartDefinition.SubTitle}
                 // yAxis
-                //yAxisMinimumValue={0}  // need this?
-                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnIds[0]}
+                yAxisMinimumValue={this.state.YAxisMinimumValue}
+                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnIds.map(c => {
+                    return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns)
+                }).join(', ')}
                 // xAxis
-                xAxisTitle={this.props.CurrentChartDefinition.XAxisColumnId}
+                xAxisTitle={ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns)}
                 // crosshairs
                 crosshairsDisplayMode={this.state.ChartCrosshairsMode}
                 crosshairsSnapToData={this.state.SpanCrossHairsToData}
@@ -176,16 +188,16 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         })
 
         return <div className={cssClassName}>
-            <PanelWithImageTwoButtons
+            <PanelWithImageThreeButtons
                 cssClassName={cssClassName}
                 header={StrategyConstants.ChartStrategyName}
                 style={{ width: panelWidth }}
                 bsStyle={PRIMARY_BSSTYLE}
                 glyphicon={StrategyConstants.ChartGlyph}
-                secondButton={minmaxButton}
-                firstButton={closeButton}
+                secondButton={closeButton}
+                firstButton={editButton}
+                thirdButton={minmaxButton}
             >
-                {editButton}
                 {this.state.IsMinimised == false &&
                     <Row>
                         <Col xs={chartColumnSize}>
@@ -201,7 +213,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                     </Col>
                                 </Row>
                                 <FormGroup controlId="formChartType">
-
                                     <Row>
                                         <Col xs={4}>
                                             <ControlLabel>Type</ControlLabel>
@@ -235,41 +246,66 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                     </Row>
                                 </FormGroup>
                                 {this.state.ChartSize != ChartSize.XSmall &&
-                                    <FormGroup controlId="formCrosshairs">
+                                    <div>
+                                        <FormGroup controlId="formCrosshairs">
 
-                                        <Row>
-                                            <Col xs={4}>
-                                                <ControlLabel>Crosshairs</ControlLabel>
-                                            </Col>
-                                            <Col xs={8}>
-                                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
-                                                    {optionCrossHairModeTypes}
-                                                </FormControl>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col xs={4}>
-                                            </Col>
-                                            <Col xs={7}>
-                                                <Checkbox disabled={this.state.ChartCrosshairsMode == ChartCrosshairsMode.None} onChange={(e) => this.onSpanCrossHairsToDataOptionChanged(e)} checked={this.state.SpanCrossHairsToData} >Snap to Data</Checkbox>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col xs={4}>
-                                            </Col>
-                                            <Col xs={7}>
-                                                <Checkbox inline disabled={this.state.ChartCrosshairsMode == ChartCrosshairsMode.None} onChange={(e) => this.onEnableCrosshairsAnnotationsOptionChanged(e)} checked={this.state.EnableCrosshairsAnnotations} >Crosshair Legend</Checkbox>
-                                            </Col>
-                                        </Row>
+                                            <Row>
+                                                <Col xs={4}>
+                                                    <ControlLabel>Crosshairs</ControlLabel>
+                                                </Col>
+                                                <Col xs={8}>
+                                                    <FormControl componentClass="select" placeholder="select" value={this.state.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
+                                                        {optionCrossHairModeTypes}
+                                                    </FormControl>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={4}>
+                                                </Col>
+                                                <Col xs={7}>
+                                                    <Checkbox disabled={this.state.ChartCrosshairsMode == ChartCrosshairsMode.None} onChange={(e) => this.onSpanCrossHairsToDataOptionChanged(e)} checked={this.state.SpanCrossHairsToData} >Snap to Data</Checkbox>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col xs={4}>
+                                                </Col>
+                                                <Col xs={7}>
+                                                    <Checkbox inline disabled={this.state.ChartCrosshairsMode == ChartCrosshairsMode.None} onChange={(e) => this.onEnableCrosshairsAnnotationsOptionChanged(e)} checked={this.state.EnableCrosshairsAnnotations} >Show Legend</Checkbox>
+                                                </Col>
+                                            </Row>
 
-                                    </FormGroup>
+                                        </FormGroup>
+                                        <FormGroup controlId="formYAxisMinValue">
+                                            <Row>
+                                                <Col xs={4}>
+                                                    <ControlLabel>Y Axis</ControlLabel>
+                                                </Col>
+                                                <Col xs={7}>
+                                                    <Checkbox onChange={(e) => this.onSetYAxisMinValueOptionChanged(e)} checked={this.state.SetYAxisMinimumValue} >Set Min Value</Checkbox>
+                                                </Col>
+                                            </Row>
+                                            {this.state.SetYAxisMinimumValue &&
+                                                <Row>
+                                                    <Col xs={4} />
+                                                    <Col xs={8}>
+                                                        <FormControl
+                                                            type="number"
+                                                            placeholder="Enter Number"
+                                                            onChange={this.onYAxisMinValueChanged}
+                                                            value={this.state.YAxisMinimumValue}
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            }
+                                        </FormGroup>
+                                    </div>
                                 }
                             </Panel>
                         </Col>
 
                     </Row>
                 }
-            </PanelWithImageTwoButtons>
+            </PanelWithImageThreeButtons>
 
             {this.state.EditedChartDefinition &&
                 <ChartWizard
@@ -333,6 +369,20 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.setState({ EnableFinalValueAnnotations: e.checked } as ChartDisplayPopupWizardState)
     }
 
+    private onSetYAxisMinValueOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.setState({ SetYAxisMinimumValue: true } as ChartDisplayPopupWizardState)
+        } else { // set YAxisMinValue to undefined
+            this.setState({ SetYAxisMinimumValue: e.checked, YAxisMinimumValue: undefined } as ChartDisplayPopupWizardState)
+        }
+
+    }
+
+    private onYAxisMinValueChanged = (e: any) => {
+        this.setState({ YAxisMinimumValue: Number(e.target.value) } as ChartDisplayPopupWizardState)
+    }
+
     onCloseWizard() {
         this.setState({ EditedChartDefinition: null });
     }
@@ -342,11 +392,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.state.EditedChartDefinition.Title);
         this.props.onAddUpdateChartDefinition(index, clonedObject);
         this.setState({ EditedChartDefinition: null });
-             this.props.onSelectChartDefinition(clonedObject);
+        this.props.onSelectChartDefinition(clonedObject);
     }
 
     canFinishWizard() {
-        return StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);  
+        return StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);
     }
 
     setChartHeight(): string {
@@ -434,7 +484,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
         onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
-      
+
     };
 }
 

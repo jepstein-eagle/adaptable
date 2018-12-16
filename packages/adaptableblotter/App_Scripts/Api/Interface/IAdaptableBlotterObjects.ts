@@ -76,7 +76,7 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
   SubTitle: string
   YAxisColumnIds: string[]
   XAxisColumnId: string
-  XAxisColumnValues: string[]
+  XAxisExpression: Expression
   AdditionalColumnId?: string
   AdditionalColumnValues?: string[]
 }
@@ -231,7 +231,7 @@ export interface IPercentBar extends IAdaptableBlotterObject {
   PositiveColor: string;
   NegativeColor: string;
   ShowValue: boolean;
- }
+}
 
 
 

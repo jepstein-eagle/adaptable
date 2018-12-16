@@ -12,6 +12,7 @@ import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
@@ -138,7 +139,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
         return 1
     }
     public GetIndexStepDecrement() {
-        return 1;
+        return (ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression) )? 2 : 1
     }
     public StepName = this.props.StepName
 }

@@ -18,12 +18,20 @@ export class ChartService implements IChartService {
 
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
 
-      //  let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnIds[0], columns)
+        //  let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnIds[0], columns)
         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
 
-        let xAxisColValues: string[] = chartDefinition.XAxisColumnValues.length > 0 && chartDefinition.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
-            chartDefinition.XAxisColumnValues :
-            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+        let xAxisColValues: string[] = [];
+        if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
+            xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+        } else {
+            this.blotter.forAllRecordsDo((row) => {
+                if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
+                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
+                    xAxisColValues.push(columnValue);
+                }
+            })
+        }
 
         let additionalColValues: string[] = this.getAdditionalColumnValues(chartDefinition);
 
@@ -32,7 +40,7 @@ export class ChartService implements IChartService {
             chartDataRow[xAxisColumnName] = cv
 
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
- 
+
             // need to revisit and see if we really do want always group...
             // if we have additional column values then do those 
             // NB: currently only doing first - want to? or all?
@@ -43,13 +51,13 @@ export class ChartService implements IChartService {
                     chartDataRow[columnValue] = groupedTotal
                 })
             } else { // otherwise do the y cols
-               chartDefinition.YAxisColumnIds.forEach(colID=>{
-                let groupedTotal = this.buildGroupedTotal(colID, [xAxisKVP], columns)
-                let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
-                chartDataRow[colName] = groupedTotal
-   
-               })
-             }
+                chartDefinition.YAxisColumnIds.forEach(colID => {
+                    let groupedTotal = this.buildGroupedTotal(colID, [xAxisKVP], columns)
+                    let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
+                    chartDataRow[colName] = groupedTotal
+
+                })
+            }
             return chartDataRow
         })
         return chartData

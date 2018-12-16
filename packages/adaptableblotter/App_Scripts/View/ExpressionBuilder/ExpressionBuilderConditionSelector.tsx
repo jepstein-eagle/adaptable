@@ -123,7 +123,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 // get ranges
                 let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
                 selectedColumnRanges = (ranges) ? ranges.Ranges : []
-
+                  
                 return {
                     SelectedColumnId: this.state.SelectedColumnId,
                     ColumnRawValueDisplayValuePairs: this.state.ColumnRawValueDisplayValuePairs, // we fill this later...

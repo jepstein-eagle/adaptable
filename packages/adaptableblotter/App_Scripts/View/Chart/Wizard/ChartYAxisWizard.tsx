@@ -34,14 +34,17 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
             let additionalLabelTextString = ' (' + idsCount + ')'
             newLabelText = newLabelText + additionalLabelTextString;
         }
-
-        let newRow = this.createRow(idsCount, newLabelText, cssClassName, "", this.state.YAxisColumnIds.length);
+        let availableCols = this.getAvailableNumericColumns("")
+        let newRow = ArrayExtensions.IsNotNullOrEmpty(availableCols) ?
+            this.createRow(idsCount, newLabelText, cssClassName, "", this.state.YAxisColumnIds.length, availableCols)
+            : null;
 
         let existingColumnRows = this.state.YAxisColumnIds.map((colId, index) => {
             let columnNumber: number = index + 1;
             let labelText: string = "Y Axis Column (" + columnNumber + ")"
-            return this.createRow(columnNumber, labelText, cssClassName, colId, index);
-          })
+            let availableNumericCols = this.getAvailableNumericColumns(colId)
+            return this.createRow(columnNumber, labelText, cssClassName, colId, index, availableNumericCols);
+        })
 
 
         return <div className={cssClassName}>
@@ -51,7 +54,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                         <Row>
                             <Col xs={1} />
                             <Col xs={10}>
-                                <Well>Select a numeric column for the Y Axis. <br />
+                                <Well>Select numeric column(s) for the Y Axis. <br />
                                     This will show grouped totals according to values in the X Axis.</Well>
                             </Col>
                             <Col xs={1} />
@@ -66,7 +69,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
         </div>
     }
 
-    createRow(columnNumber: number, labelText: string, cssClassName: string, colId: string, index: number): any {
+    createRow(columnNumber: number, labelText: string, cssClassName: string, colId: string, index: number, availableCols: IColumn[]): any {
         return <Row key={columnNumber}>
             <Col xs={3} componentClass={ControlLabel}>{labelText}</Col>
             <Col xs={8}>
@@ -74,7 +77,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                     key={"colSelect" + columnNumber}
                     cssClassName={cssClassName}
                     SelectedColumnIds={[colId]}
-                    ColumnList={this.getAvailableNumericColumns(colId)}
+                    ColumnList={availableCols}
                     onColumnChange={columns => this.onYAxisColumnChanged(columns, index)}
                     SelectionMode={SelectionMode.Single} />
             </Col>

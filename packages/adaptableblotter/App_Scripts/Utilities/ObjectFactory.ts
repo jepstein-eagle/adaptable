@@ -22,7 +22,7 @@ export module ObjectFactory {
             SubTitle: "",
             YAxisColumnIds: [],
             XAxisColumnId: "",
-            XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]
+            XAxisExpression: ExpressionHelper.CreateEmptyExpression()
         }
     }
 

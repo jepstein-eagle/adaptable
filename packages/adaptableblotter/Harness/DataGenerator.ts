@@ -53,12 +53,12 @@ export class DataGenerator {
         let ftseRows: IFtse[] = [];
         let todayDate: Date = new Date();
         let startDate: Date = addDays(todayDate, ((-count)))
-        let start: number = 125;
-        let end: number = start + this.generateRandomInt(-10, 10);
+        let start: number = this.roundTo2Dp(325 + this.generateRandomDouble());
+        let end: number = this.roundTo2Dp(start + this.generateRandomInt(-10, 10) + this.generateRandomDouble());
         ftseRows.push(this.createIFtse(startDate, 0, start, end));
         for (let i = 1; i <= count; i++) {
             let newStart: number = end;
-            end = newStart + this.generateRandomInt(-10, 10);
+            end = this.roundTo2Dp(newStart + this.generateRandomInt(-10, 10) + this.generateRandomDouble());
             ftseRows.push(this.createIFtse(startDate, i, newStart, end));
         }
         return ftseRows;
@@ -161,8 +161,12 @@ export class DataGenerator {
 
     createIFtse(date: Date, index: number, start: number, end: number): IFtse {
         let newDate: Date = addDays(date, index)
-        let low: number = (start > end) ? end - this.generateRandomInt(0, 10) : start - this.generateRandomInt(0, 10);
-        let high = (start > end) ? start + this.generateRandomInt(0, 10) : end + this.generateRandomInt(0, 10)
+        let low: number = (start > end) ?
+            this.roundTo2Dp(end - this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
+            this.roundTo2Dp(start - this.generateRandomInt(0, 10) + this.generateRandomDouble());
+        let high = (start > end) ?
+            this.roundTo2Dp(start + this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
+            this.roundTo2Dp(end + this.generateRandomInt(0, 10) + this.generateRandomDouble());
         let ftse =
         {
             "date": newDate,
@@ -370,6 +374,10 @@ export class DataGenerator {
 
     protected roundTo4Dp(val: number): number {
         return Math.round(val * 10000) / 10000;
+    }
+
+    protected roundTo2Dp(val: number): number {
+        return Math.round(val * 100) / 100;
     }
 
     protected getMeaningfulDoubleInRange(min: number, max: number): number {
