@@ -346,10 +346,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     canFinishWizard() {
-        //  let Chart = this.props.cu
-        //  return StringExtensions.IsNotNullOrEmpty(Chart.Title);
-        // todo?? 
-        return true;
+        return StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);  
     }
 
     setChartHeight(): string {
