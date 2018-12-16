@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton } from 'react-bootstrap';
+import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton, NavbarCollapse } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -68,18 +68,23 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         });
 
         // column items
-        let colItems = this.props.Columns.map((col: IColumn, index) => {
-            return <div className="ab_home_toolbar_column_list" key={index}>
+        let colItems: any = []
+        colItems.push(<span>{' '}{' '}&nbsp;&nbsp;<b>{"Columns"}</b></span>);
+        this.props.Columns.forEach((col: IColumn, index) => {
+            colItems.push(<div className="ab_home_toolbar_column_list" key={index}>
                 <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible} onChange={(e) => this.onSetColumnVisibility(e)} > {col.FriendlyName}</Checkbox>
-            </div>
+            </div>)
         });
 
         // toolbar items
-        let toolbarItems = this.props.DashboardState.AvailableToolbars.map((toolbar: string, index) => {
+        let toolbarItems: any = []
+        toolbarItems.push(<span>{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></span>);
+        this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
             let isVisible: boolean = ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
-            return <div className="ab_home_toolbar_column_list" key={index}>
-                <Checkbox value={toolbar} key={toolbar} checked={isVisible} onChange={(e) => this.onSetToolbarVisibility(e)} > {toolbar}</Checkbox>
-            </div>
+            let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+            toolbarItems.push(<div className="ab_home_toolbar_column_list" key={index}>
+                <Checkbox value={toolbar} key={toolbar} checked={isVisible} onChange={(e) => this.onSetToolbarVisibility(e)} > {functionName}</Checkbox>
+            </div>)
         });
 
         // status button
@@ -215,7 +220,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     onSetColumnVisibility(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let changedColumnn: IColumn = ColumnHelper.getColumnFromId(e.value, this.props.Columns);
-          
+
         let columns: IColumn[] = [].concat(this.props.Columns);
         changedColumnn = Object.assign({}, changedColumnn, {
             Visible: !changedColumnn.Visible
