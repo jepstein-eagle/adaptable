@@ -45,7 +45,7 @@ class HomeToolbarControlComponent extends React.Component {
         });
         // column items
         let colItems = [];
-        colItems.push(React.createElement("div", { key: "colTitle" },
+        colItems.push(React.createElement("span", null,
             ' ',
             ' ',
             "\u00A0\u00A0",
@@ -58,7 +58,7 @@ class HomeToolbarControlComponent extends React.Component {
         });
         // toolbar items
         let toolbarItems = [];
-        toolbarItems.push(React.createElement("div", { key: "toolbarTitle" },
+        toolbarItems.push(React.createElement("span", null,
             ' ',
             ' ',
             "\u00A0\u00A0",

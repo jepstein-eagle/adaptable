@@ -7,14 +7,12 @@ const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 const Enums_1 = require("../../../Utilities/Enums");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
-const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 class ChartYAxisWizard extends React.Component {
     constructor(props) {
         super(props);
         this.StepName = this.props.StepName;
         this.state = {
             YAxisColumnIds: props.Data.YAxisColumnIds,
-            YAxisTotal: props.Data.YAxisTotal
         };
     }
     render() {
@@ -25,15 +23,11 @@ class ChartYAxisWizard extends React.Component {
             let additionalLabelTextString = ' (' + idsCount + ')';
             newLabelText = newLabelText + additionalLabelTextString;
         }
-        let availableCols = this.getAvailableNumericColumns("");
-        let newRow = ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(availableCols) ?
-            this.createRow(idsCount, newLabelText, cssClassName, "", this.state.YAxisColumnIds.length, availableCols)
-            : null;
+        let newRow = this.createRow(idsCount, newLabelText, cssClassName, "", this.state.YAxisColumnIds.length);
         let existingColumnRows = this.state.YAxisColumnIds.map((colId, index) => {
             let columnNumber = index + 1;
             let labelText = "Y Axis Column (" + columnNumber + ")";
-            let availableNumericCols = this.getAvailableNumericColumns(colId);
-            return this.createRow(columnNumber, labelText, cssClassName, colId, index, availableNumericCols);
+            return this.createRow(columnNumber, labelText, cssClassName, colId, index);
         });
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: "Chart Colum Y Axis", bsStyle: "primary" },
@@ -47,19 +41,14 @@ class ChartYAxisWizard extends React.Component {
                                     React.createElement("br", null),
                                     "This will show grouped totals according to values in the X Axis.")),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 })),
-                        React.createElement(react_bootstrap_1.Row, null,
-                            React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Display Total:"),
-                            React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Sum", checked: this.state.YAxisTotal == ChartEnums_1.AxisTotal.Sum, onChange: (e) => this.onYAisTotalChanged(e) }, "Sum"),
-                                React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Average", checked: this.state.YAxisTotal == ChartEnums_1.AxisTotal.Average, onChange: (e) => this.onYAisTotalChanged(e) }, "Average"))),
                         existingColumnRows,
                         newRow))));
     }
-    createRow(columnNumber, labelText, cssClassName, colId, index, availableCols) {
-        return React.createElement(react_bootstrap_1.Row, { key: columnNumber, style: { marginTop: '10px' } },
+    createRow(columnNumber, labelText, cssClassName, colId, index) {
+        return React.createElement(react_bootstrap_1.Row, { key: columnNumber },
             React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, labelText),
             React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                React.createElement(ColumnSelector_1.ColumnSelector, { key: "colSelect" + columnNumber, cssClassName: cssClassName, SelectedColumnIds: [colId], ColumnList: availableCols, onColumnChange: columns => this.onYAxisColumnChanged(columns, index), SelectionMode: Enums_1.SelectionMode.Single })));
+                React.createElement(ColumnSelector_1.ColumnSelector, { key: "colSelect" + columnNumber, cssClassName: cssClassName, SelectedColumnIds: [colId], ColumnList: this.getAvailableNumericColumns(colId), onColumnChange: columns => this.onYAxisColumnChanged(columns, index), SelectionMode: Enums_1.SelectionMode.Single })));
     }
     onYAxisColumnChanged(columns, index) {
         let column = columns.length > 0 ? columns[0].ColumnId : "";
@@ -79,11 +68,6 @@ class ChartYAxisWizard extends React.Component {
         }
         this.setState({ YAxisColumnIds: currentColumns }, () => this.props.UpdateGoBackState());
     }
-    onYAisTotalChanged(event) {
-        let e = event.target;
-        let axisTotal = (e.value == "Sum") ? ChartEnums_1.AxisTotal.Sum : ChartEnums_1.AxisTotal.Average;
-        this.setState({ YAxisTotal: axisTotal }, () => this.props.UpdateGoBackState());
-    }
     getAvailableNumericColumns(selectedColumnId) {
         let cols = [];
         ColumnHelper_1.ColumnHelper.getNumericColumns(this.props.Columns).forEach(c => {
@@ -102,7 +86,6 @@ class ChartYAxisWizard extends React.Component {
     canBack() { return true; }
     Next() {
         this.props.Data.YAxisColumnIds = this.state.YAxisColumnIds;
-        this.props.Data.YAxisTotal = this.state.YAxisTotal;
     }
     Back() {
         // todo

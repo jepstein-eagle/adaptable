@@ -20,14 +20,7 @@ import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-char
 import { ChartWizard } from "./Wizard/ChartWizard";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
-import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { PanelWithImageThreeButtons } from "../Components/Panels/PanelWithIImageThreeButtons";
-import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility } from "../../Utilities/ChartEnums";
-import { PanelWithButton } from "../Components/Panels/PanelWithButton";
-import { ColorPicker } from "../ColorPicker";
-import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
-import { DefaultChartProperties } from "../../api/DefaultChartProperties";
+import { CategoryChartType } from "igniteui-react-charts/ES2015/CategoryChartType";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -35,8 +28,8 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     CurrentChartDefinition: IChartDefinition
     ChartData: any
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
-    onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => ChartRedux.ChartPropertiesUpdateAction,
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction,
+    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction,
+
 }
 
 export interface ChartDisplayPopupWizardState {
@@ -293,7 +286,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 // datasource
                 dataSource={this.props.ChartData}
                 // chart type
-                chartType={this.state.ChartProperties.ChartType}
+                chartType={CategoryChartType[this.state.ChartType]}
                 // size
                 width={chartWidth}
                 height={chartHeight}
@@ -314,22 +307,14 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 xAxisLabelTextColor={this.state.ChartProperties.XAxisLabelColor}
 
                 // crosshairs
-                crosshairsDisplayMode={this.state.ChartProperties.ChartCrosshairsMode}
-                crosshairsSnapToData={this.state.ChartProperties.SpanCrossHairsToData}
-                crosshairsAnnotationEnabled={this.state.ChartProperties.EnableCrosshairsAnnotations}
+                // crosshairsDisplayMode={this.state.ChartCrosshairsMode}
+                // crosshairsSnapToData={this.state.SpanCrossHairsToData}
+                // crosshairsAnnotationEnabled={this.state.EnableCrosshairsAnnotations}
                 // transitions
                 isTransitionInEnabled={this.state.ChartProperties.EnableTransitions}
                 // transitionInEasingFunction={EasingFunctions.cubicEase}
-                transitionInDuration={this.state.ChartProperties.TransitionInDuration}
-                finalValueAnnotationsVisible={this.state.ChartProperties.EnableFinalValueAnnotations}
-
-                titleAlignment={this.state.ChartProperties.TitleAlignment}
-                titleRightMargin={this.state.TitleMargin}
-                titleTopMargin={this.state.TitleMargin}
-                subtitleAlignment={this.state.ChartProperties.SubTitleAlignment}
-                subtitleRightMargin={this.state.SubTitleMargin}
-            //  subtitleRightMargin={this.state.TitleMargin}
-            //subtitleTopMargin = {this.state.TitleMargin}
+                transitionInDuration={1000}
+                // finalValueAnnotationsVisible={this.state.EnableFinalValueAnnotations}
 
             // callouts - not doing yet as not sure how we can with dynamic data...
             // calloutsVisible={true}
@@ -793,7 +778,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         } as ChartDisplayPopupWizardState)
         // then update the properties
         let chartProperties: IChartProperties = Helper.cloneObject(DefaultChartProperties);
-        // do the titles 
+        // do the titles
         chartProperties.YAxisTitle = this.getYAxisTitle(true);
         chartProperties.XAxisTitle = this.getXAxisTitle(true);
         this.updateChartProperties(chartProperties);
@@ -1220,8 +1205,8 @@ function mapStateToProps(state: AdaptableBlotterState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
-        onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => dispatch(ChartRedux.ChartPropertiesUpdate(chartTitle, chartProperties)),
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
+
     };
 }
 
