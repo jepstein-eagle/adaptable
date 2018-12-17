@@ -27,9 +27,9 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         let previewHeader: string = this.props.ShowHeader && this.props.PreviewInfo != null ? "Preview Results: " + (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : "") : "";
 
 
-        var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult) => {
+        var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult, index: number) => {
 
-            return <tr key={previewResult.Id} >
+            return <tr key={index} >
                 <td>{previewResult.InitialValue}</td>
                 <td>{previewResult.ComputedValue}</td>
                 {previewResult.ValidationRules.length > 0 ?

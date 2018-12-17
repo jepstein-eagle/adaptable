@@ -636,10 +636,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // using new method... (JW, 11/3/18)
         var itemsToUpdate: any[] = [];
         var dataChangedEvents: IDataChangedEvent[] = []
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
+        let nodesToRefresh: RowNode[] = []
+        let colsToRefresh: string[] = []
+        this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
-
+                nodesToRefresh.push(rowNode);
+                if (ArrayExtensions.NotContainsItem(colsToRefresh, value.ColumnId)) {
+                    colsToRefresh.push(value.ColumnId)
+                }
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
 
                 var data: any = rowNode.data;
@@ -667,6 +672,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
+        nodesToRefresh.forEach(node => {
+            this.refreshCells(node, colsToRefresh)
+        })
+
     }
 
     public cancelEdit() {

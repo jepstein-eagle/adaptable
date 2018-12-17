@@ -69,7 +69,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // column items
         let colItems: any = []
-        colItems.push(<span>{' '}{' '}&nbsp;&nbsp;<b>{"Columns"}</b></span>);
+        colItems.push(<div key="colTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Columns"}</b></div>);
         this.props.Columns.forEach((col: IColumn, index) => {
             colItems.push(<div className="ab_home_toolbar_column_list" key={index}>
                 <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible} onChange={(e) => this.onSetColumnVisibility(e)} > {col.FriendlyName}</Checkbox>
@@ -78,7 +78,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // toolbar items
         let toolbarItems: any = []
-        toolbarItems.push(<span>{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></span>);
+        toolbarItems.push(<div key="toolbarTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></div>);
         this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
             let isVisible: boolean = ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
             let functionName = StrategyConstants.getNameForStrategyId(toolbar);

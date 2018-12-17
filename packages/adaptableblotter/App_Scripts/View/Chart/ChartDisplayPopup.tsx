@@ -129,7 +129,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let chartColumnSize: number = this.setChartColumnSize();
         let legendColumnSize: number = this.setLegendColumnSize();
 
-        console.log(this.props.ChartData);
         let chartData = (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
 
             <IgrCategoryChart
