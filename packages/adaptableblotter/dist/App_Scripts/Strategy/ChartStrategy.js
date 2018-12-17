@@ -38,9 +38,9 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (this.ChartState.IsChartVisible && this.ChartState.CurrentChartDefinition != null) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId = dataChangedEvent.ColumnId;
-            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.ChartState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
-                this.ChartState.CurrentChartDefinition.XAxisColumnId == columnChangedId ||
-                this.ChartState.CurrentChartDefinition.AdditionalColumnId == columnChangedId) {
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.ChartInternalState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
+                this.ChartInternalState.CurrentChartDefinition.XAxisColumnId == columnChangedId ||
+                this.ChartInternalState.CurrentChartDefinition.AdditionalColumnId == columnChangedId) {
                 this.debouncedSetChartData();
             }
         }

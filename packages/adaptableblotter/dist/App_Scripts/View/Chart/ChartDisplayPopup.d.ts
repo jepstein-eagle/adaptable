@@ -1,24 +1,16 @@
 import * as React from "react";
-import { IChartDefinition, IChartProperties } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { ChartSize } from "../../Utilities/ChartEnums";
+import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ChartType, ChartCrosshairsMode, ChartSize } from "../../Utilities/Enums";
 export interface ChartDisplayPopupWizardState {
     IsChartMinimised: boolean;
     IsChartSettingsVisible: boolean;
     EditedChartDefinition: IChartDefinition;
     ChartProperties: IChartProperties;
     ChartSize: ChartSize;
-    IsGeneralMinimised: boolean;
-    SetYAxisMinimumValue: boolean;
-    SetYAxisLabelColor: boolean;
-    SetYAxisTitleColor: boolean;
-    IsYAxisMinimised: boolean;
-    UseDefaultYAxisTitle: boolean;
-    IsXAxisMinimised: boolean;
-    SetXAxisLabelColor: boolean;
-    SetXAxisTitleColor: boolean;
-    UseDefaultXAxisTitle: boolean;
-    IsMiscMinimised: boolean;
-    TitleMargin: number;
-    SubTitleMargin: number;
+    SpanCrossHairsToData: boolean;
+    EnableCrosshairsAnnotations: boolean;
+    EnableFinalValueAnnotations: boolean;
+    IsMinimised: boolean;
+    EditedChartDefinition: IChartDefinition;
 }
 export declare let ChartDisplayPopup: React.ComponentClass<{}, any>;
