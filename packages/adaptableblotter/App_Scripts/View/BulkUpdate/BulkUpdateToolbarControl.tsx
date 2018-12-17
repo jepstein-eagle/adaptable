@@ -85,7 +85,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="default" bsSize="small">Off</Button>
             : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
 
-        let selectedColumn = (this.props.PreviewInfo) ?
+        let selectedColumn = (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
             null;
 

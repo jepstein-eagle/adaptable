@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import {  InputGroup, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
+import { InputGroup, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
@@ -31,7 +31,7 @@ interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopup
     MathOperation: MathOperation;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
+    onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SystemRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
@@ -69,28 +69,29 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
     render() {
 
         let statusColour: StatusColour = this.getStatusColour()
-       
+
         let cssClassName: string = this.props.cssClassName + "__SmartEdit";
 
-        let selctedColumn = ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns);
-        let previewPanel =
+        let selectedColumn = (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null
+
+        let previewPanel = 
             <PreviewResultsPanel
                 cssClassName={cssClassName}
                 UpdateValue={this.props.SmartEditValue}
                 PreviewInfo={this.props.PreviewInfo}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
-                SelectedColumn={selctedColumn}
+                SelectedColumn={selectedColumn}
                 ShowPanel={true}
                 ShowHeader={false}
-            />
+            /> 
 
         let operationMenuItems = EnumExtensions.getNames(MathOperation).filter(e => e != MathOperation.Replace).map((mathOperation: MathOperation, index) => {
             return <MenuItem key={index} eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
         })
 
         let content = <span>
-            <div className={this.props.AccessLevel==AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel == AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
 
                     <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.MathOperation} id="SmartEdit_Operation" bsSize="small" componentClass={InputGroup.Button}>
@@ -109,9 +110,9 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                         bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Smart Edit"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
-                        DisplayMode="Glyph" 
+                        DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
-                        />
+                    />
                 }
 
                 {this.props.IsValidSelection &&

@@ -35,7 +35,7 @@ export module ColumnHelper {
         if (foundColumn) {
             return getFriendlyNameFromColumn(columnId, foundColumn);
         } else {
-            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+             LoggingHelper.LogWarning("No column found named '" + columnId + "'");
             return columnId + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -55,8 +55,8 @@ export module ColumnHelper {
         let foundColumn: IColumn = columns.find(c => c.FriendlyName == friendlyName);
         if (foundColumn) {
             return foundColumn.ColumnId;
-        } else {
-            LoggingHelper.LogWarning("No column found named '" + friendlyName + "'");
+        } else {            
+   LoggingHelper.LogWarning("No column found named '" + friendlyName + "'");
             return friendlyName + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -83,7 +83,7 @@ export module ColumnHelper {
         if (foundColumn) {
             return foundColumn;
         } else {
-            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LoggingHelper.LogError("No column found named '" + columnId + "'");
             return null;
         }
 
