@@ -128,6 +128,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let panelWidth: string = this.setPanelWidth();
         let chartColumnSize: number = this.setChartColumnSize();
         let legendColumnSize: number = this.setLegendColumnSize();
+        let yAxisLabelLoction = (this.state.EnableFinalValueAnnotations) ? "outsideRight" : "outsideLeft";
 
         let chartData = (this.state.IsMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
 
@@ -147,8 +148,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnIds.map(c => {
                     return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns)
                 }).join(', ')}
+                yAxisLabelLocation={yAxisLabelLoction}
+
                 // xAxis
                 xAxisTitle={ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns)}
+                yAxisLabelTextColor={"green"}
+                
                 // crosshairs
                 crosshairsDisplayMode={this.state.ChartCrosshairsMode}
                 crosshairsSnapToData={this.state.SpanCrossHairsToData}

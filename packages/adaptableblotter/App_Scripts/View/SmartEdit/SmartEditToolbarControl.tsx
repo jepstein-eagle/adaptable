@@ -23,8 +23,6 @@ import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;
