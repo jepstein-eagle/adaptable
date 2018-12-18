@@ -1,8 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import { ButtonToolbar, Col, InputGroup, Button } from 'react-bootstrap';
-import { Typeahead } from 'react-bootstrap-typeahead'
+import { InputGroup, Button } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
@@ -10,31 +9,20 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IPreviewInfo } from "../../Api/Interface/IPreview";
-import { IColumn } from "../../Api/Interface/IColumn";
 import { IUIConfirmation } from "../../Api/Interface/IMessage";
-import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
-import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IEvent } from "../../Api/Interface/IEvent";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType, StatusColour, AccessLevel } from "../../Utilities/Enums";
+import { StatusColour, AccessLevel } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { fail } from "assert";
 import { UIHelper } from "../UIHelper";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -56,7 +44,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         super(props);
         this.state = {
             Disabled: true,
-            SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
+            SubFunc: () => {
                 this.onSelectionChanged()
             }
         }
@@ -206,7 +194,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     onApplyBulkUpdate(): any {
         this.props.onApplyBulkUpdate()
         this.onSelectionChanged()
-
     }
 
 }

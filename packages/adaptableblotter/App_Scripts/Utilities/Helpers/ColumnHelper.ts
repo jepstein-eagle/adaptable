@@ -83,7 +83,7 @@ export module ColumnHelper {
         if (foundColumn) {
             return foundColumn;
         } else {
-            LoggingHelper.LogError("No column found named '" + columnId + "'");
+            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
             return null;
         }
 
