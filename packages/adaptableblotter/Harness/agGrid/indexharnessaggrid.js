@@ -11,7 +11,7 @@ function runQuickSearch() {
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
   // trades = dataGen.getTrades(400);
-  trades = dataGen.getFtseData(100);
+  trades = dataGen.getFtseData(10);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well

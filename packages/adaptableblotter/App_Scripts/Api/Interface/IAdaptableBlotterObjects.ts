@@ -1,7 +1,8 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType, ChartType } from '../../Utilities/Enums';
+import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Utilities/Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment  } from '../../Utilities/ChartEnums';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -79,6 +80,27 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
   XAxisExpression: Expression
   AdditionalColumnId?: string
   AdditionalColumnValues?: string[]
+  ChartProperties: IChartProperties
+}
+
+export interface IChartProperties {
+  // General
+  ChartType?: ChartType;
+  ChartCrosshairsMode?: ChartCrosshairsMode;
+  EnableFinalValueAnnotations?: boolean;
+  SpanCrossHairsToData?: boolean;
+  EnableCrosshairsAnnotations?: boolean;
+  // Y Axis
+  YAxisLabelLocation?: AxisLabelsLocation
+  YAxisLabelTextColor?: string
+  YAxisMinimumValue?: number
+  // x Axis
+  XAxisLabelTextColor?: string
+  // Misc
+  EnableTransitions?: boolean;
+  TransitionInDuration? : number
+  TitleAlignment? : HorizontalAlignment
+  SubTitleAlignment? : HorizontalAlignment
 }
 
 

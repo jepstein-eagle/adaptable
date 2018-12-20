@@ -141,7 +141,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-
     private ShowErrorPreventMessage(failedRules: ICellValidationRule[]): void {
         if (failedRules.length > 0) {
             let failedMessages: string[] = []

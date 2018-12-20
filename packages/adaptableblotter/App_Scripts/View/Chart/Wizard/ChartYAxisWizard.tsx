@@ -70,7 +70,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
     }
 
     createRow(columnNumber: number, labelText: string, cssClassName: string, colId: string, index: number, availableCols: IColumn[]): any {
-        return <Row key={columnNumber}>
+        return <Row key={columnNumber} style={{marginTop: '10px'}}>
             <Col xs={3} componentClass={ControlLabel}>{labelText}</Col>
             <Col xs={8}>
                 <ColumnSelector

@@ -1,6 +1,6 @@
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ChartType, ActionMode } from './Enums';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode } from './Enums';
 import { IColumn } from '../Api/Interface/IColumn';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
@@ -9,6 +9,8 @@ import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { Expression } from '../Api/Expression';
 import { IVendorGridInfo, IColumnCategory } from '../Api/Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
+import { DefaultAdaptableBlotterOptions } from '../Api/DefaultAdaptableBlotterOptions';
+import { DefaultChartProperties } from '../api/DefaultChartProperties';
 
 export module ObjectFactory {
 
@@ -22,7 +24,9 @@ export module ObjectFactory {
             SubTitle: "",
             YAxisColumnIds: [],
             XAxisColumnId: "",
-            XAxisExpression: ExpressionHelper.CreateEmptyExpression()
+            XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
+            ChartProperties: DefaultChartProperties
+
         }
     }
 

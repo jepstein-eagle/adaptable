@@ -64,7 +64,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
             </Row>
         </AdaptableBlotterForm>;
         return <div className={cssClassName}>
-            <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle} >
+            <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle} bsSize={this.props.bsSize} >
                 {this.props.children}
             </Panel>
         </div>;

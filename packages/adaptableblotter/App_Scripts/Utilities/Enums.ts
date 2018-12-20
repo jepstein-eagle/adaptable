@@ -253,31 +253,6 @@ export enum SelectedCellOperation {
     VWAP = 'VWAP'
 }
 
-export enum ChartType {
-    Column = 'Column',
-    Area = 'Area',
-    Line = 'Line',
-    Point = 'Point',
-    Spline = 'Spline',
-    StepArea = 'StepArea',
-    StepLine = 'StepLine'
-}
-
-export enum ChartCrosshairsMode {
-    None = 'None',
-    Horizontal = 'Horizontal',
-    Vertical = 'Vertical',
-    Both = 'Both'
-}
-
-export enum ChartSize {
-    XSmall = 'XSmall',
-    Small = 'Small',
-    Medium = 'Medium',
-    Large = 'Large',
-    XLarge = 'XLarge'
-}
-
 
 export enum PinnedColumnDirection {
     Left = 'Leftt',

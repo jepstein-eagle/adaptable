@@ -14,5 +14,6 @@ export interface ChartDisplayPopupPropsBase<View> extends React.ClassAttributes<
     showModal: boolean;
     Blotter: IAdaptableBlotter,
     UserFilters: IUserFilter[]
-    SystemFilters: string[]
+    SystemFilters: string[];
+    ColorPalette: string[];
 }

@@ -32,7 +32,8 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       showModal: this.props.showModal,
       Blotter: this.props.AdaptableBlotter,
       UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-      SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters
+      SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+      ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
     }
 
     var body: any = React.createElement(bodyElement, commonProps);

@@ -6,7 +6,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
-import { ChartType } from "../../../Utilities/Enums";
+import { ChartType } from "../../../Utilities/ChartEnums";
 
 export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
