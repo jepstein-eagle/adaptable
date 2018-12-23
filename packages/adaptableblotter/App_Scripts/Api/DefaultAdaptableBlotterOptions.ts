@@ -22,6 +22,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     useDefaultVendorGridThemes: true,
     useAdaptableBlotterFilterForm: true,
     useAdaptableBlotterFloatingFilter: true,
-    showMissingPrimaryKeyWarning: true
+    showMissingPrimaryKeyWarning: true,
+    indicateFilteredColumns: true
 }   
 

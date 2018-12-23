@@ -125,6 +125,11 @@ export interface IAdaptableBlotterOptions {
     */
     showMissingPrimaryKeyWarning?: boolean;
     /**
+    * Whether to make the font in the Column header for filtered columns to be bold and italicised
+    * This will make it easier for users to see at a glance which columns are currently filtered 
+    */
+    indicateFilteredColumns: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

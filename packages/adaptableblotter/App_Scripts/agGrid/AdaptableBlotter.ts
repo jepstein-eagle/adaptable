@@ -213,6 +213,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.gridOptions.api.refreshHeader();
                 }
                 this.checkPrimaryKeyExists();
+                this.applyFilteredColumnStyle();
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
@@ -1726,7 +1727,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isQuickFilterable(): boolean {
-        return true;
+        return this.gridOptions.floatingFilter != null;  // returns for both whether its visible or not.
     }
 
     public isQuickFilterActive(): boolean {
@@ -1766,6 +1767,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let container = document.getElementById(this.BlotterOptions.vendorContainer);
             if (container != null) {
                 container.className = "ag-theme-balham-dark";
+
+
+
             }
         }
     }
@@ -1776,11 +1780,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let errorMessage: string = "The PK Column '" + this.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
             if (this.BlotterOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
                 this.api.alertShowError("No Primary Key", errorMessage, true)
-            }else{ // otherwise just log it
+            } else { // otherwise just log it
                 LoggingHelper.LogError(errorMessage);
             }
         }
+        // perhaps we can also use this method to check that all properties are expected (#325)
+
     }
 
+    private applyFilteredColumnStyle(): void {
+        if (this.BlotterOptions.indicateFilteredColumns == true) {
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
+            document.body.appendChild(css);
+        }
+    }
 
 }
