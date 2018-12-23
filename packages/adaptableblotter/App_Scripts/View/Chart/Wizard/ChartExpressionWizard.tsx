@@ -15,5 +15,7 @@ export class ChartExpressionWizard extends ExpressionBuilderPage implements Adap
         this.props2.Data.XAxisExpression = this.state.Expression
     }
     
+    public canBack(): boolean { return true; }
+    
     public StepName = this.props.StepName
 }

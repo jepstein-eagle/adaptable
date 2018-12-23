@@ -196,7 +196,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         let searchChangedArgs: ISearchChangedEventArgs = {
             object: "fdc3-context",
             definition: "https://fdc3.org/context/1.0.0/",
-            version: "1.0.0",
+            version: "1.0.0",       
             data: [searchEventData]
         }
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);

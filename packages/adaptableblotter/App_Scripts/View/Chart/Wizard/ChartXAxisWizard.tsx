@@ -12,6 +12,7 @@ import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
+import { Expression } from "../../../Api/Expression";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
@@ -22,6 +23,7 @@ export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDe
 export interface ChartXAxisWizardState {
     XAxisColumnId: string,
     UseAllXAsisColumnValues: boolean,
+    XAxisExpression: Expression
 }
 
 export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, ChartXAxisWizardState> implements AdaptableWizardStep {
@@ -30,6 +32,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
         this.state = {
             XAxisColumnId: props.Data.XAxisColumnId,
             UseAllXAsisColumnValues: ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression),
+            XAxisExpression: this.props.Data.XAxisExpression
         }
     }
 
@@ -94,11 +97,11 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
     public canBack(): boolean { return true; }
 
     public Next(): void {
+        this.props.Data.XAxisColumnId = this.state.XAxisColumnId
+        this.props.Data.XAxisExpression = (this.state.UseAllXAsisColumnValues) ? ExpressionHelper.CreateEmptyExpression() : this.state.XAxisExpression
         if (this.props.Data.XAxisColumnId != this.state.XAxisColumnId) {
             this.props.Data.XAxisExpression = ExpressionHelper.CreateEmptyExpression();
         }
-        this.props.Data.XAxisColumnId = this.state.XAxisColumnId
-
     }
 
     public Back(): void {

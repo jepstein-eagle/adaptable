@@ -28,7 +28,9 @@ export class ChartService implements IChartService {
             this.blotter.forAllRecordsDo((row) => {
                 if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
                     let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
-                    xAxisColValues.push(columnValue);
+                    if (ArrayExtensions.NotContainsItem(xAxisColValues, columnValue)) {
+                        xAxisColValues.push(columnValue);
+                    }
                 }
             })
         }
@@ -60,6 +62,7 @@ export class ChartService implements IChartService {
             }
             return chartDataRow
         })
+        console.log(chartData);
         return chartData
     }
 

@@ -10,19 +10,19 @@ function runQuickSearch() {
 }
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  // trades = dataGen.getTrades(400);
-  trades = dataGen.getFtseData(10);
+   trades = dataGen.getTrades(400);
+ // trades = dataGen.getFtseData(10);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
   let gridOptions = {
-    // columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
-    columnDefs: getFTSESchema(), // returns a list of agGrid column definitions
+     columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
+   // columnDefs: getFTSESchema(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-    //  floatingFilter: true,
+     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
     columnTypes: { // not required but helpful for column data type identification
@@ -38,11 +38,12 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  dataGen.startTickingDataagGrid(gridOptions);
+  //dataGen.startTickingDataagGrid(gridOptions);
 
   // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
   let adaptableBlotterOptions = {
-    primaryKey: "date", // pk for blotter - required
+  //  primaryKey: "date", // pk for blotter - required
+    primaryKey: "fdfdf", // pk for blotter - required
     userName: "demo user", // name of current user
     blotterId: "demo blotter 2.5", // id for blotter
     enableAuditLog: false, // not running audit log

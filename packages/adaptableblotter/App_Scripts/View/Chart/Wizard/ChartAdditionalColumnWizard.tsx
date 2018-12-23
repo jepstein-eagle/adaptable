@@ -114,7 +114,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
             AdditionalColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
             AvailableAdditionalColumnValues: isColumn ?
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, DistinctCriteriaPairValue.DisplayValue) :
-                null
+                []
         } as ChartAdditionalColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
@@ -129,7 +129,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
 
     public Next(): void {
         this.props.Data.AdditionalColumnId = this.state.AdditionalColumn
-        this.props.Data.AdditionalColumnValues = this.state.AdditionalColumnValues
+        this.props.Data.AdditionalColumnValues = StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumn)? this.state.AdditionalColumnValues: []
     }
     public Back(): void {
         // todo

@@ -120,6 +120,11 @@ export interface IAdaptableBlotterOptions {
     */
     useAdaptableBlotterFloatingFilter?: boolean;
     /**
+    * Whether to show a warning if the primary key column identified in this Options does not exist
+    * Recommended to set to true (default) as a wrongly applied primary key can affect many functions
+    */
+    showMissingPrimaryKeyWarning?: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {

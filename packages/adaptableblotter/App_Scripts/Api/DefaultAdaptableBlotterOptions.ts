@@ -21,6 +21,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     ignoreCaseInQueries: true,
     useDefaultVendorGridThemes: true,
     useAdaptableBlotterFilterForm: true,
-    useAdaptableBlotterFloatingFilter: true
-}
+    useAdaptableBlotterFloatingFilter: true,
+    showMissingPrimaryKeyWarning: true
+}   
 
