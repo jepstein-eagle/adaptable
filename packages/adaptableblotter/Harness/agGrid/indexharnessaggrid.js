@@ -43,7 +43,7 @@ function InitTradeBlotter() {
   // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
   let adaptableBlotterOptions = {
   //  primaryKey: "date", // pk for blotter - required
-    primaryKey: "fdfdf", // pk for blotter - required
+    primaryKey: "tradeId", // pk for blotter - required
     userName: "demo user", // name of current user
     blotterId: "demo blotter 2.5", // id for blotter
     enableAuditLog: false, // not running audit log

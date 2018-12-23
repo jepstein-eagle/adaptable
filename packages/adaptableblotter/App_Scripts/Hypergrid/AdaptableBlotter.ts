@@ -231,6 +231,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(() => {
                 let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
                 this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+                this.checkPrimaryKeyExists();
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
@@ -1521,6 +1522,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public redraw() {
         this.ReindexAndRepaint();
+    }
+
+    public checkPrimaryKeyExists(): void {
+        let pkColumn: IColumn = ColumnHelper.getColumnFromId(this.BlotterOptions.primaryKey, this.getState().Grid.Columns);
+        if (pkColumn == null) {
+            let errorMessage: string = "The PK Column '" + this.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
+            if (this.BlotterOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
+                this.api.alertShowError("No Primary Key", errorMessage, true)
+            }else{ // otherwise just log it
+                LoggingHelper.LogError(errorMessage);
+            }
+        }
     }
 
 }

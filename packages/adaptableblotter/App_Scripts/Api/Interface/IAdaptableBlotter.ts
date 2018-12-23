@@ -54,6 +54,7 @@ export interface IAdaptableBlotter {
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
+    checkPrimaryKeyExists(): void
     
     // cell / column selection
     getActiveCell(): ICellInfo

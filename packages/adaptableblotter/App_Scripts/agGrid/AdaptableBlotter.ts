@@ -212,7 +212,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
                     this.gridOptions.api.refreshHeader();
                 }
-                this.checkPrimaryKey();
+                this.checkPrimaryKeyExists();
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
@@ -1770,11 +1770,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    private checkPrimaryKey(): any {
+    public checkPrimaryKeyExists(): void {
         let pkColumn: IColumn = ColumnHelper.getColumnFromId(this.BlotterOptions.primaryKey, this.getState().Grid.Columns);
         if (pkColumn == null) {
             let errorMessage: string = "The PK Column '" + this.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
-            if (this.BlotterOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option
+            if (this.BlotterOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
                 this.api.alertShowError("No Primary Key", errorMessage, true)
             }else{ // otherwise just log it
                 LoggingHelper.LogError(errorMessage);

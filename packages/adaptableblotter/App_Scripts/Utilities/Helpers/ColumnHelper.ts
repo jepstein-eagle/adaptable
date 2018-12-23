@@ -5,6 +5,7 @@ import { DataType } from '../Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { IColumnCategory } from '../../Api/Interface/Interfaces';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 
 export module ColumnHelper {
 
@@ -105,4 +106,5 @@ export module ColumnHelper {
         })
         return returnValue;
     }
+
 }
