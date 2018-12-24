@@ -234,9 +234,31 @@ export module Helper {
 
     export function StringifyValue(value: any): string {
 
-    if (!isNaN(Number(value))) {
-     return Number(value).toString()
+        if (!isNaN(Number(value))) {
+            return Number(value).toString()
+        }
     }
-}
+
+
+    export function RoundNumber(numberToRound: any, decimalPlaces: number): number {
+        switch (decimalPlaces) {
+            case 1:
+                return Math.round(numberToRound * 10) / 10;
+            case 2:
+                return Math.round(numberToRound * 100) / 100;
+            case 3:
+                return Math.round(numberToRound * 1000) / 1000;
+            case 4:
+                return Math.round(numberToRound * 10000) / 10000;
+            case 5:
+                return Math.round(numberToRound * 100000) / 100000;
+            case 6:
+                return Math.round(numberToRound * 1000000) / 1000000;
+
+        }
+    }
+    export function RoundNumberTo4dp(numberToRound: any): number {
+        return RoundNumber(numberToRound, 4);
+    }
 }
 

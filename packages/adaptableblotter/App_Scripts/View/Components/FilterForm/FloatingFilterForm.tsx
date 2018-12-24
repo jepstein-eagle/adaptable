@@ -1,6 +1,7 @@
 import * as DeepDiff from 'deep-diff'
 import * as React from "react";
 import * as Redux from "redux";
+import * as _ from 'lodash'
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
@@ -109,6 +110,9 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         </span>
     }
 
+    // debouncedRunQuickSearch = _.debounce((searchText: string) => this.runTextchanged(searchText), 250);
+    // debouncedSetFilter = _.debounce((columnFilter: IColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
+
 
     OnTextChange(searchText: string) {
         // as soon as anything changes clear existing column filter
@@ -155,7 +159,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
                 operand1 = values[0];
                 operand2 = values[1];
             }
-            let range: IRange =  RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
+            let range: IRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
             let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], [], [], [range])
             this.createColumnFilter(expression, searchText)
         }

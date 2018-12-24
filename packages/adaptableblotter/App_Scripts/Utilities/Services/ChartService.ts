@@ -10,6 +10,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { AxisTotal } from '../ChartEnums';
+import { Helper } from '../Helpers/Helper';
 
 
 export class ChartService implements IChartService {
@@ -45,26 +46,25 @@ export class ChartService implements IChartService {
 
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
-            // need to revisit and see if we really do want always group...
-            // if we have additional column values then do those 
-            // NB: currently only doing first - want to? or all?
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
                     let columnValueKVP: IKeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
-                    let groupedTotal = this.buildTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns, showAverageTotal)
-                    chartDataRow[columnValue] = groupedTotal
+                    chartDefinition.YAxisColumnIds.forEach(colID => {
+                        let colFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
+                        let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal)
+                        chartDataRow[colFriendlyName + '(' + columnValue + ")"] = total;
+                    });
                 })
             } else { // otherwise do the y cols
                 chartDefinition.YAxisColumnIds.forEach(colID => {
-                    let groupedTotal = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal)
-                    let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
-                    chartDataRow[colName] = groupedTotal
-
+                    let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
+                    let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
+                    chartDataRow[colName] = total;
                 })
             }
             return chartDataRow
         })
-        //  console.log(chartData);
+        // console.log(chartData);
         return chartData
     }
 
@@ -92,7 +92,10 @@ export class ChartService implements IChartService {
                 finalTotal += Number(columnValue)
             }
         })
-        return (showAverageTotal) ? (finalTotal / returnedRecordCount) : finalTotal;
+        if (showAverageTotal) {
+            finalTotal = (finalTotal / returnedRecordCount)
+        }
+        return Helper.RoundNumberTo4dp(finalTotal);
     }
 
     private getAdditionalColumnValues(chartDefinition: IChartDefinition): string[] {
