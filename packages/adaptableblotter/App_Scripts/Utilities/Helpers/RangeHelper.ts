@@ -26,6 +26,8 @@ export module RangeHelper {
             { Key: "=", Value: LeafExpressionOperator.Equals },
             { Key: ":", Value: LeafExpressionOperator.Between },
             { Key: "%", Value: LeafExpressionOperator.Contains },
+            { Key: "*", Value: LeafExpressionOperator.StartsWith },
+            { Key: "!", Value: LeafExpressionOperator.NotContains },
         ]
     }
 
@@ -68,7 +70,7 @@ export module RangeHelper {
         // NOTE:  This fails unless the text is > 5.  not working for 5:7 at the moment..
 
         let opKVP: IKeyValuePair = GetNumberOperatorPairs().find(kvp => kvp.Key == operatorText);
-        if (opKVP == null) { // no number so lets try a string
+        if (opKVP == null) { // no number so lets try a string -- not sure we need this now as all strings are in numbers (need to rethink that)
             opKVP = GetStringOperatorPairs().find(kvp => kvp.Key == operatorText);
         }
         return (opKVP) ? CreateValueRange(opKVP.Value, operandText, null) : null;

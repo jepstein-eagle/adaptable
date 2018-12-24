@@ -1352,7 +1352,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                     let range: IRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
                     if (range != null) {
-                        console.log(range)
                         for (let column of visibleCols) {
                             if (RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
                                 let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [range])

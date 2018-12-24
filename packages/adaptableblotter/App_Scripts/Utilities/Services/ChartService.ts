@@ -49,12 +49,12 @@ export class ChartService implements IChartService {
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
                     let columnValueKVP: IKeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
-                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns)
+                    let groupedTotal = this.buildTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns)
                     chartDataRow[columnValue] = groupedTotal
                 })
             } else { // otherwise do the y cols
                 chartDefinition.YAxisColumnIds.forEach(colID => {
-                    let groupedTotal = this.buildGroupedTotal(colID, [xAxisKVP], columns)
+                    let groupedTotal = this.buildTotal(colID, [xAxisKVP], columns)
                     let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
                     chartDataRow[colName] = groupedTotal
 
@@ -62,11 +62,12 @@ export class ChartService implements IChartService {
             }
             return chartDataRow
         })
-      //  console.log(chartData);
+        //  console.log(chartData);
         return chartData
     }
 
-    private buildGroupedTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[]): number {
+    private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[]): number {
+        let doAverage: boolean = true;
         let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,
@@ -81,14 +82,16 @@ export class ChartService implements IChartService {
             RangeExpressions: []
         }
 
-        let groupedTotal: number = 0;
+        let finalTotal: number = 0;
+        let returnedRecordCount: number = 0;
         this.blotter.forAllRecordsDo((row) => {
             if (ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
+                returnedRecordCount++;
                 let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn)
-                groupedTotal += Number(columnValue)
+                finalTotal += Number(columnValue)
             }
         })
-        return groupedTotal;
+        return (doAverage) ? (finalTotal / returnedRecordCount) : finalTotal;
     }
 
     private getAdditionalColumnValues(chartDefinition: IChartDefinition): string[] {
