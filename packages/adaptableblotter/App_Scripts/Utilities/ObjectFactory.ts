@@ -5,12 +5,11 @@ import { IColumn } from '../Api/Interface/IColumn';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
-import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { Expression } from '../Api/Expression';
 import { IVendorGridInfo, IColumnCategory } from '../Api/Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
-import { DefaultAdaptableBlotterOptions } from '../Api/DefaultAdaptableBlotterOptions';
 import { DefaultChartProperties } from '../api/DefaultChartProperties';
+import { AxisTotal } from './ChartEnums';
 
 export module ObjectFactory {
 
@@ -23,6 +22,7 @@ export module ObjectFactory {
             Title: "",
             SubTitle: "",
             YAxisColumnIds: [],
+            YAxisTotal: AxisTotal.Sum,
             XAxisColumnId: "",
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties
@@ -155,7 +155,7 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro = true): string {
+    export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter): string {
         let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?

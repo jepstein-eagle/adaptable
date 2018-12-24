@@ -145,7 +145,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         if (failedRules.length > 0) {
             let failedMessages: string[] = []
             failedRules.forEach(fr => {
-                let failedMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let failedMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = failedMessages.find(f => f == failedMessage);
                 if (existingMessage == null) {
                     failedMessages.push(failedMessage)
@@ -161,7 +161,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let warningMessages: string[] = []
             failedRules.forEach(fr => {
-                let warningMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let warningMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = warningMessages.find(w => w == warningMessage);
                 if (existingMessage == null) {
                     warningMessages.push(warningMessage)

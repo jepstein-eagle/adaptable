@@ -9,6 +9,7 @@ import { IKeyValuePair } from '../../Api/Interface/Interfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Api/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
+import { AxisTotal } from '../ChartEnums';
 
 
 export class ChartService implements IChartService {
@@ -40,6 +41,7 @@ export class ChartService implements IChartService {
         let chartData: any = xAxisColValues.map(cv => {
             let chartDataRow: any = new Object()
             chartDataRow[xAxisColumnName] = cv
+            let showAverageTotal = chartDefinition.YAxisTotal == AxisTotal.Average;
 
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
@@ -49,12 +51,12 @@ export class ChartService implements IChartService {
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
                     let columnValueKVP: IKeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
-                    let groupedTotal = this.buildTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns)
+                    let groupedTotal = this.buildTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns, showAverageTotal)
                     chartDataRow[columnValue] = groupedTotal
                 })
             } else { // otherwise do the y cols
                 chartDefinition.YAxisColumnIds.forEach(colID => {
-                    let groupedTotal = this.buildTotal(colID, [xAxisKVP], columns)
+                    let groupedTotal = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal)
                     let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
                     chartDataRow[colName] = groupedTotal
 
@@ -66,8 +68,7 @@ export class ChartService implements IChartService {
         return chartData
     }
 
-    private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[]): number {
-        let doAverage: boolean = true;
+    private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
         let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,
@@ -91,7 +92,7 @@ export class ChartService implements IChartService {
                 finalTotal += Number(columnValue)
             }
         })
-        return (doAverage) ? (finalTotal / returnedRecordCount) : finalTotal;
+        return (showAverageTotal) ? (finalTotal / returnedRecordCount) : finalTotal;
     }
 
     private getAdditionalColumnValues(chartDefinition: IChartDefinition): string[] {

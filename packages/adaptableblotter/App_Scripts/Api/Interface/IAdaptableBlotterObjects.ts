@@ -75,7 +75,8 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
 export interface IChartDefinition extends IAdaptableBlotterObject {
   Title: string
   SubTitle: string
-  YAxisColumnIds: string[]
+  YAxisColumnIds: string[];
+  YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string
   XAxisExpression: Expression
   AdditionalColumnId?: string

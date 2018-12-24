@@ -41,3 +41,8 @@ export enum HorizontalAlignment {
     Center = 'Center',
     Right = 'Right',
 }
+
+export enum AxisTotal {
+    Sum = 'Sum',
+    Average = 'Average',
+}

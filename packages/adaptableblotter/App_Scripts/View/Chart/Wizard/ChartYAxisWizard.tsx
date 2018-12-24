@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Well, Row } from 'react-bootstrap';
+import { ControlLabel, FormGroup, Col, Panel, Well, Row, Radio } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
@@ -9,6 +9,8 @@ import { IColumn } from "../../../Api/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
+import { AxisTotal } from "../../../Utilities/ChartEnums";
+import { Axis } from "igniteui-react-charts/ES2015/Axis";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
@@ -17,6 +19,7 @@ export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDe
 
 export interface ChartYAxisWizardState {
     YAxisColumnIds: string[],
+    YAxisTotal: AxisTotal
 }
 
 export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, ChartYAxisWizardState> implements AdaptableWizardStep {
@@ -24,6 +27,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
         super(props)
         this.state = {
             YAxisColumnIds: props.Data.YAxisColumnIds,
+            YAxisTotal: props.Data.YAxisTotal as AxisTotal
         }
     }
     render(): any {
@@ -49,6 +53,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
 
         return <div className={cssClassName}>
             <Panel header="Chart Colum Y Axis" bsStyle="primary">
+
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="yAxisColumn">
                         <Row>
@@ -59,6 +64,14 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                             </Col>
                             <Col xs={1} />
                         </Row>
+                        <Row>
+                            <Col xs={3} componentClass={ControlLabel}>Display Total:</Col>
+                            <Col xs={7} >
+                                <Radio inline value="Sum" checked={this.state.YAxisTotal == AxisTotal.Sum} onChange={(e) => this.onYAisTotalChanged(e)}>Sum</Radio>
+                                <Radio inline value="Average" checked={this.state.YAxisTotal == AxisTotal.Average} onChange={(e) => this.onYAisTotalChanged(e)}>Average</Radio>
+                            </Col>
+                        </Row>
+
                         {existingColumnRows}
                         {newRow}
 
@@ -70,7 +83,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
     }
 
     createRow(columnNumber: number, labelText: string, cssClassName: string, colId: string, index: number, availableCols: IColumn[]): any {
-        return <Row key={columnNumber} style={{marginTop: '10px'}}>
+        return <Row key={columnNumber} style={{ marginTop: '10px' }}>
             <Col xs={3} componentClass={ControlLabel}>{labelText}</Col>
             <Col xs={8}>
                 <ColumnSelector
@@ -102,6 +115,11 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
         this.setState({ YAxisColumnIds: currentColumns } as ChartYAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
+    private onYAisTotalChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let axisTotal: AxisTotal = (e.value == "Sum") ? AxisTotal.Sum : AxisTotal.Average;
+        this.setState({ YAxisTotal: axisTotal } as ChartYAxisWizardState, () => this.props.UpdateGoBackState())
+    }
 
     getAvailableNumericColumns(selectedColumnId: string): IColumn[] {
         let cols: IColumn[] = []
@@ -125,7 +143,8 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.YAxisColumnIds = this.state.YAxisColumnIds
+        this.props.Data.YAxisColumnIds = this.state.YAxisColumnIds;
+        this.props.Data.YAxisTotal = this.state.YAxisTotal
     }
     public Back(): void {
         // todo
