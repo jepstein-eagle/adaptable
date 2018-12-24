@@ -62,7 +62,7 @@ export class ChartService implements IChartService {
             }
             return chartDataRow
         })
-        console.log(chartData);
+      //  console.log(chartData);
         return chartData
     }
 

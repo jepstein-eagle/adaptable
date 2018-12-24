@@ -3,8 +3,10 @@ import { DataSourceIndexed } from './DataSourceIndexed'
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, DisplayAction } from '../Utilities/Enums'
-import { IAdvancedSearch, IColumnFilter } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, IColumnFilter, IRange } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
+import { Expression } from '../Api/Expression';
 
 /* There are 3 possible reasons why we might need to filter / search the grid:
 1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)
@@ -45,7 +47,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
 
         let serverSearchOption = blotter.BlotterOptions.serverSearchOption
-       
+
         // first let's assess ADVANCED SEARCH 
         // Note: serverSearchOption has to be 'None' becasue any other value then they are performing search on the server and nothing for us to do
         if (serverSearchOption == 'None') {
@@ -79,24 +81,25 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             // finally, let's assess QUICK SEARCH
             let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
             // check that we have quick search running
-            if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
-                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase()
+            let range: IRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
 
-                // with quick search because we need to colour and might not need to filter we dont return true/false but instead set a return value
+            if  (range != null) {
+                 // with quick search because we need to colour and might not need to filter we dont return true/false but instead set a return value
                 let recordReturnValue: boolean = false
 
                 let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
-                   
+
                 // only check on visible columns for quick search 
                 for (let column of columns.filter(c => c.Visible)) {
-                    let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId)
-                    let stringValueLowerCase = displayValue.toLowerCase()
+                    let isMatch: boolean = false;
+                    if (RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
+                        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [range])
 
-                    // we need to differentiate between whether to search for 'Contains' or 'StartsWith'
-                    let isMatch: boolean = (quickSearchState.Operator == LeafExpressionOperator.Contains) ?
-                        stringValueLowerCase.includes(quickSearchLowerCase) :
-                        stringValueLowerCase.startsWith(quickSearchLowerCase);
-
+                        if (ExpressionHelper.checkForExpressionFromRecord(expression, rowObject, [column], blotter)) {
+                            isMatch = true;
+                        }
+                    }
+                   
                     if (isMatch) {
                         //if we need to display ONLY the rows that matched the quicksearch and dont need to colour them then we can return true
                         if (quickSearchState.DisplayAction == DisplayAction.ShowRow) {
@@ -117,7 +120,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
         }
         return true;
     },
-     
+
     /* If any of the 3 causes of searching are present then return the index; 
     otherwise return the row count of the data source.
     */

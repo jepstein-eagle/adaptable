@@ -58,12 +58,7 @@ export interface IBlotterApi {
    * Retrieves the current quick search text
    */
   quickSearchGetValue(): string
-  /**
-   * Sets the Quick Search Operator
-   * @param operator Either 'Contains' to return any cell containing the text or 'StartsWith' to return only those where the value starts with the text
-   */
-  quickSearchSetOperator(operator: 'Contains' | 'StartsWith'): void
-  quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
+    quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
   quickSearchSetStyle(style: IStyle): void
 
   /**

@@ -82,7 +82,7 @@ import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { IColumn } from '../Api/Interface/IColumn';
 import { BlotterApi } from './BlotterApi';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
@@ -106,6 +106,8 @@ import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICe
 import { Events } from "ag-grid/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
+import { Expression } from '../Api/Expression';
+import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -388,25 +390,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
                 && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
                     || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
-                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
-                if (displayValue) {
-                    let stringValueLowerCase = displayValue.toLowerCase();
-                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
-                        case LeafExpressionOperator.Contains:
-                            {
-                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    return true
-                                }
-                            }
-                            break;
-                        case LeafExpressionOperator.StartsWith:
-                            {
-                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    return true
-                                }
-                            }
-                            break;
+
+                let range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+                if (range) {
+                    // not right but just checking...
+                    if (RangeHelper.IsColumnAppropriateForRange(range.Operator, col)) {
+                        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(columnId, null, null, null, [range])
+                        if (ExpressionHelper.checkForExpressionFromRecord(expression, params.node, [col], blotter)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -1326,6 +1318,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
         this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
             let columns = this.getState().Grid.Columns;
+            let visibleCols = columns.filter(c => c.Visible);
 
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
@@ -1353,32 +1346,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         }
                     }
                 }
-                //we assess quicksearch
+                //we next assess quicksearch
                 let quickSearchState = this.getState().QuickSearch;
-                if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-                    && quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-                    let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                    for (let column of columns.filter(c => c.Visible)) {
-                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
-                        if (displayValue != null) {
-                            let stringValueLowerCase = displayValue.toLowerCase();
-                            switch (quickSearchState.Operator) {
-                                case LeafExpressionOperator.Contains:
-                                    {
-                                        if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
-                                        }
-                                    }
-                                    break;
-                                case LeafExpressionOperator.StartsWith:
-                                    {
-                                        if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
-                                        }
-                                    }
-                                    break;
+                if (quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
+
+                    let range: IRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+                    if (range != null) {
+                        console.log(range)
+                        for (let column of visibleCols) {
+                            if (RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
+                                let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [range])
+
+                                if (ExpressionHelper.checkForExpressionFromRecord(expression, node, [column], this)) {
+                                    return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                }
                             }
                         }
+                    } else {
+                        return true; // is this right????
                     }
                     return false;
                 }

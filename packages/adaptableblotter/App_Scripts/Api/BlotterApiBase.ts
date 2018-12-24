@@ -185,10 +185,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
     return this.getState().QuickSearch.QuickSearchText;
   }
 
-  public quickSearchSetOperator(operator: 'Contains' | 'StartsWith'): void {
-    this.dispatchAction(QuickSearchRedux.QuickSearchSetOperator(operator as LeafExpressionOperator))
-  }
-
   public quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
     this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction as DisplayAction))
   }
