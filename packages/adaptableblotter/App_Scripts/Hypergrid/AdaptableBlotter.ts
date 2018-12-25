@@ -135,7 +135,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
+        console.log("before")
+        console.log(blotterOptions);
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions.auditLogOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditLogOptions, blotterOptions.auditLogOptions)
+        this.BlotterOptions.remoteConfigServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.remoteConfigServerOptions, blotterOptions.remoteConfigServerOptions)
+        this.BlotterOptions.layoutOptions = Object.assign({}, DefaultAdaptableBlotterOptions.layoutOptions, blotterOptions.layoutOptions)
+        console.log("after")
+        console.log(this.BlotterOptions);
+        
         this.hyperGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;

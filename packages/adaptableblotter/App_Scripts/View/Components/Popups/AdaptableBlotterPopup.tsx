@@ -14,7 +14,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   showModal: boolean;
   ComponentName: string;
   ComponentStrategy: string;
-   onHide?: Function;
+  onHide?: Function;
   Blotter: IAdaptableBlotter;
   PopupParams: string
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
@@ -26,15 +26,20 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.Blotter.BlotterOptions, document);
-    let accessLevel: AccessLevel =  EntitlementHelper.getEntitlementAccessLevelForStrategy(  this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy );
-     
+    let accessLevel: AccessLevel = EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
+
     if (this.props.ComponentName) {
+      let enableRemoteConfigServer: boolean = this.props.Blotter.BlotterOptions.remoteConfigServerOptions != null
+        && this.props.Blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
+        && this.props.Blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true
+
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
+
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
-        TeamSharingActivated: this.props.Blotter.BlotterOptions.enableRemoteConfigServer,
+        TeamSharingActivated: enableRemoteConfigServer,
         Columns: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
         UserFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
         SystemFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
@@ -60,7 +65,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         <div className={cssClassName + StyleConstants.MODAL_BASE}>
           <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
             <div className="ab_main_popup">
-              <div className={accessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+              <div className={accessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 {body}
               </div>
             </div>

@@ -69,6 +69,8 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
+import { BlotterApi } from '../../Hypergrid/BlotterApi';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,
@@ -196,8 +198,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     let engineWithMigrate: ReduxStorage.StorageEngine
     let engineReduxStorage: ReduxStorage.StorageEngine
 
-    if (blotter.BlotterOptions.enableRemoteConfigServer) {
-      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.remoteConfigServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+    if (blotter.BlotterOptions.remoteConfigServerOptions != null
+      && blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
+      && blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true
+      && StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.remoteConfigServerOptions.remoteConfigServerUrl)) {
+      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.remoteConfigServerOptions.remoteConfigServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
     }
     else {
       engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
@@ -273,18 +278,116 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
   }
 }
 
+
+
 var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
-      let oldState = middlewareAPI.getState()
+      switch (action.type) {
 
-      let ret = next(action);
-      if (action.type != ReduxStorage.SAVE) {
-        let newState = middlewareAPI.getState()
-        let diff = DeepDiff.diff(oldState, newState)
-        adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+        case ReduxStorage.SAVE: // do nothing
+        case INIT_STATE: {
+          return next(action);
+        }
+
+        // for the system state functions
+        case SystemRedux.SYSTEM_SET_HEALTH_STATUS:
+        case SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS:
+        case SystemRedux.SYSTEM_ALERT_ADD:
+        case SystemRedux.SYSTEM_ALERT_DELETE:
+        case SystemRedux.SYSTEM_ALERT_DELETE_ALL:
+        case SystemRedux.REPORT_START_LIVE:
+        case SystemRedux.REPORT_STOP_LIVE:
+        case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION:
+        case SystemRedux.SMARTEDIT_FETCH_PREVIEW:
+        case SystemRedux.SMARTEDIT_SET_VALID_SELECTION:
+        case SystemRedux.SMARTEDIT_SET_PREVIEW:
+        case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION:
+        case SystemRedux.BULK_UPDATE_SET_VALID_SELECTION:
+        case SystemRedux.BULK_UPDATE_SET_PREVIEW:
+
+        case GridRedux.GRID_SET_COLUMNS:
+        case GridRedux.GRID_ADD_COLUMN:
+        case GridRedux.GRID_HIDE_COLUMN:
+        case GridRedux.GRID_SET_VALUE_LIKE_EDIT:
+        case GridRedux.GRID_SELECT_COLUMN:
+        case GridRedux.GRID_SET_SORT:
+        case GridRedux.GRID_SET_SELECTED_CELLS:
+        case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY:
+        case GridRedux.GRID_SET_SELECTED_CELLS_SUMMARY:
+
+        case MenuRedux.SET_MENUITEMS:
+        case MenuRedux.BUILD_COLUMN_CONTEXT_MENU:
+        case MenuRedux.ADD_ITEM_COLUMN_CONTEXT_MENU:
+        case MenuRedux.CLEAR_COLUMN_CONTEXT_MENU:
+
+        case PopupRedux.POPUP_SHOW_SCREEN:
+        case PopupRedux.POPUP_HIDE_SCREEN:
+        case PopupRedux.POPUP_SHOW_LOADING:
+        case PopupRedux.POPUP_HIDE_LOADING:
+        case PopupRedux.POPUP_SHOW_ABOUT:
+        case PopupRedux.POPUP_HIDE_ABOUT:
+        case PopupRedux.POPUP_SHOW_ALERT:
+        case PopupRedux.POPUP_HIDE_ALERT:
+        case PopupRedux.POPUP_SHOW_PROMPT:
+        case PopupRedux.POPUP_HIDE_PROMPT:
+        case PopupRedux.POPUP_CONFIRM_PROMPT:
+        case PopupRedux.POPUP_SHOW_CONFIRMATION:
+        case PopupRedux.POPUP_CONFIRM_CONFIRMATION:
+        case PopupRedux.POPUP_CANCEL_CONFIRMATION:
+        case PopupRedux.POPUP_CLEAR_PARAM:
+
+        // do team sharing??
+
+        case ChartInternalRedux.CHART_INTERNAL_SHOW_CHART:
+        case ChartInternalRedux.CHART_INTERNAL_HIDE_CHART:
+        case ChartInternalRedux.CHART_INTERNAL_SET_CHART_DATA:
+        case ChartInternalRedux.CHART_INTERNAL_DEFINITION_SELECT: {
+          if (adaptableBlotter.BlotterOptions.auditLogOptions != null &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog != null &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog == true &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.auditInternalStateChanges != null &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.auditInternalStateChanges == true
+          ) {
+            let oldState = middlewareAPI.getState()
+
+            let ret = next(action);
+            console.log("auditing in internal: " + action.type);
+            let newState = middlewareAPI.getState()
+            let diff = DeepDiff.diff(oldState, newState)
+            adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+            return ret
+          } else {
+
+            return next(action);
+          }
+        }
+
+
+
+        default: {
+          if (adaptableBlotter.BlotterOptions.auditLogOptions != null &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog != null &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog == true &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.auditUserStateChanges != null &&
+            adaptableBlotter.BlotterOptions.auditLogOptions.auditUserStateChanges == true
+          ) {
+            let oldState = middlewareAPI.getState()
+
+            let ret = next(action);
+            console.log("auditing in user changes: " + action.type);
+            let newState = middlewareAPI.getState()
+            let diff = DeepDiff.diff(oldState, newState)
+            adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+            return ret
+          } else {
+
+            return next(action);
+          }
+        }
       }
-      return ret;
+
+
     }
   }
 }
@@ -297,101 +400,118 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
 var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
-      let state = middlewareAPI.getState()
 
-      // Note: not done custom sort, and many others
-      // also not done bulk update, smart edit as each has different issues...
-      switch (action.type) {
+      if (adaptableBlotter.BlotterOptions.auditLogOptions != null &&
+        adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog != null &&
+        adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog == true &&
+        adaptableBlotter.BlotterOptions.auditLogOptions.auditFunctionEvents != null &&
+        adaptableBlotter.BlotterOptions.auditLogOptions.auditFunctionEvents == true
+      ) {
+        let state = middlewareAPI.getState()
+       
+        // Note: not done custom sort, and many others
+        // also not done bulk update, smart edit as each has different issues...
+        // need to add lots more here as its very patch at the moment...
+        switch (action.type) {
 
-        case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-          let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
-          let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
-
-          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
-            "apply advanced search",
-            actionTyped.SelectedSearchName,
-            advancedSearch)
-
-
-          return next(action);
-        }
-        case AdvancedSearchRedux.ADVANCED_SEARCH_ADD_UPDATE: {
-          let actionTyped = <AdvancedSearchRedux.AdvancedSearchAddUpdateAction>action
-          let currentAdvancedSearch = state.AdvancedSearch.CurrentAdvancedSearch; // problem here if they have changed the name potentially...
-          if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
+          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
+            let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
+            let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
 
             adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
               "apply advanced search",
-              actionTyped.AdvancedSearch.Name,
-              actionTyped.AdvancedSearch)
+              actionTyped.SelectedSearchName,
+              advancedSearch)
 
+
+            return next(action);
           }
-          return next(action);
+          case AdvancedSearchRedux.ADVANCED_SEARCH_ADD_UPDATE: {
+            let actionTyped = <AdvancedSearchRedux.AdvancedSearchAddUpdateAction>action
+            let currentAdvancedSearch = state.AdvancedSearch.CurrentAdvancedSearch; // problem here if they have changed the name potentially...
+            if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
+
+              adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
+                "apply advanced search",
+                actionTyped.AdvancedSearch.Name,
+                actionTyped.AdvancedSearch)
+
+            }
+            return next(action);
+          }
+          case QuickSearchRedux.QUICK_SEARCH_APPLY: {
+            let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action
+
+            alert("in quick search function log!")
+            adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.QuickSearchStrategyId,
+              "apply quick search",
+              actionTyped.quickSearchText,
+              actionTyped.quickSearchText)
+
+            return next(action);
+          }
+          case PlusMinusRedux.PLUSMINUS_APPLY: {
+            let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
+
+            adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.PlusMinusStrategyId,
+              "apply plus minus",
+              "KeyPressed:" + actionTyped.KeyEventString,
+              actionTyped.CellInfos)
+            return next(action);
+          }
+          case ShortcutRedux.SHORTCUT_APPLY: {
+            let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
+
+            adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ShortcutStrategyId,
+              "apply shortcut",
+              "KeyPressed:" + actionTyped.KeyEventString,
+              { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId })
+            return next(action);
+          }
+          case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
+
+            adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId,
+              "apply column filters",
+              "filters applied",
+              state.ColumnFilter.ColumnFilters)
+
+            return next(action);
+          }
+          case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
+            let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
+
+            adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.UserFilterStrategyId,
+              "user filters changed",
+              "filters applied",
+              state.UserFilter.UserFilters)
+
+            return next(action);
+          }
+          case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+            let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action
+            // first create a new user filter based on the column filter and input name
+            let userFilter: IUserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
+            middlewareAPI.dispatch(UserFilterRedux.UserFilterAddUpdate(-1, userFilter));
+
+            // then create a new column filter from the user filter - so that it will display the user filter name
+            let newColumnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(userFilter);
+            middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(newColumnFilter));
+
+            return next(action);
+          }
+
+
+          default:{
+            console.log("not handling - function change: " + action.type);
+
+            return next(action);
         }
-        case QuickSearchRedux.QUICK_SEARCH_APPLY: {
-          let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action
-
-          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.QuickSearchStrategyId,
-            "apply quick search",
-            actionTyped.quickSearchText,
-            actionTyped.quickSearchText)
-
-          return next(action);
-        }
-        case PlusMinusRedux.PLUSMINUS_APPLY: {
-          let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
-
-          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.PlusMinusStrategyId,
-            "apply plus minus",
-            "KeyPressed:" + actionTyped.KeyEventString,
-            actionTyped.CellInfos)
-          return next(action);
-        }
-        case ShortcutRedux.SHORTCUT_APPLY: {
-          let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
-
-          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ShortcutStrategyId,
-            "apply shortcut",
-            "KeyPressed:" + actionTyped.KeyEventString,
-            { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId })
-          return next(action);
-        }
-        case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
-
-          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId,
-            "apply column filters",
-            "filters applied",
-            state.ColumnFilter.ColumnFilters)
-
-          return next(action);
-        }
-        case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
-          let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
-
-          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.UserFilterStrategyId,
-            "user filters changed",
-            "filters applied",
-            state.UserFilter.UserFilters)
-
-          return next(action);
-        }
-        case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
-          let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action
-          // first create a new user filter based on the column filter and input name
-          let userFilter: IUserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
-          middlewareAPI.dispatch(UserFilterRedux.UserFilterAddUpdate(-1, userFilter));
-
-          // then create a new column filter from the user filter - so that it will display the user filter name
-          let newColumnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(userFilter);
-          middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(newColumnFilter));
-
-          return next(action);
-        }
-
-
-        default:
-          return next(action);
       }
+
+      } else {
+        return next(action);
+      }
+
     }
   }
 }

@@ -16,11 +16,19 @@ export class AuditLogService {
     constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
         this.auditLogQueue = []
         this.blotterOptions = blotterOptions
-        if (this.blotterOptions.enableAuditLog) {
+        if (this.isAuditLogEnabled()) {
             this.ping()
             setInterval(() => this.ping(), 60000)
             setInterval(() => this.flushAuditQueue(), 1000)
         }
+    }
+
+    private isAuditLogEnabled(): boolean {
+        let isEnabled = false;
+        if (this.blotterOptions.auditLogOptions != null && this.blotterOptions.auditLogOptions.enableAuditLog != null) {
+            return this.blotterOptions.auditLogOptions.enableAuditLog;
+        }
+        return isEnabled;
     }
 
     public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedEvent[]) {

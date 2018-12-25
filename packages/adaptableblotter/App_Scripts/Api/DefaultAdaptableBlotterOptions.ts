@@ -4,9 +4,17 @@ import { IAdaptableBlotterOptions } from './Interface/IAdaptableBlotterOptions';
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     vendorGrid: null,
     primaryKey: "",
-    enableAuditLog: false,
-    enableRemoteConfigServer: false,
-    remoteConfigServerUrl: "",
+    auditLogOptions: {
+        enableAuditLog: false,
+        auditCellEdit: false,
+        auditFunctionEvents: false,
+        auditUserStateChanges: false,
+        auditInternalStateChanges: false,
+    },
+    remoteConfigServerOptions: {
+        enableRemoteConfigServer: false,
+        remoteConfigServerUrl: "",
+    },
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfig: null,
@@ -15,8 +23,10 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     columnValuesOnlyInQueries: false,
     adaptableBlotterContainer: "adaptableBlotter",
     vendorContainer: "grid",
-    includeVendorStateInLayouts: false,
-    autoSaveLayouts: false,
+    layoutOptions: {
+        includeVendorStateInLayouts: false,
+        autoSaveLayouts: false,
+    },
     getColumnValues: null,
     ignoreCaseInQueries: true,
     useDefaultVendorGridThemes: true,
@@ -24,5 +34,5 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     useAdaptableBlotterFloatingFilter: true,
     showMissingPrimaryKeyWarning: true,
     indicateFilteredColumns: true
-}   
+}
 

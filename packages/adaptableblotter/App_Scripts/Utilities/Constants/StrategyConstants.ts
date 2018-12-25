@@ -6,9 +6,9 @@ export const ApplicationStrategyId: string = "Application"
 export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
 export const CalendarStrategyId: string = "Calendar"
-export const PercentBarStrategyId: string = "PercentBar"
 export const CellValidationStrategyId: string = "CellValidation"
 export const ChartStrategyId: string = "Chart"
+export const ColumnCategoryStrategyId: string = "ColumnCategory"
 export const ColumnChooserStrategyId: string = "ColumnChooser"
 export const ColumnFilterStrategyId: string = "ColumnFilter"
 export const ColumnInfoStrategyId: string = "ColumnInfo"
@@ -23,7 +23,7 @@ export const FormatColumnStrategyId: string = "FormatColumn"
 export const FreeTextColumnStrategyId: string = "FreeTextColumn"
 export const HomeStrategyId: string = "Home"
 export const LayoutStrategyId: string = "Layout"
-export const ColumnCategoryStrategyId: string = "ColumnCategory"
+export const PercentBarStrategyId: string = "PercentBar"
 export const PlusMinusStrategyId: string = "PlusMinus"
 export const QuickSearchStrategyId: string = "QuickSearch"
 export const SelectColumnStrategyId: string = "SelectColumn"
@@ -41,9 +41,9 @@ export const ApplicationStrategyName: string = "Application"
 export const BulkUpdateStrategyName: string = "Bulk Update"
 export const CalculatedColumnStrategyName: string = "Calculated Column"
 export const CalendarStrategyName: string = "Calendar"
-export const PercentBarStrategyName: string = "Percent Bar"
 export const CellValidationStrategyName: string = "Cell Validation"
 export const ChartStrategyName: string = "Chart"
+export const ColumnCategoryStrategyName: string = "Column Category"
 export const ColumnChooserStrategyName: string = "Column Chooser"
 export const ColumnFilterStrategyName: string = "Column Filter"
 export const ColumnInfoStrategyName: string = "Column Information"
@@ -57,7 +57,7 @@ export const FlashingCellsStrategyName: string = "Flashing Cells"
 export const FormatColumnStrategyName: string = "Format Column"
 export const FreeTextColumnStrategyName: string = "Free Text Column"
 export const LayoutStrategyName: string = "Layout"
-export const ColumnCategoryStrategyName: string = "Column Category"
+export const PercentBarStrategyName: string = "Percent Bar"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
 export const SelectColumnStrategyName: string = "Select Column"
@@ -75,9 +75,9 @@ export const ApplicationGlyph: string = "font"
 export const BulkUpdateGlyph: string = "hand-up"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"
-export const PercentBarGlyph: string = "transfer"
 export const CellValidationGlyph: string = "flag"
 export const ChartGlyph: string = "signal"
+export const ColumnCategoryGlyph: string = "link"
 export const ColumnChooserGlyph: string = "list-alt"
 export const ColumnFilterGlyph: string = "filter"
 export const ColumnInfoGlyph: string = "italic"
@@ -92,7 +92,7 @@ export const FormatColumnGlyph: string = "picture"
 export const FreeTextColumnGlyph: string = "comment"
 export const FunctionsGlyph: string = "home"
 export const LayoutGlyph: string = "th"
-export const ColumnCategoryGlyph: string = "link"
+export const PercentBarGlyph: string = "transfer"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
 export const SelectColumnGlyph: string = "compressed"
@@ -105,10 +105,10 @@ export const UserFilterGlyph: string = "user"
 
 export function getIdForStrategyName(strategyName: string) {
     switch (strategyName) {
-        case AlertStrategyName:
-            return AlertStrategyId
         case AdvancedSearchStrategyName:
             return AdvancedSearchStrategyId
+        case AlertStrategyName:
+            return AlertStrategyId
         case ApplicationStrategyName:
             return ApplicationStrategyId
         case BulkUpdateStrategyName:
@@ -119,10 +119,10 @@ export function getIdForStrategyName(strategyName: string) {
             return CalendarStrategyId
         case CellValidationStrategyName:
             return CellValidationStrategyId
-        case PercentBarStrategyName:
-            return PercentBarStrategyId
         case ChartStrategyName:
             return ChartStrategyId
+        case ColumnCategoryStrategyName:
+            return ColumnCategoryStrategyId
         case ColumnChooserStrategyName:
             return ColumnChooserStrategyId
         case ColumnFilterStrategyName:
@@ -149,8 +149,8 @@ export function getIdForStrategyName(strategyName: string) {
             return FreeTextColumnStrategyId
         case LayoutStrategyName:
             return LayoutStrategyId
-        case ColumnCategoryStrategyName:
-            return ColumnCategoryStrategyId
+        case PercentBarStrategyName:
+            return PercentBarStrategyId
         case PlusMinusStrategyName:
             return PlusMinusStrategyId
         case QuickSearchStrategyName:
@@ -175,10 +175,10 @@ export function getIdForStrategyName(strategyName: string) {
 
 export function getNameForStrategyId(strategyID: string) {
     switch (strategyID) {
-        case AlertStrategyId:
-            return AlertStrategyName
         case AdvancedSearchStrategyId:
             return AdvancedSearchStrategyName
+        case AlertStrategyId:
+            return AlertStrategyName
         case ApplicationStrategyId:
             return ApplicationStrategyName
         case BulkUpdateStrategyId:
@@ -189,10 +189,10 @@ export function getNameForStrategyId(strategyID: string) {
             return CalendarStrategyName
         case CellValidationStrategyId:
             return CellValidationStrategyName
-        case PercentBarStrategyId:
-            return PercentBarStrategyName
         case ChartStrategyId:
             return ChartStrategyName
+        case ColumnCategoryStrategyId:
+            return ColumnCategoryStrategyName
         case ColumnChooserStrategyId:
             return ColumnChooserStrategyName
         case ColumnFilterStrategyId:
@@ -219,8 +219,8 @@ export function getNameForStrategyId(strategyID: string) {
             return FreeTextColumnStrategyName
         case LayoutStrategyId:
             return LayoutStrategyName
-        case ColumnCategoryStrategyId:
-            return ColumnCategoryStrategyName
+        case PercentBarStrategyId:
+            return PercentBarStrategyName
         case PlusMinusStrategyId:
             return PlusMinusStrategyName
         case QuickSearchStrategyId:
@@ -244,10 +244,10 @@ export function getNameForStrategyId(strategyID: string) {
 
 export function getGhyphiconForStrategyId(strategyID: string) {
     switch (strategyID) {
-        case AlertStrategyId:
-            return AlertGlyph
         case AdvancedSearchStrategyId:
             return AdvancedSearchGlyph
+        case AlertStrategyId:
+            return AlertGlyph
         case ApplicationStrategyId:
             return ApplicationGlyph
         case BulkUpdateStrategyId:
@@ -258,10 +258,10 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return CalendarGlyph
         case CellValidationStrategyId:
             return CellValidationGlyph
-        case PercentBarStrategyId:
-            return PercentBarGlyph
         case ChartStrategyId:
             return ChartGlyph
+        case ColumnCategoryStrategyId:
+            return ColumnCategoryGlyph
         case ColumnChooserStrategyId:
             return ColumnChooserGlyph
         case ColumnFilterStrategyId:
@@ -284,8 +284,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return FreeTextColumnGlyph
         case LayoutStrategyId:
             return LayoutGlyph
-        case ColumnCategoryStrategyId:
-            return ColumnCategoryGlyph
+        case PercentBarStrategyId:
+            return PercentBarGlyph
         case PlusMinusStrategyId:
             return PlusMinusGlyph
         case QuickSearchStrategyId:

@@ -134,7 +134,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
+        console.log("before")
+        console.log(blotterOptions);
         this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
+        this.BlotterOptions.auditLogOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditLogOptions, blotterOptions.auditLogOptions)
+        this.BlotterOptions.remoteConfigServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.remoteConfigServerOptions, blotterOptions.remoteConfigServerOptions)
+        this.BlotterOptions.layoutOptions = Object.assign({}, DefaultAdaptableBlotterOptions.layoutOptions, blotterOptions.layoutOptions)
+        console.log("after")
+        console.log(this.BlotterOptions);
         this.gridOptions = this.BlotterOptions.vendorGrid
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
@@ -458,7 +465,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), 500);
     public saveGridLayout() {
-        if (this.BlotterOptions.includeVendorStateInLayouts) {
+        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
             LayoutHelper.autoSaveLayout(this);
         }
     }
@@ -1625,7 +1632,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
-        if (this.BlotterOptions.includeVendorStateInLayouts) {
+        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.autoSaveLayouts != null && this.BlotterOptions.layoutOptions.autoSaveLayouts) {
             let groupedState: any = null
             let test = this.gridOptions.columnApi.getAllDisplayedColumns();
             let groupedCol = test.find(c => ColumnHelper.isSpecialColumn(c.getColId()));

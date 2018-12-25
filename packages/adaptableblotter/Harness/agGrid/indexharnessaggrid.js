@@ -52,22 +52,34 @@ function InitTradeBlotter() {
   if (s == 2) {
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
+      vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
       //  primaryKey: "date", // pk for blotter - required
       primaryKey: "tradeId", // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: "demo blotter 2.5", // id for blotter
-      enableAuditLog: false, // not running audit log
-      enableRemoteConfigServer: false, // not running remote config
-      // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
+
+      auditLogOptions: {
+        enableAuditLog: true,
+        auditCellEdit: false,
+        auditFunctionEvents: true,
+        auditUserStateChanges: false,
+        auditInternalStateChanges: false,
+      },
+      //  remoteConfigServerOptions: {
+      //      enableRemoteConfigServer: false,
+      //  remoteConfigServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+      //  },
+
       predefinedConfig: categoryJson,
       //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       iPushPullConfig: {
         api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
         api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
       },
-      includeVendorStateInLayouts: true, // whether layouts should include things like column size
-      autoSaveLayouts: true, // layouts will save automatically
-      vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
+      layoutOptions: {
+        includeVendorStateInLayouts: true,
+        // autoSaveLayouts: true,
+      },
       ignoreCaseInQueries: true,
       maxColumnValueItemsDisplayed: 200,
       //  useDefaultVendorGridThemes: true,
@@ -78,7 +90,6 @@ function InitTradeBlotter() {
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
-
 
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
     window.adaptableblotter = adaptableblotter;

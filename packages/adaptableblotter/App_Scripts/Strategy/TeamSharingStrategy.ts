@@ -11,11 +11,13 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     }
 
     protected addPopupMenuItem() {
-            this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
-     }
+        this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
+    }
 
-    protected hasPopupMenu(): boolean{
-        return  this.blotter.BlotterOptions.enableRemoteConfigServer;
+    protected hasPopupMenu(): boolean {
+        return this.blotter.BlotterOptions.remoteConfigServerOptions != null
+            && this.blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
+            && this.blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true;
     }
 
     protected InitState() {

@@ -13,7 +13,6 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { IDataChangedEvent, IDataChangingEvent } from '../Utilities/Services/Interface/IAuditService';
 
-
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
     protected AlertState: AlertState
 
@@ -47,16 +46,16 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
 
     public CheckDataChanged(dataChangedEvent: IDataChangedEvent): IAlertDefinition[] {
-        let editingRules = this.AlertState.AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
+        let relatedAlertDefinitions = this.AlertState.AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
         let triggeredAlerts: IAlertDefinition[] = [];
-        if (editingRules.length > 0) {
+        if (relatedAlertDefinitions.length > 0) {
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
             // first check the rules which have expressions
-            let expressionRules: IAlertDefinition[] = editingRules.filter(r => ExpressionHelper.IsNotEmptyExpression(r.Expression));
+            let expressionAlertDefinitions: IAlertDefinition[] = relatedAlertDefinitions.filter(r => ExpressionHelper.IsNotEmptyExpression(r.Expression));
 
-            if (expressionRules.length > 0) {
-                for (let expressionRule of expressionRules) {
+            if (expressionAlertDefinitions.length > 0) {
+                for (let expressionRule of expressionAlertDefinitions) {
                     let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(expressionRule.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter);
                     if (isSatisfiedExpression && this.IsAlertTriggered(expressionRule, dataChangedEvent, columns)) {
                         triggeredAlerts.push(expressionRule);
@@ -65,24 +64,21 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
             }
 
             // now check the rules without expressions//
-            let noExpressionRules: IAlertDefinition[] = editingRules.filter(r => ExpressionHelper.IsEmptyExpression(r.Expression));
+            let noExpressionRules: IAlertDefinition[] = relatedAlertDefinitions.filter(r => ExpressionHelper.IsEmptyExpression(r.Expression));
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {
                     triggeredAlerts.push(noExpressionRule);
                 }
             }
-        }
-        let dataChangingEvent: IDataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue }
-        if (ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,
-                "CheckingAudit",
-                "AlertsTriggered",
-                { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent })
-        } else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,
-                "CheckingAudit",
-                "Ok",
-                { DataChangingEvent: dataChangingEvent })
+
+            if (ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
+                let dataChangingEvent: IDataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue }
+
+                this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,
+                    "Data Changed",
+                    "Alerts Triggered",
+                    { failedRules: triggeredAlerts, DataChangingEvent: dataChangingEvent })
+            }
         }
         return triggeredAlerts;
     }
@@ -93,7 +89,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
             return true;
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
-        let column: IColumn =ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns)
+        let column: IColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns)
         let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(alert.Range, dataChangedEvent.NewValue, dataChangedEvent.OldValue, column, this.blotter, null)
         return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter)
     }

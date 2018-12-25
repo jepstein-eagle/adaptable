@@ -21,18 +21,18 @@ export module ColumnFilterHelper {
         return infoBody;
     }
 
- export function   getColumnFiltersDescription(columnFilters: IColumnFilter[], columns: IColumn[], blotter: IAdaptableBlotter): string {
+    export function getColumnFiltersDescription(columnFilters: IColumnFilter[], columns: IColumn[], blotter: IAdaptableBlotter): string {
         if (blotter && !blotter.isFilterable()) {
             return "Grid is not filterable"
         }
 
-       if (ArrayExtensions.IsNullOrEmpty(columnFilters)) {
+        if (ArrayExtensions.IsNullOrEmpty(columnFilters)) {
             return "No Column Filter Active"
         }
-        let stringarr:string[]= ColumnFilterHelper.ConvertColumnFiltersToKVPArray(columnFilters, columns).map(kvp => {
+        let stringarr: string[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(columnFilters, columns).map(kvp => {
             return kvp.Key + ": " + kvp.Value
         })
-       return stringarr.join("; ")
+        return stringarr.join("; ")
     }
 }
 

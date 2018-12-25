@@ -65,7 +65,7 @@ export module Helper {
             .trim();
     }
 
-    function replacer(a: string, b: string, c: string) {
+    function replacer(b: string, c: string) {
         return b.toUpperCase() + c;
     }
 
@@ -260,5 +260,7 @@ export module Helper {
     export function RoundNumberTo4dp(numberToRound: any): number {
         return RoundNumber(numberToRound, 4);
     }
+
+  
 }
 

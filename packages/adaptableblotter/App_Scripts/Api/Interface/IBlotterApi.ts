@@ -17,6 +17,7 @@ export interface IBlotterApi {
   setGridData(data: any): void;
 
 
+
   /**
    * Selects the layout
    * @param layoutName has to be an existing layout
@@ -216,7 +217,7 @@ export interface IBlotterApi {
   /**
    * Sets which coloured System Status button is displayed in the Home Toolbar
    * @param statusMessage The message to show when the button is clicked
-   * @param statusColour The colour of the buttton - also influences the type of message (red: error, amber: warning etc)
+   * @param statusColour The colour of the buttton - also influences the type of message (i.e. red: error, amber: warning, green: info)
    */
   systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
 

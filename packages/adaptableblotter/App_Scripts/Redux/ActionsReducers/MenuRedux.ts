@@ -1,6 +1,7 @@
 import * as Redux from 'redux';
 import { IMenuItem } from '../../Api/Interface/IMenu';
 import { MenuState } from './Interface/IState'
+
 export const SET_MENUITEMS = 'SET_MENUITEMS';
 export const BUILD_COLUMN_CONTEXT_MENU = 'BUILD_COLUMN_CONTEXT_MENU';
 export const ADD_ITEM_COLUMN_CONTEXT_MENU = 'ADD_ITEM_COLUMN_CONTEXT_MENU';
