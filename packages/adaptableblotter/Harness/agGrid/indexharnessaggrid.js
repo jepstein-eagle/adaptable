@@ -4,10 +4,17 @@ var quickSearchText
 var trades
 
 function runQuickSearch() {
-  // silly function to demo calling api outside of blotter
-  let element = document.getElementById("txtInput")
-  adaptableblotter.api.layoutSet("neil")
+  let element = document.getElementById("txtQuickSearchText")
+  adaptableblotter.api.quickSearchRun(element.value)
 }
+
+function clearQuickSearch() {
+  let element = document.getElementById("txtQuickSearchText")
+  element.value = ""
+  adaptableblotter.api.quickSearchClear()
+}
+
+
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
   trades = dataGen.getTrades(200);
@@ -42,61 +49,61 @@ function InitTradeBlotter() {
 
   let s = 2;
 
-  if(s==2){
-  // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
-  let adaptableBlotterOptions = {
-    //  primaryKey: "date", // pk for blotter - required
-    primaryKey: "tradeId", // pk for blotter - required
-    userName: "demo user", // name of current user
-    blotterId: "demo blotter 2.5", // id for blotter
-    enableAuditLog: false, // not running audit log
-    enableRemoteConfigServer: false, // not running remote config
-    // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
-    predefinedConfig: categoryJson,
-    //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
-    iPushPullConfig: {
-      api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-      api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-    },
-    includeVendorStateInLayouts: true, // whether layouts should include things like column size
-    autoSaveLayouts: true, // layouts will save automatically
-    vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
-    ignoreCaseInQueries: true,
-    maxColumnValueItemsDisplayed: 200,
-    //  useDefaultVendorGridThemes: true,
-    //useAdaptableBlotterFilterForm: false,
-    // useAdaptableBlotterQuickFilter: false
-    // getColumnValues: retrieveValues,
-    //  maxColumnValueItemsDisplayed: 5
-  }
-
-  // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
-
- 
-  adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-  window.adaptableblotter = adaptableblotter;
-
-  adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
-    dataChangeHack(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
-  });
-
-  adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
-    apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
-  });
-  adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
-    listenToColumnStateChange(columnChangedArgs))
-  adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
-    stateChangedArgs))
-  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
-    listenToSearchChange(searchChangedArgs))
-  setTimeout(() => {
-    if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ==
-      "Ab_Default_Layout") {
-      gridOptions.columnApi.autoSizeAllColumns(), 2;
+  if (s == 2) {
+    // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
+    let adaptableBlotterOptions = {
+      //  primaryKey: "date", // pk for blotter - required
+      primaryKey: "tradeId", // pk for blotter - required
+      userName: "demo user", // name of current user
+      blotterId: "demo blotter 2.5", // id for blotter
+      enableAuditLog: false, // not running audit log
+      enableRemoteConfigServer: false, // not running remote config
+      // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
+      predefinedConfig: categoryJson,
+      //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+      iPushPullConfig: {
+        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+      },
+      includeVendorStateInLayouts: true, // whether layouts should include things like column size
+      autoSaveLayouts: true, // layouts will save automatically
+      vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
+      ignoreCaseInQueries: true,
+      maxColumnValueItemsDisplayed: 200,
+      //  useDefaultVendorGridThemes: true,
+      //useAdaptableBlotterFilterForm: false,
+      // useAdaptableBlotterQuickFilter: false
+      // getColumnValues: retrieveValues,
+      //  maxColumnValueItemsDisplayed: 5
     }
-  })
 
-}
+    // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
+
+
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
+    window.adaptableblotter = adaptableblotter;
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
+      dataChangeHack(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
+    });
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
+      apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
+    });
+    adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
+      listenToColumnStateChange(columnChangedArgs))
+    adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
+      stateChangedArgs))
+    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
+      listenToSearchChange(searchChangedArgs))
+    setTimeout(() => {
+      if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ==
+        "Ab_Default_Layout") {
+        gridOptions.columnApi.autoSizeAllColumns(), 2;
+      }
+    })
+
+  }
 
 }
 

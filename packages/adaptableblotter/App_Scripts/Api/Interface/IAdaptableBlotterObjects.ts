@@ -2,7 +2,7 @@ import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType 
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment  } from '../../Utilities/ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility  } from '../../Utilities/ChartEnums';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -93,10 +93,15 @@ export interface IChartProperties {
   EnableCrosshairsAnnotations?: boolean;
   // Y Axis
   YAxisLabelLocation?: AxisLabelsLocation
-  YAxisLabelTextColor?: string
+  YAxisLabelVisibility?: LabelVisibility
+  YAxisLabelColor?: string
+  YAxisTitleColor?: string
   YAxisMinimumValue?: number
   // x Axis
-  XAxisLabelTextColor?: string
+  XAxisLabelVisibility?: LabelVisibility
+  XAxisLabelColor?: string
+  XAxisTitle?: string
+  XAxisTitleColor?: string
   // Misc
   EnableTransitions?: boolean;
   TransitionInDuration? : number

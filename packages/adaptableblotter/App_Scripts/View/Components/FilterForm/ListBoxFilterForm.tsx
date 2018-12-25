@@ -239,7 +239,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
     }
 
     private onColumnOperand2SelectedChanged(column: IColumn) {
-        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand2Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId }
+        let editedRange: IRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId }
         this.setState({ UiSelectedRange: editedRange } as ListBoxFilterFormState, () => this.raiseOnChangeCustomExpression())
     }
 

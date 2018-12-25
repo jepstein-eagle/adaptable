@@ -46,3 +46,8 @@ export enum AxisTotal {
     Sum = 'Sum',
     Average = 'Average',
 }
+
+export enum LabelVisibility {
+    Visible = 'visible',
+    Collapsed = 'collapsed',
+}

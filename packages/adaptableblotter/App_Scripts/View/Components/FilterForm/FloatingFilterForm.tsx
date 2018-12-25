@@ -1,7 +1,7 @@
 import * as DeepDiff from 'deep-diff'
 import * as React from "react";
 import * as Redux from "redux";
-import * as _ from 'lodash'
+    import * as _ from 'lodash'
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
