@@ -662,7 +662,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-                dataChangedEvents.push(dataChangedEvent)                
+                dataChangedEvents.push(dataChangedEvent)
             }
         })
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -671,7 +671,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
 
-       
+
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
@@ -1203,9 +1203,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
-                let dataChangingEvent: IDataChangingEvent;
-                dataChangingEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) };
-                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
+
+                let dataChangedEvent: IDataChangedEvent =
+                {
+                    OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+                    NewValue: this._currentEditor.getValue(),
+                    ColumnId: params.column.getColId(),
+                    IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
+                    Timestamp: null,
+                    Record: null
+                }
+
+                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
                 if (failedRules.length > 0) {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
@@ -1219,9 +1228,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                         });
                         let cellInfo: ICellInfo = {
-                            Id: dataChangingEvent.IdentifierValue,
-                            ColumnId: dataChangingEvent.ColumnId,
-                            Value: dataChangingEvent.NewValue
+                            Id: dataChangedEvent.IdentifierValue,
+                            ColumnId: dataChangedEvent.ColumnId,
+                            Value: dataChangedEvent.NewValue
                         };
                         let confirmation: IUIConfirmation = {
                             CancelText: "Cancel Edit",
@@ -1239,16 +1248,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
                 let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
                 if (!whatToReturn) {
-                    //no failed validation so we raise the edit auditlog
-                    let dataChangedEvent: IDataChangedEvent =
-                    {
-                        OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
-                        NewValue: dataChangingEvent.NewValue,
-                        ColumnId: dataChangingEvent.ColumnId,
-                        IdentifierValue: dataChangingEvent.IdentifierValue,
-                        Timestamp: null,
-                        Record: null
-                    }
+
                     if (this.AuditLogService.IsAuditCellEditsEnabled) {
                         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                     }

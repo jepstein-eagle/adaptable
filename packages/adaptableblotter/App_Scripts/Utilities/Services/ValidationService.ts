@@ -11,7 +11,7 @@ import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode, DisplayAction } from '../Enums';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IDataChangingEvent } from '../../Api/Interface/IDataChanges';
+import { IDataChangingEvent, IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
 export class ValidationService implements IValidationService {
 
@@ -19,7 +19,7 @@ export class ValidationService implements IValidationService {
     }
 
     // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-    public ValidateCellChanging(dataChangedEvent: IDataChangingEvent): ICellValidationRule[] {
+    public ValidateCellChanging(dataChangedEvent: IDataChangedEvent): ICellValidationRule[] {
         let failedWarningRules: ICellValidationRule[] = [];
         // first check that if primary key change, the new value is unique
         if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {

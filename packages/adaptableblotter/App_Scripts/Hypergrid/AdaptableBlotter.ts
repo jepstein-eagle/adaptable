@@ -1176,7 +1176,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
             // then check validation
-            let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
+            let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
             if (failedRules.length > 0) {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
