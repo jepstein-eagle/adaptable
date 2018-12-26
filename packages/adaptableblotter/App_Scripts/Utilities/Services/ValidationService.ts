@@ -98,7 +98,7 @@ export class ValidationService implements IValidationService {
     }
 
     private logAuditValidationEvent(action: string, info: string, data?: any): void {
-        if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled()) {
+        if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
             this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
                 action,
                 info,

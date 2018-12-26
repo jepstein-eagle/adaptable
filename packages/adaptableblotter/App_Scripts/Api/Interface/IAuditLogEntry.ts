@@ -8,14 +8,8 @@ export interface IAuditLogEntry {
         primarykey: string
         primarykey_column_id: string
         column_id: string
-        old_value_string: string
-        new_value_string: string
-        old_value_numeric?: number
-        new_value_numeric?: number
-        old_value_date?: Date
-        new_value_date?: Date
-        old_value_boolean?: boolean
-        new_value_boolean?: boolean
+        previous_value: string
+        new_value: string
     }
     adaptableblotter_function?: {
         name: string

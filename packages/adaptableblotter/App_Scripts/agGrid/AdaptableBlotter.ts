@@ -621,7 +621,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-                if (this.AuditLogService.isAuditCellEditsEnabled()) {
+                if (this.AuditLogService.IsAuditCellEditsEnabled) {
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                 }
                 this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
@@ -664,7 +664,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 dataChangedEvents.push(dataChangedEvent)                
             }
         })
-        if (this.AuditLogService.isAuditCellEditsEnabled()) {
+        if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
@@ -1248,7 +1248,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         Timestamp: null,
                         Record: null
                     }
-                    if (this.AuditLogService.isAuditCellEditsEnabled()) {
+                    if (this.AuditLogService.IsAuditCellEditsEnabled) {
                         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                     }
                     // it might be a free text column so we need to update the values

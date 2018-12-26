@@ -72,7 +72,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
             }
 
             if (ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
-                if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled()) {
+                if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
                     let dataChangingEvent: IDataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue }
 
                     this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,

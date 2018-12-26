@@ -18,6 +18,7 @@ import { Helper } from "../../Utilities/Helpers/Helper";
 import { Waiting } from "../Components/FilterForm/Waiting";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { raw } from "body-parser";
+import { IKeyValuePair } from "../../Api/Interface/Interfaces";
 
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -123,7 +124,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 // get ranges
                 let ranges = theProps.Expression.RangeExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
                 selectedColumnRanges = (ranges) ? ranges.Ranges : []
-                  
+
                 return {
                     SelectedColumnId: this.state.SelectedColumnId,
                     ColumnRawValueDisplayValuePairs: this.state.ColumnRawValueDisplayValuePairs, // we fill this later...
@@ -397,8 +398,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
     private getRawValuesForDisplayValues(selectedColumnDisplayValues: any[]): any[] {
         let columnRawValues: any[] = []
         selectedColumnDisplayValues.forEach(scv => {
-            let rawValue = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv).RawValue;
-            columnRawValues.push(rawValue)
+            let rawValueDisplayValuePair: IRawValueDisplayValuePair = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv);
+            if (rawValueDisplayValuePair) {
+                columnRawValues.push(rawValueDisplayValuePair.RawValue)
+            }
         })
         return columnRawValues;
     }

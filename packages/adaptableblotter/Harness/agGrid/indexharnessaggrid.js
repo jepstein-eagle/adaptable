@@ -59,7 +59,7 @@ function InitTradeBlotter() {
       blotterId: "demo blotter 2.5", // id for blotter
 
       auditLogOptions: {
-        auditCellEdits: false,
+        auditCellEdits: true,
         auditFunctionEvents: true,
         auditUserStateChanges: false,
         auditInternalStateChanges: false,

@@ -287,7 +287,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
     return function (action: Redux.Action) {
 
       // if audit state is turned off, then get out asap
-      if (!adaptableBlotter.AuditLogService.isAuditLogStateEnabled()) {
+      if (!adaptableBlotter.AuditLogService.IsAuditStateChangesEnabled) {
         return next(action);
       }
 
@@ -354,7 +354,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case ChartInternalRedux.CHART_INTERNAL_HIDE_CHART:
         case ChartInternalRedux.CHART_INTERNAL_SET_CHART_DATA:
         case ChartInternalRedux.CHART_INTERNAL_DEFINITION_SELECT: {
-          if (adaptableBlotter.AuditLogService.isAuditInternalStateChangesEnabled()) {
+          if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
             let oldState = middlewareAPI.getState()
             let ret = next(action);
             let newState = middlewareAPI.getState()
@@ -369,7 +369,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
 
         // for all other functions we audit state changes  if audit is set to log user state
         default: {
-          if (adaptableBlotter.AuditLogService.isAuditUserStateChangesEnabled()) {
+          if (adaptableBlotter.AuditLogService.IsAuditUserStateChangesEnabled) {
             let oldState = middlewareAPI.getState()
             let ret = next(action);
             let newState = middlewareAPI.getState()
@@ -394,7 +394,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
 
-      if (adaptableBlotter.AuditLogService.isAuditFunctionEventsEnabled()) {
+       if (adaptableBlotter.AuditLogService.IsAuditFunctionEventsEnabled) {
         let state = middlewareAPI.getState()
 
         // Note: not done custom sort, and many others
@@ -407,8 +407,8 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
             let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
 
             adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
-              "apply advanced search",
-              actionTyped.SelectedSearchName,
+              action.type,
+             StringExtensions.IsNullOrEmpty( actionTyped.SelectedSearchName)? "[No Advanced Search selected]": actionTyped.SelectedSearchName,
               advancedSearch)
 
 
@@ -420,7 +420,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
             if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
 
               adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
-                "apply advanced search",
+                action.type,
                 actionTyped.AdvancedSearch.Name,
                 actionTyped.AdvancedSearch)
 

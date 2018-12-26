@@ -527,7 +527,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Timestamp: null,
             Record: null
         }
-        if (this.AuditLogService.isAuditCellEditsEnabled()) {
+        if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
         }
         // it might be a free text column so we need to update the values
@@ -558,7 +558,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
          }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
-        if (this.AuditLogService.isAuditCellEditsEnabled()) {
+        if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
@@ -1148,6 +1148,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //         }
         //     });
         this.hyperGrid.addEventListener("fin-before-cell-edit", (event: any) => {
+            console.log(event.detail);
             // cell edit is about to happen so create datachanging and datahanged objects
             // these are to use to check for free text column, validation and audit log
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
@@ -1159,8 +1160,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             let dataChangedEvent: IDataChangedEvent =
                 {
-                    OldValue: null,
-                    NewValue: dataChangingEvent.NewValue,
+                    OldValue: event.detail.oldValue,
+                    NewValue: event.detail.newValue,
                     ColumnId: dataChangingEvent.ColumnId,
                     IdentifierValue: dataChangingEvent.IdentifierValue,
                     Timestamp: null,
@@ -1208,7 +1209,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
             // finally call auditlogservice
-            if (this.AuditLogService.isAuditCellEditsEnabled()) {
+            if (this.AuditLogService.IsAuditCellEditsEnabled) {
                 this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         });

@@ -106,8 +106,8 @@ function InitBlotter() {
         blotterId: "my Blotter",
         auditLogOptions: {
             auditCellEdits: true,
-            auditFunctionEvents: false,
-            auditUserStateChanges: false,
+            auditFunctionEvents: true,
+            auditUserStateChanges: true,
             auditInternalStateChanges: false,
         },
         //  remoteConfigServerOptions: {
