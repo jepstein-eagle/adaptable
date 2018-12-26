@@ -6,9 +6,9 @@ import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState, ChartInternalState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
-import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 

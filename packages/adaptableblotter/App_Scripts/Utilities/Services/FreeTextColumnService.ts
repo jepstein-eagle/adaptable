@@ -4,8 +4,8 @@ import { IFreeTextColumn } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
-import { IDataChangedEvent } from './Interface/IAuditService';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux'
+import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
 export class FreeTextColumnService implements IFreeTextColumnService {
     constructor(private blotter: IAdaptableBlotter) {

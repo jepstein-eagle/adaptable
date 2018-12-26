@@ -10,7 +10,7 @@ import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
 import { ICellInfo } from '../Api/Interface/Interfaces';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
+import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     protected BulkUpdateState: BulkUpdateState

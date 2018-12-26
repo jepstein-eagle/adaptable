@@ -6,7 +6,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IConditionalStyle } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IColumnCategory } from '../../Api/Interface/Interfaces';
-import { IDataChangedEvent } from '../../Utilities/Services/Interface/IAuditService';
+import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

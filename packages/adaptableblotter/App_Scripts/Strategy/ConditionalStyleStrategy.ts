@@ -7,8 +7,7 @@ import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Api/Interface/IColumn';
-import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
-import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
+import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState

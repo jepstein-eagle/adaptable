@@ -1,7 +1,6 @@
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../../Utilities/Enums';
-import { IDataChangedEvent } from '../../Utilities/Services/Interface/IAuditService'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
@@ -9,6 +8,7 @@ import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColumnCategory } from '../../Api/Interface/Interfaces';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

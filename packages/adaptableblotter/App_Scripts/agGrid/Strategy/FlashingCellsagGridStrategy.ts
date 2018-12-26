@@ -1,10 +1,10 @@
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy'
-import { IDataChangedEvent } from '../../Utilities/Services/Interface/IAuditService'
 import { DataType } from '../../Utilities/Enums'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
 import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {

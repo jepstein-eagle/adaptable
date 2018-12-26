@@ -18,7 +18,6 @@ import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRed
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 // services
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
-import { IAuditService, IDataChangedEvent, IDataChangingEvent } from '../Utilities/Services/Interface/IAuditService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { StyleService } from '../Utilities/Services/StyleService';
@@ -109,6 +108,8 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { Expression } from '../Api/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
+import { IAuditService } from '../Utilities/Services/Interface/IAuditService';
+import { IDataChangedEvent, IDataChangingEvent } from '../Api/Interface/IDataChanges';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 

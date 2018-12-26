@@ -69,7 +69,6 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { EnumExtensions } from '../Utilities/Extensions/EnumExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
-import { IDataChangingEvent, IAuditService, IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import { HypergridThemes } from './HypergridThemes';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
@@ -82,6 +81,8 @@ import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
+import { IAuditService } from '../Utilities/Services/Interface/IAuditService';
+import { IDataChangedEvent, IDataChangingEvent } from '../Api/Interface/IDataChanges';
 
 
 //icon to indicate toggle state

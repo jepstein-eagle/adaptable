@@ -1,5 +1,4 @@
 
-import { IDataChangingEvent } from './Interface/IAuditService';
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
@@ -12,6 +11,7 @@ import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode, DisplayAction } from '../Enums';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
+import { IDataChangingEvent } from '../../Api/Interface/IDataChanges';
 
 export class ValidationService implements IValidationService {
 

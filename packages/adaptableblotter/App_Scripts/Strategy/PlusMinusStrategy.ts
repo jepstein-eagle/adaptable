@@ -15,7 +15,7 @@ import { ICellInfo } from '../Api/Interface/Interfaces';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
+import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 
 
