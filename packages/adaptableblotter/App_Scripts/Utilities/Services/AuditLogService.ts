@@ -10,7 +10,7 @@ export class AuditLogService {
     private canSendLog: boolean = true
     private numberOfMissedPing: number = 0
     private blotterOptions: IAdaptableBlotterOptions
-    public IsAuditLogEnabled: boolean;
+    public IsAuditEnabled: boolean;
     public IsAuditStateChangesEnabled: boolean;
     public IsAuditCellEditsEnabled: boolean;
     public IsAuditFunctionEventsEnabled: boolean;
@@ -22,38 +22,38 @@ export class AuditLogService {
         this.auditLogQueue = []
         this.blotterOptions = blotterOptions
         this.setUpFlags(blotterOptions)
-        if (this.IsAuditLogEnabled) {
+        if (this.IsAuditEnabled) {
             this.ping()
-            setInterval(() => this.ping(), blotterOptions.auditLogOptions.pingInterval * 1000)
-            setInterval(() => this.flushAuditQueue(), blotterOptions.auditLogOptions.sendAuditLogsInterval * 1000)
+            setInterval(() => this.ping(), blotterOptions.auditOptions.pingInterval * 1000)
+            setInterval(() => this.flushAuditQueue(), blotterOptions.auditOptions.auditLogsSendInterval * 1000)
         }
     }
 
     private setUpFlags(blotterOptions: IAdaptableBlotterOptions) {
         // Internal State
-        if (blotterOptions.auditLogOptions != null && blotterOptions.auditLogOptions.auditInternalStateChanges != null) {
-            this.IsAuditInternalStateChangesEnabled = blotterOptions.auditLogOptions.auditInternalStateChanges;
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditInternalStateChanges != null) {
+            this.IsAuditInternalStateChangesEnabled = blotterOptions.auditOptions.auditInternalStateChanges;
         } else {
             this.IsAuditInternalStateChangesEnabled = false;
         }
 
         // User State
-        if (blotterOptions.auditLogOptions != null && blotterOptions.auditLogOptions.auditUserStateChanges != null) {
-            this.IsAuditUserStateChangesEnabled = blotterOptions.auditLogOptions.auditUserStateChanges;
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditUserStateChanges != null) {
+            this.IsAuditUserStateChangesEnabled = blotterOptions.auditOptions.auditUserStateChanges;
         } else {
             this.IsAuditUserStateChangesEnabled = false;
         }
 
         // Function Events
-        if (blotterOptions.auditLogOptions != null && blotterOptions.auditLogOptions.auditFunctionEvents != null) {
-            this.IsAuditFunctionEventsEnabled = blotterOptions.auditLogOptions.auditFunctionEvents;
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditFunctionEvents != null) {
+            this.IsAuditFunctionEventsEnabled = blotterOptions.auditOptions.auditFunctionEvents;
         } else {
             this.IsAuditFunctionEventsEnabled = false;
         }
 
         // Cell Edit
-        if (blotterOptions.auditLogOptions != null && blotterOptions.auditLogOptions.auditCellEdits != null) {
-            this.IsAuditCellEditsEnabled = blotterOptions.auditLogOptions.auditCellEdits;
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditCellEdits != null) {
+            this.IsAuditCellEditsEnabled = blotterOptions.auditOptions.auditCellEdits;
         } else {
             this.IsAuditCellEditsEnabled = false;
         }
@@ -62,7 +62,7 @@ export class AuditLogService {
         this.IsAuditStateChangesEnabled = this.IsAuditInternalStateChangesEnabled || this.IsAuditUserStateChangesEnabled;
 
         // General Audit Flag
-        this.IsAuditLogEnabled = this.IsAuditStateChangesEnabled || this.IsAuditFunctionEventsEnabled || this.IsAuditCellEditsEnabled;
+        this.IsAuditEnabled = this.IsAuditStateChangesEnabled || this.IsAuditFunctionEventsEnabled || this.IsAuditCellEditsEnabled;
     }
 
     public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedEvent[]) {

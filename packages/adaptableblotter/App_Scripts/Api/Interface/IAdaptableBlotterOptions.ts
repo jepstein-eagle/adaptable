@@ -30,7 +30,7 @@ export interface IAdaptableBlotterOptions {
      * Every keystroke, data change, user action etc. is logged
      * This is then sent as JSON to the Audit Http Channel
      */
-    auditLogOptions?: IAuditLogOptions;
+    auditOptions?: IAuditOptions;
     /**
      * Options for setting Remote Config Server
      * This allows you to store user state not in local storage (the default)
@@ -135,13 +135,13 @@ export interface IServerColumnValues {
     ColumnValues: string[];
 }
 
-export interface IAuditLogOptions {
+export interface IAuditOptions {
     auditCellEdits?: boolean;
     auditFunctionEvents?: boolean;
     auditUserStateChanges?: boolean;
     auditInternalStateChanges?: boolean;
     pingInterval?: number;
-    sendAuditLogsInterval ? : number;
+    auditLogsSendInterval ? : number;
 }
 
 export interface IRemoteConfigServerOptions {

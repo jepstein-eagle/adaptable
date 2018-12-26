@@ -4,13 +4,13 @@ import { IAdaptableBlotterOptions } from './Interface/IAdaptableBlotterOptions';
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     vendorGrid: null,
     primaryKey: "",
-    auditLogOptions: {
+    auditOptions: {
         auditCellEdits: false,
         auditFunctionEvents: false,
         auditUserStateChanges: false,
         auditInternalStateChanges: false,
         pingInterval: 60,
-        sendAuditLogsInterval: 1
+        auditLogsSendInterval: 1
     },
     remoteConfigServerOptions: {
         enableRemoteConfigServer: false,
