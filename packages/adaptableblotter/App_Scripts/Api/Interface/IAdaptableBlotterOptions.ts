@@ -1,4 +1,5 @@
 import { ILayout } from "./IAdaptableBlotterObjects";
+import { number } from "prop-types";
 
 /**
  * The class injected into the Adaptable Blotter at startup
@@ -139,6 +140,8 @@ export interface IAuditLogOptions {
     auditFunctionEvents?: boolean;
     auditUserStateChanges?: boolean;
     auditInternalStateChanges?: boolean;
+    pingInterval?: number;
+    sendAuditLogsInterval ? : number;
 }
 
 export interface IRemoteConfigServerOptions {

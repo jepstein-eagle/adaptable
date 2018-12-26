@@ -63,6 +63,7 @@ function InitTradeBlotter() {
         auditFunctionEvents: true,
         auditUserStateChanges: false,
         auditInternalStateChanges: false,
+        pingInterval: 120
       },
       //  remoteConfigServerOptions: {
       //      enableRemoteConfigServer: false,

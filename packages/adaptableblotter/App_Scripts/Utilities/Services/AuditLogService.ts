@@ -18,13 +18,14 @@ export class AuditLogService {
     public IsAuditInternalStateChangesEnabled: boolean;
 
     constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
+        console.log(blotterOptions);
         this.auditLogQueue = []
         this.blotterOptions = blotterOptions
         this.setUpFlags(blotterOptions)
         if (this.IsAuditLogEnabled) {
             this.ping()
-            setInterval(() => this.ping(), 60000)
-            setInterval(() => this.flushAuditQueue(), 1000)
+            setInterval(() => this.ping(), blotterOptions.auditLogOptions.pingInterval * 1000)
+            setInterval(() => this.flushAuditQueue(), blotterOptions.auditLogOptions.sendAuditLogsInterval * 1000)
         }
     }
 

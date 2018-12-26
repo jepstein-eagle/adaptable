@@ -9,7 +9,6 @@ export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 export const CREATE_USER_FILTER_FROM_COLUMN_FILTER = 'CREATE_USER_FILTER_FROM_COLUMN_FILTER';
 
-
 export interface UserFilterAddUpdateAction extends Redux.Action {
     Index: number
    UserFilter: IUserFilter
