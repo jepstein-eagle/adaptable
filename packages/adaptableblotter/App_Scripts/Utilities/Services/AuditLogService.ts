@@ -5,8 +5,6 @@ import { IDataChangedEvent } from "./Interface/IAuditService";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";
 
-
-
 export class AuditLogService {
     private auditLogQueue: Array<IAuditLogEntry>
     private canSendLog: boolean = true
@@ -23,12 +21,47 @@ export class AuditLogService {
         }
     }
 
-    private isAuditLogEnabled(): boolean {
-        let isEnabled = false;
-        if (this.blotterOptions.auditLogOptions != null && this.blotterOptions.auditLogOptions.enableAuditLog != null) {
-            return this.blotterOptions.auditLogOptions.enableAuditLog;
+    public isAuditLogEnabled(): boolean {
+        return this.isAuditCellEditsEnabled() ||
+            this.isAuditFunctionEventsEnabled() ||
+            this.isAuditInternalStateChangesEnabled() ||
+            this.isAuditUserStateChangesEnabled();
+    }
+
+    public isAuditLogStateEnabled(): boolean {
+        return this.isAuditInternalStateChangesEnabled() || this.isAuditUserStateChangesEnabled();
+    }
+
+    public isAuditCellEditsEnabled(): boolean {
+        if (this.blotterOptions.auditLogOptions != null &&
+            this.blotterOptions.auditLogOptions.auditCellEdits != null) {
+            return this.blotterOptions.auditLogOptions.auditCellEdits;
         }
-        return isEnabled;
+        return false;
+    }
+
+    public isAuditFunctionEventsEnabled(): boolean {
+        if (this.blotterOptions.auditLogOptions != null &&
+            this.blotterOptions.auditLogOptions.auditFunctionEvents != null) {
+            return this.blotterOptions.auditLogOptions.auditFunctionEvents;
+        }
+        return false;
+    }
+
+    public isAuditUserStateChangesEnabled(): boolean {
+        if (this.blotterOptions.auditLogOptions != null &&
+            this.blotterOptions.auditLogOptions.auditUserStateChanges != null) {
+            return this.blotterOptions.auditLogOptions.auditUserStateChanges;
+        }
+        return false;
+    }
+
+    public isAuditInternalStateChangesEnabled(): boolean {
+        if (this.blotterOptions.auditLogOptions != null &&
+            this.blotterOptions.auditLogOptions.auditInternalStateChanges != null) {
+            return this.blotterOptions.auditLogOptions.auditInternalStateChanges;
+        }
+        return false;
     }
 
     public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedEvent[]) {
@@ -36,6 +69,8 @@ export class AuditLogService {
     }
 
     public AddEditCellAuditLog(dataChangedEvent: IDataChangedEvent) {
+       console.log("Logging data changed event for: " + dataChangedEvent.ColumnId)
+       
         if (typeof dataChangedEvent.OldValue == "string" && typeof dataChangedEvent.NewValue == "string") {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
@@ -120,6 +155,7 @@ export class AuditLogService {
     }
 
     public AddStateChangeAuditLog(stateChanges: any, actionType: string) {
+        console.log("logging state change for action type: " + actionType)
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger.StateChange,
             adaptableblotter_client_timestamp: new Date(),
@@ -133,6 +169,7 @@ export class AuditLogService {
     }
 
     public AddAdaptableBlotterFunctionLog(functionName: string, action: string, info: string, data?: any) {
+        console.log("logging function: " + functionName + " for action: " + action + " in info: " + info)
         this.auditLogQueue.push({
             adaptableblotter_auditlog_trigger: AuditLogTrigger.AdaptableBlotterFunction,
             adaptableblotter_client_timestamp: new Date(),

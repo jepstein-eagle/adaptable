@@ -9,7 +9,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
-import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode } from '../Enums';
+import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode, DisplayAction } from '../Enums';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 
@@ -50,10 +50,7 @@ export class ValidationService implements IValidationService {
                     if (isSatisfiedExpression && this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.ActionMode == 'Stop Edit') {
-                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
-                                "CheckCellChanging",
-                                "Failed",
-                                { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent })
+                            this.logAuditValidationEvent('Validating Cell Edit', 'Failed', { Errors: [expressionRule], DataChangingEvent: dataChangedEvent })
                             return [expressionRule];
                         } else {
                             failedWarningRules.push(expressionRule);
@@ -67,10 +64,7 @@ export class ValidationService implements IValidationService {
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.ActionMode == 'Stop Edit') {
-                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
-                            "CheckCellChanging",
-                            "Failed",
-                            { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent })
+                        this.logAuditValidationEvent('Validating Cell Edit', 'Failed', { Errors: [noExpressionRule], DataChangingEvent: dataChangedEvent })
                         return [noExpressionRule];
                     } else {
                         failedWarningRules.push(noExpressionRule);
@@ -79,16 +73,10 @@ export class ValidationService implements IValidationService {
             }
         }
         if (failedWarningRules.length > 0) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
-                "CheckCellChanging",
-                "Warning",
-                { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent })
+            this.logAuditValidationEvent('Validating Cell Edit', 'Warning Shown', { Warnings: failedWarningRules, DataChangingEvent: dataChangedEvent })
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
-                "CheckCellChanging",
-                "Ok",
-                { DataChangingEvent: dataChangedEvent })
+            this.logAuditValidationEvent('Validating Cell Edit', 'Success', { DataChangingEvent: dataChangedEvent })
         }
         return failedWarningRules;
     }
@@ -107,6 +95,15 @@ export class ValidationService implements IValidationService {
 
     private GetCellValidationState(): CellValidationState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
+    }
+
+    private logAuditValidationEvent(action: string, info: string, data?: any): void {
+        if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled()) {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId,
+                action,
+                info,
+                data)
+        }
     }
 
 

@@ -18,8 +18,6 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject, IAlertDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { AlertHelper } from "../../Utilities/Helpers/AlertHelper";
-import { AccessLevel } from "../../Utilities/Enums";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
     Alerts: IAlertDefinition[]

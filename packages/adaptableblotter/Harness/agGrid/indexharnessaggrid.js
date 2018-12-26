@@ -59,8 +59,7 @@ function InitTradeBlotter() {
       blotterId: "demo blotter 2.5", // id for blotter
 
       auditLogOptions: {
-        enableAuditLog: true,
-        auditCellEdit: false,
+        auditCellEdits: false,
         auditFunctionEvents: true,
         auditUserStateChanges: false,
         auditInternalStateChanges: false,
@@ -69,18 +68,18 @@ function InitTradeBlotter() {
       //      enableRemoteConfigServer: false,
       //  remoteConfigServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
       //  },
-
+      layoutOptions: {
+        includeVendorStateInLayouts: true,
+        // autoSaveLayouts: true,
+      },
+    
       predefinedConfig: categoryJson,
       //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       iPushPullConfig: {
         api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
         api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
       },
-      layoutOptions: {
-        includeVendorStateInLayouts: true,
-        // autoSaveLayouts: true,
-      },
-      ignoreCaseInQueries: true,
+       ignoreCaseInQueries: true,
       maxColumnValueItemsDisplayed: 200,
       //  useDefaultVendorGridThemes: true,
       //useAdaptableBlotterFilterForm: false,

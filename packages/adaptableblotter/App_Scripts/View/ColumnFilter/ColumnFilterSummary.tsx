@@ -15,9 +15,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IColumnFilter, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Utilities/Enums";
 import { IEntitlement } from "../../Api/Interface/Interfaces";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]

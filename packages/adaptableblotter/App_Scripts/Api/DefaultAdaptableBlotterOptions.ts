@@ -5,8 +5,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     vendorGrid: null,
     primaryKey: "",
     auditLogOptions: {
-        enableAuditLog: false,
-        auditCellEdit: false,
+        auditCellEdits: false,
         auditFunctionEvents: false,
         auditUserStateChanges: false,
         auditInternalStateChanges: false,

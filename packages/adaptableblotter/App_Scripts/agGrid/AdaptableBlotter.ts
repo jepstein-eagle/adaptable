@@ -108,6 +108,7 @@ import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from 
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/gridOptions"
 import { Expression } from '../Api/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
+import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -134,14 +135,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
-        console.log("before")
-        console.log(blotterOptions);
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
-        this.BlotterOptions.auditLogOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditLogOptions, blotterOptions.auditLogOptions)
-        this.BlotterOptions.remoteConfigServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.remoteConfigServerOptions, blotterOptions.remoteConfigServerOptions)
-        this.BlotterOptions.layoutOptions = Object.assign({}, DefaultAdaptableBlotterOptions.layoutOptions, blotterOptions.layoutOptions)
-        console.log("after")
-        console.log(this.BlotterOptions);
+        this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
+
         this.gridOptions = this.BlotterOptions.vendorGrid
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
@@ -221,7 +216,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
                     this.gridOptions.api.refreshHeader();
                 }
-                this.checkPrimaryKeyExists();
+                BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
                 this.applyFilteredColumnStyle();
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
@@ -608,11 +603,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setValue(cellInfo: ICellInfo): void {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        let isUpdated: boolean = false;
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+            if (!isUpdated && cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
-                // this seems to loop unnecessarily... ????
+                // change the  flag to make looping quicker - but would be nicer if could just break...
+                isUpdated = true;
+
 
                 let dataChangedEvent: IDataChangedEvent =
                 {
@@ -623,7 +621,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                if (this.AuditLogService.isAuditCellEditsEnabled()) {
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                }
+                this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
             }
         })
         this.applyGridFiltering();
@@ -660,17 +661,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-                dataChangedEvents.push(dataChangedEvent)
-
-                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent)
+                dataChangedEvents.push(dataChangedEvent)                
             }
         })
-        this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+        if (this.AuditLogService.isAuditCellEditsEnabled()) {
+            this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+        }
+        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
         dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
 
-        // if its a freetext column then do our own stuff
-
-
+       
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
@@ -1248,10 +1248,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         Timestamp: null,
                         Record: null
                     }
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
-
+                    if (this.AuditLogService.isAuditCellEditsEnabled()) {
+                        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                    }
                     // it might be a free text column so we need to update the values
-                    this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
                 }
                 return whatToReturn;
             };
@@ -1615,14 +1616,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    private checkIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedEvent) {
-        let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
-        if (freeTextColumn) {
-            let freeTextStoredValue: FreeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue }
-            this.AdaptableBlotterStore.TheStore.dispatch<FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
-        }
-    }
-
     public getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo {
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
@@ -1765,19 +1758,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    public checkPrimaryKeyExists(): void {
-        let pkColumn: IColumn = ColumnHelper.getColumnFromId(this.BlotterOptions.primaryKey, this.getState().Grid.Columns);
-        if (pkColumn == null) {
-            let errorMessage: string = "The PK Column '" + this.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
-            if (this.BlotterOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
-                this.api.alertShowError("No Primary Key", errorMessage, true)
-            } else { // otherwise just log it
-                LoggingHelper.LogError(errorMessage);
-            }
-        }
-        // perhaps we can also use this method to check that all properties are expected (#325)
-
-    }
 
     private applyFilteredColumnStyle(): void {
         if (this.BlotterOptions.indicateFilteredColumns == true) {

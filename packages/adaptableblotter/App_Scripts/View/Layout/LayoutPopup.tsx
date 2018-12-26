@@ -17,14 +17,12 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IColumn } from "../../Api/Interface/IColumn";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { ILayout, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];

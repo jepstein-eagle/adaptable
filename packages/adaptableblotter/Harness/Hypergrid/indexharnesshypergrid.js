@@ -34,7 +34,7 @@ function getSchema(data) {
 
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-     trades = dataGen.getTrades(30000);
+    trades = dataGen.getTrades(30000);
 
     var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
     //  dataGen.startTickingDataHypergrid(vendorGrid)
@@ -61,7 +61,7 @@ function InitBlotter() {
 
     //we enable the edit on some columns
     vendorGrid.behavior.dataModel.getCellEditorAt = function (columnIndex, rowIndex, declaredEditorName, options) {
-         let editorName = declaredEditorName;
+        let editorName = declaredEditorName;
         if (options.column.name !== "tradeId"
             //  && options.column.name !== "changeOnYear"
             && options.column.name !== "price"
@@ -80,7 +80,7 @@ function InitBlotter() {
     // Make DeskID not sortable
     behavior.setColumnProperties(2, {
         unsortable: true,
-     //   unfilterable: true
+        //   unfilterable: true
     });
 
 
@@ -100,33 +100,41 @@ function InitBlotter() {
     });
 
     var blotterOptions = {
+        vendorGrid: vendorGrid,
         primaryKey: "tradeId",
         userName: "jonathan",
         blotterId: "my Blotter",
-        enableAuditLog: false,
-        enableRemoteConfigServer: false,
-         predefinedConfig: categoryJson,
+        auditLogOptions: {
+            auditCellEdits: true,
+            auditFunctionEvents: false,
+            auditUserStateChanges: false,
+            auditInternalStateChanges: false,
+        },
+        //  remoteConfigServerOptions: {
+        //      enableRemoteConfigServer: false,
+        //  remoteConfigServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+        //  },
+        predefinedConfig: categoryJson,
         serverSearchOption: "None",
-        vendorGrid: vendorGrid,
         useDefaultVendorGridThemes: true,
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-       // getColumnValues: retrieveValues,
+        // getColumnValues: retrieveValues,
         maxColumnValueItemsDisplayed: 1000
     }
 
     adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
     adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
-  
- //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-  //  vendorGrid.addProperties(lightTheme);
+
+    //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    //  vendorGrid.addProperties(lightTheme);
 }
 
 function listenToStateChange(stateChangedArgs) {
-  //  console.log("state event received")
-  //  console.log(stateChangedArgs)
+    //  console.log("state event received")
+    //  console.log(stateChangedArgs)
 }
 
 function retrieveValues(columnName) {
@@ -158,10 +166,10 @@ function getTradesForSearch(searchArgs, dataGen) {
     if (searchArgs.data != null && searchArgs.data.length > -1) {
         let searchChangedInfo = searchArgs.data[0].id;
         if (searchChangedInfo.searchChangedTrigger == "QuickSearch") {
-         //   alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
+            //   alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
 
-          //  let jsonstring = JSON.stringify(searchArgs)
-         //   console.log(jsonstring)
+            //  let jsonstring = JSON.stringify(searchArgs)
+            //   console.log(jsonstring)
         }
 
 
@@ -186,22 +194,22 @@ function getTradesForSearch(searchArgs, dataGen) {
 
 let categoryJson = {
     "ColumnCategory": {
-      "ColumnCategories": [
-        {
-          "ColumnCategoryId": "Pricing",
-          "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
-        },
-        {
-          "ColumnCategoryId": "Strings",
-          "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
-        },
-        {
-          "ColumnCategoryId": "Others",
-          "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
-        }
-      ]
+        "ColumnCategories": [
+            {
+                "ColumnCategoryId": "Pricing",
+                "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
+            },
+            {
+                "ColumnCategoryId": "Strings",
+                "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
+            },
+            {
+                "ColumnCategoryId": "Others",
+                "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
+            }
+        ]
     }
-  }
+}
 
 let json = {
     "UserInterface": {

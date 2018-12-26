@@ -13,7 +13,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { CalculatedColumnWizard } from "./Wizard/CalculatedColumnWizard";
-import { SortOrder, AccessLevel } from "../../Utilities/Enums";
+import { SortOrder } from "../../Utilities/Enums";
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
@@ -21,7 +21,6 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ICalculatedColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction

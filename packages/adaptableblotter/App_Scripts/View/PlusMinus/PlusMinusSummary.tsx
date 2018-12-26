@@ -18,8 +18,6 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject, IPlusMinusRule } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Utilities/Enums";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
     PlusMinusRules: IPlusMinusRule[]

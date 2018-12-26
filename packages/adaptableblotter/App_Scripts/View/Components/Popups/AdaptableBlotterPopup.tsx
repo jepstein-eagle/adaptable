@@ -8,7 +8,7 @@ import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
 import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants'
-import { EntitlementHelper } from '../../../Utilities/Helpers/EntitlementHelper';
+import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
@@ -26,7 +26,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.Blotter.BlotterOptions, document);
-    let accessLevel: AccessLevel = EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
+    let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
 
     if (this.props.ComponentName) {
       let enableRemoteConfigServer: boolean = this.props.Blotter.BlotterOptions.remoteConfigServerOptions != null

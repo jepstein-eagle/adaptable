@@ -135,11 +135,7 @@ export interface IServerColumnValues {
 }
 
 export interface IAuditLogOptions {
-    /**
-     * If true, Audit Log is enabled and all actions are sent to the HTTP channel
-     */
-    enableAuditLog?: boolean;
-    auditCellEdit?: boolean;
+    auditCellEdits?: boolean;
     auditFunctionEvents?: boolean;
     auditUserStateChanges?: boolean;
     auditInternalStateChanges?: boolean;

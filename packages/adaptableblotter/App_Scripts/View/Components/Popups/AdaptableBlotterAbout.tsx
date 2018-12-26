@@ -59,7 +59,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
     public CreateAboutInfo(colItems: IColItem[]): IColItem[][] {
 
         let returnRows: IColItem[][] = []
-        if ( this.props.showAbout) {
+        if (this.props.showAbout) {
             //get state - do better?
             let state: AdaptableBlotterState = this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState()
 
@@ -80,13 +80,12 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
             if (options.userName != undefined) {
                 returnRows.push(this.createColItem(colItems, "User", options.userName));
             }
-            if (options.auditLogOptions != undefined) {
-                // TODO:  not sure this is correct...
-                returnRows.push(this.createColItem(colItems, "Audit Log", (options.auditLogOptions.enableAuditLog) ? "On" : "Off"));
-            }
+            returnRows.push(this.createColItem(colItems, "Audit Log", (this.props.AdaptableBlotter.AuditLogService.isAuditLogEnabled()) ? "On" : "Off"));
+
             if (options.remoteConfigServerOptions != undefined) {
                 returnRows.push(this.createColItem(colItems, "Remote Configuration", (options.remoteConfigServerOptions.enableRemoteConfigServer) ? "On" : "Off"));
             }
+            
             if (options.serverSearchOption != undefined) {
                 returnRows.push(this.createColItem(colItems, "Server Search Option", options.serverSearchOption));
             }

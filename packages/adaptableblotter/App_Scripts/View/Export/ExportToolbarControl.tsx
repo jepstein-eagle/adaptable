@@ -26,8 +26,6 @@ import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IReport } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {

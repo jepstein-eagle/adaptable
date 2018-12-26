@@ -23,9 +23,6 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { ILayout } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Utilities/Enums";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
-
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;

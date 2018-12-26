@@ -1,6 +1,5 @@
 ﻿import '../Styles/stylesheets/adaptableblotter-style.css'
 
-
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
@@ -13,7 +12,7 @@ import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/In
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../Strategy/Interface/IStrategy';
 import { IMenuItem, } from '../Api/Interface/IMenu';
-import { IAlert, IUIConfirmation } from '../Api/Interface/IMessage';
+import { IUIConfirmation } from '../Api/Interface/IMessage';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -61,7 +60,6 @@ import * as _ from 'lodash'
 import { SelectedCellsStrategy } from '../Strategy/SelectedCellsStrategy';
 import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
-import { DefaultAdaptableBlotterOptions } from '../Api/DefaultAdaptableBlotterOptions';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { ChartService } from '../Utilities/Services/ChartService';
@@ -81,9 +79,9 @@ import { AuditService } from '../Utilities/Services/AuditService';
 import { ValidationService } from '../Utilities/Services/ValidationService';
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
-import { IFreeTextColumnStrategy } from '../Strategy/Interface/IFreeTextColumnStrategy';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
+import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 
 
 //icon to indicate toggle state
@@ -128,22 +126,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement: HTMLElement;
     private hyperGrid: any
     private filterContainer: HTMLDivElement
-    //private contextMenuContainer: HTMLDivElement
 
     public isInitialised: boolean
 
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
-        console.log("before")
-        console.log(blotterOptions);
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
-        this.BlotterOptions.auditLogOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditLogOptions, blotterOptions.auditLogOptions)
-        this.BlotterOptions.remoteConfigServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.remoteConfigServerOptions, blotterOptions.remoteConfigServerOptions)
-        this.BlotterOptions.layoutOptions = Object.assign({}, DefaultAdaptableBlotterOptions.layoutOptions, blotterOptions.layoutOptions)
-        console.log("after")
-        console.log(this.BlotterOptions);
-        
+        this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
+       
         this.hyperGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;
@@ -156,12 +146,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ValidationService = new ValidationService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.ChartService = new ChartService(this);
-
-        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => {
-            let column = this.getHypergridColumn(columnId);
-            return this.valOrFunc(record, column)
-        });
-
+        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
 
         //we build the list of strategies
@@ -212,12 +197,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        //   this.contextMenuContainer = this.abContainerElement.ownerDocument.createElement("div")
-        //   this.contextMenuContainer.id = "contextMenuContainer"
-        //   this.contextMenuContainer.style.position = 'absolute'
-        //    this.abContainerElement.ownerDocument.body.appendChild(this.contextMenuContainer)
-        //    ReactDOM.render(ContextMenuReact(this), this.contextMenuContainer);
-
         iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load
@@ -239,7 +218,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(() => {
                 let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
                 this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
-                this.checkPrimaryKeyExists();
+                BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
@@ -548,10 +527,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Timestamp: null,
             Record: null
         }
-        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
-
+        if (this.AuditLogService.isAuditCellEditsEnabled()) {
+            this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+        }
         // it might be a free text column so we need to update the values
-        this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
@@ -575,11 +555,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Record: null
             }
             dataChangedEvents.push(dataChangedEvent);
-            this.checkIfDataChangingColumnIsFreeText(dataChangedEvent)
-        }
+         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
-        this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
+        if (this.AuditLogService.isAuditCellEditsEnabled()) {
+            this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
+        }
+        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
+      
         this.ClearSelection();
     }
 
@@ -592,13 +575,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hyperGrid.cancelEditing()
     }
 
-    private checkIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedEvent) {
-        let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
-        if (freeTextColumn) {
-            let freeTextStoredValue: FreeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue }
-            this.AdaptableBlotterStore.TheStore.dispatch<FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
-        }
-    }
+
 
     public forAllRecordsDo(func: (record: any) => any): any {
         //we use getData instead of this.hyperGrid.behavior.dataModel.dataSource as this method is used to compute stuff on filtered data as well
@@ -1036,7 +1013,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             editor: 'textfield' // this is not quite right as it says undefined, but not sure how to get a cell editor added dynamically at runtime. 
         })
 
-      }
+    }
 
     public isGroupRecord(): boolean {
         return false;
@@ -1171,13 +1148,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //         }
         //     });
         this.hyperGrid.addEventListener("fin-before-cell-edit", (event: any) => {
-            let dataChangingEvent: IDataChangingEvent;
+            // cell edit is about to happen so create datachanging and datahanged objects
+            // these are to use to check for free text column, validation and audit log
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
-            dataChangingEvent = { ColumnId: event.detail.input.column.name, NewValue: event.detail.newValue, IdentifierValue: this.getPrimaryKeyValueFromRecord(row) };
+            let dataChangingEvent: IDataChangingEvent = {
+                ColumnId: event.detail.input.column.name,
+                NewValue: event.detail.newValue,
+                IdentifierValue: this.getPrimaryKeyValueFromRecord(row)
+            };
 
-            let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangingEvent.ColumnId);
-            if (freeTextColumn) {
-                let dataChangedEvent: IDataChangedEvent =
+            let dataChangedEvent: IDataChangedEvent =
                 {
                     OldValue: null,
                     NewValue: dataChangingEvent.NewValue,
@@ -1186,11 +1166,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 }
-                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+
+            // first free text column
+            let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangingEvent.ColumnId);
+            if (freeTextColumn) {
+                      this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
             }
+
+            // then check validation
             let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangingEvent);
             if (failedRules.length > 0) {
-                // let cellValidationStrategy: ICellValidationStrategy = this.Strategies.get(StrategyConstants.CellValidationStrategyId) as ICellValidationStrategy;
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
@@ -1220,6 +1205,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();
                 }
+            }
+
+            // finally call auditlogservice
+            if (this.AuditLogService.isAuditCellEditsEnabled()) {
+                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
             }
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
@@ -1532,17 +1522,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ReindexAndRepaint();
     }
 
-    public checkPrimaryKeyExists(): void {
-        let pkColumn: IColumn = ColumnHelper.getColumnFromId(this.BlotterOptions.primaryKey, this.getState().Grid.Columns);
-        if (pkColumn == null) {
-            let errorMessage: string = "The PK Column '" + this.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
-            if (this.BlotterOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
-                this.api.alertShowError("No Primary Key", errorMessage, true)
-            }else{ // otherwise just log it
-                LoggingHelper.LogError(errorMessage);
-            }
-        }
-    }
+
 
 }
 

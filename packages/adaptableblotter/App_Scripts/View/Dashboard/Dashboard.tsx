@@ -15,7 +15,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
 import { IEntitlement } from "../../Api/Interface/Interfaces";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
+import { StrategyHelper } from "../../Utilities/Helpers/StrategyHelper";
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
@@ -39,7 +39,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             //we'll need to use the name or something else
             let dashboardControl = AdaptableDashboardViewFactory.get(control);
             if (dashboardControl) {
-                let accessLevel: AccessLevel = EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
+                let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
                 let dashboardElememt = React.createElement(dashboardControl, {
                     Blotter: this.props.Blotter,
                     Columns: this.props.Columns,

@@ -26,11 +26,11 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { PercentBarSummary } from "../PercentBar/PercentBarSummary";
 import { FreeTextColumnSummary } from "../FreeTextColumn/FreeTextColumnSummary";
+import { StrategyHelper } from "../../Utilities/Helpers/StrategyHelper";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
@@ -265,7 +265,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     private getAccessLevel(strategyId: string): AccessLevel {
-        return EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.FunctionEntitlements, strategyId)
+        return StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.FunctionEntitlements, strategyId)
     }
 
 }

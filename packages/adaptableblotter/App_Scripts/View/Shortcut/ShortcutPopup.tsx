@@ -21,7 +21,6 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IShortcut, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {

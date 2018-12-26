@@ -71,6 +71,7 @@ import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { BlotterApi } from '../../Hypergrid/BlotterApi';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { AuditLogService } from '../../Utilities/Services/AuditLogService';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,
@@ -279,18 +280,28 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 }
 
 
-
+// this function checks for any differences in the state and sends it to audit logger
+// we now allow users to differentiate between user and internal state so we check for both
 var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
+
+      // if audit state is turned off, then get out asap
+      if (!adaptableBlotter.AuditLogService.isAuditLogStateEnabled()) {
+        return next(action);
+      }
+
+      // we have audit so look at the action to decide what to do
       switch (action.type) {
 
-        case ReduxStorage.SAVE: // do nothing
+        // for some octions we never audit even if its turned on
+        case ReduxStorage.SAVE:
+        case RESET_STATE:
         case INIT_STATE: {
           return next(action);
         }
 
-        // for the system state functions
+        // for system state functions we audit state changes only if audit is set to log internal state
         case SystemRedux.SYSTEM_SET_HEALTH_STATUS:
         case SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS:
         case SystemRedux.SYSTEM_ALERT_ADD:
@@ -337,57 +348,39 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case PopupRedux.POPUP_CANCEL_CONFIRMATION:
         case PopupRedux.POPUP_CLEAR_PARAM:
 
-        // do team sharing??
+        // do team sharing actions??
 
         case ChartInternalRedux.CHART_INTERNAL_SHOW_CHART:
         case ChartInternalRedux.CHART_INTERNAL_HIDE_CHART:
         case ChartInternalRedux.CHART_INTERNAL_SET_CHART_DATA:
         case ChartInternalRedux.CHART_INTERNAL_DEFINITION_SELECT: {
-          if (adaptableBlotter.BlotterOptions.auditLogOptions != null &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog != null &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog == true &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.auditInternalStateChanges != null &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.auditInternalStateChanges == true
-          ) {
+          if (adaptableBlotter.AuditLogService.isAuditInternalStateChangesEnabled()) {
             let oldState = middlewareAPI.getState()
-
             let ret = next(action);
-            console.log("auditing in internal: " + action.type);
             let newState = middlewareAPI.getState()
             let diff = DeepDiff.diff(oldState, newState)
             adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
             return ret
           } else {
-
             return next(action);
           }
         }
 
 
-
+        // for all other functions we audit state changes  if audit is set to log user state
         default: {
-          if (adaptableBlotter.BlotterOptions.auditLogOptions != null &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog != null &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog == true &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.auditUserStateChanges != null &&
-            adaptableBlotter.BlotterOptions.auditLogOptions.auditUserStateChanges == true
-          ) {
+          if (adaptableBlotter.AuditLogService.isAuditUserStateChangesEnabled()) {
             let oldState = middlewareAPI.getState()
-
             let ret = next(action);
-            console.log("auditing in user changes: " + action.type);
             let newState = middlewareAPI.getState()
             let diff = DeepDiff.diff(oldState, newState)
             adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
             return ret
           } else {
-
             return next(action);
           }
         }
       }
-
-
     }
   }
 }
@@ -401,14 +394,9 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
 
-      if (adaptableBlotter.BlotterOptions.auditLogOptions != null &&
-        adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog != null &&
-        adaptableBlotter.BlotterOptions.auditLogOptions.enableAuditLog == true &&
-        adaptableBlotter.BlotterOptions.auditLogOptions.auditFunctionEvents != null &&
-        adaptableBlotter.BlotterOptions.auditLogOptions.auditFunctionEvents == true
-      ) {
+      if (adaptableBlotter.AuditLogService.isAuditFunctionEventsEnabled()) {
         let state = middlewareAPI.getState()
-       
+
         // Note: not done custom sort, and many others
         // also not done bulk update, smart edit as each has different issues...
         // need to add lots more here as its very patch at the moment...
@@ -442,7 +430,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           case QuickSearchRedux.QUICK_SEARCH_APPLY: {
             let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action
 
-            alert("in quick search function log!")
             adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.QuickSearchStrategyId,
               "apply quick search",
               actionTyped.quickSearchText,
@@ -501,14 +488,12 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           }
 
 
-          default:{
-            console.log("not handling - function change: " + action.type);
-
+          default: { // not one of the functions we log so nothing to do
             return next(action);
+          }
         }
-      }
 
-      } else {
+      } else {  // we are not logging function changes so nothing to do
         return next(action);
       }
 

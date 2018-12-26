@@ -2,21 +2,14 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux'
-import { FormControl, Row, Col, ControlLabel, Button, ListGroup, Glyphicon, Label, MenuItem, InputGroup, DropdownButton, HelpBlock, Well, FormGroup } from 'react-bootstrap';
+import { MenuItem, InputGroup, DropdownButton, HelpBlock, Well, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { AdaptableBlotterPopup } from '../Components/Popups/AdaptableBlotterPopup';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { Helper } from '../../Utilities/Helpers/Helper'
-import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import { AccessLevel } from "../../Utilities/Enums";
-import { EntitlementHelper } from "../../Utilities/Helpers/EntitlementHelper";
 
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
