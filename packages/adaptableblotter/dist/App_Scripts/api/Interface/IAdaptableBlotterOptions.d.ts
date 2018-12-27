@@ -23,9 +23,9 @@ export interface IAdaptableBlotterOptions {
     */
     userName?: string;
     /**
-     * Options for Audit Log
-     * Every keystroke, data change, user action etc. is logged
-     * This is then sent as JSON to the Audit Http Channel
+     * Options for mananging the Audit Log
+     * Depending on your options, every keystroke, data change, user action etc. is logged
+     * This is then sent as JSON to and Audit Http Channel for you to listen to using the software of your choice
      */
     auditOptions?: IAuditOptions;
     /**

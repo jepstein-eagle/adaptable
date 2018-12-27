@@ -26,10 +26,10 @@ export interface IAdaptableBlotterOptions {
     */
     userName?: string;
     /**
-     * Options for Audit Log
-     * Every keystroke, data change, user action etc. is logged
-     * This is then sent as JSON to the Audit Http Channel
-     */
+    * Options for mananging the Audit Log
+     * Depending on your options, every keystroke, data change, user action etc. is logged
+     * This is then sent as JSON to and Audit Http Channel for you to listen to using the software of your choice
+    */
     auditOptions?: IAuditOptions;
     /**
      * Options for setting Remote Config Server
@@ -152,7 +152,7 @@ export interface IConfigServerOptions {
     enableConfigServer?: boolean;
     /**
      * Remote config server that'll persist the user state and give it back on demand.
-     * Only used if enableRemoteConfigServer is true.
+     * Only used if enableConfigServer is true.
      *
      * AdaptableBlotter will send a POST request to this URL to persist the state with the follower parameters:
      * Headers: { ab_username: string, ab_id: string }
