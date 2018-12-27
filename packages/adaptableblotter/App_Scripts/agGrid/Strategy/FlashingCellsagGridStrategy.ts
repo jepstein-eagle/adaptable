@@ -38,10 +38,11 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                 let cellClassRules: any = {};
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
-                       
+
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value);
+                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value, true);
                         if (params.value > oldValue) {
+                          //  console.log("applying up for: " + col.ColumnId)
                             let key = primaryKey + col.ColumnId
                             let currentFlashTimer = currentFlashing.get(key)
                             theBlotter.refreshCells(params.node, [col.ColumnId])
@@ -60,20 +61,22 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
 
                     cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value);
-                        if (oldValue && params.value < oldValue) {
+                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value, false);
+                        if (params.value < oldValue) {
+                          //  console.log("applying down for: " + col.ColumnId)
                             let key = primaryKey + col.ColumnId
                             let currentFlashTimer = currentFlashing.get(key)
                             if (currentFlashTimer) {
                                 clearTimeout(currentFlashTimer)
                             }
-                            let timer: number = window.setTimeout(() => {
+                            let timer: any = setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
                             return true
+                        } else {
+                            return false
                         }
-                        return false
                     }
 
                 }

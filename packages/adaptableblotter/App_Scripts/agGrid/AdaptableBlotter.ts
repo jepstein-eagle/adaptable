@@ -226,7 +226,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.applyFilteredColumnStyle();
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
-        })
+            })
 
         if (renderGrid) {
             if (this.abContainerElement == null) {
@@ -602,7 +602,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setValue(cellInfo: ICellInfo): void {
-        //ag-grid doesn't support FindRow based on data
+          //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let isUpdated: boolean = false;
         this.gridOptions.api.getModel().forEachNode(rowNode => {
@@ -670,7 +670,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
         dataChangedEvents.forEach(dc => this.DataService.CreateDataSourcedChangedEvent(dc));
-
 
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
@@ -939,7 +938,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         else {
-            if (type == "FlashingCell"){
+            if (type == "FlashingCell") {
                 alert("here ")
             }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
@@ -966,10 +965,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
-   //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });
+        //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });
     }
 
-      public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
+    public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
         // first change the value getter in the coldefs - nothing else needs to change
         let colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
@@ -1773,23 +1772,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-public clearFlashingCellMap(): void{
-    this._flashingCellList.clear();
-}
-    
-public getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number): number {
-     let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
+    public clearFlashingCellMap(): void {
+        this._flashingCellList.clear();
+    }
+
+    public getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number, isUp: boolean): number {
+        let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
 
         let oldValue: number = columnValueList.get(identifierValue);
         if (oldValue) {
-            if (oldValue != newValue) { // its changed so set the new value
-                columnValueList.set(identifierValue, newValue); // need to do this always...
-                  return oldValue;
-            } 
+            if (oldValue != newValue) { // its changed 
+                if (isUp) {
+                    if (newValue > oldValue) { // we are up and its higher so set it and return it
+                        columnValueList.set(identifierValue, newValue);
+                        return oldValue;
+
+                    }
+                } else {
+                    if (newValue < oldValue) { // we are down and its lower so set it and return it
+                        columnValueList.set(identifierValue, newValue);
+                         return oldValue;
+
+                    }
+                }
+            }
         }
         else { // we dont have an existing value so set the new value for future reference and return null
             columnValueList.set(identifierValue, newValue); // need to do this always...
-          }
+        }
 
         // dont like this but we check anyway...
         return newValue;
