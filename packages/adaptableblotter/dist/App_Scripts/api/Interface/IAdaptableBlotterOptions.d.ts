@@ -32,10 +32,10 @@ export interface IAdaptableBlotterOptions {
      * Options for setting Remote Config Server
      * This allows you to store user state not in local storage (the default)
      */
-    remoteConfigServerOptions?: IRemoteConfigServerOptions;
+    configServerOptions?: IConfigServerOptions;
     /**
      * Configuration properties and objects set at design-time
-     * Only used if enableRemoteConfigServer is false
+     * Only used when Config Server is not enabled
      */
     predefinedConfig?: any;
     /**
@@ -137,12 +137,12 @@ export interface IAuditOptions {
     pingInterval?: number;
     auditLogsSendInterval?: number;
 }
-export interface IRemoteConfigServerOptions {
+export interface IConfigServerOptions {
     /**
      * If true, config is stored at server location of your choice
      * Otherwise it is stored in the local cache
      */
-    enableRemoteConfigServer?: boolean;
+    enableConfigServer?: boolean;
     /**
      * Remote config server that'll persist the user state and give it back on demand.
      * Only used if enableRemoteConfigServer is true.
@@ -158,7 +158,7 @@ export interface IRemoteConfigServerOptions {
      *
      * Your server should return the user state related to the given ab_username and ab_id combination as a JSON object.
      */
-    remoteConfigServerUrl?: string;
+    configServerUrl?: string;
 }
 export interface ILayoutOptions {
     /**

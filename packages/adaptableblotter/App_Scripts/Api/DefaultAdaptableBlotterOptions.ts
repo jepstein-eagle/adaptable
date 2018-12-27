@@ -12,9 +12,9 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         pingInterval: 60,
         auditLogsSendInterval: 1
     },
-    remoteConfigServerOptions: {
-        enableRemoteConfigServer: false,
-        remoteConfigServerUrl: "",
+    configServerOptions: {
+        enableConfigServer: false,
+        configServerUrl: "",
     },
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,

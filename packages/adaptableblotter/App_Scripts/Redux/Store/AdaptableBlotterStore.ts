@@ -73,6 +73,7 @@ import { BlotterApi } from '../../Hypergrid/BlotterApi';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AuditLogService } from '../../Utilities/Services/AuditLogService';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,
@@ -200,11 +201,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     let engineWithMigrate: ReduxStorage.StorageEngine
     let engineReduxStorage: ReduxStorage.StorageEngine
 
-    if (blotter.BlotterOptions.remoteConfigServerOptions != null
-      && blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
-      && blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true
-      && StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.remoteConfigServerOptions.remoteConfigServerUrl)) {
-      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.remoteConfigServerOptions.remoteConfigServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+    if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions) && StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.configServerOptions.configServerUrl)) {
+      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
     }
     else {
       engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
@@ -462,7 +460,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId,
             action.type,
             "Column Filter Applied",
-            {Column: actionTyped.columnFilter.ColumnId, ColumnFilter: ExpressionHelper.ConvertExpressionToString(actionTyped.columnFilter.Filter, middlewareAPI.getState().Grid.Columns)})
+            { Column: actionTyped.columnFilter.ColumnId, ColumnFilter: ExpressionHelper.ConvertExpressionToString(actionTyped.columnFilter.Filter, middlewareAPI.getState().Grid.Columns) })
           return next(action);
         }
 
@@ -471,7 +469,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId,
             action.type,
             "Column Filter Cleared",
-            {Column: actionTyped.columnId})
+            { Column: actionTyped.columnId })
           return next(action);
         }
         case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
@@ -1188,7 +1186,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           blotter.createMenu();
 
-           return returnAction;
+          return returnAction;
         }
 
         default:

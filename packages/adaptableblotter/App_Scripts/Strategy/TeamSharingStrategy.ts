@@ -3,6 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -15,9 +16,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     }
 
     protected hasPopupMenu(): boolean {
-        return this.blotter.BlotterOptions.remoteConfigServerOptions != null
-            && this.blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
-            && this.blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true;
+        return BlotterHelper.IsConfigServerEnabled(this.blotter.BlotterOptions)
     }
 
     protected InitState() {

@@ -142,6 +142,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     applyDarkTheme(): void;
     private applyFilteredColumnStyle;
     clearFlashingCellMap(): void;
-    getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number): number;
+    getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number, isUp: boolean): number;
     private getCellValuesForColumn;
 }

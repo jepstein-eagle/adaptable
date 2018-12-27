@@ -8,7 +8,7 @@ var BlotterHelper;
     function AssignBlotterOptions(blotterOptions) {
         let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
         returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions);
-        returnBlotterOptions.remoteConfigServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.remoteConfigServerOptions, blotterOptions.remoteConfigServerOptions);
+        returnBlotterOptions.configServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.configServerOptions, blotterOptions.configServerOptions);
         returnBlotterOptions.layoutOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.layoutOptions, blotterOptions.layoutOptions);
         return returnBlotterOptions;
     }
@@ -26,4 +26,10 @@ var BlotterHelper;
         }
     }
     BlotterHelper.CheckPrimaryKeyExists = CheckPrimaryKeyExists;
+    function IsConfigServerEnabled(blotterOptions) {
+        return blotterOptions.configServerOptions != null
+            && blotterOptions.configServerOptions.enableConfigServer != null
+            && blotterOptions.configServerOptions.enableConfigServer == true;
+    }
+    BlotterHelper.IsConfigServerEnabled = IsConfigServerEnabled;
 })(BlotterHelper = exports.BlotterHelper || (exports.BlotterHelper = {}));

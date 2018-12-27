@@ -509,6 +509,7 @@ class AdaptableBlotter {
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                 }
                 this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
+                this.DataService.CreateDataSourcedChangedEvent(dataChangedEvent);
             }
         });
         this.applyGridFiltering();
@@ -518,7 +519,6 @@ class AdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         // using new method... (JW, 11/3/18)
-        var itemsToUpdate = [];
         var dataChangedEvents = [];
         let nodesToRefresh = [];
         let colsToRefresh = [];
@@ -532,7 +532,6 @@ class AdaptableBlotter {
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode);
                 var data = rowNode.data;
                 data[value.ColumnId] = value.Value;
-                itemsToUpdate.push(data);
                 let dataChangedEvent = {
                     OldValue: oldValue,
                     NewValue: value.Value,
@@ -1538,13 +1537,23 @@ class AdaptableBlotter {
     clearFlashingCellMap() {
         this._flashingCellList.clear();
     }
-    getOldFlashingCellValue(columnId, identifierValue, newValue) {
+    getOldFlashingCellValue(columnId, identifierValue, newValue, isUp) {
         let columnValueList = this.getCellValuesForColumn(columnId);
         let oldValue = columnValueList.get(identifierValue);
         if (oldValue) {
-            if (oldValue != newValue) { // its changed so set the new value
-                columnValueList.set(identifierValue, newValue); // need to do this always...
-                return oldValue;
+            if (oldValue != newValue) { // its changed 
+                if (isUp) {
+                    if (newValue > oldValue) { // we are up and its higher so set it and return it
+                        columnValueList.set(identifierValue, newValue);
+                        return oldValue;
+                    }
+                }
+                else {
+                    if (newValue < oldValue) { // we are down and its lower so set it and return it
+                        columnValueList.set(identifierValue, newValue);
+                        return oldValue;
+                    }
+                }
             }
         }
         else { // we dont have an existing value so set the new value for future reference and return null

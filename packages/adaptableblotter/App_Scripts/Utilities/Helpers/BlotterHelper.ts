@@ -10,7 +10,7 @@ export module BlotterHelper {
     export function AssignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions {
         let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions)
-        returnBlotterOptions.remoteConfigServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.remoteConfigServerOptions, blotterOptions.remoteConfigServerOptions)
+        returnBlotterOptions.configServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.configServerOptions, blotterOptions.configServerOptions)
         returnBlotterOptions.layoutOptions = Object.assign({}, DefaultAdaptableBlotterOptions.layoutOptions, blotterOptions.layoutOptions)
         return returnBlotterOptions;
     }
@@ -25,6 +25,12 @@ export module BlotterHelper {
                 LoggingHelper.LogError(errorMessage);
             }
         }
+    }
+
+    export function IsConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean{
+        return blotterOptions.configServerOptions != null
+        && blotterOptions.configServerOptions.enableConfigServer != null
+        && blotterOptions.configServerOptions.enableConfigServer == true;
     }
 
    

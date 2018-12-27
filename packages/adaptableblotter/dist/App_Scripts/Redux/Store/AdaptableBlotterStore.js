@@ -59,6 +59,7 @@ const PreviewHelper_1 = require("../../Utilities/Helpers/PreviewHelper");
 const iPushPullHelper_1 = require("../../Utilities/Helpers/iPushPullHelper");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const BlotterHelper_1 = require("../../Utilities/Helpers/BlotterHelper");
 const rootReducer = Redux.combineReducers({
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
@@ -169,11 +170,8 @@ class AdaptableBlotterStore {
         let engineWithFilter;
         let engineWithMigrate;
         let engineReduxStorage;
-        if (blotter.BlotterOptions.remoteConfigServerOptions != null
-            && blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
-            && blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true
-            && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.remoteConfigServerOptions.remoteConfigServerUrl)) {
-            engineReduxStorage = AdaptableBlotterReduxStorageClientEngine_1.createEngine(blotter.BlotterOptions.remoteConfigServerOptions.remoteConfigServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+        if (BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions) && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.configServerOptions.configServerUrl)) {
+            engineReduxStorage = AdaptableBlotterReduxStorageClientEngine_1.createEngine(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
             engineReduxStorage = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);

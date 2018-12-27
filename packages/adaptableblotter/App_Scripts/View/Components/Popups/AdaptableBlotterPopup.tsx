@@ -9,6 +9,7 @@ import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants'
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
+import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
@@ -29,9 +30,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
 
     if (this.props.ComponentName) {
-      let enableRemoteConfigServer: boolean = this.props.Blotter.BlotterOptions.remoteConfigServerOptions != null
-        && this.props.Blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
-        && this.props.Blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true
+      
 
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
 
@@ -39,7 +38,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       let commonProps: StrategyViewPopupProps<this> = {
         PopupParams: this.props.PopupParams,
         onClearPopupParams: () => this.props.onClearPopupParams(),
-        TeamSharingActivated: enableRemoteConfigServer,
+        TeamSharingActivated: BlotterHelper.IsConfigServerEnabled(this.props.Blotter.BlotterOptions),
         Columns: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
         UserFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
         SystemFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
