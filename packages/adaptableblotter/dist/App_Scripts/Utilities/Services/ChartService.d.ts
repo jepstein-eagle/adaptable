@@ -6,6 +6,6 @@ export declare class ChartService implements IChartService {
     private blotter;
     constructor(blotter: IAdaptableBlotter);
     BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any;
-    private buildGroupedTotal;
+    private buildTotal;
     private getAdditionalColumnValues;
 }

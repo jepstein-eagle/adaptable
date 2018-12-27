@@ -66,7 +66,7 @@ var Helper;
             .trim();
     }
     Helper.capitalize = capitalize;
-    function replacer(a, b, c) {
+    function replacer(b, c) {
         return b.toUpperCase() + c;
     }
     // converts an array (or an array of arrays) to CSV
@@ -235,4 +235,25 @@ var Helper;
         }
     }
     Helper.StringifyValue = StringifyValue;
+    function RoundNumber(numberToRound, decimalPlaces) {
+        switch (decimalPlaces) {
+            case 1:
+                return Math.round(numberToRound * 10) / 10;
+            case 2:
+                return Math.round(numberToRound * 100) / 100;
+            case 3:
+                return Math.round(numberToRound * 1000) / 1000;
+            case 4:
+                return Math.round(numberToRound * 10000) / 10000;
+            case 5:
+                return Math.round(numberToRound * 100000) / 100000;
+            case 6:
+                return Math.round(numberToRound * 1000000) / 1000000;
+        }
+    }
+    Helper.RoundNumber = RoundNumber;
+    function RoundNumberTo4dp(numberToRound) {
+        return RoundNumber(numberToRound, 4);
+    }
+    Helper.RoundNumberTo4dp = RoundNumberTo4dp;
 })(Helper = exports.Helper || (exports.Helper = {}));

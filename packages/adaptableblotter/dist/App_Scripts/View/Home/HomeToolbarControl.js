@@ -44,19 +44,32 @@ class HomeToolbarControlComponent extends React.Component {
                 menuItem.Label);
         });
         // column items
-        let colItems = this.props.Columns.map((col, index) => {
-            return React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
+        let colItems = [];
+        colItems.push(React.createElement("div", { key: "colTitle" },
+            ' ',
+            ' ',
+            "\u00A0\u00A0",
+            React.createElement("b", null, "Columns")));
+        this.props.Columns.forEach((col, index) => {
+            colItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
                 React.createElement(react_bootstrap_1.Checkbox, { value: col.ColumnId, key: col.ColumnId, checked: col.Visible, onChange: (e) => this.onSetColumnVisibility(e) },
                     " ",
-                    col.FriendlyName));
+                    col.FriendlyName)));
         });
         // toolbar items
-        let toolbarItems = this.props.DashboardState.AvailableToolbars.map((toolbar, index) => {
+        let toolbarItems = [];
+        toolbarItems.push(React.createElement("div", { key: "toolbarTitle" },
+            ' ',
+            ' ',
+            "\u00A0\u00A0",
+            React.createElement("b", null, "Toolbars")));
+        this.props.DashboardState.AvailableToolbars.forEach((toolbar, index) => {
             let isVisible = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
-            return React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
+            let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+            toolbarItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
                 React.createElement(react_bootstrap_1.Checkbox, { value: toolbar, key: toolbar, checked: isVisible, onChange: (e) => this.onSetToolbarVisibility(e) },
                     " ",
-                    toolbar));
+                    functionName)));
         });
         // status button
         let statusButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "systemstatus", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },

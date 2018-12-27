@@ -12,12 +12,11 @@ const AdaptableBlotterStore_1 = require("../Redux/Store/AdaptableBlotterStore");
 const MenuRedux = require("../Redux/ActionsReducers/MenuRedux");
 const LayoutRedux = require("../Redux/ActionsReducers/LayoutRedux");
 const GridRedux = require("../Redux/ActionsReducers/GridRedux");
-const FreeTextColumnRedux = require("../Redux/ActionsReducers/FreeTextColumnRedux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
 const AuditLogService_1 = require("../Utilities/Services/AuditLogService");
 const StyleService_1 = require("../Utilities/Services/StyleService");
 const CalendarService_1 = require("../Utilities/Services/CalendarService");
-const AuditService_1 = require("../Utilities/Services/AuditService");
+const DataService_1 = require("../Utilities/Services/DataService");
 const ValidationService_1 = require("../Utilities/Services/ValidationService");
 const ChartService_1 = require("../Utilities/Services/ChartService");
 const FreeTextColumnService_1 = require("../Utilities/Services/FreeTextColumnService");
@@ -52,6 +51,7 @@ const SelectedCellsStrategy_1 = require("../Strategy/SelectedCellsStrategy");
 const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
 const HomeStrategy_1 = require("../Strategy/HomeStrategy");
 const FreeTextColumnStrategy_1 = require("../Strategy/FreeTextColumnStrategy");
+const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const PercentBarStrategy_1 = require("../Strategy/PercentBarStrategy");
 const ColumnCategoryStrategy_1 = require("../Strategy/ColumnCategoryStrategy");
 // components
@@ -62,8 +62,6 @@ const Enums_1 = require("../Utilities/Enums");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const color_1 = require("../Utilities/color");
 const BlotterApi_1 = require("./BlotterApi");
-// Helpers
-const DefaultAdaptableBlotterOptions_1 = require("../Api/DefaultAdaptableBlotterOptions");
 const iPushPullHelper_1 = require("../Utilities/Helpers/iPushPullHelper");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 const StyleHelper_1 = require("../Utilities/Helpers/StyleHelper");
@@ -74,9 +72,11 @@ const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const Helper_1 = require("../Utilities/Helpers/Helper");
 const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
+const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
+const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
-        this.calculatedColumnPathMap = new Map();
+        this._calculatedColumnPathMap = new Map();
         this._onKeyDown = new EventDispatcher_1.EventDispatcher();
         this._onGridDataBound = new EventDispatcher_1.EventDispatcher();
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
@@ -88,7 +88,7 @@ class AdaptableBlotter {
         this.debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), 500);
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
+        this.BlotterOptions = BlotterHelper_1.BlotterHelper.AssignBlotterOptions(blotterOptions);
         this.gridOptions = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true;
@@ -97,7 +97,7 @@ class AdaptableBlotter {
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         // create the services
         this.CalendarService = new CalendarService_1.CalendarService(this);
-        this.AuditService = new AuditService_1.AuditService(this);
+        this.DataService = new DataService_1.DataService(this);
         this.ValidationService = new ValidationService_1.ValidationService(this);
         this.AuditLogService = new AuditLogService_1.AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService_1.StyleService(this);
@@ -106,6 +106,8 @@ class AdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
+        // create the flashing cells map - will be empty
+        this._flashingCellList = new Map();
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
@@ -117,7 +119,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy_1.PercentBarStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
@@ -161,6 +163,8 @@ class AdaptableBlotter {
             if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
                 this.gridOptions.api.refreshHeader();
             }
+            BlotterHelper_1.BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
+            this.applyFilteredColumnStyle();
             this.isInitialised = true;
             this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());
         });
@@ -185,10 +189,6 @@ class AdaptableBlotter {
     createFloatingFilterWrapper(col) {
         this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: false };
         this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapper_1.FloatingFilterWrapperFactory(this);
-    }
-    InitAuditService() {
-        //Probably Temporary but we init the Audit service with current data
-        this.AuditService.Init(this.gridOptions.rowData);
     }
     onKeyDown() {
         return this._onKeyDown;
@@ -300,25 +300,14 @@ class AdaptableBlotter {
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
                 && (quickSearchState.DisplayAction == Enums_1.DisplayAction.HighlightCell
                     || quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRowAndHighlightCell)) {
-                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                let displayValue = blotter.getDisplayValueFromRecord(params.node, columnId);
-                if (displayValue) {
-                    let stringValueLowerCase = displayValue.toLowerCase();
-                    switch (blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Operator) {
-                        case Enums_1.LeafExpressionOperator.Contains:
-                            {
-                                if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                    return true;
-                                }
-                            }
-                            break;
-                        case Enums_1.LeafExpressionOperator.StartsWith:
-                            {
-                                if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                    return true;
-                                }
-                            }
-                            break;
+                let range = RangeHelper_1.RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+                if (range) {
+                    // not right but just checking...
+                    if (RangeHelper_1.RangeHelper.IsColumnAppropriateForRange(range.Operator, col)) {
+                        let expression = ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(columnId, null, null, null, [range]);
+                        if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(expression, params.node, [col], blotter)) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -370,7 +359,7 @@ class AdaptableBlotter {
         }
     }
     saveGridLayout() {
-        if (this.BlotterOptions.includeVendorStateInLayouts) {
+        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
             LayoutHelper_1.LayoutHelper.autoSaveLayout(this);
         }
     }
@@ -501,11 +490,13 @@ class AdaptableBlotter {
     setValue(cellInfo) {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        let isUpdated = false;
         this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+            if (!isUpdated && cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode);
                 rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value);
-                // this seems to loop unnecessarily... ????
+                // change the  flag to make looping quicker - but would be nicer if could just break...
+                isUpdated = true;
                 let dataChangedEvent = {
                     OldValue: oldValue,
                     NewValue: cellInfo.Value,
@@ -514,7 +505,10 @@ class AdaptableBlotter {
                     Timestamp: null,
                     Record: null
                 };
-                this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                if (this.AuditLogService.IsAuditCellEditsEnabled) {
+                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                }
+                this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
             }
         });
         this.applyGridFiltering();
@@ -526,9 +520,15 @@ class AdaptableBlotter {
         // using new method... (JW, 11/3/18)
         var itemsToUpdate = [];
         var dataChangedEvents = [];
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
+        let nodesToRefresh = [];
+        let colsToRefresh = [];
+        this.gridOptions.api.getModel().forEachNode((rowNode) => {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode));
             if (value) {
+                nodesToRefresh.push(rowNode);
+                if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(colsToRefresh, value.ColumnId)) {
+                    colsToRefresh.push(value.ColumnId);
+                }
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode);
                 var data = rowNode.data;
                 data[value.ColumnId] = value.Value;
@@ -542,14 +542,18 @@ class AdaptableBlotter {
                     Record: null
                 };
                 dataChangedEvents.push(dataChangedEvent);
-                this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
             }
         });
-        this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
-        dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
-        // if its a freetext column then do our own stuff
+        if (this.AuditLogService.IsAuditCellEditsEnabled) {
+            this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+        }
+        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
+        dataChangedEvents.forEach(dc => this.DataService.CreateDataSourcedChangedEvent(dc));
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
+        nodesToRefresh.forEach(node => {
+            this.refreshCells(node, colsToRefresh);
+        });
     }
     cancelEdit() {
         this.gridOptions.api.stopEditing(true);
@@ -787,6 +791,9 @@ class AdaptableBlotter {
             }
         }
         else {
+            if (type == "FlashingCell") {
+                alert("here ");
+            }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
     }
@@ -807,6 +814,7 @@ class AdaptableBlotter {
     }
     refreshCells(rowNode, columnIds) {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
+        //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });
     }
     editCalculatedColumnInGrid(calculatedColumn) {
         // first change the value getter in the coldefs - nothing else needs to change
@@ -817,7 +825,7 @@ class AdaptableBlotter {
         colDefs[colDefIndex] = newColDef;
         this.gridOptions.api.setColumnDefs(colDefs);
         // for column list its an itnernal map only so we can first delete
-        for (let columnList of this.calculatedColumnPathMap.values()) {
+        for (let columnList of this._calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumn.ColumnId);
             if (index > -1) {
                 columnList.splice(index, 1);
@@ -826,10 +834,10 @@ class AdaptableBlotter {
         // and then add
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression);
         for (let column of columnList) {
-            let childrenColumnList = this.calculatedColumnPathMap.get(column);
+            let childrenColumnList = this._calculatedColumnPathMap.get(column);
             if (!childrenColumnList) {
                 childrenColumnList = [];
-                this.calculatedColumnPathMap.set(column, childrenColumnList);
+                this._calculatedColumnPathMap.set(column, childrenColumnList);
             }
             childrenColumnList.push(calculatedColumn.ColumnId);
         }
@@ -841,7 +849,7 @@ class AdaptableBlotter {
             colDefs.splice(colDefIndex, 1);
             this.gridOptions.api.setColumnDefs(colDefs);
         }
-        for (let columnList of this.calculatedColumnPathMap.values()) {
+        for (let columnList of this._calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
             if (index > -1) {
                 columnList.splice(index, 1);
@@ -861,10 +869,10 @@ class AdaptableBlotter {
         this.gridOptions.api.setColumnDefs(colDefs);
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression);
         for (let column of columnList) {
-            let childrenColumnList = this.calculatedColumnPathMap.get(column);
+            let childrenColumnList = this._calculatedColumnPathMap.get(column);
             if (!childrenColumnList) {
                 childrenColumnList = [];
-                this.calculatedColumnPathMap.set(column, childrenColumnList);
+                this._calculatedColumnPathMap.set(column, childrenColumnList);
             }
             childrenColumnList.push(calculatedColumn.ColumnId);
         }
@@ -1025,9 +1033,15 @@ class AdaptableBlotter {
             //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
-                let dataChangingEvent;
-                dataChangingEvent = { ColumnId: params.column.getColId(), NewValue: this._currentEditor.getValue(), IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node) };
-                let failedRules = this.ValidationService.ValidateCellChanging(dataChangingEvent);
+                let dataChangedEvent = {
+                    OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+                    NewValue: this._currentEditor.getValue(),
+                    ColumnId: params.column.getColId(),
+                    IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
+                    Timestamp: null,
+                    Record: null
+                };
+                let failedRules = this.ValidationService.ValidateCellChanging(dataChangedEvent);
                 if (failedRules.length > 0) {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
@@ -1041,9 +1055,9 @@ class AdaptableBlotter {
                             warningMessage = warningMessage + ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                         });
                         let cellInfo = {
-                            Id: dataChangingEvent.IdentifierValue,
-                            ColumnId: dataChangingEvent.ColumnId,
-                            Value: dataChangingEvent.NewValue
+                            Id: dataChangedEvent.IdentifierValue,
+                            ColumnId: dataChangedEvent.ColumnId,
+                            Value: dataChangedEvent.NewValue
                         };
                         let confirmation = {
                             CancelText: "Cancel Edit",
@@ -1061,18 +1075,11 @@ class AdaptableBlotter {
                 }
                 let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
                 if (!whatToReturn) {
-                    //no failed validation so we raise the edit auditlog
-                    let dataChangedEvent = {
-                        OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
-                        NewValue: dataChangingEvent.NewValue,
-                        ColumnId: dataChangingEvent.ColumnId,
-                        IdentifierValue: dataChangingEvent.IdentifierValue,
-                        Timestamp: null,
-                        Record: null
-                    };
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                    if (this.AuditLogService.IsAuditCellEditsEnabled) {
+                        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                    }
                     // it might be a free text column so we need to update the values
-                    this.checkIfDataChangingColumnIsFreeText(dataChangedEvent);
+                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
                 }
                 return whatToReturn;
             };
@@ -1109,15 +1116,15 @@ class AdaptableBlotter {
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_VALUE_CHANGED, (params) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-            this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            this.DataService.CreateDataEvent(identifierValue, params.newValue, params.colDef.field, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
-            let columnList = this.calculatedColumnPathMap.get(params.colDef.field);
+            let columnList = this._calculatedColumnPathMap.get(params.colDef.field);
             if (columnList) {
                 columnList.forEach(x => {
                     let newValue = this.gridOptions.api.getValue(x, params.node);
-                    this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
+                    this.DataService.CreateDataEvent(identifierValue, newValue, x, params.node);
                 });
             }
         });
@@ -1142,6 +1149,7 @@ class AdaptableBlotter {
         let originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
         this.gridOptions.doesExternalFilterPass = (node) => {
             let columns = this.getState().Grid.Columns;
+            let visibleCols = columns.filter(c => c.Visible);
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
@@ -1168,32 +1176,22 @@ class AdaptableBlotter {
                         }
                     }
                 }
-                //we assess quicksearch
+                //we next assess quicksearch
                 let quickSearchState = this.getState().QuickSearch;
-                if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-                    && quickSearchState.DisplayAction != Enums_1.DisplayAction.HighlightCell) {
-                    let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
-                    for (let column of columns.filter(c => c.Visible)) {
-                        let displayValue = this.getDisplayValueFromRecord(node, column.ColumnId);
-                        if (displayValue != null) {
-                            let stringValueLowerCase = displayValue.toLowerCase();
-                            switch (quickSearchState.Operator) {
-                                case Enums_1.LeafExpressionOperator.Contains:
-                                    {
-                                        if (stringValueLowerCase.includes(quickSearchLowerCase)) {
-                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
-                                        }
-                                    }
-                                    break;
-                                case Enums_1.LeafExpressionOperator.StartsWith:
-                                    {
-                                        if (stringValueLowerCase.startsWith(quickSearchLowerCase)) {
-                                            return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
-                                        }
-                                    }
-                                    break;
+                if (quickSearchState.DisplayAction != Enums_1.DisplayAction.HighlightCell) {
+                    let range = RangeHelper_1.RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+                    if (range != null) {
+                        for (let column of visibleCols) {
+                            if (RangeHelper_1.RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
+                                let expression = ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [range]);
+                                if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(expression, node, [column], this)) {
+                                    return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
+                                }
                             }
                         }
+                    }
+                    else {
+                        return true; // is this right????
                     }
                     return false;
                 }
@@ -1410,13 +1408,6 @@ class AdaptableBlotter {
             this.setColumnIntoStore();
         }
     }
-    checkIfDataChangingColumnIsFreeText(dataChangedEvent) {
-        let freeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
-        if (freeTextColumn) {
-            let freeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue };
-            this.AdaptableBlotterStore.TheStore.dispatch(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
-        }
-    }
     getVendorGridState(visibleCols, forceFetch) {
         // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
         if (forceFetch) {
@@ -1425,7 +1416,7 @@ class AdaptableBlotter {
                 ColumnState: JSON.stringify(this.gridOptions.columnApi.getColumnState())
             };
         }
-        if (this.BlotterOptions.includeVendorStateInLayouts) {
+        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.autoSaveLayouts != null && this.BlotterOptions.layoutOptions.autoSaveLayouts) {
             let groupedState = null;
             let test = this.gridOptions.columnApi.getAllDisplayedColumns();
             let groupedCol = test.find(c => ColumnHelper_1.ColumnHelper.isSpecialColumn(c.getColId()));
@@ -1498,7 +1489,7 @@ class AdaptableBlotter {
         return false;
     }
     isQuickFilterable() {
-        return true;
+        return this.gridOptions.floatingFilter != null; // returns for both whether its visible or not.
     }
     isQuickFilterActive() {
         if (this.gridOptions.floatingFilter != null) {
@@ -1535,6 +1526,46 @@ class AdaptableBlotter {
                 container.className = "ag-theme-balham-dark";
             }
         }
+    }
+    applyFilteredColumnStyle() {
+        if (this.BlotterOptions.indicateFilteredColumns == true) {
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
+            document.body.appendChild(css);
+        }
+    }
+    clearFlashingCellMap() {
+        this._flashingCellList.clear();
+    }
+    getOldFlashingCellValue(columnId, identifierValue, newValue) {
+        let columnValueList = this.getCellValuesForColumn(columnId);
+        let oldValue = columnValueList.get(identifierValue);
+        if (oldValue) {
+            if (oldValue != newValue) { // its changed so set the new value
+                columnValueList.set(identifierValue, newValue); // need to do this always...
+                return oldValue;
+            }
+        }
+        else { // we dont have an existing value so set the new value for future reference and return null
+            columnValueList.set(identifierValue, newValue); // need to do this always...
+        }
+        // dont like this but we check anyway...
+        return newValue;
+    }
+    getCellValuesForColumn(columnId) {
+        // first check the list exists; if not, then create it
+        if (this._flashingCellList.size == 0) {
+            this._flashingCellList.set(columnId, new Map());
+        }
+        // get the item
+        let returnList = this._flashingCellList.get(columnId);
+        //in case we created a new calculated column  - need to worry about this?
+        if (!returnList) {
+            returnList = new Map();
+            this._flashingCellList.set(columnId, returnList);
+        }
+        return returnList;
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

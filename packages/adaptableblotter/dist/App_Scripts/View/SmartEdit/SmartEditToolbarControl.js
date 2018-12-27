@@ -42,8 +42,8 @@ class SmartEditToolbarControlComponent extends React.Component {
     render() {
         let statusColour = this.getStatusColour();
         let cssClassName = this.props.cssClassName + "__SmartEdit";
-        let selctedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns);
-        let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.SmartEditValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selctedColumn, ShowPanel: true, ShowHeader: false });
+        let selectedColumn = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper_1.ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null;
+        let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.SmartEditValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selectedColumn, ShowPanel: true, ShowHeader: false });
         let operationMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.MathOperation).filter(e => e != Enums_1.MathOperation.Replace).map((mathOperation, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onSmartEditOperationChange(mathOperation) }, mathOperation);
         });

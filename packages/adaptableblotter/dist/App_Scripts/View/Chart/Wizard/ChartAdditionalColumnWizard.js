@@ -9,6 +9,7 @@ const Enums_1 = require("../../../Utilities/Enums");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const SingleListBox_1 = require("../../Components/ListBox/SingleListBox");
 const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 class ChartAdditionalColumnWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -29,12 +30,16 @@ class ChartAdditionalColumnWizard extends React.Component {
             React.createElement(react_bootstrap_1.Panel, { header: "X Axis Additional Column", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "additionalColumn" },
-                        React.createElement(react_bootstrap_1.Col, { xs: 4 }),
-                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                            React.createElement(react_bootstrap_1.Well, null, "You can, optionally, segment the X Axis further by grouping totals against the values in another column")),
-                        React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column: "),
-                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                            React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.AdditionalColumn], ColumnList: this.props.Columns, onColumnChange: columns => this.onAdditionalColumnChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })),
+                        React.createElement(react_bootstrap_1.Row, null,
+                            "  ",
+                            React.createElement(react_bootstrap_1.Col, { xs: 1 }),
+                            React.createElement(react_bootstrap_1.Col, { xs: 10 },
+                                React.createElement(react_bootstrap_1.Well, null, "You can, optionally, segment the X Axis further by grouping totals against the values in another column")),
+                            React.createElement(react_bootstrap_1.Col, { xs: 1 })),
+                        React.createElement(react_bootstrap_1.Row, null,
+                            React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column: "),
+                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.AdditionalColumn], ColumnList: this.props.Columns, onColumnChange: columns => this.onAdditionalColumnChanged(columns), SelectionMode: Enums_1.SelectionMode.Single }))),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column Values:"),
                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
@@ -64,7 +69,7 @@ class ChartAdditionalColumnWizard extends React.Component {
             AdditionalColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
             AvailableAdditionalColumnValues: isColumn ?
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
-                null
+                []
         }, () => this.props.UpdateGoBackState());
     }
     canNext() {
@@ -76,7 +81,7 @@ class ChartAdditionalColumnWizard extends React.Component {
     canBack() { return true; }
     Next() {
         this.props.Data.AdditionalColumnId = this.state.AdditionalColumn;
-        this.props.Data.AdditionalColumnValues = this.state.AdditionalColumnValues;
+        this.props.Data.AdditionalColumnValues = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumn) ? this.state.AdditionalColumnValues : [];
     }
     Back() {
         // todo
@@ -85,7 +90,7 @@ class ChartAdditionalColumnWizard extends React.Component {
         return 1;
     }
     GetIndexStepDecrement() {
-        return 1;
+        return (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression)) ? 2 : 1;
     }
 }
 exports.ChartAdditionalColumnWizard = ChartAdditionalColumnWizard;

@@ -1,8 +1,8 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
-import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
 import * as _ from 'lodash';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 export declare class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
     private ChartState;
     private ChartInternalState;
@@ -10,7 +10,7 @@ export declare class ChartStrategy extends AdaptableStrategyBase implements ICha
     protected addPopupMenuItem(): void;
     protected InitState(): void;
     debouncedSetChartData: (() => void) & _.Cancelable;
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void;
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void;
     private setChartData;
     private clearChartData;
 }

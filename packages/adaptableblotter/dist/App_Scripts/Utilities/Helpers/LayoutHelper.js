@@ -33,7 +33,7 @@ var LayoutHelper;
     function autoSaveLayout(blotter) {
         let layoutState = blotter.AdaptableBlotterStore.TheStore.getState().Layout;
         if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
-            if (blotter.BlotterOptions.autoSaveLayouts) {
+            if (blotter.BlotterOptions.layoutOptions != null && blotter.BlotterOptions.layoutOptions.autoSaveLayouts != null && blotter.BlotterOptions.layoutOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                 if (layout != null) {
                     let gridState = blotter.AdaptableBlotterStore.TheStore.getState().Grid;

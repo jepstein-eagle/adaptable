@@ -7,9 +7,9 @@ exports.ApplicationStrategyId = "Application";
 exports.BulkUpdateStrategyId = "BulkUpdate";
 exports.CalculatedColumnStrategyId = "CalculatedColumn";
 exports.CalendarStrategyId = "Calendar";
-exports.PercentBarStrategyId = "PercentBar";
 exports.CellValidationStrategyId = "CellValidation";
 exports.ChartStrategyId = "Chart";
+exports.ColumnCategoryStrategyId = "ColumnCategory";
 exports.ColumnChooserStrategyId = "ColumnChooser";
 exports.ColumnFilterStrategyId = "ColumnFilter";
 exports.ColumnInfoStrategyId = "ColumnInfo";
@@ -24,7 +24,7 @@ exports.FormatColumnStrategyId = "FormatColumn";
 exports.FreeTextColumnStrategyId = "FreeTextColumn";
 exports.HomeStrategyId = "Home";
 exports.LayoutStrategyId = "Layout";
-exports.ColumnCategoryStrategyId = "ColumnCategory";
+exports.PercentBarStrategyId = "PercentBar";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
 exports.SelectColumnStrategyId = "SelectColumn";
@@ -41,9 +41,9 @@ exports.ApplicationStrategyName = "Application";
 exports.BulkUpdateStrategyName = "Bulk Update";
 exports.CalculatedColumnStrategyName = "Calculated Column";
 exports.CalendarStrategyName = "Calendar";
-exports.PercentBarStrategyName = "Percent Bar";
 exports.CellValidationStrategyName = "Cell Validation";
 exports.ChartStrategyName = "Chart";
+exports.ColumnCategoryStrategyName = "Column Category";
 exports.ColumnChooserStrategyName = "Column Chooser";
 exports.ColumnFilterStrategyName = "Column Filter";
 exports.ColumnInfoStrategyName = "Column Information";
@@ -57,7 +57,7 @@ exports.FlashingCellsStrategyName = "Flashing Cells";
 exports.FormatColumnStrategyName = "Format Column";
 exports.FreeTextColumnStrategyName = "Free Text Column";
 exports.LayoutStrategyName = "Layout";
-exports.ColumnCategoryStrategyName = "Column Category";
+exports.PercentBarStrategyName = "Percent Bar";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
 exports.SelectColumnStrategyName = "Select Column";
@@ -74,9 +74,9 @@ exports.ApplicationGlyph = "font";
 exports.BulkUpdateGlyph = "hand-up";
 exports.CalculatedColumnGlyph = "th-list";
 exports.CalendarGlyph = "calendar";
-exports.PercentBarGlyph = "transfer";
 exports.CellValidationGlyph = "flag";
 exports.ChartGlyph = "signal";
+exports.ColumnCategoryGlyph = "link";
 exports.ColumnChooserGlyph = "list-alt";
 exports.ColumnFilterGlyph = "filter";
 exports.ColumnInfoGlyph = "italic";
@@ -91,7 +91,7 @@ exports.FormatColumnGlyph = "picture";
 exports.FreeTextColumnGlyph = "comment";
 exports.FunctionsGlyph = "home";
 exports.LayoutGlyph = "th";
-exports.ColumnCategoryGlyph = "link";
+exports.PercentBarGlyph = "transfer";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
 exports.SelectColumnGlyph = "compressed";
@@ -103,10 +103,10 @@ exports.ThemeGlyph = "leaf";
 exports.UserFilterGlyph = "user";
 function getIdForStrategyName(strategyName) {
     switch (strategyName) {
-        case exports.AlertStrategyName:
-            return exports.AlertStrategyId;
         case exports.AdvancedSearchStrategyName:
             return exports.AdvancedSearchStrategyId;
+        case exports.AlertStrategyName:
+            return exports.AlertStrategyId;
         case exports.ApplicationStrategyName:
             return exports.ApplicationStrategyId;
         case exports.BulkUpdateStrategyName:
@@ -117,10 +117,10 @@ function getIdForStrategyName(strategyName) {
             return exports.CalendarStrategyId;
         case exports.CellValidationStrategyName:
             return exports.CellValidationStrategyId;
-        case exports.PercentBarStrategyName:
-            return exports.PercentBarStrategyId;
         case exports.ChartStrategyName:
             return exports.ChartStrategyId;
+        case exports.ColumnCategoryStrategyName:
+            return exports.ColumnCategoryStrategyId;
         case exports.ColumnChooserStrategyName:
             return exports.ColumnChooserStrategyId;
         case exports.ColumnFilterStrategyName:
@@ -147,8 +147,8 @@ function getIdForStrategyName(strategyName) {
             return exports.FreeTextColumnStrategyId;
         case exports.LayoutStrategyName:
             return exports.LayoutStrategyId;
-        case exports.ColumnCategoryStrategyName:
-            return exports.ColumnCategoryStrategyId;
+        case exports.PercentBarStrategyName:
+            return exports.PercentBarStrategyId;
         case exports.PlusMinusStrategyName:
             return exports.PlusMinusStrategyId;
         case exports.QuickSearchStrategyName:
@@ -172,10 +172,10 @@ function getIdForStrategyName(strategyName) {
 exports.getIdForStrategyName = getIdForStrategyName;
 function getNameForStrategyId(strategyID) {
     switch (strategyID) {
-        case exports.AlertStrategyId:
-            return exports.AlertStrategyName;
         case exports.AdvancedSearchStrategyId:
             return exports.AdvancedSearchStrategyName;
+        case exports.AlertStrategyId:
+            return exports.AlertStrategyName;
         case exports.ApplicationStrategyId:
             return exports.ApplicationStrategyName;
         case exports.BulkUpdateStrategyId:
@@ -186,10 +186,10 @@ function getNameForStrategyId(strategyID) {
             return exports.CalendarStrategyName;
         case exports.CellValidationStrategyId:
             return exports.CellValidationStrategyName;
-        case exports.PercentBarStrategyId:
-            return exports.PercentBarStrategyName;
         case exports.ChartStrategyId:
             return exports.ChartStrategyName;
+        case exports.ColumnCategoryStrategyId:
+            return exports.ColumnCategoryStrategyName;
         case exports.ColumnChooserStrategyId:
             return exports.ColumnChooserStrategyName;
         case exports.ColumnFilterStrategyId:
@@ -216,8 +216,8 @@ function getNameForStrategyId(strategyID) {
             return exports.FreeTextColumnStrategyName;
         case exports.LayoutStrategyId:
             return exports.LayoutStrategyName;
-        case exports.ColumnCategoryStrategyId:
-            return exports.ColumnCategoryStrategyName;
+        case exports.PercentBarStrategyId:
+            return exports.PercentBarStrategyName;
         case exports.PlusMinusStrategyId:
             return exports.PlusMinusStrategyName;
         case exports.QuickSearchStrategyId:
@@ -241,10 +241,10 @@ function getNameForStrategyId(strategyID) {
 exports.getNameForStrategyId = getNameForStrategyId;
 function getGhyphiconForStrategyId(strategyID) {
     switch (strategyID) {
-        case exports.AlertStrategyId:
-            return exports.AlertGlyph;
         case exports.AdvancedSearchStrategyId:
             return exports.AdvancedSearchGlyph;
+        case exports.AlertStrategyId:
+            return exports.AlertGlyph;
         case exports.ApplicationStrategyId:
             return exports.ApplicationGlyph;
         case exports.BulkUpdateStrategyId:
@@ -255,10 +255,10 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.CalendarGlyph;
         case exports.CellValidationStrategyId:
             return exports.CellValidationGlyph;
-        case exports.PercentBarStrategyId:
-            return exports.PercentBarGlyph;
         case exports.ChartStrategyId:
             return exports.ChartGlyph;
+        case exports.ColumnCategoryStrategyId:
+            return exports.ColumnCategoryGlyph;
         case exports.ColumnChooserStrategyId:
             return exports.ColumnChooserGlyph;
         case exports.ColumnFilterStrategyId:
@@ -281,8 +281,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.FreeTextColumnGlyph;
         case exports.LayoutStrategyId:
             return exports.LayoutGlyph;
-        case exports.ColumnCategoryStrategyId:
-            return exports.ColumnCategoryGlyph;
+        case exports.PercentBarStrategyId:
+            return exports.PercentBarGlyph;
         case exports.PlusMinusStrategyId:
             return exports.PlusMinusGlyph;
         case exports.QuickSearchStrategyId:

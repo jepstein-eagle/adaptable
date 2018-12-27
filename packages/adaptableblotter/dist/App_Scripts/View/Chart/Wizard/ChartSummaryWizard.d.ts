@@ -9,6 +9,7 @@ export declare class ChartSummaryWizard extends React.Component<ChartSummaryWiza
     constructor(props: ChartSummaryWizardProps);
     render(): any;
     private getColumnValuesList;
+    private getExpressionString;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

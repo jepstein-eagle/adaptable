@@ -11,7 +11,7 @@ const Enums_1 = require("../../Utilities/Enums");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
-const EntitlementHelper_1 = require("../../Utilities/Helpers/EntitlementHelper");
+const StrategyHelper_1 = require("../../Utilities/Helpers/StrategyHelper");
 class DashboardComponent extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
@@ -26,7 +26,7 @@ class DashboardComponent extends React.Component {
             //we'll need to use the name or something else
             let dashboardControl = AdaptableViewFactory_1.AdaptableDashboardViewFactory.get(control);
             if (dashboardControl) {
-                let accessLevel = EntitlementHelper_1.EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
+                let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
                 let dashboardElememt = React.createElement(dashboardControl, {
                     Blotter: this.props.Blotter,
                     Columns: this.props.Columns,

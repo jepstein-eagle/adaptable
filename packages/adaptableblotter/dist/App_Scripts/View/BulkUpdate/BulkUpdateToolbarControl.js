@@ -24,7 +24,7 @@ class BulkUpdateToolbarControlComponent extends React.Component {
         super(props);
         this.state = {
             Disabled: true,
-            SubFunc: (sender, event) => {
+            SubFunc: () => {
                 this.onSelectionChanged();
             }
         };
@@ -47,7 +47,7 @@ class BulkUpdateToolbarControlComponent extends React.Component {
         let activeButton = this.state.Disabled ?
             React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "default", bsSize: "small" }, "Off")
             : React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "primary", bsSize: "small" }, "On");
-        let selectedColumn = (this.props.PreviewInfo) ?
+        let selectedColumn = (this.props.PreviewInfo && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
             null;
         let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.BulkUpdateValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selectedColumn, ShowPanel: true, ShowHeader: false });

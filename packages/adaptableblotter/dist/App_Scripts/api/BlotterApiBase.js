@@ -143,9 +143,6 @@ class BlotterApiBase {
     quickSearchGetValue() {
         return this.getState().QuickSearch.QuickSearchText;
     }
-    quickSearchSetOperator(operator) {
-        this.dispatchAction(QuickSearchRedux.QuickSearchSetOperator(operator));
-    }
     quickSearchSetDisplayAction(displayAction) {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction));
     }

@@ -5,6 +5,7 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const Enums_1 = require("../Utilities/Enums");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const Helper_1 = require("../Utilities/Helpers/Helper");
 class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.SelectedCellsStrategyId, blotter);
@@ -48,12 +49,12 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
             let hasNumericColumns = numericValues.length > 0;
             let distinct = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
-                Sum: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.sumNumberArray(numericValues)) : "",
-                Average: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.meanNumberArray(numericValues)) : "",
-                Median: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.medianNumberArray(numericValues)) : "",
+                Sum: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(this.sumNumberArray(numericValues)) : "",
+                Average: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(this.meanNumberArray(numericValues)) : "",
+                Median: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(this.medianNumberArray(numericValues)) : "",
                 Distinct: distinct,
-                Max: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.max(...numericValues)) : "",
-                Min: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.min(...numericValues)) : "",
+                Max: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(Math.max(...numericValues)) : "",
+                Min: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(Math.min(...numericValues)) : "",
                 Count: allValues.length,
                 Only: (distinct == 1) ? allValues[0] : "",
                 VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
@@ -82,9 +83,6 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         }
         return median;
     }
-    roundNumberToFourPlaces(numberToRound) {
-        return Math.round(numberToRound * 10000) / 10000;
-    }
     calculateVwap(numericValues) {
         let firstColValues = [];
         let secondColComputedValues = [];
@@ -99,7 +97,7 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         }
         let firstColTotal = this.sumNumberArray(firstColValues);
         let secondColTotal = this.sumNumberArray(secondColComputedValues);
-        let result = this.roundNumberToFourPlaces((secondColTotal / firstColTotal));
+        let result = Helper_1.Helper.RoundNumberTo4dp((secondColTotal / firstColTotal));
         return result;
     }
 }

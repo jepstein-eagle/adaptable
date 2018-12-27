@@ -3,13 +3,13 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IAlertDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
-import { IDataChangedEvent } from '../Utilities/Services/Interface/IAuditService';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 export declare class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
     protected AlertState: AlertState;
     constructor(blotter: IAdaptableBlotter);
     protected InitState(): void;
     protected addPopupMenuItem(): void;
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void;
-    CheckDataChanged(dataChangedEvent: IDataChangedEvent): IAlertDefinition[];
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void;
+    CheckDataChanged(dataChangedEvent: IDataChangedInfo): IAlertDefinition[];
     private IsAlertTriggered;
 }

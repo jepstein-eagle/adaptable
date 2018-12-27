@@ -21,11 +21,11 @@ const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
-const EntitlementHelper_1 = require("../../Utilities/Helpers/EntitlementHelper");
 const ColumnCategorySummary_1 = require("../ColumnCategory/ColumnCategorySummary");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const PercentBarSummary_1 = require("../PercentBar/PercentBarSummary");
 const FreeTextColumnSummary_1 = require("../FreeTextColumn/FreeTextColumnSummary");
+const StrategyHelper_1 = require("../../Utilities/Helpers/StrategyHelper");
 class ColumnInfoPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -124,7 +124,7 @@ class ColumnInfoPopupComponent extends React.Component {
         return this.getAccessLevel(strategyId) == Enums_1.AccessLevel.ReadOnly;
     }
     getAccessLevel(strategyId) {
-        return EntitlementHelper_1.EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.FunctionEntitlements, strategyId);
+        return StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.FunctionEntitlements, strategyId);
     }
 }
 function mapStateToProps(state, ownProps) {

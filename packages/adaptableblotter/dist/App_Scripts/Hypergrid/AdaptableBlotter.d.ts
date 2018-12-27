@@ -15,17 +15,17 @@ import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEve
 import * as _ from 'lodash';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
-import { IAuditService } from '../Utilities/Services/Interface/IAuditService';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
+import { IDataService } from '../Utilities/Services/Interface/IDataService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
     AdaptableBlotterStore: IAdaptableBlotterStore;
     CalendarService: ICalendarService;
-    AuditService: IAuditService;
+    DataService: IDataService;
     ValidationService: IValidationService;
     AuditLogService: AuditLogService;
     ChartService: IChartService;
@@ -42,7 +42,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private getState;
-    InitAuditService(): void;
     private buildFontCSSShorthand;
     private buildFontCSSProperties;
     setColumnIntoStore(): void;
@@ -71,7 +70,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setValueBatch(batchValues: ICellInfo[]): void;
     private ClearSelection;
     cancelEdit(): void;
-    private checkIfDataChangingColumnIsFreeText;
     forAllRecordsDo(func: (record: any) => any): any;
     forAllVisibleRecordsDo(func: (record: any) => any): void;
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;

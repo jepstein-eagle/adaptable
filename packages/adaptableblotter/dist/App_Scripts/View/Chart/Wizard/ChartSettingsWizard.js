@@ -6,7 +6,7 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
-const Enums_1 = require("../../../Utilities/Enums");
+const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 class ChartSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +20,7 @@ class ChartSettingsWizard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "-settings";
         let validationState = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-        let optionChartTypes = EnumExtensions_1.EnumExtensions.getNames(Enums_1.ChartType).map((enumName) => {
+        let optionChartTypes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ChartType).map((enumName) => {
             return React.createElement("option", { key: enumName, value: enumName }, enumName);
         });
         return React.createElement("div", { className: cssClassName },

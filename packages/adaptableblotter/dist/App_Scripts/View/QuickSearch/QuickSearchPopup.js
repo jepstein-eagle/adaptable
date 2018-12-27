@@ -28,10 +28,6 @@ class QuickSearchPopupComponent extends React.Component {
         this.setState({ EditedQuickSearchText: text });
         this.debouncedRunQuickSearch();
     }
-    onStringOperatorChange(event) {
-        let e = event.target;
-        this.props.onSetSearchOperator(e.value);
-    }
     onDisplayTypeChange(event) {
         let e = event.target;
         this.props.onSetSearchDisplayType(e.value);
@@ -87,17 +83,10 @@ class QuickSearchPopupComponent extends React.Component {
                         React.createElement(AdaptableBlotterFormControlTextClear_1.AdaptableBlotterFormControlTextClear, { cssClassName: cssClassName, type: "text", placeholder: "Quick Search Text", value: this.state.EditedQuickSearchText, OnTextChange: (x) => this.handleQuickSearchTextChange(x) }))),
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.Panel, { header: "Quick Search Options", eventKey: "1", bsStyle: "info" },
-                        React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineSearchOperator" },
-                            React.createElement(react_bootstrap_1.Col, { xs: 3 },
-                                React.createElement(react_bootstrap_1.ControlLabel, null, "Operator:")),
-                            React.createElement(react_bootstrap_1.Col, { xs: 4 },
-                                React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: this.props.Operator.toString(), onChange: (x) => this.onStringOperatorChange(x) }, optionOperators)),
-                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Quick Search: Operator", bodyText: [React.createElement("b", null, "Starts With:"), " Returns cells whose contents begin with the search text", React.createElement("br", null), React.createElement("br", null), React.createElement("b", null, "Contains:"), " Returns cells whose contents contain the search text anywhere."], MessageType: Enums_1.MessageType.Info }))),
                         React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineSearchDisplay" },
                             React.createElement(react_bootstrap_1.Col, { xs: 3 },
                                 React.createElement(react_bootstrap_1.ControlLabel, null, "Behaviour:")),
-                            React.createElement(react_bootstrap_1.Col, { xs: 4 },
+                            React.createElement(react_bootstrap_1.Col, { xs: 7 },
                                 React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: this.props.DisplayAction.toString(), onChange: (x) => this.onDisplayTypeChange(x) }, DisplayActions)),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 },
                                 React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Quick Search: Behaviour", bodyText: [React.createElement("b", null, "Highlight Cells Only:"), " Changes back colour of cells matching search text", React.createElement("br", null), React.createElement("br", null), React.createElement("b", null, "Show Matching Rows Only:"), " Only shows rows containing cells matching search text", React.createElement("br", null), React.createElement("br", null), React.createElement("b", null, "Highlight Cells and Show Matching Rows:"), " Only shows rows containing cells (which are also coloured) matching search text"], MessageType: Enums_1.MessageType.Info }))),
@@ -130,7 +119,6 @@ class QuickSearchPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        Operator: state.QuickSearch.Operator,
         DisplayAction: state.QuickSearch.DisplayAction,
         QuickSearchStyle: state.QuickSearch.Style,
     };
@@ -138,7 +126,6 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
     return {
         onRunQuickSearch: (quickSearchText) => dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),
-        onSetSearchOperator: (searchOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
         onSetSearchDisplayType: (searchDisplayType) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
         onSetStyle: (style) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
     };

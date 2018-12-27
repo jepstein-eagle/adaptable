@@ -11,7 +11,9 @@ class TeamSharingStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
     }
     hasPopupMenu() {
-        return this.blotter.BlotterOptions.enableRemoteConfigServer;
+        return this.blotter.BlotterOptions.remoteConfigServerOptions != null
+            && this.blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer != null
+            && this.blotter.BlotterOptions.remoteConfigServerOptions.enableRemoteConfigServer == true;
     }
     InitState() {
         //nothing 

@@ -6,11 +6,12 @@ const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const ChartInternalRedux = require("../Redux/ActionsReducers/ChartInternalRedux");
 const Enums_1 = require("../Utilities/Enums");
 const _ = require("lodash");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ChartStrategyId, blotter);
         this.debouncedSetChartData = _.debounce(() => this.setChartData(), 500);
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
     }
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.ChartStrategyName, ScreenPopups.ChartPopup, StrategyConstants.ChartGlyph);
@@ -48,7 +49,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (this.ChartInternalState != null && this.ChartInternalState.ChartVisible && this.ChartInternalState.CurrentChartDefinition != null) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId = dataChangedEvent.ColumnId;
-            if (this.ChartInternalState.CurrentChartDefinition.YAxisColumnId == columnChangedId ||
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.ChartInternalState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 this.ChartInternalState.CurrentChartDefinition.XAxisColumnId == columnChangedId ||
                 this.ChartInternalState.CurrentChartDefinition.AdditionalColumnId == columnChangedId) {
                 this.debouncedSetChartData();

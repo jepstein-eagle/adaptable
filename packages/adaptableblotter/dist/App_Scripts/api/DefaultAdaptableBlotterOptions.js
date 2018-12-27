@@ -4,9 +4,18 @@ const GeneralConstants = require("../Utilities/Constants/GeneralConstants");
 exports.DefaultAdaptableBlotterOptions = {
     vendorGrid: null,
     primaryKey: "",
-    enableAuditLog: false,
-    enableRemoteConfigServer: false,
-    remoteConfigServerUrl: "",
+    auditOptions: {
+        auditCellEdits: false,
+        auditFunctionEvents: false,
+        auditUserStateChanges: false,
+        auditInternalStateChanges: false,
+        pingInterval: 60,
+        auditLogsSendInterval: 1
+    },
+    remoteConfigServerOptions: {
+        enableRemoteConfigServer: false,
+        remoteConfigServerUrl: "",
+    },
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfig: null,
@@ -15,11 +24,15 @@ exports.DefaultAdaptableBlotterOptions = {
     columnValuesOnlyInQueries: false,
     adaptableBlotterContainer: "adaptableBlotter",
     vendorContainer: "grid",
-    includeVendorStateInLayouts: false,
-    autoSaveLayouts: false,
+    layoutOptions: {
+        includeVendorStateInLayouts: false,
+        autoSaveLayouts: false,
+    },
     getColumnValues: null,
     ignoreCaseInQueries: true,
     useDefaultVendorGridThemes: true,
     useAdaptableBlotterFilterForm: true,
-    useAdaptableBlotterFloatingFilter: true
+    useAdaptableBlotterFloatingFilter: true,
+    showMissingPrimaryKeyWarning: true,
+    indicateFilteredColumns: true
 };

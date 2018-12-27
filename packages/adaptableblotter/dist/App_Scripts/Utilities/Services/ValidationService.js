@@ -37,7 +37,7 @@ class ValidationService {
                     if (isSatisfiedExpression && this.IsCellValidationRuleBroken(expressionRule, dataChangedEvent, columns)) {
                         // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
                         if (expressionRule.ActionMode == 'Stop Edit') {
-                            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId, "CheckCellChanging", "Failed", { failedRules: [expressionRule], DataChangingEvent: dataChangedEvent });
+                            this.logAuditValidationEvent('Validating Cell Edit', 'Failed', { Errors: [expressionRule], DataChangingEvent: dataChangedEvent });
                             return [expressionRule];
                         }
                         else {
@@ -51,7 +51,7 @@ class ValidationService {
             for (let noExpressionRule of noExpressionRules) {
                 if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
                     if (noExpressionRule.ActionMode == 'Stop Edit') {
-                        this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId, "CheckCellChanging", "Failed", { failedRules: [noExpressionRule], DataChangingEvent: dataChangedEvent });
+                        this.logAuditValidationEvent('Validating Cell Edit', 'Failed', { Errors: [noExpressionRule], DataChangingEvent: dataChangedEvent });
                         return [noExpressionRule];
                     }
                     else {
@@ -61,10 +61,10 @@ class ValidationService {
             }
         }
         if (failedWarningRules.length > 0) {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId, "CheckCellChanging", "Warning", { failedRules: failedWarningRules, DataChangingEvent: dataChangedEvent });
+            this.logAuditValidationEvent('Validating Cell Edit', 'Warning Shown', { Warnings: failedWarningRules, DataChangingEvent: dataChangedEvent });
         }
         else {
-            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId, "CheckCellChanging", "Ok", { DataChangingEvent: dataChangedEvent });
+            this.logAuditValidationEvent('Validating Cell Edit', 'Success', { DataChangingEvent: dataChangedEvent });
         }
         return failedWarningRules;
     }
@@ -76,11 +76,16 @@ class ValidationService {
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let column = ColumnHelper_1.ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
-        let rangeEvaluation = ExpressionHelper_1.ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, this.blotter.AuditService.getExistingDataValue(dataChangedEvent), column, this.blotter, null);
+        let rangeEvaluation = ExpressionHelper_1.ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, dataChangedEvent.NewValue, column, this.blotter, null);
         return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
     }
     GetCellValidationState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
+    }
+    logAuditValidationEvent(action, info, data) {
+        if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
+            this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.CellValidationStrategyId, action, info, data);
+        }
     }
 }
 exports.ValidationService = ValidationService;

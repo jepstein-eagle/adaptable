@@ -523,11 +523,21 @@ var ExpressionHelper;
             case Enums_1.LeafExpressionOperator.IsFalse:
                 return (rangeEvaluation.newValue == false);
             case Enums_1.LeafExpressionOperator.Contains:
-                return rangeEvaluation.newValue.indexOf(rangeEvaluation.operand1) >= 0;
+                if (rangeEvaluation.newValue == undefined) {
+                    return false;
+                }
+                return String(rangeEvaluation.newValue).indexOf(rangeEvaluation.operand1) >= 0;
             case Enums_1.LeafExpressionOperator.NotContains:
-                return rangeEvaluation.newValue.indexOf(rangeEvaluation.operand1) < 0;
+                if (rangeEvaluation.newValue == undefined) {
+                    return false;
+                }
+                return String(rangeEvaluation.newValue).indexOf(rangeEvaluation.operand1) < 0;
             case Enums_1.LeafExpressionOperator.StartsWith:
-                return rangeEvaluation.newValue.startsWith(rangeEvaluation.operand1);
+                // alert("new value: " + rangeEvaluation.newValue)
+                if (rangeEvaluation.newValue == undefined) {
+                    return false;
+                }
+                return String(rangeEvaluation.newValue).startsWith(rangeEvaluation.operand1);
             case Enums_1.LeafExpressionOperator.EndsWith:
                 return rangeEvaluation.newValue.endsWith(rangeEvaluation.operand1);
             case Enums_1.LeafExpressionOperator.Regex:

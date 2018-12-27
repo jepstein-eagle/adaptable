@@ -1,15 +1,22 @@
 import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
-import { IDataChangedEvent } from "./Interface/IAuditService";
+import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
 export declare class AuditLogService {
     private blotter;
     private auditLogQueue;
     private canSendLog;
     private numberOfMissedPing;
     private blotterOptions;
+    IsAuditEnabled: boolean;
+    IsAuditStateChangesEnabled: boolean;
+    IsAuditCellEditsEnabled: boolean;
+    IsAuditFunctionEventsEnabled: boolean;
+    IsAuditUserStateChangesEnabled: boolean;
+    IsAuditInternalStateChangesEnabled: boolean;
     constructor(blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions);
-    AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedEvent[]): void;
-    AddEditCellAuditLog(dataChangedEvent: IDataChangedEvent): void;
+    private setUpFlags;
+    AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]): void;
+    AddEditCellAuditLog(dataChangedEvent: IDataChangedInfo): void;
     AddStateChangeAuditLog(stateChanges: any, actionType: string): void;
     AddAdaptableBlotterFunctionLog(functionName: string, action: string, info: string, data?: any): void;
     private ping;

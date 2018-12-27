@@ -23,36 +23,21 @@ export interface IAdaptableBlotterOptions {
     */
     userName?: string;
     /**
-     * If enabled, every keystroke, data change, user action etc. is logged
+     * Options for Audit Log
+     * Every keystroke, data change, user action etc. is logged
      * This is then sent as JSON to the Audit Http Channel
      */
-    enableAuditLog?: boolean;
+    auditOptions?: IAuditOptions;
     /**
-     * If true, config is stored at server location of your choice
-     * Otherwise it is stored in the local cache
+     * Options for setting Remote Config Server
+     * This allows you to store user state not in local storage (the default)
      */
-    enableRemoteConfigServer?: boolean;
+    remoteConfigServerOptions?: IRemoteConfigServerOptions;
     /**
      * Configuration properties and objects set at design-time
      * Only used if enableRemoteConfigServer is false
      */
     predefinedConfig?: any;
-    /**
-     * Remote config server that'll persist the user state and give it back on demand.
-     * Only used if enableRemoteConfigServer is true.
-     *
-     * AdaptableBlotter will send a POST request to this URL to persist the state with the follower parameters:
-     * Headers: { ab_username: string, ab_id: string }
-     * Body: Stringified user state
-     *
-     * Each ab_username & ab_id combination is unique, so your server should persist the state and use that combination as a key.
-     *
-     * AdaptableBlotter will send a GET request to this URL to get the persisted state with the follower parameters:
-     * Headers: { ab_username: string, ab_id: string }
-     *
-     * Your server should return the user state related to the given ab_username and ab_id combination as a JSON object.
-     */
-    remoteConfigServerUrl?: string;
     /**
      * How many items to dispay in column value listboxes when building queries
      * Useful when datasource is very large
@@ -85,20 +70,15 @@ export interface IAdaptableBlotterOptions {
     */
     vendorContainer?: string;
     /**
-     * Whether layouts should include vendor-related state
-     * Defaults to false - only currently available in ag-Grid
+     * Options for use in Layouts
+     * (ie. saveable view of column order, visibility and sorts)
      */
-    includeVendorStateInLayouts?: boolean;
+    layoutOptions?: ILayoutOptions;
     /**
-     * Whether layouts should save as soon as column order or sorts change
-     * Defaults to false - user needs to click save to persist changes
-     */
-    autoSaveLayouts?: boolean;
-    /**
-     * When running queries on text columns to ignore case
-     * Defaults to true - case is ignored by default
-     * (e.g. [StartsWith 'c'] will return true for the value 'Canada')
-     */
+   * When running queries on text columns to ignore case
+   * Defaults to true - case is ignored by default
+   * (e.g. [StartsWith 'c'] will return true for the value 'Canada')
+   */
     ignoreCaseInQueries?: boolean;
     /**
      * Use the default theme that we provide for the vendor grid
@@ -119,6 +99,16 @@ export interface IAdaptableBlotterOptions {
     */
     useAdaptableBlotterFloatingFilter?: boolean;
     /**
+    * Whether to show a warning if the primary key column identified in this Options does not exist
+    * Recommended to set to true (default) as a wrongly applied primary key can affect many functions
+    */
+    showMissingPrimaryKeyWarning?: boolean;
+    /**
+    * Whether to make the font in the Column header for filtered columns to be bold and italicised
+    * This will make it easier for users to see at a glance which columns are currently filtered
+    */
+    indicateFilteredColumns?: boolean;
+    /**
     * Required if using iPushPull to display / send live report data
     */
     iPushPullConfig?: {
@@ -138,4 +128,47 @@ export interface IAdaptableBlotterOptions {
 export interface IServerColumnValues {
     DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
     ColumnValues: string[];
+}
+export interface IAuditOptions {
+    auditCellEdits?: boolean;
+    auditFunctionEvents?: boolean;
+    auditUserStateChanges?: boolean;
+    auditInternalStateChanges?: boolean;
+    pingInterval?: number;
+    auditLogsSendInterval?: number;
+}
+export interface IRemoteConfigServerOptions {
+    /**
+     * If true, config is stored at server location of your choice
+     * Otherwise it is stored in the local cache
+     */
+    enableRemoteConfigServer?: boolean;
+    /**
+     * Remote config server that'll persist the user state and give it back on demand.
+     * Only used if enableRemoteConfigServer is true.
+     *
+     * AdaptableBlotter will send a POST request to this URL to persist the state with the follower parameters:
+     * Headers: { ab_username: string, ab_id: string }
+     * Body: Stringified user state
+     *
+     * Each ab_username & ab_id combination is unique, so your server should persist the state and use that combination as a key.
+     *
+     * AdaptableBlotter will send a GET request to this URL to get the persisted state with the follower parameters:
+     * Headers: { ab_username: string, ab_id: string }
+     *
+     * Your server should return the user state related to the given ab_username and ab_id combination as a JSON object.
+     */
+    remoteConfigServerUrl?: string;
+}
+export interface ILayoutOptions {
+    /**
+    * Whether layouts should include vendor-related state
+    * Defaults to false - only currently available in ag-Grid
+    */
+    includeVendorStateInLayouts?: boolean;
+    /**
+     * Whether layouts should save as soon as column order or sorts change
+     * Defaults to false - user needs to click save to persist changes
+     */
+    autoSaveLayouts?: boolean;
 }

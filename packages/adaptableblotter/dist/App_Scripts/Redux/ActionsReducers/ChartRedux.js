@@ -1,12 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
+exports.CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
 exports.CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
 exports.CHART_DEFINITION_DELETE = 'CHART_DEFINITION_DELETE';
 exports.ChartDefinitionAddUpdate = (Index, ChartDefinition) => ({
     type: exports.CHART_DEFINITION_ADD_UPDATE,
     Index,
     ChartDefinition
+});
+exports.ChartPropertiesUpdate = (ChartTitle, ChartProperties) => ({
+    type: exports.CHART_PROPERTIES_UPDATE,
+    ChartTitle,
+    ChartProperties
 });
 exports.ChartDefinitionDelete = (ChartDefinition) => ({
     type: exports.CHART_DEFINITION_DELETE,
@@ -27,14 +33,18 @@ exports.ChartReducer = (state = initialChartState, action) => {
             else {
                 chartDefinitions.push(actionTypedAddUpdate.ChartDefinition);
             }
-            return Object.assign({}, state, { ChartDefinitions: chartDefinitions }); //, CurrentAdvancedSearch: currentSearchName })
+            return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
+        case exports.CHART_PROPERTIES_UPDATE:
+            let actionTypedPropertiesUpdate = action;
+            chartDefinitions = [].concat(state.ChartDefinitions);
+            let chartDefinition = chartDefinitions.find(c => c.Title == actionTypedPropertiesUpdate.ChartTitle);
+            chartDefinition.ChartProperties = actionTypedPropertiesUpdate.ChartProperties;
+            return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
         case exports.CHART_DEFINITION_DELETE:
             chartDefinitions = [].concat(state.ChartDefinitions);
             let index = chartDefinitions.findIndex(x => x.Title == action.ChartDefinition.Title);
             chartDefinitions.splice(index, 1);
-            return Object.assign({}, state, {
-                ChartDefinitions: chartDefinitions
-            });
+            return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
         default:
             return state;
     }

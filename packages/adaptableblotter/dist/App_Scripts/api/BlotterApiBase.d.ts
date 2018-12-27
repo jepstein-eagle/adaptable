@@ -40,7 +40,6 @@ export declare abstract class BlotterApiBase implements IBlotterApi {
     quickSearchRun(quickSearchText: string): void;
     quickSearchClear(): void;
     quickSearchGetValue(): string;
-    quickSearchSetOperator(operator: 'Contains' | 'StartsWith'): void;
     quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void;
     quickSearchSetStyle(style: IStyle): void;
     calendarSetCurrent(calendar: string): void;

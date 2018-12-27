@@ -1,6 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoggingHelper_1 = require("./LoggingHelper");
+/*
+This page used to work using the old ipushpull connection mechanism that refernces Angular.
+We are keen to remove this dependnecy as its causing us problems and enlarging the package.
+there is a new javascript API that we should apparently use:  https://bitbucket.org/ipushpull/ipp-js/wiki/Home
+
+However we have 2 problems:
+1.  We cannot get the new way to work at all  - we cannot reference any of the new types.
+    There is currently no definition file and trying to reference their stuff through JavaScript is not working for me.
+2.  Even the old way no longer works because of a CORS issue:
+        Access to XMLHttpRequest at 'https://www.ipushpull.com/Api/1.0/oauth/token/' from origin 'http://localhost:8080' has been blocked by CORS policy:
+        Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+        [http://localhost:8080/]
+    I assume that this issue will be extant even if we successfully solve issue 1.
+
+So for the time being I have removed ipushpull (or rather made it always return unavailable) until we can move to the new version and run it locally.
+
+We could keep it running with the old version but its not sustainable not being able to test and we really do need to start using the new version I think?
+
+If we want to put it then its just a case of readding angular types:
+ "@types/angular": "^1.6.47",
+*/
 var iPushPullHelper;
 (function (iPushPullHelper) {
     let ServiceStatus;
@@ -13,7 +34,7 @@ var iPushPullHelper;
     iPushPullHelper.IPPStatus = ServiceStatus.Unknown;
     let iPushPullApp; //angular.IModule
     function isIPushPullLoaded(iPPConfig) {
-        return false;
+        return false; // remove this if we want to go back to old version
         /*
           try {
               let angular = (<any>window).angular

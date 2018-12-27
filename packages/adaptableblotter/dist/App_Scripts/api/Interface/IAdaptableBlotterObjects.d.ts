@@ -2,6 +2,7 @@ import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType 
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility } from '../../Utilities/ChartEnums';
 /**
  * The base empty Adaptable Blotter Object interface
  */
@@ -64,11 +65,33 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Title: string;
     SubTitle: string;
-    YAxisColumnId: string;
+    YAxisColumnIds: string[];
+    YAxisTotal: 'Sum' | 'Average';
     XAxisColumnId: string;
-    XAxisColumnValues: string[];
+    XAxisExpression: Expression;
     AdditionalColumnId?: string;
     AdditionalColumnValues?: string[];
+    ChartProperties: IChartProperties;
+}
+export interface IChartProperties {
+    ChartType?: ChartType;
+    ChartCrosshairsMode?: ChartCrosshairsMode;
+    EnableFinalValueAnnotations?: boolean;
+    SpanCrossHairsToData?: boolean;
+    EnableCrosshairsAnnotations?: boolean;
+    YAxisLabelLocation?: AxisLabelsLocation;
+    YAxisLabelVisibility?: LabelVisibility;
+    YAxisLabelColor?: string;
+    YAxisTitleColor?: string;
+    YAxisMinimumValue?: number;
+    XAxisLabelVisibility?: LabelVisibility;
+    XAxisLabelColor?: string;
+    XAxisTitle?: string;
+    XAxisTitleColor?: string;
+    EnableTransitions?: boolean;
+    TransitionInDuration?: number;
+    TitleAlignment?: HorizontalAlignment;
+    SubTitleAlignment?: HorizontalAlignment;
 }
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
     Name: string;

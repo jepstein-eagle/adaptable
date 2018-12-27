@@ -11,8 +11,8 @@ class PreviewResultsPanel extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.PREVIEW_RESULTS;
         let previewHeader = this.props.ShowHeader && this.props.PreviewInfo != null ? "Preview Results: " + (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : "") : "";
-        var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult) => {
-            return React.createElement("tr", { key: previewResult.Id },
+        var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult, index) => {
+            return React.createElement("tr", { key: index },
                 React.createElement("td", null, previewResult.InitialValue),
                 React.createElement("td", null, previewResult.ComputedValue),
                 previewResult.ValidationRules.length > 0 ?

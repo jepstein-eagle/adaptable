@@ -51,11 +51,9 @@ class AdaptableBlotterAbout extends React.Component {
             if (options.userName != undefined) {
                 returnRows.push(this.createColItem(colItems, "User", options.userName));
             }
-            if (options.enableAuditLog != undefined) {
-                returnRows.push(this.createColItem(colItems, "Audit Log", (options.enableAuditLog) ? "On" : "Off"));
-            }
-            if (options.enableRemoteConfigServer != undefined) {
-                returnRows.push(this.createColItem(colItems, "Remote Configuration", (options.enableRemoteConfigServer) ? "On" : "Off"));
+            returnRows.push(this.createColItem(colItems, "Audit Log", (this.props.AdaptableBlotter.AuditLogService.IsAuditEnabled) ? "On" : "Off"));
+            if (options.remoteConfigServerOptions != undefined) {
+                returnRows.push(this.createColItem(colItems, "Remote Configuration", (options.remoteConfigServerOptions.enableRemoteConfigServer) ? "On" : "Off"));
             }
             if (options.serverSearchOption != undefined) {
                 returnRows.push(this.createColItem(colItems, "Server Search Option", options.serverSearchOption));

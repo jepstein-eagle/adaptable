@@ -117,7 +117,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (failedRules.length > 0) {
             let failedMessages = [];
             failedRules.forEach(fr => {
-                let failedMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let failedMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = failedMessages.find(f => f == failedMessage);
                 if (existingMessage == null) {
                     failedMessages.push(failedMessage);
@@ -131,7 +131,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             let allValues = warningValues.concat(...successfulValues);
             let warningMessages = [];
             failedRules.forEach(fr => {
-                let warningMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let warningMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = warningMessages.find(w => w == warningMessage);
                 if (existingMessage == null) {
                     warningMessages.push(warningMessage);

@@ -5,6 +5,7 @@ const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ExpressionHelper_1 = require("../Utilities/Helpers/ExpressionHelper");
 const Enums_1 = require("../Utilities/Enums");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 /* There are 3 possible reasons why we might need to filter / search the grid:
 1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)
 2. If there are any Column Filters applied
@@ -72,19 +73,20 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
             // finally, let's assess QUICK SEARCH
             let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
             // check that we have quick search running
-            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
-                let quickSearchLowerCase = quickSearchState.QuickSearchText.toLowerCase();
+            let range = RangeHelper_1.RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+            if (range != null) {
                 // with quick search because we need to colour and might not need to filter we dont return true/false but instead set a return value
                 let recordReturnValue = false;
                 let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject);
                 // only check on visible columns for quick search 
                 for (let column of columns.filter(c => c.Visible)) {
-                    let displayValue = blotter.getDisplayValueFromRecord(rowObject, column.ColumnId);
-                    let stringValueLowerCase = displayValue.toLowerCase();
-                    // we need to differentiate between whether to search for 'Contains' or 'StartsWith'
-                    let isMatch = (quickSearchState.Operator == Enums_1.LeafExpressionOperator.Contains) ?
-                        stringValueLowerCase.includes(quickSearchLowerCase) :
-                        stringValueLowerCase.startsWith(quickSearchLowerCase);
+                    let isMatch = false;
+                    if (RangeHelper_1.RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
+                        let expression = ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [range]);
+                        if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(expression, rowObject, [column], blotter)) {
+                            isMatch = true;
+                        }
+                    }
                     if (isMatch) {
                         //if we need to display ONLY the rows that matched the quicksearch and dont need to colour them then we can return true
                         if (quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRow) {

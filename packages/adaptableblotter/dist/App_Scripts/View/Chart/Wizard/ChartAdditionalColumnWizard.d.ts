@@ -26,6 +26,6 @@ export declare class ChartAdditionalColumnWizard extends React.Component<ChartAd
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): number;
+    GetIndexStepDecrement(): 1 | 2;
     StepName: string;
 }

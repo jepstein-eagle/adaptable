@@ -3,8 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ExpressionHelper_1 = require("./Helpers/ExpressionHelper");
 const Enums_1 = require("./Enums");
 const ColumnHelper_1 = require("./Helpers/ColumnHelper");
-const GeneralConstants = require("../Utilities/Constants/GeneralConstants");
 const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
+const DefaultChartProperties_1 = require("../api/DefaultChartProperties");
+const ChartEnums_1 = require("./ChartEnums");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateEmptyCustomSort() {
@@ -15,9 +16,11 @@ var ObjectFactory;
         return {
             Title: "",
             SubTitle: "",
-            YAxisColumnId: "",
+            YAxisColumnIds: [],
+            YAxisTotal: ChartEnums_1.AxisTotal.Sum,
             XAxisColumnId: "",
-            XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES]
+            XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
+            ChartProperties: DefaultChartProperties_1.DefaultChartProperties
         };
     }
     ObjectFactory.CreateEmptyChartDefinition = CreateEmptyChartDefinition;
@@ -145,7 +148,7 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyShortcut = CreateEmptyShortcut;
-    function CreateCellValidationMessage(CellValidation, blotter, showIntro = true) {
+    function CreateCellValidationMessage(CellValidation, blotter) {
         let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let columnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns);
         let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?

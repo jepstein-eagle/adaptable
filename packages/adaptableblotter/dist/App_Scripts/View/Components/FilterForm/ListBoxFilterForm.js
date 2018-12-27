@@ -145,7 +145,7 @@ class ListBoxFilterForm extends React.Component {
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
     onColumnOperand2SelectedChanged(column) {
-        let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand2Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId };
+        let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
     // Methods for getting column values or filters

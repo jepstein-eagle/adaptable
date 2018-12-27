@@ -22,7 +22,7 @@ export declare module ObjectFactory {
     function CreateEmptyReport(): IReport;
     function CreateDefaultFlashingCell(column: IColumn): IFlashingCell;
     function CreateEmptyShortcut(): IShortcut;
-    function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter, showIntro?: boolean): string;
+    function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter): string;
     function CreateEmptyConditionalStyle(): IConditionalStyle;
     function CreateEmptyFormatColumn(): IFormatColumn;
     function CreateEmptyFreeTextColumn(): IFreeTextColumn;

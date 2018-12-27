@@ -48,11 +48,6 @@ export interface IBlotterApi {
      * Retrieves the current quick search text
      */
     quickSearchGetValue(): string;
-    /**
-     * Sets the Quick Search Operator
-     * @param operator Either 'Contains' to return any cell containing the text or 'StartsWith' to return only those where the value starts with the text
-     */
-    quickSearchSetOperator(operator: 'Contains' | 'StartsWith'): void;
     quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void;
     quickSearchSetStyle(style: IStyle): void;
     /**
@@ -173,7 +168,7 @@ export interface IBlotterApi {
     /**
      * Sets which coloured System Status button is displayed in the Home Toolbar
      * @param statusMessage The message to show when the button is clicked
-     * @param statusColour The colour of the buttton - also influences the type of message (red: error, amber: warning etc)
+     * @param statusColour The colour of the buttton - also influences the type of message (i.e. red: error, amber: warning, green: info)
      */
     systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void;
     systemStatusSetRed(statusMessage: string): void;

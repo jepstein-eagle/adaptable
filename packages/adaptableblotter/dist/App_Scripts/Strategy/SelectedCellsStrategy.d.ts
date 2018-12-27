@@ -10,6 +10,5 @@ export declare class SelectedCellsStrategy extends AdaptableStrategyBase impleme
     private sumNumberArray;
     private meanNumberArray;
     private medianNumberArray;
-    private roundNumberToFourPlaces;
     private calculateVwap;
 }

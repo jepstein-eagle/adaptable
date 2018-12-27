@@ -38,7 +38,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, Enums_1.ExportDestination.OpenfinExcel));
         });
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, event) => {
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, event) => {
             this.throttledRecomputeAndSendLiveExcelEvent();
         });
         this.blotter.onRefresh().Subscribe((sender, event) => {

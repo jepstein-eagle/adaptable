@@ -270,8 +270,10 @@ class ExpressionBuilderConditionSelector extends React.Component {
     getRawValuesForDisplayValues(selectedColumnDisplayValues) {
         let columnRawValues = [];
         selectedColumnDisplayValues.forEach(scv => {
-            let rawValue = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv).RawValue;
-            columnRawValues.push(rawValue);
+            let rawValueDisplayValuePair = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv);
+            if (rawValueDisplayValuePair) {
+                columnRawValues.push(rawValueDisplayValuePair.RawValue);
+            }
         });
         return columnRawValues;
     }

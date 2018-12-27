@@ -7,19 +7,55 @@ class AuditLogService {
         this.blotter = blotter;
         this.canSendLog = true;
         this.numberOfMissedPing = 0;
+        console.log(blotterOptions);
         this.auditLogQueue = [];
         this.blotterOptions = blotterOptions;
-        if (this.blotterOptions.enableAuditLog) {
+        this.setUpFlags(blotterOptions);
+        if (this.IsAuditEnabled) {
             this.ping();
-            setInterval(() => this.ping(), 60000);
-            setInterval(() => this.flushAuditQueue(), 1000);
+            setInterval(() => this.ping(), blotterOptions.auditOptions.pingInterval * 1000);
+            setInterval(() => this.flushAuditQueue(), blotterOptions.auditOptions.auditLogsSendInterval * 1000);
         }
+    }
+    setUpFlags(blotterOptions) {
+        // Internal State
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditInternalStateChanges != null) {
+            this.IsAuditInternalStateChangesEnabled = blotterOptions.auditOptions.auditInternalStateChanges;
+        }
+        else {
+            this.IsAuditInternalStateChangesEnabled = false;
+        }
+        // User State
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditUserStateChanges != null) {
+            this.IsAuditUserStateChangesEnabled = blotterOptions.auditOptions.auditUserStateChanges;
+        }
+        else {
+            this.IsAuditUserStateChangesEnabled = false;
+        }
+        // Function Events
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditFunctionEvents != null) {
+            this.IsAuditFunctionEventsEnabled = blotterOptions.auditOptions.auditFunctionEvents;
+        }
+        else {
+            this.IsAuditFunctionEventsEnabled = false;
+        }
+        // Cell Edit
+        if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditCellEdits != null) {
+            this.IsAuditCellEditsEnabled = blotterOptions.auditOptions.auditCellEdits;
+        }
+        else {
+            this.IsAuditCellEditsEnabled = false;
+        }
+        // Log State
+        this.IsAuditStateChangesEnabled = this.IsAuditInternalStateChangesEnabled || this.IsAuditUserStateChangesEnabled;
+        // General Audit Flag
+        this.IsAuditEnabled = this.IsAuditStateChangesEnabled || this.IsAuditFunctionEventsEnabled || this.IsAuditCellEditsEnabled;
     }
     AddEditCellAuditLogBatch(dataChangedEvents) {
         dataChangedEvents.forEach(dce => { this.AddEditCellAuditLog(dce); });
     }
     AddEditCellAuditLog(dataChangedEvent) {
-        if (typeof dataChangedEvent.OldValue == "string" && typeof dataChangedEvent.NewValue == "string") {
+        if (this.IsAuditCellEditsEnabled) {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
@@ -29,105 +65,43 @@ class AuditLogService {
                     primarykey: String(dataChangedEvent.IdentifierValue),
                     primarykey_column_id: this.blotterOptions.primaryKey,
                     column_id: dataChangedEvent.ColumnId,
-                    old_value_string: dataChangedEvent.OldValue,
-                    new_value_string: dataChangedEvent.NewValue
-                }
-            });
-        }
-        else if (typeof dataChangedEvent.OldValue == "number" && typeof dataChangedEvent.NewValue == "number") {
-            this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.CellEdit,
-                adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotterOptions.userName,
-                adaptableblotter_id: this.blotterOptions.blotterId,
-                adaptableblotter_editcell: {
-                    primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotterOptions.primaryKey,
-                    column_id: dataChangedEvent.ColumnId,
-                    old_value_string: String(dataChangedEvent.OldValue),
-                    new_value_string: String(dataChangedEvent.NewValue),
-                    old_value_numeric: dataChangedEvent.OldValue,
-                    new_value_numeric: dataChangedEvent.NewValue
-                }
-            });
-        }
-        else if (typeof dataChangedEvent.OldValue == "boolean" && typeof dataChangedEvent.NewValue == "boolean") {
-            this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.CellEdit,
-                adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotterOptions.userName,
-                adaptableblotter_id: this.blotterOptions.blotterId,
-                adaptableblotter_editcell: {
-                    primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotterOptions.primaryKey,
-                    column_id: dataChangedEvent.ColumnId,
-                    old_value_string: String(dataChangedEvent.OldValue),
-                    new_value_string: String(dataChangedEvent.NewValue),
-                    old_value_boolean: dataChangedEvent.OldValue,
-                    new_value_boolean: dataChangedEvent.NewValue
-                }
-            });
-        }
-        else if (dataChangedEvent.OldValue instanceof Date && dataChangedEvent.NewValue instanceof Date) {
-            this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.CellEdit,
-                adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotterOptions.userName,
-                adaptableblotter_id: this.blotterOptions.blotterId,
-                adaptableblotter_editcell: {
-                    primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotterOptions.primaryKey,
-                    column_id: dataChangedEvent.ColumnId,
-                    old_value_string: String(dataChangedEvent.OldValue),
-                    new_value_string: String(dataChangedEvent.NewValue),
-                    old_value_date: dataChangedEvent.OldValue,
-                    new_value_date: dataChangedEvent.NewValue
-                }
-            });
-        }
-        else {
-            this.auditLogQueue.push({
-                adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.CellEdit,
-                adaptableblotter_client_timestamp: new Date(),
-                adaptableblotter_username: this.blotterOptions.userName,
-                adaptableblotter_id: this.blotterOptions.blotterId,
-                adaptableblotter_editcell: {
-                    primarykey: String(dataChangedEvent.IdentifierValue),
-                    primarykey_column_id: this.blotterOptions.primaryKey,
-                    column_id: dataChangedEvent.ColumnId,
-                    old_value_string: String(dataChangedEvent.OldValue),
-                    new_value_string: String(dataChangedEvent.NewValue)
+                    previous_value: String(dataChangedEvent.OldValue),
+                    new_value: String(dataChangedEvent.NewValue)
                 }
             });
         }
     }
     AddStateChangeAuditLog(stateChanges, actionType) {
-        this.auditLogQueue.push({
-            adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.StateChange,
-            adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotterOptions.userName,
-            adaptableblotter_id: this.blotterOptions.blotterId,
-            //we want to loose the type since you cannot have same field name with different types in logstash. So log it as a string...
-            //it makes sense anyway
-            adaptableblotter_state_change: this.convertToText(stateChanges),
-            adaptableblotter_state_change_action: actionType
-        });
+        if (this.IsAuditStateChangesEnabled) {
+            this.auditLogQueue.push({
+                adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.StateChange,
+                adaptableblotter_client_timestamp: new Date(),
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
+                //we want to lose the type since you cannot have same field name with different types in logstash. So log it as a string...
+                //it makes sense anyway
+                adaptableblotter_state_change: this.convertToText(stateChanges),
+                adaptableblotter_state_change_action: actionType
+            });
+        }
     }
     AddAdaptableBlotterFunctionLog(functionName, action, info, data) {
-        this.auditLogQueue.push({
-            adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.AdaptableBlotterFunction,
-            adaptableblotter_client_timestamp: new Date(),
-            adaptableblotter_username: this.blotterOptions.userName,
-            adaptableblotter_id: this.blotterOptions.blotterId,
-            adaptableblotter_function: {
-                name: functionName,
-                action: action,
-                info: info,
-                //not sure if it's best to leave undefined or null.... I think null is better
-                //same as adaptableblotter_state_change we log the obj as a string
-                data: data ? this.convertToText(data) : null
-            }
-        });
+        if (this.IsAuditFunctionEventsEnabled) {
+            this.auditLogQueue.push({
+                adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.AdaptableBlotterFunction,
+                adaptableblotter_client_timestamp: new Date(),
+                adaptableblotter_username: this.blotterOptions.userName,
+                adaptableblotter_id: this.blotterOptions.blotterId,
+                adaptableblotter_function: {
+                    name: functionName,
+                    action: action,
+                    info: info,
+                    //not sure if it's best to leave undefined or null.... I think null is better
+                    //same as adaptableblotter_state_change we log the obj as a string
+                    data: data ? this.convertToText(data) : null
+                }
+            });
+        }
     }
     ping() {
         let pingMessage = {

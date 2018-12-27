@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
-import { IAuditService } from '../Utilities/Services/Interface/IAuditService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { StyleService } from '../Utilities/Services/StyleService';
@@ -22,6 +21,7 @@ import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOpti
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { RowNode } from "ag-grid";
+import { IDataService } from '../Utilities/Services/Interface/IDataService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -29,14 +29,15 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     BlotterOptions: IAdaptableBlotterOptions;
     VendorGridName: any;
     CalendarService: ICalendarService;
-    AuditService: IAuditService;
+    DataService: IDataService;
     ValidationService: IValidationService;
     AuditLogService: AuditLogService;
     StyleService: StyleService;
     ChartService: IChartService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
-    private calculatedColumnPathMap;
+    private _calculatedColumnPathMap;
+    private _flashingCellList;
     private abContainerElement;
     private gridOptions;
     EmbedColumnMenu: boolean;
@@ -45,7 +46,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private getState;
     private createFilterWrapper;
     private createFloatingFilterWrapper;
-    InitAuditService(): void;
     private _currentEditor;
     private _onKeyDown;
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
@@ -126,7 +126,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setGridSort(gridSorts: IGridSort[]): void;
     setData(dataSource: any): void;
     private checkColumnsDataTypeSet;
-    private checkIfDataChangingColumnIsFreeText;
     getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
     setVendorGridState(vendorGridState: IVendorGridInfo): void;
     private setColumnVisible;
@@ -141,4 +140,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     hideQuickFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
+    private applyFilteredColumnStyle;
+    clearFlashingCellMap(): void;
+    getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number): number;
+    private getCellValuesForColumn;
 }

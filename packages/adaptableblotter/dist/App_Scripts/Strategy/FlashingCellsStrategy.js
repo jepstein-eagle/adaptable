@@ -9,7 +9,7 @@ const Enums_1 = require("../Utilities/Enums");
 class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter);
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
     }
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyConstants.FlashingCellGlyph);

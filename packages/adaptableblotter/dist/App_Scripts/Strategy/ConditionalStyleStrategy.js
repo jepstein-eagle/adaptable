@@ -7,7 +7,7 @@ const Enums_1 = require("../Utilities/Enums");
 class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ConditionalStyleStrategyId, blotter);
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
         this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound(blotter));
     }
     addPopupMenuItem() {

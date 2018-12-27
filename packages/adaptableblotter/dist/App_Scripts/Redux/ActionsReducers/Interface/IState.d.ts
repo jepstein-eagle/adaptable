@@ -152,7 +152,6 @@ export interface PlusMinusState extends IUserState {
 }
 export interface QuickSearchState extends IUserState {
     QuickSearchText: string;
-    Operator: 'Contains' | 'StartsWith';
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
 }

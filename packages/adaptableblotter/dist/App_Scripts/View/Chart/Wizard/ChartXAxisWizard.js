@@ -6,21 +6,16 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 const Enums_1 = require("../../../Utilities/Enums");
-const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
-const SingleListBox_1 = require("../../Components/ListBox/SingleListBox");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 class ChartXAxisWizard extends React.Component {
     constructor(props) {
         super(props);
         this.StepName = this.props.StepName;
-        let hasDistinctColumnValues = props.Data.XAxisColumnValues.length > 0 && props.Data.XAxisColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES;
         this.state = {
-            XAxisColumn: props.Data.XAxisColumnId,
-            XAxisColumnValues: props.Data.XAxisColumnValues,
-            UseAllXAsisColumnValues: (hasDistinctColumnValues) ? false : true,
-            AvailableXAxisColumnValues: (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.Data.XAxisColumnId)) ?
-                props.Blotter.getColumnValueDisplayValuePairDistinctList(props.Data.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
-                null
+            XAxisColumnId: props.Data.XAxisColumnId,
+            UseAllXAsisColumnValues: ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression),
+            XAxisExpression: this.props.Data.XAxisExpression
         };
     }
     render() {
@@ -32,66 +27,52 @@ class ChartXAxisWizard extends React.Component {
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 1 }),
                             React.createElement(react_bootstrap_1.Col, { xs: 10 },
-                                React.createElement(react_bootstrap_1.Well, null, "Select a numeric column for the X Axis.")),
+                                React.createElement(react_bootstrap_1.Well, null,
+                                    "Select a column for the X Axis.",
+                                    React.createElement("br", null),
+                                    "In the next step you can filter which values to display")),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 })),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "X Axis Column: "),
                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.XAxisColumn], ColumnList: this.props.Columns, onColumnChange: columns => this.onXAxisColumnChanged(columns), SelectionMode: Enums_1.SelectionMode.Single }))),
+                                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.XAxisColumnId], ColumnList: this.props.Columns, onColumnChange: columns => this.onXAxisColumnChanged(columns), SelectionMode: Enums_1.SelectionMode.Single }))),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "X Axis Column Values:"),
                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "All", checked: this.state.UseAllXAsisColumnValues == true, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "All"),
-                                React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Bespoke", checked: this.state.UseAllXAsisColumnValues == false, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "Bespoke"))))),
-                StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumn) && this.state.UseAllXAsisColumnValues == false &&
-                    React.createElement(react_bootstrap_1.Row, null,
-                        React.createElement(react_bootstrap_1.Col, { xs: 4 }),
-                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                            React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel", style: divStyle },
-                                React.createElement(SingleListBox_1.SingleListBox, { Values: this.state.AvailableXAxisColumnValues, cssClassName: cssClassName, UiSelectedValues: this.state.XAxisColumnValues, DisplayMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], ValueMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.DisplayValue], SortMember: Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue], onSelectedChange: (list) => this.onColumnValuesChange(list), SelectionMode: Enums_1.SelectionMode.Multi }))),
-                        React.createElement(react_bootstrap_1.Col, { xs: 2 }))));
+                                React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Filtered", checked: this.state.UseAllXAsisColumnValues == false, onChange: (e) => this.onUseAllColumnValuesChanged(e) }, "Filtered")))))));
     }
     onUseAllColumnValuesChanged(event) {
         let e = event.target;
         let showAll = e.value == "All";
-        let colValues = (showAll) ? [GeneralConstants.ALL_COLUMN_VALUES] : [];
-        this.setState({ UseAllXAsisColumnValues: showAll, XAxisColumnValues: colValues }, () => this.props.UpdateGoBackState());
+        this.setState({ UseAllXAsisColumnValues: showAll }, () => this.props.UpdateGoBackState());
     }
     onXAxisColumnChanged(columns) {
         let isColumn = ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columns);
         this.setState({
-            XAxisColumn: isColumn ? columns[0].ColumnId : "",
+            XAxisColumnId: isColumn ? columns[0].ColumnId : "",
             UseAllXAsisColumnValues: true,
-            XAxisColumnValues: [GeneralConstants.ALL_COLUMN_VALUES],
-            AvailableXAxisColumnValues: isColumn ?
-                this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue) :
-                null
         }, () => this.props.UpdateGoBackState());
     }
-    onColumnValuesChange(list) {
-        this.setState({ XAxisColumnValues: list }, () => this.props.UpdateGoBackState());
-    }
     canNext() {
-        return (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumn) && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.state.XAxisColumnValues));
+        return (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.XAxisColumnId));
     }
     canBack() { return true; }
     Next() {
-        this.props.Data.XAxisColumnId = this.state.XAxisColumn;
-        this.props.Data.XAxisColumnValues = this.state.XAxisColumnValues;
+        this.props.Data.XAxisColumnId = this.state.XAxisColumnId;
+        this.props.Data.XAxisExpression = (this.state.UseAllXAsisColumnValues) ? ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression() : this.state.XAxisExpression;
+        if (this.props.Data.XAxisColumnId != this.state.XAxisColumnId) {
+            this.props.Data.XAxisExpression = ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression();
+        }
     }
     Back() {
         // todo
     }
     GetIndexStepIncrement() {
-        return 1;
+        return (this.state.UseAllXAsisColumnValues) ? 2 : 1;
     }
     GetIndexStepDecrement() {
         return 1;
     }
 }
 exports.ChartXAxisWizard = ChartXAxisWizard;
-let divStyle = {
-    'overflowY': 'auto',
-    'height': '200px',
-    'marginTop': '2px'
-};

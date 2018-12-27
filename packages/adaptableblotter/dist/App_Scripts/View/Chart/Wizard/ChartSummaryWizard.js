@@ -5,6 +5,7 @@ const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 class ChartSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -12,12 +13,16 @@ class ChartSummaryWizard extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "-summary";
+        let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
+            return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns);
+        });
         let keyValuePairs = [
             { Key: "Title", Value: this.props.Data.Title },
             { Key: "Sub title", Value: this.props.Data.SubTitle },
-            { Key: "Y Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.YAxisColumnId, this.props.Columns) },
+            { Key: "Y Axis Column(s)", Value: friendlyNames.join(', ') },
+            { Key: "Total", Value: this.props.Data.YAxisTotal },
             { Key: "X Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
-            { Key: "X Axis Values", Value: this.getColumnValuesList(this.props.Data.XAxisColumnValues) },
+            { Key: "X Axis Values", Value: this.getExpressionString(this.props.Data.XAxisExpression) },
             {
                 Key: "Additional Column", Value: (this.props.Data.AdditionalColumnId) ?
                     ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumnId, this.props.Columns) :
@@ -34,6 +39,14 @@ class ChartSummaryWizard extends React.Component {
         }
         else {
             return columnValueArray.join(', ');
+        }
+    }
+    getExpressionString(expression) {
+        if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(expression)) {
+            return "All Column Values";
+        }
+        else {
+            return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false);
         }
     }
     canNext() { return true; }
