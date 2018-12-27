@@ -10,7 +10,7 @@ import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Api/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 import { ICalendarService } from '../../Utilities/Services/Interface/ICalendarService';
-import { IAuditService } from '../../Utilities/Services/Interface/IAuditService';
+import { IDataService } from '../../Utilities/Services/Interface/IDataService';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../../Utilities/Services/AuditLogService';
 import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -33,13 +33,12 @@ export interface IAdaptableBlotter {
 
     // Services
     CalendarService: ICalendarService
-    AuditService: IAuditService
+    DataService: IDataService
     ValidationService: IValidationService
     AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     ChartService: IChartService
-    InitAuditService(): void
-
+  
     // Grid Events
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;

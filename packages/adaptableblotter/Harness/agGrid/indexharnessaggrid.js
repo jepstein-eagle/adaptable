@@ -45,7 +45,7 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  //dataGen.startTickingDataagGrid(gridOptions);
+  dataGen.startTickingDataagGrid(gridOptions);
 
   let s = 2;
 

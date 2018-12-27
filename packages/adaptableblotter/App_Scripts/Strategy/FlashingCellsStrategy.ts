@@ -9,14 +9,14 @@ import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Api/Interface/IColumn';
 import { DataType, StateChangedTrigger } from '../Utilities/Enums';
 import { IFlashingCell } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter)
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
     protected addPopupMenuItem() {
@@ -62,7 +62,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         }
     }
 
-    protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
+    protected handleDataSourceChanged(DataChangedEvent: IDataChangedInfo) {
         let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == DataChangedEvent.ColumnId);
         let flashingCellIndex = this.FlashingCellState.FlashingCells.indexOf(flashingCell)
         if (flashingCell != null && flashingCell.IsLive) {
@@ -70,6 +70,6 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         }
     }
 
-    protected abstract FlashCell(dataChangedEvent: IDataChangedEvent, flashingCell: IFlashingCell, index: number): void;
+    protected abstract FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void;
 
 }

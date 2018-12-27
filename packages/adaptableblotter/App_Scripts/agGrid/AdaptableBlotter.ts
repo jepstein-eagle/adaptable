@@ -25,7 +25,7 @@ import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { CalendarService } from '../Utilities/Services/CalendarService';
-import { AuditService } from '../Utilities/Services/AuditService';
+import { DataService } from '../Utilities/Services/DataService';
 import { ValidationService } from '../Utilities/Services/ValidationService';
 import { ChartService } from '../Utilities/Services/ChartService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
@@ -108,8 +108,8 @@ import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid/dist/lib/entities/g
 import { Expression } from '../Api/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { IAuditService } from '../Utilities/Services/Interface/IAuditService';
-import { IDataChangedEvent, IDataChangingEvent } from '../Api/Interface/IDataChanges';
+import { IDataService } from '../Utilities/Services/Interface/IDataService';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -120,7 +120,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public VendorGridName: any
 
     public CalendarService: ICalendarService
-    public AuditService: IAuditService
+    public DataService: IDataService
     public ValidationService: IValidationService
     public AuditLogService: AuditLogService
     public StyleService: StyleService
@@ -128,7 +128,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public FreeTextColumnService: IFreeTextColumnService
 
-    private calculatedColumnPathMap: Map<string, string[]> = new Map()
+    private _calculatedColumnPathMap: Map<string, string[]> = new Map()
+    private _flashingCellList: Map<string, Map<any, number>>;
+
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
     public EmbedColumnMenu: boolean;
@@ -147,7 +149,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // create the services
         this.CalendarService = new CalendarService(this);
-        this.AuditService = new AuditService(this);
+        this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.StyleService = new StyleService(this);
@@ -156,6 +158,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
+
+        // create the flashing cells map - will be empty
+        this._flashingCellList = new Map();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -221,7 +226,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.applyFilteredColumnStyle();
                 this.isInitialised = true
                 this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
-            })
+        })
 
         if (renderGrid) {
             if (this.abContainerElement == null) {
@@ -248,11 +253,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private createFloatingFilterWrapper(col: Column) {
         this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = { suppressFilterButton: false }
         this.gridOptions.api.getColumnDef(col).floatingFilterComponent = FloatingFilterWrapperFactory(this)
-    }
-
-    public InitAuditService() {
-        //Probably Temporary but we init the Audit service with current data
-        this.AuditService.Init(this.gridOptions.rowData)
     }
 
     private _currentEditor: ICellEditor
@@ -613,7 +613,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 isUpdated = true;
 
 
-                let dataChangedEvent: IDataChangedEvent =
+                let dataChangedEvent: IDataChangedInfo =
                 {
                     OldValue: oldValue,
                     NewValue: cellInfo.Value,
@@ -638,7 +638,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // using new method... (JW, 11/3/18)
         var itemsToUpdate: any[] = [];
-        var dataChangedEvents: IDataChangedEvent[] = []
+        var dataChangedEvents: IDataChangedInfo[] = []
         let nodesToRefresh: RowNode[] = []
         let colsToRefresh: string[] = []
         this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
@@ -654,7 +654,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 data[value.ColumnId] = value.Value;
                 itemsToUpdate.push(data);
 
-                let dataChangedEvent: IDataChangedEvent = {
+                let dataChangedEvent: IDataChangedInfo = {
                     OldValue: oldValue,
                     NewValue: value.Value,
                     ColumnId: value.ColumnId,
@@ -669,7 +669,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
-        dataChangedEvents.forEach(dc => this.AuditService.CreateAuditChangedEvent(dc));
+        dataChangedEvents.forEach(dc => this.DataService.CreateDataSourcedChangedEvent(dc));
 
 
         this.applyGridFiltering();
@@ -939,6 +939,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         else {
+            if (type == "FlashingCell"){
+                alert("here ")
+            }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
     }
@@ -963,9 +966,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
+   //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });
     }
 
-    public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
+      public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
         // first change the value getter in the coldefs - nothing else needs to change
         let colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
@@ -977,7 +981,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.setColumnDefs(colDefs)
 
         // for column list its an itnernal map only so we can first delete
-        for (let columnList of this.calculatedColumnPathMap.values()) {
+        for (let columnList of this._calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumn.ColumnId);
             if (index > -1) {
                 columnList.splice(index, 1);
@@ -986,10 +990,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // and then add
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
         for (let column of columnList) {
-            let childrenColumnList = this.calculatedColumnPathMap.get(column)
+            let childrenColumnList = this._calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
                 childrenColumnList = []
-                this.calculatedColumnPathMap.set(column, childrenColumnList)
+                this._calculatedColumnPathMap.set(column, childrenColumnList)
             }
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
@@ -1003,7 +1007,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             colDefs.splice(colDefIndex, 1)
             this.gridOptions.api.setColumnDefs(colDefs)
         }
-        for (let columnList of this.calculatedColumnPathMap.values()) {
+        for (let columnList of this._calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
             if (index > -1) {
                 columnList.splice(index, 1);
@@ -1024,10 +1028,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.setColumnDefs(colDefs)
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
         for (let column of columnList) {
-            let childrenColumnList = this.calculatedColumnPathMap.get(column)
+            let childrenColumnList = this._calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
                 childrenColumnList = []
-                this.calculatedColumnPathMap.set(column, childrenColumnList)
+                this._calculatedColumnPathMap.set(column, childrenColumnList)
             }
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
@@ -1204,8 +1208,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
 
-                let dataChangedEvent: IDataChangedEvent =
-                {
+                let dataChangedEvent: IDataChangedInfo = {
                     OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
                     NewValue: this._currentEditor.getValue(),
                     ColumnId: params.column.getColId(),
@@ -1293,18 +1296,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-            this.AuditService.CreateAuditEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            this.DataService.CreateDataEvent(identifierValue, params.newValue, params.colDef.field, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
-            let columnList = this.calculatedColumnPathMap.get(params.colDef.field);
+            let columnList = this._calculatedColumnPathMap.get(params.colDef.field);
             if (columnList) {
                 columnList.forEach(x => {
                     let newValue = this.gridOptions.api.getValue(x, params.node);
-                    this.AuditService.CreateAuditEvent(identifierValue, newValue, x, params.node);
+                    this.DataService.CreateDataEvent(identifierValue, newValue, x, params.node);
                 });
             }
         });
+
 
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
@@ -1768,5 +1772,43 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             document.body.appendChild(css);
         }
     }
+
+public clearFlashingCellMap(): void{
+    this._flashingCellList.clear();
+}
+    
+public getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number): number {
+     let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
+
+        let oldValue: number = columnValueList.get(identifierValue);
+        if (oldValue) {
+            if (oldValue != newValue) { // its changed so set the new value
+                columnValueList.set(identifierValue, newValue); // need to do this always...
+                  return oldValue;
+            } 
+        }
+        else { // we dont have an existing value so set the new value for future reference and return null
+            columnValueList.set(identifierValue, newValue); // need to do this always...
+          }
+
+        // dont like this but we check anyway...
+        return newValue;
+    }
+
+    private getCellValuesForColumn(columnId: string): Map<any, number> {
+        // first check the list exists; if not, then create it
+        if (this._flashingCellList.size == 0) {
+            this._flashingCellList.set(columnId, new Map())
+        }
+        // get the item
+        let returnList: Map<any, number> = this._flashingCellList.get(columnId);
+        //in case we created a new calculated column  - need to worry about this?
+        if (!returnList) {
+            returnList = new Map()
+            this._flashingCellList.set(columnId, returnList)
+        }
+        return returnList;
+    }
+
 
 }

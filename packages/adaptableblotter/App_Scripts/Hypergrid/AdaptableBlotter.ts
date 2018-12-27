@@ -74,15 +74,15 @@ import { ICalendarService } from '../Utilities/Services/Interface/ICalendarServi
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { CalendarService } from '../Utilities/Services/CalendarService';
-import { AuditService } from '../Utilities/Services/AuditService';
 import { ValidationService } from '../Utilities/Services/ValidationService';
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { IAuditService } from '../Utilities/Services/Interface/IAuditService';
-import { IDataChangedEvent, IDataChangingEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataService } from '../Utilities/Services/Interface/IDataService';
+import { DataService } from '../Utilities/Services/DataService';
 
 
 //icon to indicate toggle state
@@ -111,7 +111,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public AdaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService
-    public AuditService: IAuditService
+    public DataService: IDataService
     public ValidationService: IValidationService
     public AuditLogService: AuditLogService
     public ChartService: IChartService
@@ -143,7 +143,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // create the services
         this.CalendarService = new CalendarService(this);
-        this.AuditService = new AuditService(this);
+        this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
         this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.ChartService = new ChartService(this);
@@ -236,10 +236,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private getState(): AdaptableBlotterState {
         return this.AdaptableBlotterStore.TheStore.getState()
-    }
-
-    public InitAuditService() {
-        // do somethign?
     }
 
     private buildFontCSSShorthand(fontCssShortHand: string, newStyle: IStyle): string {
@@ -519,7 +515,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
 
-        let dataChangedEvent: IDataChangedEvent =
+        let dataChangedEvent: IDataChangedInfo =
         {
             OldValue: oldValue,
             NewValue: cellInfo.Value,
@@ -540,13 +536,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setValueBatch(batchValues: ICellInfo[]): void {
         //no need to have a batch mode so far.... we'll see in the future performance
-        let dataChangedEvents: IDataChangedEvent[] = []
+        let dataChangedEvents: IDataChangedInfo[] = []
         for (let element of batchValues) {
             let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, element.Id)
             let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
 
-            let dataChangedEvent: IDataChangedEvent =
+            let dataChangedEvent: IDataChangedInfo =
             {
                 OldValue: oldValue,
                 NewValue: element.Value,
@@ -1149,28 +1145,22 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //         }
         //     });
         this.hyperGrid.addEventListener("fin-before-cell-edit", (event: any) => {
-            console.log(event.detail);
             // cell edit is about to happen so create datachanging and datahanged objects
             // these are to use to check for free text column, validation and audit log
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
-            let dataChangingEvent: IDataChangingEvent = {
-                ColumnId: event.detail.input.column.name,
-                NewValue: event.detail.newValue,
-                IdentifierValue: this.getPrimaryKeyValueFromRecord(row)
-            };
-
-            let dataChangedEvent: IDataChangedEvent =
+           
+            let dataChangedEvent: IDataChangedInfo =
                 {
                     OldValue: event.detail.oldValue,
                     NewValue: event.detail.newValue,
-                    ColumnId: dataChangingEvent.ColumnId,
-                    IdentifierValue: dataChangingEvent.IdentifierValue,
+                    ColumnId: event.detail.input.column.name,
+                    IdentifierValue: this.getPrimaryKeyValueFromRecord(row),
                     Timestamp: null,
                     Record: null
                 }
 
             // first free text column
-            let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangingEvent.ColumnId);
+            let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
             if (freeTextColumn) {
                       this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
             }
@@ -1190,9 +1180,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                     });
                     let cellInfo: ICellInfo = {
-                        Id: dataChangingEvent.IdentifierValue,
-                        ColumnId: dataChangingEvent.ColumnId,
-                        Value: dataChangingEvent.NewValue
+                        Id: dataChangedEvent.IdentifierValue,
+                        ColumnId: dataChangedEvent.ColumnId,
+                        Value: dataChangedEvent.NewValue
                     };
                     let confirmation: IUIConfirmation = {
                         CancelText: "Cancel Edit",
@@ -1200,7 +1190,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         ConfirmationMsg: warningMessage,
                         ConfirmationText: "Bypass Rule",
                         CancelAction: null,
-                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangingEvent.ColumnId]),
+                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]),
                         ShowCommentBox: true
                     };
                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
@@ -1263,7 +1253,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (columnId && row) {
                         //check that it doesn't impact perf monitor
                         let column = this.getHypergridColumn(columnId);
-                        this.AuditService.CreateAuditEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnId, row);
+                        this.DataService.CreateDataEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnId, row);
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);
                     let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);

@@ -1188,8 +1188,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           blotter.createMenu();
 
-          blotter.InitAuditService()
-          return returnAction;
+           return returnAction;
         }
 
         default:

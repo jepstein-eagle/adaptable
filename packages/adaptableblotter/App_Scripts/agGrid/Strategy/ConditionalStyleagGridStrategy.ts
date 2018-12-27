@@ -8,14 +8,14 @@ import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColumnCategory } from '../../Api/Interface/Interfaces';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
 export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }
 
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
         //we refresh all columns that need to be refreshed
         //this method needs to be optimised and probably cached as well. Will do when doing perf monitor
         let listOfColumns: Array<string> = []

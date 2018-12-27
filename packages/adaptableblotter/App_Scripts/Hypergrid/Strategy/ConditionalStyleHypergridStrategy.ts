@@ -6,15 +6,16 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IConditionalStyle } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IColumnCategory } from '../../Api/Interface/Interfaces';
-import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
 export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }
 
+    
     // Called when a single piece of data changes, ie. usually the result of an inline edit
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
         let theBlotter = this.blotter as AdaptableBlotter
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         //here we don't call Repaint as we consider that we already are in the repaint loop

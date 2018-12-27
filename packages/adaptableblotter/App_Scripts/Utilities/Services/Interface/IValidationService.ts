@@ -1,6 +1,6 @@
 import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { IDataChangingEvent, IDataChangedEvent } from "../../../Api/Interface/IDataChanges";
+import { IDataChangedInfo } from "../../../Api/Interface/IDataChangedInfo";
 
 export interface IValidationService {
-    ValidateCellChanging(dataChangedEvent: IDataChangedEvent): ICellValidationRule[]
+    ValidateCellChanging(dataChangedEvent: IDataChangedInfo): ICellValidationRule[]
   }

@@ -4,7 +4,9 @@ import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsS
 import { DataType } from '../../Utilities/Enums'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
 import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+//import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
 export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -13,12 +15,12 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
     }
     private currentFlashing: Map<any, number>
 
-    protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
+    protected handleDataSourceChanged(DataChangedEvent: IDataChangedInfo) {
         // no implementation required
 
     }
 
-    protected FlashCell(dataChangedEvent: IDataChangedEvent, flashingCell: IFlashingCell, index: number): void {
+    protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void {
         // no implementation required
     }
 
@@ -26,42 +28,46 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
         if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
             this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
 
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.filter(c=>c.DataType==DataType.Number);
+            let numericColumns = ColumnHelper.getNumericColumns(this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
             let theBlotter = this.blotter as AdaptableBlotter
             let currentFlashing = this.currentFlashing
 
-            columns.forEach(col => {
+            numericColumns.forEach(col => {
                 let fc = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive)
                 let index = this.FlashingCellState.FlashingCells.indexOf(fc)
                 let cellClassRules: any = {};
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
+                       
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
-                        if (auditLogValue && params.value > auditLogValue) {
+                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value);
+                        if (params.value > oldValue) {
                             let key = primaryKey + col.ColumnId
                             let currentFlashTimer = currentFlashing.get(key)
+                            theBlotter.refreshCells(params.node, [col.ColumnId])
                             if (currentFlashTimer) {
                                 clearTimeout(currentFlashTimer)
                             }
-                            let timer = window.setTimeout(() => {
+                            let timer: any = setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
                             return true
+                        } else {
+                            return false;
                         }
-                        return false
                     }
+
                     cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let auditLogValue = theBlotter.AuditService.getExistingDataValue({ ColumnId: col.ColumnId, IdentifierValue: primaryKey, NewValue: params.value })
-                        if (auditLogValue && params.value < auditLogValue) {
+                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value);
+                        if (oldValue && params.value < oldValue) {
                             let key = primaryKey + col.ColumnId
                             let currentFlashTimer = currentFlashing.get(key)
                             if (currentFlashTimer) {
                                 clearTimeout(currentFlashTimer)
                             }
-                            let timer = window.setTimeout(() => {
+                            let timer: number = window.setTimeout(() => {
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
@@ -69,7 +75,9 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                         }
                         return false
                     }
+
                 }
+                //   alert("i do this once for: " + col.ColumnId)
                 theBlotter.setCellClassRules(cellClassRules, col.ColumnId, "FlashingCell");
             })
         }

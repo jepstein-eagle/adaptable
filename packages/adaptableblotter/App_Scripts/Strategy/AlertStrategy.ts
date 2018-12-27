@@ -11,14 +11,14 @@ import { LeafExpressionOperator, StateChangedTrigger } from '../Utilities/Enums'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
-import { IDataChangedEvent, IDataChangingEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
     protected AlertState: AlertState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.AlertStrategyId, blotter)
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
     protected InitState() {
@@ -35,7 +35,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         this.createMenuItemShowPopup(StrategyConstants.AlertStrategyName, ScreenPopups.AlertPopup, StrategyConstants.AlertGlyph);
     }
 
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
         let alertDefinitions: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
@@ -45,7 +45,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         }
     }
 
-    public CheckDataChanged(dataChangedEvent: IDataChangedEvent): IAlertDefinition[] {
+    public CheckDataChanged(dataChangedEvent: IDataChangedInfo): IAlertDefinition[] {
         let relatedAlertDefinitions = this.AlertState.AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
         let triggeredAlerts: IAlertDefinition[] = [];
         if (relatedAlertDefinitions.length > 0) {
@@ -73,19 +73,18 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
 
             if (ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
                 if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
-                    let dataChangingEvent: IDataChangingEvent = { NewValue: dataChangedEvent.NewValue, ColumnId: dataChangedEvent.ColumnId, IdentifierValue: dataChangedEvent.IdentifierValue }
-
+                   
                     this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AlertStrategyId,
                         "Data Changed",
                         "Alerts Triggered",
-                        { TriggeredAlerts: triggeredAlerts, DataChangingEvent: dataChangingEvent })
+                        { TriggeredAlerts: triggeredAlerts, DataChangedEvent: dataChangedEvent })
                 }
             }
         }
         return triggeredAlerts;
     }
 
-    private IsAlertTriggered(alert: IAlertDefinition, dataChangedEvent: IDataChangedEvent, columns: IColumn[]): boolean {
+    private IsAlertTriggered(alert: IAlertDefinition, dataChangedEvent: IDataChangedInfo, columns: IColumn[]): boolean {
         // if its none then alert triggers immediately
         if (alert.Range.Operator == LeafExpressionOperator.None) {
             return true;

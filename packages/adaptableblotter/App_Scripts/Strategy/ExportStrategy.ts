@@ -52,7 +52,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, ExportDestination.OpenfinExcel));
         })
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, event) => {
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, event) => {
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
         this.blotter.onRefresh().Subscribe((sender, event) => {

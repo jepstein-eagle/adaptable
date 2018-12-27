@@ -1,11 +1,11 @@
 import { IFreeTextColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { IDataChangedEvent } from "../../../Api/Interface/IDataChanges";
+import { IDataChangedInfo } from "../../../Api/Interface/IDataChangedInfo";
 
 export interface IFreeTextColumnService {
     GetFreeTextValue( column: IFreeTextColumn, record: any): any
 
-    CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedEvent) :void
+    CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo) :void
    
-    CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedEvent[]): void 
+    CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedInfo[]): void 
    
 }

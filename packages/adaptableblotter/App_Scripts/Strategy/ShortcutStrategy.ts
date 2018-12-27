@@ -13,7 +13,7 @@ import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { IShortcut, ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Api/Interface/IMessage';
 
@@ -81,7 +81,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             }
 
             if (activeShortcut) {
-                let dataChangedEvent: IDataChangedEvent = {
+                let dataChangedEvent: IDataChangedInfo = {
                     OldValue: activeCell.Value,
                     NewValue: valueToReplace,
                     ColumnId: activeCell.ColumnId,

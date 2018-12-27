@@ -15,7 +15,7 @@ import { ICellInfo } from '../Api/Interface/Interfaces';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 
 
@@ -101,7 +101,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         //avoid the 0.0000000000x  
                         newValue.Value = parseFloat(newValue.Value.toFixed(12))
 
-                        let dataChangedEvent: IDataChangedEvent = {
+                        let dataChangedEvent: IDataChangedInfo = {
                             OldValue: Number(selectedCell.value),
                             NewValue: newValue.Value,
                             ColumnId: selectedCell.columnId,

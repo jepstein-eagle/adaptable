@@ -69,18 +69,20 @@ export class StyleService {
             }
             //we define last Flash since it has the highest priority
             this.FlashingCellState.FlashingCells.forEach((element, index) => {
-                this.addCSSRule("." + StyleConstants.FLASH_UP_STYLE + index, 'background-color: ' + element.UpColor + ' !important')
-                this.addCSSRule("." + StyleConstants.FLASH_DOWN_STYLE + index, 'background-color: ' + element.DownColor + ' !important')
+                if (element.IsLive) {
+                    this.addCSSRule("." + StyleConstants.FLASH_UP_STYLE + index, 'background-color: ' + element.UpColor + ' !important')
+                    this.addCSSRule("." + StyleConstants.FLASH_DOWN_STYLE + index, 'background-color: ' + element.DownColor + ' !important')
+                }
             });
         }
     }
 
     private clearCSSRules() {
         this.style.innerHTML = ""
-       }
+    }
 
     private addCSSRule(selector: string, rules: string) {
         this.style.innerHTML += selector + "{" + rules + "}" + "\n"
-        }
+    }
 
 }

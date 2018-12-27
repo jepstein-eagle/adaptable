@@ -11,7 +11,7 @@ import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
 import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     
@@ -108,7 +108,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 //avoid the 0.0000000000x 
                 newValue = parseFloat(newValue.toFixed(12))
 
-                let dataChangedEvent: IDataChangedEvent = {
+                let dataChangedEvent: IDataChangedInfo = {
                     OldValue: Number(selectedCell.value),
                     NewValue: newValue,
                     ColumnId: selectedCell.columnId,

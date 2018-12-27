@@ -3,7 +3,7 @@ import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterO
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";
-import { IDataChangedEvent } from "../../Api/Interface/IDataChanges";
+import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
 
 export class AuditLogService {
     private auditLogQueue: Array<IAuditLogEntry>
@@ -65,11 +65,11 @@ export class AuditLogService {
         this.IsAuditEnabled = this.IsAuditStateChangesEnabled || this.IsAuditFunctionEventsEnabled || this.IsAuditCellEditsEnabled;
     }
 
-    public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedEvent[]) {
+    public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]) {
         dataChangedEvents.forEach(dce => { this.AddEditCellAuditLog(dce) })
     }
 
-    public AddEditCellAuditLog(dataChangedEvent: IDataChangedEvent) {
+    public AddEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
         if (this.IsAuditCellEditsEnabled) {
             this.auditLogQueue.push({
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,

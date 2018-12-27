@@ -8,7 +8,7 @@ import { ChartState, ChartInternalState } from '../Redux/ActionsReducers/Interfa
 import { StateChangedTrigger } from '../Utilities/Enums';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 
@@ -17,7 +17,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ChartStrategyId, blotter)
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
     protected addPopupMenuItem() {
@@ -60,7 +60,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     debouncedSetChartData = _.debounce(() => this.setChartData(), 500);
 
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void {
+    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
         if (this.ChartInternalState != null && this.ChartInternalState.ChartVisible && this.ChartInternalState.CurrentChartDefinition != null) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedEvent.ColumnId;

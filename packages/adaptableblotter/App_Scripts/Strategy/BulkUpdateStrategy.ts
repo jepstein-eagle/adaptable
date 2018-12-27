@@ -10,7 +10,7 @@ import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
 import { ICellInfo } from '../Api/Interface/Interfaces';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
-import { IDataChangedEvent } from '../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     protected BulkUpdateState: BulkUpdateState
@@ -98,7 +98,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             for (let pair of selectedCells.Selection) {
                 for (let selectedCell of pair[1]) {
 
-                    let dataChangedEvent: IDataChangedEvent = {
+                    let dataChangedEvent: IDataChangedInfo = {
                         OldValue: selectedCell.value,
                         NewValue: typedBulkUpdateValue,
                         ColumnId: selectedCell.columnId,

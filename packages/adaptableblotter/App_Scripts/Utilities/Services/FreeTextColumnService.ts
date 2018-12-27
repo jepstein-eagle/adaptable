@@ -5,7 +5,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux'
-import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
+import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
 export class FreeTextColumnService implements IFreeTextColumnService {
     constructor(private blotter: IAdaptableBlotter) {
@@ -32,7 +32,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
         }
     }
 
-    CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedEvent): void {
+    CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo): void {
         let freeTextColumn: IFreeTextColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
         if (freeTextColumn) {
             let freeTextStoredValue: FreeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue }
@@ -40,7 +40,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
         }
     }
 
-    CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedEvent[]): void {
+    CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedInfo[]): void {
         if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn.FreeTextColumns)) {
             dataChangedEvents.forEach(dc => {
                 this.CheckIfDataChangingColumnIsFreeText(dc);
