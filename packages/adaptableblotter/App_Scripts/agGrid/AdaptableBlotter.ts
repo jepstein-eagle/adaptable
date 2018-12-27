@@ -626,6 +626,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                 }
                 this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
+
+               this.DataService.CreateDataSourcedChangedEvent(dataChangedEvent);
             }
         })
         this.applyGridFiltering();
@@ -633,11 +635,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
+       
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
 
         // using new method... (JW, 11/3/18)
-        var itemsToUpdate: any[] = [];
         var dataChangedEvents: IDataChangedInfo[] = []
         let nodesToRefresh: RowNode[] = []
         let colsToRefresh: string[] = []
@@ -645,15 +647,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
                 nodesToRefresh.push(rowNode);
+               
                 if (ArrayExtensions.NotContainsItem(colsToRefresh, value.ColumnId)) {
                     colsToRefresh.push(value.ColumnId)
                 }
+                
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
 
                 var data: any = rowNode.data;
                 data[value.ColumnId] = value.Value;
-                itemsToUpdate.push(data);
-
+               
                 let dataChangedEvent: IDataChangedInfo = {
                     OldValue: oldValue,
                     NewValue: value.Value,
