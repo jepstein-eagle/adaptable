@@ -10,19 +10,13 @@ import { StateChangedTrigger } from '../Utilities/Enums';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 
     private ChartState: ChartState
-    //  private IsChartVisible: boolean
-    //  private CurrentChartDefinition: IChartDefinition
-
+   
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ChartStrategyId, blotter)
-        // need to set these?
-        //   this.IsChartVisible = false;
-        //   this.CurrentChartDefinition = null;
 
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
@@ -32,16 +26,17 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     protected InitState() {
+
         if (this.ChartState != this.blotter.AdaptableBlotterStore.TheStore.getState().Chart) {
             this.ChartState = this.blotter.AdaptableBlotterStore.TheStore.getState().Chart;
 
-            if (this.ChartState.CurrentChartDefinition != null && this.ChartState.ChartVisible) {
+            if (this.ChartState.CurrentChartDefinition != null && this.ChartState.IsChartVisible) {
                 this.setChartData();
             } else {
                 this.clearChartData();
             }
 
-            if (this.ChartState.CurrentChartDefinition == null && this.ChartState.ChartVisible) {
+            if (this.ChartState.CurrentChartDefinition == null && this.ChartState.IsChartVisible) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(ChartRedux.ChartHideChart());
             }
 
@@ -54,7 +49,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     debouncedSetChartData = _.debounce(() => this.setChartData(), 500);
 
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-        if (this.ChartState.ChartVisible && this.ChartState.CurrentChartDefinition != null) {
+        if (this.ChartState.IsChartVisible && this.ChartState.CurrentChartDefinition != null) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedEvent.ColumnId;
             if (ArrayExtensions.ContainsItem(this.ChartState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
@@ -76,7 +71,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }
     }
-
 
     private GetSystemState(): SystemState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().System;

@@ -42,11 +42,11 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard Blotter={this.props.Blotter} />
 
-                {this.props.ChartState.ChartVisible &&
+                {this.props.ChartState.IsChartVisible &&
                     <AdaptableBlotterChart
                         AdaptableBlotter={this.props.Blotter}
                         onClose={this.props.onCloseChartPopup}
-                        showChart={this.props.ChartState.ChartVisible}
+                        showChart={this.props.ChartState.IsChartVisible}
                         showModal={false}
                     />
                 }

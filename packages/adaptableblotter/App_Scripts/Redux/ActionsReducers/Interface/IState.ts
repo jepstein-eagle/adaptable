@@ -130,7 +130,7 @@ export interface PercentBarState extends IUserState {
 
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    ChartVisible: boolean;
+    IsChartVisible: boolean;
     CurrentChartDefinition: IChartDefinition;
 }
 

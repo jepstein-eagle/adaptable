@@ -74,7 +74,7 @@ export const ChartDefinitionSelect = (CurrentChartDefinition: IChartDefinition):
 
 const initialChartState: ChartState = {
     ChartDefinitions: [],
-    ChartVisible: false,
+    IsChartVisible: false,
     CurrentChartDefinition: null
 }
 
@@ -107,9 +107,9 @@ export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = init
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
 
             case CHART_SHOW_CHART:
-            return Object.assign({}, state, { ChartVisible: true })
+            return Object.assign({}, state, { IsChartVisible: true })
         case CHART_HIDE_CHART:
-            return Object.assign({}, state, { ChartVisible: false })
+            return Object.assign({}, state, { IsChartVisible: false })
          case CHART_DEFINITION_SELECT:
             return Object.assign({}, state, { CurrentChartDefinition: (<ChartDefinitionSelectAction>action).CurrentChartDefinition })
 
