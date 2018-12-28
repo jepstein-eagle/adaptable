@@ -32,6 +32,7 @@ function InitTradeBlotter() {
     floatingFilter: false,
     enableColResize: true,
     suppressColumnVirtualisation: false,
+    sideBar: true,
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
