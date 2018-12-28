@@ -81,6 +81,7 @@ export interface IChartProperties {
     EnableCrosshairsAnnotations?: boolean;
     YAxisLabelLocation?: AxisLabelsLocation;
     YAxisLabelVisibility?: LabelVisibility;
+    YAxisTitle?: string;
     YAxisLabelColor?: string;
     YAxisTitleColor?: string;
     YAxisMinimumValue?: number;

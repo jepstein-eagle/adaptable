@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
-const ChartInternalRedux = require("../Redux/ActionsReducers/ChartInternalRedux");
+const ChartRedux = require("../Redux/ActionsReducers/ChartRedux");
 const AdaptableBlotterPopup_1 = require("./Components/Popups/AdaptableBlotterPopup");
 const AdaptableBlotterPopupPrompt_1 = require("./Components/Popups/AdaptableBlotterPopupPrompt");
 const Dashboard_1 = require("./Dashboard/Dashboard");
@@ -18,8 +18,8 @@ class AdaptableBlotterView extends React.Component {
     render() {
         return (React.createElement("div", { className: StyleConstants.AB_STYLE + StyleConstants.BASE },
             React.createElement(Dashboard_1.Dashboard, { Blotter: this.props.Blotter }),
-            this.props.ChartInternalState.ChartVisible &&
-                React.createElement(AdaptableBlotterChart_1.AdaptableBlotterChart, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseChartPopup, showChart: this.props.ChartInternalState.ChartVisible, showModal: false }),
+            this.props.ChartState.IsChartVisible &&
+                React.createElement(AdaptableBlotterChart_1.AdaptableBlotterChart, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseChartPopup, showChart: this.props.ChartState.IsChartVisible, showModal: false }),
             React.createElement(AdaptableBlotterAbout_1.AdaptableBlotterAbout, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseAboutPopup, showAbout: this.props.PopupState.AboutPopup.ShowAboutPopup }),
             React.createElement(AdaptableBlotterLoadingScreen_1.AdaptableBlotterLoadingScreen, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseLoadingPopup, showLoadingScreen: this.props.PopupState.LoadingPopup.ShowLoadingPopup }),
             React.createElement(AdaptableBlotterPopupAlert_1.AdaptableBlotterPopupAlert, { Header: this.props.PopupState.AlertPopup.Header, Msg: this.props.PopupState.AlertPopup.Msg, onClose: this.props.onCloseAlertPopup, ShowPopup: this.props.PopupState.AlertPopup.ShowAlertPopup, MessageType: this.props.PopupState.AlertPopup.MessageType }),
@@ -31,7 +31,7 @@ class AdaptableBlotterView extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         PopupState: state.Popup,
-        ChartInternalState: state.ChartInternal,
+        ChartState: state.Chart,
         AdaptableBlotter: ownProps.Blotter,
     };
 }
@@ -40,7 +40,7 @@ function mapDispatchToProps(dispatch) {
         onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
         onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
         onCloseAboutPopup: () => dispatch(PopupRedux.PopupHideAbout()),
-        onCloseChartPopup: () => dispatch(ChartInternalRedux.ChartInternalHideChart()),
+        onCloseChartPopup: () => dispatch(ChartRedux.ChartHideChart()),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),

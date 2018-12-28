@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const ChartInternalRedux = require("../../Redux/ActionsReducers/ChartInternalRedux");
+const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
@@ -48,16 +48,16 @@ class ChartToolbarControlComponent extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition,
+        CurrentChartDefinition: state.Chart.CurrentChartDefinition,
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
-        onSelectChartDefinition: (chartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
+        onSelectChartDefinition: (chartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
         onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
-        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
+        onShowChart: () => dispatch(ChartRedux.ChartShowChart()),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup))
     };

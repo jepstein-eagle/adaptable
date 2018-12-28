@@ -48,9 +48,9 @@
     "redux-storage-decorator-migrate": "^1.1.0"
   },
   "devDependencies": {
-    "ag-grid": "^18.1.2",
-    "ag-grid-enterprise": "^18.1.1",
-    "ag-grid-react": "^18.1.0",
+    "ag-grid-community": "^19.1.4",
+    "ag-grid-enterprise": "^19.1.4",
+    "ag-grid-react": "^19.1.2",
     "amdefine": "^1.0.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^6.4.1",

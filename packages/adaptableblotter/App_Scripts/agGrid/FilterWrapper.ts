@@ -1,4 +1,4 @@
-import { IFilterComp, IDoesFilterPassParams, IFilterParams, Column } from "ag-grid"
+import { IFilterComp, IDoesFilterPassParams, IFilterParams, Column } from "ag-grid-community"
 import * as ReactDOM from "react-dom";
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from './AdaptableBlotter'

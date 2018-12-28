@@ -25,6 +25,8 @@ exports.SMARTEDIT_SET_PREVIEW = 'SMARTEDIT_SET_PREVIEW';
 exports.BULK_UPDATE_CHECK_CELL_SELECTION = 'BULK_UPDATE_CHECK_CELL_SELECTION';
 exports.BULK_UPDATE_SET_VALID_SELECTION = 'BULK_UPDATE_SET_VALID_SELECTION';
 exports.BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
+// Chart Managemet 
+exports.CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
 exports.SystemSetHealthStatus = (SystemStatus) => ({
     type: exports.SYSTEM_SET_HEALTH_STATUS,
     SystemStatus
@@ -77,6 +79,10 @@ exports.BulkUpdateSetPreview = (BulkUpdatePreviewInfo) => ({
     type: exports.BULK_UPDATE_SET_PREVIEW,
     BulkUpdatePreviewInfo
 });
+exports.ChartSetChartData = (chartData) => ({
+    type: exports.CHART_SET_CHART_DATA,
+    chartData
+});
 const initialSystemState = {
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
     Alerts: [],
@@ -86,6 +92,7 @@ const initialSystemState = {
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
+    ChartData: null,
 };
 exports.SystemReducer = (state = initialSystemState, action) => {
     let alerts;
@@ -137,6 +144,8 @@ exports.SystemReducer = (state = initialSystemState, action) => {
             return Object.assign({}, state, { IsValidBulkUpdateSelection: action.IsValidBulkUpdateSelection });
         case exports.BULK_UPDATE_SET_PREVIEW:
             return Object.assign({}, state, { BulkUpdatePreviewInfo: action.BulkUpdatePreviewInfo });
+        case exports.CHART_SET_CHART_DATA:
+            return Object.assign({}, state, { ChartData: action.chartData });
         default:
             return state;
     }

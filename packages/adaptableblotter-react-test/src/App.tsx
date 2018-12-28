@@ -1,11 +1,11 @@
 import * as React from "react";
-import { GridOptions } from "ag-grid";
+import { GridOptions } from "ag-grid-community";
 import { DataGenerator } from "./DataGenerator";
 import { AdaptableBlotter, IAdaptableBlotterOptions } from "adaptableblotter-react";
 import { AgGridReact } from "ag-grid-react";
-import "ag-grid/dist/styles/ag-grid.css";
-import "ag-grid/dist/styles/ag-theme-balham.css";
-import "ag-grid/dist/styles/ag-theme-balham-dark.css";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
 
 import { ReactHarnessHelper } from "./ReactHarnessHelper";
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';

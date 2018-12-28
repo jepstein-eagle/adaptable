@@ -5,7 +5,6 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const ChartInternalRedux = require("../../Redux/ActionsReducers/ChartInternalRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
@@ -93,14 +92,14 @@ class ChartPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition
+        CurrentChartDefinition: state.Chart.CurrentChartDefinition
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onAddUpdateChartDefinition: (index, chartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
-        onSelectChartDefinition: (chartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
-        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
+        onSelectChartDefinition: (chartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onShowChart: () => dispatch(ChartRedux.ChartShowChart()),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))
     };

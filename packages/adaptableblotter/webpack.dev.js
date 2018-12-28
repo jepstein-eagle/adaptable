@@ -4,28 +4,16 @@ var failPlugin = require('webpack-fail-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var conditionalEntry = {
-   // 'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
     'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
-    //'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
     'adaptableblotteraggrid': ["./App_Scripts/agGrid/AdaptableBlotter.ts"],
     harness: "./Harness/DataGenerator.ts",
   //  'AdaptableBlotterReact': ["./App_Scripts/View/AdaptableBlotterReact.tsx"],
 };
-//if (process.env.arg == "kendo") {
- //   conditionalEntry = {
- //       'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
- //       harness: "./Harness/DataGenerator.ts"
- //   };
   if (process.env.arg == "hypergrid") {
     conditionalEntry = {
         'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
         harness: "./Harness/DataGenerator.ts"
     };
-//} else if (process.env.arg == "adaptablegrid") {
-//    conditionalEntry = {
-//        'adaptableblottergrid': ["./App_Scripts/Vendors/AdaptableGrid/AdaptableBlotter.ts"],
-//        harness: "./Harness/DataGenerator.ts"
-//    };
 }
 else if (process.env.arg == "aggrid") {
     conditionalEntry = {

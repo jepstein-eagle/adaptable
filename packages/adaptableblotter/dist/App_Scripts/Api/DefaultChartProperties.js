@@ -11,6 +11,7 @@ exports.DefaultChartProperties = {
     // Y Axis
     YAxisLabelLocation: ChartEnums_1.AxisLabelsLocation.OutsideLeft,
     YAxisLabelVisibility: ChartEnums_1.LabelVisibility.Visible,
+    YAxisTitle: "",
     YAxisLabelColor: "",
     YAxisTitleColor: "",
     YAxisMinimumValue: undefined,

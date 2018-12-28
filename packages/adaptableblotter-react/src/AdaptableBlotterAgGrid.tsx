@@ -1,6 +1,6 @@
 ﻿import * as React from 'react'
 import { AgGridReact } from 'ag-grid-react'
-import { GridOptions } from 'ag-grid'
+import { GridOptions } from 'ag-grid-community'
 import AdaptableBlotter from './AdaptableBlotter'
 import { IAdaptableBlotterOptions } from 'adaptableblotter/types'
 

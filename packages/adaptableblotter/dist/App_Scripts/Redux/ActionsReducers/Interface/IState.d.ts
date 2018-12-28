@@ -24,6 +24,7 @@ export interface SystemState extends ISystemState {
     SmartEditPreviewInfo: IPreviewInfo;
     IsValidBulkUpdateSelection: boolean;
     BulkUpdatePreviewInfo: IPreviewInfo;
+    ChartData: any;
 }
 export interface GridState extends ISystemState {
     Columns: IColumn[];
@@ -48,11 +49,6 @@ export interface TeamSharingState extends ISystemState {
     SharedEntities: ISharedEntity[];
 }
 export interface HomeState extends ISystemState {
-}
-export interface ChartInternalState extends ISystemState {
-    ChartData: any;
-    ChartVisible: boolean;
-    CurrentChartDefinition: IChartDefinition;
 }
 export interface EntitlementsState extends IDesignTimeState {
     FunctionEntitlements: IEntitlement[];
@@ -94,6 +90,8 @@ export interface PercentBarState extends IUserState {
 }
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
+    IsChartVisible: boolean;
+    CurrentChartDefinition: IChartDefinition;
 }
 export interface ConditionalStyleState extends IUserState {
     ConditionalStyles: IConditionalStyle[];

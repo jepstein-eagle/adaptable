@@ -13,7 +13,6 @@ const redux_storage_decorator_filter_1 = require("redux-storage-decorator-filter
 const MenuRedux = require("../ActionsReducers/MenuRedux");
 const PopupRedux = require("../ActionsReducers/PopupRedux");
 const ChartRedux = require("../ActionsReducers/ChartRedux");
-const ChartInternalRedux = require("../ActionsReducers/ChartInternalRedux");
 const AlertRedux = require("../ActionsReducers/AlertRedux");
 const SmartEditRedux = require("../ActionsReducers/SmartEditRedux");
 const BulkUpdateRedux = require("../ActionsReducers/BulkUpdateRedux");
@@ -65,7 +64,6 @@ const rootReducer = Redux.combineReducers({
     Menu: MenuRedux.MenuReducer,
     Alert: AlertRedux.AlertReducer,
     Chart: ChartRedux.ChartReducer,
-    ChartInternal: ChartInternalRedux.ChartInternalReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
     CustomSort: CustomSortRedux.CustomSortReducer,
@@ -292,10 +290,7 @@ var diffStateAuditMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                 case PopupRedux.POPUP_CANCEL_CONFIRMATION:
                 case PopupRedux.POPUP_CLEAR_PARAM:
                 // do team sharing actions??
-                case ChartInternalRedux.CHART_INTERNAL_SHOW_CHART:
-                case ChartInternalRedux.CHART_INTERNAL_HIDE_CHART:
-                case ChartInternalRedux.CHART_INTERNAL_SET_CHART_DATA:
-                case ChartInternalRedux.CHART_INTERNAL_DEFINITION_SELECT: {
+                case SystemRedux.CHART_SET_CHART_DATA:
                     if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
                         let oldState = middlewareAPI.getState();
                         let ret = next(action);
@@ -307,7 +302,6 @@ var diffStateAuditMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                     else {
                         return next(action);
                     }
-                }
                 // for all other functions we audit state changes  if audit is set to log user state
                 default: {
                     if (adaptableBlotter.AuditLogService.IsAuditUserStateChangesEnabled) {

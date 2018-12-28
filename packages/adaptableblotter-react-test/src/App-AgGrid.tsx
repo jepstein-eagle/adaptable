@@ -2,10 +2,10 @@ import * as React from "react";
 import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from "adaptableblotter-react";
 import { ReactHarnessHelper } from "./ReactHarnessHelper";
 import { DataGenerator } from "./DataGenerator";
-import { GridOptions } from "ag-grid";
+import { GridOptions } from "ag-grid-community";
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
-import "ag-grid/dist/styles/ag-grid.css";
-import "ag-grid/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-gridcommunity/dist/styles/ag-theme-balham.css";
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;

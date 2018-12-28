@@ -7,7 +7,6 @@ class AuditLogService {
         this.blotter = blotter;
         this.canSendLog = true;
         this.numberOfMissedPing = 0;
-        console.log(blotterOptions);
         this.auditLogQueue = [];
         this.blotterOptions = blotterOptions;
         this.setUpFlags(blotterOptions);

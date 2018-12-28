@@ -71,7 +71,7 @@ const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const Helper_1 = require("../Utilities/Helpers/Helper");
-const eventKeys_1 = require("ag-grid/dist/lib/eventKeys");
+const eventKeys_1 = require("ag-grid-community/dist/lib/eventKeys");
 const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
 class AdaptableBlotter {

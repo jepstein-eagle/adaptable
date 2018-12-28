@@ -209,7 +209,6 @@ export class AuditLogService {
             //is function
         } else if (typeof (obj) == "function") {
             stringArray.push(obj.toString())
-
         } else {
             stringArray.push(String(obj))
         }

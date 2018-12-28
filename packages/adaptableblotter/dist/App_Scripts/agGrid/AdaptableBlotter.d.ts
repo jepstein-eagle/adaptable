@@ -20,7 +20,7 @@ import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { RowNode } from "ag-grid";
+import { RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;

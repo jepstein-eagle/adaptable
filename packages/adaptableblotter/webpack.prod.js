@@ -17,11 +17,18 @@ module.exports = {
     },
     devtool: 'source-map',
     externals: {
-        "ag-grid": "ag-grid",
-        "ag-grid/main": "ag-grid",
-        "ag-grid/dist/lib/entities/colDef": "ag-grid",
-        "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
-        "ag-grid/dist/lib/gridApi": "ag-grid",
+        // old version - Samed: please check that the change is correct!
+     //   "ag-grid": "ag-grid",
+     //   "ag-grid/main": "ag-grid",
+     //   "ag-grid/dist/lib/entities/colDef": "ag-grid",
+     //   "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
+     //   "ag-grid/dist/lib/gridApi": "ag-grid",
+
+        "ag-grid-community": "ag-grid",
+        "ag-grid-community/main": "ag-grid",
+        "ag-grid-community/dist/lib/entities/colDef": "ag-grid",
+        "ag-grid-community/dist/lib/entities/gridOptions": "ag-grid",
+        "ag-grid-community/dist/lib/gridApi": "ag-grid",
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

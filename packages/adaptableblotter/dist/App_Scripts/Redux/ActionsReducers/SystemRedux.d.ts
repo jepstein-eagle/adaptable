@@ -18,6 +18,7 @@ export declare const SMARTEDIT_SET_PREVIEW = "SMARTEDIT_SET_PREVIEW";
 export declare const BULK_UPDATE_CHECK_CELL_SELECTION = "BULK_UPDATE_CHECK_CELL_SELECTION";
 export declare const BULK_UPDATE_SET_VALID_SELECTION = "BULK_UPDATE_SET_VALID_SELECTION";
 export declare const BULK_UPDATE_SET_PREVIEW = "BULK_UPDATE_SET_PREVIEW";
+export declare const CHART_SET_CHART_DATA = "CHART_SET_CHART_DATA";
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
 }
@@ -59,6 +60,9 @@ export interface BulkUpdateSetPreviewAction extends Redux.Action {
 export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
     IsValidBulkUpdateSelection: boolean;
 }
+export interface ChartSetChartDataAction extends Redux.Action {
+    chartData: any;
+}
 export declare const SystemSetHealthStatus: (SystemStatus: ISystemStatus) => SystemSetHealthStatusAction;
 export declare const SystemClearHealthStatus: () => SystemClearHealthStatusAction;
 export declare const SystemAlertAdd: (Alert: IAlert, MaxAlerts: number) => SystemAlertAddAction;
@@ -72,4 +76,5 @@ export declare const SmartEditSetPreview: (SmartEditPreviewInfo: IPreviewInfo) =
 export declare const BulkUpdateCheckCellSelection: () => BulkUpdateCheckCellSelectionAction;
 export declare const BulkUpdateSetValidSelection: (IsValidBulkUpdateSelection: boolean) => BulkUpdateSetValidSelectionAction;
 export declare const BulkUpdateSetPreview: (BulkUpdatePreviewInfo: IPreviewInfo) => BulkUpdateSetPreviewAction;
+export declare const ChartSetChartData: (chartData: any) => ChartSetChartDataAction;
 export declare const SystemReducer: Redux.Reducer<SystemState>;

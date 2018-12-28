@@ -1,7 +1,7 @@
 import * as ReactDOM from "react-dom";
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { AdaptableBlotter, } from './AdaptableBlotter'
-import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid/dist/lib/filter/floatingFilter";
+import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid-community/dist/lib/filter/floatingFilter";
 import { FloatingFilterFormReact } from "../View/Components/FilterForm/FloatingFilterForm";
 import { IColumn } from "../Api/Interface/IColumn";
 import { DistinctCriteriaPairValue } from "../Utilities/Enums";

@@ -6,7 +6,6 @@ export interface AdaptableBlotterState {
     Menu: AdaptableBlotterStates.MenuState;
     Grid: AdaptableBlotterStates.GridState;
     System: AdaptableBlotterStates.SystemState;
-    ChartInternal: AdaptableBlotterStates.ChartInternalState;
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     UserInterface: AdaptableBlotterStates.UserInterfaceState;
     SystemFilter: AdaptableBlotterStates.SystemFilterState;
