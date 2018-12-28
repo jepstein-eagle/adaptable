@@ -5,7 +5,7 @@ import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ChartInternalRedux from '../../Redux/ActionsReducers/ChartInternalRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -25,8 +25,8 @@ import { IChartDefinition, IAdaptableBlotterObject } from "../../Api/Interface/I
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction,
-    onShowChart: () => ChartInternalRedux.ChartInternalShowChartAction;
+    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction,
+    onShowChart: () => ChartRedux.ChartShowChartAction;
     ChartDefinitions: Array<IChartDefinition>
     CurrentChartDefinition: IChartDefinition
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -164,7 +164,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition
+        CurrentChartDefinition: state.Chart.CurrentChartDefinition
     };
 }
 
@@ -172,8 +172,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
-        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
+        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onShowChart: () => dispatch(ChartRedux.ChartShowChart()),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))
     };

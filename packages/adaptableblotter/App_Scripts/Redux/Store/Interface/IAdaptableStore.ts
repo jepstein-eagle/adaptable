@@ -9,8 +9,7 @@ export interface AdaptableBlotterState {
     Menu: AdaptableBlotterStates.MenuState;
     Grid: AdaptableBlotterStates.GridState;
     System: AdaptableBlotterStates.SystemState;
-    ChartInternal: AdaptableBlotterStates.ChartInternalState;
-
+  
     // Set at design time only
     Entitlements: AdaptableBlotterStates.EntitlementsState;
     UserInterface: AdaptableBlotterStates.UserInterfaceState;

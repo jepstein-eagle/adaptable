@@ -12,7 +12,6 @@ import filter from 'redux-storage-decorator-filter'
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
 import * as ChartRedux from '../ActionsReducers/ChartRedux'
-import * as ChartInternalRedux from '../ActionsReducers/ChartInternalRedux'
 import * as AlertRedux from '../ActionsReducers/AlertRedux'
 import * as SmartEditRedux from '../ActionsReducers/SmartEditRedux'
 import * as BulkUpdateRedux from '../ActionsReducers/BulkUpdateRedux'
@@ -80,8 +79,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Menu: MenuRedux.MenuReducer,
   Alert: AlertRedux.AlertReducer,
   Chart: ChartRedux.ChartReducer,
-  ChartInternal: ChartInternalRedux.ChartInternalReducer,
-  SmartEdit: SmartEditRedux.SmartEditReducer,
+   SmartEdit: SmartEditRedux.SmartEditReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
   CustomSort: CustomSortRedux.CustomSortReducer,
   Shortcut: ShortcutRedux.ShortcutReducer,
@@ -349,10 +347,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
 
         // do team sharing actions??
 
-        case ChartInternalRedux.CHART_INTERNAL_SHOW_CHART:
-        case ChartInternalRedux.CHART_INTERNAL_HIDE_CHART:
-        case ChartInternalRedux.CHART_INTERNAL_SET_CHART_DATA:
-        case ChartInternalRedux.CHART_INTERNAL_DEFINITION_SELECT: {
+        case SystemRedux.CHART_SET_CHART_DATA:
           if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
             let oldState = middlewareAPI.getState()
             let ret = next(action);
@@ -363,7 +358,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
           } else {
             return next(action);
           }
-        }
+        
 
 
         // for all other functions we audit state changes  if audit is set to log user state

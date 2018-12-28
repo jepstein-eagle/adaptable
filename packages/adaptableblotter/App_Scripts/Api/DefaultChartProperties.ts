@@ -11,6 +11,7 @@ export const DefaultChartProperties: IChartProperties = {
     // Y Axis
     YAxisLabelLocation: AxisLabelsLocation.OutsideLeft,
     YAxisLabelVisibility: LabelVisibility.Visible,
+    YAxisTitle: "",
     YAxisLabelColor: "",
     YAxisTitleColor: "",
     YAxisMinimumValue: undefined,

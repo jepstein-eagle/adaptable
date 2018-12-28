@@ -17,7 +17,7 @@ function clearQuickSearch() {
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(20);
+  trades = dataGen.getTrades(2000);
   // trades = dataGen.getFtseData(10);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
@@ -45,7 +45,7 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  dataGen.startTickingDataagGrid(gridOptions);
+  //dataGen.startTickingDataagGrid(gridOptions);
 
   let s = 2;
 

@@ -3,7 +3,8 @@ import * as Redux from 'redux'
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as ChartInternalRedux from '../../Redux/ActionsReducers/ChartInternalRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
+import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -23,10 +24,10 @@ import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartDefinition: IChartDefinition
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction;
+    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction;
     onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
-    onShowChart: () => ChartInternalRedux.ChartInternalShowChartAction;
+    onShowChart: () => ChartRedux.ChartShowChartAction;
 }
 
 class ChartToolbarControlComponent extends React.Component<ChartToolbarControlComponentProps, {}> {
@@ -112,23 +113,21 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     onShowChart() {
         this.props.onShowChart();
     }
-
-
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition,
+        CurrentChartDefinition: state.Chart.CurrentChartDefinition,
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
+        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
         onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
-        onShowChart: () => dispatch(ChartInternalRedux.ChartInternalShowChart()),
+        onShowChart: () => dispatch(ChartRedux.ChartShowChart()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup))
     };

@@ -6,6 +6,7 @@ import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Utilities/Enums';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
 import { IPreviewInfo } from '../../Api/Interface/IPreview';
+import { IChartDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -37,6 +38,9 @@ export const SMARTEDIT_SET_PREVIEW = 'SMARTEDIT_SET_PREVIEW';
 export const BULK_UPDATE_CHECK_CELL_SELECTION = 'BULK_UPDATE_CHECK_CELL_SELECTION';
 export const BULK_UPDATE_SET_VALID_SELECTION = 'BULK_UPDATE_SET_VALID_SELECTION';
 export const BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
+
+// Chart Managemet 
+export const CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
 
 
 export interface SystemSetHealthStatusAction extends Redux.Action {
@@ -94,6 +98,11 @@ export interface BulkUpdateSetPreviewAction extends Redux.Action {
 
 export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
     IsValidBulkUpdateSelection: boolean
+}
+
+
+export interface ChartSetChartDataAction extends Redux.Action {
+    chartData: any
 }
 
 export const SystemSetHealthStatus = (SystemStatus: ISystemStatus): SystemSetHealthStatusAction => ({
@@ -162,6 +171,12 @@ export const BulkUpdateSetPreview = (BulkUpdatePreviewInfo: IPreviewInfo): BulkU
     BulkUpdatePreviewInfo
 })
 
+export const ChartSetChartData = (chartData: any): ChartSetChartDataAction => ({
+    type: CHART_SET_CHART_DATA,
+    chartData
+})
+
+
 
 const initialSystemState: SystemState = {
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
@@ -172,6 +187,8 @@ const initialSystemState: SystemState = {
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
+    ChartData: null,
+   
 }
 
 export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = initialSystemState, action: Redux.Action): SystemState => {
@@ -225,6 +242,9 @@ export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = i
         case BULK_UPDATE_SET_PREVIEW:
             return Object.assign({}, state, { BulkUpdatePreviewInfo: (<BulkUpdateSetPreviewAction>action).BulkUpdatePreviewInfo })
 
+            case CHART_SET_CHART_DATA:
+            return Object.assign({}, state, { ChartData: (<ChartSetChartDataAction>action).chartData })
+    
         default:
             return state
     }

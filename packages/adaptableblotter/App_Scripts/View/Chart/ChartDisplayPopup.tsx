@@ -13,7 +13,7 @@ import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
-import * as ChartInternalRedux from '../../Redux/ActionsReducers/ChartInternalRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 // ig chart imports
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
@@ -33,6 +33,7 @@ import { ButtonNew } from "../Components/Buttons/ButtonNew";
 import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
 import { DefaultChartProperties } from "../../api/DefaultChartProperties";
 import { Visibility } from "igniteui-react-core/ES2015/Visibility";
+import { ECANCELED } from "constants";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -41,7 +42,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     ChartData: any
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => ChartRedux.ChartPropertiesUpdateAction,
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartInternalRedux.ChartDefinitionSelectAction,
+    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction,
 }
 
 export interface ChartDisplayPopupWizardState {
@@ -60,10 +61,13 @@ export interface ChartDisplayPopupWizardState {
     SetYAxisLabelColor: boolean;
     SetYAxisTitleColor: boolean;
     IsYAxisMinimised: boolean;
+    UseDefaultYAxisTitle: boolean;
+
     // X Axis
     IsXAxisMinimised: boolean;
     SetXAxisLabelColor: boolean;
     SetXAxisTitleColor: boolean;
+    UseDefaultXAxisTitle: boolean;
 
     // Misc
     IsMiscMinimised: boolean;
@@ -79,7 +83,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.state = {
             ChartProperties: this.props.CurrentChartDefinition.ChartProperties,
             EditedChartDefinition: null,
-            IsChartSettingsVisible: true,
+            IsChartSettingsVisible: false,
             IsChartMinimised: false,
 
             // General
@@ -91,11 +95,13 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             SetYAxisMinimumValue: this.props.CurrentChartDefinition.ChartProperties.YAxisMinimumValue != undefined,
             SetYAxisLabelColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisLabelColor),
             SetYAxisTitleColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitleColor),
+            UseDefaultYAxisTitle: this.isDefaultYAxisTitle(), // StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitle),
 
             // X Axis
             IsXAxisMinimised: true,
             SetXAxisLabelColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisLabelColor),
             SetXAxisTitleColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitleColor),
+            UseDefaultXAxisTitle: this.isDefaultXAxisTitle(), // StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitle),
 
             // Misc
             IsMiscMinimised: true,
@@ -302,20 +308,16 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 subtitle={this.props.CurrentChartDefinition.SubTitle}
                 // yAxis
                 yAxisMinimumValue={this.state.ChartProperties.YAxisMinimumValue}
-                // TODO: Get the title correct now
-                yAxisTitle={this.props.CurrentChartDefinition.YAxisColumnIds.map(c => {
-                    return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns)
-                }).join(', ')}
+                yAxisTitle={this.getYAxisTitle(this.state.UseDefaultYAxisTitle)}
                 yAxisLabelVisibility={this.state.ChartProperties.YAxisLabelVisibility}
                 yAxisLabelLocation={this.state.ChartProperties.YAxisLabelLocation}
                 yAxisLabelTextColor={this.state.ChartProperties.YAxisLabelColor}
                 yAxisTitleTextColor={this.state.ChartProperties.YAxisTitleColor}
                 // xAxis
                 xAxisLabelVisibility={this.state.ChartProperties.XAxisLabelVisibility}
-                xAxisTitle={this.state.ChartProperties.XAxisTitle}
+                xAxisTitle={this.getXAxisTitle(this.state.UseDefaultXAxisTitle)}
                 xAxisTitleTextColor={this.state.ChartProperties.XAxisTitleColor}
                 xAxisLabelTextColor={this.state.ChartProperties.XAxisLabelColor}
-                // xaxistitle
 
                 // crosshairs
                 crosshairsDisplayMode={this.state.ChartProperties.ChartCrosshairsMode}
@@ -476,7 +478,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             <Col xs={5}>
                                                                             </Col>
                                                                             <Col xs={7}>
-                                                                                <Checkbox inline onChange={(e) => this.onEnableCrosshairsAnnotationsOptionChanged(e)} checked={this.state.ChartProperties.EnableCrosshairsAnnotations} >Show Legend</Checkbox>
+                                                                                <Checkbox inline onChange={(e) => this.onEnableCrosshairsAnnotationsOptionChanged(e)} checked={this.state.ChartProperties.EnableCrosshairsAnnotations} >Show Label</Checkbox>
                                                                             </Col>
                                                                         </Row>
                                                                     </AdaptableBlotterForm>
@@ -516,7 +518,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                 <Row>
                                                                     < Col xs={5}>
-                                                                        <ControlLabel>Display Labels</ControlLabel>
+                                                                        <ControlLabel>Show Labels</ControlLabel>
                                                                     </Col>
                                                                     <Col xs={7} >
                                                                         <Checkbox onChange={(e) => this.onYAxisVisibilityOptionChanged(e)} checked={this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible} />
@@ -525,6 +527,34 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             </AdaptableBlotterForm>
                                                             {this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible &&
                                                                 <div>
+
+                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                        <Row>
+                                                                            <Col xs={5}><ControlLabel>Default Label</ControlLabel>
+                                                                            </Col>
+                                                                            <Col xs={7}>
+                                                                                <Checkbox onChange={(e) => this.onUseDefaultYAxisTitleOptionChanged(e)} checked={this.state.UseDefaultYAxisTitle} />
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </AdaptableBlotterForm>
+                                                                    {this.state.UseDefaultYAxisTitle == false &&
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                            <Row>
+                                                                                <Col xs={5}>
+                                                                                    <ControlLabel>Label</ControlLabel>
+                                                                                </Col>
+                                                                                <Col xs={7}>
+                                                                                    <FormControl
+                                                                                        placeholder={"Enter Label"}
+                                                                                        type="text"
+                                                                                        onChange={(e) => this.onYAxisTitleChanged(e)}
+                                                                                        value={this.state.ChartProperties.YAxisTitle}
+                                                                                    />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                    }
+
                                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                         <Row>
                                                                             <Col xs={5}>
@@ -578,7 +608,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             <AdaptableBlotterForm horizontal >
                                                                 <Row>
                                                                     <Col xs={5}>
-                                                                        <ControlLabel>Display Labels</ControlLabel>
+                                                                        <ControlLabel>Show Labels</ControlLabel>
                                                                     </Col>
                                                                     <Col xs={7}>
                                                                         <Checkbox onChange={(e) => this.onXAxisVisibilityOptionChanged(e)} checked={this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible} />
@@ -589,19 +619,30 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                 <div>
                                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                         <Row>
-                                                                            <Col xs={5}>
-                                                                                <ControlLabel>Label</ControlLabel>
+                                                                            <Col xs={5}><ControlLabel>Default Label</ControlLabel>
                                                                             </Col>
                                                                             <Col xs={7}>
-                                                                                <FormControl
-                                                                                    placeholder={"Enter name"}
-                                                                                    type="text"
-                                                                                    onChange={(e) => this.onXAxisTitleChanged(e)}
-                                                                                    value={this.state.ChartProperties.XAxisTitle}
-                                                                                />
+                                                                                <Checkbox onChange={(e) => this.onUseDefaultXAxisTitleOptionChanged(e)} checked={this.state.UseDefaultXAxisTitle} />
                                                                             </Col>
                                                                         </Row>
                                                                     </AdaptableBlotterForm>
+                                                                    {this.state.UseDefaultXAxisTitle == false &&
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                            <Row>
+                                                                                <Col xs={5}>
+                                                                                    <ControlLabel>Label</ControlLabel>
+                                                                                </Col>
+                                                                                <Col xs={7}>
+                                                                                    <FormControl
+                                                                                        placeholder={"Enter Label"}
+                                                                                        type="text"
+                                                                                        onChange={(e) => this.onXAxisTitleChanged(e)}
+                                                                                        value={this.state.ChartProperties.XAxisTitle}
+                                                                                    />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                    }
                                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                         <Row>
                                                                             <Col xs={5}>
@@ -753,12 +794,14 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             SetXAxisTitleColor: false,
             IsMiscMinimised: true,
             TitleMargin: 0,
-            SubTitleMargin: 0
+            SubTitleMargin: 0,
+            UseDefaultXAxisTitle: true
         } as ChartDisplayPopupWizardState)
         // then update the properties
         let chartProperties: IChartProperties = Helper.cloneObject(DefaultChartProperties);
-        // do the titles (dependent on the columns) - better way?
-        chartProperties.XAxisTitle = this.getXAxisTitle();
+        // do the titles 
+        chartProperties.YAxisTitle = this.getYAxisTitle(true);
+        chartProperties.XAxisTitle = this.getXAxisTitle(true);
         this.updateChartProperties(chartProperties);
     }
 
@@ -1000,6 +1043,13 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.updateChartProperties(chartProperties);
     }
 
+    private onYAxisTitleChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisTitle = e.value;
+        this.updateChartProperties(chartProperties);
+    }
+
     private onXAxisTitleChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let chartProperties: IChartProperties = this.state.ChartProperties;
@@ -1007,12 +1057,64 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.updateChartProperties(chartProperties);
     }
 
-    private getXAxisTitle(): string {
+    private onUseDefaultYAxisTitleOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) { // if its not checked then we need to clear the title
+            let chartProperties: IChartProperties = this.state.ChartProperties;
+            chartProperties.YAxisTitle = "";
+            this.updateChartProperties(chartProperties);
+        }
+
+        this.setState({ UseDefaultYAxisTitle: e.checked, } as ChartDisplayPopupWizardState)
+    }
+
+    private onUseDefaultXAxisTitleOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        if (e.checked) { // if its not checked then we need to clear the title
+            let chartProperties: IChartProperties = this.state.ChartProperties;
+            chartProperties.XAxisTitle = "";
+            this.updateChartProperties(chartProperties);
+        }
+
+        this.setState({ UseDefaultXAxisTitle: e.checked, } as ChartDisplayPopupWizardState)
+    }
+
+    private getYAxisTitle(useDefault: boolean): string {
+        if (useDefault) {
+            return this.createDefaultYAxisTitle();
+        }
+        return this.state.ChartProperties.YAxisTitle;
+    }
+
+    private getXAxisTitle(useDefault: boolean): string {
+        if (useDefault) {
+            return this.createDefaultXAxisTitle();
+        }
+        return this.state.ChartProperties.XAxisTitle;
+    }
+
+    private createDefaultYAxisTitle(): string {
+        return this.props.CurrentChartDefinition.YAxisColumnIds.map(c => {
+            return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns)
+        }).join(', ')
+    }
+
+    private createDefaultXAxisTitle(): string {
         let returnString: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns);
         if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.AdditionalColumnId)) {
             returnString = returnString + " (by " + ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.AdditionalColumnId, this.props.Columns) + ")"
         }
         return returnString;
+    }
+
+    private isDefaultYAxisTitle(): boolean {
+        return StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitle) ||
+            this.props.CurrentChartDefinition.ChartProperties.YAxisTitle == this.createDefaultYAxisTitle();
+    }
+
+    private isDefaultXAxisTitle(): boolean {
+        return StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitle) ||
+            this.props.CurrentChartDefinition.ChartProperties.XAxisTitle == this.createDefaultXAxisTitle();
     }
 
     onCloseWizard() {
@@ -1050,19 +1152,19 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let chartWidth: number;
         switch (this.state.ChartSize) {
             case ChartSize.XSmall:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 350 : 550
+                chartWidth = (this.state.IsChartSettingsVisible) ? 375 : 600
                 break;
             case ChartSize.Small:
                 chartWidth = (this.state.IsChartSettingsVisible) ? 525 : 850
                 break;
             case ChartSize.Medium:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 800 : 1150
+                chartWidth = (this.state.IsChartSettingsVisible) ? 750 : 1100
                 break;
             case ChartSize.Large:
                 chartWidth = (this.state.IsChartSettingsVisible) ? 1050 : 1350
                 break;
             case ChartSize.XLarge:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 1200 : 1550
+                chartWidth = (this.state.IsChartSettingsVisible) ? 1200 : 1600
                 break;
         }
         chartWidth = (this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible) ? chartWidth : chartWidth - 10;
@@ -1072,15 +1174,15 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     setPanelWidth(): string {
         switch (this.state.ChartSize) {
             case ChartSize.XSmall:
-                return '600px';
+                return '650px';
             case ChartSize.Small:
                 return '900px';
             case ChartSize.Medium:
-                return '1200px';
+                return '1150px';
             case ChartSize.Large:
                 return '1400px';
             case ChartSize.XLarge:
-                return '1600px';
+                return '1650px';
         }
     }
 
@@ -1115,8 +1217,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.ChartInternal.CurrentChartDefinition,
-        ChartData: state.ChartInternal.ChartData,
+        CurrentChartDefinition: state.Chart.CurrentChartDefinition,
+        ChartData: state.System.ChartData,
 
     };
 }
@@ -1125,7 +1227,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
         onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => dispatch(ChartRedux.ChartPropertiesUpdate(chartTitle, chartProperties)),
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartInternalRedux.ChartDefinitionSelect(chartDefinition)),
+        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     };
 }
 

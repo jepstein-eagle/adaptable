@@ -1,22 +1,29 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import * as ChartInternalRedux from '../Redux/ActionsReducers/ChartInternalRedux'
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
+import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
-import { ChartState, ChartInternalState } from '../Redux/ActionsReducers/Interface/IState';
+import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IChartDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 
     private ChartState: ChartState
-    private ChartInternalState: ChartInternalState
+    //  private IsChartVisible: boolean
+    //  private CurrentChartDefinition: IChartDefinition
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ChartStrategyId, blotter)
+        // need to set these?
+        //   this.IsChartVisible = false;
+        //   this.CurrentChartDefinition = null;
+
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
     }
 
@@ -28,32 +35,18 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         if (this.ChartState != this.blotter.AdaptableBlotterStore.TheStore.getState().Chart) {
             this.ChartState = this.blotter.AdaptableBlotterStore.TheStore.getState().Chart;
 
+            if (this.ChartState.CurrentChartDefinition != null && this.ChartState.ChartVisible) {
+                this.setChartData();
+            } else {
+                this.clearChartData();
+            }
+
+            if (this.ChartState.CurrentChartDefinition == null && this.ChartState.ChartVisible) {
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(ChartRedux.ChartHideChart());
+            }
+
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Chart, this.ChartState)
-            }
-        }
-
-        // need to ensure that we catch the current chart being changed...
-
-        if (this.ChartInternalState != this.blotter.AdaptableBlotterStore.TheStore.getState().ChartInternal) {
-            if (this.ChartInternalState == null) { // first time so just set - no need to get data
-                this.ChartInternalState = this.blotter.AdaptableBlotterStore.TheStore.getState().ChartInternal;
-            } else {  // want to make sure we dont get into internal loop updating chart data...
-                let isChartStateChanged: boolean = (this.ChartInternalState.ChartData != this.blotter.AdaptableBlotterStore.TheStore.getState().ChartInternal.ChartData)
-
-                this.ChartInternalState = this.blotter.AdaptableBlotterStore.TheStore.getState().ChartInternal;
-
-                if (!isChartStateChanged) {
-                    if (this.ChartInternalState.CurrentChartDefinition != null && this.ChartInternalState.ChartVisible) {
-                        this.setChartData();
-                    } else {
-                        this.clearChartData();
-                    }
-
-                    if (this.ChartInternalState.CurrentChartDefinition == null && this.ChartInternalState.ChartVisible) {
-                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ChartInternalRedux.ChartInternalHideChart());
-                    }
-                }
             }
         }
     }
@@ -61,12 +54,12 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     debouncedSetChartData = _.debounce(() => this.setChartData(), 500);
 
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-        if (this.ChartInternalState != null && this.ChartInternalState.ChartVisible && this.ChartInternalState.CurrentChartDefinition != null) {
+        if (this.ChartState.ChartVisible && this.ChartState.CurrentChartDefinition != null) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedEvent.ColumnId;
-            if (ArrayExtensions.ContainsItem(this.ChartInternalState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
-                this.ChartInternalState.CurrentChartDefinition.XAxisColumnId == columnChangedId ||
-                this.ChartInternalState.CurrentChartDefinition.AdditionalColumnId == columnChangedId) {
+            if (ArrayExtensions.ContainsItem(this.ChartState.CurrentChartDefinition.YAxisColumnIds, columnChangedId) ||
+                this.ChartState.CurrentChartDefinition.XAxisColumnId == columnChangedId ||
+                this.ChartState.CurrentChartDefinition.AdditionalColumnId == columnChangedId) {
                 this.debouncedSetChartData();
             }
         }
@@ -74,15 +67,23 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartData: any = this.blotter.ChartService.BuildChartData(this.ChartInternalState.CurrentChartDefinition, columns);
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(ChartInternalRedux.ChartInternalSetChartData(chartData));
+        let chartData: any = this.blotter.ChartService.BuildChartData(this.GetChartState().CurrentChartDefinition, columns);
+        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
     }
 
     private clearChartData() {
-        if (this.ChartInternalState.ChartData != null) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(ChartInternalRedux.ChartInternalSetChartData(null));
+        if (this.GetSystemState().ChartData != null) {
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }
     }
 
+
+    private GetSystemState(): SystemState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().System;
+    }
+
+    private GetChartState(): ChartState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Chart;
+    }
 
 }

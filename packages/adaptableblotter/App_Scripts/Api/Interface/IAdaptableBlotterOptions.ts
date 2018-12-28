@@ -32,7 +32,7 @@ export interface IAdaptableBlotterOptions {
     */
     auditOptions?: IAuditOptions;
     /**
-     * Options for setting Remote Config Server
+     * Options for setting Config Server
      * This allows you to store user state not in local storage (the default)
      */
     configServerOptions?: IConfigServerOptions;
@@ -151,7 +151,7 @@ export interface IConfigServerOptions {
      */
     enableConfigServer?: boolean;
     /**
-     * Remote config server that'll persist the user state and give it back on demand.
+     * Config server that will persist the user state and give it back on demand.
      * Only used if enableConfigServer is true.
      *
      * AdaptableBlotter will send a POST request to this URL to persist the state with the follower parameters:
