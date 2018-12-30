@@ -86,8 +86,8 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
                 returnRows.push(this.createColItem(colItems, "Config Server", (options.configServerOptions.enableConfigServer) ? "On" : "Off"));
             }
             
-            if (options.serverSearchOption != undefined) {
-                returnRows.push(this.createColItem(colItems, "Server Search Option", options.serverSearchOption));
+            if (options.generalOptions.serverSearchOption != undefined) {
+                returnRows.push(this.createColItem(colItems, "Server Search Option", options.generalOptions.serverSearchOption));
             }
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
              returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));

@@ -24,7 +24,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
             this.blotter.applyGridFiltering();
             this.postSearch();
 
-            if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(SearchChangedTrigger.QuickSearch)
             }
 

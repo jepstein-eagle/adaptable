@@ -35,7 +35,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             this.userFilters = this.GetUserFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption != 'None') {
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
                 if (StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)

@@ -4,6 +4,9 @@ import { IAdaptableBlotterOptions } from './Interface/IAdaptableBlotterOptions';
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     vendorGrid: null,
     primaryKey: "",
+    userName: GeneralConstants.USER_NAME,
+    blotterId: GeneralConstants.BLOTTER_ID,
+    predefinedConfig: null,
     auditOptions: {
         auditCellEdits: false,
         auditFunctionEvents: false,
@@ -16,24 +19,31 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         enableConfigServer: false,
         configServerUrl: "",
     },
-    userName: GeneralConstants.USER_NAME,
-    blotterId: GeneralConstants.BLOTTER_ID,
-    predefinedConfig: null,
-    maxColumnValueItemsDisplayed: 5000,
-    serverSearchOption: 'None',
-    columnValuesOnlyInQueries: false,
-    adaptableBlotterContainer: "adaptableBlotter",
-    vendorContainer: "grid",
+    containerOptions: {
+        adaptableBlotterContainer: "adaptableBlotter",
+        vendorContainer: "grid",
+        modalContainer: null
+    },
     layoutOptions: {
         includeVendorStateInLayouts: false,
         autoSaveLayouts: false,
     },
-    getColumnValues: null,
-    ignoreCaseInQueries: true,
-    useDefaultVendorGridThemes: true,
-    useAdaptableBlotterFilterForm: true,
-    useAdaptableBlotterFloatingFilter: true,
-    showMissingPrimaryKeyWarning: true,
-    indicateFilteredColumns: true
+    filterOptions: {
+        indicateFilteredColumns: true,
+        useAdaptableBlotterFilterForm: true,
+        useAdaptableBlotterFloatingFilter: true,
+    },
+    queryOptions: {
+        maxColumnValueItemsDisplayed: 5000,
+        columnValuesOnlyInQueries: false,
+        getColumnValues: null,
+        ignoreCaseInQueries: true,
+    },
+    generalOptions: {
+        useDefaultVendorGridThemes: true,
+        showMissingPrimaryKeyWarning: true,
+        serverSearchOption: 'None',
+
+    }
 }
 

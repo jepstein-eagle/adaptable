@@ -185,9 +185,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
         this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
 
-        this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+        this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
-            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return;
         }
         this.abContainerElement.innerHTML = ""
@@ -691,7 +691,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (permittedValuesForColumn) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
                     return Array.from(returnMap.values())
                 }
             })
@@ -709,7 +709,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
-                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
                     return Array.from(returnMap.values())
                 }
             }
@@ -1473,16 +1473,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // todo
     }
 
-
     public applyLightTheme(): void {
-        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getLightTheme());
             this.applyAlternateRowStyle();
         }
     }
 
     public applyDarkTheme(): void {
-        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getDarkTheme());
             this.applyAlternateRowStyle();
         }

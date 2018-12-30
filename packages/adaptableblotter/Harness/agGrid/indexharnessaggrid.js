@@ -32,7 +32,7 @@ function InitTradeBlotter() {
     floatingFilter: false,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-    sideBar:  'columns',//true, // this puts in filters and columns by default
+    sideBar: true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -48,7 +48,7 @@ function InitTradeBlotter() {
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
   //dataGen.startTickingDataagGrid(gridOptions);
 
-  let s = 20;
+  let s = 2;
 
   if (s == 2) {
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
@@ -58,7 +58,8 @@ function InitTradeBlotter() {
       primaryKey: "tradeId", // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: "demo blotter 2.5", // id for blotter
-
+      predefinedConfig: categoryJson,
+   
       auditLogOptions: {
         auditCellEdits: true,
         auditFunctionEvents: true,
@@ -74,20 +75,28 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,
         // autoSaveLayouts: true,
       },
-    
-      predefinedConfig: categoryJson,
-      //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       iPushPullConfig: {
         api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
         api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
       },
-       ignoreCaseInQueries: true,
-      maxColumnValueItemsDisplayed: 200,
+      queryOptions: {
+        ignoreCaseInQueries: false,
+        maxColumnValueItemsDisplayed: 5,
+        columnValuesOnlyInQueries: true,
+        // getColumnValues: retrieveValues,
+        //  maxColumnValueItemsDisplayed: 5
+      },
+      filterOptions: {
+        //useAdaptableBlotterFilterForm: false,
+        // useAdaptableBlotterQuickFilter: false
+      },
+      generalOptions: {
+  //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+    
+      }
+
       //  useDefaultVendorGridThemes: true,
-      //useAdaptableBlotterFilterForm: false,
-      // useAdaptableBlotterQuickFilter: false
-      // getColumnValues: retrieveValues,
-      //  maxColumnValueItemsDisplayed: 5
+
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions

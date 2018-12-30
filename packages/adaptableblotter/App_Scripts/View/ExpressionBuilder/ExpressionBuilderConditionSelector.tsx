@@ -151,16 +151,16 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         if (shouldGetColumnValues) {
 
             let columnValuePairs: IRawValueDisplayValuePair[] = [];
-            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.getColumnValues(this.props.SelectedColumnId).
+                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.SelectedColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue)
                             columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         } else { // get the distinct items and make sure within max items that can be displayed
-                            let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(di => {
                                 let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.SelectedColumnId, di)
                                 columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
@@ -248,7 +248,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 <div>
                     {selectedColumn &&
                         <div>
-                            {this.props.Blotter.BlotterOptions.columnValuesOnlyInQueries ?
+                            {this.props.Blotter.BlotterOptions.queryOptions.columnValuesOnlyInQueries ?
                                 <div>
                                     {this.state.ShowWaitingMessage ?
                                         <Waiting WaitingMessage="Retrieving Column Values..." />

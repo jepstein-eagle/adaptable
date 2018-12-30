@@ -50,7 +50,7 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
         };
     }
     componentWillReceiveProps(nextProps: ListBoxFilterFormProps, nextContext: any) {
-             this.setState({
+        this.setState({
             UiSelectedColumnValues: nextProps.UiSelectedColumnValues,
             UiSelectedUserFilters: nextProps.UiSelectedUserFilters,
             UiSelectedRange: nextProps.UiSelectedRange,
@@ -69,7 +69,9 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={"userFilter" + y} style={userFilterItemStyle}
+                return <ListGroupItem
+                    key={"userFilter" + y}
+                    style={userFilterItemStyle}
                     onClick={() => this.onClickItemUserFilter(x)}
                     active={isActive}
                     value={value} >{display}</ListGroupItem>
@@ -90,7 +92,9 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
                 return null;
             }
             else {
-                return <ListGroupItem key={"columnValue" + y} style={columnVItemStyle}
+                return <ListGroupItem
+                    key={"columnValue" + y}
+                    style={columnValueItemStyle}
                     onClick={() => this.onClickItemColumnValue(x)}
                     active={isActive}
                     value={columnValue} >{columnValue}</ListGroupItem>
@@ -153,7 +157,6 @@ export class ListBoxFilterForm extends React.Component<ListBoxFilterFormProps, L
 
         return <div style={divStyle}>
             {rangeForm}
-
             {textClear}
             <ListGroup style={listGroupStyle} >
                 {userFiltersItemsElements}
@@ -319,15 +322,15 @@ let listGroupStyle: React.CSSProperties = {
 let userFilterItemStyle: React.CSSProperties = {
     //'width': '87%',export 
     'fontStyle': 'italic',
-    'fontSize': 'small',
-    'padding': '5px',
+    'fontSize': 'xsmall',
+    'padding': '3px',
     'margin': 0
 }
 
-let columnVItemStyle = {
+let columnValueItemStyle = {
     //'width': '87%',
-    'fontSize': 'small',
-    'padding': '5px',
+    'fontSize': 'xsmall',
+    'padding': '3px',
     'margin': 0
 }
 
@@ -354,9 +357,9 @@ let searchFilterStyle = {
 }
 
 let separatorStyle = {
-    'marginTop': '10px',
+    'marginTop': '5px',
     'marginBottom': '0px',
-    'marginLeft': '15px',
+    'marginLeft': '50px',
     'width': '222px',
 
 }

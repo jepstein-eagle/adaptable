@@ -509,19 +509,19 @@ export module ExpressionHelper {
                 break;
             case DataType.Object:
             case DataType.String:
-                if (blotter.BlotterOptions.ignoreCaseInQueries) {
+                if (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) {
                     rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     (rangeExpression.Operand1 == null) ? null :
-                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions.ToLowerCase(rangeExpression.Operand1) :
                             rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     (rangeExpression.Operand2 == null) ? null :
-                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions.ToLowerCase(rangeExpression.Operand2) :
                             rangeExpression.Operand2;
                 break;

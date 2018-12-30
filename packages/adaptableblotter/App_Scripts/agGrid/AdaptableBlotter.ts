@@ -230,7 +230,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         if (renderGrid) {
             if (this.abContainerElement == null) {
-                this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+                this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
             }
             if (this.abContainerElement != null) {
                 this.abContainerElement.innerHTML = ""
@@ -797,7 +797,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             })
         }
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
     private useRawValueForColumn(columnId: string): boolean {
@@ -1064,7 +1064,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
 
-        if (this.BlotterOptions.useAdaptableBlotterFilterForm) {
+        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn)
         }
 
@@ -1142,14 +1142,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private initInternalGridLogic() {
         if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+            this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return
         }
 
-        let gridContainerElement = document.getElementById(this.BlotterOptions.vendorContainer);
+        let gridContainerElement = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
         if (gridContainerElement) {
             gridContainerElement.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
         }
@@ -1328,7 +1328,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let visibleCols = columns.filter(c => c.Visible);
 
             //first we assess AdvancedSearch (if its running locally)
-            if (this.BlotterOptions.serverSearchOption == 'None') {
+            if (this.BlotterOptions.generalOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // Get the actual Advanced Search object and check it exists
@@ -1343,7 +1343,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.BlotterOptions.serverSearchOption == 'None' || this.BlotterOptions.serverSearchOption == 'AdvancedSearch') {
+            if (this.BlotterOptions.generalOptions.serverSearchOption == 'None' || this.BlotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.getState().ColumnFilter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
@@ -1377,15 +1377,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
 
-        // if (this.isFilterable()) {
-        if (this.BlotterOptions.useAdaptableBlotterFilterForm) {
+        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFilterWrapper(col);
             });
         }
-        // }
-        if (this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterFloatingFilter) {
-            //      if (this.isFilterable()) {
+       
+        if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
@@ -1707,10 +1705,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public isQuickFilterActive(): boolean {
-        if (this.gridOptions.floatingFilter != null) {
-            return this.gridOptions.floatingFilter;
-        }
-        return false;
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter;
     }
 
     public showQuickFilter(): void {
@@ -1730,8 +1725,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyLightTheme(): void {
-        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
-            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
                 container.className = "ag-theme-balham";
             }
@@ -1739,20 +1734,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyDarkTheme(): void {
-        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
-            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
                 container.className = "ag-theme-balham-dark";
-
-
-
             }
         }
     }
 
-
     private applyFilteredColumnStyle(): void {
-        if (this.BlotterOptions.indicateFilteredColumns == true) {
+        if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
