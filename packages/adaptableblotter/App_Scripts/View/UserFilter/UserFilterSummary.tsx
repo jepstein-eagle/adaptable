@@ -96,11 +96,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     getSummary(): string {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if (!this.isColumnFilterable()) {
+         if (!this.isColumnFilterable()) {
             return "Column is not filterable"
         }
 
@@ -108,11 +104,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     getDescription(userFilter: IUserFilter): string {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if (!this.isColumnFilterable()) {
+         if (!this.isColumnFilterable()) {
             return "Column is not filterable"
         }
 
@@ -120,20 +112,13 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     isFilterable(): boolean {
-        if (!this.isGridFilterable() || !this.isColumnFilterable()) {
+        if ( !this.isColumnFilterable()) {
             return false;
         }
         return true;
     }
 
-    isGridFilterable(): boolean {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
-            return false;
-        }
-        return true;
-    }
-
-    isColumnFilterable(): boolean {
+       isColumnFilterable(): boolean {
         if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
             return false
         }

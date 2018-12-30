@@ -51,11 +51,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
     }
 
     getDescription(columnFilter: IColumnFilter): string {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if ( this.props.SummarisedColumn  && !this.props.SummarisedColumn.Filterable) {
+       if ( this.props.SummarisedColumn  && !this.props.SummarisedColumn.Filterable) {
             return "Column is not filterable"
         }
 

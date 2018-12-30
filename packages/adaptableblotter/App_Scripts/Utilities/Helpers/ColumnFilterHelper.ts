@@ -22,10 +22,6 @@ export module ColumnFilterHelper {
     }
 
     export function getColumnFiltersDescription(columnFilters: IColumnFilter[], columns: IColumn[], blotter: IAdaptableBlotter): string {
-        if (blotter && !blotter.isFilterable()) {
-            return "Grid is not filterable"
-        }
-
         if (ArrayExtensions.IsNullOrEmpty(columnFilters)) {
             return "No Column Filter Active"
         }

@@ -20,7 +20,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
 
     public addContextMenuItem(column: IColumn): void {
-        if (this.canCreateContextMenuItem(column, this.blotter, "filter")) {
+        if (this.canCreateContextMenuItem(column, this.blotter, "columnfilter")) {
             this.createContextMenuItemShowPopup(
                 "Create User Filter",
                 ScreenPopups.UserFilterPopup,

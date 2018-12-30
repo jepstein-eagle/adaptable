@@ -220,17 +220,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     }
                 </FilterFormPanel>
                 :
-                <Well bsSize="medium">{isFilterable}</Well>
+                <Well bsSize="small">{isFilterable}</Well>
             }
         </div>
     }
 
     isFilterable(): string {
-        if (!this.props.Blotter.isFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if (!this.props.CurrentColumn.Filterable) {
+         if (!this.props.CurrentColumn.Filterable) {
             return "Column is not filterable"
         }
         return ""

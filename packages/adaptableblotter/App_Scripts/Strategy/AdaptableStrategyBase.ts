@@ -152,10 +152,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                 return column.Sortable;
             } else if (functionType == "numeric") {
                 return column.DataType == DataType.Number;
-            } else if (functionType == "filter") {
-                return column.Filterable && blotter.isFilterable()
+            } else if (functionType == "columnfilter") {
+                return column.Filterable
             } else if (functionType == "quickfilter") {
-                return (blotter.isQuickFilterable() && blotter.BlotterOptions.useAdaptableBlotterFloatingFilter)
+                return (blotter.hasQuickFilter() && blotter.BlotterOptions.useAdaptableBlotterFloatingFilter)
             }
         }
         return true;
@@ -196,7 +196,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         let searchChangedArgs: ISearchChangedEventArgs = {
             object: "fdc3-context",
             definition: "https://fdc3.org/context/1.0.0/",
-            version: "1.0.0",       
+            version: "1.0.0",
             data: [searchEventData]
         }
         this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);

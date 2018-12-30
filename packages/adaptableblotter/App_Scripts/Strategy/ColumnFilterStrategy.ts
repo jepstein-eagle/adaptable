@@ -21,7 +21,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     }
 
     public addContextMenuItem(column: IColumn): void {
-        if (this.canCreateContextMenuItem(column, this.blotter, "filter")) {
+        if (this.canCreateContextMenuItem(column, this.blotter, "columnfilter")) {
             let existingColumnFilter = this.columnFilterState.find(x => x.ColumnId == column.ColumnId);
             if (existingColumnFilter) {
                 this.createContextMenuItemReduxAction(

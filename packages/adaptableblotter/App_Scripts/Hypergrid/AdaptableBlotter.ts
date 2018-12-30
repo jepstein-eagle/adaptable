@@ -274,7 +274,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: index,
                 ReadOnly: this.isColumnReadonly(x.name, index),
                 Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
-                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
+                Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name) // TODO: can we manage by column
             }
         });
         let hiddenColumns: IColumn[] = this.hyperGrid.behavior.getHiddenColumns().map((x: any) => {
@@ -288,7 +288,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: -1,
                 ReadOnly: false, // not great but doesnt matter as it will update when made visible....this.isColumnReadonly(x.name),
                 Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
-                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
+                Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name) 
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -1448,19 +1448,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
-    public isFilterable(): boolean {
+    private isColumnFilterable(colId: string): boolean {
+        // currently we ONLY look at grid level but need to get it working at col level ideally
         if (this.hyperGrid.properties.hasOwnProperty('filterable')) {
             return this.hyperGrid.behavior.filterable;
         }
         return true;
     }
 
-    public isQuickFilterable(): boolean {
+    public hasQuickFilter(): boolean {
         return false;
     }
 
     public isQuickFilterActive(): boolean {
-        return false;
+        // have not yet activated this for hypergrid so always return false;
+         return false;
     }
 
     public showQuickFilter(): void {

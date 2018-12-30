@@ -95,7 +95,7 @@ class FloatingFilterFormComponent extends React.Component<FloatingFilterFormProp
         let controlType: string = (this.props.CurrentColumn.DataType == DataType.Date) ? "date" : "text"
 
         return <span>
-            {this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable
+            {this.props.CurrentColumn.Filterable
                 && (this.props.CurrentColumn.DataType != DataType.Boolean) &&
                 <FormControl
                     style={{ padding: '1px', marginTop: '5px', minHeight: '20px', maxHeight: '20px', fontSize: "x-small", fontWeight: "lighter" }}

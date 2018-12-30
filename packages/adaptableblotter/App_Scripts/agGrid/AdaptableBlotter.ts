@@ -284,12 +284,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public applyGridFiltering() {
-        if (this.isFilterable()) {
             this.gridOptions.api.onFilterChanged()
             this._onRefresh.Dispatch(this, this);
-        } else {
-            LoggingHelper.LogError('Trying to filter on a non-filterable grid.')
-        }
     }
 
     public clearGridFiltering() {
@@ -743,10 +739,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private isColumnFilterable(columnId: string): boolean {
-        if (!this.isFilterable()) {
-            return false;
-        }
-
         let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
         if (colDef.suppressFilter != null) {
             return !colDef.suppressFilter;
@@ -1065,14 +1057,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Visible: false,
             ReadOnly: isReadOnly,
             Sortable: this.isSortable(),
-            Filterable: this.isFilterable(),
+            Filterable: true, // why not?  need to test...
         }
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(specialColumn));
 
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
 
-        if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
+        if (this.BlotterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn)
         }
 
@@ -1710,15 +1702,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-    public isFilterable(): boolean {
-        if (this.gridOptions.enableFilter != null) {
-            return this.gridOptions.enableFilter;
-        }
-        return false;
-    }
-
-    public isQuickFilterable(): boolean {
-        return this.gridOptions.floatingFilter != null;  // returns for both whether its visible or not.
+      public hasQuickFilter(): boolean {
+        return true;
     }
 
     public isQuickFilterActive(): boolean {

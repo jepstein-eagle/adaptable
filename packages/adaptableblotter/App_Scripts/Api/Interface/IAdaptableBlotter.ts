@@ -123,8 +123,7 @@ export interface IAdaptableBlotter {
     // vendor grid related
     isSelectable(): boolean
     isSortable(): boolean
-    isFilterable(): boolean
-    isQuickFilterable(): boolean
+   hasQuickFilter(): boolean
     isQuickFilterActive(): boolean
     showQuickFilter(): void
     hideQuickFilter(): void

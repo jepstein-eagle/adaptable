@@ -32,7 +32,7 @@ function InitTradeBlotter() {
     floatingFilter: false,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-    sideBar: true,
+    sideBar:  'columns',//true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -48,7 +48,7 @@ function InitTradeBlotter() {
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
   //dataGen.startTickingDataagGrid(gridOptions);
 
-  let s = 2;
+  let s = 20;
 
   if (s == 2) {
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
