@@ -58,8 +58,9 @@ function InitTradeBlotter() {
       primaryKey: "tradeId", // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: "demo blotter 2.5", // id for blotter
+     
       predefinedConfig: categoryJson,
-   
+
       auditLogOptions: {
         auditCellEdits: true,
         auditFunctionEvents: true,
@@ -67,17 +68,13 @@ function InitTradeBlotter() {
         auditInternalStateChanges: false,
         pingInterval: 120
       },
-      //  remoteConfigServerOptions: {
-      //      enableRemoteConfigServer: false,
-      //  remoteConfigServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
-      //  },
+      configServerOptions: {
+        enableConfigServer: false,
+        //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+      },
       layoutOptions: {
         includeVendorStateInLayouts: true,
         // autoSaveLayouts: true,
-      },
-      iPushPullConfig: {
-        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
       },
       queryOptions: {
         ignoreCaseInQueries: false,
@@ -91,12 +88,13 @@ function InitTradeBlotter() {
         // useAdaptableBlotterQuickFilter: false
       },
       generalOptions: {
-  //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
-    
-      }
-
-      //  useDefaultVendorGridThemes: true,
-
+        //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+      },
+      iPushPullConfig: {
+        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+      },
+      
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions

@@ -99,33 +99,52 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    var blotterOptions = {
-        vendorGrid: vendorGrid,
-        primaryKey: "tradeId",
-        userName: "jonathan",
-        blotterId: "my Blotter",
+    let adaptableBlotterOptions = {
+        vendorGrid: vendorGrid, // the ag-Grid grid options object - MANDATORY
+        //  primaryKey: "date", // pk for blotter - required
+        primaryKey: "tradeId", // pk for blotter - required
+        userName: "demo user", // name of current user
+        blotterId: "demo blotter 2.5", // id for blotter
+       
+       // predefinedConfig: categoryJson,
+  
         auditLogOptions: {
-            auditCellEdits: true,
-            auditFunctionEvents: true,
-            auditUserStateChanges: true,
-            auditInternalStateChanges: false,
+          auditCellEdits: true,
+          auditFunctionEvents: true,
+          auditUserStateChanges: false,
+          auditInternalStateChanges: false,
+          pingInterval: 120
         },
-        //  remoteConfigServerOptions: {
-        //      enableRemoteConfigServer: false,
-        //  remoteConfigServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
-        //  },
-        predefinedConfig: categoryJson,
-        serverSearchOption: "None",
-        useDefaultVendorGridThemes: true,
+        configServerOptions: {
+          enableConfigServer: false,
+          //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+        },
+        layoutOptions: {
+         // includeVendorStateInLayouts: true,
+          // autoSaveLayouts: true,
+        },
+        queryOptions: {
+          ignoreCaseInQueries: false,
+          //maxColumnValueItemsDisplayed: 5,
+          columnValuesOnlyInQueries: false,
+          // getColumnValues: retrieveValues,
+          //  maxColumnValueItemsDisplayed: 5
+        },
+        filterOptions: {
+          //useAdaptableBlotterFilterForm: false,
+          // useAdaptableBlotterQuickFilter: false
+        },
+        generalOptions: {
+          //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+        },
         iPushPullConfig: {
-            api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-            api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+          api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+          api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-        // getColumnValues: retrieveValues,
-        maxColumnValueItemsDisplayed: 1000
-    }
+        
+      }
 
-    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(adaptableBlotterOptions);
     adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
 
     //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))

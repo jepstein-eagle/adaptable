@@ -57,11 +57,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     // https://github.com/react-bootstrap/react-bootstrap/issues/1445
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
-                    return <ListGroupItem bsSize={"xsmall"} key={y} >
+                    return <ListGroupItem bsSize={"xsmall"} key={y}  style={previewListBoxItemStyle}>
                         <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.ColumnValue)} style={{ cursor: 'pointer', fontSize: 'small' }}>
                             <AdaptableBlotterForm inline>
                                 {y}
-                                <ButtonPreviewDelete cssClassName={cssClassName} bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph" />
+                                <ButtonPreviewDelete cssClassName={cssClassName}  bsStyle={"default"} style={{ float: 'right' }} onClick={() => this.props.DeleteColumnValue(columnId, y)} size="xsmall" overrideDisableButton={false} DisplayMode="Glyph" />
                             </AdaptableBlotterForm>
                         </div>
                     </ListGroupItem>
@@ -75,7 +75,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             if (columnUserFilterExpressions) {
 
                 columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
-                    return <ListGroupItem key={filter}>
+                    return <ListGroupItem key={filter} style={previewListBoxItemStyle}>
                         <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Filter)} style={{ cursor: 'pointer' }}>
                             <AdaptableBlotterForm inline>
                                 {filter}
@@ -96,7 +96,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     if (y.Operator == LeafExpressionOperator.Between) {
 
                         if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
-                            return <ListGroupItem key={columnId + index} bsStyle={StyleConstants.DANGER_BSSTYLE} >
+                            return <ListGroupItem key={columnId + index} bsStyle={StyleConstants.DANGER_BSSTYLE} style={previewListBoxItemStyle}>
                                 <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}{' '}And{' '}{this.getOperand2Value(y)}
@@ -107,7 +107,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             </ListGroupItem>
                         }
                         else {
-                            return <ListGroupItem key={columnId + index}>
+                            return <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
                                 <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}{' '}And{' '}{this.getOperand2Value(y)}
@@ -119,7 +119,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     }
                     else {
                         if (StringExtensions.IsEmpty(y.Operand1) || y.Operator == LeafExpressionOperator.Unknown) {
-                            return <ListGroupItem key={columnId + index} bsStyle={StyleConstants.DANGER_BSSTYLE} >
+                            return <ListGroupItem key={columnId + index} bsStyle={StyleConstants.DANGER_BSSTYLE} style={previewListBoxItemStyle}>
                                 <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}
@@ -129,7 +129,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                             </ListGroupItem>
                         }
                         else {
-                            return <ListGroupItem key={columnId + index}>
+                            return <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
                                 <div className="ab_div_like_button" onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)} style={{ cursor: 'pointer' }}>
                                     <AdaptableBlotterForm inline>
                                         {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}{this.getOperand1Value(y)}
@@ -241,3 +241,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 }
 
 
+let previewListBoxItemStyle: React.CSSProperties = {
+     'fontSize': 'xsmall',
+    'padding': '7px',
+    'margin': 0
+}
