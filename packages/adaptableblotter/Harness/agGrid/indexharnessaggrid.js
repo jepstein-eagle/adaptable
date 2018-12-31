@@ -2,6 +2,8 @@ var themeName = ""
 var adaptableblotter
 var quickSearchText
 var trades
+var gridOptions
+
 
 function runQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
@@ -14,25 +16,37 @@ function clearQuickSearch() {
   adaptableblotter.api.quickSearchClear()
 }
 
+function getColumns() {
+  this.gridOptions.api.setColumnDefs(getTradeSchema())
+}
+
+function getData() {
+  let dataGen = new harness.DataGenerator();
+  let data = dataGen.getTrades(10);
+  gridOptions.api.setRowData(data)
+}
+
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(2000);
+  trades = dataGen.getTrades(10);
+   rowData = trades;
   // trades = dataGen.getFtseData(10);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
-  let gridOptions = {
+  gridOptions = {
+   // columnDefs: [],
     columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
     // columnDefs: getFTSESchema(), // returns a list of agGrid column definitions
-    rowData: trades, // the dummy data we are using
+    rowData: rowData, // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-  //  sideBar: true, // this puts in filters and columns by default
+    //  sideBar: true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -58,7 +72,7 @@ function InitTradeBlotter() {
       primaryKey: "tradeId", // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: "demo blotter 2.5", // id for blotter
-     
+
       predefinedConfig: categoryJson,
 
       auditLogOptions: {
@@ -73,7 +87,7 @@ function InitTradeBlotter() {
         //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
-      //  includeVendorStateInLayouts: true,
+        //  includeVendorStateInLayouts: true,
         // autoSaveLayouts: true,
       },
       queryOptions: {
@@ -94,7 +108,7 @@ function InitTradeBlotter() {
         api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
         api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
       },
-      
+
     }
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
@@ -222,7 +236,8 @@ function getTradeSchema() {
     field: "percentChange",
     editable: true,
     filter: 'text',
-    suppressFilter: false
+    suppressFilter: false,
+    type: "numericColumn"
   });
   schema.push({
     headerName: "Notional",
