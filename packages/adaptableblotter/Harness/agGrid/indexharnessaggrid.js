@@ -29,10 +29,10 @@ function InitTradeBlotter() {
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-    floatingFilter: false,
+    floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-    sideBar: true, // this puts in filters and columns by default
+  //  sideBar: true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -73,7 +73,7 @@ function InitTradeBlotter() {
         //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
-        includeVendorStateInLayouts: true,
+      //  includeVendorStateInLayouts: true,
         // autoSaveLayouts: true,
       },
       queryOptions: {

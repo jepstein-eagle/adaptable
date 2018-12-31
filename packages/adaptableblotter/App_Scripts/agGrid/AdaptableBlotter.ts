@@ -284,8 +284,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public applyGridFiltering() {
-            this.gridOptions.api.onFilterChanged()
-            this._onRefresh.Dispatch(this, this);
+        this.gridOptions.api.onFilterChanged()
+        this._onRefresh.Dispatch(this, this);
     }
 
     public clearGridFiltering() {
@@ -322,6 +322,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
+            if (!col) {
+                console.log(allColumns);
+                console.log(VisibleColumnList);
+                alert("cannot find " + column.ColumnId);
+            }
             if (!col.isVisible()) {
                 this.setColumnVisible(this.gridOptions.columnApi, col, true, "api")
             }
@@ -346,7 +351,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (!ColumnHelper.isSpecialColumn(colId)) {
                 let existingColumn: IColumn = ColumnHelper.getColumnFromId(colId, existingColumns);
                 if (existingColumn) {
-                    existingColumn.Visible = vendorColumn.isVisible()
+                    existingColumn.Visible = vendorColumn.isVisible();
+                    if (existingColumn.DataType == DataType.Unknown) {
+                        existingColumn.DataType = this.getColumnDataType(vendorColumn);
+                    }
                 } else {
                     existingColumn = this.createColumn(vendorColumn, quickSearchClassName)
                 }
@@ -369,7 +377,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Filterable: this.isColumnFilterable(colId),
         }
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
+        this.addFiltersToVendorColumn(vendorColumn);
         return abColumn;
+    }
+
+    private addFiltersToVendorColumn(vendorColumn: Column): void {
+        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
+            this.createFilterWrapper(vendorColumn);
+        }
+
+        if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+            this.createFloatingFilterWrapper(vendorColumn);
+        }
     }
 
     private getQuickSearchClassName(): string {
@@ -598,7 +617,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     public setValue(cellInfo: ICellInfo): void {
-          //ag-grid doesn't support FindRow based on data
+        //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let isUpdated: boolean = false;
         this.gridOptions.api.getModel().forEachNode(rowNode => {
@@ -623,7 +642,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
                 this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
 
-               this.DataService.CreateDataSourcedChangedEvent(dataChangedEvent);
+                this.DataService.CreateDataSourcedChangedEvent(dataChangedEvent);
             }
         })
         this.applyGridFiltering();
@@ -631,7 +650,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
-       
+
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
 
@@ -643,16 +662,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (value) {
                 nodesToRefresh.push(rowNode);
-               
+
                 if (ArrayExtensions.NotContainsItem(colsToRefresh, value.ColumnId)) {
                     colsToRefresh.push(value.ColumnId)
                 }
-                
+
                 let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
 
                 var data: any = rowNode.data;
                 data[value.ColumnId] = value.Value;
-               
+
                 let dataChangedEvent: IDataChangedInfo = {
                     OldValue: oldValue,
                     NewValue: value.Value,
@@ -1033,23 +1052,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn) {
-        let venderCols = this.gridOptions.columnApi.getAllColumns()
+        let venderCols: Column[] = this.gridOptions.columnApi.getAllColumns()
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
-        colDefs.push({
+        let newColDef: ColDef = {
             headerName: freeTextColumn.ColumnId,
             colId: freeTextColumn.ColumnId,
             editable: true,
             hide: true,
             valueGetter: (params: ValueGetterParams) => this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node)
-        })
+        }
+        colDefs.push(newColDef);
+        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+        this.gridOptions.api.setColumnDefs([])
         this.gridOptions.api.setColumnDefs(colDefs)
 
         this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
     }
 
     private addSpecialColumnToState(columnId: string, isReadOnly: boolean): void {
-
         let vendorColumn = this.gridOptions.columnApi.getAllColumns().find(vc => vc.getColId() == columnId)
+
         let specialColumn: IColumn = {
             ColumnId: columnId,
             FriendlyName: columnId,
@@ -1064,9 +1086,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
 
-        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
-            this.createFilterWrapper(vendorColumn)
-        }
+        this.addFiltersToVendorColumn(vendorColumn);
 
         if (this.isInitialised) {
             let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
@@ -1179,6 +1199,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.debouncedSetColumnIntoStore() // was: this.setColumnIntoStore();
                 }
             }
+        });
+        // dealing with scenario where the data is poured into the blotter after grid has been setup
+        this.gridOptions.api.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, (params: any) => {
+            console.log("data rendered: " + params)
+            this.debouncedSetColumnIntoStore();
         });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
         let columnEventsThatTriggersAutoLayoutSave = [
@@ -1379,13 +1404,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-                this.createFilterWrapper(col);
+                //       this.createFilterWrapper(col);
             });
         }
-       
+
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-                this.createFloatingFilterWrapper(col);
+                //    this.createFloatingFilterWrapper(col);
             });
 
         }
@@ -1700,7 +1725,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-      public hasQuickFilter(): boolean {
+    public hasQuickFilter(): boolean {
         return true;
     }
 
@@ -1770,7 +1795,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 } else {
                     if (newValue < oldValue) { // we are down and its lower so set it and return it
                         columnValueList.set(identifierValue, newValue);
-                         return oldValue;
+                        return oldValue;
 
                     }
                 }

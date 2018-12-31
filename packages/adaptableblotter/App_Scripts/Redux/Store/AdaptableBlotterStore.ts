@@ -731,7 +731,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
 
           blotter.addFreeTextColumnToGrid(freeTextColumn)
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+       //   middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
           return returnAction;
         }
 
