@@ -15,7 +15,7 @@ export module ReportHelper {
     export const VISIBLE_DATA_REPORT = 'Visible Data'
     export const SELECTED_CELLS_REPORT = 'Selected Cells'
 
-   export  function IsSystemReport(Report: IReport): boolean {
+    export function IsSystemReport(Report: IReport): boolean {
         return Report == null || Report.Name == ALL_DATA_REPORT || Report.Name == VISIBLE_DATA_REPORT || Report.Name == SELECTED_CELLS_REPORT;
     }
 
@@ -42,8 +42,18 @@ export module ReportHelper {
             } else if (Report.Name == SELECTED_CELLS_REPORT) {
                 return "[Selected Cells Data]";
             }
+        } else {
+            switch (Report.ReportRowScope) {
+                case ReportRowScope.AllRows:
+                    return "[All Rows]";
+                case ReportRowScope.VisibleRows:
+                    return "[Visible Rows]";
+                case ReportRowScope.SelectedRows:
+                    return "[Selected Rows]";
+                case ReportRowScope.ExpressionRows:
+                    return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols)
+            }
         }
-        return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols)
     }
 
     export function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]> {
@@ -63,7 +73,7 @@ export module ReportHelper {
 
                 if (selectedCells.Selection.size == 0) {
                     // some way of saying we cannot export anything
-                    return { ActionReturn: dataToExport, Alert: {Header:"Export Error", Msg: "No cells are selected" , MessageType: MessageType.Error} };
+                    return { ActionReturn: dataToExport, Alert: { Header: "Export Error", Msg: "No cells are selected", MessageType: MessageType.Error } };
                 }
 
                 // first get column names - just look at first entry as colnames will be same for each
@@ -114,11 +124,11 @@ export module ReportHelper {
                 for (var keyValuePair of selectedCells.Selection) {
                     let values: any[] = []
                     if (keyValuePair[1].length != colNames.length) {
-                        return { ActionReturn: [], Alert: {Header: "Report Error", Msg: "Selected cells report should have the same set of columns" , MessageType: MessageType.Error} };
+                        return { ActionReturn: [], Alert: { Header: "Report Error", Msg: "Selected cells report should have the same set of columns", MessageType: MessageType.Error } };
                     }
                     for (var cvPair of keyValuePair[1]) {
                         if (!colNames.find(x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName)) {
-                            return { ActionReturn: [], Alert: { Header: "Report Error", Msg: "Selected cells report should have the same set of columns" , MessageType: MessageType.Error} };
+                            return { ActionReturn: [], Alert: { Header: "Report Error", Msg: "Selected cells report should have the same set of columns", MessageType: MessageType.Error } };
                         }
                         //we want the displayValue now
                         values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));
@@ -134,8 +144,8 @@ export module ReportHelper {
     function getRowValues(row: any, ReportColumns: IColumn[], blotter: IAdaptableBlotter): any[] {
         let newRow: any[] = [];
         ReportColumns.forEach(col => {
-            let columnValue: any =blotter.getDisplayValueFromRecord(row, col.ColumnId);
-         //  columnValue=Helper.StringifyValue(columnValue)
+            let columnValue: any = blotter.getDisplayValueFromRecord(row, col.ColumnId);
+            //  columnValue=Helper.StringifyValue(columnValue)
             newRow.push(columnValue);
         })
         return newRow;
@@ -160,7 +170,7 @@ export module ReportHelper {
             ReportRowScope: ReportRowScope.VisibleRows,
             ColumnIds: [],
             Expression: ExpressionHelper.CreateEmptyExpression()
-         });
+        });
 
         _systemReports.push({
             Name: SELECTED_CELLS_REPORT,

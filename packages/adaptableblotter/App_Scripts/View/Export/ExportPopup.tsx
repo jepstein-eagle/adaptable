@@ -6,7 +6,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import { ExportDestination, ReportColumnScope, AccessLevel } from '../../Utilities/Enums'
+import { ExportDestination, ReportColumnScope, AccessLevel, ReportRowScope } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -58,7 +58,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     render() {
         let cssClassName: string = this.props.cssClassName + "__export";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__export";
-     
+
         let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
 
         let colItems: IColItem[] = [
@@ -92,9 +92,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Report"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ExportGlyph} infoBody={infoBody} button={newButton} >
@@ -111,7 +111,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                     <ReportWizard
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReport}
-                         ModalContainer={this.props.ModalContainer}
+                        ModalContainer={this.props.ModalContainer}
                         ConfigEntities={this.props.Reports}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -140,9 +140,16 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     canFinishWizard() {
         let report = this.state.EditedAdaptableBlotterObject as IReport
-        return StringExtensions.IsNotNullOrEmpty(report.Name) &&
-            ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || ArrayExtensions.IsNotNullOrEmpty(report.ColumnIds))
+        if (StringExtensions.IsNullOrEmpty(report.Name)) {
+            return false;
+        }
+        if (report.ReportRowScope == ReportRowScope.ExpressionRows && ExpressionHelper.IsEmptyExpression(report.Expression)) {
+            return false;
+        }
+        if (report.ReportColumnScope == ReportColumnScope.BespokeColumns && ArrayExtensions.IsNullOrEmpty(report.ColumnIds)) {
+            return false;
+        }
+        return true;
     }
 
     onNew() {

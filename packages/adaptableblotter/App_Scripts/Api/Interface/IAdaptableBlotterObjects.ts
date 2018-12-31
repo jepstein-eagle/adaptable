@@ -2,7 +2,7 @@ import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType 
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility  } from '../../Utilities/ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility } from '../../Utilities/ChartEnums';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -105,9 +105,9 @@ export interface IChartProperties {
   XAxisTitleColor?: string
   // Misc
   EnableTransitions?: boolean;
-  TransitionInDuration? : number
-  TitleAlignment? : HorizontalAlignment
-  SubTitleAlignment? : HorizontalAlignment
+  TransitionInDuration?: number
+  TitleAlignment?: HorizontalAlignment
+  SubTitleAlignment?: HorizontalAlignment
 }
 
 
@@ -154,16 +154,16 @@ export interface IConditionalStyle extends IAdaptableBlotterObject {
 }
 
 export interface ICustomSort extends IAdaptableBlotterObject {
-    ColumnId: string;
-    SortedValues: string[]
+  ColumnId: string;
+  SortedValues: string[]
 }
 
 export interface IReport extends IAdaptableBlotterObject {
   Name: string;
-  ReportColumnScope: ReportColumnScope
-  ReportRowScope: ReportRowScope
-  ColumnIds: string[]
-  Expression: Expression,
+  ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
+  ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedRows' | 'ExpressionRows';
+  ColumnIds: string[];
+  Expression: Expression;
 }
 
 export interface IFlashingCell extends IAdaptableBlotterObject {

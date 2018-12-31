@@ -130,7 +130,7 @@ export module ObjectFactory {
             Expression: ExpressionHelper.CreateEmptyExpression(),
             ColumnIds: [],
             ReportColumnScope: ReportColumnScope.AllColumns,
-            ReportRowScope: ReportRowScope.ExpressionRows
+            ReportRowScope: ReportRowScope.AllRows
         };
     }
 

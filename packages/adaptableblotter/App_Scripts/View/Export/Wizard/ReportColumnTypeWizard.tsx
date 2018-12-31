@@ -18,7 +18,7 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
     constructor(props: ReportColumnTypeWizardProps) {
         super(props);
         this.state = {
-            ReportColumnScope: this.props.Data.ReportColumnScope
+            ReportColumnScope: this.props.Data.ReportColumnScope as ReportColumnScope
         }
     }
     render() {
@@ -40,7 +40,7 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="Bespoke" checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns} onChange={(e) => this.onScopeSelectChanged(e)}> {' '}{' '}{' '}Bespoke Columns - selected by you in next step</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen below will be exported (visible or not)."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen in next step will be exported (visible or not)."]} MessageType={MessageType.Info} />
                     </AdaptableBlotterForm>
                 </Col>
             </Panel>
@@ -69,6 +69,9 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
+        if(this.state.ReportColumnScope != ReportColumnScope.BespokeColumns){
+            this.props.Data.ColumnIds = []
+        }
 
     }
     public Back(): void {

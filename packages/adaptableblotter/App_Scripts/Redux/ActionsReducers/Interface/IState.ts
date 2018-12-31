@@ -38,7 +38,7 @@ export interface SystemState extends ISystemState {
     BulkUpdatePreviewInfo: IPreviewInfo;
     ChartData: any;
     CalculatedColumnErrorMessage: string;
-    IPPDomainsPages: IPPDomain[];  
+    IPPDomainsPages: IPPDomain[];
     ReportErrorMessage: string;
 }
 
@@ -171,9 +171,7 @@ export interface DataSourceState extends IUserState {
 export interface ExportState extends IUserState {
     CurrentReport: string;
     Reports: IReport[];
-    }
-
-
+}
 
 export interface FlashingCellState extends IUserState {
     FlashingCells: IFlashingCell[];
