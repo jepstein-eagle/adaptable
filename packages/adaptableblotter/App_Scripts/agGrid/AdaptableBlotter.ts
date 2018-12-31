@@ -325,9 +325,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
             if (!col) {
-                console.log(allColumns);
-                console.log(VisibleColumnList);
-                alert("cannot find " + column.ColumnId);
+                LoggingHelper.LogError("Cannot find vendor column:" + column.ColumnId)
             }
             if (!col.isVisible()) {
                 this.setColumnVisible(this.gridOptions.columnApi, col, true, "api")
@@ -544,13 +542,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // check for column type
         let colType: any = column.getColDef().type;
         if (colType) {
-           let isArray: boolean = Array.isArray(colType);
+            let isArray: boolean = Array.isArray(colType);
             if (isArray) {
                 // do array check
                 let myDatatype: DataType = DataType.Unknown;
                 colType.forEach((c: string) => {
-                    if(c == "numericColumn"){
-                        myDatatype= DataType.Number;
+                    if (c == "numericColumn") {
+                        myDatatype = DataType.Number;
                     }
                     if (c.startsWith("abColDef")) {
                         myDatatype = this.getabColDefValue(c);
@@ -561,10 +559,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             } else {
                 // do string check
-                if(colType == "numericColumn"){
-                return DataType.Number;
-            }
-             if (colType.startsWith("abColDef")) {
+                if (colType == "numericColumn") {
+                    return DataType.Number;
+                }
+                if (colType.startsWith("abColDef")) {
                     return this.getabColDefValue(colType);
                 }
             }
@@ -611,7 +609,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getabColDefValue(colType: string): DataType {
         switch (colType) {
             case 'abColDefNumber':
-                 return DataType.Number;
+                return DataType.Number;
             case 'abColDefString':
                 return DataType.String;
             case 'abColDefBoolean':
@@ -1210,7 +1208,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         // dealing with scenario where the data is poured into the blotter after grid has been setup
         this.gridOptions.api.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, (params: any) => {
-             this.debouncedSetColumnIntoStore();
+            this.debouncedSetColumnIntoStore();
         });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
         let columnEventsThatTriggersAutoLayoutSave = [

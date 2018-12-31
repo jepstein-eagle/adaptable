@@ -8,6 +8,7 @@ import { ControlLabel, Button, FormControl, FormGroup, Glyphicon } from 'react-b
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
@@ -60,14 +61,14 @@ class IPushPullLoginComponent extends React.Component<IPushPullLoginProps, IPush
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        ErrorMsg: state.Export.ErrorMsg
+        ErrorMsg: state.System.ReportErrorMessage
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onLogin: (login: string, password: string) => dispatch(ExportRedux.IPPLogin(login, password)),
-        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
+        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(SystemRedux.ReportSetErrorMessage("")) }
     };
 }
 

@@ -37,6 +37,9 @@ export interface SystemState extends ISystemState {
     IsValidBulkUpdateSelection: boolean;
     BulkUpdatePreviewInfo: IPreviewInfo;
     ChartData: any;
+    CalculatedColumnErrorMessage: string;
+    IPPDomainsPages: IPPDomain[];  
+    ReportErrorMessage: string;
 }
 
 export interface GridState extends ISystemState {
@@ -113,7 +116,6 @@ export interface BulkUpdateState extends IUserState {
 
 export interface CalculatedColumnState extends IUserState {
     CalculatedColumns: ICalculatedColumn[];
-    CalculatedColumnErrorMessage: string;
 }
 
 export interface CalendarState extends IUserState {
@@ -124,14 +126,18 @@ export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];
 }
 
-export interface PercentBarState extends IUserState {
-    PercentBars: IPercentBar[];
-}
-
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
     IsChartVisible: boolean;
     CurrentChartDefinition: IChartDefinition;
+}
+
+export interface ColumnCategoryState extends IUserState {
+    ColumnCategories: IColumnCategory[];
+}
+
+export interface ColumnFilterState extends IUserState {
+    ColumnFilters: IColumnFilter[];
 }
 
 export interface ConditionalStyleState extends IUserState {
@@ -163,19 +169,11 @@ export interface DataSourceState extends IUserState {
 }
 
 export interface ExportState extends IUserState {
-    IPPDomainsPages: IPPDomain[];  // should we persist this???
     CurrentReport: string;
     Reports: IReport[];
-    ErrorMsg: string;
-}
+    }
 
-export interface ColumnFilterState extends IUserState {
-    ColumnFilters: IColumnFilter[];
-}
 
-export interface UserFilterState extends IUserState {
-    UserFilters: IUserFilter[];
-}
 
 export interface FlashingCellState extends IUserState {
     FlashingCells: IFlashingCell[];
@@ -194,9 +192,11 @@ export interface LayoutState extends IUserState {
     Layouts: ILayout[];
 }
 
-export interface ColumnCategoryState extends IUserState {
-    ColumnCategories: IColumnCategory[];
+
+export interface PercentBarState extends IUserState {
+    PercentBars: IPercentBar[];
 }
+
 
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];
@@ -225,4 +225,9 @@ export interface ThemeState extends IUserState {
     CurrentTheme: string;
     SystemThemes: string[];
     UserThemes: IUserTheme[];
+}
+
+
+export interface UserFilterState extends IUserState {
+    UserFilters: IUserFilter[];
 }

@@ -5,6 +5,7 @@ import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -158,7 +159,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
+        CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage
     };
 }
 

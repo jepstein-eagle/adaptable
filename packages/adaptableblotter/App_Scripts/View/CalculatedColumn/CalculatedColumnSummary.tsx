@@ -6,6 +6,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
@@ -100,7 +101,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
+        CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage
     };
 }
 

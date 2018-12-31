@@ -154,8 +154,8 @@ export interface IConditionalStyle extends IAdaptableBlotterObject {
 }
 
 export interface ICustomSort extends IAdaptableBlotterObject {
-  ColumnId: string;
-  SortedValues: string[]
+    ColumnId: string;
+    SortedValues: string[]
 }
 
 export interface IReport extends IAdaptableBlotterObject {

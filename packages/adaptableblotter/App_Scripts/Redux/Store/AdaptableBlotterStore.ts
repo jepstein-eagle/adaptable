@@ -79,7 +79,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Menu: MenuRedux.MenuReducer,
   Alert: AlertRedux.AlertReducer,
   Chart: ChartRedux.ChartReducer,
-   SmartEdit: SmartEditRedux.SmartEditReducer,
+  SmartEdit: SmartEditRedux.SmartEditReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
   CustomSort: CustomSortRedux.CustomSortReducer,
   Shortcut: ShortcutRedux.ShortcutReducer,
@@ -358,7 +358,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
           } else {
             return next(action);
           }
-        
+
 
 
         // for all other functions we audit state changes  if audit is set to log user state
@@ -675,10 +675,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
           let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
           if (!returnObj.IsValid) {
-            middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
+            middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
           }
           else {
-            middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(null))
+            middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(null))
           }
           return next(action);
         }
@@ -1070,10 +1070,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
             iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
-              middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
+              middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages))
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
             }).catch((err: any) => {
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err))
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err))
             })
             middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report))
           }
@@ -1093,17 +1093,17 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
             let report = middlewareAPI.getState().Popup.ScreenPopup.Params
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen())
-            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
+            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
             iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
-              middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
+              middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages))
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
             }).catch((error: any) => {
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error))
             })
             middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report))
           }).catch((error: string) => {
             LoggingHelper.LogError("Login failed", error);
-            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
+            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error))
           })
           return next(action);
         }

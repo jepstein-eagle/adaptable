@@ -4,7 +4,7 @@ import { ISystemStatus } from '../../Api/Interface/Interfaces';
 import { IAlert } from '../../Api/Interface/IMessage';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Utilities/Enums';
-import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
+import { ILiveReport, IPPDomain } from '../../Strategy/Interface/IExportStrategy';
 import { IPreviewInfo } from '../../Api/Interface/IPreview';
 import { IChartDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
 
@@ -41,6 +41,14 @@ export const BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
 
 // Chart Managemet 
 export const CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
+
+// Error Messages
+export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
+
+// Export
+export const SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
+export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
+
 
 
 export interface SystemSetHealthStatusAction extends Redux.Action {
@@ -103,6 +111,19 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
 
 export interface ChartSetChartDataAction extends Redux.Action {
     chartData: any
+}
+
+
+export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
+    ErrorMsg: string
+}
+
+export interface SetIPPDomainPagesAction extends Redux.Action {
+    IPPDomainsPages: IPPDomain[];
+}
+
+export interface ReportSetErrorMessagection extends Redux.Action {
+    ErrorMessage: string
 }
 
 export const SystemSetHealthStatus = (SystemStatus: ISystemStatus): SystemSetHealthStatusAction => ({
@@ -176,7 +197,20 @@ export const ChartSetChartData = (chartData: any): ChartSetChartDataAction => ({
     chartData
 })
 
+export const CalculatedColumnSetErrorMessage = (ErrorMsg: string): CalculatedColumnSetErrorMessageAction => ({
+    type: CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
+    ErrorMsg
+})
 
+export const SetIPPDomainPages = (IPPDomainsPages: IPPDomain[]): SetIPPDomainPagesAction => ({
+    type: SET_IPP_DOMAIN_PAGES,
+    IPPDomainsPages
+})
+
+export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessagection => ({
+    type: REPORT_SET_ERROR_MESSAGE,
+    ErrorMessage
+})
 
 const initialSystemState: SystemState = {
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
@@ -188,7 +222,9 @@ const initialSystemState: SystemState = {
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
     ChartData: null,
-   
+    CalculatedColumnErrorMessage: "",
+    IPPDomainsPages: [],
+    ReportErrorMessage: ""
 }
 
 export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = initialSystemState, action: Redux.Action): SystemState => {
@@ -242,9 +278,18 @@ export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = i
         case BULK_UPDATE_SET_PREVIEW:
             return Object.assign({}, state, { BulkUpdatePreviewInfo: (<BulkUpdateSetPreviewAction>action).BulkUpdatePreviewInfo })
 
-            case CHART_SET_CHART_DATA:
+        case CHART_SET_CHART_DATA:
             return Object.assign({}, state, { ChartData: (<ChartSetChartDataAction>action).chartData })
-    
+        case CALCULATEDCOLUMN_SET_ERROR_MESSAGE: {
+            return Object.assign({}, state, { CalculatedColumnErrorMessage: (<CalculatedColumnSetErrorMessageAction>action).ErrorMsg });
+        }
+        case SET_IPP_DOMAIN_PAGES: {
+            return Object.assign({}, state, { IPPDomainsPages: (<SetIPPDomainPagesAction>action).IPPDomainsPages })
+        }
+        case REPORT_SET_ERROR_MESSAGE: {
+            return Object.assign({}, state, { ReportErrorMessage: (<ReportSetErrorMessagection>action).ErrorMessage })
+        }
+     
         default:
             return state
     }

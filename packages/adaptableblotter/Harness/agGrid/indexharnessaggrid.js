@@ -29,7 +29,7 @@ function getData() {
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(10);
+  trades = dataGen.getTrades(9000);
    rowData = trades;
   // trades = dataGen.getFtseData(10);
 
@@ -46,7 +46,7 @@ function InitTradeBlotter() {
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-    //  sideBar: true, // this puts in filters and columns by default
+      sideBar: true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -87,13 +87,13 @@ function InitTradeBlotter() {
         //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
-        //  includeVendorStateInLayouts: true,
-        // autoSaveLayouts: true,
+         includeVendorStateInLayouts: true,
+         autoSaveLayouts: true,
       },
       queryOptions: {
-        ignoreCaseInQueries: false,
-        maxColumnValueItemsDisplayed: 5,
-        columnValuesOnlyInQueries: true,
+      //  ignoreCaseInQueries: false,
+       // maxColumnValueItemsDisplayed: 5,
+      //  columnValuesOnlyInQueries: true,
         // getColumnValues: retrieveValues,
         //  maxColumnValueItemsDisplayed: 5
       },
