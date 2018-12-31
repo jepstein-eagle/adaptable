@@ -207,6 +207,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
+                    this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
                 })
             .then(
                 () => this.initInternalGridLogic(),
@@ -214,6 +215,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     LoggingHelper.LogError('Failed to Init Strategies : ', e);
                     //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
                     this.initInternalGridLogic()
+                    this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
                 })
             .then(() => {
                 // at the end so load the current layout, refresh the toolbar and turn off the loading message
@@ -566,7 +568,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let row = this.gridOptions.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
-            LoggingHelper.LogWarning('there is no first row so we are returning Unknown for Type')
+            LoggingHelper.LogWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"')
             return DataType.Unknown;
         }
         //if it's a group we need the content of the group
