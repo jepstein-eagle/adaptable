@@ -7,7 +7,7 @@ var gridOptions
 
 function runQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
-  adaptableblotter.api.quickSearchRun(element.value)
+  adaptableblotter.api.QuickSearchApi.quickSearchRun(element.value)
 }
 
 function clearQuickSearch() {

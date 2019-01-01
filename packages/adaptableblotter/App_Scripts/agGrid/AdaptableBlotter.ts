@@ -80,7 +80,6 @@ import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
 import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { IColumn } from '../Api/Interface/IColumn';
-import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
@@ -110,6 +109,7 @@ import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { BlotterApi } from '../Api/BlotterApi';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -1631,7 +1631,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.onSortChanged();
     }
 
-    public setData(dataSource: any) {
+    public setGridData(dataSource: any) {
         this.gridOptions.api.setRowData(dataSource)
     }
 
@@ -1730,15 +1730,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-    public hasQuickFilter(): boolean {
+    public hasFloatingFilter(): boolean {
         return true;
     }
 
-    public isQuickFilterActive(): boolean {
+    public isFloatingFilterActive(): boolean {
         return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter;
     }
 
-    public showQuickFilter(): void {
+    public showFloatingFilter(): void {
         this.gridOptions.floatingFilter = true;
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
             this.createFloatingFilterWrapper(col);
@@ -1746,7 +1746,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.refreshHeader();
     }
 
-    public hideQuickFilter(): void {
+    public hideFloatingFilter(): void {
         this.gridOptions.floatingFilter = false;
         //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
         //       this.deleteFloatingFilterWrapper(col);

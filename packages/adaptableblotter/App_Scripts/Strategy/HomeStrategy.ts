@@ -22,10 +22,10 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     }
 
     public addContextMenuItem(column: IColumn): void {
-        if (this.canCreateContextMenuItem(column, this.blotter, "quickfilter")) {
-            let isFilterActive: boolean = this.blotter.isQuickFilterActive();
+        if (this.canCreateContextMenuItem(column, this.blotter, "floatingfilter")) {
+            let isFilterActive: boolean = this.blotter.isFloatingFilterActive();
             this.createContextMenuItemReduxAction(
-                isFilterActive ? "Hide Quick Filter Bar" : "Show Quick Filter Bar",
+                isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar",
                 isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
                 isFilterActive ? HomeRedux.QuickFilterBarHide() : HomeRedux.QuickFilterBarShow())
         }

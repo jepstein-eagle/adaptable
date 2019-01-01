@@ -5,11 +5,15 @@ import { IAdvancedSearch, ILayout, IStyle, IColumnFilter, IUserFilter, ICustomSo
 import { IEntitlement, IColumnCategory } from "../../Api/Interface/Interfaces";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState, IUserState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IQuickSearchApi } from "../QuickSearchApi";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  */
 export interface IBlotterApi {
+
+  QuickSearchApi: IQuickSearchApi
+
   /**
    * Repopulates the grid; typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to the Blotter.
    * @param data can be any data from any datasource that is suitable for the underlying grid.  
@@ -44,24 +48,7 @@ export interface IBlotterApi {
    */
   layoutSave(): void
 
-  /**
-* Runs QuickSearch on the supplied text
-* @param quickSearchText text to run QuickSearch on
-*/
-  quickSearchRun(quickSearchText: string): void
-
-  /**
-   * Clears Quick Search
-   */
-  quickSearchClear(): void
-
-  /**
-   * Retrieves the current quick search text
-   */
-  quickSearchGetValue(): string
-    quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
-  quickSearchSetStyle(style: IStyle): void
-
+ 
   /**
   * Selects the dataSource
   * @param dataSource has to be an existing dataSource

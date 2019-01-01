@@ -154,8 +154,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
                 return column.DataType == DataType.Number;
             } else if (functionType == "columnfilter") {
                 return column.Filterable
-            } else if (functionType == "quickfilter") {
-                return (blotter.hasQuickFilter() && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter)
+            } else if (functionType == "floatingfilter") {
+                return (blotter.hasFloatingFilter() && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter)
             }
         }
         return true;

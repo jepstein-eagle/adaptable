@@ -50,7 +50,6 @@ import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendo
 import { IColumn } from '../Api/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
-import { BlotterApi } from './BlotterApi';
 import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
@@ -83,6 +82,7 @@ import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataService } from '../Utilities/Services/DataService';
+import { BlotterApi } from '../Api/BlotterApi';
 
 
 //icon to indicate toggle state
@@ -1456,20 +1456,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
-    public hasQuickFilter(): boolean {
+    public hasFloatingFilter(): boolean {
         return false;
     }
 
-    public isQuickFilterActive(): boolean {
+    public isFloatingFilterActive(): boolean {
         // have not yet activated this for hypergrid so always return false;
          return false;
     }
 
-    public showQuickFilter(): void {
+    public showFloatingFilter(): void {
         // todo
     }
 
-    public hideQuickFilter(): void {
+    public hideFloatingFilter(): void {
         // todo
     }
 

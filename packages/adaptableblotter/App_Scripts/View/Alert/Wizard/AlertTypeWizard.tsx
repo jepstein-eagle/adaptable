@@ -19,7 +19,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     constructor(props: AlertTypeWizardProps) {
         super(props)
         this.state = {
-            MessageType: this.props.Data.MessageType,
+            MessageType: this.props.Data.MessageType as MessageType,
             ShowAsPopup: this.props.Data.ShowAsPopup,
         }
     }

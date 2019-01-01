@@ -68,9 +68,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
-import { BlotterApi } from '../../Hypergrid/BlotterApi';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AuditLogService } from '../../Utilities/Services/AuditLogService';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 
@@ -929,12 +927,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          HOME ACTIONS - Filter and quick Filter
          ************ */
         case HomeRedux.QUICK_FILTER_BAR_SHOW: {
-          blotter.showQuickFilter();
+          blotter.showFloatingFilter();
           return next(action);
         }
 
         case HomeRedux.QUICK_FILTER_BAR_HIDE: {
-          blotter.hideQuickFilter();
+          blotter.hideFloatingFilter();
           return next(action);
         }
 

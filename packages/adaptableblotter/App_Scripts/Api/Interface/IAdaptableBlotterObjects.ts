@@ -67,8 +67,8 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange;
   Expression: Expression;
-  MessageType: MessageType;
-  ShowAsPopup: boolean
+  MessageType: 'Info'|'Warning'|'Error';
+  ShowAsPopup: boolean;
 }
 
 

@@ -1,9 +1,8 @@
-import { IAdaptableBlotter } from "../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "./Interface/IAdaptableBlotter";
 import { IEvent } from "./Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
-import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
 import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux'
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
 import * as ColumnCategoryRedux from '../Redux/ActionsReducers/ColumnCategoryRedux'
@@ -29,7 +28,7 @@ import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ILayout, IAdvancedSearch, IStyle, ICustomSort, IColumnFilter, IUserFilter, IUserTheme, IShortcut, ICalculatedColumn, ICellValidationRule, IFormatColumn, IReport, IGridSort, IFreeTextColumn, IPercentBar } from "./Interface/IAdaptableBlotterObjects";
 import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IEntitlement, ISystemStatus, IPermittedColumnValues, IColumnCategory } from "../Api/Interface/Interfaces";
+import { IEntitlement, ISystemStatus, IPermittedColumnValues, IColumnCategory } from "./Interface/Interfaces";
 import { LeafExpressionOperator, DisplayAction, Visibility, MathOperation, MessageType, StatusColour, ExportDestination, StateChangedTrigger } from "../Utilities/Enums";
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
@@ -42,14 +41,19 @@ import { AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState
 import { FilterHelper } from "../Utilities/Helpers/FilterHelper";
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { LoggingHelper } from "../Utilities/Helpers/LoggingHelper";
+import { IQuickSearchApi, QuickSearchApi } from "./QuickSearchApi";
 
-export abstract class BlotterApiBase implements IBlotterApi {
+
+export class BlotterApi implements IBlotterApi {
+
+  public QuickSearchApi: IQuickSearchApi;
 
   constructor(protected blotter: IAdaptableBlotter) {
+    this.QuickSearchApi = new QuickSearchApi(blotter);
   }
 
   public setGridData(dataSource: any): void {
-    // no implementation as done in the base class
+    this.blotter.setGridData(dataSource);
   }
 
   // Layout api methods
@@ -172,26 +176,6 @@ export abstract class BlotterApiBase implements IBlotterApi {
   }
 
 
-  // Quick Search api methods
-  public quickSearchRun(quickSearchText: string): void {
-    this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText))
-  }
-
-  public quickSearchClear(): void {
-    this.dispatchAction(QuickSearchRedux.QuickSearchApply(""))
-  }
-
-  public quickSearchGetValue(): string {
-    return this.getState().QuickSearch.QuickSearchText;
-  }
-
-  public quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
-    this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction as DisplayAction))
-  }
-
-  public quickSearchSetStyle(style: IStyle): void {
-    this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style))
-  }
 
   // Calendar State
   public calendarSetCurrent(calendar: string): void {
@@ -664,7 +648,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   }
 
   public percentBarAdd(percentBar: IPercentBar): void {
-    this.dispatchAction(PercentBarRedux.PercentBarAdd( percentBar))
+    this.dispatchAction(PercentBarRedux.PercentBarAdd(percentBar))
   }
 
   public percentBarCreate(columnId: string, minValue: number, maxValue: number, positiveColor: string, negativeColor: string, showValue: boolean): void {
@@ -684,47 +668,47 @@ export abstract class BlotterApiBase implements IBlotterApi {
   }
 
   public percentBarEdit(percentBar: IPercentBar): void {
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
-   this.percentBarEditByIndex(index, percentBar);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+    this.percentBarEditByIndex(index, percentBar);
   }
 
   public percentBarEditMinValue(minValue: number, columnId: string): void {
-   let percentBar = this.percentBarGetByColumn(columnId);
+    let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.MinValue = minValue;
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
     this.percentBarEditByIndex(index, percentBar);
-    }
+  }
 
   public percentBarEditMaxValue(maxValue: number, columnId: string): void {
     let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.MaxValue = maxValue;
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
     this.percentBarEditByIndex(index, percentBar);
- }
+  }
 
   public percentBarEditPositiveColor(positiveColor: string, columnId: string): void {
     let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.PositiveColor = positiveColor;
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
     this.percentBarEditByIndex(index, percentBar);
- }
+  }
 
   public percentBarEditNegativeColor(negativeColor: string, columnId: string): void {
     let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.NegativeColor = negativeColor;
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
     this.percentBarEditByIndex(index, percentBar);
   }
 
   public percentBarEditShowValue(showValue: boolean, columnId: string): void {
     let percentBar = this.percentBarGetByColumn(columnId);
     percentBar.ShowValue = showValue;
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == percentBar.ColumnId);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
     this.percentBarEditByIndex(index, percentBar);
   }
 
   public percentBarDelete(columnId: string): void {
-    let index: number = this.percentBarGetAll().findIndex(pcb=>pcb.ColumnId == columnId);
+    let index: number = this.percentBarGetAll().findIndex(pcb => pcb.ColumnId == columnId);
     this.dispatchAction(PercentBarRedux.PercentBarDelete(index))
   }
 
@@ -903,7 +887,7 @@ export abstract class BlotterApiBase implements IBlotterApi {
   }
 
   // Helper Methods
-  private dispatchAction(action: Action): void {
+  public dispatchAction(action: Action): void {
     this.blotter.AdaptableBlotterStore.TheStore.dispatch(action)
   }
 

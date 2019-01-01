@@ -27,7 +27,7 @@ export interface IAdaptableBlotter {
     AdaptableBlotterStore: IAdaptableBlotterStore;
     Strategies: IAdaptableStrategyCollection
 
-    VendorGridName: 'agGrid' | 'Hypergrid' ;
+    VendorGridName: 'agGrid' | 'Hypergrid';
     EmbedColumnMenu: boolean
     isInitialised: boolean
 
@@ -38,7 +38,7 @@ export interface IAdaptableBlotter {
     AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     ChartService: IChartService
-  
+
     // Grid Events
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
@@ -53,7 +53,7 @@ export interface IAdaptableBlotter {
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
-     
+
     // cell / column selection
     getActiveCell(): ICellInfo
     selectColumn(columnId: string): void
@@ -95,7 +95,7 @@ export interface IAdaptableBlotter {
     addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void
     editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void
-   
+
     // percentBar
     removePercentBar(percentBar: IPercentBar): void
     addPercentBar(percentBar: IPercentBar): void
@@ -123,16 +123,18 @@ export interface IAdaptableBlotter {
     // vendor grid related
     isSelectable(): boolean
     isSortable(): boolean
-   hasQuickFilter(): boolean
-    isQuickFilterActive(): boolean
-    showQuickFilter(): void
-    hideQuickFilter(): void
+    hasFloatingFilter(): boolean
+    isFloatingFilterActive(): boolean
+    showFloatingFilter(): void
+    hideFloatingFilter(): void
 
     //Theme
     applyLightTheme(): void
     applyDarkTheme(): void
 
     redraw(): void
-    
+
+     setGridData(dataSource: any) : void
+
 }
 
