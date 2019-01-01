@@ -19,8 +19,8 @@ export default class AdaptableBlotter extends React.Component<
 > {
   componentWillMount() {
     const { AdaptableBlotterOptions, VendorGridName } = this.props;
-    AdaptableBlotterOptions.adaptableBlotterContainer =
-      AdaptableBlotterOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
+    AdaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
+      AdaptableBlotterOptions.containerOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
     this.setState({
       AdaptableBlotter: BlotterFactory.CreateAdaptableBlotter(
         AdaptableBlotterOptions,

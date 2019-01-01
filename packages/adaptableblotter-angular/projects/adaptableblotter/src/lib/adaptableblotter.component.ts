@@ -14,7 +14,7 @@ try {
 
 @Component({
   selector: 'adaptable-blotter',
-  template: `<div [id]="adaptableBlotterOptions.adaptableBlotterContainer">Loading...</div>`,
+  template: `<div [id]="adaptableBlotterOptions.containerOptions.adaptableBlotterContainer">Loading...</div>`,
   styles: []
 })
 export class AdaptableBlotterComponent implements OnInit {
@@ -28,11 +28,11 @@ export class AdaptableBlotterComponent implements OnInit {
   constructor(private elRef: ElementRef) {}
 
   ngOnInit() {
-    this.adaptableBlotterOptions.adaptableBlotterContainer =
-      this.adaptableBlotterOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
+    this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
+      this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
     const waitForContainer = setInterval(() => {
       try {
-        document.getElementById(this.adaptableBlotterOptions.adaptableBlotterContainer);
+        document.getElementById(this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer);
         // Element is mounted
         this.adaptableBlotter = BlotterFactory.CreateAdaptableBlotter(
           this.adaptableBlotterOptions,
