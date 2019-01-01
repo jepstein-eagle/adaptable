@@ -137,7 +137,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {
-        this.blotter.api.AlertApi.ShowError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
+        this.blotter.api.alertApi.ShowError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
     }
 
     private ShowWarningMessages(failedRules: ICellValidationRule[], shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any, oldValue: any): void {

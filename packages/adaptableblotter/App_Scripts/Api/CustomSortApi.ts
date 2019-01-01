@@ -14,7 +14,6 @@ export interface ICustomSortApi {
 }
 
 
-
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
 
    // Custom Sort Methods
@@ -22,8 +21,8 @@ export class CustomSortApi extends ApiBase implements ICustomSortApi {
     return this.getState().CustomSort.CustomSorts;
   }
 
-  public GetByColumn(columnn: string): ICustomSort {
-    return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
+  public GetByColumn(column: string): ICustomSort {
+    return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
   }
 
   public Add(customSort: ICustomSort): void {

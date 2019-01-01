@@ -40,7 +40,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
             let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             alertDefinitions.forEach(fr => { // might be better to do a single alert with all the messages?
-                this.blotter.api.AlertApi.Show(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup)
+                this.blotter.api.alertApi.Show(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup)
             })
         }
     }
