@@ -28,9 +28,6 @@ class ColumnFilterSummaryComponent extends React.Component {
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: cssWizardClassName, SummaryItems: summaryItems });
     }
     getDescription(columnFilter) {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
-            return "Grid is not filterable";
-        }
         if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
             return "Column is not filterable";
         }

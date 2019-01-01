@@ -124,7 +124,7 @@ var ObjectFactory;
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ColumnIds: [],
             ReportColumnScope: Enums_1.ReportColumnScope.AllColumns,
-            ReportRowScope: Enums_1.ReportRowScope.ExpressionRows
+            ReportRowScope: Enums_1.ReportRowScope.AllRows
         };
     }
     ObjectFactory.CreateEmptyReport = CreateEmptyReport;

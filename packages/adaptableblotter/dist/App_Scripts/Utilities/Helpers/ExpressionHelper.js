@@ -463,19 +463,19 @@ var ExpressionHelper;
                 break;
             case Enums_1.DataType.Object:
             case Enums_1.DataType.String:
-                if (blotter.BlotterOptions.ignoreCaseInQueries) {
+                if (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) {
                     rangeEvaluation.newValue = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     (rangeExpression.Operand1 == null) ? null :
-                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions_1.StringExtensions.ToLowerCase(rangeExpression.Operand1) :
                             rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     (rangeExpression.Operand2 == null) ? null :
-                        (blotter.BlotterOptions.ignoreCaseInQueries) ?
+                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions_1.StringExtensions.ToLowerCase(rangeExpression.Operand2) :
                             rangeExpression.Operand2;
                 break;

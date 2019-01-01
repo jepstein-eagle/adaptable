@@ -6,6 +6,7 @@ import { ExportDestination } from "../Utilities/Enums";
 
 export interface IExportApi {
 
+  GetCurrent(): string;
   GetAllReports(): IReport[];
   GetAllLiveReports(): ILiveReport[];
   SendReport(reportName: string, destination: ExportDestination): void
@@ -14,7 +15,11 @@ export interface IExportApi {
 
 
 export class ExportApi extends ApiBase implements IExportApi {
-  // Export api Methods
+
+  public GetCurrent(): string {
+    return this.getState().Export.CurrentReport;
+  }
+
   public GetAllReports(): IReport[] {
     return this.getState().Export.Reports;
   }

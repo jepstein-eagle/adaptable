@@ -87,7 +87,7 @@ class CalculatedColumnPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
+        CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage
     };
 }
 function mapDispatchToProps(dispatch) {

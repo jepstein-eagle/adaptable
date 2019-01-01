@@ -112,7 +112,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         .catch((reason) => {
                         LoggingHelper_1.LoggingHelper.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
                         this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
-                        this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
+                        this.blotter.api.AlertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
                 else if (cle.ExportDestination == Enums_1.ExportDestination.iPushPull) {
@@ -136,7 +136,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         .catch((reason) => {
                         LoggingHelper_1.LoggingHelper.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
                         this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.iPushPull));
-                        this.blotter.api.alertShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
+                        this.blotter.api.AlertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
             });

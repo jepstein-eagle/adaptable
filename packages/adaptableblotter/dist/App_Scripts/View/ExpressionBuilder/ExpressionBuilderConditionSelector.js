@@ -108,9 +108,9 @@ class ExpressionBuilderConditionSelector extends React.Component {
         }
         if (shouldGetColumnValues) {
             let columnValuePairs = [];
-            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.getColumnValues(this.props.SelectedColumnId).
+                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.SelectedColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
@@ -118,14 +118,14 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(di => {
                             let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.SelectedColumnId, di);
                             columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
                         });
                         this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.Blotter.api.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
+                        this.props.Blotter.api.UserInterfaceApi.SetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
                     }
                 }, function () {
                     //    this.setState({ name: error });
@@ -174,7 +174,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.props.SelectedColumnId], ColumnList: this.props.ColumnsList, onColumnChange: columns => this.onColumnSelectChange(columns), SelectionMode: Enums_1.SelectionMode.Single }))
             :
                 React.createElement("div", null, selectedColumn &&
-                    React.createElement("div", null, this.props.Blotter.BlotterOptions.columnValuesOnlyInQueries ?
+                    React.createElement("div", null, this.props.Blotter.BlotterOptions.queryOptions.columnValuesOnlyInQueries ?
                         React.createElement("div", null, this.state.ShowWaitingMessage ?
                             React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                             :

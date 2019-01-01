@@ -86,12 +86,12 @@ export interface IAdaptableBlotter {
     setVendorGridState(vendorGridState: IVendorGridInfo): void;
     isSelectable(): boolean;
     isSortable(): boolean;
-    isFilterable(): boolean;
-    isQuickFilterable(): boolean;
-    isQuickFilterActive(): boolean;
-    showQuickFilter(): void;
-    hideQuickFilter(): void;
+    hasFloatingFilter(): boolean;
+    isFloatingFilterActive(): boolean;
+    showFloatingFilter(): void;
+    hideFloatingFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
     redraw(): void;
+    setGridData(dataSource: any): void;
 }

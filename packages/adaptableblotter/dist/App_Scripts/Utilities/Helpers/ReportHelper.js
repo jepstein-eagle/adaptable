@@ -36,7 +36,18 @@ var ReportHelper;
                 return "[Selected Cells Data]";
             }
         }
-        return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(Report.Expression, cols);
+        else {
+            switch (Report.ReportRowScope) {
+                case Enums_1.ReportRowScope.AllRows:
+                    return "[All Rows]";
+                case Enums_1.ReportRowScope.VisibleRows:
+                    return "[Visible Rows]";
+                case Enums_1.ReportRowScope.SelectedRows:
+                    return "[Selected Rows]";
+                case Enums_1.ReportRowScope.ExpressionRows:
+                    return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(Report.Expression, cols);
+            }
+        }
     }
     ReportHelper.GetReportExpressionDescription = GetReportExpressionDescription;
     function ConvertReportToArray(blotter, Report) {

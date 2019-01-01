@@ -3,6 +3,7 @@ import { SystemState } from './Interface/IState';
 import { ISystemStatus } from '../../Api/Interface/Interfaces';
 import { IAlert } from '../../Api/Interface/IMessage';
 import { ExportDestination } from '../../Utilities/Enums';
+import { IPPDomain } from '../../Strategy/Interface/IExportStrategy';
 import { IPreviewInfo } from '../../Api/Interface/IPreview';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";
@@ -19,6 +20,9 @@ export declare const BULK_UPDATE_CHECK_CELL_SELECTION = "BULK_UPDATE_CHECK_CELL_
 export declare const BULK_UPDATE_SET_VALID_SELECTION = "BULK_UPDATE_SET_VALID_SELECTION";
 export declare const BULK_UPDATE_SET_PREVIEW = "BULK_UPDATE_SET_PREVIEW";
 export declare const CHART_SET_CHART_DATA = "CHART_SET_CHART_DATA";
+export declare const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = "CALCULATEDCOLUMN_SET_ERROR_MESSAGE";
+export declare const SET_IPP_DOMAIN_PAGES = "SET_IPP_DOMAIN_PAGES";
+export declare const REPORT_SET_ERROR_MESSAGE = "REPORT_SET_ERROR_MESSAGE";
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
 }
@@ -63,6 +67,15 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
 export interface ChartSetChartDataAction extends Redux.Action {
     chartData: any;
 }
+export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
+    ErrorMsg: string;
+}
+export interface SetIPPDomainPagesAction extends Redux.Action {
+    IPPDomainsPages: IPPDomain[];
+}
+export interface ReportSetErrorMessagection extends Redux.Action {
+    ErrorMessage: string;
+}
 export declare const SystemSetHealthStatus: (SystemStatus: ISystemStatus) => SystemSetHealthStatusAction;
 export declare const SystemClearHealthStatus: () => SystemClearHealthStatusAction;
 export declare const SystemAlertAdd: (Alert: IAlert, MaxAlerts: number) => SystemAlertAddAction;
@@ -77,4 +90,7 @@ export declare const BulkUpdateCheckCellSelection: () => BulkUpdateCheckCellSele
 export declare const BulkUpdateSetValidSelection: (IsValidBulkUpdateSelection: boolean) => BulkUpdateSetValidSelectionAction;
 export declare const BulkUpdateSetPreview: (BulkUpdatePreviewInfo: IPreviewInfo) => BulkUpdateSetPreviewAction;
 export declare const ChartSetChartData: (chartData: any) => ChartSetChartDataAction;
+export declare const CalculatedColumnSetErrorMessage: (ErrorMsg: string) => CalculatedColumnSetErrorMessageAction;
+export declare const SetIPPDomainPages: (IPPDomainsPages: IPPDomain[]) => SetIPPDomainPagesAction;
+export declare const ReportSetErrorMessage: (ErrorMessage: string) => ReportSetErrorMessagection;
 export declare const SystemReducer: Redux.Reducer<SystemState>;

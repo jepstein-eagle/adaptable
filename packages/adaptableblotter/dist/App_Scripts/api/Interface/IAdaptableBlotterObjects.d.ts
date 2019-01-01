@@ -1,4 +1,4 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Utilities/Enums';
+import { LeafExpressionOperator } from '../../Utilities/Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
@@ -59,7 +59,7 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
     ColumnId: string;
     Range: IRange;
     Expression: Expression;
-    MessageType: MessageType;
+    MessageType: 'Info' | 'Warning' | 'Error';
     ShowAsPopup: boolean;
 }
 export interface IChartDefinition extends IAdaptableBlotterObject {
@@ -134,8 +134,8 @@ export interface ICustomSort extends IAdaptableBlotterObject {
 }
 export interface IReport extends IAdaptableBlotterObject {
     Name: string;
-    ReportColumnScope: ReportColumnScope;
-    ReportRowScope: ReportRowScope;
+    ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
+    ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedRows' | 'ExpressionRows';
     ColumnIds: string[];
     Expression: Expression;
 }

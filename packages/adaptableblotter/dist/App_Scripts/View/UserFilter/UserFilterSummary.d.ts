@@ -14,7 +14,6 @@ export declare class UserFilterSummaryComponent extends React.Component<UserFilt
     getSummary(): string;
     getDescription(userFilter: IUserFilter): string;
     isFilterable(): boolean;
-    isGridFilterable(): boolean;
     isColumnFilterable(): boolean;
     onNew(): void;
     onEdit(index: number, UserFilter: IUserFilter): void;

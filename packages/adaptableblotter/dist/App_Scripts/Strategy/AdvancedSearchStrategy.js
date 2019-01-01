@@ -17,7 +17,7 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
             // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
             this.blotter.applyGridFiltering();
-            if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption != 'None') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.AdvancedSearch);
             }
             if (this.blotter.isInitialised) {

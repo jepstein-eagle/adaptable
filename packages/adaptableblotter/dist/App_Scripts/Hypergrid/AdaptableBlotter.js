@@ -38,8 +38,6 @@ const FilterAndSearchDataSource_1 = require("./FilterAndSearchDataSource");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const BulkUpdateStrategy_1 = require("../Strategy/BulkUpdateStrategy");
 const FilterForm_1 = require("../View/Components/FilterForm/FilterForm");
-//import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
-const BlotterApi_1 = require("./BlotterApi");
 const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
 const _ = require("lodash");
 const SelectedCellsStrategy_1 = require("../Strategy/SelectedCellsStrategy");
@@ -60,6 +58,7 @@ const FreeTextColumnStrategy_1 = require("../Strategy/FreeTextColumnStrategy");
 const FreeTextColumnService_1 = require("../Utilities/Services/FreeTextColumnService");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
 const DataService_1 = require("../Utilities/Services/DataService");
+const BlotterApi_1 = require("../Api/BlotterApi");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -138,9 +137,9 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
         this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
-        this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+        this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
-            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
+            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
             return;
         }
         this.abContainerElement.innerHTML = "";
@@ -215,7 +214,7 @@ class AdaptableBlotter {
                 Index: index,
                 ReadOnly: this.isColumnReadonly(x.name, index),
                 Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
-                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
+                Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name) // TODO: can we manage by column
             };
         });
         let hiddenColumns = this.hyperGrid.behavior.getHiddenColumns().map((x) => {
@@ -229,7 +228,7 @@ class AdaptableBlotter {
                 Index: -1,
                 ReadOnly: false,
                 Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
-                Filterable: existingColumn ? existingColumn.Filterable : this.isFilterable() // TODO: can we manage by column
+                Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name)
             };
         });
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -572,7 +571,7 @@ class AdaptableBlotter {
         if (permittedValuesForColumn) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
                     return Array.from(returnMap.values());
                 }
             });
@@ -591,7 +590,7 @@ class AdaptableBlotter {
                 else if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.DisplayValue) {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
-                if (returnMap.size == this.BlotterOptions.maxColumnValueItemsDisplayed) {
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
                     return Array.from(returnMap.values());
                 }
             }
@@ -1000,7 +999,7 @@ class AdaptableBlotter {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    this.api.alertShowError("Validation Error", errorMessage, true);
+                    this.api.AlertApi.ShowError("Validation Error", errorMessage, true);
                     event.preventDefault();
                 }
                 else {
@@ -1251,32 +1250,34 @@ class AdaptableBlotter {
         }
         return true;
     }
-    isFilterable() {
+    isColumnFilterable(colId) {
+        // currently we ONLY look at grid level but need to get it working at col level ideally
         if (this.hyperGrid.properties.hasOwnProperty('filterable')) {
             return this.hyperGrid.behavior.filterable;
         }
         return true;
     }
-    isQuickFilterable() {
+    hasFloatingFilter() {
         return false;
     }
-    isQuickFilterActive() {
+    isFloatingFilterActive() {
+        // have not yet activated this for hypergrid so always return false;
         return false;
     }
-    showQuickFilter() {
+    showFloatingFilter() {
         // todo
     }
-    hideQuickFilter() {
+    hideFloatingFilter() {
         // todo
     }
     applyLightTheme() {
-        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getLightTheme());
             this.applyAlternateRowStyle();
         }
     }
     applyDarkTheme() {
-        if (this.BlotterOptions.useDefaultVendorGridThemes) {
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes_1.HypergridThemes.getDarkTheme());
             this.applyAlternateRowStyle();
         }

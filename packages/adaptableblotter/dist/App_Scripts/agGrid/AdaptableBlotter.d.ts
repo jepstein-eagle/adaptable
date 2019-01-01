@@ -67,6 +67,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     debouncedSetColumnIntoStore: (() => void) & _.Cancelable;
     setColumnIntoStore(): void;
     private createColumn;
+    private addFiltersToVendorColumn;
     private getQuickSearchClassName;
     private addQuickSearchStyleToColumn;
     createMenu(): void;
@@ -124,7 +125,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getVisibleColumnCount(): number;
     selectColumn(columnId: string): void;
     setGridSort(gridSorts: IGridSort[]): void;
-    setData(dataSource: any): void;
+    setGridData(dataSource: any): void;
     private checkColumnsDataTypeSet;
     getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
     setVendorGridState(vendorGridState: IVendorGridInfo): void;
@@ -133,11 +134,10 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private setColumnState;
     isSelectable(): boolean;
     isSortable(): boolean;
-    isFilterable(): boolean;
-    isQuickFilterable(): boolean;
-    isQuickFilterActive(): boolean;
-    showQuickFilter(): void;
-    hideQuickFilter(): void;
+    hasFloatingFilter(): boolean;
+    isFloatingFilterActive(): boolean;
+    showFloatingFilter(): void;
+    hideFloatingFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
     private applyFilteredColumnStyle;

@@ -122,7 +122,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.setValueBatch([{ Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue }]);
     }
     ShowErrorPreventMessage(failedRule) {
-        this.blotter.api.alertShowError("Shortcut Failed", ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true);
+        this.blotter.api.AlertApi.ShowError("Shortcut Failed", ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true);
     }
     ShowWarningMessages(failedRules, shortcut, activeCell, keyEventString, newValue, oldValue) {
         let warningMessage = "";

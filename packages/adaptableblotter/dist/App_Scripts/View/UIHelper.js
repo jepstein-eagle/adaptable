@@ -47,8 +47,8 @@ var UIHelper;
     UIHelper.getPlaceHolderforDataType = getPlaceHolderforDataType;
     function getModalContainer(blotterOptions, document) {
         let modalContainer;
-        if (blotterOptions.modalContainer) { // this has been set, so we use the property
-            modalContainer = document.getElementById(blotterOptions.modalContainer);
+        if (blotterOptions.containerOptions.modalContainer) { // this has been set, so we use the property
+            modalContainer = document.getElementById(blotterOptions.containerOptions.modalContainer);
             if (modalContainer) {
                 const modalContainerClassName = " modal-container";
                 if (!modalContainer.className.includes(modalContainerClassName)) {

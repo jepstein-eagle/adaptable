@@ -4,7 +4,6 @@ import { MathOperation } from '../Utilities/Enums';
 
 export interface ISmartEditApi {
 
-
   EditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void
   GetMathOperation(): string
   EditValue(smartEditValue: number): void
@@ -14,8 +13,7 @@ export interface ISmartEditApi {
 
 export class SmartEditApi extends ApiBase implements ISmartEditApi {
 
-  // SmartEdit api methods
-  public EditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
+    public EditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
     this.dispatchAction(SmartEditRedux.SmartEditChangeOperation(mathOperation as MathOperation))
   }
 

@@ -38,31 +38,19 @@ class UserFilterSummaryComponent extends React.Component {
                 React.createElement(UserFilterWizard_1.UserFilterWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, SelectedColumnId: this.props.SummarisedColumn.ColumnId, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }));
     }
     getSummary() {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable";
-        }
         if (!this.isColumnFilterable()) {
             return "Column is not filterable";
         }
         return Helper_1.Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.UserFilterStrategyName);
     }
     getDescription(userFilter) {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable";
-        }
         if (!this.isColumnFilterable()) {
             return "Column is not filterable";
         }
         return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns);
     }
     isFilterable() {
-        if (!this.isGridFilterable() || !this.isColumnFilterable()) {
-            return false;
-        }
-        return true;
-    }
-    isGridFilterable() {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
+        if (!this.isColumnFilterable()) {
             return false;
         }
         return true;

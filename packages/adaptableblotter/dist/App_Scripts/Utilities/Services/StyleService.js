@@ -12,7 +12,7 @@ class StyleService {
         this.blotter = blotter;
         // Create the <style> tag
         this.style = document.createElement("style");
-        this.style.id = `${blotter.BlotterOptions.adaptableBlotterContainer}-style`;
+        this.style.id = `${blotter.BlotterOptions.containerOptions.adaptableBlotterContainer}-style`;
         // WebKit hack :(
         this.style.appendChild(document.createTextNode(""));
         // Add the <style> element to the page

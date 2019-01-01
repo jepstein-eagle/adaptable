@@ -7,6 +7,7 @@ const react_bootstrap_2 = require("react-bootstrap");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../../Utilities/Enums");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
@@ -62,15 +63,15 @@ class IPushPullDomainPageSelectorComponent extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        IPPDomainsPages: state.Export.IPPDomainsPages,
-        ErrorMsg: state.Export.ErrorMsg,
+        IPPDomainsPages: state.System.IPPDomainsPages,
+        ErrorMsg: state.System.ReportErrorMessage,
         LiveReports: state.System.CurrentLiveReports,
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onApplyExport: (value, folder, page) => dispatch(ExportRedux.ExportApply(value, Enums_1.ExportDestination.iPushPull, folder, page)),
-        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(ExportRedux.ReportSetErrorMsg("")); }
+        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(SystemRedux.ReportSetErrorMessage("")); }
     };
 }
 exports.IPushPullDomainPageSelector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(IPushPullDomainPageSelectorComponent);

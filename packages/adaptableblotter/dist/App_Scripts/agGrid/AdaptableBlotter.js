@@ -61,7 +61,6 @@ const EventDispatcher_1 = require("../Utilities/EventDispatcher");
 const Enums_1 = require("../Utilities/Enums");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const color_1 = require("../Utilities/color");
-const BlotterApi_1 = require("./BlotterApi");
 const iPushPullHelper_1 = require("../Utilities/Helpers/iPushPullHelper");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 const StyleHelper_1 = require("../Utilities/Helpers/StyleHelper");
@@ -74,6 +73,7 @@ const Helper_1 = require("../Utilities/Helpers/Helper");
 const eventKeys_1 = require("ag-grid-community/dist/lib/eventKeys");
 const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
+const BlotterApi_1 = require("../Api/BlotterApi");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -150,11 +150,13 @@ class AdaptableBlotter {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
+            this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
         })
             .then(() => this.initInternalGridLogic(), (e) => {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
             this.initInternalGridLogic();
+            this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
         })
             .then(() => {
             // at the end so load the current layout, refresh the toolbar and turn off the loading message
@@ -170,7 +172,7 @@ class AdaptableBlotter {
         });
         if (renderGrid) {
             if (this.abContainerElement == null) {
-                this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+                this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
             }
             if (this.abContainerElement != null) {
                 this.abContainerElement.innerHTML = "";
@@ -203,13 +205,8 @@ class AdaptableBlotter {
         return this._onRefresh;
     }
     applyGridFiltering() {
-        if (this.isFilterable()) {
-            this.gridOptions.api.onFilterChanged();
-            this._onRefresh.Dispatch(this, this);
-        }
-        else {
-            LoggingHelper_1.LoggingHelper.LogError('Trying to filter on a non-filterable grid.');
-        }
+        this.gridOptions.api.onFilterChanged();
+        this._onRefresh.Dispatch(this, this);
     }
     clearGridFiltering() {
         this.gridOptions.columnApi.getAllColumns().forEach(c => {
@@ -239,6 +236,9 @@ class AdaptableBlotter {
         }
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId);
+            if (!col) {
+                LoggingHelper_1.LoggingHelper.LogError("Cannot find vendor column:" + column.ColumnId);
+            }
             if (!col.isVisible()) {
                 this.setColumnVisible(this.gridOptions.columnApi, col, true, "api");
             }
@@ -261,6 +261,9 @@ class AdaptableBlotter {
                 let existingColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(colId, existingColumns);
                 if (existingColumn) {
                     existingColumn.Visible = vendorColumn.isVisible();
+                    if (existingColumn.DataType == Enums_1.DataType.Unknown) {
+                        existingColumn.DataType = this.getColumnDataType(vendorColumn);
+                    }
                 }
                 else {
                     existingColumn = this.createColumn(vendorColumn, quickSearchClassName);
@@ -282,7 +285,16 @@ class AdaptableBlotter {
             Filterable: this.isColumnFilterable(colId),
         };
         this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
+        this.addFiltersToVendorColumn(vendorColumn);
         return abColumn;
+    }
+    addFiltersToVendorColumn(vendorColumn) {
+        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
+            this.createFilterWrapper(vendorColumn);
+        }
+        if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+            this.createFloatingFilterWrapper(vendorColumn);
+        }
     }
     getQuickSearchClassName() {
         let blotter = this;
@@ -423,6 +435,9 @@ class AdaptableBlotter {
                 // do array check
                 let myDatatype = Enums_1.DataType.Unknown;
                 colType.forEach((c) => {
+                    if (c == "numericColumn") {
+                        myDatatype = Enums_1.DataType.Number;
+                    }
                     if (c.startsWith("abColDef")) {
                         myDatatype = this.getabColDefValue(c);
                     }
@@ -433,6 +448,9 @@ class AdaptableBlotter {
             }
             else {
                 // do string check
+                if (colType == "numericColumn") {
+                    return Enums_1.DataType.Number;
+                }
                 if (colType.startsWith("abColDef")) {
                     return this.getabColDefValue(colType);
                 }
@@ -440,7 +458,7 @@ class AdaptableBlotter {
         }
         let row = this.gridOptions.api.getModel().getRow(0);
         if (row == null) { // possible that there will be no data.
-            LoggingHelper_1.LoggingHelper.LogWarning('there is no first row so we are returning Unknown for Type');
+            LoggingHelper_1.LoggingHelper.LogWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"');
             return Enums_1.DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -608,9 +626,6 @@ class AdaptableBlotter {
         return true;
     }
     isColumnFilterable(columnId) {
-        if (!this.isFilterable()) {
-            return false;
-        }
         let colDef = this.gridOptions.api.getColumnDef(columnId);
         if (colDef.suppressFilter != null) {
             return !colDef.suppressFilter;
@@ -663,7 +678,7 @@ class AdaptableBlotter {
                 }
             });
         }
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...
@@ -880,13 +895,16 @@ class AdaptableBlotter {
     addFreeTextColumnToGrid(freeTextColumn) {
         let venderCols = this.gridOptions.columnApi.getAllColumns();
         let colDefs = venderCols.map(x => x.getColDef());
-        colDefs.push({
+        let newColDef = {
             headerName: freeTextColumn.ColumnId,
             colId: freeTextColumn.ColumnId,
             editable: true,
             hide: true,
             valueGetter: (params) => this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node)
-        });
+        };
+        colDefs.push(newColDef);
+        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+        this.gridOptions.api.setColumnDefs([]);
         this.gridOptions.api.setColumnDefs(colDefs);
         this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
     }
@@ -899,14 +917,12 @@ class AdaptableBlotter {
             Visible: false,
             ReadOnly: isReadOnly,
             Sortable: this.isSortable(),
-            Filterable: this.isFilterable(),
+            Filterable: true,
         };
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridAddColumn(specialColumn));
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
-        if (this.isFilterable() && this.BlotterOptions.useAdaptableBlotterFilterForm) {
-            this.createFilterWrapper(vendorColumn);
-        }
+        this.addFiltersToVendorColumn(vendorColumn);
         if (this.isInitialised) {
             let conditionalStyleagGridStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId);
             conditionalStyleagGridStrategy.InitStyles();
@@ -975,13 +991,13 @@ class AdaptableBlotter {
     }
     initInternalGridLogic() {
         if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.BlotterOptions.adaptableBlotterContainer);
+            this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
+            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
             return;
         }
-        let gridContainerElement = document.getElementById(this.BlotterOptions.vendorContainer);
+        let gridContainerElement = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
         if (gridContainerElement) {
             gridContainerElement.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
         }
@@ -1011,6 +1027,10 @@ class AdaptableBlotter {
                     this.debouncedSetColumnIntoStore(); // was: this.setColumnIntoStore();
                 }
             }
+        });
+        // dealing with scenario where the data is poured into the blotter after grid has been setup
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_FIRST_DATA_RENDERED, (params) => {
+            this.debouncedSetColumnIntoStore();
         });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
         let columnEventsThatTriggersAutoLayoutSave = [
@@ -1045,7 +1065,7 @@ class AdaptableBlotter {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
                         let errorMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                        this.api.alertShowError("Validation Error", errorMessage, true);
+                        this.api.AlertApi.ShowError("Validation Error", errorMessage, true);
                         return true;
                     }
                     else {
@@ -1150,7 +1170,7 @@ class AdaptableBlotter {
             let columns = this.getState().Grid.Columns;
             let visibleCols = columns.filter(c => c.Visible);
             //first we assess AdvancedSearch (if its running locally)
-            if (this.BlotterOptions.serverSearchOption == 'None') {
+            if (this.BlotterOptions.generalOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // Get the actual Advanced Search object and check it exists
@@ -1165,7 +1185,7 @@ class AdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.BlotterOptions.serverSearchOption == 'None' || this.BlotterOptions.serverSearchOption == 'AdvancedSearch') {
+            if (this.BlotterOptions.generalOptions.serverSearchOption == 'None' || this.BlotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
                 let columnFilters = this.getState().ColumnFilter.ColumnFilters;
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
@@ -1197,17 +1217,14 @@ class AdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
-        // if (this.isFilterable()) {
-        if (this.BlotterOptions.useAdaptableBlotterFilterForm) {
+        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-                this.createFilterWrapper(col);
+                //       this.createFilterWrapper(col);
             });
         }
-        // }
-        if (this.gridOptions.floatingFilter && this.BlotterOptions.useAdaptableBlotterFloatingFilter) {
-            //      if (this.isFilterable()) {
+        if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-                this.createFloatingFilterWrapper(col);
+                //    this.createFloatingFilterWrapper(col);
             });
         }
         // add any special renderers
@@ -1397,7 +1414,7 @@ class AdaptableBlotter {
         this.gridOptions.api.setSortModel(sortModel);
         this.gridOptions.api.onSortChanged();
     }
-    setData(dataSource) {
+    setGridData(dataSource) {
         this.gridOptions.api.setRowData(dataSource);
     }
     checkColumnsDataTypeSet() {
@@ -1481,29 +1498,20 @@ class AdaptableBlotter {
         }
         return false;
     }
-    isFilterable() {
-        if (this.gridOptions.enableFilter != null) {
-            return this.gridOptions.enableFilter;
-        }
-        return false;
+    hasFloatingFilter() {
+        return true;
     }
-    isQuickFilterable() {
-        return this.gridOptions.floatingFilter != null; // returns for both whether its visible or not.
+    isFloatingFilterActive() {
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter;
     }
-    isQuickFilterActive() {
-        if (this.gridOptions.floatingFilter != null) {
-            return this.gridOptions.floatingFilter;
-        }
-        return false;
-    }
-    showQuickFilter() {
+    showFloatingFilter() {
         this.gridOptions.floatingFilter = true;
         this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
             this.createFloatingFilterWrapper(col);
         });
         this.gridOptions.api.refreshHeader();
     }
-    hideQuickFilter() {
+    hideFloatingFilter() {
         this.gridOptions.floatingFilter = false;
         //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
         //       this.deleteFloatingFilterWrapper(col);
@@ -1511,23 +1519,23 @@ class AdaptableBlotter {
         this.gridOptions.api.refreshHeader();
     }
     applyLightTheme() {
-        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
-            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
                 container.className = "ag-theme-balham";
             }
         }
     }
     applyDarkTheme() {
-        if (this.BlotterOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.vendorContainer)) {
-            let container = document.getElementById(this.BlotterOptions.vendorContainer);
+        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
+            let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
                 container.className = "ag-theme-balham-dark";
             }
         }
     }
     applyFilteredColumnStyle() {
-        if (this.BlotterOptions.indicateFilteredColumns == true) {
+        if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";

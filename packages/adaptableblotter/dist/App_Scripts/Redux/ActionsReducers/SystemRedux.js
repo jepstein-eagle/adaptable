@@ -27,6 +27,11 @@ exports.BULK_UPDATE_SET_VALID_SELECTION = 'BULK_UPDATE_SET_VALID_SELECTION';
 exports.BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
 // Chart Managemet 
 exports.CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
+// Error Messages
+exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
+// Export
+exports.SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
+exports.REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
 exports.SystemSetHealthStatus = (SystemStatus) => ({
     type: exports.SYSTEM_SET_HEALTH_STATUS,
     SystemStatus
@@ -83,6 +88,18 @@ exports.ChartSetChartData = (chartData) => ({
     type: exports.CHART_SET_CHART_DATA,
     chartData
 });
+exports.CalculatedColumnSetErrorMessage = (ErrorMsg) => ({
+    type: exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
+    ErrorMsg
+});
+exports.SetIPPDomainPages = (IPPDomainsPages) => ({
+    type: exports.SET_IPP_DOMAIN_PAGES,
+    IPPDomainsPages
+});
+exports.ReportSetErrorMessage = (ErrorMessage) => ({
+    type: exports.REPORT_SET_ERROR_MESSAGE,
+    ErrorMessage
+});
 const initialSystemState = {
     SystemStatus: { StatusMessage: "", StatusColour: "Green" },
     Alerts: [],
@@ -93,6 +110,9 @@ const initialSystemState = {
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
     ChartData: null,
+    CalculatedColumnErrorMessage: "",
+    IPPDomainsPages: [],
+    ReportErrorMessage: ""
 };
 exports.SystemReducer = (state = initialSystemState, action) => {
     let alerts;
@@ -146,6 +166,15 @@ exports.SystemReducer = (state = initialSystemState, action) => {
             return Object.assign({}, state, { BulkUpdatePreviewInfo: action.BulkUpdatePreviewInfo });
         case exports.CHART_SET_CHART_DATA:
             return Object.assign({}, state, { ChartData: action.chartData });
+        case exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE: {
+            return Object.assign({}, state, { CalculatedColumnErrorMessage: action.ErrorMsg });
+        }
+        case exports.SET_IPP_DOMAIN_PAGES: {
+            return Object.assign({}, state, { IPPDomainsPages: action.IPPDomainsPages });
+        }
+        case exports.REPORT_SET_ERROR_MESSAGE: {
+            return Object.assign({}, state, { ReportErrorMessage: action.ErrorMessage });
+        }
         default:
             return state;
     }

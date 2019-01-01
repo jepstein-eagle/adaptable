@@ -35,9 +35,9 @@ class FilterFormComponent extends React.Component {
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean) {
             let columnValuePairs = [];
-            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
@@ -45,7 +45,7 @@ class FilterFormComponent extends React.Component {
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(distinctItem => {
                             let displayValue = (result.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) ?
                                 this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, distinctItem) :
@@ -57,7 +57,7 @@ class FilterFormComponent extends React.Component {
                             Enums_1.DistinctCriteriaPairValue.DisplayValue;
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
+                        this.props.Blotter.api.UserInterfaceApi.SetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
                     }
                 }, function (error) {
                     //    this.setState({ name: error });
@@ -98,12 +98,9 @@ class FilterFormComponent extends React.Component {
                         :
                             React.createElement(ListBoxFilterForm_1.ListBoxFilterForm, { cssClassName: cssClassName, CurrentColumn: this.props.CurrentColumn, Columns: this.props.Columns, ColumnValuePairs: this.state.ColumnValuePairs, DataType: this.props.CurrentColumn.DataType, DistinctCriteriaPairValue: this.state.DistinctCriteriaPairValue, UiSelectedColumnValues: uiSelectedColumnValues, UiSelectedUserFilters: uiSelectedUserFilters, UiSelectedRange: uiSelectedRangeExpression, UserFilters: appropriateFilterItems, onColumnValueSelectedChange: (list) => this.onClickColumValue(list), onUserFilterSelectedChange: (list) => this.onClickUserFilter(list), Operators: leafExpressionOperators, onCustomRangeExpressionChange: (range) => this.onSetCustomExpression(range) })))
             :
-                React.createElement(react_bootstrap_1.Well, { bsSize: "medium" }, isFilterable));
+                React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, isFilterable));
     }
     isFilterable() {
-        if (!this.props.Blotter.isFilterable()) {
-            return "Grid is not filterable";
-        }
         if (!this.props.CurrentColumn.Filterable) {
             return "Column is not filterable";
         }

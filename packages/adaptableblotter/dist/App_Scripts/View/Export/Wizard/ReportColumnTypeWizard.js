@@ -48,7 +48,7 @@ class ReportColumnTypeWizard extends React.Component {
                             "Bespoke Columns - selected by you in next step"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Bespoke Columns", bodyText: ["Only the columns chosen below will be exported (visible or not)."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Bespoke Columns", bodyText: ["Only the columns chosen in next step will be exported (visible or not)."], MessageType: Enums_1.MessageType.Info })))));
     }
     onScopeSelectChanged(event) {
         let e = event.target;
@@ -70,6 +70,9 @@ class ReportColumnTypeWizard extends React.Component {
     canBack() { return true; }
     Next() {
         this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
+        if (this.state.ReportColumnScope != Enums_1.ReportColumnScope.BespokeColumns) {
+            this.props.Data.ColumnIds = [];
+        }
     }
     Back() {
         //todo

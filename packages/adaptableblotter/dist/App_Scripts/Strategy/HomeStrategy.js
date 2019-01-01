@@ -14,15 +14,15 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyConstants.HomeStrategyId, blotter);
     }
     addContextMenuItem(column) {
-        if (this.canCreateContextMenuItem(column, this.blotter, "quickfilter")) {
-            let isFilterActive = this.blotter.isQuickFilterActive();
-            this.createContextMenuItemReduxAction(isFilterActive ? "Hide Quick Filter Bar" : "Show Quick Filter Bar", isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH, isFilterActive ? HomeRedux.QuickFilterBarHide() : HomeRedux.QuickFilterBarShow());
+        if (this.canCreateContextMenuItem(column, this.blotter, "floatingfilter")) {
+            let isFilterActive = this.blotter.isFloatingFilterActive();
+            this.createContextMenuItemReduxAction(isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar", isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH, isFilterActive ? HomeRedux.QuickFilterBarHide() : HomeRedux.QuickFilterBarShow());
         }
     }
     InitState() {
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts;
-            if (this.blotter.BlotterOptions.serverSearchOption == "AllSearchandSort") {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.Sort);
             }
         }

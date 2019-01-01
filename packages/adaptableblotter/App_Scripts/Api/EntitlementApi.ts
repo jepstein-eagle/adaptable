@@ -7,14 +7,14 @@ export interface IEntitlementApi {
   GetAll(): IEntitlement[]
   GetByFunction(functionName: string): IEntitlement
   GetAccessLevelForFunction(functionName: string): string
-  AddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void
+  Add(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void
+  Edit(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void
   Delete(functionName: string): void
 
 }
 
 
 export class EntitlementApi extends ApiBase implements IEntitlementApi {
-
 
   public GetAll(): IEntitlement[] {
     return this.getState().Entitlements.FunctionEntitlements;
@@ -28,15 +28,18 @@ export class EntitlementApi extends ApiBase implements IEntitlementApi {
     return this.getState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
   }
 
-  public AddOrUpdate(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
+  public Add(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
     let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel }
-    this.dispatchAction(EntitlementsRedux.EntitlementAddUpdate(-1, entitlement))
+    this.dispatchAction(EntitlementsRedux.EntitlementAdd(entitlement))
+  }
+
+  public Edit(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
+    let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel }
+    this.dispatchAction(EntitlementsRedux.EntitlementUpdate(entitlement))
   }
 
   public Delete(functionName: string): void {
     this.dispatchAction(EntitlementsRedux.EntitlementDelete(functionName))
   }
-
-
 
 }

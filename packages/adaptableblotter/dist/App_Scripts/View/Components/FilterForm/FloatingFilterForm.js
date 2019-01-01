@@ -58,7 +58,7 @@ class FloatingFilterFormComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__floatingFilterForm";
         let controlType = (this.props.CurrentColumn.DataType == Enums_1.DataType.Date) ? "date" : "text";
-        return React.createElement("span", null, this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable
+        return React.createElement("span", null, this.props.CurrentColumn.Filterable
             && (this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean) &&
             React.createElement(react_bootstrap_1.FormControl, { style: { padding: '1px', marginTop: '5px', minHeight: '20px', maxHeight: '20px', fontSize: "x-small", fontWeight: "lighter" }, className: cssClassName, autoFocus: false, bsSize: "small", type: controlType, placeholder: this.state.placeholder, value: this.state.floatingFilterFormText, onChange: (x) => this.OnTextChange(x.target.value) }));
     }

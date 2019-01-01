@@ -44,7 +44,7 @@ class AdaptableBlotterAbout extends React.Component {
             });
             let options = this.props.AdaptableBlotter.BlotterOptions;
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
-            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "2.7"));
+            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "2.8"));
             if (options.blotterId != undefined) {
                 returnRows.push(this.createColItem(colItems, "Blotter Id", options.blotterId));
             }
@@ -55,11 +55,10 @@ class AdaptableBlotterAbout extends React.Component {
             if (options.configServerOptions != undefined) {
                 returnRows.push(this.createColItem(colItems, "Config Server", (options.configServerOptions.enableConfigServer) ? "On" : "Off"));
             }
-            if (options.serverSearchOption != undefined) {
-                returnRows.push(this.createColItem(colItems, "Server Search Option", options.serverSearchOption));
+            if (options.generalOptions.serverSearchOption != undefined) {
+                returnRows.push(this.createColItem(colItems, "Server Search Option", options.generalOptions.serverSearchOption));
             }
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
-            returnRows.push(this.createColItem(colItems, "Can Filter", this.props.AdaptableBlotter.isFilterable() ? "True" : "False"));
             returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));
             returnRows.push(this.createColItem(colItems, "All Rows", this.props.AdaptableBlotter.getRowCount()));
             returnRows.push(this.createColItem(colItems, "Visible Rows", this.props.AdaptableBlotter.getVisibleRowCount()));

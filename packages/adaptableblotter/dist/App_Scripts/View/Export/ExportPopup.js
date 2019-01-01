@@ -70,9 +70,16 @@ class ExportPopupComponent extends React.Component {
     }
     canFinishWizard() {
         let report = this.state.EditedAdaptableBlotterObject;
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(report.Name) &&
-            ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != Enums_1.ReportColumnScope.BespokeColumns || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(report.ColumnIds));
+        if (StringExtensions_1.StringExtensions.IsNullOrEmpty(report.Name)) {
+            return false;
+        }
+        if (report.ReportRowScope == Enums_1.ReportRowScope.ExpressionRows && ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(report.Expression)) {
+            return false;
+        }
+        if (report.ReportColumnScope == Enums_1.ReportColumnScope.BespokeColumns && ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(report.ColumnIds)) {
+            return false;
+        }
+        return true;
     }
     onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyReport(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });

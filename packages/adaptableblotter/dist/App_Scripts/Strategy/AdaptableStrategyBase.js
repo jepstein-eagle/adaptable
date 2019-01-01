@@ -97,11 +97,11 @@ class AdaptableStrategyBase {
             else if (functionType == "numeric") {
                 return column.DataType == Enums_1.DataType.Number;
             }
-            else if (functionType == "filter") {
-                return column.Filterable && blotter.isFilterable();
+            else if (functionType == "columnfilter") {
+                return column.Filterable;
             }
-            else if (functionType == "quickfilter") {
-                return (blotter.isQuickFilterable() && blotter.BlotterOptions.useAdaptableBlotterFloatingFilter);
+            else if (functionType == "floatingfilter") {
+                return (blotter.hasFloatingFilter() && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter);
             }
         }
         return true;

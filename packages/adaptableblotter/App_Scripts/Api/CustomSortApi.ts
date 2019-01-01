@@ -7,6 +7,7 @@ export interface ICustomSortApi {
    
   GetAll(): ICustomSort[]
   GetByColumn(columnn: string): ICustomSort
+  Add(customSort: ICustomSort): void
   Create(column: string, values: string[]): void
   Edit(column: string, values: string[]): void
   Delete(column: string): void
@@ -25,9 +26,13 @@ export class CustomSortApi extends ApiBase implements ICustomSortApi {
     return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
   }
 
+  public Add(customSort: ICustomSort): void {
+    this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort))
+  }
+
   public Create(column: string, values: string[]): void {
     let customSort: ICustomSort = { ColumnId: column, SortedValues: values }
-    this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort))
+    this.Add(customSort);
   }
 
   public Edit(column: string, values: string[]): void {

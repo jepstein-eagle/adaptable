@@ -18,9 +18,6 @@ var ColumnFilterHelper;
     }
     ColumnFilterHelper.ConvertColumnFiltersToKVPArray = ConvertColumnFiltersToKVPArray;
     function getColumnFiltersDescription(columnFilters, columns, blotter) {
-        if (blotter && !blotter.isFilterable()) {
-            return "Grid is not filterable";
-        }
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columnFilters)) {
             return "No Column Filter Active";
         }

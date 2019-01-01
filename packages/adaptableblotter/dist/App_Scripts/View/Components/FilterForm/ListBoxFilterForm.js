@@ -56,7 +56,7 @@ class ListBoxFilterForm extends React.Component {
                 return null;
             }
             else {
-                return React.createElement(react_bootstrap_1.ListGroupItem, { key: "columnValue" + y, style: columnVItemStyle, onClick: () => this.onClickItemColumnValue(x), active: isActive, value: columnValue }, columnValue);
+                return React.createElement(react_bootstrap_1.ListGroupItem, { key: "columnValue" + y, style: columnValueItemStyle, onClick: () => this.onClickItemColumnValue(x), active: isActive, value: columnValue }, columnValue);
             }
         });
         let textClear = React.createElement(AdaptableBlotterFormControlTextClear_1.AdaptableBlotterFormControlTextClear, { cssClassName: this.props.cssClassName, autoFocus: true, style: searchFilterStyle, type: "text", placeholder: "Search Filters", value: this.state.FilterValue, bsSize: "small", OnTextChange: (x) => this.onUpdateFilterSearch(x) });
@@ -216,14 +216,14 @@ let listGroupStyle = {
 let userFilterItemStyle = {
     //'width': '87%',export 
     'fontStyle': 'italic',
-    'fontSize': 'small',
-    'padding': '5px',
+    'fontSize': 'xsmall',
+    'padding': '3px',
     'margin': 0
 };
-let columnVItemStyle = {
+let columnValueItemStyle = {
     //'width': '87%',
-    'fontSize': 'small',
-    'padding': '5px',
+    'fontSize': 'xsmall',
+    'padding': '3px',
     'margin': 0
 };
 let rangeOperatorStyle = {
@@ -247,8 +247,8 @@ let searchFilterStyle = {
     'width': '222px'
 };
 let separatorStyle = {
-    'marginTop': '10px',
+    'marginTop': '5px',
     'marginBottom': '0px',
-    'marginLeft': '15px',
+    'marginLeft': '50px',
     'width': '222px',
 };

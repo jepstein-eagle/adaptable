@@ -8,7 +8,6 @@ import { ObjectFactory } from "../Utilities/ObjectFactory";
 
 export interface ILayoutApi {
 
-
     /**
      * Selects the layout
      * @param layoutName has to be an existing layout
@@ -26,6 +25,11 @@ export interface ILayoutApi {
     GetCurrent(): ILayout
 
     /**
+     * Retrieves current Layout name
+     */
+    GetCurrentName(): string
+
+    /**
      * Retrieves all Layouts in State
      */
     GetAll(): ILayout[]
@@ -35,13 +39,11 @@ export interface ILayoutApi {
      */
     Save(): void
 
-
 }
 
 
-
 export class LayoutApi extends ApiBase implements ILayoutApi {
-    // Layout api methods
+  
     public  Set(layoutName: string): void {
         let layout: ILayout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
@@ -56,6 +58,10 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
     public  GetCurrent(): ILayout {
         let layoutName = this.getState().Layout.CurrentLayout;
         return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
+    }
+
+    public  GetCurrentName(): string {
+       return this.getState().Layout.CurrentLayout;
     }
 
     public  GetAll(): ILayout[] {

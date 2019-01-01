@@ -16,7 +16,7 @@ class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
             this.quickSearchState = this.GetQuickSearchState();
             this.blotter.applyGridFiltering();
             this.postSearch();
-            if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.QuickSearch);
             }
             if (this.blotter.isInitialised) {

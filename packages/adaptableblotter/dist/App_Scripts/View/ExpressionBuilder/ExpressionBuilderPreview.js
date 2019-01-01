@@ -30,7 +30,7 @@ class ExpressionBuilderPreview extends React.Component {
                     // https://github.com/react-bootstrap/react-bootstrap/issues/1445
                     // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
                     // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
-                    return React.createElement(react_bootstrap_1.ListGroupItem, { bsSize: "xsmall", key: y },
+                    return React.createElement(react_bootstrap_1.ListGroupItem, { bsSize: "xsmall", key: y, style: previewListBoxItemStyle },
                         React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.ColumnValue), style: { cursor: 'pointer', fontSize: 'small' } },
                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                 y,
@@ -42,7 +42,7 @@ class ExpressionBuilderPreview extends React.Component {
             let columnUserFilterExpressionsListgroupItems;
             if (columnUserFilterExpressions) {
                 columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map((filter, index) => {
-                    return React.createElement(react_bootstrap_1.ListGroupItem, { key: filter },
+                    return React.createElement(react_bootstrap_1.ListGroupItem, { key: filter, style: previewListBoxItemStyle },
                         React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Filter), style: { cursor: 'pointer' } },
                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                 filter,
@@ -57,7 +57,7 @@ class ExpressionBuilderPreview extends React.Component {
                 columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
                     if (y.Operator == Enums_1.LeafExpressionOperator.Between) {
                         if (StringExtensions_1.StringExtensions.IsEmpty(y.Operand1) || StringExtensions_1.StringExtensions.IsEmpty(y.Operand2)) {
-                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: StyleConstants.DANGER_BSSTYLE },
+                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: StyleConstants.DANGER_BSSTYLE, style: previewListBoxItemStyle },
                                 React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Range), style: { cursor: 'pointer' } },
                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                         ExpressionHelper_1.ExpressionHelper.OperatorToShortFriendlyString(y.Operator),
@@ -70,7 +70,7 @@ class ExpressionBuilderPreview extends React.Component {
                                         React.createElement(ButtonPreviewDelete_1.ButtonPreviewDelete, { cssClassName: cssClassName, bsStyle: "default", style: { float: 'right' }, onClick: () => this.props.DeleteRange(columnId, index), size: "xsmall", overrideDisableButton: false, DisplayMode: "Glyph" }))));
                         }
                         else {
-                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index },
+                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, style: previewListBoxItemStyle },
                                 React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Range), style: { cursor: 'pointer' } },
                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                         ExpressionHelper_1.ExpressionHelper.OperatorToShortFriendlyString(y.Operator),
@@ -85,7 +85,7 @@ class ExpressionBuilderPreview extends React.Component {
                     }
                     else {
                         if (StringExtensions_1.StringExtensions.IsEmpty(y.Operand1) || y.Operator == Enums_1.LeafExpressionOperator.Unknown) {
-                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: StyleConstants.DANGER_BSSTYLE },
+                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, bsStyle: StyleConstants.DANGER_BSSTYLE, style: previewListBoxItemStyle },
                                 React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Range), style: { cursor: 'pointer' } },
                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                         ExpressionHelper_1.ExpressionHelper.OperatorToShortFriendlyString(y.Operator),
@@ -94,7 +94,7 @@ class ExpressionBuilderPreview extends React.Component {
                                         React.createElement(ButtonPreviewDelete_1.ButtonPreviewDelete, { cssClassName: cssClassName, bsStyle: "default", style: { float: 'right' }, onClick: () => this.props.DeleteRange(columnId, index), size: "xsmall", overrideDisableButton: false, DisplayMode: "Glyph" }))));
                         }
                         else {
-                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index },
+                            return React.createElement(react_bootstrap_1.ListGroupItem, { key: columnId + index, style: previewListBoxItemStyle },
                                 React.createElement("div", { className: "ab_div_like_button", onClick: () => this.props.onSelectedColumnChange(columnId, Enums_1.QueryTab.Range), style: { cursor: 'pointer' } },
                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                                         ExpressionHelper_1.ExpressionHelper.OperatorToShortFriendlyString(y.Operator),
@@ -166,3 +166,8 @@ class ExpressionBuilderPreview extends React.Component {
     }
 }
 exports.ExpressionBuilderPreview = ExpressionBuilderPreview;
+let previewListBoxItemStyle = {
+    'fontSize': 'xsmall',
+    'padding': '7px',
+    'margin': 0
+};

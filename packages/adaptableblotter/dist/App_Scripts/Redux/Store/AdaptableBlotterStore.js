@@ -575,10 +575,10 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
                     let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid(action.Expression);
                     if (!returnObj.IsValid) {
-                        middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg));
+                        middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg));
                     }
                     else {
-                        middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(null));
+                        middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(null));
                     }
                     return next(action);
                 }
@@ -628,9 +628,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
                     let returnAction = next(action);
                     let freeTextColumn = action.FreeTextColumn;
-                    let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible);
                     blotter.addFreeTextColumnToGrid(freeTextColumn);
-                    middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout));
                     return returnAction;
                 }
                 case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
@@ -816,11 +814,11 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                  HOME ACTIONS - Filter and quick Filter
                  ************ */
                 case HomeRedux.QUICK_FILTER_BAR_SHOW: {
-                    blotter.showQuickFilter();
+                    blotter.showFloatingFilter();
                     return next(action);
                 }
                 case HomeRedux.QUICK_FILTER_BAR_HIDE: {
-                    blotter.hideQuickFilter();
+                    blotter.hideFloatingFilter();
                     return next(action);
                 }
                 case HomeRedux.FILTER_FORM_HIDE: {
@@ -941,10 +939,10 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     }
                     else if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && !actionTyped.Folder) {
                         iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages) => {
-                            middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages));
-                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""));
+                            middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
+                            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""));
                         }).catch((err) => {
-                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err));
+                            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err));
                         });
                         middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report));
                     }
@@ -963,17 +961,17 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     iPushPullHelper_1.iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
                         let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
                         middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-                        middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""));
+                        middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""));
                         iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages) => {
-                            middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages));
-                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""));
+                            middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
+                            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""));
                         }).catch((error) => {
-                            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));
+                            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
                         });
                         middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report));
                     }).catch((error) => {
                         LoggingHelper_1.LoggingHelper.LogError("Login failed", error);
-                        middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error));
+                        middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
                     });
                     return next(action);
                 }
