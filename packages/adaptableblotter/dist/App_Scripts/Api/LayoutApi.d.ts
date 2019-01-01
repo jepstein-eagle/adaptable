@@ -15,6 +15,10 @@ export interface ILayoutApi {
      */
     GetCurrent(): ILayout;
     /**
+     * Retrieves current Layout name
+     */
+    GetCurrentName(): string;
+    /**
      * Retrieves all Layouts in State
      */
     GetAll(): ILayout[];
@@ -27,6 +31,7 @@ export declare class LayoutApi extends ApiBase implements ILayoutApi {
     Set(layoutName: string): void;
     Clear(): void;
     GetCurrent(): ILayout;
+    GetCurrentName(): string;
     GetAll(): ILayout[];
     Save(): void;
 }

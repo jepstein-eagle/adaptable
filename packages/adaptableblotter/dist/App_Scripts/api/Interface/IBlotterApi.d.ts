@@ -30,31 +30,31 @@ import { IGridApi } from "../GridApi";
  * The main interface between users (devs) and the Blotter while the system is up and running
  */
 export interface IBlotterApi {
-    AdvancedSearchApi: IAdvancedSearchApi;
-    AlertApi: IAlertApi;
-    CalculatedColumnApi: ICalculatedColumnApi;
-    CalendarApi: ICalendarApi;
-    CellValidationApi: ICellValidationApi;
-    ColumnCategoryApi: IColumnCategoryApi;
-    ColumnFilterApi: IColumnFilterApi;
-    ConfigApi: IConfigApi;
-    CustomSortApi: ICustomSortApi;
-    DashboardApi: IDashboardApi;
-    DataSourceApi: IDataSourceApi;
-    EntitlementApi: IEntitlementApi;
-    ExportApi: IExportApi;
-    FormatColumnApi: IFormatColumnApi;
-    FreeTextColumnApi: IFreeTextColumnApi;
-    GridApi: IGridApi;
-    LayoutApi: ILayoutApi;
-    PercentBarApi: IPercentBarApi;
-    QuickSearchApi: IQuickSearchApi;
-    ShortcutApi: IShortcutApi;
-    SmartEditApi: ISmartEditApi;
-    SystemFilterApi: ISystemFilterApi;
-    SystemStatusApi: ISystemStatusApi;
-    ThemeApi: IThemeApi;
-    UserInterfaceApi: IUserInterfaceApi;
+    advancedSearchApi: IAdvancedSearchApi;
+    alertApi: IAlertApi;
+    calculatedColumnApi: ICalculatedColumnApi;
+    calendarApi: ICalendarApi;
+    cellValidationApi: ICellValidationApi;
+    columnCategoryApi: IColumnCategoryApi;
+    columnFilterApi: IColumnFilterApi;
+    configApi: IConfigApi;
+    customSortApi: ICustomSortApi;
+    dashboardApi: IDashboardApi;
+    dataSourceApi: IDataSourceApi;
+    entitlementApi: IEntitlementApi;
+    exportApi: IExportApi;
+    formatColumnApi: IFormatColumnApi;
+    freeTextColumnApi: IFreeTextColumnApi;
+    gridApi: IGridApi;
+    layoutApi: ILayoutApi;
+    percentBarApi: IPercentBarApi;
+    quickSearchApi: IQuickSearchApi;
+    shortcutApi: IShortcutApi;
+    smartEditApi: ISmartEditApi;
+    systemFilterApi: ISystemFilterApi;
+    systemStatusApi: ISystemStatusApi;
+    themeApi: IThemeApi;
+    userInterfaceApi: IUserInterfaceApi;
     /**
     * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
     * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>

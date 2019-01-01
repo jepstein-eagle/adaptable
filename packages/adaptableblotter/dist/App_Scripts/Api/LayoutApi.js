@@ -19,6 +19,9 @@ class LayoutApi extends ApiBase_1.ApiBase {
         let layoutName = this.getState().Layout.CurrentLayout;
         return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
     }
+    GetCurrentName() {
+        return this.getState().Layout.CurrentLayout;
+    }
     GetAll() {
         return this.getState().Layout.Layouts;
     }

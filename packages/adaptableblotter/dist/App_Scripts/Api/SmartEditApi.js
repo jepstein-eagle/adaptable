@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SmartEditRedux = require("../Redux/ActionsReducers/SmartEditRedux");
 const ApiBase_1 = require("./ApiBase");
 class SmartEditApi extends ApiBase_1.ApiBase {
-    // SmartEdit api methods
     EditMathOperation(mathOperation) {
         this.dispatchAction(SmartEditRedux.SmartEditChangeOperation(mathOperation));
     }

@@ -123,7 +123,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     failedMessages.push(failedMessage);
                 }
             });
-            this.blotter.api.AlertApi.ShowError("Nudge(s) failed rule", failedMessages.toString(), true);
+            this.blotter.api.alertApi.ShowError("Nudge(s) failed rule", failedMessages.toString(), true);
         }
     }
     ShowWarningMessages(failedRules, warningValues, successfulValues, keyEventString) {

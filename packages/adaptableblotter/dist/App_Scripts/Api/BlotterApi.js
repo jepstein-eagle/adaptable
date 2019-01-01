@@ -28,31 +28,31 @@ const GridApi_1 = require("./GridApi");
 class BlotterApi {
     constructor(blotter) {
         this.blotter = blotter;
-        this.AdvancedSearchApi = new AdvancedSearchApi_1.AdvancedSearchApi(blotter);
-        this.AlertApi = new AlertApi_1.AlertApi(blotter);
-        this.CalendarApi = new CalendarApi_1.CalendarApi(blotter);
-        this.CalculatedColumnApi = new CalculatedColumnApi_1.CalculatedColumnApi(blotter);
-        this.CellValidationApi = new CellValidationApi_1.CellValidationApi(blotter);
-        this.ColumnCategoryApi = new ColumnCategoryApi_1.ColumnCategoryApi(blotter);
-        this.ColumnFilterApi = new ColumnFilterApi_1.ColumnFilterApi(blotter);
-        this.ConfigApi = new ConfigApi_1.ConfigApi(blotter);
-        this.CustomSortApi = new CustomSortApi_1.CustomSortApi(blotter);
-        this.DashboardApi = new DashboardApi_1.DashboardApi(blotter);
-        this.DataSourceApi = new DataSource_1.DataSourceApi(blotter);
-        this.EntitlementApi = new EntitlementApi_1.EntitlementApi(blotter);
-        this.ExportApi = new ExportApi_1.ExportApi(blotter);
-        this.FormatColumnApi = new FormatColumnApi_1.FormatColumnApi(blotter);
-        this.FreeTextColumnApi = new FreeTextColumn_1.FreeTextColumnApi(blotter);
-        this.GridApi = new GridApi_1.GridApi(blotter);
-        this.LayoutApi = new LayoutApi_1.LayoutApi(blotter);
-        this.PercentBarApi = new PercentBarApi_1.PercentBarApi(blotter);
-        this.QuickSearchApi = new QuickSearchApi_1.QuickSearchApi(blotter);
-        this.ShortcutApi = new ShortcutApi_1.ShortcutApi(blotter);
-        this.SmartEditApi = new SmartEditApi_1.SmartEditApi(blotter);
-        this.SystemFilterApi = new SystemFilterApi_1.SystemFilterApi(blotter);
-        this.SystemStatusApi = new SystemStatusApi_1.SystemStatusApi(blotter);
-        this.ThemeApi = new ThemeApi_1.ThemeApi(blotter);
-        this.UserInterfaceApi = new UserInterfaceApi_1.UserInterfaceApi(blotter);
+        this.advancedSearchApi = new AdvancedSearchApi_1.AdvancedSearchApi(blotter);
+        this.alertApi = new AlertApi_1.AlertApi(blotter);
+        this.calendarApi = new CalendarApi_1.CalendarApi(blotter);
+        this.calculatedColumnApi = new CalculatedColumnApi_1.CalculatedColumnApi(blotter);
+        this.cellValidationApi = new CellValidationApi_1.CellValidationApi(blotter);
+        this.columnCategoryApi = new ColumnCategoryApi_1.ColumnCategoryApi(blotter);
+        this.columnFilterApi = new ColumnFilterApi_1.ColumnFilterApi(blotter);
+        this.configApi = new ConfigApi_1.ConfigApi(blotter);
+        this.customSortApi = new CustomSortApi_1.CustomSortApi(blotter);
+        this.dashboardApi = new DashboardApi_1.DashboardApi(blotter);
+        this.dataSourceApi = new DataSource_1.DataSourceApi(blotter);
+        this.entitlementApi = new EntitlementApi_1.EntitlementApi(blotter);
+        this.exportApi = new ExportApi_1.ExportApi(blotter);
+        this.formatColumnApi = new FormatColumnApi_1.FormatColumnApi(blotter);
+        this.freeTextColumnApi = new FreeTextColumn_1.FreeTextColumnApi(blotter);
+        this.gridApi = new GridApi_1.GridApi(blotter);
+        this.layoutApi = new LayoutApi_1.LayoutApi(blotter);
+        this.percentBarApi = new PercentBarApi_1.PercentBarApi(blotter);
+        this.quickSearchApi = new QuickSearchApi_1.QuickSearchApi(blotter);
+        this.shortcutApi = new ShortcutApi_1.ShortcutApi(blotter);
+        this.smartEditApi = new SmartEditApi_1.SmartEditApi(blotter);
+        this.systemFilterApi = new SystemFilterApi_1.SystemFilterApi(blotter);
+        this.systemStatusApi = new SystemStatusApi_1.SystemStatusApi(blotter);
+        this.themeApi = new ThemeApi_1.ThemeApi(blotter);
+        this.userInterfaceApi = new UserInterfaceApi_1.UserInterfaceApi(blotter);
     }
     // Events
     onSearchedChanged() {

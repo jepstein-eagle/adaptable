@@ -29,7 +29,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
             let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             alertDefinitions.forEach(fr => {
-                this.blotter.api.AlertApi.Show(ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper_1.AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup);
+                this.blotter.api.alertApi.Show(ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper_1.AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup);
             });
         }
     }

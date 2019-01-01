@@ -7,8 +7,8 @@ class CustomSortApi extends ApiBase_1.ApiBase {
     GetAll() {
         return this.getState().CustomSort.CustomSorts;
     }
-    GetByColumn(columnn) {
-        return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
+    GetByColumn(column) {
+        return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
     }
     Add(customSort) {
         this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort));
