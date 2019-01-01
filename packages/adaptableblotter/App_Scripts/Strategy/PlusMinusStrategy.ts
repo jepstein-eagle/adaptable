@@ -151,7 +151,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     failedMessages.push(failedMessage)
                 }
             })
-            this.blotter.api.alertShowError("Nudge(s) failed rule", failedMessages.toString(), true)
+            this.blotter.api.AlertApi.alertShowError("Nudge(s) failed rule", failedMessages.toString(), true)
         }
     }
 

@@ -13,7 +13,7 @@ function runQuickSearch() {
 function clearQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
   element.value = ""
-  adaptableblotter.api.quickSearchClear()
+  adaptableblotter.api.QuickSearchApi.quickSearchClear()
 }
 
 function getColumns() {
@@ -88,7 +88,7 @@ function InitTradeBlotter() {
       },
       layoutOptions: {
          includeVendorStateInLayouts: true,
-         autoSaveLayouts: true,
+        // autoSaveLayouts: true,
       },
       queryOptions: {
       //  ignoreCaseInQueries: false,
@@ -398,29 +398,29 @@ function apiTester(state, gridOptions) {
   if (state.QuickSearch.QuickSearchText != quickSearchText) {
     quickSearchText = state.QuickSearch.QuickSearchText
     if (quickSearchText == "#advanced") {
-      let test = adaptableblotter.api.configGetUserStateByFunction('AdvancedSearch')
+      let test = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch')
       console.log("object");
       console.log(test);
-      let test2 = adaptableblotter.api.configGetUserStateByFunction('AdvancedSearch', true)
+      let test2 = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch', true)
       console.log("string version");
       console.log(test2);
-      let test3 = adaptableblotter.api.configGetAllUserState()
+      let test3 = adaptableblotter.api.ConfigApi.configGetAllUserState()
       console.log("all version");
       console.log(test3);
-      let test4 = adaptableblotter.api.configGetAdvancedSearchState()
+      let test4 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState()
       console.log("advanced search");
       console.log(test4);
-      let test5 = adaptableblotter.api.configGetAdvancedSearchState(true)
+      let test5 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState(true)
       console.log("advanced search string");
       console.log(test5);
     } else if (quickSearchText == "#hideabout") {
-      adaptableblotter.api.dashboardHideAboutButton()
+      adaptableblotter.api.DashboardApi.dashboardHideAboutButton()
     } else if (quickSearchText == "#showabout") {
-      adaptableblotter.api.dashboardShowAboutButton()
+      adaptableblotter.api.DashboardApi.dashboardShowAboutButton()
     } else if (quickSearchText == "#permies") {
-      adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
+      adaptableblotter.api.UserInterfaceApi.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
     } else if (quickSearchText == "#systemfilters") {
-      adaptableblotter.api.filterClearSystemFilters()
+      adaptableblotter.api.SystemFilterApi.systemFilterClear()
     } else if (quickSearchText == "#reset") {
       //     adaptableblotter.api.configDeleteLocalStorage()
     } else if (quickSearchText == "#loadUserState") {
@@ -437,46 +437,44 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#clear") {
       adaptableblotter.api.uiClearColumnPermittedValues('counterparty')
     } else if (quickSearchText == "#send") {
-      adaptableblotter.api.exportSendReport('All Data', 'CSV')
+      adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV')
     } else if (quickSearchText == "#info") {
-      adaptableblotter.api.alertShow("Hello",
+      adaptableblotter.api.AlertApi.alertShow("Hello",
         "Your data is fine actually its very good and I want to check that this wraps", "Info",
         true)
     } else if (quickSearchText == "#warning") {
-      adaptableblotter.api.alertShow("End of Day", "Dont forget to send the report", "Warning",
+      adaptableblotter.api.AlertApi.alertShow("End of Day", "Dont forget to send the report", "Warning",
         true)
     } else if (quickSearchText == "#error") {
-      adaptableblotter.api.alertShow("Limits Breached", "Pleae adjust your PnL", "Error", true)
+      adaptableblotter.api.AlertApi.alertShow("Limits Breached", "Pleae adjust your PnL", "Error", true)
     } else if (quickSearchText == "#green") {
-      adaptableblotter.api.systemStatusSetGreen("The server is fine")
+      adaptableblotter.api.SystemStatusApi.systemStatusSetGreen("The server is fine")
     } else if (quickSearchText == "#amber") {
-      adaptableblotter.api.systemStatusSetAmber("The server is running slowly")
+      adaptableblotter.api.SystemStatusApi.systemStatusSetAmber("The server is running slowly")
     } else if (quickSearchText == "#red") {
-      adaptableblotter.api.systemStatusSetRed("The server has stopped ")
+      adaptableblotter.api.SystemStatusApi.systemStatusSetRed("The server has stopped ")
     } else if (quickSearchText == "#sbutton") {
-      adaptableblotter.api.dashboardShowSystemStatusButton()
+      adaptableblotter.api.DashboardApi.dashboardShowSystemStatusButton()
     } else if (quickSearchText == "#hbutton") {
-      adaptableblotter.api.dashboardHideSystemStatusButton()
+      adaptableblotter.api.DashboardApi.dashboardHideSystemStatusButton()
     } else if (quickSearchText == "#sfunc") {
-      adaptableblotter.api.dashboardShowFunctionsDropdown()
+      adaptableblotter.api.DashboardApi.dashboardShowFunctionsDropdown()
     } else if (quickSearchText == "#hfunc") {
-      adaptableblotter.api.dashboardHideFunctionsDropdown()
+      adaptableblotter.api.DashboardApi.dashboardHideFunctionsDropdown()
     } else if (quickSearchText == "#scols") {
-      adaptableblotter.api.dashboardShowColumnsDropdown()
+      adaptableblotter.api.DashboardApi.dashboardShowColumnsDropdown()
     } else if (quickSearchText == "#hcols") {
-      adaptableblotter.api.dashboardHideColumnsDropdown()
+      adaptableblotter.api.DashboardApi.dashboardHideColumnsDropdown()
     } else if (quickSearchText == "#title") {
-      adaptableblotter.api.dashboardSetHomeToolbarTitle("hello world")
+      adaptableblotter.api.DashboardApi.dashboardSetHomeToolbarTitle("hello world")
     } else if (quickSearchText == "#filterclear") {
-      adaptableblotter.api.filterClearColumnFilters()
+      adaptableblotter.api.ColumnFilterApi.columnFilterClearAll()
     } else if (quickSearchText == "#userfilter") {
-      adaptableblotter.api.columnFilterSetUserFilter("Big Desk Id")
+      adaptableblotter.api.ColumnFilterApi.columnFilterSetUserFilter("Big Desk Id")
     } else if (quickSearchText == "#savelayout") {
-      adaptableblotter.api.layoutSave()
+      adaptableblotter.api.LayoutApi.layoutSave()
     } else if (quickSearchText == "#setlayout") {
-      adaptableblotter.api.layoutSet("miguel")
-    } else if (quickSearchText == "#toolbarTitle") {
-      adaptableblotter.api.dashboardSetApplicationToolbarTitle("my app")
+      adaptableblotter.api.LayoutApi.layoutSet("miguel")
     } else if (quickSearchText == "#notional") {
       gridOptions.api.forEachNode((rowNode, index) => {
         if (index == 4) {

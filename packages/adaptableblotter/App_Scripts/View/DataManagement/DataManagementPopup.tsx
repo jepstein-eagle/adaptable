@@ -47,7 +47,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     }
 
     onClear() {
-        this.props.Blotter.api.configDeleteLocalStorage();
+        this.props.Blotter.api.ConfigApi.configDeleteLocalStorage();
     }
 
 
