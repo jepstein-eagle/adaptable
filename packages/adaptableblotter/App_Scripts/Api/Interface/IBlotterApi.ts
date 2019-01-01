@@ -32,9 +32,9 @@ import { ISystemFilterApi } from "../SystemFilterApi";
 export interface IBlotterApi {
   AdvancedSearchApi: IAdvancedSearchApi;
   AlertApi: IAlertApi;
-  CalendarApi: ICalendarApi;
   CalculatedColumnApi: ICalculatedColumnApi;
-  CellValidationApi: ICellValidationApi;
+ CalendarApi: ICalendarApi;
+   CellValidationApi: ICellValidationApi;
   ColumnCategoryApi: IColumnCategoryApi;
   ColumnFilterApi: IColumnFilterApi;
   ConfigApi: IConfigApi;
