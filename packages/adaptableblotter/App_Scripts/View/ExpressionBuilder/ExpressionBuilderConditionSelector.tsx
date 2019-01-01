@@ -167,7 +167,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                             })
                             this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                             // set the UIPermittedValues for this column to what has been sent
-                            this.props.Blotter.api.UserInterfaceApi.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems)
+                            this.props.Blotter.api.UserInterfaceApi.SetColumnPermittedValues(this.props.SelectedColumnId, distinctItems)
                         }
                     }, function () {
                         //    this.setState({ name: error });

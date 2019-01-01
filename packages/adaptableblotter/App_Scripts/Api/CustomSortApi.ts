@@ -5,12 +5,11 @@ import { ApiBase } from "./ApiBase";
 
 export interface ICustomSortApi {
    
-  // Custom Sort Methods
-  customSortGetAll(): ICustomSort[]
-  customSortGetByColumn(columnn: string): ICustomSort
-  customSortAdd(column: string, values: string[]): void
-  customSortEdit(column: string, values: string[]): void
-  customSortDelete(column: string): void
+  GetAll(): ICustomSort[]
+  GetByColumn(columnn: string): ICustomSort
+  Create(column: string, values: string[]): void
+  Edit(column: string, values: string[]): void
+  Delete(column: string): void
 }
 
 
@@ -18,26 +17,26 @@ export interface ICustomSortApi {
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
 
    // Custom Sort Methods
-   public customSortGetAll(): ICustomSort[] {
+   public GetAll(): ICustomSort[] {
     return this.getState().CustomSort.CustomSorts;
   }
 
-  public customSortGetByColumn(columnn: string): ICustomSort {
+  public GetByColumn(columnn: string): ICustomSort {
     return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == columnn);
   }
 
-  public customSortAdd(column: string, values: string[]): void {
+  public Create(column: string, values: string[]): void {
     let customSort: ICustomSort = { ColumnId: column, SortedValues: values }
     this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort))
   }
 
-  public customSortEdit(column: string, values: string[]): void {
+  public Edit(column: string, values: string[]): void {
     let customSort: ICustomSort = { ColumnId: column, SortedValues: values }
     this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort))
   }
 
-  public customSortDelete(column: string): void {
-    let customSort: ICustomSort = this.customSortGetByColumn(column);
+  public Delete(column: string): void {
+    let customSort: ICustomSort = this.GetByColumn(column);
     this.dispatchAction(CustomSortRedux.CustomSortDelete(customSort))
   }
 

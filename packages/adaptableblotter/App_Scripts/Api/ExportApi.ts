@@ -6,28 +6,25 @@ import { ExportDestination } from "../Utilities/Enums";
 
 export interface IExportApi {
 
-  // Export api methods
-  exportReportsGetAll(): IReport[];
+  GetAllReports(): IReport[];
+  GetAllLiveReports(): ILiveReport[];
+  SendReport(reportName: string, destination: ExportDestination): void
 
-  exportLiveReportsGetAll(): ILiveReport[];
-
-   exportSendReport(reportName: string, destination: ExportDestination): void 
-  
 }
 
 
 export class ExportApi extends ApiBase implements IExportApi {
   // Export api Methods
-  public exportReportsGetAll(): IReport[] {
+  public GetAllReports(): IReport[] {
     return this.getState().Export.Reports;
   }
 
-  public exportLiveReportsGetAll(): ILiveReport[] {
+  public GetAllLiveReports(): ILiveReport[] {
     return this.getState().System.CurrentLiveReports;
   }
 
-  public exportSendReport(reportName: string, destination: ExportDestination): void {
-    let report: IReport = this.exportReportsGetAll().find(r => r.Name == reportName);
+  public SendReport(reportName: string, destination: ExportDestination): void {
+    let report: IReport = this.GetAllReports().find(r => r.Name == reportName);
     if (this.checkItemExists(report, reportName, "Report")) {
       this.dispatchAction(ExportRedux.ExportApply(reportName, destination))
     }

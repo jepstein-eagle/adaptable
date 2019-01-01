@@ -13,27 +13,27 @@ export interface ILayoutApi {
      * Selects the layout
      * @param layoutName has to be an existing layout
      */
-    layoutSet(layoutName: string): void
+   Set(layoutName: string): void
 
     /**
        * Clears the currently selected layout
        */
-    layoutClear(): void
+    Clear(): void
 
     /**
      * Retrieves current Layout
      */
-    layoutGetCurrent(): ILayout
+    GetCurrent(): ILayout
 
     /**
      * Retrieves all Layouts in State
      */
-    layoutgetAll(): ILayout[]
+    GetAll(): ILayout[]
 
     /**
      * Saves the current layout - using the column order and grid sort info currently in the grid
      */
-    layoutSave(): void
+    Save(): void
 
 
 }
@@ -42,27 +42,27 @@ export interface ILayoutApi {
 
 export class LayoutApi extends ApiBase implements ILayoutApi {
     // Layout api methods
-    public layoutSet(layoutName: string): void {
+    public  Set(layoutName: string): void {
         let layout: ILayout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName))
         }
     }
 
-    public layoutClear(): void {
+    public  Clear(): void {
         this.dispatchAction(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
     }
 
-    public layoutGetCurrent(): ILayout {
+    public  GetCurrent(): ILayout {
         let layoutName = this.getState().Layout.CurrentLayout;
         return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
     }
 
-    public layoutgetAll(): ILayout[] {
+    public  GetAll(): ILayout[] {
         return this.getState().Layout.Layouts;
     }
 
-    public layoutSave(): void {
+    public  Save(): void {
         let currentLayoutName: string = this.getState().Layout.CurrentLayout
         if (currentLayoutName != DEFAULT_LAYOUT) {
             let currentLayoutObject: ILayout = this.getState().Layout.Layouts.find(l => l.Name == currentLayoutName)

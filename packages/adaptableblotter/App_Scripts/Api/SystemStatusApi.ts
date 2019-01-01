@@ -11,16 +11,16 @@ export interface ISystemStatusApi {
    * @param statusMessage The message to show when the button is clicked
    * @param statusColour The colour of the buttton - also influences the type of message (i.e. red: error, amber: warning, green: info)
    */
-  systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
+  Set(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void
 
-  systemStatusSetRed(statusMessage: string): void
-  systemStatusSetAmber(statusMessage: string): void
-  systemStatusSetGreen(statusMessage: string): void
+  SetRed(statusMessage: string): void
+  SetAmber(statusMessage: string): void
+  SetGreen(statusMessage: string): void
 
     /**
    * Clears any System Status messages - and sets teh button to green
    */
-  systemStatusClear(): void
+  Clear(): void
 }
 
 
@@ -28,24 +28,24 @@ export interface ISystemStatusApi {
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
 
       // System Status api Methods
-  public systemStatusSet(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
+  public  Set(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public systemStatusSetRed(statusMessage: string): void {
+  public  SetRed(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Red }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public systemStatusSetAmber(statusMessage: string): void {
+  public  SetAmber(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Amber }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public systemStatusSetGreen(statusMessage: string): void {
+  public  SetGreen(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Green }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
 
-  public systemStatusClear(): void {
+  public  Clear(): void {
     this.dispatchAction(SystemRedux.SystemClearHealthStatus())
   }
 

@@ -8,35 +8,35 @@ export interface ISystemFilterApi {
 
 
   userFilterSet(userFilters: IUserFilter[]): void
-  systemFilterSet(systemFilters: string[]): void
-  systemFilterClear(): void
-  systemFilterGetCurrent(): string[]
-  systemFilterGetAll(): string[]
+  Set(systemFilters: string[]): void
+  Clear(): void
+  GetCurrent(): string[]
+  GetAll(): string[]
 }
 
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
 
-    
+
   public userFilterSet(userFilters: IUserFilter[]): void {
     userFilters.forEach(uf => {
       this.dispatchAction(UserFilterRedux.UserFilterAddUpdate(-1, uf))
     })
   }
 
-  public systemFilterSet(systemFilters: string[]): void {
+  public Set(systemFilters: string[]): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet(systemFilters));
   }
 
-  public systemFilterClear(): void {
+  public Clear(): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
   }
 
-  public systemFilterGetCurrent(): string[] {
+  public GetCurrent(): string[] {
     return this.getState().SystemFilter.SystemFilters;
   }
 
-  public systemFilterGetAll(): string[] {
+  public GetAll(): string[] {
     return FilterHelper.GetAllSystemFilters();
   }
 

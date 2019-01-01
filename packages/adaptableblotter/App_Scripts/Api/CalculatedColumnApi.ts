@@ -5,36 +5,34 @@ import { ICalculatedColumn } from './Interface/IAdaptableBlotterObjects';
 export interface ICalculatedColumnApi {
 
  
-  // Calculated Column State
-  calculatedColumnGetAll(): ICalculatedColumn[]
-  calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void
-  calculatedColumnEditExpression(column: string, columnExpression: string): void
-  calculatedColumnDelete(column: string): void
+  GetAll(): ICalculatedColumn[]
+  Add(calculatedColumn: ICalculatedColumn): void
+  EditExpression(column: string, columnExpression: string): void
+  Delete(column: string): void
 
 }
 
 
 export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi {
 
-  
-  // Calculated Column State
-  public calculatedColumnGetAll(): ICalculatedColumn[] {
+ 
+  public GetAll(): ICalculatedColumn[] {
     return this.getState().CalculatedColumn.CalculatedColumns;
   }
 
-  public calculatedColumnAdd(calculatedColumn: ICalculatedColumn): void {
+  public Add(calculatedColumn: ICalculatedColumn): void {
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn))
   }
 
-  public calculatedColumnEditExpression(column: string, columnExpression: string): void {
-    let calcColumn: ICalculatedColumn = this.calculatedColumnGetAll().find(cc => cc.ColumnId == column);
-    let calcColumnIndex: number = this.calculatedColumnGetAll().findIndex(cc => cc.ColumnId == column);
+  public EditExpression(column: string, columnExpression: string): void {
+    let calcColumn: ICalculatedColumn = this.GetAll().find(cc => cc.ColumnId == column);
+    let calcColumnIndex: number = this.GetAll().findIndex(cc => cc.ColumnId == column);
     calcColumn.ColumnExpression = columnExpression;
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnEdit(calcColumnIndex, calcColumn))
   }
 
-  public calculatedColumnDelete(column: string): void {
-    let calcColumnIndex: number = this.calculatedColumnGetAll().findIndex(cc => cc.ColumnId == column);
+  public Delete(column: string): void {
+    let calcColumnIndex: number = this.GetAll().findIndex(cc => cc.ColumnId == column);
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex))
   }
 

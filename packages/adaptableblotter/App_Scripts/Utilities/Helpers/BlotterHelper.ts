@@ -24,7 +24,7 @@ export module BlotterHelper {
         if (pkColumn == null) {
             let errorMessage: string = "The PK Column '" + blotter.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
             if (blotter.BlotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
-                blotter.api.AlertApi.alertShowError("No Primary Key", errorMessage, true)
+                blotter.api.AlertApi.ShowError("No Primary Key", errorMessage, true)
             } else { // otherwise just log it
                 LoggingHelper.LogError(errorMessage);
             }

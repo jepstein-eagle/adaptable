@@ -4,11 +4,10 @@ import { IShortcut } from './Interface/IAdaptableBlotterObjects';
 
 export interface IShortcutApi {
 
-  // Shortcut api methods
-  shortcutGetAll(): IShortcut[]
-  shortcutAdd(shortcut: IShortcut): void
-  shortcutDelete(shortcut: IShortcut): void
-  shortcutDeleteAll(): void
+  GetAll(): IShortcut[]
+  Add(shortcut: IShortcut): void
+  Delete(shortcut: IShortcut): void
+  DeleteAll(): void
 
 }
 
@@ -16,21 +15,21 @@ export interface IShortcutApi {
 export class ShortcutApi extends ApiBase implements IShortcutApi {
 
     // Shortuct State
-    public shortcutGetAll(): IShortcut[] {
+    public  GetAll(): IShortcut[] {
       return this.getState().Shortcut.Shortcuts;
     }
   
-    public shortcutAdd(shortcut: IShortcut): void {
+    public  Add(shortcut: IShortcut): void {
       this.dispatchAction(ShortcutRedux.ShortcutAdd(shortcut))
     }
   
-    public shortcutDelete(shortcut: IShortcut): void {
+    public  Delete(shortcut: IShortcut): void {
       this.dispatchAction(ShortcutRedux.ShortcutDelete(shortcut))
     }
   
-    public shortcutDeleteAll(): void {
-      this.shortcutGetAll().forEach(s => {
-        this.shortcutDelete(s);
+    public  DeleteAll(): void {
+      this.GetAll().forEach(s => {
+        this.Delete(s);
       })
     }
 

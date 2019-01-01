@@ -4,116 +4,111 @@ import { Visibility } from '../Utilities/Enums';
 
 export interface IDashboardApi {
 
-    // Dashboard api methods
-    dashboardSetAvailableToolbars(availableToolbars: string[]): void
-    dashboardSetVisibleToolbars(visibleToolbars: string[]): void
-    dashboardShowToolbar(visibleToolbar: string): void
-    dashboardHideToolbar(visibleToolbar: string): void
-    dashboardSetVisibleButtons(functionButtons: string[]): void
-    dashboardSetZoom(zoom: Number): void
-    dashboardSetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void
-    dashboardShow(): void
-    dashboardHide(): void
-    dashboardShowSystemStatusButton(): void
-    dashboardHideSystemStatusButton(): void
-    dashboardShowAboutButton(): void
-    dashboardHideAboutButton(): void
-    dashboardShowFunctionsDropdown(): void
-    dashboardHideFunctionsDropdown(): void
-    dashboardShowColumnsDropdown(): void
-    dashboardHideColumnsDropdown(): void
-    dashboardSetHomeToolbarTitle(title: string): void
-    dashboardSetApplicationToolbarTitle(title: string): void
-    dashboardMinimise(): void
-
+    SetAvailableToolbars(availableToolbars: string[]): void
+    SetVisibleToolbars(visibleToolbars: string[]): void
+    ShowToolbar(visibleToolbar: string): void
+    HideToolbar(visibleToolbar: string): void
+    SetVisibleButtons(functionButtons: string[]): void
+    SetZoom(zoom: Number): void
+    SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void
+    Show(): void
+    Hide(): void
+    ShowSystemStatusButton(): void
+    HideSystemStatusButton(): void
+    ShowAboutButton(): void
+    HideAboutButton(): void
+    ShowFunctionsDropdown(): void
+    HideFunctionsDropdown(): void
+    ShowColumnsDropdown(): void
+    HideColumnsDropdown(): void
+    SetHomeToolbarTitle(title: string): void
+    SetApplicationToolbarTitle(title: string): void
+    Minimise(): void
 }
 
 
 
 export class DashboardApi extends ApiBase implements IDashboardApi {
 
-
-
-    // Dashboard api methods
-    public dashboardSetAvailableToolbars(availableToolbars: string[]): void {
+  public SetAvailableToolbars(availableToolbars: string[]): void {
         this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars))
     }
 
-    public dashboardSetVisibleToolbars(visibleToolbars: string[]): void {
+    public SetVisibleToolbars(visibleToolbars: string[]): void {
         visibleToolbars.forEach(vt => {
-            this.dashboardShowToolbar(vt)
+            this.ShowToolbar(vt)
         })
     }
 
-    public dashboardShowToolbar(visibleToolbar: string): void {
+    public ShowToolbar(visibleToolbar: string): void {
         this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar))
     }
 
-    public dashboardHideToolbar(visibleToolbar: string): void {
+    public HideToolbar(visibleToolbar: string): void {
         this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar))
     }
 
-    public dashboardSetVisibleButtons(functionButtons: string[]): void {
+    public SetVisibleButtons(functionButtons: string[]): void {
         this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons))
     }
 
-    public dashboardSetZoom(zoom: Number): void {
+    public SetZoom(zoom: Number): void {
         this.dispatchAction(DashboardRedux.DashboardSetZoom(zoom))
     }
 
-    public dashboardSetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
+    public SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
         this.dispatchAction(DashboardRedux.DashboardSetVisibility(dashboardVisibility as Visibility))
     }
 
-    public dashboardShow(): void {
-        this.dashboardSetVisibility(Visibility.Visible);
+    public Show(): void {
+        this.SetVisibility(Visibility.Visible);
     }
 
-    public dashboardHide(): void {
-        this.dashboardSetVisibility(Visibility.Hidden);
+    public Hide(): void {
+        this.SetVisibility(Visibility.Hidden);
     }
 
-    public dashboardMinimise(): void {
-        this.dashboardSetVisibility(Visibility.Minimised);
+    public Minimise(): void {
+        this.SetVisibility(Visibility.Minimised);
     }
 
-    public dashboardShowSystemStatusButton(): void {
+    public ShowSystemStatusButton(): void {
         this.dispatchAction(DashboardRedux.DashboardShowSystemStatusButton())
     }
 
-    public dashboardHideSystemStatusButton(): void {
+    public HideSystemStatusButton(): void {
         this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton())
     }
 
-    public dashboardShowAboutButton(): void {
+    public ShowAboutButton(): void {
         this.dispatchAction(DashboardRedux.DashboardShowAboutButton())
     }
 
-    public dashboardHideAboutButton(): void {
+    public HideAboutButton(): void {
         this.dispatchAction(DashboardRedux.DashboardHideAboutButton())
     }
 
-    public dashboardShowFunctionsDropdown(): void {
+    public ShowFunctionsDropdown(): void {
         this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown())
     }
 
-    public dashboardHideFunctionsDropdown(): void {
+    public HideFunctionsDropdown(): void {
         this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown())
     }
 
-    public dashboardShowColumnsDropdown(): void {
+    public ShowColumnsDropdown(): void {
         this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown())
     }
 
-    public dashboardHideColumnsDropdown(): void {
+    public HideColumnsDropdown(): void {
         this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown())
     }
 
-    public dashboardSetHomeToolbarTitle(title: string): void {
+    public SetHomeToolbarTitle(title: string): void {
         this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title))
     }
 
-    public dashboardSetApplicationToolbarTitle(title: string): void {
+    public SetApplicationToolbarTitle(title: string): void {
         this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title))
     }
 

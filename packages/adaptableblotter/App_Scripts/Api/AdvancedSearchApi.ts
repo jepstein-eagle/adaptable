@@ -4,58 +4,57 @@ import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRed
 import { ApiBase } from "./ApiBase";
 
 export interface IAdvancedSearchApi {
-   
-     // Advanced Search api methods
-  advancedSearchSet(advancedSearchName: string): void
-  advancedSearchClear(): void
-  advancedSearchAdd(advancedSearch: IAdvancedSearch): void
-  advancedSearchEdit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void
-  advancedSearchDelete(advancedSearchName: string): void
-  advancedSearchGetCurrent(): IAdvancedSearch
-  advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch
-  advancedSearchGetAll(): IAdvancedSearch[]
+
+  Set(advancedSearchName: string): void;
+  Clear(): void;
+  Add(advancedSearch: IAdvancedSearch): void;
+  Edit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void;
+  Delete(advancedSearchName: string): void;
+  GetCurrent(): IAdvancedSearch;
+  GetByName(advancedSearchName: string): IAdvancedSearch;
+  GetAll(): IAdvancedSearch[];
+  
 }
 
 
 
 export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
 
-  // Advanced Search api methods
-  public advancedSearchSet(advancedSearchName: string): void {
+  public Set(advancedSearchName: string): void {
     let advancedSearch: IAdvancedSearch = this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
     if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyConstants.AdvancedSearchStrategyName)) {
       this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName))
     }
   }
 
-  public advancedSearchClear(): void {
+  public Clear(): void {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(""))
   }
 
-  public advancedSearchAdd(advancedSearch: IAdvancedSearch): void {
+  public Add(advancedSearch: IAdvancedSearch): void {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(-1, advancedSearch))
   }
 
-  public advancedSearchEdit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void {
+  public Edit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void {
     let searchIndex: number = this.getState().AdvancedSearch.AdvancedSearches.findIndex(a => a.Name == advancedSearchName);
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(searchIndex, advancedSearch))
   }
 
-  public advancedSearchDelete(advancedSearchName: string): void {
-    let searchToDelete = this.advancedSearchGetByName(advancedSearchName)
+  public Delete(advancedSearchName: string): void {
+    let searchToDelete = this.GetByName(advancedSearchName)
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete))
   }
 
-  public advancedSearchGetCurrent(): IAdvancedSearch {
+  public GetCurrent(): IAdvancedSearch {
     let currentAdvancedSearchName: string = this.getState().AdvancedSearch.CurrentAdvancedSearch
-    return this.advancedSearchGetByName(currentAdvancedSearchName)
+    return this.GetByName(currentAdvancedSearchName)
   }
 
-  public advancedSearchGetByName(advancedSearchName: string): IAdvancedSearch {
+  public GetByName(advancedSearchName: string): IAdvancedSearch {
     return this.getState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
   }
 
-  public advancedSearchGetAll(): IAdvancedSearch[] {
+  public GetAll(): IAdvancedSearch[] {
     return this.getState().AdvancedSearch.AdvancedSearches;
   }
 

@@ -8,19 +8,19 @@ export interface IQuickSearchApi {
    * Runs QuickSearch on the supplied text
    * @param quickSearchText text to run QuickSearch on
    */
-    quickSearchRun(quickSearchText: string): void
+    Apply(quickSearchText: string): void
 
     /**
      * Clears Quick Search
      */
-    quickSearchClear(): void
+    Clear(): void
 
     /**
      * Retrieves the current quick search text
      */
-    quickSearchGetValue(): string
-    quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
-    quickSearchSetStyle(style: IStyle): void
+    GetValue(): string
+    EditDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void
+    EditStyle(style: IStyle): void
 
 }
 
@@ -28,23 +28,23 @@ export interface IQuickSearchApi {
 
 export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
 
-   public quickSearchRun(quickSearchText: string): void {
+   public Apply(quickSearchText: string): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText))
     }
 
-    public quickSearchClear(): void {
+    public Clear(): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(""))
     }
 
-    public quickSearchGetValue(): string {
+    public GetValue(): string {
         return this.getState().QuickSearch.QuickSearchText;
     }
 
-    public quickSearchSetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
+    public EditDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction as DisplayAction))
     }
 
-    public quickSearchSetStyle(style: IStyle): void {
+    public EditStyle(style: IStyle): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style))
     }
 

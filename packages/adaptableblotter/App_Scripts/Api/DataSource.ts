@@ -5,15 +5,15 @@ import { ApiBase } from "./ApiBase";
 export interface IDataSourceApi {
 
   /**
-  * Selects the dataSource
+  * Sets the dataSource
   * @param dataSource has to be an existing dataSource
   */
-  dataSourceSet(dataSource: string): void
+  Set(dataSource: string): void
 
   /**
    * Clears the currently selected dataSource
    */
-  dataSourceClear(): void
+  Clear(): void
 
 }
 
@@ -21,14 +21,14 @@ export interface IDataSourceApi {
 export class DataSourceApi extends ApiBase implements IDataSourceApi {
 
   // Data Source api methods
-  public dataSourceSet(dataSourceName: string): void {
+  public Set(dataSourceName: string): void {
     let dataSource: string = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
     if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {
       this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource))
     }
   }
 
-  public dataSourceClear(): void {
+  public Clear(): void {
     this.dispatchAction(DataSourceRedux.DataSourceSelect(""))
   }
 }
