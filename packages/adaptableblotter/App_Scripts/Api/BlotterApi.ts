@@ -26,6 +26,8 @@ import { IDataSourceApi, DataSourceApi } from "./DataSource";
 import { IExportApi, ExportApi } from "./ExportApi";
 import { IFreeTextColumnApi, FreeTextColumnApi } from "./FreeTextColumn";
 import { ISystemFilterApi, SystemFilterApi } from "./SystemFilterApi";
+import { IGridApi, GridApi } from "./GridApi";
+
 
 
 export class BlotterApi implements IBlotterApi {
@@ -45,6 +47,7 @@ export class BlotterApi implements IBlotterApi {
   public ExportApi: IExportApi;
   public FormatColumnApi: IFormatColumnApi;
   public FreeTextColumnApi: IFreeTextColumnApi;
+  public GridApi: IGridApi
   public LayoutApi: ILayoutApi;
   public PercentBarApi: IPercentBarApi;
   public QuickSearchApi: IQuickSearchApi;
@@ -72,6 +75,7 @@ export class BlotterApi implements IBlotterApi {
     this.ExportApi = new ExportApi(blotter);
     this.FormatColumnApi = new FormatColumnApi(blotter);
     this.FreeTextColumnApi = new FreeTextColumnApi(blotter);
+    this.GridApi = new GridApi(blotter);
     this.LayoutApi = new LayoutApi(blotter);
     this.PercentBarApi = new PercentBarApi(blotter);
     this.QuickSearchApi = new QuickSearchApi(blotter);
@@ -83,9 +87,7 @@ export class BlotterApi implements IBlotterApi {
     this.UserInterfaceApi = new UserInterfaceApi(blotter);
   }
 
-  public setGridData(dataSource: any): void {
-    this.blotter.setGridData(dataSource);
-  }
+
 
   // Events
   public onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs> {

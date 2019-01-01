@@ -25,6 +25,7 @@ import { IDataSourceApi } from "../DataSource";
 import { IExportApi } from "../ExportApi";
 import { IFreeTextColumnApi } from "../FreeTextColumn";
 import { ISystemFilterApi } from "../SystemFilterApi";
+import { IGridApi } from "../GridApi";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -45,6 +46,7 @@ export interface IBlotterApi {
   ExportApi: IExportApi;
   FormatColumnApi: IFormatColumnApi;
   FreeTextColumnApi: IFreeTextColumnApi;
+  GridApi:  IGridApi;
   LayoutApi: ILayoutApi;
   PercentBarApi: IPercentBarApi;
   QuickSearchApi: IQuickSearchApi;
@@ -55,11 +57,7 @@ export interface IBlotterApi {
   ThemeApi: IThemeApi;
   UserInterfaceApi: IUserInterfaceApi;
 
-  /**
-   * Repopulates the grid; typically used after listening to a SearchChanged event, so appropriately filtered data on the server can be sent to the Blotter.
-   * @param data can be any data from any datasource that is suitable for the underlying grid.  
-   */
-  setGridData(data: any): void;
+ 
 
   /**
   * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
