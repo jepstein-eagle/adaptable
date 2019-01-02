@@ -13,7 +13,7 @@ export interface AdaptableBlotterFormControlTextClearProps extends FormControlPr
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<AdaptableBlotterFormControlTextClearProps, {}> {
     render() {
-        let size: any = (this.props.bsSize) ? this.props.bsSize : 'xsmall'
+        let size: any = (this.props.bsSize) ? this.props.bsSize : 'sm'
         let cssClassName: string = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
 
         return <span>
