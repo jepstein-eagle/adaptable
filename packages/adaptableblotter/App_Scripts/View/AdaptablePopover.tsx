@@ -33,7 +33,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON
 
-        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['hover', 'focus'];
+        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['click'];
 
         let useButton = (this.props.useButton != null) ? this.props.useButton : false
 

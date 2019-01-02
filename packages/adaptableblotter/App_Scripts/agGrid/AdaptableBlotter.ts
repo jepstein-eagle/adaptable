@@ -72,9 +72,9 @@ import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
 import { IMenuItem } from '../Api/Interface/IMenu';
 import { IEvent } from '../Api/Interface/IEvent';
-import { IUIConfirmation } from '../Api/Interface/IMessage';
+import { IUIConfirmation, IAlert } from '../Api/Interface/IMessage';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../Utilities/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, MessageType } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
@@ -110,6 +110,7 @@ import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
+import { Action } from 'redux';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -173,7 +174,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-      //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -207,7 +208,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
-                    this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
+                    this.dispatchAction(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
                 })
             .then(
                 () => this.initInternalGridLogic(),
@@ -215,19 +216,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     LoggingHelper.LogError('Failed to Init Strategies : ', e);
                     //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
                     this.initInternalGridLogic()
-                    this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
+                    this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
                 })
             .then(() => {
                 // at the end so load the current layout, refresh the toolbar and turn off the loading message
                 let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
-                this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+                this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
                 if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
                     this.gridOptions.api.refreshHeader();
                 }
                 BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
                 this.applyFilteredColumnStyle();
                 this.isInitialised = true
-                this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
+                this.dispatchAction(PopupRedux.PopupHideLoading());
             })
 
         if (renderGrid) {
@@ -242,9 +243,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     }
 
-    private getState(): AdaptableBlotterState {
-        return this.AdaptableBlotterStore.TheStore.getState()
-    }
+
 
     private createFilterWrapper(col: Column) {
         this.gridOptions.api.destroyFilter(col)
@@ -361,8 +360,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 allColumns.push(existingColumn);
             }
         })
-
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(allColumns));
+        this.dispatchAction(GridRedux.GridSetColumns(allColumns));
     }
 
     private createColumn(vendorColumn: Column, quickSearchClassName: string): IColumn {
@@ -436,7 +434,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
         })
-        this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
+        this.dispatchAction(MenuRedux.SetMenuItems(menuItems));
     }
 
     public getPrimaryKeyValueFromRecord(record: RowNode): any {
@@ -521,7 +519,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
         }
         let selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
+        this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCells));
+  
         this._onSelectedCellsChanged.Dispatch(this, this)
     }
 
@@ -1829,5 +1828,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return returnList;
     }
 
+
+    // A couple of state management functions
+    private getState(): AdaptableBlotterState {
+        return this.AdaptableBlotterStore.TheStore.getState()
+    }
+
+    private dispatchAction(action: Action): void {
+        this.AdaptableBlotterStore.TheStore.dispatch(action);
+    }
 
 }
