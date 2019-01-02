@@ -15,5 +15,4 @@ export class ApplicationStrategy extends AdaptableStrategyBase implements IAppli
         this.createMenuItemShowPopup(StrategyConstants.ApplicationStrategyName, ScreenPopups.ApplicationPopup, StrategyConstants.ApplicationGlyph);
     }
 
-    
 }
