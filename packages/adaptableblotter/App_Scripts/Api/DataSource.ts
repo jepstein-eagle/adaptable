@@ -20,7 +20,6 @@ export interface IDataSourceApi {
 
 export class DataSourceApi extends ApiBase implements IDataSourceApi {
 
-  // Data Source api methods
   public Set(dataSourceName: string): void {
     let dataSource: string = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
     if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {

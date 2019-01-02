@@ -14,8 +14,7 @@ export interface IShortcutApi {
 
 export class ShortcutApi extends ApiBase implements IShortcutApi {
 
-    // Shortuct State
-    public  GetAll(): IShortcut[] {
+     public  GetAll(): IShortcut[] {
       return this.getState().Shortcut.Shortcuts;
     }
   

@@ -7,14 +7,14 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { IAlert } from './Interface/IMessage';
 
 export interface IAlertApi {
-
-   // Alerts
-  /**
-   * Shows an alert as a popup
+ 
+   /**
+    * 
    * @param alertHeader Title to appear in the popup
    * @param alertMessage Main message of the alert
    * @param MessageType Type (Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
-   */
+   * @param showAsPopup TDetermines whether the Alert appears in the middle of the screen or in the Alerts tab.
+    */
   Show(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void
 
   ShowMessage(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
@@ -26,8 +26,7 @@ export interface IAlertApi {
 export class AlertApi extends ApiBase implements IAlertApi {
 
    
-  // Alerts api Methods
-  public Show(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void {
+   public Show(alertHeader: string, alertMessage: string, MessageType: "Info" | "Warning" | "Error", showAsPopup: boolean): void {
     let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
     let MessageTypeEnum = MessageType as MessageType;
     let alertToShow: IAlert = {
