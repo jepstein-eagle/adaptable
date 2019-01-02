@@ -208,11 +208,13 @@ export interface IShortcut extends IAdaptableBlotterObject {
    */
   ShortcutKey: string;
   /**
-   * Output of the function; if 'date' then its always a new value; if 'number' then it can be computed with existing edit value
+   * Output of the function; if 'date' then its always a new value; 
+   * if 'number' then it can be computed with existing edit value
    */
   ShortcutResult: any;
   /**
-   * What the function does; Date shortcuts only replace; Numeric shortcuts can make a computation based on existing value and 'ShortcutResult' property
+   * What the function does; Date shortcuts only replace; 
+   * Numeric shortcuts make a computation based on existing value and 'ShortcutResult' property
    */
   ShortcutOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'
   /**

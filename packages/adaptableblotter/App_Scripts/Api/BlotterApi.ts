@@ -1,7 +1,5 @@
 import { IAdaptableBlotter } from "./Interface/IAdaptableBlotter";
-import { IEvent } from "./Interface/IEvent";
 import { IBlotterApi } from "./Interface/IBlotterApi";
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./Interface/IStateEvents";
 import { IQuickSearchApi, QuickSearchApi } from "./QuickSearchApi";
 import { IDashboardApi, DashboardApi } from "./DashboardApi";
 import { ILayoutApi, LayoutApi } from "./LayoutApi";
@@ -27,6 +25,7 @@ import { IExportApi, ExportApi } from "./ExportApi";
 import { IFreeTextColumnApi, FreeTextColumnApi } from "./FreeTextColumn";
 import { ISystemFilterApi, SystemFilterApi } from "./SystemFilterApi";
 import { IGridApi, GridApi } from "./GridApi";
+import { IEventApi, EventApi } from "./EventApi";
 
 export class BlotterApi implements IBlotterApi {
 
@@ -42,6 +41,7 @@ export class BlotterApi implements IBlotterApi {
   public dashboardApi: IDashboardApi;
   public dataSourceApi: IDataSourceApi;
   public entitlementApi: IEntitlementApi;
+  public eventApi: IEventApi;
   public exportApi: IExportApi;
   public formatColumnApi: IFormatColumnApi;
   public freeTextColumnApi: IFreeTextColumnApi;
@@ -70,6 +70,7 @@ export class BlotterApi implements IBlotterApi {
     this.dashboardApi = new DashboardApi(blotter);
     this.dataSourceApi = new DataSourceApi(blotter);
     this.entitlementApi = new EntitlementApi(blotter);
+    this.eventApi = new EventApi(blotter);
     this.exportApi = new ExportApi(blotter);
     this.formatColumnApi = new FormatColumnApi(blotter);
     this.freeTextColumnApi = new FreeTextColumnApi(blotter);
@@ -86,19 +87,6 @@ export class BlotterApi implements IBlotterApi {
   }
 
 
-
-  // Events
-  public onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs> {
-    return this.blotter.SearchedChanged;
-  }
-
-  public onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs> {
-    return this.blotter.StateChanged;
-  }
-
-  public onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs> {
-    return this.blotter.ColumnStateChanged;
-  }
 
 }
 

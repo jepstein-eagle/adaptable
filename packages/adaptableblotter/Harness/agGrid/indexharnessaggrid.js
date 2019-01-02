@@ -123,11 +123,11 @@ function InitTradeBlotter() {
     adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
       apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
     });
-    adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
+    adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
       listenToColumnStateChange(columnChangedArgs))
-    adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
+    adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
       stateChangedArgs))
-    adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
+    adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
       listenToSearchChange(searchChangedArgs))
     setTimeout(() => {
       if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ==
@@ -147,18 +147,18 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-  //  console.log("column event received")
-  //   console.log(columnChangedArgs)
+    console.log("column event received")
+     console.log(columnChangedArgs)
 }
 
 function listenToStateChange(stateChangedArgs) {
-  //   console.log("state event received")
-  //   console.log(stateChangedArgs)
+     console.log("state event received")
+     console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
-  //   console.log("search changed event received")
-  //   console.log(searchChangedArgs)
+     console.log("search changed event received")
+     console.log(searchChangedArgs)
 }
 
 function getValuesForColumn(columnName) {

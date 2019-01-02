@@ -190,11 +190,9 @@ export interface LayoutState extends IUserState {
     Layouts: ILayout[];
 }
 
-
 export interface PercentBarState extends IUserState {
     PercentBars: IPercentBar[];
 }
-
 
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];

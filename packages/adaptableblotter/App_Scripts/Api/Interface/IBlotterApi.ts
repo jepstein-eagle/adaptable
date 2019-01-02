@@ -1,6 +1,3 @@
-import { IEvent } from "./IEvent";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
 import { IQuickSearchApi } from "../QuickSearchApi";
 import { ICalculatedColumnApi } from "../CalculatedColumnApi";
 import { ICellValidationApi } from "../CellValidationApi";
@@ -26,6 +23,7 @@ import { IExportApi } from "../ExportApi";
 import { IFreeTextColumnApi } from "../FreeTextColumn";
 import { ISystemFilterApi } from "../SystemFilterApi";
 import { IGridApi } from "../GridApi";
+import { IEventApi } from "../EventApi";
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -43,6 +41,7 @@ export interface IBlotterApi {
   dashboardApi: IDashboardApi;
   dataSourceApi: IDataSourceApi;
   entitlementApi: IEntitlementApi;
+  eventApi:IEventApi;
   exportApi: IExportApi;
   formatColumnApi: IFormatColumnApi;
   freeTextColumnApi: IFreeTextColumnApi;
@@ -56,25 +55,4 @@ export interface IBlotterApi {
   systemStatusApi: ISystemStatusApi;
   themeApi: IThemeApi;
   userInterfaceApi: IUserInterfaceApi;
-
-
-
-  /**
-  * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
-  * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
-  */
-  onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
-
-  /**
-  * Event fired whenever the state in the Blotter changes, providing full coverage of what triggered the change and what the new state for that function is.
-  * @returns IEvent<IAdaptableBlotter, IStateChangedEventArgs>
-  */
-  onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;
-
-  /**
-  * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.
-  * Only fires when in a user layout and currently just passes the name of the layout.
-  * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
-  */
-  onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
 }
