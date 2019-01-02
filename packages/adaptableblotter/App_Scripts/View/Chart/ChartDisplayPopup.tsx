@@ -4,23 +4,20 @@ import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IChartDefinition, IUserFilter, IChartProperties } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition, IChartProperties } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE, INFO_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { Row, Col, FormGroup, ControlLabel, FormControl, Button, Checkbox, Panel, Radio, Label } from "react-bootstrap";
+import { Row, Col, ControlLabel, FormControl, Checkbox, Radio } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 // ig chart imports
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
-import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
-import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
-import { EasingFunctions } from 'igniteui-react-core/ES2015/EasingFunctions';
+//import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
+//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
 import { ChartWizard } from "./Wizard/ChartWizard";
-import { IColumn } from "../../Api/Interface/IColumn";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
@@ -29,11 +26,8 @@ import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, Horizont
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ButtonNew } from "../Components/Buttons/ButtonNew";
 import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
 import { DefaultChartProperties } from "../../api/DefaultChartProperties";
-import { Visibility } from "igniteui-react-core/ES2015/Visibility";
-import { ECANCELED } from "constants";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -109,8 +103,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             SubTitleMargin: (this.props.CurrentChartDefinition.ChartProperties.SubTitleAlignment == HorizontalAlignment.Right) ? 5 : 0
 
         }
-        IgrCategoryChartModule.register();
-        IgrDataChartAnnotationModule.register();
+   //     IgrCategoryChartModule.register();
+   //     IgrDataChartAnnotationModule.register();
     }
 
     render() {
@@ -1214,7 +1208,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
         CurrentChartDefinition: state.Chart.CurrentChartDefinition,

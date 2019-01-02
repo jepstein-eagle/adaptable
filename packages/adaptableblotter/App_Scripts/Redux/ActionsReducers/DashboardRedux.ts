@@ -207,7 +207,7 @@ const initialDashboardState: DashboardState = {
         StrategyConstants.SelectedCellsStrategyId,
         StrategyConstants.ApplicationStrategyId,
         StrategyConstants.AlertStrategyId,
-        StrategyConstants.ChartStrategyId,
+  //      StrategyConstants.ChartStrategyId,
     ],
     VisibleToolbars: [
         StrategyConstants.AdvancedSearchStrategyId,
