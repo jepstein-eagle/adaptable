@@ -686,7 +686,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
 
           blotter.addCalculatedColumnToGrid(calculatedColumn)
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+      //    middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
           return returnAction;
         }
         case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {

@@ -520,7 +520,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         let selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap }
         this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCells));
-  
+
         this._onSelectedCellsChanged.Dispatch(this, this)
     }
 
@@ -1037,13 +1037,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
         let venderCols = this.gridOptions.columnApi.getAllColumns()
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
-        colDefs.push({
+
+        let newColDef: ColDef = {
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
             hide: true,
             valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
-        })
+        }
+        colDefs.push(newColDef);
+        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+        this.gridOptions.api.setColumnDefs([])
         this.gridOptions.api.setColumnDefs(colDefs)
+
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
         for (let column of columnList) {
             let childrenColumnList = this._calculatedColumnPathMap.get(column)
