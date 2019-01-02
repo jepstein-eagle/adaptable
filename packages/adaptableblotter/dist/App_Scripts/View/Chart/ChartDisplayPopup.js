@@ -13,8 +13,8 @@ const ButtonMaximise_1 = require("../Components/Buttons/ButtonMaximise");
 const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 // ig chart imports
 const igr_category_chart_1 = require("igniteui-react-charts/ES2015/igr-category-chart");
-const igr_category_chart_module_1 = require("igniteui-react-charts/ES2015/igr-category-chart-module");
-const igr_data_chart_annotation_module_1 = require("igniteui-react-charts/ES2015/igr-data-chart-annotation-module");
+//import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
+//import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module';
 const ChartWizard_1 = require("./Wizard/ChartWizard");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
@@ -63,8 +63,8 @@ class ChartDisplayPopupComponent extends React.Component {
             TitleMargin: (this.props.CurrentChartDefinition.ChartProperties.TitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0,
             SubTitleMargin: (this.props.CurrentChartDefinition.ChartProperties.SubTitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0
         };
-        igr_category_chart_module_1.IgrCategoryChartModule.register();
-        igr_data_chart_annotation_module_1.IgrDataChartAnnotationModule.register();
+        //     IgrCategoryChartModule.register();
+        //     IgrDataChartAnnotationModule.register();
     }
     render() {
         let cssClassName = this.props.cssClassName + "__Charts";
@@ -698,7 +698,7 @@ class ChartDisplayPopupComponent extends React.Component {
         }
     }
 }
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
         CurrentChartDefinition: state.Chart.CurrentChartDefinition,

@@ -21,4 +21,4 @@ export interface ChartDisplayPopupWizardState {
     TitleMargin: number;
     SubTitleMargin: number;
 }
-export declare let ChartDisplayPopup: React.ComponentClass<any, any>;
+export declare let ChartDisplayPopup: React.ComponentClass<{}, any>;
