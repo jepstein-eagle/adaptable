@@ -664,28 +664,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let nodesToRefresh: RowNode[] = []
         let colsToRefresh: string[] = []
         this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
-            let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
-            if (value) {
+            let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
+            if (cellInfo) {
                 nodesToRefresh.push(rowNode);
 
-                if (ArrayExtensions.NotContainsItem(colsToRefresh, value.ColumnId)) {
-                    colsToRefresh.push(value.ColumnId)
+                if (ArrayExtensions.NotContainsItem(colsToRefresh, cellInfo.ColumnId)) {
+                    colsToRefresh.push(cellInfo.ColumnId)
                 }
 
-                let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode)
+                let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
 
                 var data: any = rowNode.data;
-                data[value.ColumnId] = value.Value;
+                data[cellInfo.ColumnId] = cellInfo.Value;
 
                 let dataChangedEvent: IDataChangedInfo = {
                     OldValue: oldValue,
-                    NewValue: value.Value,
-                    ColumnId: value.ColumnId,
-                    IdentifierValue: value.Id,
+                    NewValue: cellInfo.Value,
+                    ColumnId: cellInfo.ColumnId,
+                    IdentifierValue: cellInfo.Id,
                     Timestamp: null,
                     Record: null
                 }
                 dataChangedEvents.push(dataChangedEvent)
+
+                // check if any calc columns need to refresh
+                let columnList = this._calculatedColumnPathMap.get(cellInfo.ColumnId);
+                if (columnList) {
+                    columnList.forEach(calcColumn => {
+                        if (ArrayExtensions.NotContainsItem(colsToRefresh, calcColumn)) {
+                            colsToRefresh.push(calcColumn)
+                        }
+                    });
+                }
             }
         })
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -699,7 +709,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         nodesToRefresh.forEach(node => {
             this.refreshCells(node, colsToRefresh)
         })
-
     }
 
     public cancelEdit() {
@@ -1333,7 +1342,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 columnList.forEach(x => {
                     let newValue = this.gridOptions.api.getValue(x, params.node);
                     this.DataService.CreateDataEvent(identifierValue, newValue, x, params.node);
+                    console.log("refreshing")
+                    // this.refreshCells(params.node, [x])
                 });
+                alert("hello ")
+                this.refreshCells(params.node, columnList)
+
             }
         });
 
