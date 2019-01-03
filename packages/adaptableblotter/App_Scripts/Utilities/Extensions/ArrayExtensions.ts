@@ -1,6 +1,12 @@
 
 export module ArrayExtensions {
 
+    export function AddItem(array: any[], itemToAdd: any): void {
+      if(this.NotContainsItem(array, itemToAdd)){
+          array.push(itemToAdd);
+      }
+    }
+
     export function ContainsItem(array: any[], itemToCheck: any): boolean {
       if(array==null){
           return false;

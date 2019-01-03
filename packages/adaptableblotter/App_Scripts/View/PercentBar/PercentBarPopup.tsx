@@ -164,9 +164,15 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
-    canFinishWizard() {
-        let PercentBar = this.state.EditedAdaptableBlotterObject as IPercentBar
-        return StringExtensions.IsNotNullOrEmpty(PercentBar.ColumnId)
+    canFinishWizard():boolean {
+        let percentBar = this.state.EditedAdaptableBlotterObject as IPercentBar
+        if (StringExtensions.IsNullOrEmpty(percentBar.ColumnId) ||
+            StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) ||
+            StringExtensions.IsNullOrEmpty(percentBar.NegativeColor)) {
+            return false;
+        }
+        // we are not currently checking for columns - ok? or problem?
+        return true;
     }
 }
 

@@ -10,6 +10,7 @@ import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ColorPicker } from "../ColorPicker";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { FormControl } from "react-bootstrap";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 
 
 export interface PercentBarEntityRowProps extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
@@ -28,18 +29,23 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = ColumnHelper.getFriendlyNameFromColumn(PercentBar.ColumnId, this.props.Column)
-        colItems[1].Content = <FormControl
-            type={"number"}
-            placeholder="Min Value"
-            onChange={(e) => this.onMinimumValueChanged(e)}
-            value={PercentBar.MinValue}
-        />
-        colItems[2].Content = <FormControl
-            type={"number"}
-            placeholder="Max Value"
-            onChange={(e) => this.onMaximumValueChanged(e)}
-            value={PercentBar.MaxValue}
-        />
+        colItems[1].Content = (StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId)) ?
+            <FormControl
+                type={"number"}
+                placeholder="Min Value"
+                onChange={(e) => this.onMinimumValueChanged(e)}
+                value={PercentBar.MinValue}
+            />
+            :
+            "[" + ColumnHelper.getFriendlyNameFromColumnId(PercentBar.MinValueColumnId, this.props.Columns) + "]";
+        colItems[2].Content = (StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId)) ?
+            <FormControl
+                type={"number"}
+                placeholder="Max Value"
+                onChange={(e) => this.onMaximumValueChanged(e)}
+                value={PercentBar.MaxValue} />
+            :
+            "[" + ColumnHelper.getFriendlyNameFromColumnId(PercentBar.MaxValueColumnId, this.props.Columns) + "]";
         colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} value={PercentBar.PositiveColor} onChange={(x) => this.onPositiveColorChanged(x)} />
         colItems[4].Content = <ColorPicker ColorPalette={this.props.ColorPalette} value={PercentBar.NegativeColor} onChange={(x) => this.onNegativeColorChanged(x)} />
 
@@ -70,7 +76,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
         let e = event.target as HTMLInputElement;
         if (!isNaN(Number(e.value))) {
             let maxValue: number = Number(e.value);
-             this.props.onMaximumValueChanged(this.props.AdaptableBlotterObject as IPercentBar, maxValue);
+            this.props.onMaximumValueChanged(this.props.AdaptableBlotterObject as IPercentBar, maxValue);
         }
     }
 

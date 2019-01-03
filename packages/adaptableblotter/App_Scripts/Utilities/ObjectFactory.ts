@@ -113,6 +113,8 @@ export module ObjectFactory {
             PositiveColor: '#008000',
             NegativeColor: '#FF0000',
             ShowValue: false,
+            MaxValueColumnId: null,
+            MinValueColumnId: null
         }
     }
 

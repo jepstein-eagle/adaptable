@@ -262,6 +262,8 @@ export interface IPercentBar extends IAdaptableBlotterObject {
   PositiveColor: string;
   NegativeColor: string;
   ShowValue: boolean;
+  MaxValueColumnId? :string
+  MinValueColumnId? :string
 }
 
 

@@ -100,7 +100,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc } from "ag-grid-community"
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, ICellRendererParams, RefreshCellsParams } from "ag-grid-community"
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -111,6 +111,8 @@ import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
 import { Action } from 'redux';
+import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
+import { AlertToolbarControl } from '../View/Alert/AlertToolbarControl';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -219,14 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
                 })
             .then(() => {
-                // at the end so load the current layout, refresh the toolbar and turn off the loading message
-                let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
-                this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
-                if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
-                    this.gridOptions.api.refreshHeader();
-                }
-                BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
-                this.applyFilteredColumnStyle();
+                this.applyFinalRendering();
                 this.isInitialised = true
                 this.dispatchAction(PopupRedux.PopupHideLoading());
             })
@@ -662,25 +657,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // using new method... (JW, 11/3/18)
         var dataChangedEvents: IDataChangedInfo[] = []
         let nodesToRefresh: RowNode[] = []
-        let colsToRefresh: string[] = []
+        let refreshColumnList: string[] = []
         this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
             let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
             if (cellInfo) {
+                let colId: string = cellInfo.ColumnId;
+                refreshColumnList.push(colId);
                 nodesToRefresh.push(rowNode);
 
-                if (ArrayExtensions.NotContainsItem(colsToRefresh, cellInfo.ColumnId)) {
-                    colsToRefresh.push(cellInfo.ColumnId)
-                }
+                ArrayExtensions.AddItem(refreshColumnList, colId);
 
-                let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
+                let oldValue = this.gridOptions.api.getValue(colId, rowNode)
 
                 var data: any = rowNode.data;
-                data[cellInfo.ColumnId] = cellInfo.Value;
+                data[colId] = cellInfo.Value;
 
                 let dataChangedEvent: IDataChangedInfo = {
                     OldValue: oldValue,
                     NewValue: cellInfo.Value,
-                    ColumnId: cellInfo.ColumnId,
+                    ColumnId: colId,
                     IdentifierValue: cellInfo.Id,
                     Timestamp: null,
                     Record: null
@@ -688,14 +683,25 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 dataChangedEvents.push(dataChangedEvent)
 
                 // check if any calc columns need to refresh
-                let columnList = this._calculatedColumnPathMap.get(cellInfo.ColumnId);
+                let columnList = this._calculatedColumnPathMap.get(colId);
                 if (columnList) {
                     columnList.forEach(calcColumn => {
-                        if (ArrayExtensions.NotContainsItem(colsToRefresh, calcColumn)) {
-                            colsToRefresh.push(calcColumn)
-                        }
+                        ArrayExtensions.AddItem(refreshColumnList, calcColumn);
                     });
                 }
+
+                // see if we need to refresh any percent bars
+                this.getState().PercentBar.PercentBars.forEach(pb => {
+                    refreshColumnList.forEach(changedColId => {
+                        if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
+                            ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                        }
+                        if (StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
+                            ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                        }
+                    })
+                })
+
             }
         })
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -707,7 +713,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
-            this.refreshCells(node, colsToRefresh)
+            this.refreshCells(node, refreshColumnList)
         })
     }
 
@@ -1223,6 +1229,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, (params: any) => {
             this.debouncedSetColumnIntoStore();
         });
+        // once the grid is ready we should make sure we are too
+        this.gridOptions.api.addEventListener(Events.EVENT_GRID_READY, (params: any) => {
+            // do something?
+        });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
         let columnEventsThatTriggersAutoLayoutSave = [
             Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
@@ -1329,26 +1339,38 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, () => {
             // not sure about this - doing it to make sure that we set the columns properly at least once!
             this.checkColumnsDataTypeSet();
+
         });
 
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-            this.DataService.CreateDataEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            let colId: string = params.colDef.field;
+            this.DataService.CreateDataEvent(identifierValue, params.newValue, colId, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
-            let columnList = this._calculatedColumnPathMap.get(params.colDef.field);
+            let refreshColumnList: string[] = [colId]
+            let columnList = this._calculatedColumnPathMap.get(colId);
             if (columnList) {
-                columnList.forEach(x => {
-                    let newValue = this.gridOptions.api.getValue(x, params.node);
-                    this.DataService.CreateDataEvent(identifierValue, newValue, x, params.node);
-                    console.log("refreshing")
-                    // this.refreshCells(params.node, [x])
+                columnList.forEach(columnId => {
+                    let newValue = this.gridOptions.api.getValue(columnId, params.node);
+                    this.DataService.CreateDataEvent(identifierValue, newValue, columnId, params.node);
+                    ArrayExtensions.AddItem(refreshColumnList, columnId);
                 });
-                alert("hello ")
-                this.refreshCells(params.node, columnList)
-
             }
+
+            // see if we need to refresh any percent bars
+            this.getState().PercentBar.PercentBars.forEach(pb => {
+                refreshColumnList.forEach(changedColId => {
+                    if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
+                        ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                    }
+                    if (StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
+                        ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                    }
+                })
+            })
+            this.refreshCells(params.node, refreshColumnList);
         });
 
 
@@ -1492,24 +1514,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addPercentBar(pcr: IPercentBar): void {
-        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
+         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
             let showNegatives: boolean = pcr.MinValue < 0;
             let showPositives: boolean = pcr.MaxValue > 0;
-            let maxValue = pcr.MaxValue;
-            let minValue = pcr.MinValue;
 
-            let cellRendererFunc: ICellRendererFunc = (params: any) => {
+            let cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
                 let isNegativeValue: boolean = params.value < 0;
                 let value = params.value;
+
+                let maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId) ?
+                    this.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
+                    pcr.MaxValue;
+                let minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId) ?
+                    this.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
+                    pcr.MinValue;
+
                 if (isNegativeValue) {
                     value = value * -1;
                 }
                 let percentagePositiveValue = ((100 / maxValue) * value);
                 let percentageNegativeValue = ((100 / (minValue * -1)) * value);
-
-                //    let dualValue
-
 
                 if (showNegatives && showPositives) { // if need both then half the space
                     percentagePositiveValue = percentagePositiveValue / 2;
@@ -1790,13 +1815,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    private applyFilteredColumnStyle(): void {
+    private applyFinalRendering(): void {
+        let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+
+        // Check that we have a primary key
+        BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
+
+        // add the filter header style if required
         if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
             document.body.appendChild(css);
         }
+
+        // sometimes the header row looks wrong when using floating filter so to be sure...
+        if (this.gridOptions.floatingFilter) {
+            this.gridOptions.api.refreshHeader();
+        }
+
+        // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
+        if (this.getState().Layout.CurrentLayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
+            this.dispatchAction(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT));
+        }
+        // at the end so load the current layout, refresh the toolbar and turn off the loading message
+        this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
     }
 
     public clearFlashingCellMap(): void {

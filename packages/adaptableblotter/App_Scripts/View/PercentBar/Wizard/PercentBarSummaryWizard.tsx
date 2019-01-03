@@ -8,6 +8,7 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { StyleVisualItem } from "../../Components/StyleVisualItem";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     Columns: IColumn[]
@@ -30,11 +31,11 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
 
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Minimum Value", Value: this.props.Data.MinValue },
-            { Key: "Maximum Value", Value: this.props.Data.MaxValue },
+            { Key: "Minimum Value", Value: StringExtensions.IsNullOrEmpty(this.props.Data.MinValueColumnId)? this.props.Data.MinValue: "[" + ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.MinValueColumnId, this.props.Columns) + "]" },
+            { Key: "Maximum Value", Value: StringExtensions.IsNullOrEmpty(this.props.Data.MaxValueColumnId)? this.props.Data.MaxValue: "[" + ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.MaxValueColumnId, this.props.Columns) + "]" },
             { Key: "Positive Colour", Value: <StyleVisualItem Style={positiveStyle} /> },
             { Key: "Negative Colour", Value: <StyleVisualItem Style={negativeStyle} /> },
-            { Key: "Show Value", Value: this.props.Data.ShowValue? "Yes": "No" },
+            { Key: "Show Cell Value", Value: this.props.Data.ShowValue? "Yes": "No" },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.PercentBarStrategyName} />
