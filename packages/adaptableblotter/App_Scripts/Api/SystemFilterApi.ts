@@ -3,17 +3,7 @@ import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux'
 import { ApiBase } from "./ApiBase";
 import { IUserFilter } from './Interface/IAdaptableBlotterObjects';
 import { FilterHelper } from '../Utilities/Helpers/FilterHelper';
-
-export interface ISystemFilterApi {
-
-
-  userFilterSet(userFilters: IUserFilter[]): void
-  Set(systemFilters: string[]): void
-  Clear(): void
-  GetCurrent(): string[]
-  GetAll(): string[]
-}
-
+import { ISystemFilterApi } from './Interface/ISystemFilterApi';
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
 

@@ -1,15 +1,7 @@
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux'
 import { ApiBase } from "./ApiBase";
 import { MathOperation } from '../Utilities/Enums';
-
-export interface ISmartEditApi {
-
-  EditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void
-  GetMathOperation(): string
-  EditValue(smartEditValue: number): void
-  GetValue(): number
-}
-
+import { ISmartEditApi } from './Interface/ISmartEditApi';
 
 export class SmartEditApi extends ApiBase implements ISmartEditApi {
 

@@ -21,3 +21,4 @@ export interface IAuditLogEntry {
     adaptableblotter_state_change_action? : string
     adaptableblotter_number_of_missed_ping?: number
 }
+

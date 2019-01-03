@@ -1,16 +1,8 @@
 import * as CalculatedColumnRedux from '../Redux/ActionsReducers/CalculatedColumnRedux'
 import { ApiBase } from "./ApiBase";
 import { ICalculatedColumn } from './Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumnApi } from './Interface/ICalculatedColumnApi';
 
-export interface ICalculatedColumnApi {
-
- 
-  GetAll(): ICalculatedColumn[]
-  Add(calculatedColumn: ICalculatedColumn): void
-  EditExpression(column: string, columnExpression: string): void
-  Delete(column: string): void
-
-}
 
 
 export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi {

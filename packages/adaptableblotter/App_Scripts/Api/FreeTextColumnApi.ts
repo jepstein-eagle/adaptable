@@ -1,17 +1,7 @@
 import { IFreeTextColumn } from "./Interface/IAdaptableBlotterObjects";
 import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRedux'
 import { ApiBase } from "./ApiBase";
-
-export interface IFreeTextColumnApi {
- 
-  GetAll(): IFreeTextColumn[];
-  Add(freeTextColumn: IFreeTextColumn): void;
-  Create(columnId: string, defaultValue: string): void;
-  Delete(columnId: string): void;
-
-}
-
-
+import { IFreeTextColumnApi } from "./Interface/IFreeTextColumnApi";
 
 export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
 

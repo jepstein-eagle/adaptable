@@ -1,20 +1,10 @@
 import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux'
 import { ApiBase } from "./ApiBase";
 import { IPermittedColumnValues } from './Interface/Interfaces';
-
-export interface IUserInterfaceApi {
-
-  SetColorPalette(colorPalette: string[]): void
-  AddColorsToPalette(colorPalette: string[]): void
-  AddStyleClassNames(styleClassNames: string[]): void
-  SetColumnPermittedValues(column: string, permittedValues: string[]): void
-  ClearColumnPermittedValues(column: string): void
-}
-
+import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
 
-  // user interface api methods
   public SetColorPalette(colorPalette: string[]): void {
     this.dispatchAction(UserInterfaceRedux.ColorPaletteSet(colorPalette))
   }

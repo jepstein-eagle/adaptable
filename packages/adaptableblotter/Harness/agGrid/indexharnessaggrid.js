@@ -458,9 +458,9 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#hbutton") {
       adaptableblotter.api.DashboardApi.dashboardHideSystemStatusButton()
     } else if (quickSearchText == "#sfunc") {
-      adaptableblotter.api.DashboardApi.dashboardShowFunctionsDropdown()
+      adaptableblotter.api.dashboardApi.ShowFunctionsDropdown()
     } else if (quickSearchText == "#hfunc") {
-      adaptableblotter.api.DashboardApi.dashboardHideFunctionsDropdown()
+      adaptableblotter.api.dashboardApi.HideFunctionsDropdown()
     } else if (quickSearchText == "#scols") {
       adaptableblotter.api.DashboardApi.dashboardShowColumnsDropdown()
     } else if (quickSearchText == "#hcols") {

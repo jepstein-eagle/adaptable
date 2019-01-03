@@ -1,18 +1,7 @@
 import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux'
 import { ApiBase } from "./ApiBase";
 import { IUserTheme } from './Interface/IAdaptableBlotterObjects';
-
-export interface IThemeApi {
-
-  SetCurrent(theme: string): void
-  GetCurrent(): string
-  SetSystemThemes(systemThemes: string[]): void
-  SetUserThemes(userThemes: string[]): void
-  SystemThemeGetAll(): string[]
-  UserThemeGetAll(): IUserTheme[]
-}
-
-
+import { IThemeApi } from './Interface/IThemeApi';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
 
