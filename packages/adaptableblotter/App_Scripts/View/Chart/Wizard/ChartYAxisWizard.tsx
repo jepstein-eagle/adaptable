@@ -127,9 +127,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
             if (c.ColumnId == selectedColumnId) {
                 cols.push(c);
             } else {
-                if (ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c.ColumnId)) {
-                    cols.push(c);
-                }
+               ArrayExtensions.AddItem(this.state.YAxisColumnIds, c.ColumnId);
             }
         });
         return cols;

@@ -131,21 +131,21 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
             if (isActive && setRefFirstSelected) {
                 setRefFirstSelected = false
-                return <ListGroupItem key={x} 
-                className="Selected"
+                return <ListGroupItem key={x}
+                    className="Selected"
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
                     style={listGroupItemStyle}
-                     active={isActive}
+                    active={isActive}
                     ref="FirstSelectedSelected"
                     onDragStart={(event) => this.DragSelectedStart(event, x)}
                     onDragEnd={() => this.DragSelectedEnd()}
                     value={x}>{x}</ListGroupItem>
             }
             else {
-                return <ListGroupItem key={x} 
-                className="Selected" 
-                style={listGroupItemStyle}
+                return <ListGroupItem key={x}
+                    className="Selected"
+                    style={listGroupItemStyle}
                     draggable={true}
                     onClick={() => this.onClickSelectedItem(x)}
                     bsSize={'small'} active={isActive}
@@ -335,8 +335,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         }
 
         let masterNames = this.state.MasterValues.map(mv => { return mv.value })
-let isFilterMode: boolean = StringExtensions.IsNotEmpty(this.state.FilterValue);
-        
+        let isFilterMode: boolean = StringExtensions.IsNotEmpty(this.state.FilterValue);
+
         if (ArrayExtensions.ContainsItem(masterNames, item)) {
             let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == item);
             let filterMaster: boolean = true;
@@ -505,15 +505,11 @@ let isFilterMode: boolean = StringExtensions.IsNotEmpty(this.state.FilterValue);
             if (masterChildren) {
                 masterChildren.Children.forEach(c => {
                     if (ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
-                        if (ArrayExtensions.NotContainsItem(newAvailableValues, c)) {
-                            newAvailableValues.push(c)
-                        }
+                        ArrayExtensions.AddItem(newAvailableValues, c);
                     }
                 })
             } else {
-                if (ArrayExtensions.NotContainsItem(newAvailableValues, av)) {
-                    newAvailableValues.push(av)
-                }
+                ArrayExtensions.AddItem(newAvailableValues, av);
             }
         })
         return newAvailableValues;

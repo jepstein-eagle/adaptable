@@ -30,9 +30,7 @@ export class ChartService implements IChartService {
             this.blotter.forAllRecordsDo((row) => {
                 if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
                     let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
-                    if (ArrayExtensions.NotContainsItem(xAxisColValues, columnValue)) {
-                        xAxisColValues.push(columnValue);
-                    }
+                    ArrayExtensions.AddItem(xAxisColValues, columnValue);
                 }
             })
         }
