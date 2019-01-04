@@ -5,14 +5,9 @@ import { StateChangedTrigger } from '../Utilities/Enums';
 import { ApiBase } from './ApiBase';
 import { IConfigApi } from './Interface/IConfigApi';
 
-
-
 export class ConfigApi extends ApiBase implements IConfigApi {
 
-   
-
-  // General Config
-  public configClear(): void {
+   public configClear(): void {
     //this doesnt work but should!
     this.dispatchAction(ResetUserData())
   }

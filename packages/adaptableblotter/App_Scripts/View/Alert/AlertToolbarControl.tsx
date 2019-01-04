@@ -16,7 +16,6 @@ import { IAlert } from "../../Api/Interface/IMessage";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, AccessLevel } from "../../Utilities/Enums";
 import { AlertsPanel } from "../Components/AlertsPanel";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];

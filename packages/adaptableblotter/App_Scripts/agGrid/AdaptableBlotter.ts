@@ -36,25 +36,6 @@ import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalSty
 import { AlertStrategy } from '../Strategy/AlertStrategy';
 import { ApplicationStrategy } from '../Strategy/ApplicationStrategy';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
-import { CustomSortagGridStrategy } from './Strategy/CustomSortagGridStrategy'
-import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
-import { ShortcutStrategy } from '../Strategy/ShortcutStrategy'
-import { DataManagementStrategy } from '../Strategy/DataManagementStrategy'
-import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
-import { ExportStrategy } from '../Strategy/ExportStrategy'
-import { FlashingCellsagGridStrategy } from './Strategy/FlashingCellsagGridStrategy'
-import { CalendarStrategy } from '../Strategy/CalendarStrategy'
-import { ConditionalStyleagGridStrategy } from './Strategy/ConditionalStyleagGridStrategy'
-import { QuickSearchagGridStrategy } from './Strategy/QuickSearchagGridStrategy'
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
-import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
-import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
-import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
-import { LayoutStrategy } from '../Strategy/LayoutStrategy'
-import { ThemeStrategy } from '../Strategy/ThemeStrategy'
-import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
-import { FormatColumnagGridStrategy } from './Strategy/FormatColumnagGridStrategy'
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../Strategy/CalculatedColumnStrategy";
@@ -78,9 +59,9 @@ import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCri
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../Api/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { IColumn } from '../Api/Interface/IColumn';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression, IPermittedColumnValues } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
@@ -113,6 +94,25 @@ import { BlotterApi } from '../Api/BlotterApi';
 import { Action } from 'redux';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { AlertToolbarControl } from '../View/Alert/AlertToolbarControl';
+import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
+import { CalendarStrategy } from '../Strategy/CalendarStrategy';
+import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
+import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
+import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
+import { DataManagementStrategy } from '../Strategy/DataManagementStrategy';
+import { ExportStrategy } from '../Strategy/ExportStrategy';
+import { LayoutStrategy } from '../Strategy/LayoutStrategy';
+import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
+import { SmartEditStrategy } from '../Strategy/SmartEditStrategy';
+import { ShortcutStrategy } from '../Strategy/ShortcutStrategy';
+import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy';
+import { ThemeStrategy } from '../Strategy/ThemeStrategy';
+import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
+import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
+import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
+import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
+import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
+import { QuickSearchStrategyagGrid } from './Strategy/QuickSearchStrategyagGrid';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -180,20 +180,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
-        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy(this))
-        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyagGrid(this))
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(this))
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy(this))
-        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellStrategyagGrid(this))
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyagGrid(this))
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchagGridStrategy(this))
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
@@ -1615,7 +1615,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             if (customSort) {
                                 // check that not already applied
                                 if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
-                                    let customSortStrategy: CustomSortagGridStrategy = this.Strategies.get(StrategyConstants.CustomSortStrategyId) as CustomSortagGridStrategy;
+                                    let customSortStrategy: CustomSortStrategyagGrid = this.Strategies.get(StrategyConstants.CustomSortStrategyId) as CustomSortStrategyagGrid;
                                     let groupCustomSort: ICustomSort = ObjectFactory.CreateEmptyCustomSort();
                                     groupCustomSort.ColumnId = sm.colId;
                                     groupCustomSort.SortedValues = customSort.SortedValues;

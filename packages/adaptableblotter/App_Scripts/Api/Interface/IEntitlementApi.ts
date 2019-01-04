@@ -1,6 +1,4 @@
-import * as EntitlementsRedux from '../../Redux/ActionsReducers/EntitlementsRedux'
-import { IEntitlement } from "./Interfaces";
-import { ApiBase } from "../ApiBase";
+import { IEntitlement } from "./IAdaptableBlotterObjects";
 
 export interface IEntitlementApi {
 

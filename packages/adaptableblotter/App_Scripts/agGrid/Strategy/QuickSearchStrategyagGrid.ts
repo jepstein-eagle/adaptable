@@ -2,12 +2,10 @@ import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrat
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { QuickSearchStrategy } from '../../Strategy/QuickSearchStrategy';
 
-export class QuickSearchagGridStrategy extends QuickSearchStrategy implements IQuickSearchStrategy {
+export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQuickSearchStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }
-
-
 
     protected postSearch() {
         if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {

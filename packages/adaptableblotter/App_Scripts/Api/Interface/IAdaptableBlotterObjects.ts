@@ -1,4 +1,4 @@
-import { LeafExpressionOperator, ReportColumnScope, ReportRowScope, MessageType } from '../../Utilities/Enums';
+import { LeafExpressionOperator } from '../../Utilities/Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
@@ -257,8 +257,8 @@ export interface IStyle {
 
 export interface IPercentBar extends IAdaptableBlotterObject {
   ColumnId: string;
-  MinValue: number;
-  MaxValue: number;
+  MinValue?: number;
+  MaxValue?: number;
   PositiveColor: string;
   NegativeColor: string;
   ShowValue: boolean;
@@ -266,6 +266,25 @@ export interface IPercentBar extends IAdaptableBlotterObject {
   MinValueColumnId? :string
 }
 
+export interface IEntitlement {
+  FunctionName: string;
+  AccessLevel: "ReadOnly" | "Hidden" | "Full";
+}
+
+export interface ISystemStatus {
+  StatusMessage: string;
+  StatusColour: "Red" | "Amber" | "Green";
+}
+
+export interface IPermittedColumnValues {
+  ColumnId: string;
+  PermittedValues: any[]
+}
+
+export interface IColumnCategory {
+  ColumnCategoryId: string;
+  ColumnIds: string[]
+}
 
 
 

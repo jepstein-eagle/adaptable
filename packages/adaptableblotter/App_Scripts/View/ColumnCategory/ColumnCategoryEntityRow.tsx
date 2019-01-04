@@ -4,8 +4,8 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
-import { IColumnCategory } from "../../Api/Interface/Interfaces";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 export interface ColumnCategoryEntityRowProps<ColumnCategoryEntityRow> extends SharedEntityExpressionRowProps<ColumnCategoryEntityRow> {

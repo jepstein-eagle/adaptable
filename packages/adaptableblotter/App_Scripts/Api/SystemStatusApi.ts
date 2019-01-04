@@ -1,8 +1,8 @@
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { ApiBase } from "./ApiBase";
-import { ISystemStatus } from "./Interface/Interfaces";
 import { StatusColour } from "../Utilities/Enums";
 import { ISystemStatusApi } from './Interface/ISystemStatusApi';
+import { ISystemStatus } from './Interface/IAdaptableBlotterObjects';
 
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
 

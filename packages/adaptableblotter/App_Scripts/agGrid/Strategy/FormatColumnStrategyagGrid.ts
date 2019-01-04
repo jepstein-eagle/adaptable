@@ -6,7 +6,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 
-export class FormatColumnagGridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
+export class FormatColumnStrategyagGrid extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {
         super(blotterBypass)
     }

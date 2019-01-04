@@ -4,7 +4,7 @@ import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsS
 import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
-export class FlashingCellsHypergridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
+export class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }

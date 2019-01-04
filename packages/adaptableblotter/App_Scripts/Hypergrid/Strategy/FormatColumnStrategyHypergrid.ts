@@ -2,7 +2,7 @@ import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStr
 import { FormatColumnStrategy } from '../../Strategy/FormatColumnStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 
-export class FormatColumnHypergridStrategy extends FormatColumnStrategy implements IFormatColumnStrategy {
+export class FormatColumnStrategyHypergrid extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {
         super(blotterBypass)
     }

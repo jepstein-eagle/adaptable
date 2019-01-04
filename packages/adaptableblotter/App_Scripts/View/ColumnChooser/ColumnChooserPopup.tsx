@@ -9,8 +9,9 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { IColumnCategory, IMasterChildren } from "../../Api/Interface/Interfaces";
+import {  IMasterChildren } from "../../Api/Interface/Interfaces";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {

@@ -1,8 +1,5 @@
 import { IUserState, AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import { ResetUserData, LoadState } from '../../Redux/Store/AdaptableBlotterStore';
-import { StateChangedTrigger } from '../../Utilities/Enums';
-import { ApiBase } from '../ApiBase';
 
 export interface IConfigApi {
 

@@ -4,16 +4,14 @@ import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
-import { IConditionalStyle } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IColumnCategory } from '../../Api/Interface/Interfaces';
+import { IConditionalStyle, IColumnCategory } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
-export class ConditionalStyleHypergridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
+export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }
 
-    
     // Called when a single piece of data changes, ie. usually the result of an inline edit
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
         let theBlotter = this.blotter as AdaptableBlotter

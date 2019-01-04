@@ -4,7 +4,6 @@ import { AdaptableBlotter, } from './AdaptableBlotter'
 import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid-community/dist/lib/filter/floatingFilter";
 import { FloatingFilterFormReact } from "../View/Components/FilterForm/FloatingFilterForm";
 import { IColumn } from "../Api/Interface/IColumn";
-import { DistinctCriteriaPairValue } from "../Utilities/Enums";
 import { ColumnHelper } from "../Utilities/Helpers/ColumnHelper";
 
 

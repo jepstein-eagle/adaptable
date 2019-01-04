@@ -1,9 +1,10 @@
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { ApiBase } from "../ApiBase";
-import { Visibility } from '../../Utilities/Enums';
 
 export interface IDashboardApi {
 
+    /**
+     * 
+     * @param availableToolbars 
+     */
     SetAvailableToolbars(availableToolbars: string[]): void
     SetVisibleToolbars(visibleToolbars: string[]): void
     ShowToolbar(visibleToolbar: string): void

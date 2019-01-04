@@ -1,5 +1,3 @@
-import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
-import { ApiBase } from "../ApiBase";
 import { ICalculatedColumn } from './IAdaptableBlotterObjects';
 
 export interface ICalculatedColumnApi {

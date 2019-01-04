@@ -6,11 +6,11 @@ import { AdaptableBlotter } from '../AdaptableBlotter'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IColumnCategory } from '../../Api/Interface/Interfaces';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IColumnCategory } from '../../Api/Interface/IAdaptableBlotterObjects';
 
-export class ConditionalStyleagGridStrategy extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
+export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
     }

@@ -16,7 +16,6 @@ import { SelectedCellOperation, AccessLevel } from "../../Utilities/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IEntitlement } from "../../Api/Interface/Interfaces";
 
 interface SelectedCellsToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SelectedCellsToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo

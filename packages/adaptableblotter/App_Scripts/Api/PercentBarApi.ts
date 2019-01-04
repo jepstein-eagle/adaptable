@@ -5,9 +5,7 @@ import { IPercentBarApi } from './Interface/IPercentBarApi';
 
 export class PercentBarApi extends ApiBase implements IPercentBarApi {
 
-
-  // Percent Bars api methods
-  public GetAll(): IPercentBar[] {
+ public GetAll(): IPercentBar[] {
     return this.getState().PercentBar.PercentBars;
   }
 

@@ -4,7 +4,6 @@ import { ApiBase } from "./ApiBase";
 import { IDataSourceApi } from './Interface/IDataSource';
 
 
-
 export class DataSourceApi extends ApiBase implements IDataSourceApi {
 
   public Set(dataSourceName: string): void {

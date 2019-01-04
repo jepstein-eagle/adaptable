@@ -9,9 +9,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { IEntitlement } from "../../Api/Interface/Interfaces";
-
+import { IEntitlement } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
     AvailableToolbars: string[];

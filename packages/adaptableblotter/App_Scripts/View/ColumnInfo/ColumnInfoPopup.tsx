@@ -20,11 +20,10 @@ import { DataType, SelectionMode, AccessLevel } from '../../Utilities/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { IEntitlement, IColumnCategory } from "../../Api/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn, IEntitlement, IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";

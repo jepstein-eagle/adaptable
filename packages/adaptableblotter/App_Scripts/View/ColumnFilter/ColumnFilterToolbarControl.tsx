@@ -14,10 +14,10 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType, AccessLevel } from '../../Utilities/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IUserFilter, IColumnFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter, IColumnFilter, IEntitlement } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
-import { IEntitlement, IKeyValuePair } from "../../Api/Interface/Interfaces";
+import {  IKeyValuePair } from "../../Api/Interface/Interfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,

@@ -4,12 +4,9 @@ import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
 import { ApiBase } from "./ApiBase";
 import { ICustomSortApi } from './Interface/ICustomSortApi';
 
-
-
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
 
-   // Custom Sort Methods
-   public GetAll(): ICustomSort[] {
+    public GetAll(): ICustomSort[] {
     return this.getState().CustomSort.CustomSorts;
   }
 

@@ -159,5 +159,3 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
 }
-
-

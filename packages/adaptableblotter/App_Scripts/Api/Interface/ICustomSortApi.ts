@@ -1,7 +1,4 @@
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ICustomSort } from "./IAdaptableBlotterObjects";
-import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import { ApiBase } from "../ApiBase";
 
 export interface ICustomSortApi {
    

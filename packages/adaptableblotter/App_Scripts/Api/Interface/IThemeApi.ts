@@ -1,4 +1,5 @@
 import { IUserTheme } from './IAdaptableBlotterObjects';
+
 export interface IThemeApi {
   SetCurrent(theme: string): void;
   GetCurrent(): string;

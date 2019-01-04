@@ -16,12 +16,12 @@ import { IColumn } from '../../Api/Interface/IColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Utilities/Enums";
-import { ISystemStatus } from "../../Api/Interface/Interfaces";
 import { IAlert, } from "../../Api/Interface/IMessage";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { ISystemStatus } from "../../Api/Interface/IAdaptableBlotterObjects";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {

@@ -1,22 +1,49 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
 import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Utilities/Enums';
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Api/Expression';
-import { PRIMARY_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
+import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
 
 
 export module UIHelper {
+    export function getDefaultColors(): string[] {
+        return [
+            "#000000", //  {/* black */}
+            "#ffffff", //  {/* white */}
+            "#C0C0C0", //  {/* light gray */}
+            "#808080", //  {/* dark gray */}
+            "#800000", //  {/* brown */}
+
+            "#808000", //  {/* olive */}
+            "#008000", //  {/* dark green */}
+            "#00FF00", //  {/* light green */}
+            "#FFFF00", //  {/* yellow */}
+            "#FFFFCC", //  {/* pale yellow (quick search default) */}
+
+            "#000080", //  {/* dark blue */}
+            "#0000FF", //  {/* blue */}
+            "#008080", //  {/* cyan */}
+            "#00FFFF", //  {/* light blue */}
+            "#FF00FF", //  {/* pink */}
+
+            "#800080", //  {/* purple */}
+            "#8B0000", //  {/* dark red */}
+            "#FF0000", //  {/* red */}
+            "#FF6961", //  {/* pastel red */}
+            "#FFA500", //  {/* orange */}
+        ]
+    }
+
     export function getEmptyConfigState(): EditableConfigEntityState {
         return {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
         }
     }
 
- 
+
     export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
         return {
             Expression: expression, SelectedColumnId: "", SelectedTab: null
@@ -120,6 +147,6 @@ export module UIHelper {
     }
 
 
- 
+
 
 }

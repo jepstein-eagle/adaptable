@@ -21,12 +21,6 @@ import { DataManagementStrategy } from '../Strategy/DataManagementStrategy'
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy'
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy'
 import { ExportStrategy } from '../Strategy/ExportStrategy'
-import { FlashingCellsHypergridStrategy } from './Strategy/FlashingCellsHypergridStrategy'
-import { CalendarStrategy } from '../Strategy/CalendarStrategy'
-import { ConditionalStyleHypergridStrategy } from './Strategy/ConditionalStyleHypergridStrategy'
-import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy'
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy'
-import { FormatColumnHypergridStrategy } from './Strategy/FormatColumnHypergridStrategy'
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy'
 import { UserFilterStrategy } from '../Strategy/UserFilterStrategy'
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy'
@@ -44,13 +38,13 @@ import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
-import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IPermittedColumnValues, IVendorGridInfo } from '../Api/Interface/Interfaces';
+import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { IColumn } from '../Api/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar, IPermittedColumnValues } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
@@ -83,6 +77,12 @@ import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataService } from '../Utilities/Services/DataService';
 import { BlotterApi } from '../Api/BlotterApi';
+import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
+import { CalendarStrategy } from '../Strategy/CalendarStrategy';
+import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
+import { ConditionalStyleStrategyHypergrid } from './Strategy/ConditionalStyleStrategyHypergrid';
+import { FlashingCellsStrategyHypergrid } from './Strategy/FlashingCellsStrategyHypergrid';
+import { FormatColumnStrategyHypergrid } from './Strategy/FormatColumnStrategyHypergrid';
 
 
 //icon to indicate toggle state
@@ -162,7 +162,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
-        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy(this))
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyHypergrid(this))
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
@@ -172,8 +172,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
-        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy(this))
-        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnHypergridStrategy(this))
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyHypergrid(this))
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))

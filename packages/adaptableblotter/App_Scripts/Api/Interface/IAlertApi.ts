@@ -1,10 +1,3 @@
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ApiBase } from "../ApiBase";
-import { MessageType } from '../../Utilities/Enums';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { IAlert } from './IMessage';
 
 export interface IAlertApi {
  

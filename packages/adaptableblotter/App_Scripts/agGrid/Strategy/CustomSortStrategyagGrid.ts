@@ -3,7 +3,7 @@ import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { RowNode } from "ag-grid-community"
 import { ICustomSort } from '../../Api/Interface/IAdaptableBlotterObjects';
 
-export class CustomSortagGridStrategy extends CustomSortStrategy {
+export class CustomSortStrategyagGrid extends CustomSortStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(blotter)
     }

@@ -1,26 +1,20 @@
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy'
-import { DataType } from '../../Utilities/Enums'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
 import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-//import { IDataChangedEvent } from '../../Api/Interface/IDataChanges';
 
-export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implements IFlashingCellsStrategy {
+
+export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
         this.currentFlashing = new Map()
     }
     private currentFlashing: Map<any, number>
 
-    protected handleDataSourceChanged(DataChangedEvent: IDataChangedInfo) {
-        // no implementation required
-
-    }
-
-    protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void {
+   protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void {
         // no implementation required
     }
 
@@ -80,7 +74,6 @@ export class FlashingCellsagGridStrategy extends FlashingCellsStrategy implement
                     }
 
                 }
-                //   alert("i do this once for: " + col.ColumnId)
                 theBlotter.setCellClassRules(cellClassRules, col.ColumnId, "FlashingCell");
             })
         }
