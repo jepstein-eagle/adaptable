@@ -24,25 +24,6 @@ const CalculatedColumnExpressionService_1 = require("../Utilities/Services/Calcu
 const AlertStrategy_1 = require("../Strategy/AlertStrategy");
 const ApplicationStrategy_1 = require("../Strategy/ApplicationStrategy");
 const BulkUpdateStrategy_1 = require("../Strategy/BulkUpdateStrategy");
-const CustomSortagGridStrategy_1 = require("./Strategy/CustomSortagGridStrategy");
-const SmartEditStrategy_1 = require("../Strategy/SmartEditStrategy");
-const ShortcutStrategy_1 = require("../Strategy/ShortcutStrategy");
-const DataManagementStrategy_1 = require("../Strategy/DataManagementStrategy");
-const PlusMinusStrategy_1 = require("../Strategy/PlusMinusStrategy");
-const ColumnChooserStrategy_1 = require("../Strategy/ColumnChooserStrategy");
-const ExportStrategy_1 = require("../Strategy/ExportStrategy");
-const FlashingCellsagGridStrategy_1 = require("./Strategy/FlashingCellsagGridStrategy");
-const CalendarStrategy_1 = require("../Strategy/CalendarStrategy");
-const ConditionalStyleagGridStrategy_1 = require("./Strategy/ConditionalStyleagGridStrategy");
-const QuickSearchagGridStrategy_1 = require("./Strategy/QuickSearchagGridStrategy");
-const AdvancedSearchStrategy_1 = require("../Strategy/AdvancedSearchStrategy");
-const UserFilterStrategy_1 = require("../Strategy/UserFilterStrategy");
-const ColumnFilterStrategy_1 = require("../Strategy/ColumnFilterStrategy");
-const CellValidationStrategy_1 = require("../Strategy/CellValidationStrategy");
-const LayoutStrategy_1 = require("../Strategy/LayoutStrategy");
-const ThemeStrategy_1 = require("../Strategy/ThemeStrategy");
-const TeamSharingStrategy_1 = require("../Strategy/TeamSharingStrategy");
-const FormatColumnagGridStrategy_1 = require("./Strategy/FormatColumnagGridStrategy");
 const ColumnInfoStrategy_1 = require("../Strategy/ColumnInfoStrategy");
 const DashboardStrategy_1 = require("../Strategy/DashboardStrategy");
 const CalculatedColumnStrategy_1 = require("../Strategy/CalculatedColumnStrategy");
@@ -73,6 +54,26 @@ const eventKeys_1 = require("ag-grid-community/dist/lib/eventKeys");
 const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
 const BlotterApi_1 = require("../Api/BlotterApi");
+const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
+const AdvancedSearchStrategy_1 = require("../Strategy/AdvancedSearchStrategy");
+const CalendarStrategy_1 = require("../Strategy/CalendarStrategy");
+const CellValidationStrategy_1 = require("../Strategy/CellValidationStrategy");
+const ColumnChooserStrategy_1 = require("../Strategy/ColumnChooserStrategy");
+const ColumnFilterStrategy_1 = require("../Strategy/ColumnFilterStrategy");
+const DataManagementStrategy_1 = require("../Strategy/DataManagementStrategy");
+const ExportStrategy_1 = require("../Strategy/ExportStrategy");
+const LayoutStrategy_1 = require("../Strategy/LayoutStrategy");
+const PlusMinusStrategy_1 = require("../Strategy/PlusMinusStrategy");
+const SmartEditStrategy_1 = require("../Strategy/SmartEditStrategy");
+const ShortcutStrategy_1 = require("../Strategy/ShortcutStrategy");
+const TeamSharingStrategy_1 = require("../Strategy/TeamSharingStrategy");
+const ThemeStrategy_1 = require("../Strategy/ThemeStrategy");
+const UserFilterStrategy_1 = require("../Strategy/UserFilterStrategy");
+const ConditionalStyleStrategyagGrid_1 = require("./Strategy/ConditionalStyleStrategyagGrid");
+const CustomSortStrategyagGrid_1 = require("./Strategy/CustomSortStrategyagGrid");
+const FlashingCellsStrategyagGrid_1 = require("./Strategy/FlashingCellsStrategyagGrid");
+const FormatColumnStrategyagGrid_1 = require("./Strategy/FormatColumnStrategyagGrid");
+const QuickSearchStrategyagGrid_1 = require("./Strategy/QuickSearchStrategyagGrid");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -122,20 +123,20 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
-        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleagGridStrategy_1.ConditionalStyleagGridStrategy(this));
-        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortagGridStrategy_1.CustomSortagGridStrategy(this));
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyagGrid_1.ConditionalStyleStrategyagGrid(this));
+        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid_1.CustomSortStrategyagGrid(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
         this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsagGridStrategy_1.FlashingCellsagGridStrategy(this));
-        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnagGridStrategy_1.FormatColumnagGridStrategy(this));
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyagGrid_1.FlashingCellStrategyagGrid(this));
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyagGrid_1.FormatColumnStrategyagGrid(this));
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchagGridStrategy_1.QuickSearchagGridStrategy(this));
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
@@ -149,25 +150,18 @@ class AdaptableBlotter {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
             //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
-            this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
+            this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
         })
             .then(() => this.initInternalGridLogic(), (e) => {
             LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
             this.initInternalGridLogic();
-            this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
+            this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
         })
             .then(() => {
-            // at the end so load the current layout, refresh the toolbar and turn off the loading message
-            let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
-            this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
-            if (this.gridOptions.floatingFilter) { // sometimes the header row looks wrong when using floating filter so to be sure...
-                this.gridOptions.api.refreshHeader();
-            }
-            BlotterHelper_1.BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
-            this.applyFilteredColumnStyle();
+            this.applyFinalRendering();
             this.isInitialised = true;
-            this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());
+            this.dispatchAction(PopupRedux.PopupHideLoading());
         });
         if (renderGrid) {
             if (this.abContainerElement == null) {
@@ -178,9 +172,6 @@ class AdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterView_1.AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
-    }
-    getState() {
-        return this.AdaptableBlotterStore.TheStore.getState();
     }
     createFilterWrapper(col) {
         this.gridOptions.api.destroyFilter(col);
@@ -270,7 +261,7 @@ class AdaptableBlotter {
                 allColumns.push(existingColumn);
             }
         });
-        this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(allColumns));
+        this.dispatchAction(GridRedux.GridSetColumns(allColumns));
     }
     createColumn(vendorColumn, quickSearchClassName) {
         let colId = vendorColumn.getColId();
@@ -336,7 +327,7 @@ class AdaptableBlotter {
                 }
             }
         });
-        this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.SetMenuItems(menuItems));
+        this.dispatchAction(MenuRedux.SetMenuItems(menuItems));
     }
     getPrimaryKeyValueFromRecord(record) {
         return this.gridOptions.api.getValue(this.BlotterOptions.primaryKey, record);
@@ -411,7 +402,7 @@ class AdaptableBlotter {
             });
         }
         let selectedCells = { Columns: columns, Selection: selectionMap };
-        this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetSelectedCells(selectedCells));
+        this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCells));
         this._onSelectedCellsChanged.Dispatch(this, this);
     }
     //We deduce the type here, as there is no way to get it through the definition
@@ -538,26 +529,44 @@ class AdaptableBlotter {
         // using new method... (JW, 11/3/18)
         var dataChangedEvents = [];
         let nodesToRefresh = [];
-        let colsToRefresh = [];
+        let refreshColumnList = [];
         this.gridOptions.api.getModel().forEachNode((rowNode) => {
-            let value = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode));
-            if (value) {
+            let cellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode));
+            if (cellInfo) {
+                let colId = cellInfo.ColumnId;
+                refreshColumnList.push(colId);
                 nodesToRefresh.push(rowNode);
-                if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(colsToRefresh, value.ColumnId)) {
-                    colsToRefresh.push(value.ColumnId);
-                }
-                let oldValue = this.gridOptions.api.getValue(value.ColumnId, rowNode);
+                ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, colId);
+                let oldValue = this.gridOptions.api.getValue(colId, rowNode);
                 var data = rowNode.data;
-                data[value.ColumnId] = value.Value;
+                data[colId] = cellInfo.Value;
                 let dataChangedEvent = {
                     OldValue: oldValue,
-                    NewValue: value.Value,
-                    ColumnId: value.ColumnId,
-                    IdentifierValue: value.Id,
+                    NewValue: cellInfo.Value,
+                    ColumnId: colId,
+                    IdentifierValue: cellInfo.Id,
                     Timestamp: null,
                     Record: null
                 };
                 dataChangedEvents.push(dataChangedEvent);
+                // check if any calc columns need to refresh
+                let columnList = this._calculatedColumnPathMap.get(colId);
+                if (columnList) {
+                    columnList.forEach(calcColumn => {
+                        ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, calcColumn);
+                    });
+                }
+                // see if we need to refresh any percent bars
+                this.getState().PercentBar.PercentBars.forEach(pb => {
+                    refreshColumnList.forEach(changedColId => {
+                        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
+                            ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                        }
+                        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
+                            ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                        }
+                    });
+                });
             }
         });
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -568,7 +577,7 @@ class AdaptableBlotter {
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
-            this.refreshCells(node, colsToRefresh);
+            this.refreshCells(node, refreshColumnList);
         });
     }
     cancelEdit() {
@@ -873,12 +882,15 @@ class AdaptableBlotter {
     addCalculatedColumnToGrid(calculatedColumn) {
         let venderCols = this.gridOptions.columnApi.getAllColumns();
         let colDefs = venderCols.map(x => x.getColDef());
-        colDefs.push({
+        let newColDef = {
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
             hide: true,
             valueGetter: (params) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
-        });
+        };
+        colDefs.push(newColDef);
+        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+        this.gridOptions.api.setColumnDefs([]);
         this.gridOptions.api.setColumnDefs(colDefs);
         let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression);
         for (let column of columnList) {
@@ -1031,6 +1043,10 @@ class AdaptableBlotter {
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_FIRST_DATA_RENDERED, (params) => {
             this.debouncedSetColumnIntoStore();
         });
+        // once the grid is ready we should make sure we are too
+        this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_GRID_READY, (params) => {
+            // do something?
+        });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
         let columnEventsThatTriggersAutoLayoutSave = [
             eventKeys_1.Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
@@ -1134,17 +1150,32 @@ class AdaptableBlotter {
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_VALUE_CHANGED, (params) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-            this.DataService.CreateDataEvent(identifierValue, params.newValue, params.colDef.field, params.node);
+            let colId = params.colDef.field;
+            this.DataService.CreateDataEvent(identifierValue, params.newValue, colId, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
-            let columnList = this._calculatedColumnPathMap.get(params.colDef.field);
+            let refreshColumnList = [colId];
+            let columnList = this._calculatedColumnPathMap.get(colId);
             if (columnList) {
-                columnList.forEach(x => {
-                    let newValue = this.gridOptions.api.getValue(x, params.node);
-                    this.DataService.CreateDataEvent(identifierValue, newValue, x, params.node);
+                columnList.forEach(columnId => {
+                    let newValue = this.gridOptions.api.getValue(columnId, params.node);
+                    this.DataService.CreateDataEvent(identifierValue, newValue, columnId, params.node);
+                    ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, columnId);
                 });
             }
+            // see if we need to refresh any percent bars
+            this.getState().PercentBar.PercentBars.forEach(pb => {
+                refreshColumnList.forEach(changedColId => {
+                    if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
+                        ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                    }
+                    if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
+                        ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                    }
+                });
+            });
+            this.refreshCells(params.node, refreshColumnList);
         });
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
         let originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
@@ -1279,17 +1310,20 @@ class AdaptableBlotter {
         if (renderedColumn) {
             let showNegatives = pcr.MinValue < 0;
             let showPositives = pcr.MaxValue > 0;
-            let maxValue = pcr.MaxValue;
-            let minValue = pcr.MinValue;
             let cellRendererFunc = (params) => {
                 let isNegativeValue = params.value < 0;
                 let value = params.value;
+                let maxValue = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId) ?
+                    this.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
+                    pcr.MaxValue;
+                let minValue = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId) ?
+                    this.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
+                    pcr.MinValue;
                 if (isNegativeValue) {
                     value = value * -1;
                 }
                 let percentagePositiveValue = ((100 / maxValue) * value);
                 let percentageNegativeValue = ((100 / (minValue * -1)) * value);
-                //    let dualValue
                 if (showNegatives && showPositives) { // if need both then half the space
                     percentagePositiveValue = percentagePositiveValue / 2;
                     percentageNegativeValue = percentageNegativeValue / 2;
@@ -1533,13 +1567,27 @@ class AdaptableBlotter {
             }
         }
     }
-    applyFilteredColumnStyle() {
+    applyFinalRendering() {
+        let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
+        // Check that we have a primary key
+        BlotterHelper_1.BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
+        // add the filter header style if required
         if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
             document.body.appendChild(css);
         }
+        // sometimes the header row looks wrong when using floating filter so to be sure...
+        if (this.gridOptions.floatingFilter) {
+            this.gridOptions.api.refreshHeader();
+        }
+        // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
+        if (this.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
+            this.dispatchAction(LayoutRedux.LayoutSelect(GeneralConstants_1.DEFAULT_LAYOUT));
+        }
+        // at the end so load the current layout, refresh the toolbar and turn off the loading message
+        this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
     }
     clearFlashingCellMap() {
         this._flashingCellList.clear();
@@ -1582,6 +1630,13 @@ class AdaptableBlotter {
             this._flashingCellList.set(columnId, returnList);
         }
         return returnList;
+    }
+    // A couple of state management functions
+    getState() {
+        return this.AdaptableBlotterStore.TheStore.getState();
+    }
+    dispatchAction(action) {
+        this.AdaptableBlotterStore.TheStore.dispatch(action);
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

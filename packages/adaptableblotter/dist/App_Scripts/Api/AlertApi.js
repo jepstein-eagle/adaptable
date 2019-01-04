@@ -7,7 +7,6 @@ const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 class AlertApi extends ApiBase_1.ApiBase {
-    // Alerts api Methods
     Show(alertHeader, alertMessage, MessageType, showAsPopup) {
         let maxAlerts = this.getState().Alert.MaxAlertsInStore;
         let MessageTypeEnum = MessageType;

@@ -1,31 +1,29 @@
-import { IEvent } from "./IEvent";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from "./IStateEvents";
-import { IQuickSearchApi } from "../QuickSearchApi";
-import { ICalculatedColumnApi } from "../CalculatedColumnApi";
-import { ICellValidationApi } from "../CellValidationApi";
-import { IColumnCategoryApi } from "../ColumnCategoryApi";
-import { ICustomSortApi } from "../CustomSortApi";
-import { IDashboardApi } from "../DashboardApi";
-import { IEntitlementApi } from "../EntitlementApi";
-import { IFormatColumnApi } from "../FormatColumnApi";
-import { ILayoutApi } from "../LayoutApi";
-import { IPercentBarApi } from "../PercentBarApi";
-import { IShortcutApi } from "../ShortcutApi";
-import { ISmartEditApi } from "../SmartEditApi";
-import { ISystemStatusApi } from "../SystemStatusApi";
-import { IThemeApi } from "../ThemeApi";
-import { IUserInterfaceApi } from "../UserInterfaceApi";
-import { IAdvancedSearchApi } from "../AdvancedSearchApi";
-import { IAlertApi } from "../AlertApi";
-import { ICalendarApi } from "../CalendarApi";
-import { IColumnFilterApi } from "../ColumnFilterApi";
-import { IConfigApi } from "../ConfigApi";
-import { IDataSourceApi } from "../DataSource";
-import { IExportApi } from "../ExportApi";
-import { IFreeTextColumnApi } from "../FreeTextColumn";
-import { ISystemFilterApi } from "../SystemFilterApi";
-import { IGridApi } from "../GridApi";
+import { ICellValidationApi } from "./ICellValidationApi";
+import { IColumnFilterApi } from "./IColumnFilterApi";
+import { IAdvancedSearchApi } from "./IAdvancedSearchApi";
+import { IAlertApi } from "./IAlertApi";
+import { ICalculatedColumnApi } from "./ICalculatedColumnApi";
+import { ICalendarApi } from "./ICalendarApi";
+import { IColumnCategoryApi } from "./IColumnCategoryApi";
+import { IConfigApi } from "./IConfigApi";
+import { IDashboardApi } from "./IDashboardApi";
+import { IDataSourceApi } from "./IDataSource";
+import { IEntitlementApi } from "./IEntitlementApi";
+import { IEventApi } from "./IEventApi";
+import { IExportApi } from "./IExportApi";
+import { IFormatColumnApi } from "./IFormatColumnApi";
+import { IFreeTextColumnApi } from "./IFreeTextColumnApi";
+import { IGridApi } from "./IGridApi";
+import { ILayoutApi } from "./ILayoutApi";
+import { IPercentBarApi } from "./IPercentBarApi";
+import { IQuickSearchApi } from "./IQuickSearchApi";
+import { IShortcutApi } from "./IShortcutApi";
+import { ISmartEditApi } from "./ISmartEditApi";
+import { ISystemFilterApi } from "./ISystemFilterApi";
+import { ISystemStatusApi } from "./ISystemStatusApi";
+import { IThemeApi } from "./IThemeApi";
+import { IUserInterfaceApi } from "./IUserInterfaceApi";
+import { ICustomSortApi } from "./ICustomSortApi";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  */
@@ -42,6 +40,7 @@ export interface IBlotterApi {
     dashboardApi: IDashboardApi;
     dataSourceApi: IDataSourceApi;
     entitlementApi: IEntitlementApi;
+    eventApi: IEventApi;
     exportApi: IExportApi;
     formatColumnApi: IFormatColumnApi;
     freeTextColumnApi: IFreeTextColumnApi;
@@ -55,20 +54,4 @@ export interface IBlotterApi {
     systemStatusApi: ISystemStatusApi;
     themeApi: IThemeApi;
     userInterfaceApi: IUserInterfaceApi;
-    /**
-    * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
-    * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
-    */
-    onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
-    /**
-    * Event fired whenever the state in the Blotter changes, providing full coverage of what triggered the change and what the new state for that function is.
-    * @returns IEvent<IAdaptableBlotter, IStateChangedEventArgs>
-    */
-    onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;
-    /**
-    * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.
-    * Only fires when in a user layout and currently just passes the name of the layout.
-    * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
-    */
-    onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
 }

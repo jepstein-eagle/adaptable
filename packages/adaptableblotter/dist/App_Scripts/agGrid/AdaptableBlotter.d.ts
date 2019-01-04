@@ -43,7 +43,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     EmbedColumnMenu: boolean;
     isInitialised: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
-    private getState;
     private createFilterWrapper;
     private createFloatingFilterWrapper;
     private _currentEditor;
@@ -140,8 +139,10 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     hideFloatingFilter(): void;
     applyLightTheme(): void;
     applyDarkTheme(): void;
-    private applyFilteredColumnStyle;
+    private applyFinalRendering;
     clearFlashingCellMap(): void;
     getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number, isUp: boolean): number;
     private getCellValuesForColumn;
+    private getState;
+    private dispatchAction;
 }

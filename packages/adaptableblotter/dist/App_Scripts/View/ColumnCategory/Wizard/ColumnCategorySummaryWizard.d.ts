@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumnCategory } from "../../../Api/Interface/Interfaces";
+import { IColumnCategory } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IColumn } from "../../../Api/Interface/IColumn";
 export interface ColumnCategorySummaryWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
     Columns: IColumn[];

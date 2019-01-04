@@ -6,6 +6,7 @@ const StrategyConstants = require("../../../Utilities/Constants/StrategyConstant
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const StyleVisualItem_1 = require("../../Components/StyleVisualItem");
 const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 class PercentBarSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -21,11 +22,11 @@ class PercentBarSummaryWizard extends React.Component {
         negativeStyle.ForeColor = this.props.Data.NegativeColor;
         let keyValuePairs = [
             { Key: "Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Minimum Value", Value: this.props.Data.MinValue },
-            { Key: "Maximum Value", Value: this.props.Data.MaxValue },
+            { Key: "Minimum Value", Value: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.Data.MinValueColumnId) ? this.props.Data.MinValue : "[" + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.MinValueColumnId, this.props.Columns) + "]" },
+            { Key: "Maximum Value", Value: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.Data.MaxValueColumnId) ? this.props.Data.MaxValue : "[" + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.MaxValueColumnId, this.props.Columns) + "]" },
             { Key: "Positive Colour", Value: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: positiveStyle }) },
             { Key: "Negative Colour", Value: React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: negativeStyle }) },
-            { Key: "Show Value", Value: this.props.Data.ShowValue ? "Yes" : "No" },
+            { Key: "Show Cell Value", Value: this.props.Data.ShowValue ? "Yes" : "No" },
         ];
         let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.PercentBarStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);

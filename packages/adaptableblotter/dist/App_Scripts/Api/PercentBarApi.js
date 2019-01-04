@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PercentBarRedux = require("../Redux/ActionsReducers/PercentBarRedux");
 const ApiBase_1 = require("./ApiBase");
 class PercentBarApi extends ApiBase_1.ApiBase {
-    // Percent Bars api methods
     GetAll() {
         return this.getState().PercentBar.PercentBars;
     }

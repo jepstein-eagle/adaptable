@@ -4,7 +4,6 @@ const AdaptableBlotterStore_1 = require("../Redux/Store/AdaptableBlotterStore");
 const Enums_1 = require("../Utilities/Enums");
 const ApiBase_1 = require("./ApiBase");
 class ConfigApi extends ApiBase_1.ApiBase {
-    // General Config
     configClear() {
         //this doesnt work but should!
         this.dispatchAction(AdaptableBlotterStore_1.ResetUserData());

@@ -1,6 +1,6 @@
 import { ColumnCategoryState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IColumnCategory } from '../../Api/Interface/Interfaces';
+import { IColumnCategory } from '../../Api/Interface/IAdaptableBlotterObjects';
 export declare const COLUMN_CATEGORY_ADD = "COLUMN_CATEGORY_ADD";
 export declare const COLUMN_CATEGORY_EDIT = "COLUMN_CATEGORY_EDIT";
 export declare const COLUMN_CATEGORY_DELETE = "COLUMN_CATEGORY_DELETE";

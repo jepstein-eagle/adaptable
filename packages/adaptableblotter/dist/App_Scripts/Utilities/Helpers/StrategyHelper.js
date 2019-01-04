@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const StrategyConstants = require("../Constants/StrategyConstants");
-const Enums_1 = require("../Enums");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
+const Enums_1 = require("../Enums");
 var StrategyHelper;
 (function (StrategyHelper) {
     function IsEditStrategy(strategyId) {

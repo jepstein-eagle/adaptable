@@ -4,7 +4,6 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const DataSourceRedux = require("../Redux/ActionsReducers/DataSourceRedux");
 const ApiBase_1 = require("./ApiBase");
 class DataSourceApi extends ApiBase_1.ApiBase {
-    // Data Source api methods
     Set(dataSourceName) {
         let dataSource = this.getState().DataSource.DataSources.find(a => a == dataSourceName);
         if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {

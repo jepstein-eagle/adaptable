@@ -357,16 +357,12 @@ class DualListBoxEditor extends React.Component {
             if (masterChildren) {
                 masterChildren.Children.forEach(c => {
                     if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
-                        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(newAvailableValues, c)) {
-                            newAvailableValues.push(c);
-                        }
+                        ArrayExtensions_1.ArrayExtensions.AddItem(newAvailableValues, c);
                     }
                 });
             }
             else {
-                if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(newAvailableValues, av)) {
-                    newAvailableValues.push(av);
-                }
+                ArrayExtensions_1.ArrayExtensions.AddItem(newAvailableValues, av);
             }
         });
         return newAvailableValues;

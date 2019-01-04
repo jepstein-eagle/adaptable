@@ -22,9 +22,7 @@ class ChartService {
             this.blotter.forAllRecordsDo((row) => {
                 if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
                     let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId);
-                    if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(xAxisColValues, columnValue)) {
-                        xAxisColValues.push(columnValue);
-                    }
+                    ArrayExtensions_1.ArrayExtensions.AddItem(xAxisColValues, columnValue);
                 }
             });
         }
