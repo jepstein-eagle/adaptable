@@ -17,7 +17,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter, IEntitlement } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
-import {  IKeyValuePair } from "../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../Api/Interface/Interfaces";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
@@ -31,22 +31,22 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
     render(): any {
 
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
-         let collapsedText = this.props.ColumnFilters.length == 0 ?
+        let collapsedText = this.props.ColumnFilters.length == 0 ?
             "No Filters" :
             this.props.ColumnFilters.length == 1 ?
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
 
-                let filterStrings: IKeyValuePair[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns)
+        let filterStrings: IKeyValuePair[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns)
         let infoBody: any[] = []
-       filterStrings.forEach(fs => {
-                infoBody.push(<b> {fs.Key} </b>)
-                infoBody.push(fs.Value, <br />)
-            
+        filterStrings.forEach(fs => {
+            infoBody.push(<b> {fs.Key} </b>)
+            infoBody.push(fs.Value, <br />)
+
         })
 
         let content = <span>
-            <div className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <FormControl bsSize="small" style={{ width: "80px" }} value={collapsedText} disabled={true} type="string" />
                 {' '}
                 {infoBody.length > 0 &&
@@ -54,7 +54,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} MessageType={MessageType.Info} useButton={true} triggerAction={"click"} />
 
                         {' '}
-                        <ButtonClear onClick={() => this.onClearFilters() }
+                        <ButtonClear onClick={() => this.onClearFilters()}
                             bsStyle={"primary"}
                             cssClassName={cssClassName}
                             size={"small"}
@@ -73,7 +73,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         </PanelDashboard>
     }
 
-    private onClearFilters(){
+    private onClearFilters() {
         // better to put in store but lets test first...
         this.props.onClearAllFilters();
         this.props.Blotter.clearGridFiltering();

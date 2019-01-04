@@ -7,24 +7,26 @@ import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFla
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 
+// Base interface
 export interface IState {
-
 }
 
+/**
+ * Interface for System related State elements
+ * This is created by the system at run-time and NOT part of predefined or user config.
+ * Therefore it is not saved nor included in State events
+
+ */ 
 export interface ISystemState extends IState {
 }
 
+// Interface for State elements which are provided at Design time and never modified in the Blotter
 export interface IDesignTimeState extends IState {
 }
 
+// Interface for State elements which the User is able to modify during the lifetime of the application
 export interface IUserState extends IState {
 }
-
-/*
-System Config
-This is created by the system at run-time and NOT part of predefined or user config.
-Therefore it is not saved nor included in State events
-*/
 
 export interface SystemState extends ISystemState {
     SystemStatus: ISystemStatus;

@@ -16,14 +16,14 @@ export interface IAdaptableBlotterOptions {
     */
     vendorGrid?: any;
     /**
-      * How to identifier this Blotter
+      * Identifier for this instance of the Adaptable Blotter
       * Useful if Audit Log is turned on or you are using multiple Blotters
      */
     blotterId?: string;
     /**
      * Current user of the Adaptable Blotter
-     * Strongly recommended if using Config Server
-     * Identifies the current user in Audit Log
+     * Strongly recommended to be set if using Config Server
+     * Also used in Audit Log to identify the current user
     */
     userName?: string;
     /**
@@ -58,7 +58,7 @@ export interface IAdaptableBlotterOptions {
     */
     layoutOptions?: ILayoutOptions;
     /**
-     * Options for filters 
+     * Options for running filters 
      * Whether to use Adaptable Blotter or vendor grid forms
     */
     filterOptions?: IFilterOptions;
