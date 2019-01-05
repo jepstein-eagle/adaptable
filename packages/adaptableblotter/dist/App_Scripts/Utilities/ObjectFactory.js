@@ -17,6 +17,7 @@ var ObjectFactory;
             Title: "",
             SubTitle: "",
             YAxisColumnIds: [],
+            YAxisTotal: ChartEnums_1.AxisTotal.Sum,
             XAxisColumnId: "",
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties_1.DefaultChartProperties

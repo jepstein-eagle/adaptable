@@ -45,7 +45,7 @@ const SelectedCellsToolbarControl_1 = require("./SelectedCells/SelectedCellsTool
 const AlertPopup_1 = require("./Alert/AlertPopup");
 const AlertToolbarControl_1 = require("./Alert/AlertToolbarControl");
 const ChartPopup_1 = require("./Chart/ChartPopup");
-const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
+// import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
 const PercentBarPopup_1 = require("./PercentBar/PercentBarPopup");
@@ -84,7 +84,6 @@ exports.AdaptableViewFactory = {
     ThemePopup: ThemePopup_1.ThemePopup,
     TeamSharingPopup: TeamSharingPopup_1.TeamSharingPopup,
     UserFilterPopup: UserFilterPopup_1.UserFilterPopup,
-    ChartDisplayPopup: ChartDisplayPopup_1.ChartDisplayPopup
 };
 //here we put the dashboard control for each strategy
 exports.AdaptableDashboardViewFactory = new Map([
