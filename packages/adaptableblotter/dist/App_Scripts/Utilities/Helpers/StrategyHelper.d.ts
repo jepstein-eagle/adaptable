@@ -1,4 +1,4 @@
-import { IEntitlement } from '../../Api/Interface/Interfaces';
+import { IEntitlement } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { AccessLevel } from '../Enums';
 export declare module StrategyHelper {
     function IsEditStrategy(strategyId: string): boolean;

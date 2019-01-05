@@ -1,4 +1,5 @@
 export declare module ArrayExtensions {
+    function AddItem(array: any[], itemToAdd: any): void;
     function ContainsItem(array: any[], itemToCheck: any): boolean;
     function NotContainsItem(array: any[], itemToCheck: any): boolean;
     function RetrieveDistinct(array: any[]): any[];

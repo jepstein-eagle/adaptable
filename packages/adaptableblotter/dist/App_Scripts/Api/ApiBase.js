@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
+// Base class for the API - provides checking dispatching methods
 class ApiBase {
     constructor(blotter) {
         this.blotter = blotter;

@@ -9,7 +9,7 @@ class ColumnFilterApi extends ApiBase_1.ApiBase {
             this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf));
         });
     }
-    SetUserFilter(userFilter) {
+    SetFromUserFilter(userFilter) {
         let existingUserFilter = this.getState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
             let columnFilter = ObjectFactory_1.ObjectFactory.CreateColumnFilterFromUserFilter(existingUserFilter);

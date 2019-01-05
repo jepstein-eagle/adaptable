@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CustomSortRedux = require("../Redux/ActionsReducers/CustomSortRedux");
 const ApiBase_1 = require("./ApiBase");
 class CustomSortApi extends ApiBase_1.ApiBase {
-    // Custom Sort Methods
     GetAll() {
         return this.getState().CustomSort.CustomSorts;
     }

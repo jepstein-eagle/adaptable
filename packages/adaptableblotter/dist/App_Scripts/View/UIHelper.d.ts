@@ -5,6 +5,7 @@ import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Api/Expression';
 export declare module UIHelper {
+    function getDefaultColors(): string[];
     function getEmptyConfigState(): EditableConfigEntityState;
     function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState;
     function getExpressionBuilderStateWithColumn(expression: Expression, columnId: string): ExpressionBuilderPageState;

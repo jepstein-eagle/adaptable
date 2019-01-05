@@ -5,6 +5,31 @@ const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const StyleConstants_1 = require("../Utilities/Constants/StyleConstants");
 var UIHelper;
 (function (UIHelper) {
+    function getDefaultColors() {
+        return [
+            "#000000",
+            "#ffffff",
+            "#C0C0C0",
+            "#808080",
+            "#800000",
+            "#808000",
+            "#008000",
+            "#00FF00",
+            "#FFFF00",
+            "#FFFFCC",
+            "#000080",
+            "#0000FF",
+            "#008080",
+            "#00FFFF",
+            "#FF00FF",
+            "#800080",
+            "#8B0000",
+            "#FF0000",
+            "#FF6961",
+            "#FFA500",
+        ];
+    }
+    UIHelper.getDefaultColors = getDefaultColors;
     function getEmptyConfigState() {
         return {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,

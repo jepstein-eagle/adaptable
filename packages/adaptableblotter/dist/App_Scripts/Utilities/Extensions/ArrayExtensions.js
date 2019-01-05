@@ -2,6 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ArrayExtensions;
 (function (ArrayExtensions) {
+    function AddItem(array, itemToAdd) {
+        if (this.NotContainsItem(array, itemToAdd)) {
+            array.push(itemToAdd);
+        }
+    }
+    ArrayExtensions.AddItem = AddItem;
     function ContainsItem(array, itemToCheck) {
         if (array == null) {
             return false;

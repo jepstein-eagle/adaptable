@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const UserInterfaceRedux = require("../Redux/ActionsReducers/UserInterfaceRedux");
 const ApiBase_1 = require("./ApiBase");
 class UserInterfaceApi extends ApiBase_1.ApiBase {
-    // user interface api methods
     SetColorPalette(colorPalette) {
         this.dispatchAction(UserInterfaceRedux.ColorPaletteSet(colorPalette));
     }

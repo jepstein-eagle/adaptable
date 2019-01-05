@@ -9,7 +9,7 @@ const UIHelper_1 = require("./UIHelper");
 class AdaptablePopover extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON;
-        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['hover', 'focus'];
+        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['click'];
         let useButton = (this.props.useButton != null) ? this.props.useButton : false;
         const popoverClickRootClose = (React.createElement(react_bootstrap_1.Popover, { style: { margin: "0px", padding: "0px" }, id: "ab_popover", title: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : "" }, this.props.bodyText.map((textOrHTML, index) => React.createElement("span", { key: index }, textOrHTML))));
         return React.createElement("span", { className: cssClassName },

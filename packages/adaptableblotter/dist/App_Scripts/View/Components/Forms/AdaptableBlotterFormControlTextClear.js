@@ -7,7 +7,7 @@ const ButtonClear_1 = require("../Buttons/ButtonClear");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class AdaptableBlotterFormControlTextClear extends React.Component {
     render() {
-        let size = (this.props.bsSize) ? this.props.bsSize : 'xsmall';
+        let size = (this.props.bsSize) ? this.props.bsSize : 'sm';
         let cssClassName = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
         return React.createElement("span", null,
             React.createElement(react_bootstrap_1.InputGroup, null,

@@ -3,12 +3,17 @@ import { IMenuItem, IContextMenu } from '../../../Api/Interface/IMenu';
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IPreviewInfo } from '../../../Api/Interface/IPreview';
 import { IColumn } from '../../../Api/Interface/IColumn';
-import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Api/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar, ISystemStatus, IEntitlement, IPermittedColumnValues, IColumnCategory } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 export interface IState {
 }
+/**
+ * Interface for System related State elements
+ * This is created by the system at run-time and NOT part of predefined or user config.
+ * Therefore it is not saved nor included in State events
+
+ */
 export interface ISystemState extends IState {
 }
 export interface IDesignTimeState extends IState {

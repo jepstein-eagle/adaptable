@@ -44,7 +44,7 @@ import { SelectedCellsToolbarControl } from './SelectedCells/SelectedCellsToolba
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { ChartPopup } from './Chart/ChartPopup';
-import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
+// import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
@@ -84,7 +84,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ThemePopup: ThemePopup,
   TeamSharingPopup: TeamSharingPopup,
   UserFilterPopup: UserFilterPopup,
-  ChartDisplayPopup: ChartDisplayPopup
+  // ChartDisplayPopup: ChartDisplayPopup
 }
 
 //here we put the dashboard control for each strategy

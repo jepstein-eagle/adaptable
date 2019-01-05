@@ -22,9 +22,7 @@ class ChartService {
             this.blotter.forAllRecordsDo((row) => {
                 if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
                     let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId);
-                    if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(xAxisColValues, columnValue)) {
-                        xAxisColValues.push(columnValue);
-                    }
+                    ArrayExtensions_1.ArrayExtensions.AddItem(xAxisColValues, columnValue);
                 }
             });
         }
@@ -34,21 +32,21 @@ class ChartService {
             chartDataRow[xAxisColumnName] = cv;
             let showAverageTotal = chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average;
             let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
-            // need to revisit and see if we really do want always group...
-            // if we have additional column values then do those
-            // NB: currently only doing first - want to? or all?
             if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue) => {
                     let columnValueKVP = { Key: chartDefinition.AdditionalColumnId, Value: columnValue };
-                    let groupedTotal = this.buildGroupedTotal(chartDefinition.YAxisColumnIds[0], [xAxisKVP, columnValueKVP], columns);
-                    chartDataRow[columnValue] = groupedTotal;
+                    chartDefinition.YAxisColumnIds.forEach(colID => {
+                        let colFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
+                        let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal);
+                        chartDataRow[colFriendlyName + '(' + columnValue + ")"] = total;
+                    });
                 });
             }
             else { // otherwise do the y cols
                 chartDefinition.YAxisColumnIds.forEach(colID => {
-                    let groupedTotal = this.buildGroupedTotal(colID, [xAxisKVP], columns);
+                    let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
                     let colName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
-                    chartDataRow[colName] = groupedTotal;
+                    chartDataRow[colName] = total;
                 });
             }
             return chartDataRow;

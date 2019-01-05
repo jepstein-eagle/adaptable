@@ -17,12 +17,6 @@ const DataManagementStrategy_1 = require("../Strategy/DataManagementStrategy");
 const PlusMinusStrategy_1 = require("../Strategy/PlusMinusStrategy");
 const ColumnChooserStrategy_1 = require("../Strategy/ColumnChooserStrategy");
 const ExportStrategy_1 = require("../Strategy/ExportStrategy");
-const FlashingCellsHypergridStrategy_1 = require("./Strategy/FlashingCellsHypergridStrategy");
-const CalendarStrategy_1 = require("../Strategy/CalendarStrategy");
-const ConditionalStyleHypergridStrategy_1 = require("./Strategy/ConditionalStyleHypergridStrategy");
-const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
-const AdvancedSearchStrategy_1 = require("../Strategy/AdvancedSearchStrategy");
-const FormatColumnHypergridStrategy_1 = require("./Strategy/FormatColumnHypergridStrategy");
 const ColumnInfoStrategy_1 = require("../Strategy/ColumnInfoStrategy");
 const UserFilterStrategy_1 = require("../Strategy/UserFilterStrategy");
 const ColumnFilterStrategy_1 = require("../Strategy/ColumnFilterStrategy");
@@ -59,6 +53,12 @@ const FreeTextColumnService_1 = require("../Utilities/Services/FreeTextColumnSer
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
 const DataService_1 = require("../Utilities/Services/DataService");
 const BlotterApi_1 = require("../Api/BlotterApi");
+const AdvancedSearchStrategy_1 = require("../Strategy/AdvancedSearchStrategy");
+const CalendarStrategy_1 = require("../Strategy/CalendarStrategy");
+const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
+const ConditionalStyleStrategyHypergrid_1 = require("./Strategy/ConditionalStyleStrategyHypergrid");
+const FlashingCellsStrategyHypergrid_1 = require("./Strategy/FlashingCellsStrategyHypergrid");
+const FormatColumnStrategyHypergrid_1 = require("./Strategy/FormatColumnStrategyHypergrid");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -115,7 +115,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
-        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleHypergridStrategy_1.ConditionalStyleHypergridStrategy(this));
+        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyHypergrid_1.ConditionalStyleStrategyHypergrid(this));
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
@@ -125,8 +125,8 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
-        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsHypergridStrategy_1.FlashingCellsHypergridStrategy(this));
-        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnHypergridStrategy_1.FormatColumnHypergridStrategy(this));
+        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyHypergrid_1.FlashingCellsStrategyHypergrid(this));
+        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid_1.FormatColumnStrategyHypergrid(this));
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
