@@ -1,3 +1,5 @@
 const adaptableBlotterHypergrid = require('./dist/adaptableblotterhypergrid-bundle.min');
 
-module.exports = adaptableBlotterHypergrid;
+module.exports = {
+  AdaptableBlotter: adaptableBlotterHypergrid.AdaptableBlotter,
+};
