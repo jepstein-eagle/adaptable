@@ -15,7 +15,6 @@ module.exports = {
         library: "[name]",
         libraryTarget: 'umd'
     },
-    devtool: 'source-map',
     externals: {
         // old version - Samed: please check that the change is correct!
      //   "ag-grid": "ag-grid",
@@ -41,14 +40,13 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new webpack.ProvidePlugin({
-            Promise: 'es6-promise-promise', // works as expected 
+            Promise: 'es6-promise-promise', // works as expected
         }),
         new CopyWebpackPlugin([{
             from: 'App_Scripts/Styles',
             to: 'App_Scripts/Styles',
             ignore: [ '*.ts' ],
         }]),
-        
       ],
     module: {
         loaders: [
@@ -65,9 +63,9 @@ module.exports = {
                     path.resolve(__dirname, "node_modules/igniteui-react-charts")
                 ],
             },
-            // handle main stylesheets required 
+            // handle main stylesheets required
             { test: /\.css$/, exclude: /themes/, loader: 'style-loader!css-loader' },
-            // handle main stylesheets required 
+            // handle main stylesheets required
             { test: /\.css$/, exclude: /stylesheets/, loader: 'css-to-string-loader!css-loader' },
             { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ]
