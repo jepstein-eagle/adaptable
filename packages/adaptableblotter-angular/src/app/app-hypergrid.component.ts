@@ -6,7 +6,7 @@ import DataGenerator from './data-generator';
 @Component({
   selector: 'adaptableblotter-hypergrid-root',
   template: `
-   <div id="adaptableblotter-hypergrid-react-demo-app">
+   <div id="adaptableblotter-hypergrid-angular-demo-app">
     <adaptable-blotter-hypergrid
       [adaptableBlotterOptions]="blotterOptions"
       [gridOptions]="gridOptions">

@@ -8,7 +8,7 @@ import DataGenerator from './data-generator';
 @Component({
   selector: 'adaptableblotter-aggrid-root',
   template: `
-   <div id="adaptableblotter-aggrid-react-demo-app">
+   <div id="adaptableblotter-aggrid-angular-demo-app">
     <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
       [gridOptions]="gridOptions">
