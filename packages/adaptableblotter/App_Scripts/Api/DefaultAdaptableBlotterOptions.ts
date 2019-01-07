@@ -43,7 +43,6 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         useDefaultVendorGridThemes: true,
         showMissingPrimaryKeyWarning: true,
         serverSearchOption: 'None',
-
     }
 }
 

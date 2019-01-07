@@ -973,7 +973,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         else {
             if (type == "FlashingCell") {
-                alert("here ")
+         //       alert("here ")
             }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
@@ -1244,6 +1244,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
         });
+
+        // this event deals with when the user makes an edit - it doesnt look at ticking data
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
             //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
             let editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex].cellComps[params.column.getColId()].cellEditor;
@@ -1299,11 +1301,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
                 if (!whatToReturn) {
 
+                    // audit the cell event if needed
                     if (this.AuditLogService.IsAuditCellEditsEnabled) {
                         this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                     }
                     // it might be a free text column so we need to update the values
                     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
+
+                    // do we need to also refresh calculated columns?
                 }
                 return whatToReturn;
             };
@@ -1342,6 +1347,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         });
 
+        // this handles ticking data
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             
@@ -1429,7 +1435,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 //we next assess quicksearch
                 let quickSearchState = this.getState().QuickSearch;
                 if (quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-
                     let range: IRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
                     if (range != null) {
                         for (let column of visibleCols) {
@@ -1449,19 +1454,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
-
-        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
-            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-                //       this.createFilterWrapper(col);
-            });
-        }
-
-        if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
-            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-                //    this.createFloatingFilterWrapper(col);
-            });
-
-        }
 
         // add any special renderers
         let percentBars: IPercentBar[] = this.getState().PercentBar.PercentBars;
@@ -1517,7 +1509,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public addPercentBar(pcr: IPercentBar): void {
-         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
+        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
             let showNegatives: boolean = pcr.MinValue < 0;
             let showPositives: boolean = pcr.MaxValue > 0;
@@ -1698,7 +1690,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
-        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.autoSaveLayouts != null && this.BlotterOptions.layoutOptions.autoSaveLayouts) {
+        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
             let groupedState: any = null
             let test = this.gridOptions.columnApi.getAllDisplayedColumns();
             let groupedCol = test.find(c => ColumnHelper.isSpecialColumn(c.getColId()));
