@@ -7,13 +7,13 @@ var gridOptions
 
 function runQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
-  adaptableblotter.api.QuickSearchApi.quickSearchRun(element.value)
+  adaptableblotter.api.quickSearchApi.Apply(element.value)
 }
 
 function clearQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
   element.value = ""
-  adaptableblotter.api.QuickSearchApi.quickSearchClear()
+  adaptableblotter.api.quickSearchApi.Clear()
 }
 
 function getColumns() {
@@ -88,7 +88,7 @@ function InitTradeBlotter() {
       },
       layoutOptions: {
          includeVendorStateInLayouts: true,
-        // autoSaveLayouts: true,
+         autoSaveLayouts: true,
       },
       queryOptions: {
       //  ignoreCaseInQueries: false,
