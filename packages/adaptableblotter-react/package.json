@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-react",
-  "version": "0.2.37",
+  "version": "0.2.38",
   "description": "",
   "keywords": [],
   "main": "dist/index.umd.js",
@@ -120,7 +120,7 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "adaptableblotter": "^2.8.2",
+    "adaptableblotter": "^2.8.3",
     "ag-grid-community": "^19.1.4",
     "ag-grid-enterprise": "^19.1.4",
     "ag-grid-react": "^19.1.2"
