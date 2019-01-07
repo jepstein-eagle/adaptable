@@ -18,6 +18,10 @@ export interface ILayoutApi {
      */
     GetCurrentName(): string;
     /**
+    * Retrieves the layout with the inputted name
+     */
+    GetByName(layoutName: string): ILayout;
+    /**
      * Retrieves all Layouts in State
      */
     GetAll(): ILayout[];

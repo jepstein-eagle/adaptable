@@ -17,10 +17,16 @@ class LayoutApi extends ApiBase_1.ApiBase {
     }
     GetCurrent() {
         let layoutName = this.getState().Layout.CurrentLayout;
-        return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        return this.GetByName(layoutName);
     }
     GetCurrentName() {
         return this.getState().Layout.CurrentLayout;
+    }
+    GetByName(layoutName) {
+        let layout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
+            return layout;
+        }
     }
     GetAll() {
         return this.getState().Layout.Layouts;

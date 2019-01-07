@@ -5,7 +5,7 @@ import { DataGenerator } from "./DataGenerator";
 import { GridOptions } from "ag-grid-community";
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-gridcommunity/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;
@@ -49,8 +49,7 @@ export default class App extends React.Component<{}, AppState> {
       primaryKey: "tradeId",
       vendorGrid: gridOptions,
       userName: "AgGrid Wrapper user",
-      blotterId: "AgGrid Wrapper",
-      useDefaultVendorGridThemes: true
+      blotterId: "AgGrid Wrapper"
     };
   }
 
@@ -62,11 +61,11 @@ export default class App extends React.Component<{}, AppState> {
   render() {
     return (
       <div id="adaptableblotter-aggrid-react-demo-app">
-      <AdaptableBlotterAgGrid
-        AdaptableBlotterOptions={this.state.blotterOptions}
-        GridOptions={this.state.gridOptions}
-      />
-    </div>
+        <AdaptableBlotterAgGrid
+          AdaptableBlotterOptions={this.state.blotterOptions}
+          GridOptions={this.state.gridOptions}
+        />
+      </div>
     );
   }
 }

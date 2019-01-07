@@ -814,7 +814,7 @@ class AdaptableBlotter {
         }
         else {
             if (type == "FlashingCell") {
-                alert("here ");
+                //       alert("here ")
             }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
@@ -1179,6 +1179,8 @@ class AdaptableBlotter {
                     }
                 });
             });
+            // only if visible...
+            console.log("updating: " + params.node);
             this.refreshCells(params.node, refreshColumnList);
         });
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
@@ -1573,7 +1575,7 @@ class AdaptableBlotter {
             document.body.appendChild(css);
         }
         // sometimes the header row looks wrong when using floating filter so to be sure...
-        if (this.gridOptions.floatingFilter) {
+        if (this.isFloatingFilterActive()) {
             this.gridOptions.api.refreshHeader();
         }
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this

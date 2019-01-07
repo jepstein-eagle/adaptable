@@ -6,6 +6,7 @@ export declare class LayoutApi extends ApiBase implements ILayoutApi {
     Clear(): void;
     GetCurrent(): ILayout;
     GetCurrentName(): string;
+    GetByName(layoutName: string): ILayout;
     GetAll(): ILayout[];
     Save(): void;
 }
