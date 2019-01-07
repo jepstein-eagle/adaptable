@@ -37,8 +37,8 @@ function getSchema(data) {
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
     trades = dataGen.getTrades(300);
-
-    var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
+var gridOptions= { data: trades, schema: getSchema(trades) };
+    var vendorGrid = new fin.Hypergrid('#grid', gridOptions);
     //  dataGen.startTickingDataHypergrid(vendorGrid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     vendorGrid.addProperties({ renderFalsy: true })
@@ -102,7 +102,7 @@ function InitBlotter() {
     });
 
     let adaptableBlotterOptions = {
-        vendorGrid: vendorGrid, // the ag-Grid grid options object - MANDATORY
+        vendorGrid: vendorGrid, // the underlying hypergrid - MANDATORY
         //  primaryKey: "date", // pk for blotter - required
         primaryKey: "tradeId", // pk for blotter - required
         userName: "demo user", // name of current user

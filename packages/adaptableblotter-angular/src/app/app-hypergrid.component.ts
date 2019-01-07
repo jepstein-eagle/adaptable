@@ -24,7 +24,8 @@ export class AppHyperGridComponent {
   blotterOptions: IAdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     userName: 'jonathan',
-    blotterId: 'Hypergrid Wrapper'
+    blotterId: 'Hypergrid Wrapper',
+    vendorGrid: this.gridOptions,
   };
 
   static getSchema(data) {
