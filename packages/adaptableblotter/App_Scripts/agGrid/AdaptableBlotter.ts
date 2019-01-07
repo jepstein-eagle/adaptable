@@ -973,7 +973,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         else {
             if (type == "FlashingCell") {
-                alert("here ")
+         //       alert("here ")
             }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
