@@ -40,7 +40,6 @@ export class AppComponent {
     primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'angular wrapper',
-    useDefaultVendorGridThemes: true
-  };
+    blotterId: 'angular wrapper'
+   };
 }

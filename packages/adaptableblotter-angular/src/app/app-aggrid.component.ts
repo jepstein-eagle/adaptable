@@ -31,7 +31,6 @@ export class AppAgGridComponent {
     primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'AgGrid Wrapper',
-    useDefaultVendorGridThemes: true
-  };
+    blotterId: 'AgGrid Wrapper'
+    };
 }
