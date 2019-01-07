@@ -1344,6 +1344,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
+            
             let colId: string = params.colDef.field;
             this.DataService.CreateDataEvent(identifierValue, params.newValue, colId, params.node);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
@@ -1370,6 +1371,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 })
             })
+            // only if visible...
+            console.log("updating: " + params.node);
             this.refreshCells(params.node, refreshColumnList);
         });
 
@@ -1830,7 +1833,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // sometimes the header row looks wrong when using floating filter so to be sure...
-        if (this.gridOptions.floatingFilter) {
+        if (this.isFloatingFilterActive()) {
             this.gridOptions.api.refreshHeader();
         }
 

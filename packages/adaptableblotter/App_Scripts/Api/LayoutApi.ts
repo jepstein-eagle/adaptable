@@ -22,12 +22,20 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
 
     public  GetCurrent(): ILayout {
         let layoutName = this.getState().Layout.CurrentLayout;
-        return this.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        return this.GetByName(layoutName);
     }
 
     public  GetCurrentName(): string {
        return this.getState().Layout.CurrentLayout;
     }
+
+  public  GetByName(layoutName: string): ILayout{
+     let layout : ILayout = this.getState().Layout.Layouts.find(l=>l.Name == layoutName);
+       if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
+      return layout;
+       }
+  }
+
 
     public  GetAll(): ILayout[] {
         return this.getState().Layout.Layouts;
