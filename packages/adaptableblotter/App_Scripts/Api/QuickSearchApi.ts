@@ -18,11 +18,11 @@ export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
         return this.getState().QuickSearch.QuickSearchText;
     }
 
-    public EditDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
+    public SetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction as DisplayAction))
     }
 
-    public EditStyle(style: IStyle): void {
+    public SetStyle(style: IStyle): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style))
     }
 

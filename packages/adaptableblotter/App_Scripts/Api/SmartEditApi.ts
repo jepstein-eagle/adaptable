@@ -5,7 +5,7 @@ import { ISmartEditApi } from './Interface/ISmartEditApi';
 
 export class SmartEditApi extends ApiBase implements ISmartEditApi {
 
-    public EditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
+    public SetMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
     this.dispatchAction(SmartEditRedux.SmartEditChangeOperation(mathOperation as MathOperation))
   }
 
@@ -13,7 +13,7 @@ export class SmartEditApi extends ApiBase implements ISmartEditApi {
     return this.getState().SmartEdit.MathOperation;
   }
 
-  public EditValue(smartEditValue: number): void {
+  public SetValue(smartEditValue: number): void {
     this.dispatchAction(SmartEditRedux.SmartEditChangeValue(smartEditValue))
   }
 

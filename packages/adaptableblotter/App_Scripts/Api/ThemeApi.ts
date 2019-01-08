@@ -5,7 +5,6 @@ import { IThemeApi } from './Interface/IThemeApi';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
 
-  // Theme State
   public  SetCurrent(theme: string): void {
     this.dispatchAction(ThemeRedux.ThemeSelect(theme))
   }
@@ -22,11 +21,11 @@ export class ThemeApi extends ApiBase implements IThemeApi {
     this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes))
   }
 
-  public  SystemThemeGetAll(): string[] {
+  public  GetAllSystemTheme(): string[] {
     return this.getState().Theme.SystemThemes;
   }
 
-  public  UserThemeGetAll(): IUserTheme[] {
+  public  GetAllUserTheme(): IUserTheme[] {
     return this.getState().Theme.UserThemes;
   }
 
