@@ -6,11 +6,11 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
-import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
 import { ICellInfo } from '../Api/Interface/Interfaces';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     protected BulkUpdateState: BulkUpdateState

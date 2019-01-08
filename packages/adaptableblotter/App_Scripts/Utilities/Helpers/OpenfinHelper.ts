@@ -1,9 +1,10 @@
 
 import { LoggingHelper } from './LoggingHelper';
 import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';
-import { i } from 'mathjs';
 import { EventDispatcher } from '../EventDispatcher';
-import { IEvent } from '../../Api/Interface/IEvent';
+import { IEvent } from '../Interface/IEvent';
+
+
 export module OpenfinHelper {
     declare var fin: any;
     declare var chrome: any;

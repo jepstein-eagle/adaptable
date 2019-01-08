@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Glyphicon, Label, ListGroupItem, ListGroup, InputGroup } from "react-bootstrap";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAlert } from "../../Api/Interface/IMessage";
 import { UIHelper } from "../UIHelper";
 import { ButtonClear } from "./Buttons/ButtonClear";
 import { ButtonPreviewDelete } from "./Buttons/ButtonPreviewDelete";
 import { PanelWithButton } from "./Panels/PanelWithButton";
 import { AccessLevel } from "../../Utilities/Enums";
+import { IAlert } from "../../Utilities/Interface/IMessage";
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
     Alerts: IAlert[];

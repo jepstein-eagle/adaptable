@@ -51,9 +51,6 @@ import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
-import { IMenuItem } from '../Api/Interface/IMenu';
-import { IEvent } from '../Api/Interface/IEvent';
-import { IUIConfirmation, IAlert } from '../Api/Interface/IMessage';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, MessageType } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
@@ -113,6 +110,9 @@ import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
 import { QuickSearchStrategyagGrid } from './Strategy/QuickSearchStrategyagGrid';
+import { IMenuItem } from '../Utilities/Interface/IMenu';
+import { IEvent } from '../Utilities/Interface/IEvent';
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 

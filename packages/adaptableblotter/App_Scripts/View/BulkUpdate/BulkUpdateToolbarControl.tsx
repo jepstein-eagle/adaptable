@@ -13,16 +13,15 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Api/Interface/IPreview";
-import { IUIConfirmation } from "../../Api/Interface/IMessage";
-import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
 import { StatusColour, AccessLevel } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { UIHelper } from "../UIHelper";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;

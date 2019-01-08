@@ -13,9 +13,6 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUIConfirmation } from '../../Api/Interface/IMessage';
-import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Api/Interface/IPreview";
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Api/Interface/IColumn";
 import { isNumber, isDate } from "util";
@@ -25,6 +22,8 @@ import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;

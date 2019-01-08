@@ -5,7 +5,6 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IUIConfirmation } from '../Api/Interface/IMessage';
 import { DataType, StateChangedTrigger } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IColumn } from '../Api/Interface/IColumn';
@@ -17,7 +16,7 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState

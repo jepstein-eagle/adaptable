@@ -1,5 +1,5 @@
 import { ApiBase } from "./ApiBase";
-import { IEvent } from './Interface/IEvent';
+import { IEvent } from '../Utilities/Interface/IEvent';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from './Interface/IStateEvents';
 import { IEventApi } from "./Interface/IEventApi";

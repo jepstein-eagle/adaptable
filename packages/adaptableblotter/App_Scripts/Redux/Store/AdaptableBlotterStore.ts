@@ -54,7 +54,6 @@ import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStra
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
 import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIConfirmation, InputAction } from '../../Api/Interface/IMessage';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants'
 import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
@@ -71,6 +70,7 @@ import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
+import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,

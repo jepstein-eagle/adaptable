@@ -15,7 +15,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { IShortcut, ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IUIConfirmation } from '../Api/Interface/IMessage';
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
 

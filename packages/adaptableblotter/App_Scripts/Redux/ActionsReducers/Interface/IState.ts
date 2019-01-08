@@ -1,11 +1,11 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert, IAboutPopup } from '../../../Api/Interface/IMessage'
-import { IMenuItem, IContextMenu } from '../../../Api/Interface/IMenu'
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
-import { IPreviewInfo } from '../../../Api/Interface/IPreview';
 import { IColumn } from '../../../Api/Interface/IColumn';
 import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar, ISystemStatus, IEntitlement, IPermittedColumnValues, IColumnCategory } from '../../../Api/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
+import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
+import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
+import { IAlert, IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup } from '../../../Utilities/Interface/IMessage';
 
 // Base interface
 export interface IState {

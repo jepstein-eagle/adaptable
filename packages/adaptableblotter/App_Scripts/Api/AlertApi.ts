@@ -4,7 +4,7 @@ import { ApiBase } from "./ApiBase";
 import { MessageType } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { IAlert } from './Interface/IMessage';
+import { IAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
 
 

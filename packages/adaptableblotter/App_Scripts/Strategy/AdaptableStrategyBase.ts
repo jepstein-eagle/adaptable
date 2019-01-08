@@ -1,6 +1,5 @@
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
-import { IMenuItem } from '../Api/Interface/IMenu';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
@@ -13,6 +12,7 @@ import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
+import { IMenuItem } from '../Utilities/Interface/IMenu';
 
 
 export abstract class AdaptableStrategyBase implements IStrategy {

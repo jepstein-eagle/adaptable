@@ -1,9 +1,9 @@
-import { IAuditLogEntry } from "../../Api/Interface/IAuditLogEntry";
 import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";
 import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
+import { IAuditLogEntry } from "../Interface/IAuditLogEntry";
 
 export class AuditLogService {
     private auditLogQueue: Array<IAuditLogEntry>

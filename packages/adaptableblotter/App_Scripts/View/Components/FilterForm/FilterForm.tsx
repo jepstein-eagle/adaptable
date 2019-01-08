@@ -28,13 +28,13 @@ import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
-import { PanelProps, Panel, Row, Col, Button, Glyphicon, Tab, Nav, NavItem, Well } from 'react-bootstrap';
-import { IMenuItem } from "../../../Api/Interface/IMenu";
+import {  Well } from 'react-bootstrap';
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
-import { IUIPrompt } from "../../../Api/Interface/IMessage";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
+import { IMenuItem } from "../../../Utilities/Interface/IMenu";
+import { IUIPrompt } from "../../../Utilities/Interface/IMessage";
 
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

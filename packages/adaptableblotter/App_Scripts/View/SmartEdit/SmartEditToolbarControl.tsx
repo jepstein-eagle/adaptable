@@ -13,8 +13,6 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Api/Interface/IPreview";
-import { IUIConfirmation } from "../../Api/Interface/IMessage";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
@@ -23,6 +21,8 @@ import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { MessageType } from '../../Utilities/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
-import { IPreviewResult, IPreviewInfo } from "../../Api/Interface/IPreview";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../Api/Interface/IColumn";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IUserFilter, ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
+import { IPreviewInfo, IPreviewResult } from "../../Utilities/Interface/IPreview";
 
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {

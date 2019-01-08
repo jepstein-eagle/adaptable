@@ -1,6 +1,6 @@
-import { IMenuItem } from '../../Api/Interface/IMenu'
-import { IEntitlement } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IMenuItem } from "../../Utilities/Interface/IMenu";
+import { IEntitlement } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from "../../Api/Interface/IColumn";
 
 export interface IStrategy {
     Id: string

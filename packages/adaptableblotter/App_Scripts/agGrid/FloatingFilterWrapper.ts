@@ -39,4 +39,3 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
 
     }
 };
-

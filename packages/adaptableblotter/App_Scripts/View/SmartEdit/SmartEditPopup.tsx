@@ -12,17 +12,16 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUIConfirmation } from '../../Api/Interface/IMessage';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Api/Interface/IPreview";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;

@@ -1,11 +1,11 @@
 import * as Redux from 'redux';
 import { SystemState } from './Interface/IState'
-import { IAlert } from '../../Api/Interface/IMessage';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Utilities/Enums';
 import { ILiveReport, IPPDomain } from '../../Strategy/Interface/IExportStrategy';
-import { IPreviewInfo } from '../../Api/Interface/IPreview';
 import { ISystemStatus } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
+import { IAlert } from '../../Utilities/Interface/IMessage';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

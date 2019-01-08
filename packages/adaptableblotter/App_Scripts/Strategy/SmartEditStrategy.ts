@@ -8,10 +8,10 @@ import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
 import { ICellInfo } from '../Api/Interface/Interfaces';
 import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
-import { IPreviewInfo, IPreviewResult } from '../Api/Interface/IPreview';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     

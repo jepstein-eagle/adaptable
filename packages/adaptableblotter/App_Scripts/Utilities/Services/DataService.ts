@@ -1,8 +1,8 @@
 import { EventDispatcher } from "../EventDispatcher";
-import { IEvent } from "../../Api/Interface/IEvent";
 import { IDataService } from "./Interface/IDataService";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
+import { IEvent } from "../Interface/IEvent";
 
 
 export class DataService implements IDataService {

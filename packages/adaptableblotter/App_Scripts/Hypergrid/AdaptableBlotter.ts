@@ -11,8 +11,6 @@ import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRed
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import { IStrategy, } from '../Strategy/Interface/IStrategy';
-import { IMenuItem, } from '../Api/Interface/IMenu';
-import { IUIConfirmation } from '../Api/Interface/IMessage';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -30,7 +28,6 @@ import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
-import { IEvent } from '../Api/Interface/IEvent';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
@@ -83,6 +80,9 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
 import { ConditionalStyleStrategyHypergrid } from './Strategy/ConditionalStyleStrategyHypergrid';
 import { FlashingCellsStrategyHypergrid } from './Strategy/FlashingCellsStrategyHypergrid';
 import { FormatColumnStrategyHypergrid } from './Strategy/FormatColumnStrategyHypergrid';
+import { IMenuItem } from '../Utilities/Interface/IMenu';
+import { IEvent } from '../Utilities/Interface/IEvent';
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 
 
 //icon to indicate toggle state

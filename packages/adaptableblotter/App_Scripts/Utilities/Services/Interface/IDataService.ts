@@ -1,5 +1,5 @@
-import { IEvent } from "../../../Api/Interface/IEvent";
 import { IDataChangedInfo } from "../../../Api/Interface/IDataChangedInfo";
+import { IEvent } from "../../Interface/IEvent";
 
 export interface IDataService {
     CreateDataSourcedChangedEvent(dataChangedEvent: IDataChangedInfo): void;

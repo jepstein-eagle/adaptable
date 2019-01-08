@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import { IUIConfirmation } from '../../../Api/Interface/IMessage';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { IUIConfirmation } from "../../../Utilities/Interface/IMessage";
 
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction

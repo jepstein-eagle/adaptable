@@ -1,4 +1,4 @@
-import { IEvent } from './IEvent';
+import { IEvent } from '../../Utilities/Interface/IEvent';
 import { IAdaptableBlotter } from './IAdaptableBlotter';
 import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from './IStateEvents';
 
