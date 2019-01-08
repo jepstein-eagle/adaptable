@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
-import { GridOptions } from 'ag-grid';
+import { GridOptions } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
 @Component({
