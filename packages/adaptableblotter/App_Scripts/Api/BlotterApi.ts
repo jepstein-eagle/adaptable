@@ -115,4 +115,3 @@ export class BlotterApi implements IBlotterApi {
   }
 
 }
-

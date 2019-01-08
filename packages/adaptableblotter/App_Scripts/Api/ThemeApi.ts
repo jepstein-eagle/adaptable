@@ -5,8 +5,7 @@ import { IThemeApi } from './Interface/IThemeApi';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
 
-  // Theme State
-  public  SetCurrent(theme: string): void {
+   public  SetCurrent(theme: string): void {
     this.dispatchAction(ThemeRedux.ThemeSelect(theme))
   }
 
