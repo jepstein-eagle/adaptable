@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
-import { GridOptions } from 'ag-grid';
+import { GridOptions } from 'ag-grid-community';
 import HarnessHelper from './harness-helper';
 import DataGenerator from './data-generator';
 
