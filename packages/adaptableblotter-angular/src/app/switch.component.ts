@@ -16,13 +16,6 @@ import { Component, OnInit } from '@angular/core';
       <h3>AgGrid Angular Wrapper - wraps Adaptable Blotter AND agGrid components</h3>
       <adaptableblotter-aggrid-root></adaptableblotter-aggrid-root>
     </div>
-    <!--
-    <div [hidden]="show !== 3">
-      <h3>Hypergrid Angular Wrapper - wraps Adaptable Blotter AND Hypergrid components</h3>
-      <adaptableblotter-hypergrid-root></adaptableblotter-hypergrid-root>
-    </div>
-
-    -->
   </div>`
 })
 export class SwitchComponent implements OnInit {

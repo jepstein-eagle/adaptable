@@ -1,3 +1,4 @@
+/*
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdaptableblotterHyperGridComponent } from './adaptableblotter-hypergrid.component';
@@ -23,3 +24,5 @@ describe('AdaptableblotterHyperGridComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+*/
