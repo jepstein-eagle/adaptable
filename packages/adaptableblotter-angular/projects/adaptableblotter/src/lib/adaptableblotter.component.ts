@@ -4,14 +4,14 @@ import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@ang
 
 import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 
-// let ReactDOM;
-// try {
-//  ReactDOM = require('react-dom');
-// } catch (ignored) {
- // ReactDOM = require('adaptableblotter/node_modules/react-dom');
-// }
+let ReactDOM;
+try {
+  ReactDOM = require('react-dom');
+} catch (ignored) {
+  ReactDOM = require('adaptableblotter/node_modules/react-dom');
+}
 
 @Component({
   selector: 'adaptable-blotter',
@@ -20,13 +20,13 @@ import ReactDOM from 'react-dom';
 })
 export class AdaptableBlotterComponent implements OnInit {
   @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
-  @Input() vendorGridName: 'agGrid' | 'Hypergrid' ;
+  @Input() vendorGridName: 'agGrid' | 'Hypergrid';
 
   @Output() adaptableBlotterMounted = new EventEmitter<any>();
 
   private adaptableBlotter: IAdaptableBlotter;
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef) { }
 
   ngOnInit() {
     this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
