@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppAgGridComponent } from './app-aggrid.component';
-import { AppHyperGridComponent } from './app-hypergrid.component';
+// import { AppHyperGridComponent } from './app-hypergrid.component';
 import { SwitchComponent } from './switch.component';
 import { AdaptableBlotterModule } from 'adaptableblotter-angular';
 import { AgGridModule } from 'ag-grid-angular';
@@ -12,7 +12,7 @@ import { AgGridModule } from 'ag-grid-angular';
   declarations: [
     AppComponent,
     AppAgGridComponent,
-    AppHyperGridComponent,
+  //  AppHyperGridComponent,
     SwitchComponent,
   ],
   imports: [

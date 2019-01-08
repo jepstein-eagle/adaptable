@@ -1,3 +1,4 @@
+/*
 import { Component } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
 
@@ -82,3 +83,4 @@ export class AppHyperGridComponent {
   }
 }
 
+*/

@@ -1,3 +1,4 @@
+/*
 import { Component, OnInit, Input, ElementRef, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
 import Hypergrid from 'fin-hypergrid';
@@ -28,10 +29,10 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
   /**
    * Emits the mounted Hypergrid object for any specific settings.
    */
-  @Output() gridMounted = new EventEmitter<any>();
+  //@Output() gridMounted = new EventEmitter<any>();
 
-  constructor(private elRef: ElementRef) { }
-
+//  constructor(private elRef: ElementRef) { }
+/*
   ngOnInit() {
     const container = this.elRef.nativeElement.firstChild.lastChild;
     this.grid = new Hypergrid(container, this.gridOptions);
@@ -49,6 +50,8 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
    * Update the grid on input changes.
    * Need our own update logic since hypergrid doesn't have an Angular wrapper.
    */
+  
+   /*
   ngOnChanges(changes: SimpleChanges) {
     if (!this.grid) { return; }
     const hgOptionsChange = changes.gridOptions;
@@ -68,3 +71,4 @@ export class AdaptableblotterHyperGridComponent implements OnInit, OnChanges {
   }
 
 }
+*/

@@ -5,7 +5,9 @@ import { Component, OnInit } from '@angular/core';
   template: `<div>
     <button (click)="showWrapper(1)">Angular Wrapper</button>
     <button (click)="showWrapper(2)">agGrid Angular Wrapper</button>
+    <!--
     <button (click)="showWrapper(3)">Hypergrid Angular Wrapper</button>
+    -->
     <div [hidden]="show !== 1">
       <h3>Angular Wrapper - working alongside agGrid angular component</h3>
       <adaptableblotter-root></adaptableblotter-root>
@@ -14,10 +16,13 @@ import { Component, OnInit } from '@angular/core';
       <h3>AgGrid Angular Wrapper - wraps Adaptable Blotter AND agGrid components</h3>
       <adaptableblotter-aggrid-root></adaptableblotter-aggrid-root>
     </div>
+    <!--
     <div [hidden]="show !== 3">
       <h3>Hypergrid Angular Wrapper - wraps Adaptable Blotter AND Hypergrid components</h3>
       <adaptableblotter-hypergrid-root></adaptableblotter-hypergrid-root>
     </div>
+
+    -->
   </div>`
 })
 export class SwitchComponent implements OnInit {
@@ -43,9 +48,9 @@ export class SwitchComponent implements OnInit {
       case 2:
         rootId = 'adaptableblotter-aggrid-root';
         break;
-      case 3:
-        rootId = 'adaptableblotter-hypergrid-root';
-        break;
+   //   case 3:
+   //     rootId = 'adaptableblotter-hypergrid-root';
+    //    break;
       default:
         return;
     }
