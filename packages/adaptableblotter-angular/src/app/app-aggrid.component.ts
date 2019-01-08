@@ -31,6 +31,9 @@ export class AppAgGridComponent {
     primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'AgGrid Wrapper'
-    };
+    blotterId: 'AgGrid Wrapper',
+    containerOptions: {
+      adaptableBlotterContainer: 'adaptableBlotter'
+    }
+  };
 }

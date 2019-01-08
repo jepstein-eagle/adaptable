@@ -26,6 +26,9 @@ export class AppHyperGridComponent {
     userName: 'jonathan',
     blotterId: 'Hypergrid Wrapper',
     vendorGrid: this.gridOptions,
+    containerOptions: {
+      adaptableBlotterContainer: 'adaptableBlotter'
+    }
   };
 
   static getSchema(data) {
@@ -78,3 +81,4 @@ export class AppHyperGridComponent {
     };
   }
 }
+

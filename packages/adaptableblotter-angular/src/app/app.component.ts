@@ -40,6 +40,9 @@ export class AppComponent {
     primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'angular wrapper'
-   };
+    blotterId: 'angular wrapper',
+    containerOptions: {
+      adaptableBlotterContainer: 'adaptableBlotter'
+    }
+  };
 }
