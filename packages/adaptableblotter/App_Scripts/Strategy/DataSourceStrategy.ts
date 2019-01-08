@@ -2,10 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
-import { DataSourceState, GridState } from '../Redux/ActionsReducers/Interface/IState'
-import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
-import { basename } from 'path';
-import { Server } from 'https';
+import { DataSourceState } from '../Redux/ActionsReducers/Interface/IState'
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 

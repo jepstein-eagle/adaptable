@@ -4,6 +4,6 @@ export interface IThemeApi {
     GetCurrent(): string;
     SetSystemThemes(systemThemes: string[]): void;
     SetUserThemes(userThemes: string[]): void;
-    SystemThemeGetAll(): string[];
-    UserThemeGetAll(): IUserTheme[];
+    GetAllSystemTheme(): string[];
+    GetAllUserTheme(): IUserTheme[];
 }

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const CustomSortRedux = require("../Redux/ActionsReducers/CustomSortRedux");
 const ApiBase_1 = require("./ApiBase");
 class CustomSortApi extends ApiBase_1.ApiBase {
@@ -12,13 +13,15 @@ class CustomSortApi extends ApiBase_1.ApiBase {
     Add(customSort) {
         this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort));
     }
-    Create(column, values) {
-        let customSort = { ColumnId: column, SortedValues: values };
+    Create(columnId, values) {
+        let customSort = { ColumnId: columnId, SortedValues: values };
         this.Add(customSort);
     }
-    Edit(column, values) {
-        let customSort = { ColumnId: column, SortedValues: values };
-        this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort));
+    Edit(columnId, values) {
+        let customSort = { ColumnId: columnId, SortedValues: values };
+        if (this.checkItemExists(customSort, columnId, StrategyConstants.CustomSortStrategyId)) {
+            this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort));
+        }
     }
     Delete(column) {
         let customSort = this.GetByColumn(column);

@@ -1,6 +1,6 @@
 export interface ISmartEditApi {
-    EditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void;
+    SetMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void;
     GetMathOperation(): string;
-    EditValue(smartEditValue: number): void;
+    SetValue(smartEditValue: number): void;
     GetValue(): number;
 }

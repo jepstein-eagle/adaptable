@@ -5,6 +5,6 @@ export declare class QuickSearchApi extends ApiBase implements IQuickSearchApi {
     Apply(quickSearchText: string): void;
     Clear(): void;
     GetValue(): string;
-    EditDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void;
-    EditStyle(style: IStyle): void;
+    SetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void;
+    SetStyle(style: IStyle): void;
 }
