@@ -7,9 +7,9 @@ This allows you to install, instantiate and reference the Adaptable Blotter on t
 ## What's Included
 There are 2 angular components available for use.
 
-1.  AdaptableBlotterComponent - this is a general Component that wraps the Adaptable Blotter and requires you to create your own ag-Grid component to sit alongside it.
+1.  *AdaptableBlotterComponent* - this is a general Component that wraps the Adaptable Blotter and requires you to create your own ag-Grid component to sit alongside it.
 
-2.  AdaptableblotterAgGridComponent - this wraps both the Adaptable Blotter and Ag Grid angular components into a single component which you can manage as one object.
+2.  *AdaptableblotterAgGridComponent* - this wraps both the Adaptable Blotter and Ag Grid angular components into a single component which you can manage as one object.
 
 ## Installation
 To install Adaptable Blotter Angular ag-Grid via npm, you need to follow these 3 steps:
