@@ -14,7 +14,7 @@ There are 2 React Components available:
 ## Installation
 To install Adaptable Blotter React via npm, run:
 ```javascript
-npm install --save adaptableblotter-react
+npm install adaptableblotter-react
 ```
   
 ## Licences
