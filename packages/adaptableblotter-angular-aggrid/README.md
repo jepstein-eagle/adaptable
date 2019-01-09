@@ -16,10 +16,11 @@ For examples of using the Angular wrapper see https://adaptabletools.zendesk.com
 
 Also take at look at the Stackblitz at: https://stackblitz.com/edit/adaptableblotter-angular-aggrid-test
 
+
 ## Installation
 To install Adaptable Blotter Angular ag-Grid via npm, you need to follow these 3 steps:
 
-1.  Install the Adapbleblotter
+1.  Install the Adaptable Blotter
 
 ```javascript
 npm install --save adaptableblotter
