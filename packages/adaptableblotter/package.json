@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "2.9.2",
+  "version": "2.9.3",
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
