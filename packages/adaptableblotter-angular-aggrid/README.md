@@ -23,13 +23,13 @@ To install Adaptable Blotter Angular ag-Grid via npm, you need to follow these 3
 1.  Install the Adaptable Blotter
 
 ```javascript
-npm install --save adaptableblotter
+npm install adaptableblotter
 ```
 
 2.  Install the ag-Grid Angular Wrapper
 
 ```javascript
-npm install --save adaptableblotter-angular-aggrid
+npm install adaptableblotter-angular-aggrid
 ```
 
 3.  Install ag-Grid dependencies
