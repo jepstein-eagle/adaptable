@@ -1,9 +1,9 @@
 {
   "name": "adaptableblotter-test",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "private": true,
   "dependencies": {
-    "adaptableblotter": "^3.1.1",
+    "adaptableblotter": "^3.1.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "2.1.3",
