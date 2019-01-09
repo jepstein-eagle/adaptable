@@ -1378,8 +1378,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             })
             // only if visible...
-            console.log("updating: " + params.node);
-            this.refreshCells(params.node, refreshColumnList);
+             this.refreshCells(params.node, refreshColumnList);
         });
 
 
