@@ -94,8 +94,7 @@ function InitTradeBlotter() {
       //  ignoreCaseInQueries: false,
        // maxColumnValueItemsDisplayed: 5,
       //  columnValuesOnlyInQueries: true,
-        // getColumnValues: retrieveValues,
-        //  maxColumnValueItemsDisplayed: 5
+         getColumnValues: retrieveValues,
       },
       filterOptions: {
         //useAdaptableBlotterFilterForm: false,
