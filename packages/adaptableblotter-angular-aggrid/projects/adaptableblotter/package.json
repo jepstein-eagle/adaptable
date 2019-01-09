@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
-    "adaptableblotter": "^2.4.0",
+    "adaptableblotter": "^3.1.1",
     "ag-grid-community": "^19.1.4",
     "ag-grid-angular": "^19.1.2",
     "ag-grid-enterprise": "^19.1.4"
