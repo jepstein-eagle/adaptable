@@ -8,7 +8,7 @@ import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrat
 import { Expression } from '../Api/Expression';
 import { IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
-import { DefaultChartProperties } from '../api/DefaultChartProperties';
+import { DefaultChartProperties } from '../Api/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';
 
 export module ObjectFactory {
