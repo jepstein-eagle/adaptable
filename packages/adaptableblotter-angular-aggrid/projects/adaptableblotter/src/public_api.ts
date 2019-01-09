@@ -8,7 +8,6 @@ export * from './lib/adaptableblotter.module';
 // Export components
 export * from './lib/adaptableblotter.component';
 export * from './lib/adaptableblotter-aggrid.component';
-// export * from './lib/adaptableblotter-hypergrid.component';
 
 // Export the parameter types
 export * from 'adaptableblotter/types';
