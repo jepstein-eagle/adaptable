@@ -1180,7 +1180,6 @@ class AdaptableBlotter {
                 });
             });
             // only if visible...
-            console.log("updating: " + params.node);
             this.refreshCells(params.node, refreshColumnList);
         });
         //We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
