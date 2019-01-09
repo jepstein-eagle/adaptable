@@ -20,8 +20,7 @@ try {
 })
 export class AdaptableBlotterComponent implements OnInit {
   @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
-  @Input() vendorGridName: 'agGrid' | 'Hypergrid';
-
+ 
   @Output() adaptableBlotterMounted = new EventEmitter<any>();
 
   private adaptableBlotter: IAdaptableBlotter;
@@ -37,7 +36,7 @@ export class AdaptableBlotterComponent implements OnInit {
         // Element is mounted
         this.adaptableBlotter = BlotterFactory.CreateAdaptableBlotter(
           this.adaptableBlotterOptions,
-          this.vendorGridName
+          'agGrid'
         );
         this.adaptableBlotterMounted.emit(this.adaptableBlotter);
         ReactDOM.render(

@@ -9,8 +9,7 @@ import DataGenerator from './data-generator';
   template: `
   <div>
     <adaptable-blotter
-      [adaptableBlotterOptions]="blotterOptions"
-      vendorGridName="agGrid">
+      [adaptableBlotterOptions]="blotterOptions">
     </adaptable-blotter>
     <div id="grid">
     <ag-grid-angular
@@ -46,3 +45,4 @@ export class AppComponent {
     }
   };
 }
+
