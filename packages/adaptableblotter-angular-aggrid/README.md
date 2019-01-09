@@ -11,6 +11,11 @@ There are 2 angular components available for use.
 
 2.  *AdaptableblotterAgGridComponent* - this wraps both the Adaptable Blotter and Ag Grid angular components into a single component which you can manage as one object.
 
+## How to use it
+For examples of using the Angular wrapper see https://adaptabletools.zendesk.com/hc/en-us/articles/360021501952-Angular-Wrapper-ag-Grid-Examples
+
+Also take at look at the Stackblitz at: https://stackblitz.com/edit/adaptableblotter-angular-aggrid-test
+
 ## Installation
 To install Adaptable Blotter Angular ag-Grid via npm, you need to follow these 3 steps:
 
