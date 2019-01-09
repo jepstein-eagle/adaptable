@@ -10,4 +10,3 @@ export interface IEntitlementApi {
   Delete(functionName: string): void
 
 }
-
