@@ -1,11 +1,11 @@
-# Adaptable Blotter Angular
+# Adaptable Blotter Angular ag-Grid
 
-Repository for the Adaptable Blotter Angular Wrapper.
+Repository for the Adaptable Blotter Angular ag-Grid Wrapper.
 
-This allows you to install, instantiate and reference the Adaptable Blotter in an "Angular-friendly" manner.
+This allows you to install, instantiate and reference the Adaptable Blotter on top of ag-Grid in an "Angular-friendly" manner.
 
 ## Installation
-To install Adaptable Blotter Angular via npm, run:
+To install Adaptable Blotter Angular ag-Grid via npm, run:
 ```javascript
 npm install --save adaptableblotter-angular-aggrid
 ```
