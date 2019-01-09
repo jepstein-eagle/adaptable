@@ -4,12 +4,43 @@ Repository for the Adaptable Blotter Angular ag-Grid Wrapper.
 
 This allows you to install, instantiate and reference the Adaptable Blotter on top of ag-Grid in an "Angular-friendly" manner.
 
+## What's Included
+There are 2 angular components available for use.
+
+1.  *AdaptableBlotterComponent* - this is a general Component that wraps the Adaptable Blotter and requires you to create your own ag-Grid component to sit alongside it.
+
+2.  *AdaptableblotterAgGridComponent* - this wraps both the Adaptable Blotter and Ag Grid angular components into a single component which you can manage as one object.
+
+## How to use it
+For examples of using the Angular wrapper see https://adaptabletools.zendesk.com/hc/en-us/articles/360021501952-Angular-Wrapper-ag-Grid-Examples
+
+Also take at look at the Stackblitz at: https://stackblitz.com/edit/adaptableblotter-angular-aggrid-test
+
+
 ## Installation
-To install Adaptable Blotter Angular ag-Grid via npm, run:
+To install Adaptable Blotter Angular ag-Grid via npm, you need to follow these 3 steps:
+
+1.  Install the Adaptable Blotter
+
+```javascript
+npm install --save adaptableblotter
+```
+
+2.  Install the ag-Grid Angular Wrapper
+
 ```javascript
 npm install --save adaptableblotter-angular-aggrid
 ```
-  
+
+3.  Install ag-Grid dependencies
+
+```javascript
+npm install ag-grid-community
+npm install ag-grid-enterprise
+npm install ag-grid-angular
+```
+
+
 ## Licences
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
