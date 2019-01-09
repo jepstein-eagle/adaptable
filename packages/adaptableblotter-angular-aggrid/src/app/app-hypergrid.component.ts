@@ -1,6 +1,6 @@
 /*
 import { Component } from '@angular/core';
-import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
+import { IAdaptableBlotterOptions } from 'adaptableblotter-angular-aggrid';
 
 import DataGenerator from './data-generator';
 

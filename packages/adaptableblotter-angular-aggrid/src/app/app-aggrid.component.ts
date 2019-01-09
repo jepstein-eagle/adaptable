@@ -1,46 +1,37 @@
 import { Component } from '@angular/core';
-import { IAdaptableBlotterOptions } from 'adaptableblotter-angular';
+import { IAdaptableBlotterOptions } from 'adaptableblotter-angular-aggrid';
 import { GridOptions } from 'ag-grid-community';
+
 import HarnessHelper from './harness-helper';
 import DataGenerator from './data-generator';
 
 @Component({
-  selector: 'adaptableblotter-root',
+  selector: 'adaptableblotter-aggrid-root',
   template: `
-  <div>
-    <adaptable-blotter
+   <div id="adaptableblotter-aggrid-angular-demo-app">
+    <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
-      vendorGridName="agGrid">
-    </adaptable-blotter>
-    <div id="grid">
-    <ag-grid-angular
-      style="width: 100%; height: 97vh;"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
       [gridOptions]="gridOptions">
-    </ag-grid-angular>
-    </div>
+    </adaptable-blotter-aggrid>
   </div>
   `
-  // if useDefaultVendorGridThemes is false in BlotterOptions then add an agGrid theme in the angular component
-  // e.g. something like:  class="ag-theme-balham"
 })
-export class AppComponent {
-
+export class AppAgGridComponent {
   gridOptions: GridOptions = {
     columnDefs: new HarnessHelper().getTradeSchema(),
     rowData: new DataGenerator().getTrades(5000),
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-    enableColResize: true
+    floatingFilter: true,
+    enableColResize: true,
+    suppressColumnVirtualisation: false,
   };
-
   blotterOptions: IAdaptableBlotterOptions = {
     primaryKey: 'tradeId',
     vendorGrid: this.gridOptions,
     userName: 'demo user',
-    blotterId: 'angular wrapper',
+    blotterId: 'AgGrid Wrapper',
     containerOptions: {
       adaptableBlotterContainer: 'adaptableBlotter'
     }

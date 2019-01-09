@@ -1,5 +1,5 @@
 {
-  "name": "adaptableblotter-angular",
+  "name": "adaptableblotter-angular-aggrid",
   "version": "0.2.21",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",

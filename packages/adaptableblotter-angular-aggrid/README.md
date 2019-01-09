@@ -7,7 +7,7 @@ This allows you to install, instantiate and reference the Adaptable Blotter in a
 ## Installation
 To install Adaptable Blotter Angular via npm, run:
 ```javascript
-npm install --save adaptableblotter-angular
+npm install --save adaptableblotter-angular-aggrid
 ```
   
 ## Licences

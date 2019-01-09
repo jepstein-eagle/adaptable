@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { AppAgGridComponent } from './app-aggrid.component';
 // import { AppHyperGridComponent } from './app-hypergrid.component';
 import { SwitchComponent } from './switch.component';
-import { AdaptableBlotterModule } from 'adaptableblotter-angular';
+import { AdaptableBlotterModule } from 'adaptableblotter-angular-aggrid';
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
