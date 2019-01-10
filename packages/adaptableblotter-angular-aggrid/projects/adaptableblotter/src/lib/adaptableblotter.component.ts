@@ -10,7 +10,7 @@ let ReactDOM;
 try {
   ReactDOM = require('react-dom');
 } catch (ignored) {
-  ReactDOM = require('adaptableblotter/node_modules/react-dom');
+  ReactDOM = require('adaptableblotter/react-dom').ReactDOM;
 }
 
 @Component({
