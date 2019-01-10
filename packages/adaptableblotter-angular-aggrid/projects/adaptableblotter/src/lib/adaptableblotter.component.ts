@@ -2,7 +2,8 @@ declare var require: any;
 
 import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 
-import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory';
+// import { AdaptableBlotterApp } from 'adaptableblotter/blotterApp';
+import { AdaptableBlotterApp, AdaptableBlotter } from 'adaptableblotter/aggrid';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
 // import ReactDOM from 'react-dom';
 
@@ -20,7 +21,7 @@ try {
 })
 export class AdaptableBlotterComponent implements OnInit {
   @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
- 
+
   @Output() adaptableBlotterMounted = new EventEmitter<any>();
 
   private adaptableBlotter: IAdaptableBlotter;
@@ -30,14 +31,11 @@ export class AdaptableBlotterComponent implements OnInit {
   ngOnInit() {
     this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
       this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
-    const waitForContainer = setInterval(() => {
+     const waitForContainer = setInterval(() => {
       try {
         document.getElementById(this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer);
         // Element is mounted
-        this.adaptableBlotter = BlotterFactory.CreateAdaptableBlotter(
-          this.adaptableBlotterOptions,
-          'agGrid'
-        );
+        this.adaptableBlotter = new AdaptableBlotter(this.adaptableBlotterOptions, false);
         this.adaptableBlotterMounted.emit(this.adaptableBlotter);
         ReactDOM.render(
           AdaptableBlotterApp({ AdaptableBlotter: this.adaptableBlotter }),
