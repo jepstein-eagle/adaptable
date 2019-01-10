@@ -78,8 +78,8 @@ function InitTradeBlotter() {
       auditLogOptions: {
         auditCellEdits: true,
         auditFunctionEvents: true,
-        auditUserStateChanges: false,
-        auditInternalStateChanges: false,
+        auditUserStateChanges: true,
+        auditInternalStateChanges: true,
         pingInterval: 120
       },
       configServerOptions: {
@@ -94,7 +94,7 @@ function InitTradeBlotter() {
       //  ignoreCaseInQueries: false,
        // maxColumnValueItemsDisplayed: 5,
       //  columnValuesOnlyInQueries: true,
-         getColumnValues: retrieveValues,
+        // getColumnValues: retrieveValues,
       },
       filterOptions: {
         //useAdaptableBlotterFilterForm: false,

@@ -8,9 +8,7 @@ import { SelectionMode } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Api/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { AxisTotal } from "../../../Utilities/ChartEnums";
-import { Axis } from "igniteui-react-charts/ES2015/Axis";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
@@ -127,8 +125,10 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
             if (c.ColumnId == selectedColumnId) {
                 cols.push(c);
             } else {
-               ArrayExtensions.AddItem(this.state.YAxisColumnIds, c.ColumnId);
-            }
+                if (ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c.ColumnId)) {
+                    cols.push(c);
+                }
+             }
         });
         return cols;
     }
