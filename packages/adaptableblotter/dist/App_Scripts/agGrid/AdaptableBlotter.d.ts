@@ -37,7 +37,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
     private _calculatedColumnPathMap;
-    private _flashingCellList;
     private abContainerElement;
     private gridOptions;
     EmbedColumnMenu: boolean;
@@ -140,9 +139,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     applyLightTheme(): void;
     applyDarkTheme(): void;
     private applyFinalRendering;
-    clearFlashingCellMap(): void;
-    getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number, isUp: boolean): number;
-    private getCellValuesForColumn;
     private getState;
     private dispatchAction;
 }

@@ -77,7 +77,6 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     NewValue: valueToReplace,
                     ColumnId: activeCell.ColumnId,
                     IdentifierValue: activeCell.Id,
-                    Timestamp: Date.now(),
                     Record: null
                 };
                 let validationRules = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);

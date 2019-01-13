@@ -80,7 +80,6 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         NewValue: typedBulkUpdateValue,
                         ColumnId: selectedCell.columnId,
                         IdentifierValue: pair[0],
-                        Timestamp: Date.now(),
                         Record: null
                     };
                     let validationRules = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);

@@ -11,6 +11,6 @@ export declare abstract class FlashingCellsStrategy extends AdaptableStrategyBas
     protected addPopupMenuItem(): void;
     addContextMenuItem(column: IColumn): void;
     protected InitState(): void;
-    protected handleDataSourceChanged(DataChangedEvent: IDataChangedInfo): void;
-    protected abstract FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void;
+    protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void;
+    protected abstract FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void;
 }

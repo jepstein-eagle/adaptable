@@ -5,18 +5,39 @@ class DataService {
     constructor(blotter) {
         this.blotter = blotter;
         this._onDataSourceChanged = new EventDispatcher_1.EventDispatcher();
+        // create the _columnValueList - will be empty - used primarily for flashing cell
+        this._columnValueList = new Map();
     }
-    CreateDataSourcedChangedEvent(dataChangedEvent) {
-        if (dataChangedEvent.NewValue != dataChangedEvent.OldValue) {
-            this._onDataSourceChanged.Dispatch(this, dataChangedEvent);
+    CreateDataChangedEvent(dataChangedInfo) {
+        if (dataChangedInfo.NewValue != dataChangedInfo.OldValue) {
+            this._onDataSourceChanged.Dispatch(this, dataChangedInfo);
         }
-    }
-    CreateDataEvent(identifierValue, newValue, columnId, record) {
-        var dataChangedEvent = { OldValue: null, NewValue: newValue, ColumnId: columnId, IdentifierValue: identifierValue, Timestamp: Date.now(), Record: record };
-        this.CreateDataSourcedChangedEvent(dataChangedEvent);
     }
     OnDataSourceChanged() {
         return this._onDataSourceChanged;
+    }
+    clearFlashingCellMap() {
+        this._columnValueList.clear();
+    }
+    GetPreviousColumnValue(columnId, identifierValue, newValue) {
+        let columnValueList = this.getCellValuesForColumn(columnId);
+        let oldValue = columnValueList.get(identifierValue);
+        columnValueList.set(identifierValue, newValue);
+        return (oldValue) ? oldValue : newValue;
+    }
+    getCellValuesForColumn(columnId) {
+        // first check the list exists; if not, then create it
+        if (this._columnValueList.size == 0) {
+            this._columnValueList.set(columnId, new Map());
+        }
+        // get the item
+        let returnList = this._columnValueList.get(columnId);
+        //in case we created a new calculated column  - need to worry about this?
+        if (!returnList) {
+            returnList = new Map();
+            this._columnValueList.set(columnId, returnList);
+        }
+        return returnList;
     }
 }
 exports.DataService = DataService;

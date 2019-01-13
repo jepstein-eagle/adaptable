@@ -23,7 +23,7 @@ class AdaptableBlotterChart extends React.Component {
             SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
         };
-        var body = React.createElement(bodyElement, commonProps);
+        var body = null; //React.createElement(bodyElement, commonProps);
         return (React.createElement("div", null, this.props.showModal ?
             React.createElement(react_bootstrap_1.Modal, { show: this.props.showChart, onHide: this.props.onClose, className: cssClassName + StyleConstants.BASE, container: modalContainer },
                 React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },

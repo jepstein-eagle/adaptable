@@ -106,8 +106,6 @@ class AdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
-        // create the flashing cells map - will be empty
-        this._flashingCellList = new Map();
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
@@ -510,14 +508,13 @@ class AdaptableBlotter {
                     NewValue: cellInfo.Value,
                     ColumnId: cellInfo.ColumnId,
                     IdentifierValue: cellInfo.Id,
-                    Timestamp: null,
                     Record: null
                 };
                 if (this.AuditLogService.IsAuditCellEditsEnabled) {
                     this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
                 }
                 this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
-                this.DataService.CreateDataSourcedChangedEvent(dataChangedEvent);
+                this.DataService.CreateDataChangedEvent(dataChangedEvent);
             }
         });
         this.applyGridFiltering();
@@ -545,7 +542,6 @@ class AdaptableBlotter {
                     NewValue: cellInfo.Value,
                     ColumnId: colId,
                     IdentifierValue: cellInfo.Id,
-                    Timestamp: null,
                     Record: null
                 };
                 dataChangedEvents.push(dataChangedEvent);
@@ -573,7 +569,7 @@ class AdaptableBlotter {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
-        dataChangedEvents.forEach(dc => this.DataService.CreateDataSourcedChangedEvent(dc));
+        dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
@@ -1068,15 +1064,14 @@ class AdaptableBlotter {
             //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
-                let dataChangedEvent = {
+                let dataChangedInfo = {
                     OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
                     NewValue: this._currentEditor.getValue(),
                     ColumnId: params.column.getColId(),
                     IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
-                    Timestamp: null,
                     Record: null
                 };
-                let failedRules = this.ValidationService.ValidateCellChanging(dataChangedEvent);
+                let failedRules = this.ValidationService.ValidateCellChanging(dataChangedInfo);
                 if (failedRules.length > 0) {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
@@ -1090,9 +1085,9 @@ class AdaptableBlotter {
                             warningMessage = warningMessage + ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                         });
                         let cellInfo = {
-                            Id: dataChangedEvent.IdentifierValue,
-                            ColumnId: dataChangedEvent.ColumnId,
-                            Value: dataChangedEvent.NewValue
+                            Id: dataChangedInfo.IdentifierValue,
+                            ColumnId: dataChangedInfo.ColumnId,
+                            Value: dataChangedInfo.NewValue
                         };
                         let confirmation = {
                             CancelText: "Cancel Edit",
@@ -1112,10 +1107,10 @@ class AdaptableBlotter {
                 if (!whatToReturn) {
                     // audit the cell event if needed
                     if (this.AuditLogService.IsAuditCellEditsEnabled) {
-                        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                        this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
                     }
                     // it might be a free text column so we need to update the values
-                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
+                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
                     // do we need to also refresh calculated columns?
                 }
                 return whatToReturn;
@@ -1155,7 +1150,14 @@ class AdaptableBlotter {
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_CELL_VALUE_CHANGED, (params) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             let colId = params.colDef.field;
-            this.DataService.CreateDataEvent(identifierValue, params.newValue, colId, params.node);
+            let dataChangedInfo = {
+                OldValue: params.oldValue,
+                NewValue: params.newValue,
+                ColumnId: colId,
+                IdentifierValue: identifierValue,
+                Record: params.node
+            };
+            this.DataService.CreateDataChangedEvent(dataChangedInfo);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
@@ -1163,8 +1165,14 @@ class AdaptableBlotter {
             let columnList = this._calculatedColumnPathMap.get(colId);
             if (columnList) {
                 columnList.forEach(columnId => {
-                    let newValue = this.gridOptions.api.getValue(columnId, params.node);
-                    this.DataService.CreateDataEvent(identifierValue, newValue, columnId, params.node);
+                    let dataChangedInfo = {
+                        OldValue: params.oldValue,
+                        NewValue: this.gridOptions.api.getValue(columnId, params.node),
+                        ColumnId: columnId,
+                        IdentifierValue: identifierValue,
+                        Record: params.node
+                    };
+                    this.DataService.CreateDataChangedEvent(dataChangedInfo);
                     ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, columnId);
                 });
             }
@@ -1583,48 +1591,6 @@ class AdaptableBlotter {
         }
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
-    }
-    clearFlashingCellMap() {
-        this._flashingCellList.clear();
-    }
-    getOldFlashingCellValue(columnId, identifierValue, newValue, isUp) {
-        let columnValueList = this.getCellValuesForColumn(columnId);
-        let oldValue = columnValueList.get(identifierValue);
-        if (oldValue) {
-            if (oldValue != newValue) { // its changed 
-                if (isUp) {
-                    if (newValue > oldValue) { // we are up and its higher so set it and return it
-                        columnValueList.set(identifierValue, newValue);
-                        return oldValue;
-                    }
-                }
-                else {
-                    if (newValue < oldValue) { // we are down and its lower so set it and return it
-                        columnValueList.set(identifierValue, newValue);
-                        return oldValue;
-                    }
-                }
-            }
-        }
-        else { // we dont have an existing value so set the new value for future reference and return null
-            columnValueList.set(identifierValue, newValue); // need to do this always...
-        }
-        // dont like this but we check anyway...
-        return newValue;
-    }
-    getCellValuesForColumn(columnId) {
-        // first check the list exists; if not, then create it
-        if (this._flashingCellList.size == 0) {
-            this._flashingCellList.set(columnId, new Map());
-        }
-        // get the item
-        let returnList = this._flashingCellList.get(columnId);
-        //in case we created a new calculated column  - need to worry about this?
-        if (!returnList) {
-            returnList = new Map();
-            this._flashingCellList.set(columnId, returnList);
-        }
-        return returnList;
     }
     // A couple of state management functions
     getState() {

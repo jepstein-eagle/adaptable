@@ -5,15 +5,17 @@ class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy_1.FlashingCel
     constructor(blotter) {
         super(blotter);
     }
-    FlashCell(dataChangedEvent, flashingCell, index) {
+    FlashCell(dataChangedInfo, flashingCell) {
         let theBlotter = this.blotter;
-        if (dataChangedEvent.OldValue == null) {
-            return;
+        if (dataChangedInfo.OldValue == null) { // currently always
+            dataChangedInfo.OldValue = this.blotter.DataService.GetPreviousColumnValue(dataChangedInfo.ColumnId, dataChangedInfo.IdentifierValue, dataChangedInfo.NewValue);
         }
-        var oldvalueNumber = Number(dataChangedEvent.OldValue);
-        var newValueNumber = Number(dataChangedEvent.NewValue);
-        var cellStyle = (oldvalueNumber > newValueNumber) ? flashingCell.DownColor : flashingCell.UpColor;
-        theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, { flashBackColor: cellStyle }, flashingCell.FlashingCellDuration);
+        if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
+            var oldvalueNumber = Number(dataChangedInfo.OldValue);
+            var newValueNumber = Number(dataChangedInfo.NewValue);
+            var cellStyle = (oldvalueNumber > newValueNumber) ? flashingCell.DownColor : flashingCell.UpColor;
+            theBlotter.addCellStyleHypergrid(dataChangedInfo.IdentifierValue, dataChangedInfo.ColumnId, { flashBackColor: cellStyle }, flashingCell.FlashingCellDuration);
+        }
     }
 }
 exports.FlashingCellsStrategyHypergrid = FlashingCellsStrategyHypergrid;
