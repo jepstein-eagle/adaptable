@@ -36,10 +36,10 @@ function getSchema(data) {
 
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    trades = dataGen.getTrades(300);
+    trades = dataGen.getTrades(1000);
     var gridOptions = { data: trades, schema: getSchema(trades) };
     var vendorGrid = new fin.Hypergrid('#grid', gridOptions);
-    //  dataGen.startTickingDataHypergrid(vendorGrid)
+     dataGen.startTickingDataHypergrid(vendorGrid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     vendorGrid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON

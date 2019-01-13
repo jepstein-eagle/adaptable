@@ -9,13 +9,17 @@ export class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy implem
         super(blotter)
     }
 
-    protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void {
+    protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void {
         let theBlotter = this.blotter as AdaptableBlotter
-        if (dataChangedEvent.OldValue == null) { return; }
-        var oldvalueNumber: Number = Number(dataChangedEvent.OldValue);
-        var newValueNumber: Number = Number(dataChangedEvent.NewValue);
+        if (dataChangedInfo.OldValue == null) {  // currently always
+            dataChangedInfo.OldValue = this.blotter.DataService.GetPreviousColumnValue(dataChangedInfo.ColumnId, dataChangedInfo.IdentifierValue, dataChangedInfo.NewValue);
+        }
+        if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
+            var oldvalueNumber: Number = Number(dataChangedInfo.OldValue);
+            var newValueNumber: Number = Number(dataChangedInfo.NewValue);
 
-        var cellStyle: string = (oldvalueNumber > newValueNumber) ? flashingCell.DownColor : flashingCell.UpColor
-        theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, dataChangedEvent.ColumnId, { flashBackColor: cellStyle }, flashingCell.FlashingCellDuration)
+            var cellStyle: string = (oldvalueNumber > newValueNumber) ? flashingCell.DownColor : flashingCell.UpColor
+            theBlotter.addCellStyleHypergrid(dataChangedInfo.IdentifierValue, dataChangedInfo.ColumnId, { flashBackColor: cellStyle }, flashingCell.FlashingCellDuration)
+        }
     }
 }

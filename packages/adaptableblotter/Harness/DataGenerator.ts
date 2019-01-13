@@ -127,7 +127,7 @@ export class DataGenerator {
             trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
             //grid.behavior.reindex();
             grid.repaint()
-        }, 100)
+        }, 3000)
     }
 
     startTickingDataagGrid(gridOptions: any) {

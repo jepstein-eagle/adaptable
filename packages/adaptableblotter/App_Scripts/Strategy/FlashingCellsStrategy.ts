@@ -25,7 +25,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     public addContextMenuItem(column: IColumn): void {
         if (this.canCreateContextMenuItem(column, this.blotter)) {
-          
+
             if (column.DataType == DataType.Number) {
                 if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == column.ColumnId) == null) {
 
@@ -62,14 +62,14 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         }
     }
 
-    protected handleDataSourceChanged(DataChangedEvent: IDataChangedInfo) {
-        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == DataChangedEvent.ColumnId);
-        let flashingCellIndex = this.FlashingCellState.FlashingCells.indexOf(flashingCell)
-        if (flashingCell != null && flashingCell.IsLive) {
-            this.FlashCell(DataChangedEvent, flashingCell, flashingCellIndex);
+    protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo) {
+        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == dataChangedInfo.ColumnId);
+        if (flashingCell && flashingCell.IsLive) {
+            this.FlashCell(dataChangedInfo, flashingCell);
+
         }
     }
 
-    protected abstract FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void;
+    protected abstract FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void;
 
 }

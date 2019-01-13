@@ -103,7 +103,6 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
                         NewValue: typedBulkUpdateValue,
                         ColumnId: selectedCell.columnId,
                         IdentifierValue: pair[0],
-                        Timestamp: Date.now(),
                         Record: null
                     }
 

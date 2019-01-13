@@ -2,10 +2,8 @@ declare var require: any;
 
 import { Component, OnInit, Input, ElementRef, Output, EventEmitter } from '@angular/core';
 
-// import { AdaptableBlotterApp } from 'adaptableblotter/blotterApp';
 import { AdaptableBlotterApp, AdaptableBlotter } from 'adaptableblotter/aggrid';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types';
-// import ReactDOM from 'react-dom';
 
 let ReactDOM;
 try {

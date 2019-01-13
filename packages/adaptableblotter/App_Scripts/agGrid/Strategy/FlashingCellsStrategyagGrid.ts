@@ -14,7 +14,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
     }
     private currentFlashing: Map<any, number>
 
-   protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void {
+   protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void {
         // no implementation required
     }
 
@@ -34,7 +34,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
 
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value, true);
+                        let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value);
                         if (params.value > oldValue) {
                           //  console.log("applying up for: " + col.ColumnId)
                             let key = primaryKey + col.ColumnId
@@ -55,7 +55,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
 
                     cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value, false);
+                        let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value);
                         if (params.value < oldValue) {
                           //  console.log("applying down for: " + col.ColumnId)
                             let key = primaryKey + col.ColumnId

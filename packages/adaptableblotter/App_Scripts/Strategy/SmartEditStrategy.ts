@@ -113,8 +113,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                     NewValue: newValue,
                     ColumnId: selectedCell.columnId,
                     IdentifierValue: pair[0],
-                    Timestamp: Date.now(),
-                    Record: null
+                     Record: null
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
