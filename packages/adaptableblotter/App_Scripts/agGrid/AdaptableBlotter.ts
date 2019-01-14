@@ -132,7 +132,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public FreeTextColumnService: IFreeTextColumnService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
-    
+
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
     public EmbedColumnMenu: boolean;
@@ -161,7 +161,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // get the api ready
         this.api = new BlotterApi(this);
 
-       
+
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
@@ -173,7 +173,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -968,7 +968,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         else {
             if (type == "FlashingCell") {
-         //       alert("here ")
+                //       alert("here ")
             }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
@@ -993,7 +993,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public testredrawRow(rowNode: RowNode) {
-        this.gridOptions.api.redrawRows({rowNodes: [rowNode]});
+        this.gridOptions.api.redrawRows({ rowNodes: [rowNode] });
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
@@ -1349,7 +1349,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
             let colId: string = params.colDef.field;
-            let dataChangedInfo: IDataChangedInfo={
+            let dataChangedInfo: IDataChangedInfo = {
                 OldValue: params.oldValue,
                 NewValue: params.newValue,
                 ColumnId: colId,
@@ -1364,7 +1364,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columnList = this._calculatedColumnPathMap.get(colId);
             if (columnList) {
                 columnList.forEach(columnId => {
-                    let dataChangedInfo: IDataChangedInfo={
+                    let dataChangedInfo: IDataChangedInfo = {
                         OldValue: params.oldValue,
                         NewValue: this.gridOptions.api.getValue(columnId, params.node),
                         ColumnId: columnId,
@@ -1388,7 +1388,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             })
             // only if visible...
-             this.refreshCells(params.node, refreshColumnList);
+            this.refreshCells(params.node, refreshColumnList);
         });
 
 
@@ -1846,7 +1846,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
     }
 
-   
+
 
     // A couple of state management functions
     private getState(): AdaptableBlotterState {

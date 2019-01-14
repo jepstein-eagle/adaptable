@@ -36,7 +36,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
     }
 
-    var body: any = null;//React.createElement(bodyElement, commonProps);
+    var body: any = React.createElement(bodyElement, commonProps);
 
     return (
       <div>

@@ -477,7 +477,7 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#notional") {
       gridOptions.api.forEachNode((rowNode, index) => {
         if (index == 4) {
-          rowNode.setDataValue("notional", 2000000000)
+          rowNode.setDataValue("notional", 20000)
         }
       });
     }
