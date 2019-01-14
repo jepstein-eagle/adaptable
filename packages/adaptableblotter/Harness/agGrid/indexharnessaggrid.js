@@ -29,7 +29,7 @@ function getData() {
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(9000);
+  trades = dataGen.getTrades(40);
    rowData = trades;
   // trades = dataGen.getFtseData(10);
 
@@ -60,7 +60,7 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  //dataGen.startTickingDataagGrid(gridOptions);
+  dataGen.startTickingDataagGrid(gridOptions);
 
   let s = 2;
 

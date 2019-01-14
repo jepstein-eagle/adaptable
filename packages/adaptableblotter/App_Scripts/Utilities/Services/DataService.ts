@@ -1,6 +1,6 @@
 import { EventDispatcher } from "../EventDispatcher";
 import { IEvent } from "../../Api/Interface/IEvent";
-import { IDataService } from "./Interface/IDataService";
+import { IDataService, ChangeDirection } from "./Interface/IDataService";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
 
@@ -36,10 +36,27 @@ export class DataService implements IDataService {
         this._columnValueList.clear();
     }
 
-    public GetPreviousColumnValue(columnId: string, identifierValue: any, newValue: number): number {
+    public GetPreviousColumnValue(columnId: string, identifierValue: any, newValue: number, changeDirection: ChangeDirection): number {
         let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
 
         let oldValue: number = columnValueList.get(identifierValue);
+        if (oldValue) {
+            switch (changeDirection) {
+                case ChangeDirection.Up:
+                    if (oldValue >= newValue) {
+                        return null;
+                    }
+                    break;
+                case ChangeDirection.Down:
+                    if (oldValue <= newValue) {
+                        return null;
+                    }
+                    break;
+                case ChangeDirection.Ignore:
+                    // do nothing
+                    break;
+            }
+        }
         columnValueList.set(identifierValue, newValue);
         return (oldValue) ? oldValue : newValue;
     }

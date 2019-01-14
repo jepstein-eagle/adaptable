@@ -992,6 +992,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this)
     }
 
+    public testredrawRow(rowNode: RowNode) {
+        this.gridOptions.api.redrawRows({rowNodes: [rowNode]});
+    }
+
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
         this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
         //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });

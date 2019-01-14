@@ -16,7 +16,9 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter)
-        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        if (this.shouldHandleDataSourceChanged()) {
+            this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        }
     }
 
     protected addPopupMenuItem() {
@@ -69,6 +71,8 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
 
         }
     }
+
+    protected abstract shouldHandleDataSourceChanged(): boolean;
 
     protected abstract FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void;
 
