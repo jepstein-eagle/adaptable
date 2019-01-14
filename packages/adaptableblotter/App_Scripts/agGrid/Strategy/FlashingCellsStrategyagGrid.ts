@@ -7,7 +7,6 @@ import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 
-
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
         super(blotter)
@@ -38,7 +37,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                 let cellClassRules: any = {};
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
-                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
+                        let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
                         let key = primaryKey + col.ColumnId + "up";
                         let currentFlashTimer = currentFlashing.get(key)
                         if (currentFlashTimer) {
@@ -61,10 +60,10 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                         }
                     }
 
-                    
+
                     cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let key = primaryKey + col.ColumnId;
+                        let key = primaryKey + col.ColumnId + "down";
                         let currentFlashTimer = currentFlashing.get(key)
                         if (currentFlashTimer) {
                             return true;
@@ -79,13 +78,11 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
-                            return true
+                             return true
                         } else {
                             return false
                         }
                     }
-                  
-                    
                 }
                 theBlotter.setCellClassRules(cellClassRules, col.ColumnId, "FlashingCell");
             })

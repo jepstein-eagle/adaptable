@@ -4,16 +4,16 @@ import { IDataService, ChangeDirection } from "./Interface/IDataService";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
 
+// Used to be the Audit Service - now much reduced
+// Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events
 
 export class DataService implements IDataService {
 
     private _columnValueList: Map<string, Map<any, number>>;
 
-
     constructor(private blotter: IAdaptableBlotter) {
-        // create the _columnValueList - will be empty - used primarily for flashing cell
+        // create the _columnValueList - will be empty - used currrently only for flashing cell
         this._columnValueList = new Map();
-
     }
 
     public CreateDataChangedEvent(dataChangedInfo: IDataChangedInfo): void {
@@ -22,24 +22,17 @@ export class DataService implements IDataService {
         }
     }
 
-
     private _onDataSourceChanged: EventDispatcher<IDataService, IDataChangedInfo> = new EventDispatcher<IDataService, IDataChangedInfo>();
 
     OnDataSourceChanged(): IEvent<IDataService, IDataChangedInfo> {
         return this._onDataSourceChanged;
     }
 
-
-
-
-    private clearFlashingCellMap(): void {
-        this._columnValueList.clear();
-    }
-
     public GetPreviousColumnValue(columnId: string, identifierValue: any, newValue: number, changeDirection: ChangeDirection): number {
         let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
 
         let oldValue: number = columnValueList.get(identifierValue);
+        // this horrible code is for dealing with ag-Grid because it comes in twice for Flashing Cell and we only want to return (and save!) a value if its the correct direction
         if (oldValue) {
             switch (changeDirection) {
                 case ChangeDirection.Up:

@@ -29,7 +29,7 @@ function getData() {
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(40);
+  trades = dataGen.getTrades(300);
    rowData = trades;
   // trades = dataGen.getFtseData(10);
 
