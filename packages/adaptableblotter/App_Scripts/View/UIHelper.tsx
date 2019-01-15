@@ -96,6 +96,21 @@ export module UIHelper {
         return modalContainer;
     }
 
+    export function getChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement {
+        let chartContainer: HTMLElement;
+        chartContainer = document.getElementById("charttest")
+            if (chartContainer) {
+                const chartContainerClassName: string = " chart-container"
+                if (!chartContainer.className.includes(chartContainerClassName)) {
+                    chartContainer.className += chartContainerClassName;
+                }
+         }
+        if (!chartContainer) {
+            chartContainer = document.body
+        }
+        return chartContainer;
+    }
+
     export function IsNotEmptyStyle(style: IStyle): boolean {
         return style.BackColor != null || style.ForeColor != null || style.FontWeight != FontWeight.Normal || style.FontStyle != FontStyle.Normal || style.FontSize != null || StringExtensions.IsNotNullOrEmpty(style.ClassName)
 

@@ -47,8 +47,7 @@ export interface ChartDisplayPopupWizardState {
     ChartProperties: IChartProperties
 
     // General
-    ChartSize: ChartSize;
-    IsGeneralMinimised: boolean;
+     IsGeneralMinimised: boolean;
 
     // Y Axis
     SetYAxisMinimumValue: boolean;
@@ -81,7 +80,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             IsChartMinimised: false,
 
             // General
-            ChartSize: ChartSize.Medium,
             IsGeneralMinimised: false,
 
             // Y Axis
@@ -428,7 +426,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                 <ControlLabel>Size</ControlLabel>
                                                             </Col>
                                                             <Col xs={7}>
-                                                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
+                                                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
                                                                     {optionChartSizes}
                                                                 </FormControl>
                                                             </Col>
@@ -444,7 +442,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                         </Row>
                                                     </AdaptableBlotterForm>
 
-                                                    {this.state.ChartSize != ChartSize.XSmall &&
+                                                    {this.state.ChartProperties.ChartSize != ChartSize.XSmall &&
                                                         <div>
                                                             <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                 <Row>
@@ -484,7 +482,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                             }
                                         </PanelWithButton>
 
-                                        {this.state.ChartSize != ChartSize.XSmall &&
+                                        {this.state.ChartProperties.ChartSize != ChartSize.XSmall &&
                                             <div>
                                                 <PanelWithButton bsSize={"xs"} headerText={"Y Axis"} cssClassName={cssClassName} button={showYAxisPropertiesButton} style={{ marginTop: '10px' }}>
                                                     {this.state.IsYAxisMinimised == false &&
@@ -848,7 +846,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     onChartSizeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ChartSize: e.value, } as ChartDisplayPopupWizardState)
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.ChartSize = e.value as ChartSize;
+        this.updateChartProperties(chartProperties);
     }
 
     onYAxisLabelLocationChange(event: React.FormEvent<any>) {
@@ -1128,7 +1128,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     setChartHeight(): string {
-        switch (this.state.ChartSize) {
+        switch (this.state.ChartProperties.ChartSize) {
             case ChartSize.XSmall:
                 return '350px';
             case ChartSize.Small:
@@ -1144,7 +1144,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     setChartWidth(): string {
         let chartWidth: number;
-        switch (this.state.ChartSize) {
+        switch (this.state.ChartProperties.ChartSize) {
             case ChartSize.XSmall:
                 chartWidth = (this.state.IsChartSettingsVisible) ? 375 : 600
                 break;
@@ -1166,7 +1166,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     setPanelWidth(): string {
-        switch (this.state.ChartSize) {
+        switch (this.state.ChartProperties.ChartSize) {
             case ChartSize.XSmall:
                 return '650px';
             case ChartSize.Small:
@@ -1181,7 +1181,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     setChartColumnSize(): number {
-        switch (this.state.ChartSize) {
+        switch (this.state.ChartProperties.ChartSize) {
             case ChartSize.XSmall:
             case ChartSize.Small:
                 return 7;
@@ -1194,7 +1194,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     setLegendColumnSize(): number {
-        switch (this.state.ChartSize) {
+        switch (this.state.ChartProperties.ChartSize) {
             case ChartSize.XSmall:
             case ChartSize.Small:
                 return 5;

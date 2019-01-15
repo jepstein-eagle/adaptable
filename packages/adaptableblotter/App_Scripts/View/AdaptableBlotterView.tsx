@@ -2,10 +2,9 @@
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
-import { PopupState, SystemState, ChartState } from '../Redux/ActionsReducers/Interface/IState';
+import { PopupState, ChartState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'

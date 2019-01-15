@@ -1,5 +1,6 @@
 import { IAdaptableBlotter } from '../../../Api/Interface/IAdaptableBlotter';
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue } from '../../../Utilities/Enums'
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
@@ -21,7 +22,10 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+    let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+  //  console.log(chartContainer);
     let bodyElement: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
+
 
     let commonProps: ChartDisplayPopupPropsBase<this> = {
       getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
@@ -37,6 +41,10 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
     }
 
     var body: any = React.createElement(bodyElement, commonProps);
+
+    // only do this if its NOT default I guess...
+    //ReactDOM.render(body, chartContainer);
+          
 
     return (
       <div>
@@ -55,7 +63,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
             </div>
           </Modal>
           :
-          <div  style={{ marginLeft: '25px', marginBottom: '25px' }}>
+          <div style={{ marginLeft: '25px', marginBottom: '25px' }}>
             {body}
           </div>
 

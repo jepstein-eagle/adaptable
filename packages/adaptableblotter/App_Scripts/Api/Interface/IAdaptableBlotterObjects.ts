@@ -2,7 +2,7 @@ import { LeafExpressionOperator } from '../../Utilities/Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility } from '../../Utilities/ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize } from '../../Utilities/ChartEnums';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -87,6 +87,7 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
 export interface IChartProperties {
   // General
   ChartType?: ChartType;
+  ChartSize? : ChartSize;
   ChartCrosshairsMode?: ChartCrosshairsMode;
   EnableFinalValueAnnotations?: boolean;
   SpanCrossHairsToData?: boolean;

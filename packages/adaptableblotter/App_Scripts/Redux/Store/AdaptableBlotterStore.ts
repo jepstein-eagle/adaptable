@@ -269,7 +269,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             //for now i'm still initializing the AB even if loading state has failed....
             //we may revisit that later
             this.TheStore.dispatch(InitState())
-            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configurtion", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error }))
+            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error }))
           })
   }
 }
