@@ -8,6 +8,7 @@ import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
 export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableBlotterChart> {
   showChart: boolean;
@@ -22,11 +23,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
-    let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document);
-  //  console.log(chartContainer);
-    let bodyElement: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
-
-
+   
     let commonProps: ChartDisplayPopupPropsBase<this> = {
       getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
       Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
@@ -40,10 +37,23 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
     }
 
+    // if we have a chart container property in Blotter Options then lets get that and put the chart there
+    if (StringExtensions.IsNotNullOrEmpty(this.props.AdaptableBlotter.BlotterOptions.containerOptions.chartContainer)){
+    let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+ // Want to be able to get show the chart in this DIV  - but no idea how
+ // do we do this here?  or in adaptableBlotterView?
+    //  console.log(chartContainer);
+ //ReactDOM.render(body, chartContainer);
+ 
+    }
+    let bodyElement: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
+
+
+   
     var body: any = React.createElement(bodyElement, commonProps);
 
     // only do this if its NOT default I guess...
-    //ReactDOM.render(body, chartContainer);
+   
           
 
     return (

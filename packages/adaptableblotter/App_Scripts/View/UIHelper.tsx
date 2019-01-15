@@ -6,6 +6,7 @@ import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Api/Expression';
 import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
+import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 
 
 export module UIHelper {
@@ -97,17 +98,16 @@ export module UIHelper {
     }
 
     export function getChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement {
-        let chartContainer: HTMLElement;
-        chartContainer = document.getElementById("charttest")
-            if (chartContainer) {
-                const chartContainerClassName: string = " chart-container"
-                if (!chartContainer.className.includes(chartContainerClassName)) {
-                    chartContainer.className += chartContainerClassName;
-                }
-         }
-        if (!chartContainer) {
-            chartContainer = document.body
+        let chartContainer: HTMLElement = document.getElementById(blotterOptions.containerOptions.chartContainer)
+        if (chartContainer) {
+            const chartContainerClassName: string = " chart-container"
+            if (!chartContainer.className.includes(chartContainerClassName)) {
+                chartContainer.className += chartContainerClassName;
+            }
+        } else {
+            LoggingHelper.LogError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer)
         }
+
         return chartContainer;
     }
 

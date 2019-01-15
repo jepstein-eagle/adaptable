@@ -225,7 +225,12 @@ export interface IContainerOptions {
      * If not set, modals will be displayed in the middle of the page
      */
     modalContainer?: string;
-
+/**
+     * Name of the <div> where charts should appear 
+     * If not set, charts will be displayed directly the toolbar
+     * Make sure you create a div of the same name as that provided here
+     */
+   chartContainer?: string;
 }
 
 export interface IGeneralOptions {

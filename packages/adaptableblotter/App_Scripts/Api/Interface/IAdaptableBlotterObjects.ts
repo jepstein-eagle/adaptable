@@ -2,7 +2,7 @@ import { LeafExpressionOperator } from '../../Utilities/Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize } from '../../Utilities/ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType } from '../../Utilities/ChartEnums';
 
 /**
  * The base empty Adaptable Blotter Object interface 
@@ -92,6 +92,7 @@ export interface IChartProperties {
   EnableFinalValueAnnotations?: boolean;
   SpanCrossHairsToData?: boolean;
   EnableCrosshairsAnnotations?: boolean;
+  ToolTipType: ToolTipType;
   // Y Axis
   YAxisLabelLocation?: AxisLabelsLocation
   YAxisLabelVisibility?: LabelVisibility
@@ -104,6 +105,7 @@ export interface IChartProperties {
   XAxisLabelColor?: string
   XAxisTitle?: string
   XAxisTitleColor?: string
+  XAxisGap?: number
   // Misc
   EnableTransitions?: boolean;
   TransitionInDuration?: number

@@ -22,7 +22,7 @@ import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { PanelWithImageThreeButtons } from "../Components/Panels/PanelWithIImageThreeButtons";
-import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility } from "../../Utilities/ChartEnums";
+import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType } from "../../Utilities/ChartEnums";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
@@ -47,7 +47,7 @@ export interface ChartDisplayPopupWizardState {
     ChartProperties: IChartProperties
 
     // General
-     IsGeneralMinimised: boolean;
+    IsGeneralMinimised: boolean;
 
     // Y Axis
     SetYAxisMinimumValue: boolean;
@@ -292,12 +292,19 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 dataSource={this.props.ChartData}
                 // chart type
                 chartType={this.state.ChartProperties.ChartType}
+                // tooltip
+                toolTipType={this.state.ChartProperties.ToolTipType}
                 // size
                 width={chartWidth}
                 height={chartHeight}
-                // titles
+                // titles (titles, alignment and margins)
                 chartTitle={this.props.CurrentChartDefinition.Title}
                 subtitle={this.props.CurrentChartDefinition.SubTitle}
+                titleAlignment={this.state.ChartProperties.TitleAlignment}
+                titleRightMargin={this.state.TitleMargin}
+                titleTopMargin={this.state.TitleMargin}
+                subtitleAlignment={this.state.ChartProperties.SubTitleAlignment}
+                subtitleRightMargin={this.state.SubTitleMargin}
                 // yAxis
                 yAxisMinimumValue={this.state.ChartProperties.YAxisMinimumValue}
                 yAxisTitle={this.getYAxisTitle(this.state.UseDefaultYAxisTitle)}
@@ -310,6 +317,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 xAxisTitle={this.getXAxisTitle(this.state.UseDefaultXAxisTitle)}
                 xAxisTitleTextColor={this.state.ChartProperties.XAxisTitleColor}
                 xAxisLabelTextColor={this.state.ChartProperties.XAxisLabelColor}
+                xAxisGap={this.state.ChartProperties.XAxisGap}
 
                 // crosshairs
                 crosshairsDisplayMode={this.state.ChartProperties.ChartCrosshairsMode}
@@ -321,11 +329,18 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 transitionInDuration={this.state.ChartProperties.TransitionInDuration}
                 finalValueAnnotationsVisible={this.state.ChartProperties.EnableFinalValueAnnotations}
 
-                titleAlignment={this.state.ChartProperties.TitleAlignment}
-                titleRightMargin={this.state.TitleMargin}
-                titleTopMargin={this.state.TitleMargin}
-                subtitleAlignment={this.state.ChartProperties.SubTitleAlignment}
-                subtitleRightMargin={this.state.SubTitleMargin}
+
+
+
+            // playing
+            //  xAxisTickStrokeThickness={2}
+            //   xAxisTickStroke="gray"
+            //   yAxisTickLength={0}
+            //  xAxisTickLength={15}
+
+
+
+
             //  subtitleRightMargin={this.state.TitleMargin}
             //subtitleTopMargin = {this.state.TitleMargin}
 
@@ -346,6 +361,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
         let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as ChartType}</option>
+        })
+
+        let optionToolTipTypes = EnumExtensions.getNames(ToolTipType).map((enumName) => {
+            return <option key={enumName} value={enumName}>{enumName as ToolTipType}</option>
         })
 
         let optionCrossHairModeTypes = EnumExtensions.getNames(ChartCrosshairsMode).map((enumName) => {
@@ -444,6 +463,18 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
                                                     {this.state.ChartProperties.ChartSize != ChartSize.XSmall &&
                                                         <div>
+                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                <Row>
+                                                                    <Col xs={5}>
+                                                                        <ControlLabel>Tooltip</ControlLabel>
+                                                                    </Col>
+                                                                    <Col xs={7}>
+                                                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ToolTipType} onChange={(x) => this.onToolTipTypeChange(x)} >
+                                                                            {optionToolTipTypes}
+                                                                        </FormControl>
+                                                                    </Col>
+                                                                </Row>
+                                                            </AdaptableBlotterForm>
                                                             <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                 <Row>
                                                                     <Col xs={5}>
@@ -662,6 +693,23 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                                 {this.state.SetXAxisTitleColor &&
                                                                                     <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.ChartProperties.XAxisTitleColor} onChange={(x) => this.onXAxisTitleColorChange(x)} />
                                                                                 }
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </AdaptableBlotterForm>
+                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                        <Row>
+                                                                            <Col xs={5}>
+                                                                                <ControlLabel>Axis Gap</ControlLabel>
+                                                                            </Col>
+                                                                            <Col xs={7}>
+                                                                                <FormControl
+                                                                                    value={this.state.ChartProperties.XAxisGap}
+                                                                                    type="number"
+                                                                                    min="0" step="0.1" max="1"
+                                                                                    placeholder="Enter Number"
+                                                                                    onChange={(e) => this.onXAxisGapChanged(e)}
+                                                                                />
+
                                                                             </Col>
                                                                         </Row>
                                                                     </AdaptableBlotterForm>
@@ -886,6 +934,13 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.updateChartProperties(chartProperties);
     }
 
+    onToolTipTypeChange(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.ToolTipType = e.value as ToolTipType;
+        this.updateChartProperties(chartProperties);
+    }
+
     onCrosshairsModeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let chartProperties: IChartProperties = this.state.ChartProperties;
@@ -1041,6 +1096,21 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let e = event.target as HTMLInputElement;
         let chartProperties: IChartProperties = this.state.ChartProperties;
         chartProperties.YAxisTitle = e.value;
+        this.updateChartProperties(chartProperties);
+    }
+
+    private onXAxisGapChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+         let factor = Number(e.value)
+        if (factor > 1) {
+            factor = 1;
+        }
+        if (factor < 0) {
+            factor = 0;
+        }
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisGap = factor;
+
         this.updateChartProperties(chartProperties);
     }
 

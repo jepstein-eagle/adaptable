@@ -1,5 +1,5 @@
 import { IChartProperties } from './Interface/IAdaptableBlotterObjects';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize } from '../Utilities/ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType } from '../Utilities/ChartEnums';
 
 export const DefaultChartProperties: IChartProperties = {
     // General
@@ -9,6 +9,7 @@ export const DefaultChartProperties: IChartProperties = {
     EnableFinalValueAnnotations: false,
     SpanCrossHairsToData: false,
     EnableCrosshairsAnnotations: false,
+    ToolTipType: ToolTipType.Default,
     // Y Axis
     YAxisLabelLocation: AxisLabelsLocation.OutsideLeft,
     YAxisLabelVisibility: LabelVisibility.Visible,
@@ -21,6 +22,7 @@ export const DefaultChartProperties: IChartProperties = {
     XAxisLabelColor: "",
     XAxisTitle: "",
     XAxisTitleColor: "",
+    XAxisGap: 0.5,
     // Misc
     EnableTransitions: false,
     TransitionInDuration: undefined,
