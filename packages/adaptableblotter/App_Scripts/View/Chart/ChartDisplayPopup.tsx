@@ -330,13 +330,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 finalValueAnnotationsVisible={this.state.ChartProperties.EnableFinalValueAnnotations}
 
 
+                // playing
 
+                xAxisTickStroke="yellow"
 
-            // playing
-            //  xAxisTickStrokeThickness={2}
-            //   xAxisTickStroke="gray"
-            //   yAxisTickLength={0}
-            //  xAxisTickLength={15}
 
 
 
@@ -355,11 +352,17 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             // properties used in ig example
             //    xAxisFormatLabel={this.formatDateLabel}
 
+            // properties not doing
+            // tick length seems to be space between the legend and the points - doubt worth setting for V1.
+            //   yAxisTickLength={0}
+            //  xAxisTickLength={15}
+            //  xAxisTickStrokeThickness={1} // not sure what it does but looks minor!
             />
             :
             null;
 
-        let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
+
+         let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as ChartType}</option>
         })
 
@@ -1101,7 +1104,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     private onXAxisGapChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-         let factor = Number(e.value)
+        let factor = Number(e.value)
         if (factor > 1) {
             factor = 1;
         }

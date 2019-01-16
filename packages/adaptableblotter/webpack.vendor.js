@@ -13,6 +13,7 @@ module.exports = {
                 'igniteui-react-charts/ES2015/igr-category-chart-module',
                 'igniteui-react-charts/ES2015/igr-category-chart-core-module',
                 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module',
+                'ipushpull-js',
                 'isomorphic-fetch',
                 'lodash',
                 'mathjs',

@@ -78,10 +78,25 @@ export interface IAdaptableBlotterOptions {
         api_secret: string;
         transport?: string;
         storage_prefix?: string;
+        hsts?: boolean;
     };
 
 }
 
+/*
+{
+            api_url: "https://test.ipushpull.com/api/1.0",
+            ws_url: "https://test.ipushpull.com",
+            web_url: "https://test.ipushpull.com",
+            docs_url: "https://docs.ipushpull.com",
+            storage_prefix: "ipp_local",
+            api_key: "???",
+            api_secret: "???",
+            transport: "polling",
+            hsts: false,
+        }
+
+        */
 
 /**
  * Options for managing Audit Log

@@ -198,7 +198,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),

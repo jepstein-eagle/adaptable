@@ -141,7 +141,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
-
         this.gridOptions = this.BlotterOptions.vendorGrid
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
@@ -199,7 +198,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+      iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
+
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
