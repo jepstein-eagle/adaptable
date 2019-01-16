@@ -1,7 +1,7 @@
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux'
 import { ApiBase } from "./ApiBase";
-import { IDataSourceApi } from './Interface/IDataSource';
+import { IDataSourceApi } from './Interface/IDataSourceApi';
 
 
 export class DataSourceApi extends ApiBase implements IDataSourceApi {

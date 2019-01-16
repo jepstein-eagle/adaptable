@@ -11,7 +11,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Api/Expression";
+import { Expression } from "../../Utilities/Expression";
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { Helper } from "../../Utilities/Helpers/Helper";

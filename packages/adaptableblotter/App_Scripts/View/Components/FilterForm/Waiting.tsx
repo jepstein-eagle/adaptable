@@ -30,8 +30,5 @@ export class Waiting extends React.Component<WaitingProps, {}> {
             </Row>
 
         </div>
-
-
-
     }
 }

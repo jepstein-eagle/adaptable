@@ -12,7 +12,7 @@ import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Api/Expression";
+import { Expression } from "../../Utilities/Expression";
 import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../Api/Interface/IBlotterApi";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";

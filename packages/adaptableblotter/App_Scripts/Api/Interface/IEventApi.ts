@@ -1,6 +1,6 @@
 
 import { IAdaptableBlotter } from './IAdaptableBlotter';
-import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from './IStateEvents';
+import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from '../../Utilities/Interface/IStateEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 
 export interface IEventApi {

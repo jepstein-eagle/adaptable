@@ -1,7 +1,7 @@
 import * as DeepDiff from 'deep-diff'
 import * as React from "react";
 import * as Redux from "redux";
-    import * as _ from 'lodash'
+import * as _ from 'lodash'
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
@@ -10,7 +10,7 @@ import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { IColumnFilter, IUserFilter, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../../Api/Expression";
+import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Api/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";

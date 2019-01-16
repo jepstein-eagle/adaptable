@@ -7,7 +7,7 @@ import { ICalendarApi } from "./ICalendarApi";
 import { IColumnCategoryApi } from "./IColumnCategoryApi";
 import { IConfigApi } from "./IConfigApi";
 import { IDashboardApi } from "./IDashboardApi";
-import { IDataSourceApi } from "./IDataSource";
+import { IDataSourceApi } from "./IDataSourceApi";
 import { IEntitlementApi } from "./IEntitlementApi";
 import { IEventApi } from "./IEventApi";
 import { IExportApi } from "./IExportApi";

@@ -1,5 +1,5 @@
 import { LeafExpressionOperator } from '../../Utilities/Enums';
-import { Expression } from '../Expression';
+import { Expression } from '../../Utilities/Expression';
 import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility } from '../../Utilities/ChartEnums';

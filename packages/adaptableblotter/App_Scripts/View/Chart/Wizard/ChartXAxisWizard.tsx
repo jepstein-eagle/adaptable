@@ -5,14 +5,12 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { SelectionMode, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
+import { SelectionMode } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Api/Interface/IColumn";
-import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { Expression } from "../../../Api/Expression";
+import { Expression } from "../../../Utilities/Expression";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]

@@ -3,7 +3,7 @@ import { IStrategy, } from './Interface/IStrategy';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Api/Interface/IStateEvents';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';

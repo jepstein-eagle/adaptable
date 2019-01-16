@@ -6,7 +6,7 @@ import { IColumn } from './IColumn';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
 import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Api/Interface/IStateEvents';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Utilities/Interface/IStateEvents';
 import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 import { ICalendarService } from '../../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../../Utilities/Services/Interface/IDataService';

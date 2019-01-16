@@ -7,7 +7,7 @@ import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../Enums';
 import { IKeyValuePair } from '../../Api/Interface/Interfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { Expression } from '../../Api/Expression';
+import { Expression } from '../../Utilities/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { AxisTotal } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';

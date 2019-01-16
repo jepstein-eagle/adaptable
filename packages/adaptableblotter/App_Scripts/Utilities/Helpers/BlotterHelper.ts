@@ -1,5 +1,5 @@
 import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
-import { DefaultAdaptableBlotterOptions } from '../../Api/DefaultAdaptableBlotterOptions';
+import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';

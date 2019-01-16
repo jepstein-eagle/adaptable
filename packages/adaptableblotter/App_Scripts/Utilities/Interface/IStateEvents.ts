@@ -1,14 +1,16 @@
-import { IAdvancedSearch, ICustomSort, IColumnFilter, IGridSort } from "./IAdaptableBlotterObjects";
 import { IUserState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IAdvancedSearch, IColumnFilter, IGridSort, ICustomSort } from "../../Api/Interface/IAdaptableBlotterObjects";
 
-export interface IColumnStateChangedEventArgs {
-  currentLayout: string
-}
 
 export interface IFDC3Schema {
   object: string
   definition: string
   version: string
+}
+
+
+export interface IColumnStateChangedEventArgs {
+  currentLayout: string
 }
 
 export interface IStateChangedEventArgs extends IFDC3Schema {

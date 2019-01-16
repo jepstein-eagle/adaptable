@@ -5,10 +5,10 @@ import { IColumn } from '../Api/Interface/IColumn';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
-import { Expression } from '../Api/Expression';
+import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
-import { DefaultChartProperties } from '../api/DefaultChartProperties';
+import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';
 
 export module ObjectFactory {

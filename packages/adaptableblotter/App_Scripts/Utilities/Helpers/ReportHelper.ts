@@ -1,7 +1,7 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IReport, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
-import { Expression } from '../../Api/Expression';
+import { Expression } from '../../Utilities/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';

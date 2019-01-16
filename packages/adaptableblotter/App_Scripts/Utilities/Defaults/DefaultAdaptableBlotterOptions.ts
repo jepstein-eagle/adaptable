@@ -1,5 +1,5 @@
-import * as GeneralConstants from '../Utilities/Constants/GeneralConstants'
-import { IAdaptableBlotterOptions } from './Interface/IAdaptableBlotterOptions';
+import * as GeneralConstants from '../Constants/GeneralConstants'
+import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     vendorGrid: null,

@@ -1,7 +1,7 @@
 import { FilterHelper } from './FilterHelper'
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue, RangeOperandType } from '../Enums';
 import { IRange, IColumnValueExpression, IRangeExpression, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
-import { Expression } from '../../Api/Expression';
+import { Expression } from '../Expression';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';

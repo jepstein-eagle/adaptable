@@ -7,7 +7,7 @@ import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObject
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
-import { Expression } from "../../../Api/Expression";
+import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 
