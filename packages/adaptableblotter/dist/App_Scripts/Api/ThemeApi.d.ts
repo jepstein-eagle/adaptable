@@ -6,6 +6,6 @@ export declare class ThemeApi extends ApiBase implements IThemeApi {
     GetCurrent(): string;
     SetSystemThemes(systemThemes: string[]): void;
     SetUserThemes(userThemes: string[]): void;
-    SystemThemeGetAll(): string[];
-    UserThemeGetAll(): IUserTheme[];
+    GetAllSystemTheme(): string[];
+    GetAllUserTheme(): IUserTheme[];
 }

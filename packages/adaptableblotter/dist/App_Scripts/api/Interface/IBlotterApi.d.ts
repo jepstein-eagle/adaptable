@@ -26,6 +26,8 @@ import { IUserInterfaceApi } from "./IUserInterfaceApi";
 import { ICustomSortApi } from "./ICustomSortApi";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
+ * Contains all the functionality provided by the Adaptable Blotter UI in function form
+ * Allows users to access our Store in a 'safe' way
  */
 export interface IBlotterApi {
     advancedSearchApi: IAdvancedSearchApi;

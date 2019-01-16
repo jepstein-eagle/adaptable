@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ThemeRedux = require("../Redux/ActionsReducers/ThemeRedux");
 const ApiBase_1 = require("./ApiBase");
 class ThemeApi extends ApiBase_1.ApiBase {
-    // Theme State
     SetCurrent(theme) {
         this.dispatchAction(ThemeRedux.ThemeSelect(theme));
     }
@@ -16,10 +15,10 @@ class ThemeApi extends ApiBase_1.ApiBase {
     SetUserThemes(userThemes) {
         this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes));
     }
-    SystemThemeGetAll() {
+    GetAllSystemTheme() {
         return this.getState().Theme.SystemThemes;
     }
-    UserThemeGetAll() {
+    GetAllUserTheme() {
         return this.getState().Theme.UserThemes;
     }
 }

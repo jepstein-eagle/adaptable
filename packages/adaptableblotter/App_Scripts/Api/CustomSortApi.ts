@@ -6,7 +6,7 @@ import { ICustomSortApi } from './Interface/ICustomSortApi';
 
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
 
-    public GetAll(): ICustomSort[] {
+  public GetAll(): ICustomSort[] {
     return this.getState().CustomSort.CustomSorts;
   }
 
@@ -18,14 +18,16 @@ export class CustomSortApi extends ApiBase implements ICustomSortApi {
     this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort))
   }
 
-  public Create(column: string, values: string[]): void {
-    let customSort: ICustomSort = { ColumnId: column, SortedValues: values }
+  public Create(columnId: string, values: string[]): void {
+    let customSort: ICustomSort = { ColumnId: columnId, SortedValues: values }
     this.Add(customSort);
   }
 
-  public Edit(column: string, values: string[]): void {
-    let customSort: ICustomSort = { ColumnId: column, SortedValues: values }
-    this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort))
+  public Edit(columnId: string, values: string[]): void {
+    let customSort: ICustomSort = { ColumnId: columnId, SortedValues: values }
+    if (this.checkItemExists(customSort, columnId, StrategyConstants.CustomSortStrategyId)) {
+      this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort))
+    }
   }
 
   public Delete(column: string): void {

@@ -82,7 +82,6 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                             NewValue: newValue.Value,
                             ColumnId: selectedCell.columnId,
                             IdentifierValue: keyValuePair[0],
-                            Timestamp: Date.now(),
                             Record: null
                         };
                         let validationRules = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);

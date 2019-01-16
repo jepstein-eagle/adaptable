@@ -1,93 +1,52 @@
 import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
 import { LoggingHelper } from "./LoggingHelper";
-
-/*
-This page used to work using the old ipushpull connection mechanism that refernces Angular.
-We are keen to remove this dependnecy as its causing us problems and enlarging the package.
-there is a new javascript API that we should apparently use:  https://bitbucket.org/ipushpull/ipp-js/wiki/Home
-
-However we have 2 problems:
-1.  We cannot get the new way to work at all  - we cannot reference any of the new types.
-    There is currently no definition file and trying to reference their stuff through JavaScript is not working for me.
-2.  Even the old way no longer works because of a CORS issue:  
-        Access to XMLHttpRequest at 'https://www.ipushpull.com/Api/1.0/oauth/token/' from origin 'http://localhost:8080' has been blocked by CORS policy: 
-        Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. 
-        [http://localhost:8080/]
-    I assume that this issue will be extant even if we successfully solve issue 1.
-
-So for the time being I have removed ipushpull (or rather made it always return unavailable) until we can move to the new version and run it locally.
-
-We could keep it running with the old version but its not sustainable not being able to test and we really do need to start using the new version I think?
-
-If we want to put it then its just a case of readding angular types:
- "@types/angular": "^1.6.47",
-*/
+import * as ipushpull from 'ipushpull-js'
 
 export module iPushPullHelper {
+  
     export enum ServiceStatus {
         Unknown = "Unknown",
         Disconnected = "Disconnected",
         Connected = "Connected",
         Error = "Error"
     }
-    
+
     export var IPPStatus: ServiceStatus = ServiceStatus.Unknown
     let iPushPullApp: any;//angular.IModule
-    export function isIPushPullLoaded(iPPConfig?: any) {
-      return false;  // remove this if we want to go back to old version
-      /*
-        try {
-            let angular = (<any>window).angular
+     // presumably this will be given a definition file in due course which would be great;
+    var pages: Map<string, any> = new Map();
 
-            // if no ipushpullconfig then return
-            if(!iPPConfig){
-                return false;
-            }
-            
-            //first we check if angular is loaded (dependency from ipushpull)
-            if (typeof angular == 'undefined') {
-                return false;
-            }
-            //we try to create the angular module
-            if (!iPushPullApp) {
-                iPushPullApp = angular.module("myApp", ["ipushpull"])
-                iPushPullApp.config(["ippConfigProvider", (ippConfigProvider: any) => {
-                    ippConfigProvider.set(iPPConfig);
-                }]);
-                angular.bootstrap(document, ['myApp']);
-            }
+    // creates the iPushPullApp object using blotterOptions ippconfig
+    export function init(iPPConfig?: any): void {
+        if (iPushPullApp == null) {
+             iPushPullApp = ipushpull.create(iPPConfig);
         }
-        catch (ex) {
-            iPushPullApp = null;
-        } finally {
-            return iPushPullApp != null;
-        }
-        */
     }
 
+    // checks if we have loaded iPushPullproperly
+    export function isIPushPullLoaded() {
+        return iPushPullApp != null;  // remove this if we want to go back to old version
+    }
+
+    // Logs in to iPushpull
     export function Login(login: string, password: string): Promise<any> {
         return new Promise<string>((resolve: any, reject: any) => {
-            let angular = (<any>window).angular
-            let $inj = angular.element(document).injector();
-            var serv = $inj.get('ippAuthService');
-            serv.on(serv.EVENT_LOGGED_IN, function () {
+            iPushPullApp.auth.on(iPushPullApp.auth.EVENT_LOGGED_IN, function () {
                 IPPStatus = ServiceStatus.Connected;
                 resolve();
             });
 
-            serv.login(login, password).catch((err: any) => {
+            iPushPullApp.auth.login(login, password).catch((err: any) => {
                 IPPStatus = ServiceStatus.Error;
                 reject(err.message)
             });
         })
     }
 
+    // Retrieves domain pages from iPushPull
     export function GetDomainPages(clientId: string): Promise<IPPDomain[]> {
         return new Promise<IPPDomain[]>((resolve: any, reject: any) => {
-            let angular = (<any>window).angular
-            let $inj = angular.element(document).injector();
-            var serv2 = $inj.get('ippApiService');
-            serv2.getDomainsAndPages(clientId)
+              iPushPullApp.api.getDomainsAndPages(clientId)
                 .then((x: any) => {
                     let result: IPPDomain[] = x.data.domains.map((domain: any) => {
                         return {
@@ -106,16 +65,13 @@ export module iPushPullHelper {
         })
     }
 
-    var pages: Map<string, any> = new Map()
+   
     export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
         return new Promise<any>((resolve: any, reject: any) => {
-            let angular = (<any>window).angular
-            let $inj = angular.element(document).injector();
-            let serv = $inj.get('ippPageService');
-            let page = new serv(pageIPP, folderIPP)
+              let page = new iPushPullApp.page(pageIPP, folderIPP)
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
-               LoggingHelper.LogMessage("Page Ready : " + pageIPP)
+                LoggingHelper.LogMessage("Page Ready : " + pageIPP)
                 pages.set(pageIPP, page)
                 resolve(page);
                 //we return true so it removes the listener for new content.
@@ -130,7 +86,7 @@ export module iPushPullHelper {
         if (pageIPP) {
             pageIPP.destroy()
             pages.delete(page)
-           LoggingHelper.LogMessage("Page Unloaded : " + page)
+            LoggingHelper.LogMessage("Page Unloaded : " + page)
         }
     }
 
@@ -198,10 +154,10 @@ export module iPushPullHelper {
             pageIPP.Content.canDoDelta = false;
             pageIPP.Content.update(newData, true);
             pageIPP.push().then(function () {
-               LoggingHelper.LogMessage('Data pushed for page : ' + page);
+                LoggingHelper.LogMessage('Data pushed for iPushPull page : ' + page);
                 resolve()
             }, (err: any) => {
-               LoggingHelper.LogMessage('Error pushing Data for page : ' + page);
+                LoggingHelper.LogMessage('Error pushing data for iPushPull page : ' + page);
                 reject();
             });
         })

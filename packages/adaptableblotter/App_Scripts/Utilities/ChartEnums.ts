@@ -51,3 +51,10 @@ export enum LabelVisibility {
     Visible = 'visible',
     Collapsed = 'collapsed',
 }
+
+export  enum ToolTipType {
+    Default = 'Default',
+    Item = 'Item',
+    Category = 'Category',
+    None = 'None'
+}

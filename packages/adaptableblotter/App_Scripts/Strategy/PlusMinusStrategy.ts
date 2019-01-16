@@ -105,7 +105,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                             NewValue: newValue.Value,
                             ColumnId: selectedCell.columnId,
                             IdentifierValue: keyValuePair[0],
-                            Timestamp: Date.now(),
                             Record: null
                         }
 

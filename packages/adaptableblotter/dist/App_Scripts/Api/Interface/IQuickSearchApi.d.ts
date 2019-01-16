@@ -13,6 +13,6 @@ export interface IQuickSearchApi {
      * Retrieves the current quick search text
      */
     GetValue(): string;
-    EditDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void;
-    EditStyle(style: IStyle): void;
+    SetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void;
+    SetStyle(style: IStyle): void;
 }

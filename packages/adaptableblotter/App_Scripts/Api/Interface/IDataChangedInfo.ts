@@ -5,6 +5,5 @@ export interface IDataChangedInfo {
     NewValue: any;
     ColumnId: string;
     IdentifierValue: any;
-    Timestamp: number;
     Record: any;
 }

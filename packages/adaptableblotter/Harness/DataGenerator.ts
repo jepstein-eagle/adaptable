@@ -113,7 +113,7 @@ export class DataGenerator {
         setInterval(() => {
             let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
             //pick a random trade in the first ten
-            let trade = this.getRandomItem(grid.behavior.getData(), 30);
+            let trade = this.getRandomItem(grid.behavior.getData(), 10);
             //pick a random colum in the numeric col
             let columnName = "price";// this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
@@ -127,12 +127,12 @@ export class DataGenerator {
             trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
             //grid.behavior.reindex();
             grid.repaint()
-        }, 100)
+        }, 3000)
     }
 
     startTickingDataagGrid(gridOptions: any) {
         setInterval(() => {
-            let tradeId = this.generateRandomInt(0, 29);
+            let tradeId = this.generateRandomInt(0, 10);
             gridOptions.api.forEachNode((rowNode: any, index: number) => {
                 if (rowNode.group) {
                     return;
@@ -156,7 +156,7 @@ export class DataGenerator {
                 trade.setDataValue("bloombergBid", this.roundTo4Dp(bid - 0.01))
 
             });
-        }, 1000)
+        }, 500)
     }
 
     createIFtse(date: Date, index: number, start: number, end: number): IFtse {

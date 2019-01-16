@@ -40,11 +40,10 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
             }
         }
     }
-    handleDataSourceChanged(DataChangedEvent) {
-        let flashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == DataChangedEvent.ColumnId);
-        let flashingCellIndex = this.FlashingCellState.FlashingCells.indexOf(flashingCell);
-        if (flashingCell != null && flashingCell.IsLive) {
-            this.FlashCell(DataChangedEvent, flashingCell, flashingCellIndex);
+    handleDataSourceChanged(dataChangedInfo) {
+        let flashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == dataChangedInfo.ColumnId);
+        if (flashingCell && flashingCell.IsLive) {
+            this.FlashCell(dataChangedInfo, flashingCell);
         }
     }
 }

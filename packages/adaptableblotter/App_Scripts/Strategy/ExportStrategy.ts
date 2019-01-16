@@ -162,7 +162,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             })
             Promise.all(promises).then(() => {
-                LoggingHelper.LogMessage("All Data Sent")
+                LoggingHelper.LogMessage("All live report data sent")
                 this.isSendingData = false
             }).catch(() => {
                 LoggingHelper.LogWarning("One live Excel failed to send data")

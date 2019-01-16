@@ -4,11 +4,13 @@ import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEve
 export interface IEventApi {
     /**
      * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
+     * Used in association with server searching.
      * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
      */
     onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
     /**
-    * Event fired whenever the state in the Blotter changes, providing full coverage of what triggered the change and what the new state for that function is.
+    * Event fired whenever the state in the Blotter changes
+    * Provides full coverage of what triggered the change and the new function state.*
     * @returns IEvent<IAdaptableBlotter, IStateChangedEventArgs>
     */
     onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;

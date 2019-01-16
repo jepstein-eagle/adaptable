@@ -423,7 +423,6 @@ class AdaptableBlotter {
             NewValue: cellInfo.Value,
             ColumnId: cellInfo.ColumnId,
             IdentifierValue: cellInfo.Id,
-            Timestamp: null,
             Record: null
         };
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -446,7 +445,6 @@ class AdaptableBlotter {
                 NewValue: element.Value,
                 ColumnId: element.ColumnId,
                 IdentifierValue: element.Id,
-                Timestamp: null,
                 Record: null
             };
             dataChangedEvents.push(dataChangedEvent);
@@ -985,7 +983,6 @@ class AdaptableBlotter {
                 NewValue: event.detail.newValue,
                 ColumnId: event.detail.input.column.name,
                 IdentifierValue: this.getPrimaryKeyValueFromRecord(row),
-                Timestamp: null,
                 Record: null
             };
             // first free text column
@@ -1076,8 +1073,17 @@ class AdaptableBlotter {
                     let columnId = config.name;
                     if (columnId && row) {
                         //check that it doesn't impact perf monitor
+                        let rowIdentifierValue = this.getPrimaryKeyValueFromRecord(row);
                         let column = this.getHypergridColumn(columnId);
-                        this.DataService.CreateDataEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnId, row);
+                        let newValue = this.valOrFunc(row, column);
+                        let dataChangedInfo = {
+                            OldValue: null,
+                            NewValue: newValue,
+                            ColumnId: columnId,
+                            IdentifierValue: rowIdentifierValue,
+                            Record: null
+                        };
+                        this.DataService.CreateDataChangedEvent(dataChangedInfo);
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);
                     let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);

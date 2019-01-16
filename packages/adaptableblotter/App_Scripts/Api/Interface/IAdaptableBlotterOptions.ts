@@ -78,10 +78,25 @@ export interface IAdaptableBlotterOptions {
         api_secret: string;
         transport?: string;
         storage_prefix?: string;
+        hsts?: boolean;
     };
 
 }
 
+/*
+{
+            api_url: "https://test.ipushpull.com/api/1.0",
+            ws_url: "https://test.ipushpull.com",
+            web_url: "https://test.ipushpull.com",
+            docs_url: "https://docs.ipushpull.com",
+            storage_prefix: "ipp_local",
+            api_key: "???",
+            api_secret: "???",
+            transport: "polling",
+            hsts: false,
+        }
+
+        */
 
 /**
  * Options for managing Audit Log
@@ -225,7 +240,12 @@ export interface IContainerOptions {
      * If not set, modals will be displayed in the middle of the page
      */
     modalContainer?: string;
-
+/**
+     * Name of the <div> where charts should appear 
+     * If not set, charts will be displayed directly the toolbar
+     * Make sure you create a div of the same name as that provided here
+     */
+   chartContainer?: string;
 }
 
 export interface IGeneralOptions {

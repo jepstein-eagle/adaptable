@@ -91,7 +91,9 @@ class ChartYAxisWizard extends React.Component {
                 cols.push(c);
             }
             else {
-                ArrayExtensions_1.ArrayExtensions.AddItem(this.state.YAxisColumnIds, c.ColumnId);
+                if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c.ColumnId)) {
+                    cols.push(c);
+                }
             }
         });
         return cols;

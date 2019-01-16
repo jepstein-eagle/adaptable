@@ -6,6 +6,6 @@ import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 export declare class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter);
     private currentFlashing;
-    protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void;
+    protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void;
     protected InitState(): void;
 }

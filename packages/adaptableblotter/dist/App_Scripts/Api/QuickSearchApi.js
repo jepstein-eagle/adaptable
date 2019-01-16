@@ -12,10 +12,10 @@ class QuickSearchApi extends ApiBase_1.ApiBase {
     GetValue() {
         return this.getState().QuickSearch.QuickSearchText;
     }
-    EditDisplayAction(displayAction) {
+    SetDisplayAction(displayAction) {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction));
     }
-    EditStyle(style) {
+    SetStyle(style) {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style));
     }
 }

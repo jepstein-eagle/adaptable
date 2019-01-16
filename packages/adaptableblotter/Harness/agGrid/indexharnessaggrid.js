@@ -29,7 +29,7 @@ function getData() {
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(9000);
+  trades = dataGen.getTrades(30);
    rowData = trades;
   // trades = dataGen.getFtseData(10);
 
@@ -60,7 +60,7 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  //dataGen.startTickingDataagGrid(gridOptions);
+  dataGen.startTickingDataagGrid(gridOptions);
 
   let s = 2;
 
@@ -78,8 +78,8 @@ function InitTradeBlotter() {
       auditLogOptions: {
         auditCellEdits: true,
         auditFunctionEvents: true,
-        auditUserStateChanges: false,
-        auditInternalStateChanges: false,
+        auditUserStateChanges: true,
+        auditInternalStateChanges: true,
         pingInterval: 120
       },
       configServerOptions: {
@@ -95,7 +95,6 @@ function InitTradeBlotter() {
        // maxColumnValueItemsDisplayed: 5,
       //  columnValuesOnlyInQueries: true,
         // getColumnValues: retrieveValues,
-        //  maxColumnValueItemsDisplayed: 5
       },
       filterOptions: {
         //useAdaptableBlotterFilterForm: false,
@@ -107,7 +106,9 @@ function InitTradeBlotter() {
       iPushPullConfig: {
         api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
         api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-      },
+        api_url: "https://www.ipushpull.com/api/1.0",
+         hsts: false,
+        },
 
     }
 
@@ -478,7 +479,7 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#notional") {
       gridOptions.api.forEachNode((rowNode, index) => {
         if (index == 4) {
-          rowNode.setDataValue("notional", 2000000000)
+          rowNode.setDataValue("notional", 20000)
         }
       });
     }

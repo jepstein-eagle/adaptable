@@ -11,6 +11,7 @@ import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';
 
+
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {

@@ -4,7 +4,7 @@ const ExpressionHelper_1 = require("./Helpers/ExpressionHelper");
 const Enums_1 = require("./Enums");
 const ColumnHelper_1 = require("./Helpers/ColumnHelper");
 const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
-const DefaultChartProperties_1 = require("../api/DefaultChartProperties");
+const DefaultChartProperties_1 = require("../Api/DefaultChartProperties");
 const ChartEnums_1 = require("./ChartEnums");
 var ObjectFactory;
 (function (ObjectFactory) {

@@ -33,7 +33,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     protected InitState() {
         if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {
             this.ShortcutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut;
-       
+
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)
             }
@@ -86,7 +86,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
                     NewValue: valueToReplace,
                     ColumnId: activeCell.ColumnId,
                     IdentifierValue: activeCell.Id,
-                    Timestamp: Date.now(),
                     Record: null
                 }
 

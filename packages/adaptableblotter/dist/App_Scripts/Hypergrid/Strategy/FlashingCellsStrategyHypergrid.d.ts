@@ -5,5 +5,5 @@ import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 export declare class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter);
-    protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void;
+    protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void;
 }

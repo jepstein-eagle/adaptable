@@ -197,7 +197,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -520,7 +520,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             NewValue: cellInfo.Value,
             ColumnId: cellInfo.ColumnId,
             IdentifierValue: cellInfo.Id,
-            Timestamp: null,
             Record: null
         }
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -547,7 +546,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 NewValue: element.Value,
                 ColumnId: element.ColumnId,
                 IdentifierValue: element.Id,
-                Timestamp: null,
                 Record: null
             }
             dataChangedEvents.push(dataChangedEvent);
@@ -1154,7 +1152,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     NewValue: event.detail.newValue,
                     ColumnId: event.detail.input.column.name,
                     IdentifierValue: this.getPrimaryKeyValueFromRecord(row),
-                    Timestamp: null,
                     Record: null
                 }
 
@@ -1251,8 +1248,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let columnId = config.name;
                     if (columnId && row) {
                         //check that it doesn't impact perf monitor
+                        let rowIdentifierValue: any = this.getPrimaryKeyValueFromRecord(row);
                         let column = this.getHypergridColumn(columnId);
-                        this.DataService.CreateDataEvent(this.getPrimaryKeyValueFromRecord(row), this.valOrFunc(row, column), columnId, row);
+                        let newValue: any = this.valOrFunc(row, column);
+                       
+                        let dataChangedInfo: IDataChangedInfo = {
+                            OldValue: null, // dont get old value as not sure we need it
+                            NewValue: newValue,
+                            ColumnId: columnId,
+                            IdentifierValue: rowIdentifierValue,
+                            Record: null
+                        }
+
+                         this.DataService.CreateDataChangedEvent(dataChangedInfo);
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);
                     let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);

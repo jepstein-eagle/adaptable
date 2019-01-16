@@ -5,7 +5,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
 import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-
+import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -14,8 +14,13 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
     }
     private currentFlashing: Map<any, number>
 
-   protected FlashCell(dataChangedEvent: IDataChangedInfo, flashingCell: IFlashingCell, index: number): void {
-        // no implementation required
+
+    protected shouldHandleDataSourceChanged(): boolean {
+        return false;
+    }
+
+    protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void {
+        // dont handle 
     }
 
     protected InitState() {
@@ -32,18 +37,20 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                 let cellClassRules: any = {};
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
-
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value, true);
-                        if (params.value > oldValue) {
-                          //  console.log("applying up for: " + col.ColumnId)
-                            let key = primaryKey + col.ColumnId
-                            let currentFlashTimer = currentFlashing.get(key)
-                            theBlotter.refreshCells(params.node, [col.ColumnId])
+                        let key = primaryKey + col.ColumnId + "up";
+                        let currentFlashTimer = currentFlashing.get(key)
+                        if (currentFlashTimer) {
+                            return true;
+                        }
+
+                        let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, ChangeDirection.Up);
+                        if (oldValue && params.value > oldValue) {
                             if (currentFlashTimer) {
-                                clearTimeout(currentFlashTimer)
+                                window.clearTimeout(currentFlashTimer)
                             }
-                            let timer: any = setTimeout(() => {
+                            let timer: number = window.setTimeout(() => {
+                                currentFlashing.set(key, null)
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
@@ -53,26 +60,29 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                         }
                     }
 
+
                     cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let oldValue = theBlotter.getOldFlashingCellValue(col.ColumnId, primaryKey, params.value, false);
-                        if (params.value < oldValue) {
-                          //  console.log("applying down for: " + col.ColumnId)
-                            let key = primaryKey + col.ColumnId
-                            let currentFlashTimer = currentFlashing.get(key)
+                        let key = primaryKey + col.ColumnId + "down";
+                        let currentFlashTimer = currentFlashing.get(key)
+                        if (currentFlashTimer) {
+                            return true;
+                        }
+                        let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, ChangeDirection.Down);
+                        if (oldValue && params.value < oldValue) {
                             if (currentFlashTimer) {
-                                clearTimeout(currentFlashTimer)
+                                window.clearTimeout(currentFlashTimer)
                             }
-                            let timer: any = setTimeout(() => {
+                            let timer: any = window.setTimeout(() => {
+                                currentFlashing.set(key, null);
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
-                            return true
+                             return true
                         } else {
                             return false
                         }
                     }
-
                 }
                 theBlotter.setCellClassRules(cellClassRules, col.ColumnId, "FlashingCell");
             })

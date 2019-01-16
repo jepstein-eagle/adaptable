@@ -131,7 +131,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public FreeTextColumnService: IFreeTextColumnService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
-    private _flashingCellList: Map<string, Map<any, number>>;
 
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
@@ -141,7 +140,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
-
         this.gridOptions = this.BlotterOptions.vendorGrid
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
@@ -161,8 +159,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // get the api ready
         this.api = new BlotterApi(this);
 
-        // create the flashing cells map - will be empty
-        this._flashingCellList = new Map();
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -175,7 +171,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-        //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -201,7 +197,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 
-        iPushPullHelper.isIPushPullLoaded(this.BlotterOptions.iPushPullConfig)
+      iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
+
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -633,7 +630,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     NewValue: cellInfo.Value,
                     ColumnId: cellInfo.ColumnId,
                     IdentifierValue: cellInfo.Id,
-                    Timestamp: null,
                     Record: null
                 }
                 if (this.AuditLogService.IsAuditCellEditsEnabled) {
@@ -641,7 +637,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
                 this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
 
-                this.DataService.CreateDataSourcedChangedEvent(dataChangedEvent);
+                this.DataService.CreateDataChangedEvent(dataChangedEvent);
             }
         })
         this.applyGridFiltering();
@@ -676,7 +672,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     NewValue: cellInfo.Value,
                     ColumnId: colId,
                     IdentifierValue: cellInfo.Id,
-                    Timestamp: null,
                     Record: null
                 }
                 dataChangedEvents.push(dataChangedEvent)
@@ -707,7 +702,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
-        dataChangedEvents.forEach(dc => this.DataService.CreateDataSourcedChangedEvent(dc));
+        dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
 
         this.applyGridFiltering();
         this.gridOptions.api.clearRangeSelection();
@@ -972,7 +967,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         else {
             if (type == "FlashingCell") {
-         //       alert("here ")
+                //       alert("here ")
             }
             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
@@ -994,6 +989,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.redrawRows();
         this.gridOptions.api.refreshHeader();
         this._onRefresh.Dispatch(this, this)
+    }
+
+    public testredrawRow(rowNode: RowNode) {
+        this.gridOptions.api.redrawRows({ rowNodes: [rowNode] });
     }
 
     public refreshCells(rowNode: RowNode, columnIds: string[]) {
@@ -1256,16 +1255,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
 
-                let dataChangedEvent: IDataChangedInfo = {
+                let dataChangedInfo: IDataChangedInfo = {
                     OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
                     NewValue: this._currentEditor.getValue(),
                     ColumnId: params.column.getColId(),
                     IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
-                    Timestamp: null,
                     Record: null
                 }
 
-                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedEvent);
+                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedInfo);
                 if (failedRules.length > 0) {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
@@ -1279,9 +1277,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
                         });
                         let cellInfo: ICellInfo = {
-                            Id: dataChangedEvent.IdentifierValue,
-                            ColumnId: dataChangedEvent.ColumnId,
-                            Value: dataChangedEvent.NewValue
+                            Id: dataChangedInfo.IdentifierValue,
+                            ColumnId: dataChangedInfo.ColumnId,
+                            Value: dataChangedInfo.NewValue
                         };
                         let confirmation: IUIConfirmation = {
                             CancelText: "Cancel Edit",
@@ -1302,10 +1300,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
                     // audit the cell event if needed
                     if (this.AuditLogService.IsAuditCellEditsEnabled) {
-                        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+                        this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
                     }
                     // it might be a free text column so we need to update the values
-                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
+                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
 
                     // do we need to also refresh calculated columns?
                 }
@@ -1349,9 +1347,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // this handles ticking data
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_VALUE_CHANGED, (params: NewValueParams) => {
             let identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-            
             let colId: string = params.colDef.field;
-            this.DataService.CreateDataEvent(identifierValue, params.newValue, colId, params.node);
+            let dataChangedInfo: IDataChangedInfo = {
+                OldValue: params.oldValue,
+                NewValue: params.newValue,
+                ColumnId: colId,
+                IdentifierValue: identifierValue,
+                Record: params.node
+            }
+            this.DataService.CreateDataChangedEvent(dataChangedInfo);
             //24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
@@ -1359,8 +1363,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columnList = this._calculatedColumnPathMap.get(colId);
             if (columnList) {
                 columnList.forEach(columnId => {
-                    let newValue = this.gridOptions.api.getValue(columnId, params.node);
-                    this.DataService.CreateDataEvent(identifierValue, newValue, columnId, params.node);
+                    let dataChangedInfo: IDataChangedInfo = {
+                        OldValue: params.oldValue,
+                        NewValue: this.gridOptions.api.getValue(columnId, params.node),
+                        ColumnId: columnId,
+                        IdentifierValue: identifierValue,
+                        Record: params.node
+                    }
+                    this.DataService.CreateDataChangedEvent(dataChangedInfo);
                     ArrayExtensions.AddItem(refreshColumnList, columnId);
                 });
             }
@@ -1377,7 +1387,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             })
             // only if visible...
-            console.log("updating: " + params.node);
             this.refreshCells(params.node, refreshColumnList);
         });
 
@@ -1836,53 +1845,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
     }
 
-    public clearFlashingCellMap(): void {
-        this._flashingCellList.clear();
-    }
-
-    public getOldFlashingCellValue(columnId: string, identifierValue: any, newValue: number, isUp: boolean): number {
-        let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
-
-        let oldValue: number = columnValueList.get(identifierValue);
-        if (oldValue) {
-            if (oldValue != newValue) { // its changed 
-                if (isUp) {
-                    if (newValue > oldValue) { // we are up and its higher so set it and return it
-                        columnValueList.set(identifierValue, newValue);
-                        return oldValue;
-
-                    }
-                } else {
-                    if (newValue < oldValue) { // we are down and its lower so set it and return it
-                        columnValueList.set(identifierValue, newValue);
-                        return oldValue;
-
-                    }
-                }
-            }
-        }
-        else { // we dont have an existing value so set the new value for future reference and return null
-            columnValueList.set(identifierValue, newValue); // need to do this always...
-        }
-
-        // dont like this but we check anyway...
-        return newValue;
-    }
-
-    private getCellValuesForColumn(columnId: string): Map<any, number> {
-        // first check the list exists; if not, then create it
-        if (this._flashingCellList.size == 0) {
-            this._flashingCellList.set(columnId, new Map())
-        }
-        // get the item
-        let returnList: Map<any, number> = this._flashingCellList.get(columnId);
-        //in case we created a new calculated column  - need to worry about this?
-        if (!returnList) {
-            returnList = new Map()
-            this._flashingCellList.set(columnId, returnList)
-        }
-        return returnList;
-    }
 
 
     // A couple of state management functions

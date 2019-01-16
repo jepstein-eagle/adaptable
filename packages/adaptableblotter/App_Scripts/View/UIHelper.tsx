@@ -6,6 +6,7 @@ import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Utilities/Expression';
 import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
+import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 
 
 export module UIHelper {
@@ -94,6 +95,20 @@ export module UIHelper {
             modalContainer = document.body
         }
         return modalContainer;
+    }
+
+    export function getChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement {
+        let chartContainer: HTMLElement = document.getElementById(blotterOptions.containerOptions.chartContainer)
+        if (chartContainer) {
+            const chartContainerClassName: string = " chart-container"
+            if (!chartContainer.className.includes(chartContainerClassName)) {
+                chartContainer.className += chartContainerClassName;
+            }
+        } else {
+            LoggingHelper.LogError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer)
+        }
+
+        return chartContainer;
     }
 
     export function IsNotEmptyStyle(style: IStyle): boolean {
