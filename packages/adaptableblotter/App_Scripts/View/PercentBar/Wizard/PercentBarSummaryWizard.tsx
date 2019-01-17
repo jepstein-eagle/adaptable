@@ -7,7 +7,7 @@ import { IPercentBar, IStyle } from "../../../Api/Interface/IAdaptableBlotterObj
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { StyleVisualItem } from "../../Components/StyleVisualItem";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<IPercentBar> {

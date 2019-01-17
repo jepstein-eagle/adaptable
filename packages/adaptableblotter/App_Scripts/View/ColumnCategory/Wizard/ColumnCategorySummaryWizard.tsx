@@ -2,7 +2,7 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import {  IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { IColumnCategory } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { IColumn } from "../../../Api/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";

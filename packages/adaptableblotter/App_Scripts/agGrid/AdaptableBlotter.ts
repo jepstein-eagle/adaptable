@@ -55,7 +55,8 @@ import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCri
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
-import {  ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Api/Interface/IColumn';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression, IPermittedColumnValues } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';

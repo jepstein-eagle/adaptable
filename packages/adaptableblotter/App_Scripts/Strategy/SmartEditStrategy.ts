@@ -6,7 +6,7 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
-import { ICellInfo } from '../Api/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';

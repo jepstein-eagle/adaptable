@@ -6,7 +6,7 @@ import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { Expression } from '../Utilities/Expression';
-import { IVendorGridInfo } from '../Api/Interface/Interfaces';
+import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';

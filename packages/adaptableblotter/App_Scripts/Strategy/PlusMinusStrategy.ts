@@ -10,7 +10,7 @@ import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { IColumn } from '../Api/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ICellInfo } from '../Api/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';

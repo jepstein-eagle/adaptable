@@ -5,7 +5,7 @@ import { IChartDefinition, IColumnValueExpression, IChartProperties } from '../.
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../Enums';
-import { IKeyValuePair } from '../../Api/Interface/Interfaces';
+import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Utilities/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';

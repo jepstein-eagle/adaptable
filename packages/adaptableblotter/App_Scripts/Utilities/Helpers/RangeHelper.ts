@@ -1,4 +1,4 @@
-import { IKeyValuePair } from '../../Api/Interface/Interfaces';
+import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { LeafExpressionOperator, DataType } from '../Enums';
 import { IRange } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { StringExtensions } from '../Extensions/StringExtensions';

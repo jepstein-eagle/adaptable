@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IShortcut } from "../../../Api/Interface/IAdaptableBlotterObjects";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {
 }

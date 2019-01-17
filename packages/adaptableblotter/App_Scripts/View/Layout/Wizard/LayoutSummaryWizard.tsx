@@ -6,7 +6,7 @@ import { IColumn } from "../../../Api/Interface/IColumn";
 import { LayoutHelper } from "../../../Utilities/Helpers/LayoutHelper";
 import { ILayout } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
     Columns: IColumn[]

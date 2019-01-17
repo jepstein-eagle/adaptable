@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
-import { ICellInfo } from '../../Api/Interface/Interfaces';
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 import { IColumn } from '../../Api/Interface/IColumn';
 import { IGridSort } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';

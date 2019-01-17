@@ -1,6 +1,6 @@
 import {  IStrategy } from './IStrategy';
 import { DataType ,MathOperation } from '../../Utilities/Enums';
-import {  ICellInfo } from '../../Api/Interface/Interfaces';
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 
 
 export interface IShortcutStrategy extends IStrategy {

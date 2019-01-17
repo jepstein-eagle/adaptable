@@ -1,5 +1,6 @@
 import { DistinctCriteriaPairValue } from '../../Utilities/Enums'
-import { ICellInfo, IVendorGridInfo } from './Interfaces'
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
+import { IVendorGridInfo } from "../../Utilities/Interface/IVendorGridInfo";
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';

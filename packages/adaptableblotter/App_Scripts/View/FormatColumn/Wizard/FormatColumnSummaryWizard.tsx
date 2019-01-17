@@ -6,7 +6,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { IColumn } from "../../../Api/Interface/IColumn";
 import { IFormatColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {

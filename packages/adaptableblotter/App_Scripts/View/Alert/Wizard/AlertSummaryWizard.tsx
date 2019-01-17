@@ -7,7 +7,7 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IAlertDefinition, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { AlertHelper } from "../../../Utilities/Helpers/AlertHelper";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {

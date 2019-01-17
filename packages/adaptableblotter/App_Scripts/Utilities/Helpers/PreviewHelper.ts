@@ -1,6 +1,6 @@
 import { ActionMode } from "../Enums";
 import { StringExtensions } from "../Extensions/StringExtensions";
-import { ICellInfo } from "../../Api/Interface/Interfaces";
+import { ICellInfo } from "../Interface/ICellInfo";
 import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from "../Interface/IPreview";
 
 

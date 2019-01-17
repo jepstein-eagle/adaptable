@@ -9,7 +9,7 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import {  IMasterChildren } from "../../Api/Interface/Interfaces";
+import { IMasterChildren } from "../../Utilities/Interface/IMasterChildren";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
 

@@ -6,7 +6,7 @@ import { IColumn } from "../../../Api/Interface/IColumn";
 import { IFreeTextColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface FreeTextColumnSummaryWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {

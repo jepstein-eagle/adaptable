@@ -18,7 +18,7 @@ import { Helper } from "../../Utilities/Helpers/Helper";
 import { Waiting } from "../Components/FilterForm/Waiting";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 import { raw } from "body-parser";
-import { IKeyValuePair } from "../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
 
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {

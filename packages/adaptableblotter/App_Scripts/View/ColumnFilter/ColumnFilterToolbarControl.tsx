@@ -17,7 +17,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IUserFilter, IColumnFilter, IEntitlement } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
-import { IKeyValuePair } from "../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,

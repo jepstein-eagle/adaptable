@@ -6,7 +6,7 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
-import { ICellInfo } from '../Api/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';

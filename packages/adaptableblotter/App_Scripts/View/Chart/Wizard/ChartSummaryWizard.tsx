@@ -6,7 +6,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { IChartDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 

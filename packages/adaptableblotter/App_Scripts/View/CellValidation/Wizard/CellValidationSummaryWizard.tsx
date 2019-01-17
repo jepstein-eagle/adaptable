@@ -7,7 +7,7 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { ICellValidationRule, IUserFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { CellValidationHelper } from "../../../Utilities/Helpers/CellValidationHelper";
-import { IKeyValuePair } from "../../../Api/Interface/Interfaces";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {

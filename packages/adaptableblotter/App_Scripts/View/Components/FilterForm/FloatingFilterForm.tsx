@@ -16,7 +16,7 @@ import { IColumn } from "../../../Api/Interface/IColumn";
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Utilities/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { IKeyValuePair } from '../../../Api/Interface/Interfaces';
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 
 

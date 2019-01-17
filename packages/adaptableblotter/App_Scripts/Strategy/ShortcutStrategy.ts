@@ -8,7 +8,7 @@ import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { StateChangedTrigger, DataType, MathOperation, ActionMode } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ICellInfo } from '../Api/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';

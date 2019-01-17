@@ -1,6 +1,6 @@
 import { LeafExpressionOperator } from '../../Utilities/Enums';
 import { Expression } from '../../Utilities/Expression';
-import { IVendorGridInfo } from '../../Api/Interface/Interfaces';
+import { IVendorGridInfo } from "../../Utilities/Interface/IVendorGridInfo";
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType } from '../../Utilities/ChartEnums';
 

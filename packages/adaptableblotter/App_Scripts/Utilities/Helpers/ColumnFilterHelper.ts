@@ -1,7 +1,7 @@
 import { ExpressionHelper } from './ExpressionHelper'
 import { IColumnFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../../Api/Interface/IColumn';
-import { IKeyValuePair } from '../../Api/Interface/Interfaces';
+import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
