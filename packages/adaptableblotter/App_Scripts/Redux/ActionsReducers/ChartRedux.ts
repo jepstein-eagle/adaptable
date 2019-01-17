@@ -6,12 +6,7 @@ export const CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
 export const CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
 export const CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
 export const CHART_DEFINITION_DELETE = 'CHART_DEFINITION_DELETE';
-
-export const CHART_SHOW_CHART = 'CHART_SHOW_CHART';
-export const CHART_HIDE_CHART = 'CHART_HIDE_CHART';
 export const CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
-
-
 
 export interface ChartDefinitionAddUpdateAction extends Redux.Action {
     Index: number
@@ -28,16 +23,8 @@ export interface ChartDefinitionDeleteAction extends Redux.Action {
     ChartDefinition: IChartDefinition
 }
 
-export interface ChartShowChartAction extends Redux.Action {
-
-}
-
-export interface ChartHideChartAction extends Redux.Action {
-
-}
-
 export interface ChartDefinitionSelectAction extends Redux.Action {
-    CurrentChartDefinition: IChartDefinition
+    CurrentChartDefinition: string
 }
 
 export const ChartDefinitionAddUpdate = (Index: number, ChartDefinition: IChartDefinition): ChartDefinitionAddUpdateAction => ({
@@ -58,24 +45,18 @@ export const ChartDefinitionDelete = (ChartDefinition: IChartDefinition): ChartD
     ChartDefinition
 })
 
-export const ChartShowChart = (): ChartShowChartAction => ({
-    type: CHART_SHOW_CHART
-})
-
-export const ChartHideChart = (): ChartHideChartAction => ({
-    type: CHART_HIDE_CHART,
-})
 
 
-export const ChartDefinitionSelect = (CurrentChartDefinition: IChartDefinition): ChartDefinitionSelectAction => ({
+export const ChartDefinitionSelect = (CurrentChartDefinition: string): ChartDefinitionSelectAction => ({
     type: CHART_DEFINITION_SELECT,
     CurrentChartDefinition
 })
 
 const initialChartState: ChartState = {
     ChartDefinitions: [],
-    IsChartVisible: false,
-    CurrentChartDefinition: null
+    CurrentChartDefinition: "",
+    ShowModal: true,
+    RefreshRate: 1
 }
 
 export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = initialChartState, action: Redux.Action): ChartState => {
@@ -106,13 +87,8 @@ export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = init
             chartDefinitions.splice(index, 1);
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
 
-            case CHART_SHOW_CHART:
-            return Object.assign({}, state, { IsChartVisible: true })
-        case CHART_HIDE_CHART:
-            return Object.assign({}, state, { IsChartVisible: false })
-         case CHART_DEFINITION_SELECT:
+        case CHART_DEFINITION_SELECT:
             return Object.assign({}, state, { CurrentChartDefinition: (<ChartDefinitionSelectAction>action).CurrentChartDefinition })
-
 
         default:
             return state

@@ -19,15 +19,16 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
+import { ChartVisibility } from "../../Utilities/ChartEnums";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartDefinition: IChartDefinition
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction;
+    onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
     onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
-    onShowChart: () => ChartRedux.ChartShowChartAction;
+    onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
 }
 
 class ChartToolbarControlComponent extends React.Component<ChartToolbarControlComponentProps, {}> {
@@ -106,8 +107,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     }
 
     onSelectedChartDefinitionChanged(chartDefinitionName: string) {
-        let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
-        this.props.onSelectChartDefinition(chartDefinition);
+     //   let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
+        this.props.onSelectChartDefinition(chartDefinitionName);
     }
 
     onShowChart() {
@@ -117,17 +118,17 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentChartDefinition: state.Chart.CurrentChartDefinition,
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c=>c.Title == state.Chart.CurrentChartDefinition),
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onSelectChartDefinition: (chartDefinition: string) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
         onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
         onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
-        onShowChart: () => dispatch(ChartRedux.ChartShowChart()),
+        onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup))
     };

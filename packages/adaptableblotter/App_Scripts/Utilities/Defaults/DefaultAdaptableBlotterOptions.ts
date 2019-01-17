@@ -22,7 +22,8 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     containerOptions: {
         adaptableBlotterContainer: "adaptableBlotter",
         vendorContainer: "grid",
-        modalContainer: null
+        modalContainer: null,
+        chartContainer: null,
     },
     layoutOptions: {
         includeVendorStateInLayouts: false,

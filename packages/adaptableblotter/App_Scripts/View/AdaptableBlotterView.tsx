@@ -3,8 +3,9 @@ import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
-import { PopupState, ChartState } from '../Redux/ActionsReducers/Interface/IState';
+import { PopupState, ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
@@ -15,10 +16,12 @@ import { AdaptableBlotterPopupAlert } from "./Components/Popups/AdaptableBlotter
 import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart";
 import { AdaptableBlotterLoadingScreen } from "./Components/Popups/AdaptableBlotterLoadingScreen";
 import { AdaptableBlotterAbout } from "./Components/Popups/AdaptableBlotterAbout";
+import { ChartVisibility } from "../Utilities/ChartEnums";
 
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;
+    SystemState: SystemState;
     ChartState: ChartState;
     Blotter: IAdaptableBlotter;
     showPopup: (ComponentStrategy: string, ComponentName: string, IsReadOnly: boolean) => PopupRedux.PopupShowScreenAction;
@@ -29,7 +32,7 @@ interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlott
     onConfirmConfirmationPopup: (comment: string) => PopupRedux.PopupConfirmConfirmationAction;
     onCancelConfirmationPopup: () => PopupRedux.PopupCancelConfirmationAction;
     onClearPopupParams: () => PopupRedux.PopupClearParamAction;
-    onCloseChartPopup: () => ChartRedux.ChartHideChartAction;
+    onCloseChartPopup: () => SystemRedux.ChartSetChartVisibiityAction;
     onCloseLoadingPopup: () => PopupRedux.PopupHideLoadingAction;
     onCloseAboutPopup: () => PopupRedux.PopupHideAboutAction;
 }
@@ -41,12 +44,12 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
             <div className={StyleConstants.AB_STYLE + StyleConstants.BASE}>
                 <Dashboard Blotter={this.props.Blotter} />
 
-                {this.props.ChartState.IsChartVisible &&
+                {this.props.SystemState.ChartVisibility != ChartVisibility.Hidden &&
                     <AdaptableBlotterChart
                         AdaptableBlotter={this.props.Blotter}
                         onClose={this.props.onCloseChartPopup}
-                        showChart={this.props.ChartState.IsChartVisible}
-                        showModal={false}
+                        showChart={this.props.SystemState.ChartVisibility == ChartVisibility.Maximised}
+                        showModal={this.props.ChartState.ShowModal} 
                     />
                 }
 
@@ -108,6 +111,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         PopupState: state.Popup,
+        SystemState: state.System,
         ChartState: state.Chart,
         AdaptableBlotter: ownProps.Blotter,
     };
@@ -118,7 +122,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
         onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
         onCloseAboutPopup: () => dispatch(PopupRedux.PopupHideAbout()),
-        onCloseChartPopup: () => dispatch(ChartRedux.ChartHideChart()),
+        onCloseChartPopup: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden)),
         onClosePromptPopup: () => dispatch(PopupRedux.PopupHidePrompt()),
         onConfirmPromptPopup: (inputText: string) => dispatch(PopupRedux.PopupConfirmPrompt(inputText)),
         onConfirmConfirmationPopup: (comment: string) => dispatch(PopupRedux.PopupConfirmConfirmation(comment)),

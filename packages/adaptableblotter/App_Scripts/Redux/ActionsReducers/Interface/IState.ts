@@ -6,6 +6,7 @@ import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Inte
 import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
 import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IAlert, IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup } from '../../../Utilities/Interface/IMessage';
+import { ChartVisibility } from '../../../Utilities/ChartEnums';
 
 // Base interface
 export interface IState {
@@ -38,6 +39,7 @@ export interface SystemState extends ISystemState {
     IsValidBulkUpdateSelection: boolean;
     BulkUpdatePreviewInfo: IPreviewInfo;
     ChartData: any;
+    ChartVisibility: ChartVisibility;
     CalculatedColumnErrorMessage: string;
     IPPDomainsPages: IPPDomain[];
     ReportErrorMessage: string;
@@ -129,8 +131,9 @@ export interface CellValidationState extends IUserState {
 
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    IsChartVisible: boolean;
-    CurrentChartDefinition: IChartDefinition;
+    CurrentChartDefinition: string;
+    ShowModal: boolean;
+    RefreshRate: number;
 }
 
 export interface ColumnCategoryState extends IUserState {

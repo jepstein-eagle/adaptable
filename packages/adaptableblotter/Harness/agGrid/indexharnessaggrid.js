@@ -103,12 +103,12 @@ function InitTradeBlotter() {
       generalOptions: {
         //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       },
-      iPushPullConfig: {
-        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-        api_url: "https://www.ipushpull.com/api/1.0",
-         hsts: false,
-        },
+ //     iPushPullConfig: {
+ //       api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+ //       api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+ //       api_url: "https://www.ipushpull.com/api/1.0",
+ //        hsts: false,
+ //       },
 
     }
 
@@ -479,7 +479,7 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#notional") {
       gridOptions.api.forEachNode((rowNode, index) => {
         if (index == 4) {
-          rowNode.setDataValue("notional", 20000)
+          rowNode.setDataValue("notional", 345)
         }
       });
     }

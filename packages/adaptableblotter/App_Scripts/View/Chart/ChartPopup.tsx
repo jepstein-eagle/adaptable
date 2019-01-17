@@ -22,11 +22,12 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IChartDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ChartVisibility } from "../../Utilities/ChartEnums";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction,
-    onShowChart: () => ChartRedux.ChartShowChartAction;
+    onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction,
+    onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
     ChartDefinitions: Array<IChartDefinition>
     CurrentChartDefinition: IChartDefinition
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
@@ -121,8 +122,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
 
     onShowChart(chartName: string) {
-        let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartName);
-        this.props.onSelectChartDefinition(chartDefinition)
+        this.props.onSelectChartDefinition(chartName)
         this.props.onShowChart();
     }
 
@@ -149,8 +149,9 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             -1 :
             this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChartDefinition.Title)
 
-        if (index == -1 || index == currentChartIndex) {// its new so make it the new search or we are editing the current search (but might have changed the name)
-            this.props.onSelectChartDefinition(clonedObject);
+        if (index == -1 || index == currentChartIndex) {
+            // its new so make it the new chart or we are editing the current chart (but might have changed the title)
+            this.props.onSelectChartDefinition(clonedObject.Title);
         }
     }
 
@@ -164,7 +165,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.CurrentChartDefinition
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c=>c.Title == state.Chart.CurrentChartDefinition),
     };
 }
 
@@ -172,8 +173,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
-        onShowChart: () => dispatch(ChartRedux.ChartShowChart()),
+        onSelectChartDefinition: (chartDefinition: string) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
         onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
         onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId))
     };

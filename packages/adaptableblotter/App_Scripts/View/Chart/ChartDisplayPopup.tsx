@@ -13,6 +13,7 @@ import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 // ig chart imports
 import { IgrCategoryChart } from 'igniteui-react-charts/ES2015/igr-category-chart';
 import { IgrCategoryChartModule } from 'igniteui-react-charts/ES2015/igr-category-chart-module';
@@ -22,26 +23,29 @@ import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { PanelWithImageThreeButtons } from "../Components/Panels/PanelWithIImageThreeButtons";
-import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType } from "../../Utilities/ChartEnums";
+import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType, ChartVisibility } from "../../Utilities/ChartEnums";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
-import { DefaultChartProperties } from "../../Api/DefaultChartProperties";
+import { DefaultChartProperties } from "../../Utilities/Defaults/DefaultChartProperties";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
-    ChartDefinitions: IChartDefinition[]
-    CurrentChartDefinition: IChartDefinition
-    ChartData: any
+    ChartDefinitions: IChartDefinition[];
+    CurrentChartDefinition: IChartDefinition;
+    ChartData: any;
+    ChartVisibility: ChartVisibility;
+    //  ShowModal: 
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => ChartRedux.ChartPropertiesUpdateAction,
-    onSelectChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionSelectAction,
+    onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction,
+    onSetChartVisibility: (chartVisibility: ChartVisibility) => SystemRedux.ChartSetChartVisibiityAction
 }
 
 export interface ChartDisplayPopupWizardState {
     // Global
-    IsChartMinimised: boolean;
+    //  IsChartMinimised: boolean;
     IsChartSettingsVisible: boolean;
     EditedChartDefinition: IChartDefinition;
     ChartProperties: IChartProperties
@@ -77,7 +81,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             ChartProperties: this.props.CurrentChartDefinition.ChartProperties,
             EditedChartDefinition: null,
             IsChartSettingsVisible: false,
-            IsChartMinimised: false,
 
             // General
             IsGeneralMinimised: false,
@@ -103,13 +106,25 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         }
         IgrCategoryChartModule.register();
         IgrDataChartAnnotationModule.register();
+
+
+    }
+
+    componentDidMount() {
+        // not sure about this - right place?
+        // if showing modal, we only display a small size chart with no ability to change
+        if (this.props.ShowModal && this.state.ChartProperties.ChartSize != ChartSize.Small) {
+            let chartProperties: IChartProperties = this.state.ChartProperties;
+            chartProperties.ChartSize = ChartSize.Small;
+            this.updateChartProperties(chartProperties);
+        }
     }
 
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__Charts";
 
-        let closeButton = (this.props.showModal) ?
+        let closeButton = (this.props.ShowModal) ?
             null :
             <ButtonClose
                 cssClassName={cssClassName}
@@ -120,7 +135,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 hideToolTip={true}
             />
 
-        let editButton = (this.state.IsChartMinimised) ?
+        let editButton = (this.props.ChartVisibility == ChartVisibility.Minimised) ?
             null :
             <ButtonEdit
                 cssClassName={cssClassName}
@@ -134,9 +149,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             />
 
 
-        let minmaxButton = (this.props.showModal) ?
+        let minmaxButton = (this.props.ShowModal) ?
             null :
-            this.state.IsChartMinimised ?
+            this.props.ChartVisibility == ChartVisibility.Minimised ?
                 <ButtonMaximise
                     cssClassName={cssClassName}
                     onClick={() => this.onChartMaximised()}
@@ -285,7 +300,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let panelWidth: string = this.setPanelWidth();
         let chartColumnSize: number = this.setChartColumnSize();
         let legendColumnSize: number = this.setLegendColumnSize();
-        let chartData = (this.state.IsChartMinimised == false && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
+        let chartData = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
 
             <IgrCategoryChart
                 // datasource
@@ -362,7 +377,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             null;
 
 
-         let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
+        let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as ChartType}</option>
         })
 
@@ -393,7 +408,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 firstButton={editButton}
                 thirdButton={minmaxButton}
             >
-                {this.state.IsChartMinimised == false &&
+                {this.props.ChartVisibility == ChartVisibility.Maximised &&
                     <div>
                         {this.state.IsChartSettingsVisible == false &&
                             <div>
@@ -442,18 +457,20 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             </Col>
                                                         </Row>
                                                     </AdaptableBlotterForm>
-                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                        <Row>
-                                                            <Col xs={5}>
-                                                                <ControlLabel>Size</ControlLabel>
-                                                            </Col>
-                                                            <Col xs={7}>
-                                                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
-                                                                    {optionChartSizes}
-                                                                </FormControl>
-                                                            </Col>
-                                                        </Row>
-                                                    </AdaptableBlotterForm>
+                                                    {this.props.ShowModal == false &&
+                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                            <Row>
+                                                                <Col xs={5}>
+                                                                    <ControlLabel>Size</ControlLabel>
+                                                                </Col>
+                                                                <Col xs={7}>
+                                                                    <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
+                                                                        {optionChartSizes}
+                                                                    </FormControl>
+                                                                </Col>
+                                                            </Row>
+                                                        </AdaptableBlotterForm>
+                                                    }
                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                         <Row>
                                                             <Col xs={5}>
@@ -817,11 +834,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onChartMinimised() {
-        this.setState({ IsChartMinimised: true, } as ChartDisplayPopupWizardState)
+        this.props.onSetChartVisibility(ChartVisibility.Minimised);
     }
 
     onChartMaximised() {
-        this.setState({ IsChartMinimised: false, } as ChartDisplayPopupWizardState)
+        this.props.onSetChartVisibility(ChartVisibility.Maximised);
     }
 
     onSetPropertyDefaults() {
@@ -849,7 +866,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowGeneralProperties() {
-        this.setState({ IsGeneralMinimised: false, } as ChartDisplayPopupWizardState)
+
+        if (this.props.ShowModal) {
+            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        } else {
+            this.setState({ IsGeneralMinimised: false, } as ChartDisplayPopupWizardState)
+        }
     }
 
     onHideGeneralProperties() {
@@ -857,7 +879,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowYAxisProperties() {
-        this.setState({ IsYAxisMinimised: false, } as ChartDisplayPopupWizardState)
+        if (this.props.ShowModal) {
+            this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        } else {
+            this.setState({ IsYAxisMinimised: false, } as ChartDisplayPopupWizardState)
+        }
     }
 
     onHideYAxisProperties() {
@@ -865,7 +891,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowXAxisProperties() {
-        this.setState({ IsXAxisMinimised: false, } as ChartDisplayPopupWizardState)
+        if (this.props.ShowModal) {
+            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        } else {
+            this.setState({ IsXAxisMinimised: false, } as ChartDisplayPopupWizardState)
+        }
     }
 
     onHideXAxisProperties() {
@@ -873,7 +903,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowMiscProperties() {
-        this.setState({ IsMiscMinimised: false, } as ChartDisplayPopupWizardState)
+        if (this.props.ShowModal) {
+            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupWizardState)
+        } else {
+            this.setState({ IsMiscMinimised: false, } as ChartDisplayPopupWizardState)
+        }
     }
 
     onHideMiscProperties() {
@@ -1193,7 +1227,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.state.EditedChartDefinition.Title);
         this.props.onAddUpdateChartDefinition(index, clonedObject);
         this.setState({ EditedChartDefinition: null });
-        this.props.onSelectChartDefinition(clonedObject);
+        this.props.onSelectChartDefinition(clonedObject.Title);
     }
 
     canFinishWizard() {
@@ -1284,9 +1318,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 function mapStateToProps(state: AdaptableBlotterState) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.CurrentChartDefinition,
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
         ChartData: state.System.ChartData,
-
+        ChartVisibility: state.System.ChartVisibility,
     };
 }
 
@@ -1294,7 +1328,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
         onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => dispatch(ChartRedux.ChartPropertiesUpdate(chartTitle, chartProperties)),
-        onSelectChartDefinition: (chartDefinition: IChartDefinition) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onSelectChartDefinition: (chartDefinition: string) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
+        onSetChartVisibility: (chartVisibility: ChartVisibility) => dispatch(SystemRedux.ChartSetChartVisibility(chartVisibility)),
     };
 }
 

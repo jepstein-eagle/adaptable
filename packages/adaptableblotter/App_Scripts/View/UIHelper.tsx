@@ -97,17 +97,21 @@ export module UIHelper {
         return modalContainer;
     }
 
-    export function getChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement {
-        let chartContainer: HTMLElement = document.getElementById(blotterOptions.containerOptions.chartContainer)
-        if (chartContainer) {
-            const chartContainerClassName: string = " chart-container"
-            if (!chartContainer.className.includes(chartContainerClassName)) {
-                chartContainer.className += chartContainerClassName;
+    export function getChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document, showModal: boolean): HTMLElement {
+        let chartContainer: HTMLElement;
+        if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) { // they have provided one so get that
+            chartContainer = document.getElementById(blotterOptions.containerOptions.chartContainer)
+            if (chartContainer) {
+                const chartContainerClassName: string = " chart-container"
+                if (!chartContainer.className.includes(chartContainerClassName)) {
+                    chartContainer.className += chartContainerClassName;
+                }
+            } else {
+                LoggingHelper.LogError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer)
             }
-        } else {
-            LoggingHelper.LogError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer)
+        } else {  // not provided one so return whole document if modal, or 'chart' if not
+            chartContainer = (showModal) ? document.body : document.getElementById("ad");
         }
-
         return chartContainer;
     }
 

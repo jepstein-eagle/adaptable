@@ -1,5 +1,11 @@
 // Chart Enums
 
+export enum ChartVisibility {
+    Maximised = 'Maximised',
+    Minimised = 'Minimised',
+    Hidden = 'Hidden',
+}
+
 export enum ChartType {
     Column = 'Column',
     Area = 'Area',

@@ -2,13 +2,15 @@ import { IAdaptableBlotter } from '../../../Api/Interface/IAdaptableBlotter';
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Modal, Button } from 'react-bootstrap';
-import { DistinctCriteriaPairValue } from '../../../Utilities/Enums'
+import { AccessLevel } from '../../../Utilities/Enums'
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 
 export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableBlotterChart> {
   showChart: boolean;
@@ -22,24 +24,25 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
 
     let cssClassName: string = StyleConstants.AB_STYLE
 
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+    let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal);
+    let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId);
 
     let commonProps: ChartDisplayPopupPropsBase<this> = {
-      getColumnValueDisplayValuePairDistinctList: (columnId: string, distinctCriteria: DistinctCriteriaPairValue) => this.props.AdaptableBlotter ? this.props.AdaptableBlotter.getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) : null,
       Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
-      ModalContainer: modalContainer,
+      ModalContainer: chartContainer,
       cssClassName: cssClassName + StyleConstants.MODAL_BODY,
       onClose: this.props.onClose,
-      showModal: this.props.showModal,
+      ShowModal: this.props.showModal,
       Blotter: this.props.AdaptableBlotter,
       UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
       SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+      ColumnFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters,
       ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
+      AccessLevel: accessLevel
     }
 
     // if we have a chart container property in Blotter Options then lets get that and put the chart there
     if (StringExtensions.IsNotNullOrEmpty(this.props.AdaptableBlotter.BlotterOptions.containerOptions.chartContainer)) {
-      let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document);
       // Want to be able to get show the chart in this DIV  - but no idea how
       // do we do this here?  or in adaptableBlotterView?
       //  console.log(chartContainer);
@@ -60,7 +63,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       <div>
         {this.props.showModal ?
           <Modal show={this.props.showChart} onHide={this.props.onClose} className={cssClassName + StyleConstants.BASE}
-            container={modalContainer} >
+            container={chartContainer} >
             <div className={cssClassName + StyleConstants.MODAL_BASE}>
               <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
                 <div className="ab_main_chart">

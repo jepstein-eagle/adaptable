@@ -6,6 +6,7 @@ import { ILiveReport, IPPDomain } from '../../Strategy/Interface/IExportStrategy
 import { ISystemStatus } from '../../Api/Interface/IAdaptableBlotterObjects';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IAlert } from '../../Utilities/Interface/IMessage';
+import { ChartVisibility } from '../../Utilities/ChartEnums';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -40,6 +41,7 @@ export const BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
 
 // Chart Managemet 
 export const CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
+export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
@@ -49,13 +51,11 @@ export const SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
 export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
 
 
-
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
 }
 
 export interface SystemClearHealthStatusAction extends Redux.Action {
-
 }
 
 export interface SystemAlertAddAction extends Redux.Action {
@@ -68,7 +68,6 @@ export interface SystemAlertDeleteAction extends Redux.Action {
 }
 
 export interface SystemAlertDeleteAllAction extends Redux.Action {
-
 }
 
 export interface ReportStartLiveAction extends Redux.Action {
@@ -107,11 +106,13 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
     IsValidBulkUpdateSelection: boolean
 }
 
-
 export interface ChartSetChartDataAction extends Redux.Action {
     chartData: any
 }
 
+export interface ChartSetChartVisibiityAction extends Redux.Action {
+    ChartVisibility: ChartVisibility
+}
 
 export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
     ErrorMsg: string
@@ -196,6 +197,13 @@ export const ChartSetChartData = (chartData: any): ChartSetChartDataAction => ({
     chartData
 })
 
+
+export const ChartSetChartVisibility = (ChartVisibility: ChartVisibility): ChartSetChartVisibiityAction => ({
+    type: CHART_SET_CHART_VISIBILITY,
+    ChartVisibility
+})
+
+
 export const CalculatedColumnSetErrorMessage = (ErrorMsg: string): CalculatedColumnSetErrorMessageAction => ({
     type: CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
     ErrorMsg
@@ -221,6 +229,7 @@ const initialSystemState: SystemState = {
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
     ChartData: null,
+    ChartVisibility: ChartVisibility.Hidden,
     CalculatedColumnErrorMessage: "",
     IPPDomainsPages: [],
     ReportErrorMessage: ""
@@ -277,8 +286,13 @@ export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = i
         case BULK_UPDATE_SET_PREVIEW:
             return Object.assign({}, state, { BulkUpdatePreviewInfo: (<BulkUpdateSetPreviewAction>action).BulkUpdatePreviewInfo })
 
+        // Chart Actions
         case CHART_SET_CHART_DATA:
             return Object.assign({}, state, { ChartData: (<ChartSetChartDataAction>action).chartData })
+
+        case CHART_SET_CHART_VISIBILITY:
+            return Object.assign({}, state, { ChartVisibility: (<ChartSetChartVisibiityAction>action).ChartVisibility })
+
         case CALCULATEDCOLUMN_SET_ERROR_MESSAGE: {
             return Object.assign({}, state, { CalculatedColumnErrorMessage: (<CalculatedColumnSetErrorMessageAction>action).ErrorMsg });
         }
@@ -288,7 +302,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = i
         case REPORT_SET_ERROR_MESSAGE: {
             return Object.assign({}, state, { ReportErrorMessage: (<ReportSetErrorMessagection>action).ErrorMessage })
         }
-     
+
         default:
             return state
     }
