@@ -14,7 +14,6 @@ import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 // services
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -31,7 +30,7 @@ import { ChartService } from '../Utilities/Services/ChartService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 // strategies
-import { IStrategy } from '../Strategy/Interface/IStrategy';
+import { IStrategy, IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
 import { AlertStrategy } from '../Strategy/AlertStrategy';
 import { ApplicationStrategy } from '../Strategy/ApplicationStrategy';
@@ -56,14 +55,14 @@ import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCri
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
+import {  ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { IColumn } from '../Api/Interface/IColumn';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression, IPermittedColumnValues } from '../Api/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
-import { IRawValueDisplayValuePair, FreeTextStoredValue } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';

@@ -9,3 +9,5 @@ export interface IStrategy {
     InitializeWithRedux(): void
     addContextMenuItem(column: IColumn): void
 }
+export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
+}

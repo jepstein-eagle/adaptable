@@ -9,7 +9,7 @@ import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IStrategy, } from '../Strategy/Interface/IStrategy';
+import { IStrategy, IAdaptableStrategyCollection, } from '../Strategy/Interface/IStrategy';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -36,7 +36,7 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
-import { IAdaptableStrategyCollection, ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
+import {  ICellInfo, IVendorGridInfo } from '../Api/Interface/Interfaces';
 import { IColumn } from '../Api/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';

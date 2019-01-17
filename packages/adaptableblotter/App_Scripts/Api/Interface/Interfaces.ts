@@ -1,7 +1,4 @@
-import { IStrategy } from '../../Strategy/Interface/IStrategy'
 
-export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
-}
 
 export interface ICellInfo {
     Id: any;

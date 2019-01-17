@@ -1,5 +1,5 @@
 import { DistinctCriteriaPairValue } from '../../Utilities/Enums'
-import { ICellInfo, IAdaptableStrategyCollection, IVendorGridInfo } from './Interfaces'
+import { ICellInfo, IVendorGridInfo } from './Interfaces'
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
@@ -16,6 +16,8 @@ import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Int
 import { IChartService } from '../../Utilities/Services/Interface/IChartService';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
 import { IEvent } from '../../Utilities/Interface/IEvent';
+import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
+import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
 
 export interface IAdaptableBlotter {
     /**
