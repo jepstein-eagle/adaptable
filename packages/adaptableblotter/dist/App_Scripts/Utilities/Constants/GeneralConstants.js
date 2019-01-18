@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MISSING_COLUMN = " [MISSING]";
+exports.DEFAULT_LAYOUT = "Ab_Default_Layout";
+exports.LIGHT_THEME = "Light Theme";
+exports.DARK_THEME = "Dark Theme";
+exports.USER_NAME = "anonymous";
+exports.BLOTTER_ID = "adaptable_blotter_id";
+exports.MENU_PREFIX = "ab_";
+exports.READ_ONLY_STYLE = "ab_readonly";
+exports.QUICK_SEARCH_DEFAULT_BACK_COLOR = '#FFFFCC';
+exports.QUICK_SEARCH_DEFAULT_FORE_COLOR = '#000000';
+exports.ALL_COLUMN_VALUES = 'ALL_COLUMN_VALUES';
