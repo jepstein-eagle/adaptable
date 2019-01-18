@@ -12,7 +12,7 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Utilities/Enums';
-import { IUserFilter, IColumnFilter, IRange } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, IRange } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
 import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
@@ -23,7 +23,7 @@ import { Expression } from "../../../Utilities/Expression";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
-import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Utilities/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";

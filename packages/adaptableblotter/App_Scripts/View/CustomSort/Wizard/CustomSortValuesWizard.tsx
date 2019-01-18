@@ -4,7 +4,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
-import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 

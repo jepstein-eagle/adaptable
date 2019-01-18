@@ -3,7 +3,7 @@ import { SystemState } from './Interface/IState'
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Utilities/Enums';
 import { ILiveReport, IPPDomain } from '../../Strategy/Interface/IExportStrategy';
-import { ISystemStatus } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { ISystemStatus } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';

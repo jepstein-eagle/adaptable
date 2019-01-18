@@ -11,9 +11,9 @@ import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ButtonCondition } from "../Components/Buttons/ButtonCondition";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { IUserFilter } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Utilities/Expression";
-import { IAdaptableBlotterOptions } from "../../Api/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "../../Utilities/Interface/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../Api/Interface/IBlotterApi";
 import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
 

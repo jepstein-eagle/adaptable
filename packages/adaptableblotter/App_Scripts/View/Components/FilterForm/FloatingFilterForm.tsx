@@ -9,7 +9,7 @@ import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterS
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
-import { IColumnFilter, IUserFilter, IRange } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumnFilter, IUserFilter, IRange } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Api/Interface/IColumn";

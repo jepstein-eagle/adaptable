@@ -1,8 +1,8 @@
-import { LeafExpressionOperator } from '../../Utilities/Enums';
-import { Expression } from '../../Utilities/Expression';
-import { IVendorGridInfo } from "../../Utilities/Interface/IVendorGridInfo";
+import { LeafExpressionOperator } from '../Enums';
+import { Expression } from '../Expression';
+import { IVendorGridInfo } from "./IVendorGridInfo";
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType } from '../../Utilities/ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType } from '../ChartEnums';
 
 /**
  * The base empty Adaptable Blotter Object interface 

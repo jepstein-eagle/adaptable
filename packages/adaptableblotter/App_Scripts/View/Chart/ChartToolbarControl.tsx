@@ -17,7 +17,7 @@ import { SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IChartDefinition } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
 

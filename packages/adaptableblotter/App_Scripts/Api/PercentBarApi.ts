@@ -1,6 +1,6 @@
 import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux'
 import { ApiBase } from "./ApiBase";
-import { IPercentBar } from './Interface/IAdaptableBlotterObjects';
+import { IPercentBar } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IPercentBarApi } from './Interface/IPercentBarApi';
 
 export class PercentBarApi extends ApiBase implements IPercentBarApi {

@@ -1,4 +1,4 @@
-import { IChartProperties } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IChartProperties } from '../Interface/IAdaptableBlotterObjects';
 import { ChartType, ChartSize, ChartCrosshairsMode, ToolTipType, AxisLabelsLocation, LabelVisibility, HorizontalAlignment } from '../ChartEnums';
 
 export const DefaultChartProperties: IChartProperties = {

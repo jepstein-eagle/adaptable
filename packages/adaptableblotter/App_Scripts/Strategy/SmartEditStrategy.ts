@@ -8,7 +8,7 @@ import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
-import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';

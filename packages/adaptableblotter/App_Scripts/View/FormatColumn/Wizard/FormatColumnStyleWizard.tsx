@@ -4,7 +4,7 @@ import { FontWeight, FontStyle, FontSize } from '../../../Utilities/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { UIHelper } from "../../UIHelper";
-import { IFormatColumn, IStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn, IStyle } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     ColorPalette: string[]

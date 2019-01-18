@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColumn } from "../../../Api/Interface/IColumn";
-import { IUserFilter, IColumnFilter } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter, IColumnFilter } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
 import { AccessLevel } from "../../../Utilities/Enums";
 

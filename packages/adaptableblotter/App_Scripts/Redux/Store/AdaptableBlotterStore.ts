@@ -58,7 +58,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants'
 import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';

@@ -1,4 +1,4 @@
-import { IFormatColumn, IStyle } from "./IAdaptableBlotterObjects";
+import { IFormatColumn, IStyle } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 export interface IFormatColumnApi {
   GetAll(): IFormatColumn[];
   Add(column: string, style: IStyle): void;

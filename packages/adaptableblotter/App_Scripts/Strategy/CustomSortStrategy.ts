@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { ICustomSort } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICustomSort } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { StateChangedTrigger } from '../Utilities/Enums';

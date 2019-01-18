@@ -1,7 +1,7 @@
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy'
-import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 

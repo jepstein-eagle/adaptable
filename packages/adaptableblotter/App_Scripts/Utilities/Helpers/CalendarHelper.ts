@@ -1,4 +1,4 @@
-import { ICalendar } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { ICalendar } from '../Interface/IAdaptableBlotterObjects';
 
 export module CalendarHelper {
 

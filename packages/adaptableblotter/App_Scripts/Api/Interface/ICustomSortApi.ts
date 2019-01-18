@@ -1,4 +1,4 @@
-import { ICustomSort } from "./IAdaptableBlotterObjects";
+import { ICustomSort } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 export interface ICustomSortApi {
    

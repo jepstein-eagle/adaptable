@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { MessageType, ActionMode } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 
 export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
     Columns: Array<IColumn>

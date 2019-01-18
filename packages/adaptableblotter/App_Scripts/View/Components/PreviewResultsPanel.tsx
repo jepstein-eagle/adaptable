@@ -5,7 +5,7 @@ import { Glyphicon, Panel, Table } from "react-bootstrap";
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../Api/Interface/IColumn";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IUserFilter, ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter, ICellValidationRule } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 import { IPreviewInfo, IPreviewResult } from "../../Utilities/Interface/IPreview";
 

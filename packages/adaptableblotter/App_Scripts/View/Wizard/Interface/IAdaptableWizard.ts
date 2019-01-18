@@ -1,5 +1,5 @@
 import { IColumn } from '../../../Api/Interface/IColumn';
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IAdaptableBlotterObject } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
 import { IAdaptableBlotter } from '../../../Api/Interface/IAdaptableBlotter';
 
 export interface AdaptableWizardStep {

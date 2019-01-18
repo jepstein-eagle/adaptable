@@ -1,4 +1,4 @@
-import { IPercentBar } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import * as React from "react";
 import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'

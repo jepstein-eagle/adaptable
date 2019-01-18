@@ -1,4 +1,4 @@
-import { IColumnValueExpression, IFilterExpression, IRangeExpression } from "../api/Interface/IAdaptableBlotterObjects";
+import { IColumnValueExpression, IFilterExpression, IRangeExpression } from "./Interface/IAdaptableBlotterObjects";
 
 /**
  * The main Expression object - comprised of 3 collections: Column Values, Filters and Ranges

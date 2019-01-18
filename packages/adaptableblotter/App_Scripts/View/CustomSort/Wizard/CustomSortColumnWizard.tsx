@@ -6,7 +6,7 @@ import { IColumn } from '../../../Api/Interface/IColumn';
 import { SelectionMode } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { ICustomSort } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: IColumn[]

@@ -2,7 +2,7 @@ import { ExportState } from './Interface/IState';
 import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { IReport } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IReport } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';

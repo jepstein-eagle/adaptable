@@ -3,7 +3,7 @@ import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IPercentBar, IStyle } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IPercentBar, IStyle } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { StyleVisualItem } from "../../Components/StyleVisualItem";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";

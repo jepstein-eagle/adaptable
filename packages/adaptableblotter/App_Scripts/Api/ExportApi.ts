@@ -1,6 +1,6 @@
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux'
 import { ApiBase } from "./ApiBase";
-import { IReport } from './Interface/IAdaptableBlotterObjects';
+import { IReport } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { ILiveReport } from '../Strategy/Interface/IExportStrategy';
 import { ExportDestination } from "../Utilities/Enums";
 import { IExportApi } from './Interface/IExportApi';

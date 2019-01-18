@@ -23,7 +23,7 @@ import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { ICalculatedColumn, IEntitlement, IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn, IEntitlement, IColumnCategory } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";

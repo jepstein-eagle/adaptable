@@ -22,7 +22,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { ICustomSort, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 

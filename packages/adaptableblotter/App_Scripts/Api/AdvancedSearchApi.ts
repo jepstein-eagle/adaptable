@@ -1,5 +1,5 @@
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IAdvancedSearch } from "./Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../Utilities/Interface/IAdaptableBlotterObjects";
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux'
 import { ApiBase } from "./ApiBase";
 import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';

@@ -21,7 +21,7 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IChartDefinition, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {

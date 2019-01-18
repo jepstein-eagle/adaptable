@@ -7,7 +7,7 @@ import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearc
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IAdvancedSearch, IEntitlement } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, IEntitlement } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';

@@ -22,7 +22,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IConditionalStyle, IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, IConditionalStyle, IColumnCategory } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]

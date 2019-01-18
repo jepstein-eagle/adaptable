@@ -16,7 +16,7 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject, ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject, ICellValidationRule } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {

@@ -1,6 +1,6 @@
 import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { LeafExpressionOperator, DataType } from '../Enums';
-import { IRange } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IRange } from '../Interface/IAdaptableBlotterObjects';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';

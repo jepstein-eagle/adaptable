@@ -1,4 +1,4 @@
-import { IUserFilter } from './IAdaptableBlotterObjects';
+import { IUserFilter } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 export interface ISystemFilterApi {
   userFilterSet(userFilters: IUserFilter[]): void;
   Set(systemFilters: string[]): void;

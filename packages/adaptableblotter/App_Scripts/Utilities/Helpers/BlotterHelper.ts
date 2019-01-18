@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';

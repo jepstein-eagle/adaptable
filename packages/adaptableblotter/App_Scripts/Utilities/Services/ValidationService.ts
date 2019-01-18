@@ -1,7 +1,7 @@
 
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { ICellValidationRule } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';

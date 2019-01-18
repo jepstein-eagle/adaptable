@@ -1,4 +1,4 @@
-import { IShortcut } from './IAdaptableBlotterObjects';
+import { IShortcut } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 export interface IShortcutApi {
   GetAll(): IShortcut[];
   Add(shortcut: IShortcut): void;

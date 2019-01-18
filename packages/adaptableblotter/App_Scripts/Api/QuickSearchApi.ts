@@ -1,4 +1,4 @@
-import { IStyle } from "./Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../Utilities/Interface/IAdaptableBlotterObjects";
 import { DisplayAction } from "../Utilities/Enums";
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
 import { ApiBase } from "./ApiBase";

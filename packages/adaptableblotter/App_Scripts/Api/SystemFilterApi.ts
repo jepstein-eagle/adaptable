@@ -1,7 +1,7 @@
 import * as SystemFilterRedux from '../Redux/ActionsReducers/SystemFilterRedux'
 import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux'
 import { ApiBase } from "./ApiBase";
-import { IUserFilter } from './Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { FilterHelper } from '../Utilities/Helpers/FilterHelper';
 import { ISystemFilterApi } from './Interface/ISystemFilterApi';
 

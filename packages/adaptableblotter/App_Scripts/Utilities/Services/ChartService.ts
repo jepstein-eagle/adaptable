@@ -1,7 +1,7 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
-import { IChartDefinition, IColumnValueExpression, IChartProperties } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IChartDefinition, IColumnValueExpression, IChartProperties } from '../Interface/IAdaptableBlotterObjects';
 import { IColumn } from '../../Api/Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../Enums';

@@ -1,4 +1,4 @@
-import { ICalculatedColumn } from './IAdaptableBlotterObjects';
+import { ICalculatedColumn } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 
 export interface ICalculatedColumnApi {
 

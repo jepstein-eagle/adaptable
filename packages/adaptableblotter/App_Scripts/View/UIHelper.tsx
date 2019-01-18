@@ -1,8 +1,8 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
 import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
-import { IStyle } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/IAdaptableBlotterOptions';
+import { IStyle } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Utilities/Expression';
 import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';

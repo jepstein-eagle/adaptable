@@ -1,6 +1,6 @@
 import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux'
 import { ApiBase } from "../ApiBase";
-import { IColumnCategory } from './IAdaptableBlotterObjects';
+import { IColumnCategory } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 
 export interface IColumnCategoryApi {
 

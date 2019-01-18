@@ -1,4 +1,4 @@
-import { IAlertDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IAlertDefinition } from '../Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
 import { DataType, LeafExpressionOperator } from '../Enums';

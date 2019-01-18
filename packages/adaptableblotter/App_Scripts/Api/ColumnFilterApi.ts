@@ -1,6 +1,6 @@
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { ApiBase } from "./ApiBase";
-import { IUserFilter, IColumnFilter } from './Interface/IAdaptableBlotterObjects';
+import { IUserFilter, IColumnFilter } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IColumnFilterApi } from './Interface/IColumnFilterApi';
 

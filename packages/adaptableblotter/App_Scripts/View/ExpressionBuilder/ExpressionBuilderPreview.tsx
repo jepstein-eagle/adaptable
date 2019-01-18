@@ -12,7 +12,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter, IRange } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter, IRange } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Utilities/Expression";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 

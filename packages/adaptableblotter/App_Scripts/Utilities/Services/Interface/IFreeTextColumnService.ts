@@ -1,4 +1,4 @@
-import { IFreeTextColumn } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IFreeTextColumn } from "../../Interface/IAdaptableBlotterObjects";
 import { IDataChangedInfo } from "../../../Api/Interface/IDataChangedInfo";
 
 export interface IFreeTextColumnService {

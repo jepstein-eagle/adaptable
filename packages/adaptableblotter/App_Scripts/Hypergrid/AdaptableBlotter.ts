@@ -41,9 +41,9 @@ import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Api/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar, IPermittedColumnValues } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar, IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Api/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'

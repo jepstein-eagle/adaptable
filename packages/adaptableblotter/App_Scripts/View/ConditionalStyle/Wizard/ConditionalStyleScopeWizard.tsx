@@ -7,7 +7,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IConditionalStyle, IColumnCategory } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle, IColumnCategory } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {

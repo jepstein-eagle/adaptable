@@ -1,6 +1,6 @@
 import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IPlusMinusRule } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IPlusMinusRule } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../UIHelper';
 
 

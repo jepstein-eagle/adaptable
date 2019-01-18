@@ -1,6 +1,6 @@
 import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
 import { IColumn } from '../../../Api/Interface/IColumn';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar, ISystemStatus, IEntitlement, IPermittedColumnValues, IColumnCategory } from '../../../Api/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn, IPercentBar, ISystemStatus, IEntitlement, IPermittedColumnValues, IColumnCategory } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
 import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
 import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
 import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';

@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { UserInterfaceState } from './Interface/IState'
-import { IPermittedColumnValues } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IPermittedColumnValues } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../View/UIHelper';
 
 

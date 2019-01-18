@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IChartDefinition, IChartProperties } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition, IChartProperties } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE, INFO_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";

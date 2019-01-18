@@ -12,7 +12,7 @@ import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IColumn } from '../Api/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IShortcut, ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IShortcut, ICellValidationRule } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';

@@ -1,4 +1,4 @@
-import { IReport } from './IAdaptableBlotterObjects';
+import { IReport } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
 import { ExportDestination } from "../../Utilities/Enums";
 

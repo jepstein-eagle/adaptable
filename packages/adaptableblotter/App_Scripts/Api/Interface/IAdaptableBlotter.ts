@@ -5,10 +5,10 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
-import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Utilities/Interface/IStateEvents';
-import { IAdaptableBlotterOptions } from '../../Api/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../../Utilities/Interface/IAdaptableBlotterOptions';
 import { ICalendarService } from '../../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../../Utilities/Services/Interface/IDataService';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';

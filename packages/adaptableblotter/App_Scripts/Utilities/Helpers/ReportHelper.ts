@@ -1,5 +1,5 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IReport, IUserFilter } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IReport, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../Utilities/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';

@@ -1,6 +1,6 @@
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import { ApiBase } from "../ApiBase";
-import { ICellValidationRule } from './IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 
 export interface ICellValidationApi {
 

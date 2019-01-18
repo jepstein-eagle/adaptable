@@ -8,7 +8,7 @@ import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../Api/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 

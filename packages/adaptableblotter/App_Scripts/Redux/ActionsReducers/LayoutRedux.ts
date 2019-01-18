@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
-import { ILayout } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { ILayout } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 export const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';

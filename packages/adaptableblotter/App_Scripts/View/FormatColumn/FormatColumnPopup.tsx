@@ -20,7 +20,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
-import { IFormatColumn, IAdaptableBlotterObject } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
     FormatColumns: Array<IFormatColumn>,

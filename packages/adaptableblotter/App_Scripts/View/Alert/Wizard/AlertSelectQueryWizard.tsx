@@ -2,7 +2,7 @@ import * as React from "react";
 import { Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Api/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IAlertDefinition } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";

@@ -14,7 +14,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { StrategyHelper } from "../../Utilities/Helpers/StrategyHelper";
-import { IEntitlement } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IEntitlement } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState

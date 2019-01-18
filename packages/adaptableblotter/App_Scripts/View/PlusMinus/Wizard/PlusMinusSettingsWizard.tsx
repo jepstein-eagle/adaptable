@@ -5,7 +5,7 @@ import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IPlusMinusRule } from "../../../Api/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
 }

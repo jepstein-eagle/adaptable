@@ -16,7 +16,7 @@ import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IPreviewInfo } from "../../Utilities/Interface/IPreview";

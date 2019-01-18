@@ -1,5 +1,5 @@
 import { IUserState } from "../../Redux/ActionsReducers/Interface/IState";
-import { IAdvancedSearch, IColumnFilter, IGridSort, ICustomSort } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch, IColumnFilter, IGridSort, ICustomSort } from "./IAdaptableBlotterObjects";
 
 
 export interface IFDC3Schema {

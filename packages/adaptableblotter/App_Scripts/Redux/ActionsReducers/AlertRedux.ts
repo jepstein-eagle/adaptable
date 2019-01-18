@@ -1,6 +1,6 @@
 import { AlertState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IAlertDefinition } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IAlertDefinition } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { MessageType } from '../../Utilities/Enums';
 
 export const ALERT_DEFIINITION_ADD_UPDATE = 'ALERT_DEFIINITION_ADD_UPDATE';

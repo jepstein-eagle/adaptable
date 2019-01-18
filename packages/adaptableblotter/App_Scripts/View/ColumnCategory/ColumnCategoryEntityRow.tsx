@@ -5,7 +5,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumnCategory } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 
 export interface ColumnCategoryEntityRowProps<ColumnCategoryEntityRow> extends SharedEntityExpressionRowProps<ColumnCategoryEntityRow> {

@@ -1,5 +1,5 @@
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { IFormatColumn, IStyle } from "./Interface/IAdaptableBlotterObjects";
+import { IFormatColumn, IStyle } from "../Utilities/Interface/IAdaptableBlotterObjects";
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ApiBase } from "./ApiBase";
 import { IFormatColumnApi } from './Interface/IFormatColumnApi';

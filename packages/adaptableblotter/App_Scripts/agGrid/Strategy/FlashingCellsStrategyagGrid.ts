@@ -2,7 +2,7 @@ import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy'
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
-import { IFlashingCell } from '../../Api/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';

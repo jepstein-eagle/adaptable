@@ -10,7 +10,7 @@ import { StateChangedTrigger } from '../Utilities/Enums';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition } from '../Api/Interface/IAdaptableBlotterObjects';
+import { IChartDefinition } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility } from '../Utilities/ChartEnums';
 

@@ -11,7 +11,7 @@ import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IMasterChildren } from "../../Utilities/Interface/IMasterChildren";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { IColumnCategory } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { IColumnCategory } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {

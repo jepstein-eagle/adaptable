@@ -14,7 +14,7 @@ import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { ICalculatedColumn } from "../../Api/Interface/IAdaptableBlotterObjects";
+import { ICalculatedColumn } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 
 export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
