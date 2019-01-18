@@ -2,7 +2,7 @@ import { IQuickSearchStrategy } from './Interface/IQuickSearchStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState'
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 

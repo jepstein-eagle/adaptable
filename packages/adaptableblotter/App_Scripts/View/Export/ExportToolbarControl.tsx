@@ -5,7 +5,7 @@ import { DropdownButton, MenuItem, SplitButton, OverlayTrigger, Tooltip, Glyphic
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'

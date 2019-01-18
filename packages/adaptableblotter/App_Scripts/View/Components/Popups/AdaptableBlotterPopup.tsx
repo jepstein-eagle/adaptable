@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../../../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
 import { DistinctCriteriaPairValue, AccessLevel } from '../../../Utilities/Enums'

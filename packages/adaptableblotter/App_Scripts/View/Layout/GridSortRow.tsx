@@ -3,7 +3,7 @@ import { FormControl } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IColumn } from "../../Api/Interface/IColumn";
+import { IColumn } from "../../Utilities/Interface/IColumn";
 import { SelectionMode, SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";

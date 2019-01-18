@@ -4,7 +4,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { IColumnCategory } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 

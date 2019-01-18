@@ -1,5 +1,5 @@
 
-import { IAdaptableBlotter } from './IAdaptableBlotter';
+import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from '../../Utilities/Interface/IStateEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 

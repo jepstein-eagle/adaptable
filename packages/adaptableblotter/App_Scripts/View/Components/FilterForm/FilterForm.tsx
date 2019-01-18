@@ -7,7 +7,7 @@ import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux
 import * as SystemFilterRedux from '../../../Redux/ActionsReducers/SystemFilterRedux'
 import * as HomeRedux from '../../../Redux/ActionsReducers/HomeRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
@@ -29,7 +29,7 @@ import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
 import {  Well } from 'react-bootstrap';
-import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";

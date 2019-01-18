@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from "./Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../Utilities/Interface/IAdaptableBlotter";
 import { Action } from "redux";
 import { AdaptableBlotterState } from "../Redux/Store/Interface/IAdaptableStore";
 import { LoggingHelper } from "../Utilities/Helpers/LoggingHelper";

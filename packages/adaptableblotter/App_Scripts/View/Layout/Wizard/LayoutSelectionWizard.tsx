@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Panel, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { SelectionMode, LayoutSource, MessageType } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';

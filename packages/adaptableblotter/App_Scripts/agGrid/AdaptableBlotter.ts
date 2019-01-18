@@ -4,7 +4,7 @@ import '../Styles/stylesheets/adaptableblotter-style.css'
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as StyleConstants from '../Utilities/Constants/StyleConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
@@ -57,7 +57,7 @@ import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../Utilities/Interface/IColumn';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression, IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/IAdaptableBlotterOptions';

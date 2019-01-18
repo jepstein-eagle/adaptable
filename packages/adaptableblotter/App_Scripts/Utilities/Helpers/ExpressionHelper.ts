@@ -2,10 +2,10 @@ import { FilterHelper } from './FilterHelper'
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue, RangeOperandType } from '../Enums';
 import { IRange, IColumnValueExpression, IRangeExpression, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
 import { Expression } from '../Expression';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';

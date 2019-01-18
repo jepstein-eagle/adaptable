@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';

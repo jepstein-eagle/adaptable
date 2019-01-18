@@ -12,8 +12,8 @@ import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions
 import { IColumnFilter, IUserFilter, IRange } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { IColumn } from "../../../Api/Interface/IColumn";
-import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { DataType, LeafExpressionOperator } from '../../../Utilities/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";

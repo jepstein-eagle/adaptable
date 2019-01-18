@@ -14,7 +14,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from "../UIHelper";
-import { IColumn } from "../../Api/Interface/IColumn";
+import { IColumn } from "../../Utilities/Interface/IColumn";
 import { isNumber, isDate } from "util";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";

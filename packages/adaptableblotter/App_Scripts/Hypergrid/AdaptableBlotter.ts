@@ -29,7 +29,7 @@ import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
@@ -38,7 +38,7 @@ import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../Utilities/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 //import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
 import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar, IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';

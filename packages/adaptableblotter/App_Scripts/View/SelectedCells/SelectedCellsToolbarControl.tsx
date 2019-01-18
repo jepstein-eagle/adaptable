@@ -8,7 +8,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/ToolbarStrategyViewPopupProps";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";

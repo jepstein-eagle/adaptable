@@ -3,7 +3,7 @@ import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
 import { IFreeTextColumn } from '../Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux'
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 

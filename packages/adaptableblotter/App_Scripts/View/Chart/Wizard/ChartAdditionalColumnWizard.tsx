@@ -6,12 +6,12 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 import { SingleListBox } from "../../Components/ListBox/SingleListBox";
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
-import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {

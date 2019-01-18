@@ -6,8 +6,8 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { DataType, StateChangedTrigger } from '../Utilities/Enums'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";

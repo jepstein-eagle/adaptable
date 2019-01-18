@@ -2,7 +2,7 @@ import { ExpressionHelper } from './ExpressionHelper'
 import { ICellValidationRule } from '../Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../Interface/IColumn';
 import { LeafExpressionOperator, DataType } from '../Enums';
 
 

@@ -2,14 +2,14 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants'
 import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
 import { IGridSort } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { SearchChangedTrigger } from '../Utilities/Enums';
 import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 // This is a special strategy that the user can never remove but which is useful to us 
 // We use it to manage internal state changes and menu items that are not directly strategy related

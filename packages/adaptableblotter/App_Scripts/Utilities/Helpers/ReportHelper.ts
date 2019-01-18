@@ -3,9 +3,9 @@ import { IReport, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../Utilities/Expression';
 import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
-import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { Helper } from './Helper';
 
 

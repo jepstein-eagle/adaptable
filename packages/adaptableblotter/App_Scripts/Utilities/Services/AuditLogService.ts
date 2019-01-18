@@ -1,5 +1,5 @@
 import { IAdaptableBlotterOptions } from "../Interface/IAdaptableBlotterOptions";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";
 import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";

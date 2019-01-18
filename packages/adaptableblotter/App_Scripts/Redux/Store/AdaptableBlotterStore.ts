@@ -46,7 +46,7 @@ import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
 import * as SelectedCellsRedux from '../ActionsReducers/SelectedCellsRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
@@ -60,7 +60,7 @@ import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/ISt
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';

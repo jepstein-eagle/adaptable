@@ -6,9 +6,9 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IAdaptableBlotter } from "../../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { Expression } from "../../../Utilities/Expression";
 

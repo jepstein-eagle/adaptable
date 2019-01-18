@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { ILayout, IGridSort } from "../Utilities/Interface/IAdaptableBlotterObjects";
 import { ApiBase } from "./ApiBase";
 import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
-import { IColumn } from "./Interface/IColumn";
+import { IColumn } from "../Utilities/Interface/IColumn";
 import { ObjectFactory } from "../Utilities/ObjectFactory";
 import { ILayoutApi } from './Interface/ILayoutApi';
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ExpressionBuilderConditionSelector } from './ExpressionBuilderConditionSelector'
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard'
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -15,7 +15,7 @@ import { IUserFilter } from "../../Utilities/Interface/IAdaptableBlotterObjects"
 import { Expression } from "../../Utilities/Expression";
 import { IAdaptableBlotterOptions } from "../../Utilities/Interface/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../Api/Interface/IBlotterApi";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {

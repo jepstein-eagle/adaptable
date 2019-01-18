@@ -11,7 +11,7 @@ import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Utilities/Enums";

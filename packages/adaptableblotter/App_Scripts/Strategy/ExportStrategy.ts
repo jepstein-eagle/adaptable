@@ -5,7 +5,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { IExportStrategy, ILiveReport } from './Interface/IExportStrategy'
 import { ExportDestination, MessageType, StateChangedTrigger } from '../Utilities/Enums';
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';

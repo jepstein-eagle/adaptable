@@ -5,7 +5,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Api/Interface/IColumn";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { AxisTotal } from "../../../Utilities/ChartEnums";

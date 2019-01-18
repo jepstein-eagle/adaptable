@@ -1,8 +1,8 @@
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { IAdvancedSearch, ICalculatedColumn, IPlusMinusRule, ICustomSort, IRange, IGridSort, ICellValidationRule, IUserFilter, IFlashingCell, IShortcut, IConditionalStyle, IFormatColumn, ILayout, IReport, IStyle, IAlertDefinition, IChartDefinition, IColumnFilter, IFreeTextColumn, IPercentBar, IColumnCategory } from './Interface/IAdaptableBlotterObjects';
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode } from './Enums';
-import { IColumn } from '../Api/Interface/IColumn';
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IColumn } from './Interface/IColumn';
+import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
 import { ISelectedCellSummmary } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { Expression } from '../Utilities/Expression';

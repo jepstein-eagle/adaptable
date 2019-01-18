@@ -1,6 +1,6 @@
 import { EventDispatcher } from "../EventDispatcher";
 import { IDataService, ChangeDirection } from "./Interface/IDataService";
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
 import { IEvent } from "../Interface/IEvent";
 

@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { IColumn } from '../../Api/Interface/IColumn'
+import { IColumn } from '../../Utilities/Interface/IColumn'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton'
 import { ListGroupItem, ListGroup, Button, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';

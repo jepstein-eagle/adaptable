@@ -1,9 +1,9 @@
 import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
-import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
 export module BlotterHelper {
 

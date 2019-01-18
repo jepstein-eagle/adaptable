@@ -10,7 +10,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { MathOperation, MessageType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";

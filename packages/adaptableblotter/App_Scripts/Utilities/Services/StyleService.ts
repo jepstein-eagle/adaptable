@@ -1,7 +1,7 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { FlashingCellState, ConditionalStyleState, QuickSearchState, FormatColumnState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IAdaptableBlotter } from '../../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
 import { ConditionalStyleScope } from '../Enums';

@@ -8,7 +8,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { ExportDestination, ReportColumnScope, AccessLevel, ReportRowScope } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Api/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ReportEntityRow } from './ReportEntityRow'

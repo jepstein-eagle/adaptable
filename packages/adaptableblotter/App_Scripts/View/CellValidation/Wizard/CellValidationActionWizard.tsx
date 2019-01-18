@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Radio, Col, Panel,  HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { MessageType, ActionMode } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';

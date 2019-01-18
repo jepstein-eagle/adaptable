@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Radio, Col, Panel, FormControl } from 'react-bootstrap';
-import { IColumn } from '../../../Api/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

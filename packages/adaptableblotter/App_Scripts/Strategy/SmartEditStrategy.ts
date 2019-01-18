@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
 import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";

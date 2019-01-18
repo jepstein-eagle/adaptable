@@ -13,7 +13,7 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from "../../Api/Interface/IAdaptableBlotter";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
 import { StatusColour, MathOperation, AccessLevel } from "../../Utilities/Enums";

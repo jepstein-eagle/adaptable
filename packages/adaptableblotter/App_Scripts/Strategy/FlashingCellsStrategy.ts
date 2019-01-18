@@ -2,11 +2,11 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { ObjectFactory } from '../Utilities/ObjectFactory'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataType, StateChangedTrigger } from '../Utilities/Enums';
 import { IFlashingCell } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';

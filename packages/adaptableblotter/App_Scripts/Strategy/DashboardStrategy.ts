@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IDashboardStrategy } from './Interface/IDashboardStrategy'
 import { DashboardState } from '../Redux/ActionsReducers/Interface/IState';
 import { Visibility, StateChangedTrigger } from '../Utilities/Enums';

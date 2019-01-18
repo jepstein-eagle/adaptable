@@ -3,7 +3,7 @@ import { MessageType } from '../../Utilities/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
-import { IColumn } from "../../Api/Interface/IColumn";
+import { IColumn } from "../../Utilities/Interface/IColumn";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IUserFilter, ICellValidationRule } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";

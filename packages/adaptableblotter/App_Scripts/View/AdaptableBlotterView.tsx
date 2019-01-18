@@ -6,7 +6,7 @@ import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
 import { PopupState, ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt'
 import { Dashboard } from './Dashboard/Dashboard'

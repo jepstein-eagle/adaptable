@@ -1,4 +1,4 @@
-import { IAdaptableBlotter } from '../Api/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -8,7 +8,7 @@ import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilitie
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdvancedSearch, IEntitlement } from '../Utilities/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../Api/Interface/IColumn';
+import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';

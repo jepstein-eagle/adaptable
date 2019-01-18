@@ -1,22 +1,22 @@
-import { DistinctCriteriaPairValue } from '../../Utilities/Enums'
-import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
-import { IVendorGridInfo } from "../../Utilities/Interface/IVendorGridInfo";
+import { DistinctCriteriaPairValue } from '../Enums'
+import { ICellInfo } from "./ICellInfo";
+import { IVendorGridInfo } from "./IVendorGridInfo";
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { EventDispatcher } from '../../Utilities/EventDispatcher';
-import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EventDispatcher } from '../EventDispatcher';
+import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from './IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../../Utilities/Interface/IStateEvents';
-import { IAdaptableBlotterOptions } from '../../Utilities/Interface/IAdaptableBlotterOptions';
-import { ICalendarService } from '../../Utilities/Services/Interface/ICalendarService';
-import { IDataService } from '../../Utilities/Services/Interface/IDataService';
-import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
-import { AuditLogService } from '../../Utilities/Services/AuditLogService';
-import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
-import { IChartService } from '../../Utilities/Services/Interface/IChartService';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from './IStateEvents';
+import { IAdaptableBlotterOptions } from './IAdaptableBlotterOptions';
+import { ICalendarService } from '../Services/Interface/ICalendarService';
+import { IDataService } from '../Services/Interface/IDataService';
+import { IValidationService } from '../Services/Interface/IValidationService';
+import { AuditLogService } from '../Services/AuditLogService';
+import { ICalculatedColumnExpressionService } from '../Services/Interface/ICalculatedColumnExpressionService';
+import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
-import { IEvent } from '../../Utilities/Interface/IEvent';
+import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
 import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
 
