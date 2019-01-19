@@ -3,29 +3,29 @@ import * as Redux from 'redux'
 
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 
-export const QUICK_FILTER_BAR_SHOW = 'QUICK_FILTER_BAR_SHOW';
-export const QUICK_FILTER_BAR_HIDE = 'QUICK_FILTER_BAR_HIDE';
+export const FLOATING_FILTER_BAR_SHOW = 'FLOATING_FILTER_BAR_SHOW';
+export const FLOATING_FILTER_BAR_HIDE = 'FLOATING_FILTER_BAR_HIDE';
 
 
-export interface HideFilterFormAction extends Redux.Action {
+export interface FilterFormHideAction extends Redux.Action {
 }
 
-export interface QuickFilterBarShowAction extends Redux.Action {
+export interface FloatingFilterBarShowAction extends Redux.Action {
 }
 
-export interface QuickFilterBarHideAction extends Redux.Action {
+export interface FloatingFilterBarHideAction extends Redux.Action {
 }
 
-export const HideFilterForm = (): HideFilterFormAction => ({
+export const FilterFormHide = (): FilterFormHideAction => ({
     type: FILTER_FORM_HIDE,
 })
 
-export const QuickFilterBarShow = (): QuickFilterBarShowAction => ({
-    type: QUICK_FILTER_BAR_SHOW
+export const FloatingilterBarShow = (): FloatingFilterBarShowAction => ({
+    type: FLOATING_FILTER_BAR_SHOW
 })
 
-export const QuickFilterBarHide = (): QuickFilterBarHideAction => ({
-    type: QUICK_FILTER_BAR_HIDE
+export const FloatingFilterBarHide = (): FloatingFilterBarHideAction => ({
+    type: FLOATING_FILTER_BAR_HIDE
 })
 
 

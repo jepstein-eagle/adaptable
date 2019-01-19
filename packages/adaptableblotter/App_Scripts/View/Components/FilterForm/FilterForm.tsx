@@ -48,7 +48,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ShowCloseButton: boolean;
      onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
-    onHideFilterForm: () => HomeRedux.HideFilterFormAction
+    onHideFilterForm: () => HomeRedux.FilterFormHideAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
 
@@ -352,7 +352,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter: IColumnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(HomeRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(HomeRedux.FilterFormHide()),
     };
 }
 
