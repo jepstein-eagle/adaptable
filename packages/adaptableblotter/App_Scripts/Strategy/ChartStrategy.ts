@@ -89,8 +89,10 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     private setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
-        let chartData: any = this.blotter.ChartService.BuildChartData(currentChartDefinition, columns);
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+        if (currentChartDefinition) {
+            let chartData: any = this.blotter.ChartService.BuildChartData(currentChartDefinition, columns);
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+        }
     }
 
     private clearChartData() {

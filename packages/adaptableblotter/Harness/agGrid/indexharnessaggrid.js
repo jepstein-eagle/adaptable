@@ -3,7 +3,7 @@ var adaptableblotter
 var quickSearchText
 var trades
 var gridOptions
-
+var showTrade = false;
 
 function runQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
@@ -26,27 +26,55 @@ function getData() {
   gridOptions.api.setRowData(data)
 }
 
+function getRowsForGrid(dataGen) {
+  if (showTrade) {
+    return dataGen.getTrades(30);
+  } else {
+    return dataGen.getFtseData(10)
+  }
+}
+
+function getColumnsForGrid() {
+  if (showTrade) {
+    return getTradeSchema();
+  } else {
+    return getFTSESchema()
+  }
+}
+
+function getPKForGrid() {
+  if (showTrade) {
+    return "tradeId";
+  } else {
+    return "date"
+  }
+}
+
+function getBlotterIdforGrid() {
+  if (showTrade) {
+    return "demo trades";
+  } else {
+    return "demo ftse"
+  }
+}
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(30);
-   rowData = trades;
-  // trades = dataGen.getFtseData(10);
+  trades = getRowsForGrid(dataGen);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
   gridOptions = {
-   // columnDefs: [],
-    columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
-    // columnDefs: getFTSESchema(), // returns a list of agGrid column definitions
-    rowData: rowData, // the dummy data we are using
+    // columnDefs: [],
+    columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
+    rowData: trades, // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-      sideBar: true, // this puts in filters and columns by default
+    sideBar: true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -69,9 +97,9 @@ function InitTradeBlotter() {
     let adaptableBlotterOptions = {
       vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
       //  primaryKey: "date", // pk for blotter - required
-      primaryKey: "tradeId", // pk for blotter - required
+      primaryKey: getPKForGrid(), // pk for blotter - required
       userName: "demo user", // name of current user
-      blotterId: "demo blotter 2.5", // id for blotter
+      blotterId: getBlotterIdforGrid(), // id for blotter
 
       predefinedConfig: categoryJson,
 
@@ -87,13 +115,13 @@ function InitTradeBlotter() {
         //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
-         includeVendorStateInLayouts: true,
-         autoSaveLayouts: true,
+        includeVendorStateInLayouts: true,
+        autoSaveLayouts: true,
       },
       queryOptions: {
-      //  ignoreCaseInQueries: false,
-       // maxColumnValueItemsDisplayed: 5,
-      //  columnValuesOnlyInQueries: true,
+        //  ignoreCaseInQueries: false,
+        // maxColumnValueItemsDisplayed: 5,
+        //  columnValuesOnlyInQueries: true,
         // getColumnValues: retrieveValues,
       },
       filterOptions: {
@@ -103,12 +131,12 @@ function InitTradeBlotter() {
       generalOptions: {
         //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       },
- //     iPushPullConfig: {
- //       api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
- //       api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
- //       api_url: "https://www.ipushpull.com/api/1.0",
- //        hsts: false,
- //       },
+      iPushPullConfig: {
+        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+        api_url: "https://www.ipushpull.com/api/1.0",
+        hsts: false,
+      },
 
     }
 
@@ -148,17 +176,17 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-//    console.log("column event received")
-//     console.log(columnChangedArgs)
+  //    console.log("column event received")
+  //     console.log(columnChangedArgs)
 }
 
 function listenToStateChange(stateChangedArgs) {
-   //  console.log("state event received")
+  //  console.log("state event received")
   //   console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
-   //  console.log("search changed event received")
+  //  console.log("search changed event received")
   //   console.log(searchChangedArgs)
 }
 

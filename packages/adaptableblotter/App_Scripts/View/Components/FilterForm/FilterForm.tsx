@@ -21,7 +21,6 @@ import { ButtonClose } from "../Buttons/ButtonClose";
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Expression } from "../../../Utilities/Expression";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
-import { PanelWithTwoButtons } from "../Panels/PanelWithTwoButtons";
 import { ButtonClear } from "../Buttons/ButtonClear";
 import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Utilities/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";

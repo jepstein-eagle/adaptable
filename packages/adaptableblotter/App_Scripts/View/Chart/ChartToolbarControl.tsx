@@ -20,6 +20,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IChartDefinition } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
+import { ButtonDelete } from "../Components/Buttons/ButtonDelete";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
@@ -97,6 +98,19 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
                 />
+
+                <ButtonDelete
+                    style={{ marginLeft: "2px" }}
+                    cssClassName={cssClassName}
+                    size={"small"}
+                    overrideTooltip="Delete Chart"
+                    overrideDisableButton={currentChartDefinitionName == selectChartString}
+                    DisplayMode="Glyph"
+                    ConfirmAction={ChartRedux.ChartDefinitionDelete(this.props.CurrentChartDefinition)}
+                    ConfirmationMsg={"Are you sure you want to delete '" + !this.props.CurrentChartDefinition ? "" : currentChartDefinitionName + "'?"}
+                    ConfirmationTitle={"Delete Chart"}
+                    AccessLevel={this.props.AccessLevel}
+                />
             </span>
         </span>
 
@@ -107,7 +121,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     }
 
     onSelectedChartDefinitionChanged(chartDefinitionName: string) {
-     //   let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
+        //   let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
         this.props.onSelectChartDefinition(chartDefinitionName);
     }
 
@@ -118,7 +132,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c=>c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }

@@ -29,6 +29,7 @@ import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
 import { DefaultChartProperties } from "../../Utilities/Defaults/DefaultChartProperties";
+import { PanelWithTwoButtons } from "../Components/Panels/PanelWithTwoButtons";
 
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -430,17 +431,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                             </Col>
                             {this.state.IsChartSettingsVisible &&
                                 <Col xs={legendColumnSize}>
-                                    <PanelWithButton bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Chart Settings"} cssClassName={cssClassName} button={closeChartSettingsButton}>
-                                        <AdaptableBlotterForm horizontal >
-                                            <Row>
-                                                <Col xs={12}>
-                                                    <div className="pull-right" >
-                                                        {setDefaultsButton}
-                                                    </div>
-                                                </Col>
-                                            </Row>
-                                        </AdaptableBlotterForm>
-
+                                    <PanelWithTwoButtons bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Chart Settings"} cssClassName={cssClassName}
+                                        firstButton={closeChartSettingsButton} secondButton={setDefaultsButton}>
 
                                         <PanelWithButton bsSize={"xs"} headerText={"General"} cssClassName={cssClassName} button={showGeneralPropertiesButton} style={{ marginTop: '10px' }}>
                                             {this.state.IsGeneralMinimised == false &&
@@ -800,7 +792,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                             </div>
                                         }
 
-                                    </PanelWithButton>
+                                    </PanelWithTwoButtons>
                                 </Col>
                             }
                         </Row>

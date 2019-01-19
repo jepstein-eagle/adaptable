@@ -144,14 +144,14 @@ export class DataGenerator {
                 let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
                 let trade = rowNode;
                 let columnName = "price";
-                let initialNewValue = gridOptions.api.getValue(columnName, trade);
-                let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
-                trade.setDataValue(columnName, newValue)
-                let ask = this.roundTo4Dp(gridOptions.api.getValue("price", trade) - gridOptions.api.getValue("bidOfferSpread", trade) / 2);
+                let initialPrice = gridOptions.api.getValue(columnName, trade);
+                let newPrice = this.roundTo4Dp(initialPrice + numberToAdd);
+                trade.setDataValue(columnName, newPrice);
+                let bidOfferSpread = gridOptions.api.getValue("bidOfferSpread", trade);
+                let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
                 trade.setDataValue("ask", ask)
-                let bid = this.roundTo4Dp(gridOptions.api.getValue("price", trade) + gridOptions.api.getValue("bidOfferSpread", trade) / 2);
+                let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
                 trade.setDataValue("bid", bid)
-
                 trade.setDataValue("bloombergAsk", this.roundTo4Dp(ask + 0.01))
                 trade.setDataValue("bloombergBid", this.roundTo4Dp(bid - 0.01))
 
@@ -250,7 +250,7 @@ export class DataGenerator {
             "changeOnYear": this.getMeaningfulPositiveNegativeInteger(800),//  this.getMeaningfulPositiveNegativeDouble(),
             "amount": this.getRandomItem(this.getAmounts()),
             "price": price,
-            "bid": bid ,
+            "bid": bid,
             "ask": ask,
             "bidOfferSpread": bidOfferSpread,
             "status": this.getStatus(),

@@ -4,7 +4,7 @@ import { ChartType, ChartSize, ChartCrosshairsMode, ToolTipType, AxisLabelsLocat
 export const DefaultChartProperties: IChartProperties = {
     // General
     ChartType: ChartType.Column,
-    ChartSize: ChartSize.Small,
+    ChartSize: ChartSize.Medium,
     ChartCrosshairsMode: ChartCrosshairsMode.None,
     EnableFinalValueAnnotations: false,
     SpanCrossHairsToData: false,

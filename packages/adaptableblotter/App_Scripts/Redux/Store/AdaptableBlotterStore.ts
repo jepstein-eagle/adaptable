@@ -71,6 +71,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
+import { ChartVisibility } from '../../Utilities/ChartEnums';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,
@@ -302,12 +303,17 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case SystemRedux.SYSTEM_ALERT_ADD:
         case SystemRedux.SYSTEM_ALERT_DELETE:
         case SystemRedux.SYSTEM_ALERT_DELETE_ALL:
+     
         case SystemRedux.REPORT_START_LIVE:
         case SystemRedux.REPORT_STOP_LIVE:
+        case SystemRedux.SET_IPP_DOMAIN_PAGES:
+        case SystemRedux.REPORT_SET_ERROR_MESSAGE:
+       
         case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION:
         case SystemRedux.SMARTEDIT_FETCH_PREVIEW:
         case SystemRedux.SMARTEDIT_SET_VALID_SELECTION:
         case SystemRedux.SMARTEDIT_SET_PREVIEW:
+      
         case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION:
         case SystemRedux.BULK_UPDATE_SET_VALID_SELECTION:
         case SystemRedux.BULK_UPDATE_SET_PREVIEW:
@@ -346,6 +352,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         // do team sharing actions??
 
         case SystemRedux.CHART_SET_CHART_DATA:
+        case SystemRedux.CHART_SET_CHART_VISIBILITY:
           if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
             let oldState = middlewareAPI.getState()
             let ret = next(action);
@@ -819,6 +826,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
               middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(index, cs))
             }
           })
+          return returnAction;
+        }
+
+        /*
+        Charts
+        */
+        // Use case: deleting a chart that is visible causes issues
+        // Solution: when deleting a chart set the chart visibility to hidden.
+        case ChartRedux.CHART_DEFINITION_DELETE: {
+          let returnAction = next(action);
+          let actionTyped = <ChartRedux.ChartDefinitionDeleteAction>action
+          middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden))
           return returnAction;
         }
 

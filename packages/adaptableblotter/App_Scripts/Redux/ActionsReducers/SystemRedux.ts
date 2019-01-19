@@ -27,6 +27,8 @@ export const SYSTEM_ALERT_DELETE_ALL = 'SYSTEM_ALERT_DELETE_ALL';
 // Live Reports
 export const REPORT_START_LIVE = 'REPORT_START_LIVE';
 export const REPORT_STOP_LIVE = 'REPORT_STOP_LIVE';
+export const SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
+export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
 
 // Smart Edit
 export const SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
@@ -45,11 +47,6 @@ export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
-
-// Export
-export const SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
-export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
-
 
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
