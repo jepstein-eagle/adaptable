@@ -8,7 +8,7 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
-export  class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
+export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
     protected PercentBarState: PercentBarState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.PercentBarStrategyId, blotter)
@@ -33,13 +33,29 @@ export  class PercentBarStrategy extends AdaptableStrategyBase implements IPerce
     }
 
     protected InitState() {
-        if (this.PercentBarState != this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar) {
-            this.PercentBarState = this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar;
+        if (this.PercentBarState != this.GetPercentBarState()) {
 
-             if (this.blotter.isInitialised) {
-                this.publishStateChanged(StateChangedTrigger.PercentBar, this.PercentBarState)
+            if (this.blotter.isInitialised) {
+
+                // if we have made any changes then first delete them all
+                this.PercentBarState.PercentBars.forEach(pb => {
+                    this.blotter.removePercentBar(pb);
+                })
+
+                this.GetPercentBarState().PercentBars.forEach(pb => {
+                    alert("editing:" + pb.ColumnId)
+                    this.blotter.editPercentBar(pb);
+                })
+                alert("going to redraw")
+                this.blotter.redraw();
             }
+            this.PercentBarState = this.GetPercentBarState();
+            this.publishStateChanged(StateChangedTrigger.PercentBar, this.PercentBarState)
         }
+    }
+
+    protected GetPercentBarState(): PercentBarState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar;
     }
 
 }

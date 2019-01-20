@@ -72,6 +72,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
+import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
   Popup: PopupRedux.ShowPopupReducer,
@@ -492,9 +493,9 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
 }
 
 
-// this is the main function for dealing with events that we cannot deal with in strategies
-// only use this function where it makes sense to 
-// and try to document each use case 
+// this is the main function for dealing with events that we CANNOT deal with in strategies
+// only use this function where it makes sense to  - try to use the strategy to deal with appropriate state where possible
+// please document each use case where we have to use the Store
 var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
@@ -531,12 +532,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
-      /**
-       * Use Case: User has deleted a calculated column 
-       * Action (1):  Tell the blotter so it can do what it needs
-       * Action (2):  Set a new column list order so we can remove it
-       * N.B. This will NOT update any layouts that reference the column
-       */
+        /**
+         * Use Case: User has deleted a calculated column 
+         * Action (1):  Tell the blotter so it can do what it needs
+         * Action (2):  Set a new column list order so we can remove it
+         * N.B. This will NOT update any layouts that reference the column
+         */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
           let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
           let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
@@ -551,15 +552,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
-      /**
-       * Use Case: User has edited an existing calculated column 
-       * If the name has changed in the Calculated Column (rare but possible):
-       * Action (1):  Tell the blotter to delete the calculated column
-       * Action (2):  Tell the blotter to add a new calculated column
-       * Action (3):  Set a new column list order so it appears as a new column
-       * If the name has not changed:
-       * Action:  Tell the blotter so it can do what it needs
-       */
+        /**
+         * Use Case: User has edited an existing calculated column 
+         * If the name has changed in the Calculated Column (rare but possible):
+         * Action (1):  Tell the blotter to delete the calculated column
+         * Action (2):  Tell the blotter to add a new calculated column
+         * Action (3):  Set a new column list order so it appears as a new column
+         * If the name has not changed:
+         * Action:  Tell the blotter so it can do what it needs
+         */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
           let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
           let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
@@ -597,77 +598,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         // TODO:  Need to do Delete for free text column? 
 
         /*******************
-        * PERCENT BAR ACTIONS
-        *******************/
-        case PercentBarRedux.PERCENT_BAR_ADD: {
-          let actionTyped = <PercentBarRedux.PercentBarAddAction>action
-
-          let returnAction = next(action);
-
-          blotter.addPercentBar(actionTyped.PercentBar);
-          blotter.redraw();
-          return returnAction;
-        }
-
-        case PercentBarRedux.PERCENT_BAR_EDIT: {
-          let actionTyped = <PercentBarRedux.PercentBarEditAction>action
-          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars[actionTyped.Index];
-          blotter.removePercentBar(editedCellRender);
-          let returnAction = next(action);
-
-          // add new one
-          blotter.addPercentBar(actionTyped.PercentBar);
-          blotter.redraw();
-          return returnAction;
-        }
-
-        case PercentBarRedux.PERCENT_BAR_DELETE: {
-          let PercentBarState = middlewareAPI.getState().PercentBar;
-          let actionTyped = <PercentBarRedux.PercentBarDeleteAction>action
-          let PercentBar: IPercentBar = PercentBarState.PercentBars[actionTyped.Index];
-          blotter.removePercentBar(PercentBar);
-          let returnAction = next(action);
-          blotter.redraw();
-          return returnAction;
-        }
-        case PercentBarRedux.PERCENT_BAR_CHANGE_MINIMUM_VALUE: {
-          let returnAction = next(action);
-          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangeMinimumValueAction>action).PercentBar;
-          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
-          blotter.editPercentBar(editedCellRender);
-          blotter.redraw();
-          return returnAction;
-        }
-        case PercentBarRedux.PERCENT_BAR_CHANGE_MAXIMUM_VALUE: {
-          let returnAction = next(action);
-          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangeMaximumValueAction>action).PercentBar;
-          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
-          blotter.editPercentBar(editedCellRender);
-          blotter.redraw();
-          return returnAction;
-        }
-        case PercentBarRedux.PERCENT_BAR_CHANGE_POSITIVE_COLOR: {
-          let returnAction = next(action);
-          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangePositiveColorAction>action).PercentBar;
-          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
-          blotter.editPercentBar(editedCellRender);
-          blotter.redraw();
-          return returnAction;
-        }
-        case PercentBarRedux.PERCENT_BAR_CHANGE_NEGATIVE_COLOR: {
-          let returnAction = next(action);
-          let PercentBar: IPercentBar = (<PercentBarRedux.PercentBarChangeNegativeColorAction>action).PercentBar;
-          let editedCellRender: IPercentBar = middlewareAPI.getState().PercentBar.PercentBars.find(pcr => pcr.ColumnId == PercentBar.ColumnId);
-          blotter.editPercentBar(editedCellRender);
-          blotter.redraw();
-          return returnAction;
-        }
-
-        /*******************
         * COLUMN CATEGORY ACTIONS
         *******************/
 
-        // Use case: deleting a column category might involve a conditional style that uses it
+        /**
+         * Use Case: User deletes a Column Category (and there might be conditional styles that reference it)
+         * Action (1):  Get all condiitonal styles from state
+         * Action (2):  Delete any (without currently showing a warning) that reference this Column Category
+         */
         case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
           let returnAction = next(action);
           let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action
@@ -685,11 +623,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         * CHART ACTIONS
         *******************/
 
-        // Use case: deleting a chart that is visible causes issues
-        // Solution: when deleting a chart set the chart visibility to hidden.
+        /**
+        * Use Case: User deletes a chart (which might be currently showing)
+        * Action:  Set ALL chart visibility to hidden (even if its not current chart)?
+        * Note:  No need to worry about using a popup as cannot delete a chart while in popup (other than through api)
+        */
         case ChartRedux.CHART_DEFINITION_DELETE: {
           let returnAction = next(action);
-          let actionTyped = <ChartRedux.ChartDefinitionDeleteAction>action
           middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden))
           return returnAction;
         }
@@ -711,10 +651,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
               if (column) {
                 blotterColumns.push(column);
               } else {
-                LoggingHelper.LogWarning("Column '" + c + "' not found")
+                LoggingHelper.LogWarning("Column '" + c + "' not found while selecting layout: " + currentLayout)
               }
             })
-
             middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns))
             // set sort
             middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
@@ -744,22 +683,33 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         }
 
 
-
         /*******************
          * SMART EDIT ACTIONS
          *******************/
+
+        /**
+         * Use Case: User wants to perform Smart Edit and we need to check if the cell selection is valid
+         * Action (1):  Get the result from the SmartEdit strategy
+         * If the return is an Alert:
+         * Action (2): If there is a popup open, close it and show the Alert; otherwise just set false valid selection
+         * If the return is valid:
+         * Action (2): Set the valid selection to true
+         * Action (3): Build the Preview Values (via Smart Edit strategy)
+         * Action (4): Set the Preview Values (this will populate the preview screen)
+         */
         case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
           let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
           let state = middlewareAPI.getState();
           let returnAction = next(action);
-          let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
+          let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
 
           if (apiReturn.Alert) {
             // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
             let popup = state.Popup.ScreenPopup;
-            if (popup.ComponentName == ScreenPopups.SmartEditPopup) {  //We close the SmartEditPopup
+            if (popup.ComponentName == ScreenPopups.SmartEditPopup) {
+              // We are in SmartEditPopup so let's close it
               middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-              //We show the alert Popup
+              // and now show the alert Popup
               middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
             }
             middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(false));
@@ -771,7 +721,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
-        // Here we have all actions that triggers a refresh of the SmartEditPreview
+        /**
+         * Use Case: User has changed a Smmart Edit property or requested a preview
+         * Action (1):  Get the new preview set from the Smart Edit Strategy
+         * Action (2):  Set the Preview Values (this will populate the preview screen)
+         */
         case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
         case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
         case SystemRedux.SMARTEDIT_FETCH_PREVIEW: {
@@ -781,12 +735,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
 
           let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
           let state = middlewareAPI.getState();
-
           let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
           middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
           return returnAction;
         }
 
+        /**
+        * Use Case: User has clicked 'Apply' in Smart Edit popup or toolbar
+        * Action (1):  Gets the values that need to be applied from the Preview Info and passes to Preview Helper (incl. whether to bypass validation)
+        * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the Blotter)
+        */
         case SmartEditRedux.SMARTEDIT_APPLY: {
           let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
           let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
@@ -865,6 +823,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         * SHORTCUT ACTIONS
         *******************/
 
+        /**
+         * Use Case: User applies a shortcut via the keyboard
+         * Action: Tell the Shortcut Strategy to apply the shortcut
+         */
+    
         case ShortcutRedux.SHORTCUT_APPLY: {
           let shortcutStrategy = <IShortcutStrategy>(blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
           let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
@@ -952,8 +915,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         *******************/
         case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
           let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
-          //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
-          //Time will tell I guess
           blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
           return next(action);
 
@@ -1257,6 +1218,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           if (currentLayout == DEFAULT_LAYOUT) {
             middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
           }
+
+          // create the menu
           blotter.createMenu();
 
           return returnAction;

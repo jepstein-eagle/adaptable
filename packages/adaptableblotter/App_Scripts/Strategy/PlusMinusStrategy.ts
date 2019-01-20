@@ -26,8 +26,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     protected InitState() {
-        if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
-            this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+        if (this.PlusMinusState != this.GetPlusMinusState()) {
+            this.PlusMinusState = this.GetPlusMinusState();
        
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.PlusMinus, this.PlusMinusState)
@@ -187,7 +187,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-
+    protected GetPlusMinusState(): PlusMinusState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+    }
 
 }
 
