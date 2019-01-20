@@ -515,8 +515,8 @@ export class DataGenerator {
             //   "Rabobank",
             //   "RBC",
             //   "Deutsche Bank",
-            //   "Credit Suisse",
-            //   "Nomura"
+               "Credit Suisse",
+               "Nomura"
         ];
         return counterparties;
     }
