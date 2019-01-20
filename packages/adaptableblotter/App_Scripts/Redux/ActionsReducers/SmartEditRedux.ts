@@ -19,8 +19,6 @@ export interface SmartEditChangeOperationAction extends Redux.Action {
     MathOperation: MathOperation
 }
 
-
-
 export const SmartEditApply = (bypassCellValidationWarnings: boolean): SmartEditApplyAction => ({
     type: SMARTEDIT_APPLY,
     bypassCellValidationWarnings
@@ -37,11 +35,9 @@ export const SmartEditChangeOperation = (MathOperation: MathOperation): SmartEdi
 })
 
 
-
 const initialSmartEditState: SmartEditState = {
     SmartEditValue: 1,
     MathOperation: MathOperation.Add,
-    
 }
 
 export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {
@@ -50,7 +46,6 @@ export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEdit
             return Object.assign({}, state, { SmartEditValue: (<SmartEditChangeValueAction>action).value })
         case SMARTEDIT_CHANGE_OPERATION:
             return Object.assign({}, state, { MathOperation: (<SmartEditChangeOperationAction>action).MathOperation })
-       
         default:
             return state
     }

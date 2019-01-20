@@ -8,7 +8,6 @@ const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
 const THEME_SELECT = 'THEME_SELECT';
 
 
-
 export interface ThemeSetSystemThemesAction extends Redux.Action {
     SystemThemes: string[];
 }

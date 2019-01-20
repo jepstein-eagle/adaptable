@@ -897,7 +897,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         /*******************
          * USER FILTER ACTIONS
          *******************/
-        case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+        case UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
           let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action
           // first create a new user filter based on the column filter and input name
           let userFilter: IUserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)

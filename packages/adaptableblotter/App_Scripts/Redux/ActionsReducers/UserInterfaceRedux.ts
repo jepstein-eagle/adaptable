@@ -31,7 +31,6 @@ export interface PermittedColumnValuesDeleteAction extends Redux.Action {
 }
 
 
-
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
     type: COLOR_PALETTE_SET,
     ColorPalette

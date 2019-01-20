@@ -437,27 +437,6 @@ export class DataGenerator {
         return tickers[index];
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public getRandomItem(ary: any[], max?: number): any {
         if (max) {
             return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];

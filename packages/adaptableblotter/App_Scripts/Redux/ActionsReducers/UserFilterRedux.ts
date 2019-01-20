@@ -5,7 +5,7 @@ import { InputAction } from '../../Utilities/Interface/IMessage';
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
-export const CREATE_USER_FILTER_FROM_COLUMN_FILTER = 'CREATE_USER_FILTER_FROM_COLUMN_FILTER';
+export const USER_FILTER_CREATE_FROM_COLUMN_FILTER = 'USER_FILTER_CREATE_FROM_COLUMN_FILTER';
 
 export interface UserFilterAddUpdateAction extends Redux.Action {
     Index: number
@@ -32,7 +32,7 @@ export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteActio
 })
 
 export const CreateUserFilterFromColumnFilter = (ColumnFilter: IColumnFilter,  InputText: string): CreateUserFilterFromColumnFilterAction => ({
-    type: CREATE_USER_FILTER_FROM_COLUMN_FILTER,
+    type: USER_FILTER_CREATE_FROM_COLUMN_FILTER,
     ColumnFilter,
     InputText
 })
