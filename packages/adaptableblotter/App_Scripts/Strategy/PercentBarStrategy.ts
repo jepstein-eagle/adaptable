@@ -43,10 +43,8 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
                 })
 
                 this.GetPercentBarState().PercentBars.forEach(pb => {
-                    alert("editing:" + pb.ColumnId)
                     this.blotter.editPercentBar(pb);
                 })
-                alert("going to redraw")
                 this.blotter.redraw();
             }
             this.PercentBarState = this.GetPercentBarState();

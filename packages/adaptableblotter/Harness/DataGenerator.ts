@@ -54,11 +54,11 @@ export class DataGenerator {
         let todayDate: Date = new Date();
         let startDate: Date = addDays(todayDate, ((-count)))
         let start: number = this.roundTo2Dp(325 + this.generateRandomDouble());
-        let end: number = this.roundTo2Dp(start + this.generateRandomInt(-10, 10) + this.generateRandomDouble());
+        let end: number = this.roundTo2Dp(start + (this.generateRandomInt(-15, 10) + this.generateRandomDouble()));
         ftseRows.push(this.createIFtse(startDate, 0, start, end));
         for (let i = 1; i <= count; i++) {
             let newStart: number = end;
-            end = this.roundTo2Dp(newStart + this.generateRandomInt(-10, 10) + this.generateRandomDouble());
+            end = this.roundTo2Dp(newStart + this.generateRandomInt(-15, 10) + this.generateRandomDouble());
             ftseRows.push(this.createIFtse(startDate, i, newStart, end));
         }
         return ftseRows;
@@ -132,13 +132,12 @@ export class DataGenerator {
 
     startTickingDataagGrid(gridOptions: any) {
         setInterval(() => {
-            let tradeId = this.generateRandomInt(0, 10);
+            let tradeId = this.generateRandomInt(0, 25);
             gridOptions.api.forEachNode((rowNode: any, index: number) => {
                 if (rowNode.group) {
                     return;
                 }
                 let rowTradeId = gridOptions.api.getValue("tradeId", rowNode);
-                // only do first 30
                 if (rowTradeId != tradeId) { return; }
 
                 let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;

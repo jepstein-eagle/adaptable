@@ -3,7 +3,7 @@ var adaptableblotter
 var quickSearchText
 var trades
 var gridOptions
-var showTrade = false;
+var showTrade = true;
 
 function runQuickSearch() {
   let element = document.getElementById("txtQuickSearchText")
@@ -28,9 +28,9 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(30);
+    return dataGen.getTrades(100);
   } else {
-    return dataGen.getFtseData(10)
+    return dataGen.getFtseData(100)
   }
 }
 
@@ -104,11 +104,11 @@ function InitTradeBlotter() {
       predefinedConfig: categoryJson,
 
       auditLogOptions: {
-        auditCellEdits: true,
-        auditFunctionEvents: true,
-        auditUserStateChanges: true,
-        auditInternalStateChanges: true,
-        pingInterval: 120
+        //     auditCellEdits: true,
+        //     auditFunctionEvents: true,
+        //     auditUserStateChanges: true,
+        //     auditInternalStateChanges: true,
+        //     pingInterval: 120
       },
       configServerOptions: {
         enableConfigServer: false,
@@ -164,6 +164,7 @@ function InitTradeBlotter() {
         gridOptions.columnApi.autoSizeAllColumns(), 2;
       }
     })
+    gridOptions.api.closeToolPanel();
 
   }
 
@@ -261,14 +262,6 @@ function getTradeSchema() {
     type: "abColDefNumber"
   });
   schema.push({
-    headerName: "Pct Change",
-    field: "percentChange",
-    editable: true,
-    filter: 'text',
-    suppressFilter: false,
-    type: "numericColumn"
-  });
-  schema.push({
     headerName: "Notional",
     field: "notional",
     enableValue: true,
@@ -292,7 +285,7 @@ function getTradeSchema() {
   schema.push({
     headerName: "Currency",
     field: "currency",
-    editable: false,
+    //   editable: false,
     enableRowGroup: true,
     filter: 'agTextColumnFilter'
   });
@@ -323,17 +316,8 @@ function getTradeSchema() {
   schema.push({
     headerName: "Country",
     field: "country",
-    editable: true,
+    //  editable: true,
     enableRowGroup: true
-  });
-  schema.push({
-    headerName: "Desk No.",
-    field: "deskId",
-    editable: true,
-    // cellRenderer: percentCellRenderer,
-    enableRowGroup: true,
-    suppressSorting: false,
-    suppressFilter: true
   });
   schema.push({
     headerName: "Ask",
@@ -367,13 +351,6 @@ function getTradeSchema() {
     filter: 'text'
   });
   schema.push({
-    headerName: "SandP",
-    field: "sandpRating",
-    editable: true,
-    filter: 'text'
-  });
-
-  schema.push({
     headerName: "Trade Date",
     field: "tradeDate",
     editable: true,
@@ -383,6 +360,12 @@ function getTradeSchema() {
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid,
     filter: 'agDateColumnFilter'
+  });
+  schema.push({
+    headerName: "SandP",
+    field: "sandpRating",
+    editable: true,
+    filter: 'text'
   });
   schema.push({
     headerName: "Settlement Date",
@@ -408,6 +391,23 @@ function getTradeSchema() {
     },
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid
+  });
+  schema.push({
+    headerName: "Pct Change",
+    field: "percentChange",
+    editable: true,
+    filter: 'text',
+    suppressFilter: false,
+    //  type: "numericColumn"
+  });
+  schema.push({
+    headerName: "Desk No.",
+    field: "deskId",
+    editable: true,
+    // cellRenderer: percentCellRenderer,
+    enableRowGroup: true,
+    suppressSorting: false,
+    suppressFilter: true
   });
   return schema;
 }

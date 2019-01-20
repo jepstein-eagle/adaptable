@@ -39,7 +39,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
 
         return this.props.ShowPopup && <div className={StyleConstants.POPUP_ALERT}>
             <SweetAlert
-                danger={isError}
+                 danger={isError}
                 warning={isWarning}
                 success={isInfo}
                 confirmBtnBsStyle={style}
