@@ -468,20 +468,20 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#send") {
       adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV')
     } else if (quickSearchText == "#info") {
-      adaptableblotter.api.AlertApi.alertShow("Hello",
+      adaptableblotter.api.alertApi.Show("Hello",
         "Your data is fine actually its very good and I want to check that this wraps", "Info",
         true)
     } else if (quickSearchText == "#warning") {
-      adaptableblotter.api.AlertApi.alertShow("End of Day", "Dont forget to send the report", "Warning",
+      adaptableblotter.api.alertApi.Show("End of Day", "Dont forget to send the report", "Warning",
         true)
     } else if (quickSearchText == "#error") {
-      adaptableblotter.api.AlertApi.alertShow("Limits Breached", "Pleae adjust your PnL", "Error", true)
+      adaptableblotter.api.alertApi.Show("Limits Breached", "Pleae adjust your PnL", "Error", true)
     } else if (quickSearchText == "#green") {
-      adaptableblotter.api.SystemStatusApi.systemStatusSetGreen("The server is fine")
+      adaptableblotter.api.systemStatusApi.SetGreen("The server is fine")
     } else if (quickSearchText == "#amber") {
-      adaptableblotter.api.SystemStatusApi.systemStatusSetAmber("The server is running slowly")
+      adaptableblotter.api.systemStatusApi.SetAmber("The server is running slowly")
     } else if (quickSearchText == "#red") {
-      adaptableblotter.api.SystemStatusApi.systemStatusSetRed("The server has stopped ")
+      adaptableblotter.api.systemStatusApi.SetRed("The server has stopped ")
     } else if (quickSearchText == "#sbutton") {
       adaptableblotter.api.DashboardApi.dashboardShowSystemStatusButton()
     } else if (quickSearchText == "#hbutton") {

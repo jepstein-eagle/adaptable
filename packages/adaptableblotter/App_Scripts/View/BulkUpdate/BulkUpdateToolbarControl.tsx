@@ -15,13 +15,14 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { StatusColour, AccessLevel } from "../../Utilities/Enums";
+import { StatusColour, AccessLevel, MessageType } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { UIHelper } from "../UIHelper";
 import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -178,16 +179,10 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true)
+        let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     onApplyBulkUpdate(): any {

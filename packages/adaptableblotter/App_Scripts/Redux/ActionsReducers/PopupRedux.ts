@@ -148,19 +148,20 @@ const initialPopupState: PopupState = {
   },
   ConfirmationPopup: {
     ShowConfirmationPopup: false,
-    ConfirmationMsg: "",
-    ConfirmationTitle: "",
-    ConfirmationText: "",
-    CancelText: "",
+    Msg: "",
+    Header: "",
+    ConfirmButtonText: "",
+    CancelButtonText: "",
     CancelAction: null,
     ConfirmAction: null,
     ShowCommentBox: false,
-    ConfirmationComment: null
+    ConfirmationComment: null,
+    MessageType: MessageType.Info
   },
   PromptPopup: {
     ShowPromptPopup: false,
-    PromptTitle: "",
-    PromptMsg: "",
+    Header: "",
+    Msg: "",
     ConfirmAction: null
   },
 
@@ -181,33 +182,34 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       let actionTyped = (<PopupShowPromptAction>action)
       let newPromptPopup: IPromptPopup = {
         ShowPromptPopup: true,
-        PromptTitle: actionTyped.Prompt.PromptTitle,
-        PromptMsg: actionTyped.Prompt.PromptMsg,
+        Header: actionTyped.Prompt.Header,
+        Msg: actionTyped.Prompt.Msg,
         ConfirmAction: actionTyped.Prompt.ConfirmAction
       }
       return Object.assign({}, state, { PromptPopup: newPromptPopup })
     }
     case POPUP_HIDE_PROMPT: {
-      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", ConfirmAction: null }
+      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, Header: "", Msg: "", ConfirmAction: null }
       return Object.assign({}, state, { PromptPopup: newPromptPopup })
     }
     case POPUP_CONFIRM_PROMPT: {
       //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
-      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", ConfirmAction: null }
+      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, Header: "", Msg: "", ConfirmAction: null }
       return Object.assign({}, state, { PromptPopup: newPromptPopup })
     }
     case POPUP_SHOW_CONFIRMATION: {
       let actionTyped = (<PopupShowConfirmationAction>action)
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: true,
-        ConfirmationMsg: actionTyped.Confirmation.ConfirmationMsg,
-        ConfirmationTitle: actionTyped.Confirmation.ConfirmationTitle,
-        ConfirmationText: actionTyped.Confirmation.ConfirmationText,
-        CancelText: actionTyped.Confirmation.CancelText,
+        Msg: actionTyped.Confirmation.Msg,
+        Header: actionTyped.Confirmation.Header,
+        ConfirmButtonText: actionTyped.Confirmation.ConfirmButtonText,
+        CancelButtonText: actionTyped.Confirmation.CancelButtonText,
         ConfirmAction: actionTyped.Confirmation.ConfirmAction,
         CancelAction: actionTyped.Confirmation.CancelAction,
         ShowCommentBox: actionTyped.Confirmation.ShowCommentBox,
-        ConfirmationComment: null
+        ConfirmationComment: null,
+        MessageType: actionTyped.Confirmation.MessageType
       }
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
     }
@@ -216,14 +218,15 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: false,
-        ConfirmationMsg: "",
-        ConfirmationTitle: "",
-        ConfirmationText: "",
-        CancelText: "",
+        Msg: "",
+        Header: "",
+        ConfirmButtonText: "",
+        CancelButtonText: "",
         ConfirmAction: null,
         CancelAction: null,
         ShowCommentBox: false,
-        ConfirmationComment: actionTyped.comment
+        ConfirmationComment: actionTyped.comment,
+        MessageType: null // ???
       }
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
     }
@@ -231,14 +234,15 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       //we dispatch the Action of CancelAction in the middelware in order to keep the reducer pure
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: false,
-        ConfirmationMsg: "",
-        ConfirmationTitle: "",
-        ConfirmationText: "",
-        CancelText: "",
+        Msg: "",
+        Header: "",
+        ConfirmButtonText: "",
+        CancelButtonText: "",
         ConfirmAction: null,
         CancelAction: null,
         ShowCommentBox: false,
-        ConfirmationComment: null
+        ConfirmationComment: null,
+        MessageType: null
       }
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
     }
@@ -251,7 +255,7 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       let newAlertPopup: IAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", MessageType: MessageType.Info }
       return Object.assign({}, state, { AlertPopup: newAlertPopup })
     }
-       case POPUP_SHOW_LOADING: {
+    case POPUP_SHOW_LOADING: {
       let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: true }
       return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
     }

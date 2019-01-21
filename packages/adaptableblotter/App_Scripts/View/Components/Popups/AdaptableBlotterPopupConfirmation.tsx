@@ -2,58 +2,139 @@ import * as React from "react";
 //we use that syntax to import the default export from the module.... Took me a while to find the syntax
 import SweetAlert from 'react-bootstrap-sweetalert'
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { AdaptableBlotterPopupPromptProps } from "./AdaptableBlotterPopupPrompt";
+import { UIHelper } from "../../UIHelper";
+import { Modal, ControlLabel, FormControl, Row, Col, Button } from "react-bootstrap";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
+import { PanelWithImage } from "../Panels/PanelWithImage";
+import { MessageType } from "../../../Utilities/Enums";
 //import PropTypes from 'prop-types';
 
 export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttributes<AdaptableBlotterPopupConfirmation> {
     ShowPopup: boolean
     onConfirm: (comment: string) => void
     onCancel: Function
-    Title: string
+    Header: string
     Msg: string
-    ConfirmText: string
-    CancelText: string
+    ConfirmButtonText: string
+    CancelButtonText: string
     ShowCommentBox: boolean
+    MessageType: MessageType
+    AdaptableBlotter: IAdaptableBlotter;
 }
 
-export class AdaptableBlotterPopupConfirmation extends React.Component<AdaptableBlotterPopupConfirmationProps, {}> {
-  
-    constructor(props:AdaptableBlotterPopupConfirmationProps) {
-        super(props);
-     }
-  
-    render() {
-        let title = this.props.ShowCommentBox ? <span>
-            <SweetAlert.WarningIcon  />
-            {this.props.Title}
-        </span> : this.props.Title
-        let msgSplit = this.props.Msg.split("\n")
-        return this.props.ShowPopup && <div className={StyleConstants.POPUP_CONFIRMATION}>
-            <SweetAlert
-                type={this.props.ShowCommentBox ? "input" : "warning"}
-                btnSize="sm"
-                showCancel
-                confirmBtnBsStyle="primary"
-                confirmBtnBsSize="sm"
+export interface AdaptableBlotterPopupConfirmationState {
+    PromptText: string
+}
 
-                confirmBtnText={this.props.ConfirmText}
-                cancelBtnBsStyle="default"
-                cancelBtnText={this.props.CancelText}
-                title={title}
-                placeholder={"Please enter a comment to confirm"}
-                onConfirm={(inputValue: string) => this.props.onConfirm(inputValue)}
-                onCancel={() => this.props.onCancel()} >
-                <p>
-                    {msgSplit.map(function (item, index) {
-                        return (
-                            <span key={index}>
-                                {item}
-                                {index != msgSplit.length - 1 && <br />}
-                            </span>
-                        )
-                    })}
-                </p>
-            </SweetAlert>
-        </div>
+export class AdaptableBlotterPopupConfirmation extends React.Component<AdaptableBlotterPopupConfirmationProps, AdaptableBlotterPopupConfirmationState> {
+
+    constructor(props: AdaptableBlotterPopupConfirmationProps) {
+        super(props);
+        this.state = { PromptText: "" }
     }
+
+    render() {
+
+        let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
+        let header: string = this.props.Header;
+        let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
+
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let cssClassName: string = StyleConstants.POPUP_PROMPT
+
+
+        return this.props.ShowPopup && <div className={StyleConstants.POPUP_PROMPT}>
+            <Modal show={this.props.ShowPopup}
+                onHide={this.props.onCancel}
+                className={cssClassName}
+                container={modalContainer}
+                bsSize={"medium"}>
+                <div className={cssClassName + StyleConstants.MODAL_BASE} >
+                    <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
+
+                        <div className={cssClassName}>
+                        <PanelWithImage
+                                    cssClassName={cssClassName}
+                                    header={header}
+                                    bsStyle={style} 
+                                    glyphicon={glyph}
+                                    bsSize={"small"}
+                                >
+                            <div>
+                                 <div style={{ display: "flex", alignItems: "center" }}>
+                                    {this.props.Msg.split("\n").map(function (item, index) {
+                                        return (
+                                            <ControlLabel key={index}>
+                                                {item}
+                                                <br />
+                                            </ControlLabel>
+                                        )
+                                    })}
+                                </div>
+                                {this.props.ShowCommentBox &&
+                                    <div style={{ marginTop: '20px' }}>
+                                       <span>Please enter a comment to confirm</span>
+                                       <br/>
+                                        <FormControl style={{ marginTop: '20px' }}
+                                            value={this.state.PromptText}
+                                            type="string"
+                                            placeholder="Enter text"
+                                            onChange={(e) => this.changeContent(e)} />
+                                    </div>
+                                }
+                                <div style={{ marginTop: '20px' }}>
+                                    <Row >
+                                        <Col xs={4} >
+                                            <Button
+                                                bsStyle={StyleConstants.PRIMARY_BSSTYLE} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON}
+                                                disabled={!this.canConfirm()}
+                                                onClick={() => this.onConfirmmForm()}>{this.props.ConfirmButtonText}</Button>
+                                        </Col>
+                                        <Col xs={5}></Col>
+                                        <Col xs={3} >
+                                            <Button
+                                                bsStyle={StyleConstants.DEFAULT_BSSTYLE} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON}
+                                                onClick={() => this.onCancelForm()}>{this.props.CancelButtonText}</Button>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </div>
+                            </PanelWithImage>
+                        </div>
+                    </Modal.Body>
+                </div>
+            </Modal>
+        </div>
+
+
+
+
+    }
+
+    onCancelForm(): void {
+        this.setState({ PromptText: "" } as AdaptableBlotterPopupConfirmationState)
+        this.props.onCancel();
+    }
+
+    onConfirmmForm(): void {
+        let promptText = this.state.PromptText;
+        this.setState({ PromptText: "" } as AdaptableBlotterPopupConfirmationState)
+        this.props.onConfirm(promptText)
+    }
+
+
+    changeContent = (e: any) => {
+        this.setState({ PromptText: e.target.value } as AdaptableBlotterPopupConfirmationState)
+    }
+
+    canConfirm(): boolean {
+        if (this.props.ShowCommentBox) {
+            return StringExtensions.IsNotNullOrEmpty(this.state.PromptText)
+        }
+        return true;
+    }
+
 
 }

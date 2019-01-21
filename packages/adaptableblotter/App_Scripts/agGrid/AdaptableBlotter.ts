@@ -1,6 +1,7 @@
 ﻿// import styles - ab and 2 default agGrid
 import '../Styles/stylesheets/adaptableblotter-style.css'
 
+import * as Redux from 'redux'
 import * as ReactDOM from "react-dom";
 import * as _ from 'lodash'
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
@@ -112,6 +113,7 @@ import { QuickSearchStrategyagGrid } from './Strategy/QuickSearchStrategyagGrid'
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -1281,16 +1283,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             ColumnId: dataChangedInfo.ColumnId,
                             Value: dataChangedInfo.NewValue
                         };
-                        let confirmation: IUIConfirmation = {
-                            CancelText: "Cancel Edit",
-                            ConfirmationTitle: "Cell Validation Failed",
-                            ConfirmationMsg: warningMessage,
-                            ConfirmationText: "Bypass Rule",
-                            CancelAction: null,
-                            ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node)),
-                            ShowCommentBox: true
-                        };
-                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+
+                        let confirmAction: Redux.Action =  GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
+                        let cancelAction: Redux.Action =null;
+                        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+                   
+                       this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                         //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                         return true;
                     }

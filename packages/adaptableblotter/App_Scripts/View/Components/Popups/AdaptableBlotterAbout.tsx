@@ -56,7 +56,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
         </Modal>
     }
 
-    public CreateAboutInfo(colItems: IColItem[]): IColItem[][] {
+    private CreateAboutInfo(colItems: IColItem[]): IColItem[][] {
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {

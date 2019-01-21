@@ -21,7 +21,7 @@ export interface IAdaptableBlotterChartProps extends React.ClassAttributes<Adapt
 
 export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChartProps, {}> {
   render() {
-
+    
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal);

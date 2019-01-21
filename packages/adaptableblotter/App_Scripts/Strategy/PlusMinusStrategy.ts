@@ -1,11 +1,12 @@
 import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
+import * as Redux from 'redux'
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { DataType, StateChangedTrigger } from '../Utilities/Enums'
+import { DataType, StateChangedTrigger, MessageType } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -17,6 +18,7 @@ import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
@@ -167,15 +169,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             })
             let warningMessage: string = failedRules.length + " Nudge(s) failed rule:\n" + warningMessages.toString();;
 
-            let confirmation: IUIConfirmation = {
-                CancelText: "Cancel Edit",
-                ConfirmationTitle: "Cell Validation Failed",
-                ConfirmationMsg: warningMessage,
-                ConfirmationText: "Bypass Rule",
-                CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
-                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString),
-                ShowCommentBox: true
-            }
+            let confirmAction: Redux.Action =  PlusMinusRedux.PlusMinusApply(allValues, keyEventString)
+            let cancelAction: Redux.Action =PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString);
+            let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+           
             this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
         }
     }

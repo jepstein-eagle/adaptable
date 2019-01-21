@@ -9,13 +9,14 @@ export interface IAlert {
 }
 
 export interface IUIConfirmation {
-    ConfirmationTitle: string;
-    ConfirmationMsg: string;
-    ConfirmationText: string;
-    CancelText: string;
+    Header: string;
+    Msg: string;
+    ConfirmButtonText: string;
+    CancelButtonText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
     ShowCommentBox: boolean;
+    MessageType: MessageType
 }
 
 export interface InputAction extends Redux.Action {
@@ -24,8 +25,8 @@ export interface InputAction extends Redux.Action {
 
 
 export interface IUIPrompt {
-    PromptTitle: string;
-    PromptMsg: string;
+    Header: string;
+    Msg: string;
     ConfirmAction: InputAction;
 }
 
@@ -58,19 +59,20 @@ export interface IAlertPopup {
 
 export interface IConfirmationPopup {
     ShowConfirmationPopup: boolean;
-    ConfirmationTitle: string;
-    ConfirmationMsg: string;
-    ConfirmationText: string;
-    CancelText: string;
+    Header: string;
+    Msg: string;
+    ConfirmButtonText: string;
+    CancelButtonText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
     ShowCommentBox: boolean,
     ConfirmationComment: string;
+    MessageType: MessageType
 }
 
 export interface IPromptPopup {
     ShowPromptPopup: boolean;
-    PromptTitle: string;
-    PromptMsg: string;
+    Header: string;
+    Msg: string;
     ConfirmAction: InputAction;
 }

@@ -6,6 +6,7 @@ import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { IUIConfirmation } from "../../../Utilities/Interface/IMessage";
+import { MessageType } from "../../../Utilities/Enums";
 
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
@@ -29,19 +30,20 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.DELETE_BUTTON}
-            />;
+        />;
     }
 
     onClick() {
         if (this.props.ConfirmAction) {
             let confirmation: IUIConfirmation = {
-                CancelText: "Cancel",
-                ConfirmationTitle: this.props.ConfirmationTitle,
-                ConfirmationMsg: this.props.ConfirmationMsg,
-                ConfirmationText: "Delete",
+                CancelButtonText: "Cancel",
+                Header: this.props.ConfirmationTitle,
+                Msg: this.props.ConfirmationMsg,
+                ConfirmButtonText: "Delete",
                 CancelAction: null,
                 ConfirmAction: this.props.ConfirmAction,
-                ShowCommentBox: false
+                ShowCommentBox: false,
+                MessageType: MessageType.Warning
             }
             this.props.onConfirmWarning(confirmation)
 

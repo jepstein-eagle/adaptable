@@ -2,7 +2,6 @@
 import * as Redux from "redux";
 import { Provider, connect } from 'react-redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
 import { PopupState, ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
@@ -49,7 +48,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         AdaptableBlotter={this.props.Blotter}
                         onClose={this.props.onCloseChartPopup}
                         showChart={this.props.SystemState.ChartVisibility == ChartVisibility.Maximised}
-                        showModal={this.props.ChartState.ShowModal} 
+                        showModal={this.props.ChartState.ShowModal}
                     />
                 }
 
@@ -71,25 +70,29 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     onClose={this.props.onCloseAlertPopup}
                     ShowPopup={this.props.PopupState.AlertPopup.ShowAlertPopup}
                     MessageType={this.props.PopupState.AlertPopup.MessageType}
+                    AdaptableBlotter={this.props.Blotter}
                 />
 
                 <AdaptableBlotterPopupPrompt
-                    Msg={this.props.PopupState.PromptPopup.PromptMsg}
-                    Title={this.props.PopupState.PromptPopup.PromptTitle}
+                    Msg={this.props.PopupState.PromptPopup.Msg}
+                    Header={this.props.PopupState.PromptPopup.Header}
                     onClose={this.props.onClosePromptPopup}
                     onConfirm={this.props.onConfirmPromptPopup}
                     ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup}
+                    AdaptableBlotter={this.props.Blotter}
                 />
 
                 <AdaptableBlotterPopupConfirmation
-                    Title={this.props.PopupState.ConfirmationPopup.ConfirmationTitle}
-                    Msg={this.props.PopupState.ConfirmationPopup.ConfirmationMsg}
+                    Header={this.props.PopupState.ConfirmationPopup.Header}
+                    Msg={this.props.PopupState.ConfirmationPopup.Msg}
                     ShowPopup={this.props.PopupState.ConfirmationPopup.ShowConfirmationPopup}
-                    CancelText={this.props.PopupState.ConfirmationPopup.CancelText}
-                    ConfirmText={this.props.PopupState.ConfirmationPopup.ConfirmationText}
+                    CancelButtonText={this.props.PopupState.ConfirmationPopup.CancelButtonText}
+                    ConfirmButtonText={this.props.PopupState.ConfirmationPopup.ConfirmButtonText}
                     onCancel={this.props.onCancelConfirmationPopup}
                     onConfirm={this.props.onConfirmConfirmationPopup}
                     ShowCommentBox={this.props.PopupState.ConfirmationPopup.ShowCommentBox}
+                    MessageType={this.props.PopupState.ConfirmationPopup.MessageType}
+                    AdaptableBlotter={this.props.Blotter}
                 />
 
                 {/*  The main model window where function screens are 'hosted' */}

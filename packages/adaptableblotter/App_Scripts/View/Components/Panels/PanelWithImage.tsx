@@ -38,7 +38,7 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
                 </Col>
             </Row>
         </AdaptableBlotterForm>;
-        return <Panel header={headerRow} className={cssClassName} style={this.props.style} bsStyle={this.props.bsStyle}>
+        return <Panel header={headerRow} className={cssClassName} style={this.props.style} bsStyle={this.props.bsStyle} bsSize={this.props.bsSize} > 
             {this.props.children}
         </Panel>;
     }

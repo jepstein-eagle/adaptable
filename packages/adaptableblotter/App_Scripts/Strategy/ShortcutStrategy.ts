@@ -1,12 +1,13 @@
 import { IShortcutStrategy } from './Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
+import * as Redux from 'redux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { StateChangedTrigger, DataType, MathOperation, ActionMode } from '../Utilities/Enums';
+import { StateChangedTrigger, DataType, MathOperation, ActionMode, MessageType } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -16,6 +17,7 @@ import { IShortcut, ICellValidationRule } from '../Utilities/Interface/IAdaptabl
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
 
@@ -144,16 +146,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         failedRules.forEach(f => {
             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this.blotter) + "\n";
         })
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: warningMessage,
-            ConfirmationText: "Bypass Rule",
-            //We cancel the edit before applying the shortcut so if cancel then there is nothing to do
-            CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
-            ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue),
-            ShowCommentBox: true
-        }
+
+        let confirmAction: Redux.Action =  ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue)
+        let cancelAction: Redux.Action =null;
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
         this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
     }
 

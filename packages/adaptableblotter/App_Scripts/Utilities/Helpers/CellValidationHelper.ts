@@ -3,7 +3,9 @@ import { ICellValidationRule } from '../Interface/IAdaptableBlotterObjects';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../Interface/IColumn';
-import { LeafExpressionOperator, DataType } from '../Enums';
+import { LeafExpressionOperator, DataType, MessageType } from '../Enums';
+import { IUIConfirmation } from '../Interface/IMessage';
+import * as Redux from 'redux';
 
 
 export module CellValidationHelper {
@@ -36,6 +38,21 @@ export module CellValidationHelper {
             valueDescription = valueDescription + operand2Text;
         }
         return valueDescription;
+    }
+
+
+    export function createCellValidationUIConfirmation(confirmAction: Redux.Action, cancelAction: Redux.Action, warningMessage: string =  "Do you want to continue?"): IUIConfirmation {
+
+        return {
+            CancelButtonText: "Cancel Edit",
+            Header: "Cell Validation Failed",
+            Msg: warningMessage,
+            ConfirmButtonText: "Bypass Rule",
+            CancelAction: cancelAction,
+            ConfirmAction: confirmAction,
+            ShowCommentBox: true,
+            MessageType: MessageType.Warning
+        }
     }
 }
 

@@ -25,6 +25,7 @@ import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { MessageType } from "../../Utilities/Enums";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -178,13 +179,14 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
     private onConfirmWarningCellValidation(index: number, plusMinus: IPlusMinusRule) {
         let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
-            ConfirmationMsg: "Do you want to override it with new value: ?",
-            ConfirmationText: "Bypass Rule",
+            CancelButtonText: "Cancel",
+            Header: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
+           Msg: "Do you want to override it with new value: ?",
+            ConfirmButtonText: "Confirm",
             CancelAction: null,
             ConfirmAction: PlusMinusRedux.PlusMinusEditCondition(index, { ColumnId: plusMinus.ColumnId, DefaultNudge: plusMinus.NudgeValue }),
-            ShowCommentBox: false
+            ShowCommentBox: false,
+            MessageType: MessageType.Warning
         }
         this.props.onConfirmWarningCellValidation(confirmation)
     }

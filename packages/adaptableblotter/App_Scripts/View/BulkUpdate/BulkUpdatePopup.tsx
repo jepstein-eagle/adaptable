@@ -24,6 +24,7 @@ import { WARNING_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/Styl
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
 import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
     BulkUpdateValue: string;
@@ -198,16 +199,10 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true)
+        let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     private getButtonStyle(): string {

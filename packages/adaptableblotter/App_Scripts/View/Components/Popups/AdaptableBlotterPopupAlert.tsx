@@ -1,9 +1,10 @@
 import * as React from "react";
-//we use that syntax to import the default export from the module.... Took me a while to find the syntax
-import SweetAlert from 'react-bootstrap-sweetalert'
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { MessageType } from "../../../Utilities/Enums";
-import { PRIMARY_BSSTYLE, DANGER_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
+import { Modal, Button, Row, Col, ControlLabel } from "react-bootstrap";
+import { PanelWithImage } from "../Panels/PanelWithImage";
+import { UIHelper } from "../../UIHelper";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 
 export interface AdaptableBlotterPopupAlertProps extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
     ShowPopup: boolean
@@ -11,6 +12,7 @@ export interface AdaptableBlotterPopupAlertProps extends React.ClassAttributes<A
     Msg: string
     Header: string
     MessageType: MessageType
+    AdaptableBlotter: IAdaptableBlotter;
 }
 
 export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotterPopupAlertProps, {}> {
@@ -18,46 +20,66 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
     render() {
 
 
-        let style: string;
-        let isInfo: boolean = false
-        let isWarning: boolean = false
-        let isError: boolean = false
-        switch (this.props.MessageType) {
-            case MessageType.Info:
-                style = StyleConstants.INFO_BSSTYLE
-                isInfo=true
-                break;
-            case MessageType.Warning:
-                style = StyleConstants.WARNING_BSSTYLE
-                isWarning=true;
-                break;
-            case MessageType.Error:
-                style = StyleConstants.DANGER_BSSTYLE
-                isError= true;
-                break;
-        }
+        let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
+        let header: string = this.props.MessageType.toUpperCase();
+        let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
 
-        return this.props.ShowPopup && <div className={StyleConstants.POPUP_ALERT}>
-            <SweetAlert
-                 danger={isError}
-                warning={isWarning}
-                success={isInfo}
-                confirmBtnBsStyle={style}
-                title={this.props.Header}
-                onConfirm={() => this.props.onClose()}
-            >
-                <p>
-                    {this.props.Msg.split("\n").map(function (item, index) {
-                        return (
-                            <span key={index}>
-                                {item}
-                                <br />
-                            </span>
-                        )
-                    })}
-                </p>
-            </SweetAlert>
-        </div>
+
+
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let cssClassName: string = StyleConstants.POPUP_ALERT
+
+        return this.props.ShowPopup &&
+            <div className={StyleConstants.POPUP_ALERT}>
+
+                <Modal show={this.props.ShowPopup}
+                    onHide={this.props.onClose}
+                    className={cssClassName}
+                    container={modalContainer}
+                    bsSize={"small"}>
+                    <div className={cssClassName + StyleConstants.MODAL_BASE} >
+                        <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
+
+                            <div className={cssClassName}>
+                                <PanelWithImage
+                                    cssClassName={cssClassName}
+                                    header={header}
+                                    bsStyle={style} glyphicon={glyph}
+                                    bsSize={"small"}
+                                >
+                                    <div>
+                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                            <ControlLabel>
+                                                {this.props.Header}
+                                            </ControlLabel>
+                                        </div>
+                                        <div style={{ display: "flex", alignItems: "center" }}>
+                                            {this.props.Msg.split("\n").map(function (item, index) {
+                                                return (
+                                                    <span key={index}>
+                                                        {item}
+                                                        <br />
+                                                    </span>
+                                                )
+                                            })}
+                                        </div>
+                                        <div style={{ marginTop: '20px' }}>
+                                            <Row >
+                                                <Col xs={4}></Col>
+                                                <Col xs={7} >
+                                                    <Button
+                                                        bsStyle={style} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON}
+                                                        onClick={() => this.props.onClose()}>OK</Button>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                    </div>
+                                </PanelWithImage>
+                            </div>
+                        </Modal.Body>
+                    </div>
+                </Modal>
+            </div>
     }
 
 }

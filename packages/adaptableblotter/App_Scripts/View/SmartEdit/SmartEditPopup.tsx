@@ -22,6 +22,7 @@ import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
 import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
@@ -117,16 +118,10 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true)
+        let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     private getButtonStyle(): string {

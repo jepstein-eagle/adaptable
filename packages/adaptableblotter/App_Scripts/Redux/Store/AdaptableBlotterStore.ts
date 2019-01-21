@@ -827,7 +827,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          * Use Case: User applies a shortcut via the keyboard
          * Action: Tell the Shortcut Strategy to apply the shortcut
          */
-    
+
         case ShortcutRedux.SHORTCUT_APPLY: {
           let shortcutStrategy = <IShortcutStrategy>(blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
           let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
@@ -1081,13 +1081,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           if (overwriteConfirmation) {
             let confirmation: IUIConfirmation = {
-              CancelText: "Cancel Import",
-              ConfirmationTitle: "Overwrite Config",
-              ConfirmationMsg: "This item will overwrite one of your config. Do you want to continue?",
-              ConfirmationText: "Import",
+              CancelButtonText: "Cancel Import",
+              Header: "Overwrite Config",
+              Msg: "This item will overwrite one of your config. Do you want to continue?",
+              ConfirmButtonText: "Import",
               CancelAction: null,
               ConfirmAction: importAction,
-              ShowCommentBox: false
+              ShowCommentBox: false,
+              MessageType: MessageType.Warning
             }
             middlewareAPI.dispatch(PopupRedux.PopupShowConfirmation(confirmation))
           }

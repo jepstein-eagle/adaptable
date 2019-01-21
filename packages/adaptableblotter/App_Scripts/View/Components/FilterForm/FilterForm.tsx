@@ -311,8 +311,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
         let prompt: IUIPrompt = {
-            PromptTitle: "Enter name for User Filter",
-            PromptMsg: "Please enter a user filter name",
+            Header: "Enter name for User Filter",
+            Msg: "Please enter a user filter name",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         }
         this.props.onShowPrompt(prompt)

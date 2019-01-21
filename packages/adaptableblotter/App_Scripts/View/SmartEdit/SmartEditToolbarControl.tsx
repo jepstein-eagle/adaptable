@@ -16,13 +16,14 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { StatusColour, MathOperation, AccessLevel } from "../../Utilities/Enums";
+import { StatusColour, MathOperation, AccessLevel, MessageType } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
 import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
 import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;
@@ -72,7 +73,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
         let selectedColumn = (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null
 
-        let previewPanel = 
+        let previewPanel =
             <PreviewResultsPanel
                 cssClassName={cssClassName}
                 UpdateValue={this.props.SmartEditValue}
@@ -82,7 +83,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                 SelectedColumn={selectedColumn}
                 ShowPanel={true}
                 ShowHeader={false}
-            /> 
+            />
 
         let operationMenuItems = EnumExtensions.getNames(MathOperation).filter(e => e != MathOperation.Replace).map((mathOperation: MathOperation, index) => {
             return <MenuItem key={index} eventKey="index" onClick={() => this.props.onSmartEditOperationChange(mathOperation)}>{mathOperation as MathOperation}</MenuItem>
@@ -169,16 +170,10 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true)
+        let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     onApplySmartEdit(): any {

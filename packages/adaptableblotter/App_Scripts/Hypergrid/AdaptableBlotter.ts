@@ -1,6 +1,7 @@
 ﻿import '../Styles/stylesheets/adaptableblotter-style.css'
 
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
+import * as Redux from 'redux'
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
@@ -28,7 +29,7 @@ import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
+import { DataType, DistinctCriteriaPairValue, SortOrder, MessageType } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -83,6 +84,7 @@ import { FormatColumnStrategyHypergrid } from './Strategy/FormatColumnStrategyHy
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 
 //icon to indicate toggle state
@@ -134,7 +136,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
-       
+
         this.hyperGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;
@@ -288,7 +290,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Index: -1,
                 ReadOnly: false, // not great but doesnt matter as it will update when made visible....this.isColumnReadonly(x.name),
                 Sortable: existingColumn ? existingColumn.Sortable : this.isColumnSortable(x.name),
-                Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name) 
+                Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name)
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
@@ -550,14 +552,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Record: null
             }
             dataChangedEvents.push(dataChangedEvent);
-         }
+        }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
         this.ReindexAndRepaint()
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
-      
+
         this.ClearSelection();
     }
 
@@ -1146,20 +1148,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             // cell edit is about to happen so create datachanging and datahanged objects
             // these are to use to check for free text column, validation and audit log
             let row = this.hyperGrid.behavior.dataModel.getRow(event.detail.input.event.visibleRow.rowIndex);
-           
+
             let dataChangedEvent: IDataChangedInfo =
-                {
-                    OldValue: event.detail.oldValue,
-                    NewValue: event.detail.newValue,
-                    ColumnId: event.detail.input.column.name,
-                    IdentifierValue: this.getPrimaryKeyValueFromRecord(row),
-                    Record: null
-                }
+            {
+                OldValue: event.detail.oldValue,
+                NewValue: event.detail.newValue,
+                ColumnId: event.detail.input.column.name,
+                IdentifierValue: this.getPrimaryKeyValueFromRecord(row),
+                Record: null
+            }
 
             // first free text column
             let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
             if (freeTextColumn) {
-                      this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
+                this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
             }
 
             // then check validation
@@ -1181,16 +1183,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         ColumnId: dataChangedEvent.ColumnId,
                         Value: dataChangedEvent.NewValue
                     };
-                    let confirmation: IUIConfirmation = {
-                        CancelText: "Cancel Edit",
-                        ConfirmationTitle: "Cell Validation Failed",
-                        ConfirmationMsg: warningMessage,
-                        ConfirmationText: "Bypass Rule",
-                        CancelAction: null,
-                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]),
-                        ShowCommentBox: true
-                    };
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+
+                    let confirmAction: Redux.Action =  GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]);
+                    let cancelAction: Redux.Action =null;
+                    let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();
                 }
@@ -1252,7 +1249,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let rowIdentifierValue: any = this.getPrimaryKeyValueFromRecord(row);
                         let column = this.getHypergridColumn(columnId);
                         let newValue: any = this.valOrFunc(row, column);
-                       
+
                         let dataChangedInfo: IDataChangedInfo = {
                             OldValue: null, // dont get old value as not sure we need it
                             NewValue: newValue,
@@ -1261,7 +1258,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             Record: null
                         }
 
-                         this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                        this.DataService.CreateDataChangedEvent(dataChangedInfo);
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);
                     let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);
@@ -1470,7 +1467,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public isFloatingFilterActive(): boolean {
         // have not yet activated this for hypergrid so always return false;
-         return false;
+        return false;
     }
 
     public showFloatingFilter(): void {
