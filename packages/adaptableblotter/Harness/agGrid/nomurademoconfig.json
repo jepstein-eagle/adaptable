@@ -1,0 +1,31 @@
+{
+  "Layout": {
+    "CurrentLayout": "Nomura",
+    "Layouts": [{
+      "Columns": ["tradeId", "notional", "deskId", "counterparty"],
+      "GridSorts": [],
+      "Name": "Nomura",
+      "VendorGridInfo": null
+    }]
+  },
+  "Entitlements": {
+		"FunctionEntitlements": [
+			{
+				"FunctionName": "PlusMinus",
+				"AccessLevel": "ReadOnly"
+			},
+			{
+				"FunctionName": "ColumnCategories",
+				"AccessLevel": "Hidden"
+			}
+		]
+  },
+  "Dashboard": {
+    "VisibleToolbars": [
+      "SmartEdit",
+      "Layout",
+      "QuickSearch"
+    ]
+  }
+}
+

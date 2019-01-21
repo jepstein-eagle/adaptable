@@ -103,7 +103,7 @@ export class AuditLogService {
 
     public AddAdaptableBlotterFunctionLog(functionName: string, action: string, info: string, data?: any) {
         if (this.IsAuditFunctionEventsEnabled) {
-            this.auditLogQueue.push({
+            let auditLogEntry: IAuditLogEntry = {
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.AdaptableBlotterFunction,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotterOptions.userName,
@@ -116,7 +116,9 @@ export class AuditLogService {
                     //same as adaptableblotter_state_change we log the obj as a string
                     data: data ? this.convertToText(data) : null
                 }
-            });
+            };
+            console.log(auditLogEntry);
+            this.auditLogQueue.push(auditLogEntry);
         }
     }
 

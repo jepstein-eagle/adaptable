@@ -33,3 +33,241 @@
 </body>
 
 </html>
+
+
+/*{
+	"Layout": {
+		"CurrentLayout": "Help",
+		"Layouts": [
+			{
+				"Columns": [
+					"ask",
+					"bid"
+				],
+				"GridSorts": [],
+				"Name": "Help",
+				"IsReadOnly": false
+			}
+		]
+	},
+	"Entitlements": {
+		"FunctionEntitlements": [
+			{
+				"FunctionName": "QuickSearch",
+				"AccessLevel": "ReadOnly"
+			},
+			{
+				"FunctionName": "PlusMinus",
+				"AccessLevel": "Hidden"
+			},
+			{
+				"FunctionName": "SmartEdit",
+				"AccessLevel": "ReadOnly"
+			}
+		]
+	},
+	"SystemFilter": {
+		"SystemFilters": [
+			"Zero"
+		]
+	},
+	"UserInterface": {
+		"PermittedColumnValues": [
+			{
+				"ColumnId": "country",
+				"PermittedValues": [
+					"France",
+					"Russia",
+					"Israel",
+					"Test"
+				]
+			},
+			{
+				"ColumnId": "currency",
+				"PermittedValues": [
+					"EUR",
+					"USD",
+					"NIS"
+				]
+			}
+		],
+		"ColumnCategories": [
+			{
+				"Category": "finance",
+				"Columns": [
+					"bid",
+					"ask",
+					"tradeId"
+				]
+			},
+			{
+				"Category": "date",
+				"Columns": [
+					"tradeDate",
+					"settlementDate"
+				]
+			}
+		]
+	},
+	"Dashboard": {
+		"VisibleToolbars": [
+			"Export",
+			"QuickSearch",
+			"SmartEdit",
+			"Layout"
+		],
+		"VisibleButtons": [
+			"About",
+			"Dashboard",
+			"QuickSearch",
+			"SmartEdit",
+			"ColumnChooser",
+			"BulkUpdate"
+		],
+		"Zoom": "0.9",
+		"DashboardVisibility": "Minimised",
+		"ShowSystemStatusButton": true
+	}
+}
+
+<!--
+
+let tradeJson = {
+  "Dashboard": {
+    "VisibleToolbars": [
+      "SmartEdit",
+      "Layout",
+      "QuickSearch"
+    ],
+  },
+  "Theme": {
+    "CurrentTheme": "Dark Theme"
+  }
+}
+
+let oldjson = {
+  "Layout": {
+    "IncludeVendorState": false,
+    "CurrentLayout": "Hidden",
+    "Layouts": [{
+      "Columns": ["tradeId", "notional", "deskId", "counterparty"],
+      "GridSorts": [],
+      "Name": "Hidden",
+      "VendorGridInfo": null,
+      "IsReadOnly": false
+    }]
+  },
+  "QuickSearch": {
+    "Style": {
+      "ClassName": "styleBackGreen"
+    },
+
+  },
+  "Filter": {
+    "ColumnFilters": [],
+    "UserFilters": [{
+      "Name": "April 2018",
+      "Expression": {
+        "ColumnValueExpressions": [],
+        "FilterExpressions": [],
+        "RangeExpressions": [{
+          "ColumnId": "tradeDate",
+          "Ranges": [{
+            "Operator": "Between",
+            "Operand1": "2018-04-01",
+            "Operand2": "2018-04-30",
+            "Operand1Type": "Value",
+            "Operand2Type": "Value"
+          }]
+        }]
+      },
+      "ColumnId": "tradeDate",
+      "IsReadOnly": false
+    }],
+    "SystemFilters": [
+      "Blanks",
+      "Non Blanks",
+      "Today",
+      "In Past",
+      "True",
+      "False"
+    ]
+  },
+  "UserInterface": {
+    "StyleClassNames": [
+      "styleBackBrown",
+      "styleForeYellow"
+    ],
+    "PermittedColumnValues": [{
+      "ColumnId": "country",
+      "PermittedValues": [
+        "France",
+        "Russia",
+        "Israel"
+      ]
+    },
+    {
+      "ColumnId": "currency",
+      "PermittedValues": [
+        "EUR",
+        "USD",
+        "NIS"
+      ]
+    },
+    ]
+  },
+  "Theme": {
+    "CurrentTheme": "Default",
+  },
+  "FormatColumn": {
+    "FormatColumns": [{
+      "ColumnId": "notional",
+      "Style": {
+        "BackColor": "#ff0000",
+        "ForeColor": null,
+        "FontWeight": "Normal",
+        "FontStyle": "Normal",
+        "FontSize": null
+      },
+    }],
+
+  },
+  "Dashboard": {
+    "VisibleToolbars": [
+      "SmartEdit",
+      "Layout",
+      "BulkUpdate"
+    ],
+    "VisibleButtons": [
+      "About",
+      "Dashboard",
+      "SmartEdit",
+      "ColumnChooser",
+      "BulkUpdate"
+    ],
+    "Zoom": "0.5",
+    "DashboardVisibility": "Minimised",
+    "ShowSystemStatusButton": true
+  }
+}
+
+
+let categoryJson = {
+  "ColumnCategory": {
+    "ColumnCategories": [
+      {
+        "ColumnCategoryId": "Pricing",
+        "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
+      },
+      {
+        "ColumnCategoryId": "Misc.",
+        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
+      },
+      {
+        "ColumnCategoryId": "Dates",
+        "ColumnIds": ["lastUpdated", "tradeDate", "settlementDate"]
+      }
+    ]
+  }
+}
+-->

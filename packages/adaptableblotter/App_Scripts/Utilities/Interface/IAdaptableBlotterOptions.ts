@@ -83,21 +83,6 @@ export interface IAdaptableBlotterOptions {
 
 }
 
-/*
-{
-            api_url: "https://test.ipushpull.com/api/1.0",
-            ws_url: "https://test.ipushpull.com",
-            web_url: "https://test.ipushpull.com",
-            docs_url: "https://docs.ipushpull.com",
-            storage_prefix: "ipp_local",
-            api_key: "???",
-            api_secret: "???",
-            transport: "polling",
-            hsts: false,
-        }
-
-        */
-
 /**
  * Options for managing Audit Log
  * ​​Note: Adaptable Blotter has no knowledge of which messages Audit Log is given and where they are sent.  

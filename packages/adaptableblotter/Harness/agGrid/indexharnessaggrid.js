@@ -5,12 +5,12 @@ var trades
 var gridOptions
 var showTrade = true;
 
-function runQuickSearch() {
+function runQuickSearchViaAPI() {
   let element = document.getElementById("txtQuickSearchText")
   adaptableblotter.api.quickSearchApi.Apply(element.value)
 }
 
-function clearQuickSearch() {
+function clearQuickSearchViaAPI() {
   let element = document.getElementById("txtQuickSearchText")
   element.value = ""
   adaptableblotter.api.quickSearchApi.Clear()
@@ -28,7 +28,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(100);
+    return dataGen.getTrades(500);
   } else {
     return dataGen.getFtseData(100)
   }
@@ -96,19 +96,18 @@ function InitTradeBlotter() {
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
       vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
-      //  primaryKey: "date", // pk for blotter - required
-      primaryKey: getPKForGrid(), // pk for blotter - required
+       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-      predefinedConfig: categoryJson,
+      predefinedConfig: "nomurademoconfig.json",
 
-      auditLogOptions: {
+      auditOptions: {
         //     auditCellEdits: true,
-        //     auditFunctionEvents: true,
+     //   auditFunctionEvents: true,
         //     auditUserStateChanges: true,
         //     auditInternalStateChanges: true,
-        //     pingInterval: 120
+      //       pingInterval: 120
       },
       configServerOptions: {
         enableConfigServer: false,
@@ -676,157 +675,5 @@ function currencyRendereragGrid(params) {
   }
 }
 
-let categoryJson = {
-  "ColumnCategory": {
-    "ColumnCategories": [
-      {
-        "ColumnCategoryId": "Pricing",
-        "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
-      },
-      {
-        "ColumnCategoryId": "Misc.",
-        "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
-      },
-      {
-        "ColumnCategoryId": "Dates",
-        "ColumnIds": ["lastUpdated", "tradeDate", "settlementDate"]
-      }
-    ]
-  }
-}
 
 
-
-let layoutdemojson = {
-  "Layout": {
-    "IncludeVendorState": false,
-    "CurrentLayout": "Hidden",
-    "Layouts": [{
-      "Columns": ["tradeId", "notional", "deskId", "counterparty"],
-      "GridSorts": [],
-      "Name": "Hidden",
-      "VendorGridInfo": null,
-      "IsReadOnly": false
-    }]
-  }
-}
-
-
-let tradeJson = {
-  "Dashboard": {
-    "VisibleToolbars": [
-      "SmartEdit",
-      "Layout",
-      "QuickSearch"
-    ],
-  },
-  "Theme": {
-    "CurrentTheme": "Dark Theme"
-  }
-}
-
-let oldjson = {
-  "Layout": {
-    "IncludeVendorState": false,
-    "CurrentLayout": "Hidden",
-    "Layouts": [{
-      "Columns": ["tradeId", "notional", "deskId", "counterparty"],
-      "GridSorts": [],
-      "Name": "Hidden",
-      "VendorGridInfo": null,
-      "IsReadOnly": false
-    }]
-  },
-  "QuickSearch": {
-    "Style": {
-      "ClassName": "styleBackGreen"
-    },
-
-  },
-  "Filter": {
-    "ColumnFilters": [],
-    "UserFilters": [{
-      "Name": "April 2018",
-      "Expression": {
-        "ColumnValueExpressions": [],
-        "FilterExpressions": [],
-        "RangeExpressions": [{
-          "ColumnId": "tradeDate",
-          "Ranges": [{
-            "Operator": "Between",
-            "Operand1": "2018-04-01",
-            "Operand2": "2018-04-30",
-            "Operand1Type": "Value",
-            "Operand2Type": "Value"
-          }]
-        }]
-      },
-      "ColumnId": "tradeDate",
-      "IsReadOnly": false
-    }],
-    "SystemFilters": [
-      "Blanks",
-      "Non Blanks",
-      "Today",
-      "In Past",
-      "True",
-      "False"
-    ]
-  },
-  "UserInterface": {
-    "StyleClassNames": [
-      "styleBackBrown",
-      "styleForeYellow"
-    ],
-    "PermittedColumnValues": [{
-      "ColumnId": "country",
-      "PermittedValues": [
-        "France",
-        "Russia",
-        "Israel"
-      ]
-    },
-    {
-      "ColumnId": "currency",
-      "PermittedValues": [
-        "EUR",
-        "USD",
-        "NIS"
-      ]
-    },
-    ]
-  },
-  "Theme": {
-    "CurrentTheme": "Default",
-  },
-  "FormatColumn": {
-    "FormatColumns": [{
-      "ColumnId": "notional",
-      "Style": {
-        "BackColor": "#ff0000",
-        "ForeColor": null,
-        "FontWeight": "Normal",
-        "FontStyle": "Normal",
-        "FontSize": null
-      },
-    }],
-
-  },
-  "Dashboard": {
-    "VisibleToolbars": [
-      "SmartEdit",
-      "Layout",
-      "BulkUpdate"
-    ],
-    "VisibleButtons": [
-      "About",
-      "Dashboard",
-      "SmartEdit",
-      "ColumnChooser",
-      "BulkUpdate"
-    ],
-    "Zoom": "0.5",
-    "DashboardVisibility": "Minimised",
-    "ShowSystemStatusButton": true
-  }
-}
